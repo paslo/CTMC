@@ -1,0 +1,724 @@
+\documentclass[10pt]{article}
+\usepackage[dutch, english]{babel}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{bbm}
+\usepackage{graphicx}
+
+\usepackage{verbatim}
+\usepackage{array}
+\usepackage{amsthm}
+\usepackage[section]{placeins}
+
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator*{\argmin}{arg\,min}
+\DeclareMathOperator*{\argsup}{arg\,sup}
+\DeclareMathOperator*{\arginf}{arg\,inf}
+
+\newcommand{\dx}[1][x]{\text{\,d}#1}
+
+\begin{document}
+
+\title{Properties of an Imprecise Non-Homogeneous Continuous-Time Discrete-Space Markov Process}
+\author{T. E. Krak}
+\maketitle
+
+%\section{Introduction} \label{sec:intro}
+
+%TODO: problem statement here.
+
+\section{Introduction}\label{sec:one}
+
+We consider a continuous-time, discrete-space, non-homogeneous, first-order Markov process $X_t$ evolving through time $t\geq 0$ over a state space $\mathcal{X}=\{x_1,\ldots,x_n,x_{n+1}\}$, with $n$ transient states $x_1,\ldots,x_n$, a single absorbing state $x_{n+1}$, initial state distribution $\boldsymbol{\alpha}=[\Pr(X_0=x_1),\ldots,\Pr(X_0=x_{n+1})]^\top$, and the only allowed transitions being of the form $x_i\rightarrow x_{i+1}$ for $i=1,\ldots,n$. 
+
+Given times $t_1,s,t_2$, s.t. $0\leq t_1\leq s\leq t_2$, the first-order Markov property
+\begin{equation*}
+\Pr(X_{t_2}\,\vert\,X_s,X_{t_1}) = \Pr(X_{t_2}\,\vert\,X_{s})\,,
+\end{equation*}
+implies that the transition matrix $\mathbf{T}_{t_1}^{t_2}$, which has elements
+\begin{equation*}
+(\mathbf{T}_{t_1}^{t_2})_{ij}=\Pr(X_{t_2}=x_j\,\vert\,X_{t_1}=x_i)\,,
+\end{equation*}
+decomposes as
+\begin{equation*}
+\mathbf{T}_{t_1}^{t_2}=\mathbf{T}_{t_1}^s\mathbf{T}_s^{t_2}\,.
+\end{equation*}
+We stipulate that for all $t\geq 0$, the matrix $\mathbf{T}_t^t=\mathbf{I}$, with $\mathbf{I}$ the identity matrix, and that the instantaneous change at time $t$ is given by the infinitesimal generator matrix $\mathbf{A}(t)$, as
+\begin{equation*}
+\mathbf{A}(t)=\frac{\partial}{\partial s}\bigl[\mathbf{T}_{t}^{s}\bigr]\Big\vert_{s=t}\,,
+\end{equation*}
+taking values $\mathbf{A}(t)\in\mathcal{A}$, where
+\begin{equation*}
+\mathcal{A} = \left\{\left[\begin{array}{ccccc}
+-\lambda_1 & \lambda_1 & 0 & \cdots & 0 \\
+0 & -\lambda_2 & \lambda_2 & \cdots & 0 \\
+\vdots & \ddots & \ddots & \ddots & \vdots \\
+0 & \cdots & 0 & -\lambda_n & \lambda_n \\
+0 & \cdots & 0 & 0 & 0
+\end{array}\right]\,\Bigg\vert\, \begin{array}{l}
+\text{for }i=1,\ldots,n, \\
+\underline{\lambda_i} \leq \lambda_i \leq \overline{\lambda_i}, \quad\text{and} \\
+0<\underline{\lambda_i}\leq\overline{\lambda_i}<\infty\,.\end{array} \right\}\,.
+\end{equation*}
+
+In what follows, we will often consider a function $f: \mathcal{X}\rightarrow\mathbb{R}$ on the process' state space. We will also write $f(\cdot)$ as a vector $\mathbf{f}$ of length $(n+1)$, s.t. $\left(\mathbf{f}\right)_i=f(x_i)$ for all $i=1,\ldots,(n+1)$. This allows us to write the conditional expectation of $f(\cdot)$ w.r.t. the r.v. $X_{t_2}$ given $X_{t_1}$ as
+\begin{equation*}
+\mathbb{E}[f(X_{t_2})\,\vert\,X_{t_1}] = \mathbf{T}_{t_1}^{t_2}\mathbf{f}\,.
+\end{equation*}
+We will also use a converse notation, $\langle\cdot\rangle(\cdot) : \mathbb{R}^{n+1}\times\mathcal{X}\rightarrow\mathbb{R}$ to interpret a vector $\mathbf{f}$ as a function $\langle\mathbf{f}\rangle(\cdot)$ on the state space. Formally, if $\iota_{x_i}(\cdot)$ is the indicator function on $x_i$, we define
+\begin{equation*}
+\langle\mathbf{f}\rangle(x_i)\equiv \mathbf{f}^\top \boldsymbol{\iota}_{x_i}\,.
+\end{equation*}
+
+\section{Process Dynamics}
+
+Note that we have not given an expression for the transition matrix $\mathbf{T}_{t_1}^{t_2}$ in Section 1. Here, we will derive the process dynamics from the above assumptions, so that the matrix $\mathbf{T}_{t_1}^{t_2}$ can then be found as the solution to either of two systems of differential equations. The first of these systems is
+\begin{align*}
+\frac{\partial}{\partial t_2}\bigl[\mathbf{T}_{t_1}^{t_2}\bigr] &= \mathbf{T}_{t_1}^{t_2}\mathbf{A}(t_2)\,, \\
+ \mathbf{T}_{t_1}^{t_1} &= \mathbf{I}\,,
+\end{align*}
+which are known as the Kolmogorov \emph{forward equations}, and the second system is
+\begin{align*}
+\frac{\partial}{\partial t_1}\bigl[\mathbf{T}_{t_1}^{t_2}\bigr] &= -\mathbf{A}(t_1)\mathbf{T}_{t_1}^{t_2}\,, \\
+\mathbf{T}_{t_2}^{t_2} &= \mathbf{I}\,,
+\end{align*}
+which are known as the Kolmogorov \emph{backward equations}. Note that the matrix $\mathbf{T}_{t_1}^{t_2}$ satisfies both systems, i.e.,
+\begin{align*}
+\mathbf{T}_{t_1}^{t_2} &= \mathbf{I} + \int_{t_1}^{t_2} \mathbf{T}_{t_1}^s\mathbf{A}(s)\dx[s] \\
+ &= \mathbf{I} + \int_{t_1}^{t_2} \mathbf{A}(s)\mathbf{T}_{s}^{t_2}\dx[s]\,.
+\end{align*}
+
+We note that in the case where the process is homogeneous, i.e. $\mathbf{A}(t)=\mathbf{A}$ for all $t$, the above system has the unique solution
+\begin{align*}
+\mathbf{T}_{t_1}^{t_2} &= \mathbf{T}_{0}^{(t_2-t_1)} \\
+ &= \exp\{(t_2-t_1)\cdot\mathbf{A}\}\,,
+\end{align*}
+where the r.h.s. denotes the matrix exponential. Unfortunately, no such analytic solution exists for the non-homogeneous case.
+
+We next show that the above systems are indeed correct.
+\newpage
+\begin{theorem}
+The Kolmogorov forward equations follow from the assumptions made in Section 1.
+\end{theorem}
+\begin{proof}
+It is clear that the boundary condition $\mathbf{T}_{t_1}^{t_1}=\mathbf{I}$ holds by assumption.
+
+For the derivative, we note that by the Markov property, we have for any value $\delta\geq 0$ that
+\begin{equation*}
+\mathbf{T}_{t_1}^{t_2+\delta} = \mathbf{T}_{t_1}^{t_2}\mathbf{T}_{t_2}^{t_2+\delta}\,.
+\end{equation*}
+Subtracting $\mathbf{T}_{t_1}^{t_2}$ from both sides and dividing by $\delta$ gives the difference equation
+\begin{align*}
+\frac{\mathbf{T}_{t_1}^{t_2+\delta} - \mathbf{T}_{t_1}^{t_2}}{\delta} &= \frac{\mathbf{T}_{t_1}^{t_2}\mathbf{T}_{t_2}^{t_2+\delta} - \mathbf{T}_{t_1}^{t_2}}{\delta} \\
+ &= \frac{\mathbf{T}_{t_1}^{t_2}\left(\mathbf{T}_{t_2}^{t_2+\delta} - \mathbf{I}\right)}{\delta} \\ 
+ &= \frac{\mathbf{T}_{t_1}^{t_2}\left(\mathbf{T}_{t_2}^{t_2+\delta} - \mathbf{T}_{t_2}^{t_2}\right)}{\delta}\,,
+\end{align*}
+which in the limit becomes the derivative
+\begin{align*}
+\frac{\partial}{\partial t_2}\left[\mathbf{T}_{t_1}^{t_2}\right] &= \lim_{\delta\rightarrow 0}\left\{\frac{\mathbf{T}_{t_1}^{t_2}\left(\mathbf{T}_{t_2}^{t_2+\delta} - \mathbf{T}_{t_2}^{t_2}\right)}{\delta}\right\} \\
+&= \mathbf{T}_{t_1}^{t_2}\lim_{\delta\rightarrow 0}\left\{\frac{\mathbf{T}_{t_2}^{t_2+\delta} - \mathbf{T}_{t_2}^{t_2}}{\delta}\right\} \\
+&= \mathbf{T}_{t_1}^{t_2}\frac{\partial}{\partial s}\left[\mathbf{T}_{t_2}^s\right]\Big\vert_{s=t_2} \\
+&= \mathbf{T}_{t_1}^{t_2}\mathbf{A}(t_2)\,,
+\end{align*}
+by the definition of $\mathbf{A}(t)$.
+\end{proof}
+%We first need the following proposition before we can prove that the backward equations also follow from the assumptions.
+%\begin{proposition}
+%Let $t_1\leq t_2$. Then, the matrix $\mathbf{T}_{t_1}^{t_2}$ is invertible.
+%\end{proposition}
+%\begin{proof}
+%Recall that a matrix $\mathbf{M}$ is invertible if and only if its determinant $\det(\mathbf{M})$ does not equal zero. Also observe that $\mathbf{T}_{t_1}^{t_2}$ is upper-triangular by the nature of the allowed transitions, so that
+%\begin{equation*}
+%\det(\mathbf{T}_{t_1}^{t_2}) = \prod_{i=1}^{n+1}(\mathbf{T}_{t_1}^{t_2})_{ii}\,,
+%\end{equation*}
+%which is strictly positive since $0<(\mathbf{T}_{t_1}^{t_2})_{ii}\leq 1$ for $i=1,\ldots,n+1$.
+%\end{proof}
+
+We next show the derivation for the backward equations.
+\begin{theorem}
+The Kolmogorov backward equations follow from the assumptions made in Section 1.
+\end{theorem}
+\begin{proof}
+It is clear that the boundary condition $\mathbf{T}_{t_2}^{t_2}=\mathbf{I}$ holds by assumption.
+
+Next, note that for $\delta\geq 0$, we have from the Markov property that
+\begin{equation*}
+\mathbf{T}_{t_1}^{t_2} = \mathbf{T}_{t_1}^{t_1+\delta}\mathbf{T}_{t_1+\delta}^{t_2}\,.
+\end{equation*}
+%Left multiplying with $(\mathbf{T}_{t_1}^{t_1+\delta})^{-1}$ on both sides, which we know exists by Proposition 2.2, yields
+%\begin{equation*}
+%\mathbf{T}_{t_1+\delta}^{t_2} = (\mathbf{T}_{t_1}^{t_1+\delta})^{-1}\mathbf{T}_{t_1}^{t_2}\,.
+%\end{equation*}
+We now consider the matrix $\mathbf{T}_{t_1+\delta}^{t_2}$, and subtract $\mathbf{T}_{t_1}^{t_2}$ and divide by $\delta$ to obtain the difference equation
+\begin{align*}
+\frac{\mathbf{T}_{t_1+\delta}^{t_2} - \mathbf{T}_{t_1}^{t_2}}{\delta} &= \frac{\mathbf{T}_{t_1+\delta}^{t_2} - \mathbf{T}_{t_1}^{t_1+\delta}\mathbf{T}_{t_1+\delta}^{t_2}}{\delta}\\
+ &= \frac{\left(\mathbf{I} - \mathbf{T}_{t_1}^{t_1+\delta}\right)\mathbf{T}_{t_1+\delta}^{t_2}}{\delta} \\
+ &= -\frac{\mathbf{T}_{t_1}^{t_1+\delta} - \mathbf{I}}{\delta}\mathbf{T}_{t_1+\delta}^{t_2} \\
+ &= -\frac{\mathbf{T}_{t_1}^{t_1+\delta} - \mathbf{T}_{t_1}^{t_1}}{\delta}\mathbf{T}_{t_1+\delta}^{t_2}\,,
+%\frac{(\mathbf{T}_{t_1}^{t_1+\delta})^{-1}\mathbf{T}_{t_1}^{t_2} - \mathbf{T}_{t_1}^{t_2}}{\delta} \\
+%&= \frac{\left((\mathbf{T}_{t_1}^{t_1+\delta})^{-1} - \mathbf{I}\right)\mathbf{T}_{t_1}^{t_2}}{\delta} \\
+%&= \frac{\left((\mathbf{T}_{t_1}^{t_1+\delta})^{-1} - \mathbf{I}\right)\mathbf{T}_{t_1}^{t_1+\delta}\mathbf{T}_{t_1+\delta}^{t_2}}{\delta} \\
+%&= \frac{\left(\mathbf{I} - \mathbf{T}_{t_1}^{t_1+\delta}\right)\mathbf{T}_{t_1+\delta}^{t_2}}{\delta} \\
+%&= -\frac{\left(\mathbf{T}_{t_1}^{t_1+\delta} - \mathbf{I}\right)\mathbf{T}_{t_1+\delta}^{t_2}}{\delta} \\
+%&= -\frac{\mathbf{T}_{t_1}^{t_1+\delta} - \mathbf{T}_{t_1}^{t_1}}{\delta}\mathbf{T}_{t_1+\delta}^{t_2}\,,
+\end{align*}
+which in the limit gives the derivative
+\begin{align*}
+\frac{\partial}{\partial t_1}\left[\mathbf{T}_{t_1}^{t_2}\right] &= -\lim_{\delta\rightarrow 0}\left\{\frac{\mathbf{T}_{t_1}^{t_1+\delta} - \mathbf{T}_{t_1}^{t_1}}{\delta}\mathbf{T}_{t_1+\delta}^{t_2}\right\} \\
+&= -\lim_{\delta\rightarrow 0}\left\{\frac{\mathbf{T}_{t_1}^{t_1+\delta} - \mathbf{T}_{t_1}^{t_1}}{\delta}\right\}\lim_{\delta\rightarrow 0}\left\{\mathbf{T}_{t_1+\delta}^{t_2}\right\} \\
+&= -\lim_{\delta\rightarrow 0}\left\{\frac{\mathbf{T}_{t_1}^{t_1+\delta} - \mathbf{T}_{t_1}^{t_1}}{\delta}\right\}\mathbf{T}_{t_1}^{t_2} \\
+&= -\frac{\partial}{\partial s}\left[\mathbf{T}_{t_1}^s\right]\Big\vert_{s=t_1}\mathbf{T}_{t_1}^{t_2} \\
+&= -\mathbf{A}(t_1)\mathbf{T}_{t_1}^{t_2}\,,
+\end{align*}
+again by the definition of $\mathbf{A}(t)$.
+\end{proof}
+
+\section{Decomposability}
+
+We next show some decomposability properties of the matrix $\mathbf{T}_{t_1}^{t_2}$.
+
+\begin{proposition}
+Let $0\leq t_1 \leq s \leq t_2$. Then, by the Markov property, the transition probability matrix $\mathbf{T}_{t_1}^{t_2}$ decomposes as
+\begin{equation*}
+\mathbf{T}_{t_1}^{t_2} = \mathbf{T}_{t_1}^{s}\mathbf{T}_{s}^{t_2}\,.
+\end{equation*}
+\end{proposition}
+\begin{proof}
+Begin by noting that by definition,
+\begin{equation*}
+\left(\mathbf{T}_{t_1}^{t_2}\right)_{ij} = \Pr(X_{t_2}=x_j\,\vert\,X_{t_1}=x_i)\,.
+\end{equation*}
+Furthermore, we have
+\begin{align*}
+\left(\mathbf{T}_{t_1}^{s}\mathbf{T}_{s}^{t_2}\right)_{ij} &= \sum_{k=1}^{n+1} \left(\mathbf{T}_{t_1}^{s}\right)_{ik}\left(\mathbf{T}_{s}^{t_2}\right)_{kj} \\
+&= \sum_{k=1}^{n+1} \Pr(X_{s}=x_k\,\vert\,X_{t_1}=x_i)\Pr(X_{t_2}=x_j\,\vert\,X_{s}=x_k) \\
+&= \sum_{k=1}^{n+1} \Pr(X_{s}=x_k\,\vert\,X_{t_1}=x_i)\Pr(X_{t_2}=x_j\,\vert\,X_{s}=x_k,\,X_{t_1}=x_i) \\
+&= \sum_{k=1}^{n+1} \Pr(X_{t_2}=x_j,\,X_{s}=x_k\,\vert\,X_{t_1}=x_i) \\
+&= \Pr(X_{t_2}=x_j\,\vert\,X_{t_1}=x_i)\,,
+\end{align*}
+where the third step follows from the Markov property.
+\end{proof}
+
+It follows that decomposability also holds for expectations of $f(\cdot)$.
+
+\begin{corollary}
+Let $0\leq t_1\leq s\leq t_2$. Then, the following decomposition is valid:
+\begin{align*}
+\mathbb{E}[f(X_{t_2})\,\vert\,X_{t_1}] &= \mathbb{E}\bigl[\mathbb{E}[f(X_{t_2})\,\vert\,X_{s}]\,\big\vert\,X_{t_1}\bigr]\,.
+\end{align*}
+\end{corollary}
+\begin{proof}
+We have
+\begin{equation*}
+\mathbb{E}[f(X_{t_2})\,\vert\,X_{s}] = \mathbf{T}_{s}^{t_2}\mathbf{f}\,,
+\end{equation*}
+so that
+\begin{align*}
+\mathbb{E}\bigl[\mathbb{E}[f(X_{t_2})\,\vert\,X_{s}]\,\big\vert\,X_{t_1}\bigr] &= \mathbb{E}[\langle\mathbf{T}_{s}^{t_2}\mathbf{f}\rangle(X_{s})\,\vert\,X_{t_1}] \\
+&= \mathbf{T}_{t_1}^{s}\mathbf{T}_{s}^{t_2}\mathbf{f} \\
+&= \mathbf{T}_{t_1}^{t_2}\mathbf{f} \\
+&= \mathbb{E}[f(X_{t_2})\,\vert\,X_{t_1}]\,.
+\end{align*}
+\end{proof}
+
+\section{Persistence of Monotonicity when $\mathbf{A}(t)=\mathbf{A}$}
+%{\bf We have generalized these results. See Section 4 for details.}
+
+This section contains some results for a process with $\mathbf{A}(t)=\mathbf{A}$ for all $t$. Recall that we then have $\mathbf{T}_{t_1}^{t_2}=\mathbf{T}_0^{(t_2-t_1)}$, so that we can simply consider a matrix $\mathbf{T}_0^t$ for notational convenience. Also recall that this matrix has the unique solution $\mathbf{T}_0^t=\exp\{t\cdot\mathbf{A}\}$\,.
+
+We will call a function $f(\cdot)$ \emph{monotonically increasing in $x$}, if $f(x_i)\leq f(x_{i+1})$ for $i=1,\ldots,n$.
+
+We will set out to prove that if $f(\cdot)$ is monotonically increasing in $x$, and $X_t$ is homogeneous, then $\langle \mathbf{T}_0^t\mathbf{f}\rangle(\cdot)$ is also monotonically increasing in $x$. We first need some preliminary results.
+
+\begin{lemma}
+For $X_t$ homogeneous, the expectation of any function $f(\cdot)$ after time $t$ given $X_0=x_i$ for $i=1,\ldots,n$ can be decomposed as
+\begin{equation*}
+\mathbb{E}[f(X_t)\,\vert\,X_0=x_i] = e^{-\lambda_i t}f(x_i) + \int_0^t \lambda_i e^{-\lambda_i s} \mathbb{E}[f(X_{t-s})\,\vert\,X_0=x_{i+1}]\dx[s]\,.
+\end{equation*}
+\end{lemma}
+\begin{proof}
+Assume that the process occupies state $x_i$ at time $0$. By homogeneity, the distribution of the time $s$ at which the process leaves this state follows an exponential distribution with rate-parameter $\lambda_i$. Let $g(\cdot)$ denote the density function of the exponential distribution,
+\begin{equation*}
+g(s,\lambda) = \lambda e^{-\lambda s}\,.
+\end{equation*}
+The corresponding probability of the state-change from $x_i$ to $x_{i+1}$ happening before time $t$ is
+\begin{align*}
+\Pr(S \leq t) &= \int_0^t g(s,\lambda_i)\dx[s] \\
+ &= 1 - e^{-\lambda_i t}\,,
+\end{align*}
+and the probability of the switch \emph{not} happening before time $t$ is then
+\begin{equation*}
+\Pr(S > t) = e^{-\lambda_i t}\,.
+\end{equation*}
+We also note that
+\begin{equation*}
+\Pr(S > t) = \Pr(X_t=x_i\,\vert\,X_0=x_i)\,.
+\end{equation*}
+
+We can now rewrite the expectation of $f(\cdot)$ recursively as
+\begin{align*}
+\mathbb{E}[f(X_t)\,\vert\,X_0=x_i] &= \\
+\Pr(X_t=x_i\,\vert\,X_0=x_i)&f(x_i) + \int_0^t g(s,\lambda_i)\cdot\mathbb{E}[f(X_t)\,\vert\,X_s=x_{i+1}]\dx[s]\,.
+\end{align*}
+Thus, the first summand expresses the contribution to the expectation given that the process does not leave $x_i$ before time $t$, and the second summand, \emph{viz}. the integral, expresses the contribution to the expectation given that the process moved to state $x_{i+1}$ at time $s$. This expression simplifies as
+\begin{align*}
+\mathbb{E}[f(X_t)\,\vert\,X_0=x_i] = e^{-\lambda_i t}&f(x_i) + \int_0^t \lambda_i e^{-\lambda_i s}\cdot\mathbb{E}[f(X_t)\,\vert\,X_s=x_{i+1}]\dx[s]\\
+ = e^{-\lambda_i t}&f(x_i) + \int_0^t \lambda_i e^{-\lambda_i s}\cdot\mathbb{E}[f(X_{t-s})\,\vert\,X_0=x_{i+1}]\dx[s]\,,
+\end{align*}
+where the last step is valid due to the homogeneity and Markov property of the process.
+\end{proof}
+
+Moving on to the next result, we have
+\begin{lemma}
+Let $f(\cdot)$ be monotonically increasing in $x$ and $X_t$ be homogeneous. Then,
+\begin{equation*}
+\frac{\partial}{\partial t}\Bigl[\mathbb{E}[f(X_t)\,\vert\,X_0=x_i]\Bigr] \geq 0\,,
+\end{equation*}
+that is, the expectation of $f(\cdot)$ given $X_0=x_i$ is monotonically increasing in $t$.
+\end{lemma}
+\begin{proof}
+By Lemma 4.1, we have
+\begin{equation*}
+\mathbb{E}[f(X_t)\,\vert\,X_0=x_i] = e^{-\lambda_i t}f(x_i) + \int_0^t \lambda_i e^{-\lambda_i s} \mathbb{E}[f(X_{t-s})\,\vert\,X_0=x_{i+1}]\dx[s]\,.
+\end{equation*}
+Taking derivatives in $t$, we obtain
+\begin{align*}
+\frac{\partial}{\partial t}\Bigl[\mathbb{E}[f(X_t)\,\vert\,X_0=x_i]\Bigr] &= \\
+-\lambda_i e^{-\lambda_i t}f(x_i) &+ \lambda_i e^{-\lambda_i t}\cdot \mathbb{E}[f(X_0)\,\vert\,X_0=x_{i+1}] \\
+ + \int_0^t &\lambda_i e^{-\lambda_i s} \frac{\partial}{\partial u}\Bigl[\mathbb{E}[f(X_{u})\,\vert\,X_0=x_{i+1}]\Bigr]\Bigg\vert_{u=(t-s)} \dx[s] \\
+ = \lambda_i e^{-\lambda_i t}\bigl(f(x_{i+1}) - f(x_i)\bigr) &+ \int_0^t \lambda_i e^{-\lambda_i s} \frac{\partial}{\partial u}\Bigl[\mathbb{E}[f(X_{u})\,\vert\,X_0=x_{i+1}]\Bigr]\Bigg\vert_{u=(t-s)} \dx[s]\,.
+%= -\lambda_i e^{-\lambda_i t}f(x_i) + \lambda_i e^{-\lambda_i t}f(x_{i+1}) &+ \int_0^t \lambda_i e^{-\lambda_i s} \frac{\partial}{\partial h}\Bigl[\mathbb{E}[f(X_{h})\,\vert\,X_0=x_{i+1}]\Bigr]\Bigg\vert_{h=(t-s)} \dx[s] \\
+\end{align*}
+Observe that by monotonicity of $f(\cdot)$ in $x$, the first summand in this expression is non-negative. Furthermore, the first product term in the integral, $\lambda_i e^{-\lambda_i s}$, is also clearly non-negative. It follows that if the remaining derivative in the integral is also non-negative, the integral must be non-negative, and so the entire above expression must be non-negative.
+
+Thus, we will prove the proposition by induction, having shown that if the proposition holds for $X_0=x_{i+1}$, it also holds for $X_0=x_i$.
+
+The induction base is on the case $X_0=x_n$, for which we have
+\begin{align*}
+\mathbb{E}[f(X_t)\,\vert\,X_0=x_n] &= e^{-\lambda_n t}f(x_n) + \int_0^t g(s,\lambda_n)\cdot\mathbb{E}[f(X_t)\,\vert\,X_s=x_{n+1}]\dx[s] \\
+ &= e^{-\lambda_n t}f(x_n) + \int_0^t g(s,\lambda_n)f(x_{n+1})\dx[s] \\
+ &= e^{-\lambda_n t}f(x_n) + f(x_{n+1})\int_0^t g(s,\lambda_n)\dx[s] \\
+ &= e^{-\lambda_n t}f(x_n) + f(x_{n+1})(1-e^{-\lambda_n t}) \\
+ &= e^{-\lambda_n t}f(x_n) - e^{-\lambda_n t}f(x_{n+1}) + f(x_{n+1})\,,
+\end{align*}
+where the second step uses the fact that $x_{n+1}$ is the absorbing state. This expression has derivative
+\begin{align*}
+\frac{\partial}{\partial t}\Bigl[\mathbb{E}[f(X_t)\,\vert\,X_0=x_n]\Bigr] &= -\lambda_n e^{-\lambda_n t}f(x_n) + \lambda_n e^{-\lambda_n t}f(x_{n+1}) \\
+ &= \lambda_n e^{-\lambda_n t}\bigl(f(x_{n+1}) - f(x_n)\bigr) \\
+ &\geq 0\,,
+\end{align*}
+where the last step is due to monotonicity of $f(\cdot)$ in $x$.
+\end{proof}
+
+We will finally need the following proposition, which is stated in slightly more general terms so that we can re-use it later.
+\begin{proposition}
+Let $f(\cdot)$ be monotonically increasing in $x$. Then,
+\begin{equation*}
+\mathbb{E}[f(X_{t_2})\,\vert\,X_{t_1}=x_i] \geq f(x_i)\,.
+\end{equation*}
+\end{proposition}
+\begin{proof}
+Note that $\Pr(X_{t_2}=x_j\,\vert\,X_{t_1}=x_i)=0$ for all $j<i$. Hence,
+\begin{equation*}
+\mathbb{E}[f(X_{t_2})\,\vert\,X_{t_1}=x_i] = \sum_{j=i}^{n+1} \Pr(X_{t_2}=x_j\,\vert\,X_{t_1}=x_i)f(x_j)\,,
+\end{equation*}
+is a convex combination of values $f(x_i),\ldots,f(x_{n+1})$ with minimum value $f(x_i)$, by monotonicity of $f(\cdot)$ in $x$.
+\end{proof}
+
+%\newpage
+We are now ready to prove the main result of this section.
+\begin{theorem}
+Let $f(\cdot)$ be monotonically increasing in $x$ and $X_t$ be homogeneous. Then, the expectation of $f(\cdot)$ after time $t$ is monotonically increasing in $X_0$, i.e.,
+\begin{equation*}
+\mathbb{E}[f(X_t)\,\vert\,X_0=x_i] \leq \mathbb{E}[f(X_t)\,\vert\,X_0=x_{i+1}]\,.
+\end{equation*}
+\end{theorem}
+\begin{proof}
+We again use the decomposition from Lemma 4.1. We have
+\begin{align*}
+\mathbb{E}[f(X_t)\,\vert\,X_0=x_i] &= e^{-\lambda_i t}f(x_i) + \int_0^t \lambda_i e^{-\lambda_i s}\cdot\mathbb{E}[f(X_{t-s})\,\vert\,X_0=x_{i+1}]\dx[s] \\
+ &\leq e^{-\lambda_i t}f(x_i) + \int_0^t \lambda_i e^{-\lambda_i s}\cdot\mathbb{E}[f(X_t)\,\vert\,X_0=x_{i+1}]\dx[s]\,,
+\end{align*}
+by Lemma 4.2. Simplifying,
+\begin{align*}
+ &= e^{-\lambda_i t}f(x_i) + \mathbb{E}[f(X_t)\,\vert\,X_0=x_{i+1}]\cdot\int_0^t \lambda_i e^{-\lambda_i s}\dx[s] \\
+ &= e^{-\lambda_i t}f(x_i) + \mathbb{E}[f(X_t)\,\vert\,X_0=x_{i+1}]\cdot(1-e^{-\lambda_i t}) \\
+ &= e^{-\lambda_i t}f(x_i) - e^{-\lambda_i t}\cdot\mathbb{E}[f(X_t)\,\vert\,X_0=x_{i+1}] + \mathbb{E}[f(X_t)\,\vert\,X_0=x_{i+1}] \\
+ &= e^{-\lambda_i t}\bigl(f(x_i) - \mathbb{E}[f(X_t)\,\vert\,X_0=x_{i+1}]\bigr) + \mathbb{E}[f(X_t)\,\vert\,X_0=x_{i+1}]\\
+ &\leq e^{-\lambda_i t}\bigl(f(x_i) - f(x_{i+1})\bigr) + \mathbb{E}[f(X_t)\,\vert\,X_0=x_{i+1}]\,,
+\end{align*}
+where the last step is due to Proposition 4.3. Because the first summand in this expression is non-positive by monotonicity of $f(\cdot)$ in $x$, we have
+\begin{equation*}
+\leq \mathbb{E}[f(X_t)\,\vert\,X_0=x_{i+1}]\,.
+\end{equation*}
+\end{proof}
+
+\section{Persistence of Monotonicity for General $\mathbf{A}(t)$}
+
+We here repeat the above results for the non-homogeneous case. We begin by giving the decomposition of the expectation.
+
+\begin{lemma}
+The expectation of any function $f(\cdot)$ at time $t_2$ given $X_{t_1}=x_i$ for $i=1,\ldots,n$ can be decomposed as
+\begin{equation*}
+\mathbb{E}[f(X_{t_2})\,\vert\,X_{t_1}=x_i] = \bigl(\mathbf{T}_{t_1}^{t_2}\bigr)_{ii}f(x_i) + \int_{t_1}^{t_2} \frac{\partial}{\partial s}\Bigl[\bigl(1-\bigl(\mathbf{T}_{t_1}^s\bigr)_{ii}\bigr)\Bigr]\mathbb{E}[f(X_{t_2})\,\vert\,X_s=x_{i+1}]\dx[s]\,.
+\end{equation*}
+\end{lemma}
+\begin{proof}
+Assume the process occupies state $x_i$ at time $t_1$. The probability that the process is still in $x_i$ at time $t_2$ is clearly given by $\bigl(\mathbf{T}_{t_1}^{t_2}\bigr)_{ii}$. The probability that the process no longer occupies state $x_i$ at time $t_2$ is of course given by $\bigl(1-\bigl(\mathbf{T}_{t_1}^{t_2}\bigr)_{ii}\bigr)$, which by definition has density
+\begin{equation*}
+g(s) = \frac{\partial}{\partial s}\Bigl[\bigl(1-\bigl(\mathbf{T}_{t_1}^s\bigr)_{ii}\bigr)\Bigr],\quad\text{for $t_1\leq s$}.
+\end{equation*}
+%That is, the distribution of the exit-time $s$ from state $x_i$ has density function $g(\cdot)$. 
+That is, the instantaneous likelihood of the process moving from state $x_i$ to state $x_{i+1}$ at time $s$ has density $g(s)$.
+The decomposition from the lemma is then obtained by considering all times $s$, with $t_1\leq s\leq t_2$, at which the state-switch could have occurred.
+\end{proof}
+
+We next generalize the result about monotonicity in $t$.
+\begin{lemma}
+Let $f(\cdot)$ be monotonically increasing in $x$. Then,
+\begin{equation*}
+\frac{\partial}{\partial t_2}\Bigl[\mathbb{E}[f(X_{t_2})\,\vert\,X_{t_1}=x_i]\Bigr] \geq 0\,,
+\end{equation*}
+that is, the expectation of $f(\cdot)$ at time $t_2$ given $X_{t_1}=x_i$ is monotonically increasing in $t_2$.
+\end{lemma}
+\begin{proof}
+Applying the decomposition from Lemma 5.1, we have
+\begin{equation*}
+\mathbb{E}[f(X_{t_2})\,\vert\,X_{t_1}=x_i] = \bigl(\mathbf{T}_{t_1}^{t_2}\bigr)_{ii}f(x_i) + \int_{t_1}^{t_2} \frac{\partial}{\partial s}\Bigl[\bigl(1-\bigl(\mathbf{T}_{t_1}^s\bigr)_{ii}\bigr)\Bigr]\mathbb{E}[f(X_{t_2})\,\vert\,X_s=x_{i+1}]\dx[s]\,.
+\end{equation*}
+Taking derivatives in $t_2$, and denoting $(\mathbf{A}(t))_{ii}\equiv-\lambda_i(t)$, yields
+\begin{align*}
+\frac{\partial}{\partial t_2}\bigl[\mathbb{E}[f(X_{t_2})\,\vert\,X_{t_1}=x_i]\bigr] & \\
+= \frac{\partial}{\partial t_2}\bigl[(\mathbf{T}_{t_1}^{t_2})_{ii}\bigr]f(x_i) + \frac{\partial}{\partial t_2}\bigl[(1-(\mathbf{T}_{t_1}^{t_2})_{ii})\bigr]&\mathbb{E}[f(X_{t_2})\,\vert\,X_{t_2}=x_{i+1}] \\
++ \int_{t_1}^{t_2} \frac{\partial}{\partial s}\bigl[(1-(\mathbf{T}_{t_1}^{s})_{ii})\bigr]&\frac{\partial}{\partial t_2}\bigl[\mathbb{E}[f(X_{t_2})\,\vert\,X_s=x_{i+1}]\bigr]\dx[s] \\
+ = \frac{\partial}{\partial t_2}\bigl[(\mathbf{T}_{t_1}^{t_2})_{ii}\bigr]f(x_i) - \frac{\partial}{\partial t_2}\bigl[(\mathbf{T}_{t_1}^{t_2})_{ii}\bigr]&f(x_{i+1}) \\
++ \int_{t_1}^{t_2} \frac{\partial}{\partial s}\bigl[(1-(\mathbf{T}_{t_1}^s)_{ii})\bigr]&\frac{\partial}{\partial t_2}\bigl[\mathbb{E}[f(X_{t_2})\,\vert\,X_s=x_{i+1}]\bigr]\dx[s] \\
+ = (\mathbf{A}(t))_{ii}(\mathbf{T}_{t_1}^{t_2})_{ii}f(x_i) - (\mathbf{A}(t))_{ii}(\mathbf{T}_{t_1}^{t_2})_{ii}&f(x_{i+1}) \\
++ \int_{t_1}^{t_2} \frac{\partial}{\partial s}\bigl[(1-(\mathbf{T}_{t_1}^s)_{ii})\bigr]&\frac{\partial}{\partial t_2}\bigl[\mathbb{E}[f(X_{t_2})\,\vert\,X_s=x_{i+1}]\bigr]\dx[s] \\
+ = -\lambda_i(t_2)(\mathbf{T}_{t_1}^{t_2})_{ii}f(x_i) + \lambda_i(t_2)(\mathbf{T}_{t_1}^{t_2})_{ii}&f(x_{i+1}) \\
++ \int_{t_1}^{t_2} \frac{\partial}{\partial s}\bigl[(1-(\mathbf{T}_{t_1}^s)_{ii})\bigr]&\frac{\partial}{\partial t_2}\bigl[\mathbb{E}[f(X_{t_2})\,\vert\,X_s=x_{i+1}]\bigr]\dx[s] \\
+ = \lambda_i(t_2)(\mathbf{T}_{t_1}^{t_2})_{ii}\bigl(f(x_{i+1}) - f(x_i)\bigr)& \\
++ \int_{t_1}^{t_2} \frac{\partial}{\partial s}\bigl[(1-(\mathbf{T}_{t_1}^s)_{ii})\bigr]&\frac{\partial}{\partial t_2}\bigl[\mathbb{E}[f(X_{t_2})\,\vert\,X_s=x_{i+1}]\bigr]\dx[s] \\
+ = \lambda_i(t_2)(\mathbf{T}_{t_1}^{t_2})_{ii}\bigl(f(x_{i+1}) - f(x_i)\bigr) + \int_{t_1}^{t_2} \lambda_i(s)&(\mathbf{T}_{t_1}^s)_{ii}\cdot\frac{\partial}{\partial t_2}\bigl[\mathbb{E}[f(X_{t_2})\,\vert\,X_s=x_{i+1}]\bigr]\dx[s]\,.
+\end{align*}
+As before, we see that the first summand is non-negative by monotonicity of $f(\cdot)$ in $x$, and the first product term in the integral is also non-negative. Hence, we again use this as an induction step, having shown that if the proposition holds for $\mathbb{E}[f(X_{t_2})\,\vert\,X_{s}=x_{i+1}]$ with $t_1\leq s\leq t_2$, it also holds for $\mathbb{E}[f(X_{t_2})\,\vert\,X_{t_1}=x_i]$. Because $t_1$ is arbitrary, this then completes the proof. 
+
+The induction base is again on $x_n$, for which we have
+\begin{align*}
+\mathbb{E}[f(X_{t_2})\,\vert\,&X_{t_1}=x_n]  \\
+ &= \bigl(\mathbf{T}_{t_1}^{t_2}\bigr)_{nn}f(x_n) + \int_{t_1}^{t_2} \frac{\partial}{\partial s}\Bigl[\bigl(1-\bigl(\mathbf{T}_{t_1}^s\bigr)_{nn}\bigr)\Bigr]\mathbb{E}[f(X_{t_2})\,\vert\,X_s=x_{n+1}]\dx[s] \\
+ &= \bigl(\mathbf{T}_{t_1}^{t_2}\bigr)_{nn}f(x_n) + \int_{t_1}^{t_2} \frac{\partial}{\partial s}\Bigl[\bigl(1-\bigl(\mathbf{T}_{t_1}^s\bigr)_{nn}\bigr)\Bigr]f(x_{n+1})\dx[s] \\
+ &= \bigl(\mathbf{T}_{t_1}^{t_2}\bigr)_{nn}f(x_n) + \bigl(1-\bigl(\mathbf{T}_{t_1}^{t_2}\bigr)_{nn}\bigr)f(x_{n+1}) \\
+ &= \bigl(\mathbf{T}_{t_1}^{t_2}\bigr)_{nn}f(x_n) - \bigl(\mathbf{T}_{t_1}^{t_2}\bigr)_{nn}f(x_{n+1}) + f(x_{n+1})\,,
+\end{align*}
+which has derivative
+\begin{align*}
+\frac{\partial}{\partial t_2}\bigl[\mathbb{E}[f(X_{t_2})\,\vert\,X_{t_1}=x_n]\bigr] &= \frac{\partial}{\partial t_2}\bigl[\bigl(\mathbf{T}_{t_1}^{t_2}\bigr)_{nn}\bigr]f(x_n) - \frac{\partial}{\partial t_2}\bigl[\bigl(\mathbf{T}_{t_1}^{t_2}\bigr)_{nn}\bigr]f(x_{n+1}) \\
+ &= -\lambda_n(t_2)\bigl(\mathbf{T}_{t_1}^{t_2}\bigr)_{nn}f(x_n) + \lambda_n(t_2)\bigl(\mathbf{T}_{t_1}^{t_2}\bigr)_{nn}f(x_{n+1}) \\
+ &= \lambda_n(t_2)\bigl(\mathbf{T}_{t_1}^{t_2}\bigr)_{nn}\bigl(f(x_{n+1}) - f(x_n)\bigr) \\
+ &\geq 0\,,
+\end{align*}
+by monotonicity of $f(\cdot)$ in $x$.
+\end{proof}
+
+Note that Proposition 4.3 did not assume homogeneity. We will however need a new result.
+%\begin{lemma}
+%Let $f(\cdot)$ be monotonically increasing in $x$, and let $t_1\leq s\leq t_2$. Then,
+%\begin{equation*}
+%\mathbb{E}[f(X_{t_2})\,\vert\,X_{t_1}=x_i] \geq \mathbb{E}[f(X_{t_2})\,\vert\,X_{s}=x_i]\,,
+%\end{equation*}
+%that is, the expectation of $f(\cdot)$ at time $t_2$ given $X_{t_1}=x_i$ is monotonically decreasing in $t_1$.
+%\end{lemma}
+%\begin{proof}
+%Observe that the process dynamics imply that
+%\begin{align*}
+%\mathbb{E}[f(X_{t_2})\,\vert\,X_{s}] &= \mathbf{T}_{s}^{t_2}\mathbf{f} \\
+% &= \left(\mathbf{I} + \int_{s}^{t_2}\mathbf{A}(t)\mathbf{T}_{s}^t\dx[t]\right)\mathbf{f} \\
+% &= \mathbf{f} + \int_{t_1}^{t_2}\mathbf{A}(t)\mathbf{T}_{t_1}^t\mathbf{f}\dx[t] \\
+% &= \mathbf{f} + \int_{t_1}^s\mathbf{A}(t)\mathbf{T}_{t_1}^t\mathbf{f}\dx[t] + \int_s^{t_2}\mathbf{A}(t)\mathbf{T}_{t_1}^t\mathbf{f}\dx[t]\,.
+%\end{align*}
+%Furthermore, by Proposition 2.1, we have
+%\begin{align*}
+%\mathbb{E}[f(X_{t_2})\,\vert\,X_{t_1}] &= \mathbb{E}[\mathbb{E}[f(X_{t_2})\,\vert\,X_{s}]\,\vert\,X_{t_1}] \\
+% &= \mathbb{E}[\langle\mathbf{T}_s^{t_2}\mathbf{f}\rangle(X_s)\,\vert\,X_{t_1}] \\
+% &= \mathbf{T}_{t_1}^s\mathbf{T}_s^{t_2}\mathbf{f} \\
+% &= \left(\mathbf{I} + \int_{t_1}^s\mathbf{A}(t)\mathbf{T}_{t_1}^t\dx[t]\right)\mathbf{T}_s^{t_2}\mathbf{f}
+%\end{align*}
+%Applying the decomposition and taking derivatives in $t_1$ gives
+%\begin{align*}
+%\frac{\partial}{\partial t_1}\bigl[\mathbb{E}[f(X_{t_2})\,\vert\,X_{t_1}=x_i]\bigr] & \\
+%= \frac{\partial}{\partial t_1}\bigl[(\mathbf{T}_{t_1}^{t_2})_{ii}\bigr]f(x_i) - \frac{\partial}{\partial u}\bigl[(1-(\mathbf{T}_{t_1}^{u})_{ii})\bigr]\Bigg\vert_{u=t_1}&\mathbb{E}[f(X_{t_2})\,\vert\,X_{t_1}=x_{i+1}] %\\
+%+ \int_{t_1}^{t_2} \frac{\partial^2}{\partial s\partial t_1}\bigl[(1-(\mathbf{T}_{t_1}^{s})_{ii})\bigr]&\mathbb{E}[f(X_{t_2})\,\vert\,X_s=x_{i+1}]\dx[s] \\
+%= \frac{\partial}{\partial t_1}\bigl[(\mathbf{T}_{t_1}^{t_2})_{ii}\bigr]f(x_i) + \frac{\partial}{\partial u}\bigl[(\mathbf{T}_{t_1}^{u})_{ii}\bigr]\Bigg\vert_{u=t_1}&\mathbb{E}[f(X_{t_2})\,\vert\,X_{t_1}=x_{i+1}] \\
+%+ \int_{t_1}^{t_2} \frac{\partial^2}{\partial s\partial t_1}\bigl[(1-(\mathbf{T}_{t_1}^{s})_{ii})\bigr]&\mathbb{E}[f(X_{t_2})\,\vert\,X_s=x_{i+1}]\dx[s] \\
+%= -(\mathbf{A}(t_1))_{ii}(\mathbf{T}_{t_1}^{t_2})_{ii}f(x_i) + (\mathbf{A}(t_1))_{ii}&\mathbb{E}[f(X_{t_2})\,\vert\,X_{t_1}=x_{i+1}] \\
+%+ \int_{t_1}^{t_2} \frac{\partial^2}{\partial s\partial t_1}\bigl[(1-(\mathbf{T}_{t_1}^{s})_{ii})\bigr]&\mathbb{E}[f(X_{t_2})\,\vert\,X_s=x_{i+1}]\dx[s] \\
+%= -(\mathbf{A}(t_1))_{ii}(\mathbf{T}_{t_1}^{t_2})_{ii}f(x_i) + (\mathbf{A}(t_1))_{ii}&\mathbb{E}[f(X_{t_2})\,\vert\,X_{t_1}=x_{i+1}] \\
+%- \int_{t_1}^{t_2} \frac{\partial^2}{\partial s\partial t_1}\bigl[(\mathbf{T}_{t_1}^{s})_{ii}\bigr]&\mathbb{E}[f(X_{t_2})\,\vert\,X_s=x_{i+1}]\dx[s] \\
+%= -(\mathbf{A}(t_1))_{ii}(\mathbf{T}_{t_1}^{t_2})_{ii}f(x_i) + (\mathbf{A}(t_1))_{ii}&\mathbb{E}[f(X_{t_2})\,\vert\,X_{t_1}=x_{i+1}] \\
+%- \int_{t_1}^{t_2} (\mathbf{A}(s))_{ii}\frac{\partial}{\partial t_1}\bigl[(\mathbf{T}_{t_1}^{s})_{ii}\bigr]&\mathbb{E}[f(X_{t_2})\,\vert\,X_s=x_{i+1}]\dx[s] \\
+%= -(\mathbf{A}(t_1))_{ii}(\mathbf{T}_{t_1}^{t_2})_{ii}f(x_i) + (\mathbf{A}(t_1))_{ii}&\mathbb{E}[f(X_{t_2})\,\vert\,X_{t_1}=x_{i+1}] \\
+%+ \int_{t_1}^{t_2} (\mathbf{A}(s))_{ii}(\mathbf{A}(t_1))_{ii}(\mathbf{T}_{t_1}^{s})_{ii}&\mathbb{E}[f(X_{t_2})\,\vert\,X_s=x_{i+1}]\dx[s] \\
+%= \lambda_i(t_1)(\mathbf{T}_{t_1}^{t_2})_{ii}f(x_i) - \lambda_i(t_1)&\mathbb{E}[f(X_{t_2})\,\vert\,X_{t_1}=x_{i+1}] \\
+%+ \int_{t_1}^{t_2} \lambda_i(s)\lambda_i(t_1)(\mathbf{T}_{t_1}^{s})_{ii}&\mathbb{E}[f(X_{t_2})\,\vert\,X_s=x_{i+1}]\dx[s]\,.
+%\end{align*}
+%Observe that both the first and second summands here are negative. Furthermore, the integral is clearly positive, so it being a subtraction results in the entire above expression being negative.
+%\end{proof}
+\begin{lemma}
+Let $f(\cdot)$ be monotonically increasing in $x$. Then,
+\begin{equation*}
+\frac{\partial}{\partial t_1}\Bigl[\mathbb{E}[f(X_{t_2})\,\vert\,X_{t_1}=x_i]\Bigr] \leq 0\,,
+\end{equation*}
+that is, the expectation of $f(\cdot)$ at time $t_2$ given $X_{t_1}=x_i$ is monotonically decreasing in $t_1$.
+\end{lemma}
+\begin{proof}
+Applying the decomposition from Lemma 5.1,
+\begin{equation*}
+\mathbb{E}[f(X_{t_2})\,\vert\,X_{t_1}=x_i] = \bigl(\mathbf{T}_{t_1}^{t_2}\bigr)_{ii}f(x_i) + \int_{t_1}^{t_2} \frac{\partial}{\partial s}\Bigl[\bigl(1-\bigl(\mathbf{T}_{t_1}^s\bigr)_{ii}\bigr)\Bigr]\mathbb{E}[f(X_{t_2})\,\vert\,X_s=x_{i+1}]\dx[s]\,,
+\end{equation*}
+and taking derivatives in $t_1$, gives
+\begin{align*}
+\frac{\partial}{\partial t_1}&\bigl[\mathbb{E}[f(X_{t_2})\,\vert\,X_{t_1}=x_i]\bigr] \\
+=& \frac{\partial}{\partial t_1}\bigl[(\mathbf{T}_{t_1}^{t_2})_{ii}\bigr]f(x_i) - \frac{\partial}{\partial u}\bigl[(1-(\mathbf{T}_{t_1}^{u})_{ii})\bigr]\Big\vert_{u=t_1}\mathbb{E}[f(X_{t_2})\,\vert\,X_{t_1}=x_{i+1}] \\
+&\quad\quad+ \int_{t_1}^{t_2} \frac{\partial^2}{\partial s\partial t_1}\bigl[(1-(\mathbf{T}_{t_1}^{s})_{ii})\bigr]\mathbb{E}[f(X_{t_2})\,\vert\,X_s=x_{i+1}]\dx[s] \\
+=& \frac{\partial}{\partial t_1}\bigl[(\mathbf{T}_{t_1}^{t_2})_{ii}\bigr]f(x_i) + \frac{\partial}{\partial u}\bigl[(\mathbf{T}_{t_1}^{u})_{ii}\bigr]\Big\vert_{u=t_1}\mathbb{E}[f(X_{t_2})\,\vert\,X_{t_1}=x_{i+1}] \\
+&\quad\quad- \int_{t_1}^{t_2} \frac{\partial^2}{\partial s\partial t_1}\bigl[(\mathbf{T}_{t_1}^{s})_{ii}\bigr]\mathbb{E}[f(X_{t_2})\,\vert\,X_s=x_{i+1}]\dx[s] \\
+=& -(\mathbf{A}(t_1))_{ii}(\mathbf{T}_{t_1}^{t_2})_{ii}f(x_i) + (\mathbf{A}(t_1))_{ii}\mathbb{E}[f(X_{t_2})\,\vert\,X_{t_1}=x_{i+1}] \\
+&\quad\quad+ \int_{t_1}^{t_2}(\mathbf{A}(t_1))_{ii}\frac{\partial}{\partial s}[(\mathbf{T}_{t_1}^s)_{ii}]\mathbb{E}[f(X_{t_2})\,\vert\,X_{s}=x_{i+1}]\dx[s] \\
+=&\,\lambda_i(t_1)(\mathbf{T}_{t_1}^{t_2})_{ii}f(x_i) - \lambda_i(t_1)\mathbb{E}[f(X_{t_2})\,\vert\,X_{t_1}=x_{i+1}] \\
+&\quad\quad- \lambda_i(t_1)\int_{t_1}^{t_2}\frac{\partial}{\partial s}[(\mathbf{T}_{t_1}^s)_{ii}]\mathbb{E}[f(X_{t_2})\,\vert\,X_{s}=x_{i+1}]\dx[s] \\
+\leq&\,\lambda_i(t_1)(\mathbf{T}_{t_1}^{t_2})_{ii}f(x_i) - \lambda_i(t_1)\mathbb{E}[f(X_{t_2})\,\vert\,X_{t_1}=x_{i+1}] \\
+&\quad\quad- \lambda_i(t_1)\int_{t_1}^{t_2}\frac{\partial}{\partial s}[(\mathbf{T}_{t_1}^s)_{ii}]f(x_{i+1})\dx[s]\,,
+\end{align*}
+by Proposition 4.3. This simplifies as
+\begin{align*}
+ =&\,\lambda_i(t_1)(\mathbf{T}_{t_1}^{t_2})_{ii}f(x_i) - \lambda_i(t_1)\mathbb{E}[f(X_{t_2})\,\vert\,X_{t_1}=x_{i+1}] \\
+ &\quad\quad - \lambda_i(t_1)f(x_{i+1})\int_{t_1}^{t_2}\frac{\partial}{\partial s}[(\mathbf{T}_{t_1}^s)_{ii}]\dx[s] \\
+ =&\, \lambda_i(t_1)(\mathbf{T}_{t_1}^{t_2})_{ii}f(x_i) - \lambda_i(t_1)\mathbb{E}[f(X_{t_2})\,\vert\,X_{t_1}=x_{i+1}] \\
+&\quad\quad- \lambda_i(t_1)f(x_{i+1})\bigl((\mathbf{T}_{t_1}^{t_2})_{ii} - (\mathbf{T}_{t_1}^{t_1})_{ii}\bigr)\\
+ =&\, \lambda_i(t_1)(\mathbf{T}_{t_1}^{t_2})_{ii}f(x_i) - \lambda_i(t_1)\mathbb{E}[f(X_{t_2})\,\vert\,X_{t_1}=x_{i+1}] \\
+ &\quad\quad- \lambda_i(t_1)f(x_{i+1})\bigl((\mathbf{T}_{t_1}^{t_2})_{ii} - 1\bigr)\\
+ =&\, \lambda_i(t_1)(\mathbf{T}_{t_1}^{t_2})_{ii}f(x_i) - \lambda_i(t_1)\mathbb{E}[f(X_{t_2})\,\vert\,X_{t_1}=x_{i+1}] \\
+ &\quad\quad- \lambda_i(t_1)f(x_{i+1})(\mathbf{T}_{t_1}^{t_2})_{ii} + \lambda_i(t_1)f(x_{i+1})\\
+ =&\, \lambda_i(t_1)(\mathbf{T}_{t_1}^{t_2})_{ii}\Bigl(f(x_i) - f(x_{i+1})\Bigr) + \lambda_i(t_1)\Bigl(f(x_{i+1})-\mathbb{E}[f(X_{t_2})\,\vert\,X_{t_1}=x_{i+1}]\Bigr) \\
+\leq&\, 0\,,
+% = \lambda_i(t_1)(\mathbf{T}_{t_1}^{t_2})_{ii}\bigl(f(x_i) - f(x_{i+1})\bigr) - \lambda_i(t_1)&\mathbb{E}[f(X_{t_2})\,\vert\,X_{t_1}=x_{i+1}]\,.
+\end{align*}
+where the last inequality is obtained by noting that both the first and second summand are non-positive, using monotonicity of $f(\cdot)$ in $x$, and Proposition 4.3, respectively.
+\end{proof}
+
+We can now proceed to the main result of this section.
+\begin{theorem}
+Let $f(\cdot)$ be monotonically increasing in $x$. Then, the expectation of $f(\cdot)$ at time $t_2$ is monotonically increasing in $X_{t_1}$, i.e.,
+\begin{equation*}
+\mathbb{E}[f(X_{t_2})\,\vert\,X_{t_1}=x_i] \leq \mathbb{E}[f(X_{t_2})\,\vert\,X_{t_1}=x_{i+1}]\,.
+\end{equation*}
+\end{theorem}
+\begin{proof}
+Applying the decomposition from Lemma 5.1, we find
+\begin{align*}
+\mathbb{E}[f(X_{t_2})\,\vert\,X_{t_1}=x_i] & \\
+ = \bigl(\mathbf{T}_{t_1}^{t_2}\bigr)_{ii}f(x_i) &+ \int_{t_1}^{t_2} \frac{\partial}{\partial s}\Bigl[\bigl(1-\bigl(\mathbf{T}_{t_1}^s\bigr)_{ii}\bigr)\Bigr]\mathbb{E}[f(X_{t_2})\,\vert\,X_s=x_{i+1}]\dx[s] \\
+ \leq \bigl(\mathbf{T}_{t_1}^{t_2}\bigr)_{ii}f(x_i) &+ \int_{t_1}^{t_2} \frac{\partial}{\partial s}\Bigl[\bigl(1-\bigl(\mathbf{T}_{t_1}^s\bigr)_{ii}\bigr)\Bigr]\mathbb{E}[f(X_{t_2})\,\vert\,X_{t_1}=x_{i+1}]\dx[s]\,,
+\end{align*}
+by Lemma 5.3. This simplifies as
+\begin{align*}
+ &= \bigl(\mathbf{T}_{t_1}^{t_2}\bigr)_{ii}f(x_i) + \mathbb{E}[f(X_{t_2})\,\vert\,X_{t_1}=x_{i+1}]\int_{t_1}^{t_2} \frac{\partial}{\partial s}\Bigl[\bigl(1-\bigl(\mathbf{T}_{t_1}^s\bigr)_{ii}\bigr)\Bigr]\dx[s] \\
+ &= \bigl(\mathbf{T}_{t_1}^{t_2}\bigr)_{ii}f(x_i) + \mathbb{E}[f(X_{t_2})\,\vert\,X_{t_1}=x_{i+1}]\bigl(1-\bigl(\mathbf{T}_{t_1}^{t_2}\bigr)_{ii}\bigr) \\
+ &= \bigl(\mathbf{T}_{t_1}^{t_2}\bigr)_{ii}f(x_i) - \bigl(\mathbf{T}_{t_1}^{t_2}\bigr)_{ii}\mathbb{E}[f(X_{t_2})\,\vert\,X_{t_1}=x_{i+1}] + \mathbb{E}[f(X_{t_2})\,\vert\,X_{t_1}=x_{i+1}] \\
+ &= \bigl(\mathbf{T}_{t_1}^{t_2}\bigr)_{ii}\bigl(f(x_i) - \mathbb{E}[f(X_{t_2})\,\vert\,X_{t_1}=x_{i+1}]\bigr) + \mathbb{E}[f(X_{t_2})\,\vert\,X_{t_1}=x_{i+1}] \\
+ &\leq \bigl(\mathbf{T}_{t_1}^{t_2}\bigr)_{ii}\bigl(f(x_i) - f(x_{i+1})\bigr) + \mathbb{E}[f(X_{t_2})\,\vert\,X_{t_1}=x_{i+1}]\,,
+\end{align*}
+where the last step follows from Proposition 4.3. Because the first summand in this expression is non-positive by monotonicity of $f(\cdot)$ in $x$, we obtain
+\begin{equation*}
+\leq \mathbb{E}[f(X_{t_2})\,\vert\,X_{t_1}=x_{i+1}]\,.
+\end{equation*}
+\end{proof}
+
+\section{Towards Imprecision}
+
+Recall that the generator matrix $\mathbf{A}(t)$ is a function $\mathbf{A}: \mathbb{R}^+ \rightarrow \mathcal{A}$. We will next consider the set $\mathfrak{A}$ of \emph{all} such functions, and interpret the set $\mathcal{A}$ as a non-parametric specification of our uncertainty about the `true' value of the generator matrix at each time $t\geq 0$.
+
+In other words, we will now say that the only thing we know about $\mathbf{A}(t)$ is that it takes values in $\mathcal{A}$, and that the entire trajectory $\mathbf{A}(\cdot)$ is a function contained in $\mathfrak{A}$.
+
+In this setting, we will next be interested in the \emph{lower expectation} of some function $f(\cdot)$ on $\mathcal{X}$. That is, given that our only knowledge about the process is that the generator matrix at each point $t$ belongs to $\mathcal{A}$, what is the smallest value that the expectation of the function $f(\cdot)$ at time $X_{t_2}$ can take, given the variable $X_{t_1}$?
+
+We will denote this lower expectation as
+\begin{equation*}
+\underline{\mathbb{E}}[f(X_{t_2})\,\vert\,X_{t_1}]\,,
+\end{equation*}
+and it is the solution to the optimization problem
+\begin{equation*}
+\underline{\mathbb{E}}[f(X_{t_2})\,\vert\,X_{t_1}] = \min_{\mathbf{A}(\cdot)\in\mathfrak{A}}\left\{\mathbb{E}^{\mathbf{A}(\cdot)}[f(X_{t_2})\,\vert\,X_{t_1}]\right\}\,,
+\end{equation*}
+where the minimization is understood to be element-wise over $X_{t_1}$, and the term $\mathbb{E}^{\mathbf{A}(\cdot)}[f(X_{t_2})\,\vert\,X_{t_1}]$ denotes the expectation of $f(\cdot)$ w.r.t. a process whose generator matrix follows a trajectory $\mathbf{A}(\cdot)\in\mathfrak{A}$. Writing $\left(\mathbf{T}^{\mathbf{A}(\cdot)}\right)_{t_1}^{t_2}$ for that process' corresponding transition matrix, we can rewrite this problem as
+\begin{align*}
+\underline{\mathbb{E}}[f(X_{t_2})\,\vert\,X_{t_1}] &= \min_{\mathbf{A}(\cdot)\in\mathfrak{A}}\left\{\left(\mathbf{T}^{\mathbf{A}(\cdot)}\right)_{t_1}^{t_2}\mathbf{f}\right\}\\
+&= \min_{\mathbf{A}(\cdot)\in\mathfrak{A}}\left\{\left(\mathbf{I} + \int_{t_1}^{t_2}\left(\mathbf{T}^{\mathbf{A}(\cdot)}\right)_{t_1}^s\mathbf{A}(s)\dx[s]\right)\mathbf{f}\right\}\\
+&= \min_{\mathbf{A}(\cdot)\in\mathfrak{A}}\left\{\left(\mathbf{I} + \int_{t_1}^{t_2}\mathbf{A}(s)\left(\mathbf{T}^{\mathbf{A}(\cdot)}\right)_{s}^{t_2}\dx[s]\right)\mathbf{f}\right\}\,,
+\end{align*}
+using the process dynamics outlined in Section 2. 
+
+We will find it convenient to use the formulation in the last equality above, i.e., we will consider the problem of finding
+\begin{align*}
+\underline{\mathbb{E}}[f(X_{t_2})\,\vert\,X_{t_1}] &= \min_{\mathbf{A}(\cdot)\in\mathfrak{A}}\left\{\left(\mathbf{I} + \int_{t_1}^{t_2}\mathbf{A}(s)\left(\mathbf{T}^{\mathbf{A}(\cdot)}\right)_{s}^{t_2}\dx[s]\right)\mathbf{f}\right\} \\
+&= \min_{\mathbf{A}(\cdot)\in\mathfrak{A}}\left\{\mathbf{f} + \int_{t_1}^{t_2}\mathbf{A}(s)\left(\mathbf{T}^{\mathbf{A}(\cdot)}\right)_{s}^{t_2}\mathbf{f}\dx[s]\right\} \\
+ &= \mathbf{f} + \min_{\mathbf{A}(\cdot)\in\mathfrak{A}}\left\{\int_{t_1}^{t_2}\mathbf{A}(s)\left(\mathbf{T}^{\mathbf{A}(\cdot)}\right)_{s}^{t_2}\mathbf{f}\dx[s]\right\} \\
+ &= \mathbf{f} + \min_{\mathbf{A}(\cdot)\in\mathfrak{A}}\left\{\int_{t_1}^{t_2}\mathbf{A}(s)\mathbb{E}^{\mathbf{A}(\cdot)}[f(X_{t_2})\,\vert\,X_s]\dx[s]\right\} \,.
+\end{align*}
+Since the minimization is element-wise over $X_{t_1}$, we can also write this as
+\begin{align*}
+\underline{\mathbb{E}}[f(X_{t_2})\,\vert\,X_{t_1}=x_i] &= \\
+f(x_i) + \min_{\mathbf{A}(\cdot)\in\mathfrak{A}}&\Biggl\{\int_{t_1}^{t_2}\lambda_i(s)\left(\mathbb{E}^{\mathbf{A}(\cdot)}[f(X_{t_2})\,\vert\,X_s=x_{i+1}] - \mathbb{E}^{\mathbf{A}(\cdot)}[f(X_{t_2})\,\vert\,X_s=x_i]\right)\dx[s]\Biggr\}\,,
+\end{align*}
+using the structure of the generator matrix, and writing $\lambda_i(\cdot)\equiv-\bigl(\mathbf{A}(\cdot)\bigr)_{ii}$.
+
+\begin{proposition}
+For any vector $\mathbf{f}$, let
+\begin{equation*}
+\underline{\mathbf{A}}\mathbf{f} \equiv \min_{\mathbf{A}\in\mathcal{A}}\left\{\mathbf{A}\mathbf{f}\right\}\,,
+\end{equation*}
+where the minimization is understood to be element-wise. 
+
+Then, the lower expectation $\underline{\mathbb{E}}[f(X_{t_2})\,\vert\,X_{t_1}]$ is given by the solution to
+\begin{align*}
+\frac{\partial}{\partial t_1}\Bigl[\underline{\mathbb{E}}[f(X_{t_2})\,\vert\,X_{t_1}]\Bigr] &= -\underline{\mathbf{A}}\, \underline{\mathbb{E}}[f(X_{t_2})\,\vert\,X_{t_1}] \\
+\underline{\mathbb{E}}[f(X_{t_2})\,\vert\,X_{t_2}] &= \mathbf{f}\,,
+\end{align*}
+or in other words,
+\begin{equation*}
+\underline{\mathbb{E}}[f(X_{t_2})\,\vert\,X_{t_1}] = \mathbf{f} + \int_{t_1}^{t_2}\underline{\mathbf{A}}\,\underline{\mathbb{E}}[f(X_{t_2})\,\vert\,X_s]\dx[s]\,.
+\end{equation*}
+\end{proposition}
+\begin{proof}
+Several ways to show this. {\bf ATTN: I haven't done the second or third way rigorously, but don't personally worry too much about this. We should still do this at some point though.}
+\begin{itemize}
+\item Element-wise derivatives in $\lambda_i(s)$ are strictly positive (special case for $\mathbf{f}$ monotonic).
+\item Similar proof as Damjan's paper; construct a sequence that uniquely converges and is decreasing, with fixed point $\underline{\mathbb{E}}[f(X_{t_2})\,\vert\,X_{t_1}]$.
+\item Reduction to Damjan's process dynamics.
+\end{itemize}
+\end{proof}
+What this tells us is that the global minimization problem $\min_{\mathbf{A}(\cdot)\in\mathfrak{A}}\{\cdot\}$ can be solved locally by instead solving $\min_{\mathbf{A}\in\mathcal{A}}\{\cdot\}$ at each time $s$.
+
+\begin{proposition}
+Let $f(\cdot)$ be monotonically increasing in $x$. Then
+\begin{equation*}
+\underline{\mathbf{A}} = \argmin_{\mathbf{A}\in\mathcal{A}}\{\mathbf{A}\mathbf{f}\}
+\end{equation*}
+has a fixed solution, which is given by the elements
+\begin{equation*}
+\lambda_i = \underline{\lambda_i},
+\end{equation*}
+for all $i=1,\ldots,n$.
+\end{proposition}
+\begin{proof}
+For any $\mathbf{A}\in\mathcal{A}$, we have
+\begin{align*}
+\left(\mathbf{A}\mathbf{f}\right)_i &= -\lambda_i f(x_i) + \lambda_i f(x_{i+1}) \\
+ &= \lambda_i\bigl(f(x_{i+1})-f(x_i)\bigr)\,,
+\end{align*}
+using the structure of $\mathbf{A}$. Because the minimization in the proposition is element-wise, we find
+\begin{align*}
+\left(\underline{\mathbf{A}}\mathbf{f}\right)_i &= \min_{\mathbf{A}\in\mathcal{A}}\left\{ \left(\mathbf{A}\mathbf{f}\right)_i \right\} \\
+ &= \min_{\lambda_i\in\left[\underline{\lambda_i},\overline{\lambda_i}\right]}\left\{\lambda_i\bigl(f(x_{i+1})-f(x_i)\bigr)\right\} \\
+ &= \underline{\lambda_i}\bigl(f(x_{i+1}) - f(x_i)\bigr)\,,
+\end{align*}
+using the monotonicity of $f(\cdot)$ in $x$. Hence, for $f(\cdot)$ strictly monotonic, we have
+\begin{align*}
+\underline{\mathbf{A}} &= \argmin_{\mathbf{A}\in\mathcal{A}}\left\{\mathbf{A}\mathbf{f}\right\} \\
+ &= \left[\begin{array}{ccccc}
+-\underline{\lambda_1} & \underline{\lambda_1} & 0 & \cdots & 0 \\
+0 & -\underline{\lambda_2} & \underline{\lambda_2} & \cdots & 0 \\
+\vdots & \ddots & \ddots & \ddots & \vdots \\
+0 & \cdots & 0 & -\underline{\lambda_n} & \underline{\lambda_n} \\
+0 & \cdots & 0 & 0 & 0
+\end{array} \right]\,.
+\end{align*}
+Otherwise, if $f(\cdot)$ is not strictly monotonic, the $\argmin\{\cdot\}$ will return a set of minimizing arguments. In this case, we are free to choose any one of them, and will stipulate to choose the above solution from this set.
+\end{proof}
+\newpage
+Write the static solution to the minimization in Proposition 6.2 as $\underline{\mathcal{A}}$. Then, the following theorem holds.
+\begin{theorem}
+Let $f(\cdot)$ be monotonically increasing in $x$. Then,
+\begin{equation*}
+\underline{\mathbb{E}}[f(X_{t_2})\,\vert\,X_{t_1}] = \exp\bigl\{(t_2-t_1)\cdot\underline{\mathcal{A}}\bigr\}\mathbf{f}\,.
+\end{equation*}
+\end{theorem}
+\begin{proof}
+By Proposition 6.1, we have
+\begin{equation*}
+\underline{\mathbb{E}}[f(X_{t_2})\,\vert\,X_{t_1}] = \mathbf{f} + \int_{t_1}^{t_2}\underline{\mathbf{A}}\,\underline{\mathbb{E}}[f(X_{t_2})\,\vert\,X_s]\dx[s]\,.
+%\underline{\mathbb{E}}[f(X_{t_2})\,\vert\,X_{t_1}] = \mathbf{f} + \int_{t_1}^{t_2}\underline{\mathbf{A}}\left(\left(\mathbf{T}^{\underline{\mathbf{A}}}\right)_s^{t_2}\mathbf{f}\right)\dx[s]\,.
+\end{equation*}
+Using Theorem 5.4 and the assumption that $f(\cdot)$ is monotonically increasing in $x$, we note that
+\begin{equation*}
+\bigl\langle\underline{\mathbb{E}}[f(X_{t_2})\,\vert\,X_s]\bigr\rangle(\cdot)
+\end{equation*}
+is also monotonically increasing in $x$. Hence,
+\begin{align*}
+\underline{\mathbb{E}}[f(X_{t_2})\,\vert\,X_{t_1}] &= \mathbf{f} + \int_{t_1}^{t_2}\underline{\mathbf{A}}\,\underline{\mathbb{E}}[f(X_{t_2})\,\vert\,X_s]\dx[s] \\
+ &= \mathbf{f} + \int_{t_1}^{t_2}\underline{\mathcal{A}}\,\underline{\mathbb{E}}[f(X_{t_2})\,\vert\,X_s]\dx[s]\,,
+\end{align*}
+by Proposition 6.2. Repeatedly expanding this expression in $\underline{\mathbb{E}}[f(X_{t_2})\,\vert\,X_s]$ reveals
+\begin{align*}
+\underline{\mathbb{E}}[f(X_{t_2})\,\vert\,X_{t_1}] &= \mathbf{f} + \int_{t_1}^{t_2}\underline{\mathcal{A}}\,\underline{\mathbb{E}}[f(X_{t_2})\,\vert\,X_s]\dx[s] \\
+ &= \mathbf{f} + \int_{t_1}^{t_2}\underline{\mathcal{A}}\,\mathbb{E}^{\underline{\mathcal{A}}}[f(X_{t_2})\,\vert\,X_s]\dx[s]\,,
+\end{align*}
+from which we finally find
+\begin{align*} 
+\underline{\mathbb{E}}[f(X_{t_2})\,\vert\,X_{t_1}] &= \mathbf{f} + \int_{t_1}^{t_2}\underline{\mathcal{A}}\,\mathbb{E}^{\underline{\mathcal{A}}}[f(X_{t_2})\,\vert\,X_s]\dx[s] \\
+ &= \mathbf{f} + \int_{t_1}^{t_2}\underline{\mathcal{A}}\left(\mathbf{T}^{\underline{\mathcal{A}}}\right)_s^{t_2}\mathbf{f}\dx[s] \\
+ &= \left(\mathbf{I} + \int_{t_1}^{t_2}\underline{\mathcal{A}}\left(\mathbf{T}^{\underline{\mathcal{A}}}\right)_s^{t_2}\dx[s]\right)\mathbf{f} \\
+ &= \exp\bigl\{(t_2-t_1)\cdot\underline{\mathcal{A}}\bigr\}\mathbf{f}\,.
+\end{align*}
+\end{proof}
+
+%\section{Expectations and Continuity of Solutions}
+
+%In this section, we focus on the stochastic process as an expectation operator. We introduce some shorthand notation for the expectation of a function $f(\cdot)$ on the state space,
+%\begin{equation*}
+%\mathbb{E}[f(X_t)\,\vert\,X_0] = \mathbf{T}_0^t\mathbf{f} \equiv \mathbf{f}_0^t\,.
+%\end{equation*}
+%Note that due to the process dynamics defined in Section 1, we then have
+%\begin{align*}
+%\frac{\partial}{\partial t} \mathbf{f}_0^t &= \mathbf{A}(t)\mathbf{f}_0^t\,, \\
+%\mathbf{f}_0^0 &= \mathbf{f}\,.
+%\end{align*}
+
+%We next present some results about the continuity of sets of solutions to the above system. We call a vector-valued function $\mathbf{g}(t)$ a \emph{solution on the interval} $[0,T]$ if it satisfies the above system on this interval, i.e.,
+%\begin{align*}
+%\mathbf{g}(0) &= \mathbf{f}\,, \\
+%\frac{\partial}{\partial t} \mathbf{g}(t) &= \mathbf{A}(t)\mathbf{g}(t)\,,\quad\text{with $\mathbf{A}(t)\in\mathcal{A}$ for all $0\leq t\leq T$.}
+%\end{align*}
+%Let $\mathcal{G}(T)$ denote the set-valued function containing solutions to the system on the interval $[0,T]$, i.e.,
+%\begin{equation*}
+%\mathcal{G}(T) = \Bigl\{\mathbf{g}(\cdot)\,\Big\vert\,\text{$\mathbf{g}(t)$ is a solution on the interval $[0,T]$}\Bigr\}\,.
+%\end{equation*}
+%Denote the closure of $\mathcal{G}(T)$ under the $L_1$-norm as $\text{cl}(\mathcal{G}(T))$. The following result holds
+%\begin{theorem}
+%The function $\text{cl}(\mathcal{G}(T))$ is continuous in $T$.
+%\end{theorem}
+%\begin{proof}
+%This was shown by dude\footnote{find ref}.
+%\end{proof}
+
+%Moving on, call $f(\cdot)$ strictly monotonically increasing in $x$, if $f(\cdot)$ is monotonically increasing in $x$ and $f(x_1)<f(x_{n+1})$. The following result holds.
+%\begin{corollary}
+%If for all $\mathbf{g}(\cdot)\in\text{cl}(\mathcal{G}(T))$, the function $\langle\mathbf{g}(T)\rangle(\cdot)$ is strictly monotonically increasing in $x$, there exists a value $\epsilon>0$ such that for all $\mathbf{h}(\cdot)\in\text{cl}(\mathcal{G}(T+\epsilon))$, $\langle\mathbf{h}(T+\epsilon)\rangle(\cdot)$ is strictly monotonically increasing in $x$.
+%\end{corollary}
+%\begin{proof}
+%This follows from continuity, i.e., if for two continuous functions $f(\cdot), g(\cdot)$, $f(t) < g(t)$, then $\exists\epsilon>0$ s.t. $f(t+\epsilon)<g(t+\epsilon)$.
+%\end{proof}
+%
+
+%\begin{thebibliography}{11}
+
+%\end{thebibliography}
+
+\end{document}
