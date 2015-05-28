@@ -1,0 +1,1380 @@
+\documentclass{article}
+\usepackage{amssymb,amsthm}
+\usepackage{algorithmic}
+\usepackage{algorithm}
+\usepackage{mathtools}
+\usepackage{tikz}
+  \usetikzlibrary{calc,matrix,plotmarks,trees,arrows,automata}
+
+
+% sets of numbers
+\newcommand{\nats}{\mathbb{N}}
+\newcommand{\natswithzero}{\mathbb{N}_0}
+\newcommand{\reals}{\mathbb{R}}
+
+\newcommand{\statesymbol}{X}
+\newcommand{\statessymbol}{\mathcal{X}}
+\newcommand{\states}[1]{\statessymbol_{#1}}
+\newcommand{\stateset}{\statessymbol}
+
+\newtheorem{Theorem}{Theorem}
+\newtheorem{Definition}{Definition}
+
+\title{}
+\date{}
+\author{
+  % Stavros Lopatatzidis \and Jasper De Bock \and Gert de Cooman\\
+  % Ghent University, SYSTeMS Research Group\\
+   % \{Stavros.Lopatatzidis,Jasper.DeBock,Gert.deCooman\}@UGent.be
+}
+
+\begin{document}
+\maketitle
+
+\section{General Description}
+
+We introduce the notion of flipping times for imprecise continuous-time birth-death processes, show how to obtain them, and explain how they lead to new computational methods.
+\paragraph{The Precise Case} 
+Consider a continuous-time Markov processes where, at any time $t$, the stochastic matrix of the process $P_{t}$ is derived from a generator matrix~$Q$.
+When $Q$ is bounded, $P_{t}$ satisfies the Kolmogorov backward equation
+
+\begin{equation} \label{Kol_eq}
+\frac{d}{dt}P_{t}=QP_{t}.
+\end{equation}
+If we let $f_{t}(x)\coloneqq E_{t}(f\vert X_0=x)$, with $f$ a real-valued function on the finite state space~$\mathcal{X}$ and $x\in\mathcal{X}$ an initial state, then
+we can rewrite Equation~\eqref{Kol_eq} as follows:
+\begin{equation} \label{T_Kol_eq}
+\frac{d}{dt}f_{t}=Qf_{t}.
+\vspace{3pt}
+\end{equation}
+Combined with the boundary condition $f_0=f$, the unique solution of Equation~\eqref{T_Kol_eq} is $f_{t}=e^{Qt}f$.
+
+Instead of considering a time-invariant $Q$, we can also let $Q_{t}$ be a function of the time $t$.
+ In that case, Equation \eqref{T_Kol_eq} can be rewritten as
+ \begin{equation} \label{time_Kol_eq}
+\frac{d}{dt}f_{t}=Q_{t}f_{t}. 
+\end{equation}
+In general, Equation~\eqref{time_Kol_eq} has no analytical solution.
+\paragraph{The Imprecise Case}We focus on the case where every state in $\stateset\coloneqq \{0,\ldots,L\}$, %with $L \in\nats$.
+has an interval-valued birth and/or death rate. The generator matrix is then a tridiagonal matrix of the form 
+
+\begin{equation*}
+ \begin{pmatrix}
+  -\lambda_{0} & \lambda_{0} & 0 & \cdots & \cdots & \cdots & 0 \\
+  \vdots & \ddots & \ddots & \ddots & \ddots & \ddots & \vdots  \\
+  0 & \cdots & \mu_{i} & -(\mu_{i}+\lambda_{i}) & \lambda_{i} & \cdots & 0 \\
+  \vdots & \ddots & \ddots & \ddots & \ddots & \ddots & \vdots  \\
+  0 & \cdots & \cdots &\cdots & 0 & \mu_{L} & -\mu_{L}
+ \end{pmatrix}
+\end{equation*}
+where, for all $i\in\{0,\dots,L-1\}$ and $j\in\{1,\dots,L\}$, $\lambda_{i} \in [\underline{\lambda},\overline{\lambda}]$ and $\mu_{j} \in [\underline{\mu},\overline{\mu}]$. \textbf{We use $\mathcal{Q}$ to denote the the set that consists of all these generator matrices}.
+
+At any time $t$, the only assumption we make about $Q_{t}$ is that it is an element of $\mathcal{Q}$. Every such possible choice of non-stationary generator matrices will, by Equation~\eqref{time_Kol_eq}, result in a---possibly different---solution $f_t$. Our goal is to calculate exact lower and upper bounds for the set of all these solutions $f_{t}$, as denoted by $\smash{\underline{f}_{t}}$ and $\smash{\overline{f}_{t}}$; we focus on the lower bound here.
+As proved by \v{S}kulj~\cite{skulj2015}, $\smash{\underline{f}_{t}}$ is the solution to
+\begin{equation} \label{ip_Kol_eq}
+\frac{d}{dt}\underline{f}_{t}=\min_{Q\in \mathcal{Q}}Q\underline{f}_{t},
+\end{equation}
+with boundary condition $\underline{f}_0=f$.
+If $\mathcal{Q}$ is the convex hull of a \emph{finite} number of extreme generator matrices---as in our case---then since the solution to the above differential equation is continuous, we find that there must be time points $0=t_0<t_1<\ldots<t_{i}<t_{i+1}<\ldots$ such that, for all $t\in[t_i,t_{i+1}]$, the minimum in Equation~\eqref{ip_Kol_eq} is obtained by the same extreme generator matrix $Q_i\in\mathcal{Q}$. We call these time points $t_i$ \emph{flipping times}. The differential equation~\eqref{ip_Kol_eq} is then piecewise linear, and the solution is therefore given by
+\begin{equation*}
+\underline{f}_t=e^{Q_i(t-t_i)}e^{Q_{i-1}(t_i-t_{i-1})}\dots e^{Q_1(t_2-t_1)}e^{Q_0(t_1)}f,
+\end{equation*}
+for $t\in[t_i,t_{i+1}]$. The difficult part is now to find the flipping times $t_i$ and the corresponding extreme generator matrices $Q_i$. 
+Below, we show the procedure that we follow in order to identify $t_i$ and $Q_i$, with respect to lower bounds.\\
+
+\begin{algorithmic}[1]
+\STATE \textbf{Input}($\stateset:=\{0,\ldots,N\},f:\stateset\to\mathbb{R},\mathcal{Q}$)
+\STATE \ \ \  $i \leftarrow 0$
+\STATE \ \ \  $t_{i} \leftarrow 0$
+\STATE \ \ \  $f_{t_{i}} \leftarrow f$
+\STATE \ \ \  $\underline{Q}_{i}\leftarrow \arg\min_{Q\in\mathcal{Q}}Qf_{t_{i}}$
+\STATE \ \ \ \textbf{repeat}
+  \STATE \ \ \ \ \ \ $t'$ := $\min_{Q\in\mathcal{Q}}\{t:Qe^{\underline{Q}_{i}t}f_{t_{i}}=\underline{Q}_{i}e^{\underline{Q}_{i}t}f_{t_{i}}\}$ 
+  \STATE \ \ \ \ \ \ $Q'$ := $\arg\min_{Q\in\mathcal{Q}}\{t:Qe^{\underline{Q}_{i}t}f_{t_{i}}=\underline{Q}_{i}e^{\underline{Q}_{i}t}f_{t_{i}}\}$
+  \STATE \ \ \ \ \ \ $i \leftarrow i+1$
+  \STATE \ \ \ \ \ \ $t_{i} \leftarrow t'$ 
+  \STATE \ \ \ \ \ \ $\underline{Q}_{i} \leftarrow Q'$
+  \STATE \ \ \ \ \ \ $f_{t_{i}} \leftarrow e^{\underline{Q}_{i-1}t_{i}}f_{t_{i-1}}$ 
+\STATE \ \ \ \textbf{until}  $t_i \not\in \mathbb{R}_{+}$ 
+\STATE \ \ \ \textbf{return} $e^{\underline{Q}_{i}t}f_{t_{i}}$ for $t\to\infty$
+\newline
+\end{algorithmic}
+In step 13, $\mathbb{R}_{+}$ is the set of all positive real numbers.
+The minimum in steps 5 and 7 are taken row-wise.
+We provide some examples to check how the method works.
+
+
+\section{Examples}
+
+We calculate lower and upper probabilities for state spaces of size 3 and 4.
+For all the following examples, we consider a set of generator matrices $\mathcal{Q}$ derived from the intervals $\lambda \in[1,3]$ and $\mu \in [2,5]$.
+The numerical values are presented up to their 5th decimal point, for ease of representation. 
+The actual values are in comments in the .tex file.\\
+
+\textbf{Lower and Upper probabilities for state space is $\stateset:=\{0,1,2\}$}\\
+
+--- \textbf{State 0} ($f\coloneqq[1,0,0]^T$) ---\\
+
+***Lower probability ($\underline{E}(X=0)$)***\\
+
+First we have to find the generator matrix $Q$ that minimises $Qf$.
+We see that the form of the vector $Qf$ is
+\begin{equation*}  
+ \begin{array}{|c|}
+  \lambda_{0}(f(1)-f(0))\\
+  \mu_{1}(f(0)-f(1))+\lambda_{1}(f(2)-f(1))\\
+  \mu_{2}(f(1)-f(2))  
+ \end{array}
+ \end{equation*}
+from which we have that $\lambda_{0}=\overline{\lambda}=3$ and $\mu_{1}=\underline{\mu}=2$.
+We see that we cannot directly determine $\lambda_{1}$ and $\mu_{2}$ since $f(1)-f(2)=0$.
+Hence, the form of $\underline{Q}_0$ is
+\begin{equation*} 
+ \underline{Q}_{0}= 
+ \begin{array}{|rrr|}
+  -3 & 3 & 0 \\
+  2 & ? & ?  \\
+  0 & ? & ?  
+ \end{array}
+ \end{equation*}
+ where for the unknown values (?), we test the possible combinations of extreme points $\{\underline{\lambda},\overline{\lambda}\}\times\{\underline{\mu},\overline{\mu}\}$.
+ Therefore, we have to check which of the following generator matrices
+\begin{equation*}
+\begin{split} 
+ &Q_{0a}= 
+ \begin{array}{|rrr|}
+  -3 & 3 & 0 \\
+  2 & -3 & 1 \\
+  0 & 2 & -2  
+ \end{array}\ \  
+ Q_{0b}=
+ \begin{array}{|rrr|}
+  -3 & 3 & 0 \\
+  2 & -3 & 1 \\
+  0 & 5 & -5  
+ \end{array}\\
+ &Q_{0c}=
+ \begin{array}{|rrr|}
+  -3 & 3 & 0 \\
+  2 & -5 & 3 \\
+  0 & 2 & -2  
+ \end{array}\ \ 
+ Q_{0d}=
+ \begin{array}{|rrr|}
+  -3 & 3 & 0 \\
+  2 & -5 & 3 \\
+  0 & 5 & -5  
+ \end{array}
+ \end{split}
+ \end{equation*}
+ yields the minimum $f_{t_{1}}$, with $t_1$ the possible flipping time.\\\\
+
+--- First Iteration ---\\
+We start with the generator matrix 
+\begin{equation*} 
+ Q_{0a}= 
+ \begin{array}{|rrr|}
+  -3 & 3 & 0 \\
+  2 & -3 & 1 \\
+  0 & 2 & -2  
+ \end{array}
+ \end{equation*}
+which is diagonalisable and yields the following results
+\begin{equation*} 
+ e^{Q_{0a}t}= 
+ \begin{array}{|rrr|}
+  0.30+0.41e^{-5.73t}+0.27e^{-2.26t} & 0.46-0.56e^{-5.73t}+0.10e^{-2.26t} & 0.23+0.15e^{-5.73t}-0.38e^{-2.26t} \\
+  0.30-0.37e^{-5.73t}+0.06e^{-2.26t} & 0.46+0.51e^{-5.73t}+0.02e^{-2.26t} & 0.23-0.13e^{-5.73t}-0.09e^{-2.26t} \\
+  0.30+0.20e^{-5.73t}-0.05e^{-2.26t} & 0.46-0.27e^{-5.73t}-0.18e^{-2.26t} & 0.23+0.07e^{-5.73t}+0.69e^{-2.26t}  
+ \end{array}
+ \end{equation*}
+ %Matrix(3, 3, {(1, 1) = .3076923077+.4127711850*exp(-5.732050808*t)+.2795365072*exp(-2.267949192*t), (1, 2) = .102317463*exp(-2.267949192*t)-.5638559244*exp(-5.732050808*t)+.4615384613, (1, 3) = -.3818539704*exp(-2.267949192*t)+.1510847396*exp(-5.732050808*t)+.2307692308, (2, 1) = -.3759039497*exp(-5.732050808*t)+.3076923075+0.682116422e-1*exp(-2.267949192*t), (2, 2) = .4615384619+0.249671936e-1*exp(-2.267949192*t)+.5134943446*exp(-5.732050808*t), (2, 3) = -0.931788359e-1*exp(-2.267949192*t)-.1375903950*exp(-5.732050808*t)+.2307692309, (3, 1) = -.5091386272*exp(-2.267949192*t)+.2014463194*exp(-5.732050808*t)+.3076923078, (3, 2) = -.2751807900*exp(-5.732050808*t)+.4615384614-.1863576714*exp(-2.267949192*t), (3, 3) = .2307692306+.6954962990*exp(-2.267949192*t)+0.7373447050e-1*exp(-5.732050808*t)})
+\begin{equation} \label{eQ0atf}
+ e^{Q_{0a}t}f= 
+ \begin{array}{|r|}
+  0.30769+0.41277e^{-5.73205t}+0.27953e^{-2.26794t}\\
+  0.30769-0.37590e^{-5.73205t}+0.68211e^{-2.26794t}\\
+  0.30769+0.20144e^{-5.73205t}-0.50913e^{-2.26794t}
+ \end{array}
+ \end{equation}
+%Matrix(3, 1, {(1, 1) = .3076923077+.4127711850*exp(-5.732050808*t)+.2795365072*exp(-2.267949192*t), (2, 1) = -.3759039497*exp(-5.732050808*t)+.3076923075+0.6821164220e-1*exp(-2.267949192*t), (3, 1) = -.5091386272*exp(-2.267949192*t)+.2014463194*exp(-5.732050808*t)+.3076923078})
+In order to find the flipping times, if any, associated with $e^{Q_{0a}t}f$, we have to find the solutions of $Q'e^{Q_{0a}t}f=Q_{0a}e^{Q_{0a}t}f$ for $Q'\in\mathcal{Q}$.
+The form of $Q'$ is
+\begin{equation*} 
+ Q'= 
+ \begin{array}{|ccc|}
+  -\lambda_{0} & \lambda_{0} & 0 \\
+  \mu_{1} & -\mu_{1}-\lambda_{1} & \lambda_{1}  \\
+  0 & \mu_{2} & -\mu{2}  
+ \end{array}
+ \end{equation*}
+ where $\lambda_{i}\in[\underline{\lambda},\overline{\lambda}]$ and $\mu_{i+1}\in[\underline{\mu},\overline{\mu}]$, with $i\in\{0,1\}$.\\\\
+ Therefore, $Q'e^{Q_{0a}t}f$ has the following form
+ \begin{equation*} 
+ Q'e^{Q_{0a}t}f= 
+ \begin{array}{|c|}
+  \lambda_{0}(e^{Q_{0a}t}f(1)-e^{Q_{0a}t}f(0))\\
+  \mu_{1}(e^{Q_{0a}t}f(0)-e^{Q_{0a}t}f(1))+\lambda_{1}(e^{Q_{0a}t}f(2)-e^{Q_{0a}t}f(1))\\
+  \mu_{2}(e^{Q_{0a}t}f(2)-e^{Q_{0a}t}f(1))  
+ \end{array}
+ \end{equation*}
+We solve $Q'e^{Q_{0a}t}f=Q_{0a}e^{Q_{0a}t}f$ row-wise.
+Taking $(Q'e^{Q_{0a}t}f)(0)=(Q_{0a}e^{Q_{0a}t}f)(0)$, we have that
+\begin{equation*} 
+\lambda_{0}(e^{Q_{0a}t}f(1)-e^{Q_{0a}t}f(0))=3(e^{Q_{0a}t}f(1)-e^{Q_{0a}t}f(0))
+ \end{equation*}
+which means that we actually need to find the first positive $t$, for which the function $e^{Q_{0a}t}f(1)-e^{Q_{0a}t}f(0)$ is not just zero, but also that the sign of the function at both sides of $t$ is different.
+If the signs are different, then we know that $\lambda_{0}=1$, since before it was 3 in $Q_{0a}$.
+Therefore, we need the first positive $t$, at which the function $e^{Q_{0a}t}f(i)-e^{Q_{0a}t}f(i+1)=0$ changes sign, for all $i\in\{0,\ldots,N-1\}$, with $N$ being the largest ordered element in the state space.\\\\
+For $Q'e^{Q_{0a}t}f$, whose values are shown in \eqref{eQ0atf}, we do not have flipping times, because the functions
+\begin{equation*}
+\begin{split}
+&e^{Q_{0a}t}f(0)-e^{Q_{0a}t}f(1)= 0.78867e^{-5.73205t}+0.21132e^{-2.26794t}\\
+&e^{Q_{0a}t}f(1)-e^{Q_{0a}t}f(2)=-0.57735e^{-5.73205t}+0.57735e^{-2.26794t}
+\end{split}
+\end{equation*}
+do not change sign for any $t>0$.\\\\
+By taking $t\to\infty$, we have that
+\begin{equation*} 
+ f_{t}= 
+ \begin{array}{|r|}
+  0.307692\\
+  0.307692\\
+  0.307692
+ \end{array}
+ \end{equation*}
+ %Matrix(3, 1, {(1, 1) = .3076923077, (2, 1) = .3076923077, (3, 1) = .3076923077})
+By taking generator matrix 
+\begin{equation*} 
+ Q_{0b}= 
+ \begin{array}{|rrr|}
+  -3 & 3 & 0 \\
+  2 & -3 & 1 \\
+  0 & 5 & -5  
+ \end{array}
+ \end{equation*}
+which is diagonalisable, we have that
+\begin{equation*} 
+ e^{Q_{0b}t}f = 
+ \begin{array}{|r|}
+  0.35714+0.14285e^{-7t}+0.50000e^{-4t}\\
+  0.35714-0.19047e^{-7t}-0.16666e^{-4t}\\
+  0.35714+0.47619e^{-7t}-0.83333e^{-4t}
+ \end{array}
+ \end{equation*}
+%Matrix(3, 1, {(1, 1) = .3571428570+.1428571429*exp(-7.*t)+.5000000001*exp(-4.*t), (2, 1) = -.1904761904*exp(-7.*t)+.3571428572-.1666666668*exp(-4.*t), (3, 1) = -.8333333330*exp(-4.*t)+.4761904758*exp(-7.*t)+.3571428572})
+which does not have a flipping time and by taking $t\to\infty$, we have that
+\begin{equation*} 
+ f_{t}= 
+ \begin{array}{|r|}
+  0.357142857\\
+   0.357142857\\ 
+   0.357142857
+ \end{array}\\\\
+ \end{equation*}
+Similarly, by taking generator matrix 
+\begin{equation*} 
+ Q_{0c}= 
+ \begin{array}{|rrr|}
+  -3 & 3 & 0 \\
+  2 & -5 & 3 \\
+  0 & 2 & -2  
+ \end{array}
+ \end{equation*}
+which is diagonalisable, we have that
+\begin{equation*} 
+ e^{Q_{0c}t}f = 
+ \begin{array}{|r|}
+  0.21052+0.20135e^{7.44948t}+0.58811e^{-2.55051t}\\
+  0.21052-0.29864e^{7.44948t}+0.88117e^{-2.55051t}\\
+  0.21052+0.10960e^{7.44948t}-0.32013e^{-2.55051t}
+ \end{array}
+ \end{equation*}
+%Matrix(3, 1, {(1, 1) = .2105263157+.2013560733*exp(-7.449489743*t)+.5881176112*exp(-2.550510257*t), (2, 1) = -.2986439273*exp(-7.449489743*t)+.2105263161+0.8811761120e-1*exp(-2.550510257*t), (3, 1) = -.3201306792*exp(-2.550510257*t)+.1096043634*exp(-7.449489743*t)+.2105263158})
+which does not have a flipping time and by taking $t\to\infty$, we have that
+\begin{equation*} 
+ f_{t}= 
+ \begin{array}{|r|}
+  0.210526315\\
+  0.210526315\\  
+  0.210526315
+ \end{array}\\\\
+ \end{equation*}
+ Finally, by taking generator matrix 
+\begin{equation*} 
+ Q_{0d}= 
+ \begin{array}{|rrr|}
+  -3 & 3 & 0 \\
+  2 & -5 & 3 \\
+  0 & 5 & -5  
+ \end{array}
+ \end{equation*}
+which is also diagonalisable, we have that
+\begin{equation*} 
+ e^{Q_{0d}t}f = 
+ \begin{array}{|r|}   
+  0.29411+0.07646e^{-9.37228t}+0.62941e^{-3.62771t}\\
+  0.29411-0.16241e^{-9.37228t}-0.13169e^{-3.62771t}\\
+  0.29411+0.18573e^{-9.37228t}-0.47985e^{-3.62771t}
+ \end{array}
+ \end{equation*}
+%Matrix(3, 1, {(1, 1) = .2941176474+0.7646489910e-1*exp(-9.372281323*t)+.6294174535*exp(-3.627718677*t), (2, 1) = -.1624186166*exp(-9.372281323*t)+.2941176469-.1316990302*exp(-3.627718677*t), (3, 1) = -.4798543424*exp(-3.627718677*t)+.1857366954*exp(-9.372281323*t)+.2941176469})
+which does not have a flipping time and by taking $t\to\infty$, we have that
+\begin{equation*} 
+ f_{t}= 
+ \begin{array}{|r|}
+  0.294117647\\
+  0.294117647\\
+  0.294117647
+ \end{array}\\\\
+ \end{equation*} 
+The lower probability $\underline{E}(X=0)$ is $0.210526315$ and is associated with generator matrix $Q_{0c}$.
+The result is reasonable, as in the discrete time case, our generator matrix is consists of the largest birth rate and the smallest death rate at each row.\\\\
+
+***Upper probability ($\overline{E}(X=0)$)***\\\\
+Similarly, for the upper probability, we have that $\overline{E}(X=0)= 0.8064516129$, which obtained by a single generator matrix, which consists of the smallest birth rate and the largest death rate at each row, that is
+\begin{equation*} 
+ \overline{Q}_{0}= 
+ \begin{array}{|rrr|}
+  -1 & 1 & 0 \\
+  5 & -6 & 1 \\
+  0 & 5 & -5  
+ \end{array}
+\end{equation*}
+
+--- \textbf{State 2} ($f\coloneqq[0,0,1]^T$) ---\\
+
+The procedure is the same as previously and we expectedly obtain symmetrical results\\
+
+***Lower probability ($\underline{E}(X=2)$)***\\
+
+There are no flipping times and the generator matrix is 
+\begin{equation*} 
+ \underline{Q}_{0}= 
+ \begin{array}{|rrr|}
+  -1 & 1 & 0 \\
+  5 & -6 & 1 \\
+  0 & 5 & -5  
+ \end{array}
+\end{equation*}
+%Matrix([[-1, 1, 0], [5, -6, 1], [0, 5, -5]]), $\lambda_{i}=\underline{\lambda}=1$ and $\mu_{i}=\overline{\mu}=5$
+from which we get $\underline{E}(X=2)=0.03225806452$.\\\\
+
+***Upper probability ($\overline{E}(X=2)$)***\\
+
+There are no flipping times and the generator matrix is 
+\begin{equation*} 
+ \overline{Q}_{0}= 
+ \begin{array}{|rrr|}
+  -3 & 3 & 0 \\
+  2 & -5 & 3 \\
+  0 & 2 & -2  
+ \end{array}
+\end{equation*}
+% Matrix([[-3, 3, 0], [2, -5, 3], [0, 2, -2]]), i.e $\lambda_{i}=\overline{\lambda}=3$ and $\mu_{i}=\underline{\mu}=2$
+from which we get $\overline{E}(X=2)= 0.4736841978$.\\\\\\
+
+--- \textbf{State 1} ($f\coloneqq[0,1,0]^T$) ---\\
+
+***Lower probability ($\overline{E}(X=1)$)***\\
+
+--- First Iteration ---\\
+In this case, we can directly find $\underline{Q}_{0}$, which is
+\begin{equation*} 
+ \underline{Q}_{0}= 
+ \begin{array}{|rrr|}
+  -1 & 1 & 0 \\
+  5 & -8 & 3 \\
+  0 & 2 & -2 \\
+ \end{array}
+ \end{equation*}
+% Q0a := Matrix([[-1.0, 1.0, 0., 0.], [5.0, -8.0, 3.0, 0.], [0., 2.0, -5.0, 3.0], [0., 0., 2.0, -2.0]])
+which is diagonalisable and yields the following
+\begin{equation*} 
+ e^{\underline{Q}_{0}t}f= 
+ \begin{array}{|r|}
+  0.13333-0.03252e^{-1.59487t}-0.10080e^{-9.40512t}\\
+  0.13333+0.01934e^{-1.59487t}+0.84731e^{-9.40512t}\\
+  0.13333+0.09551e^{-1.59487t}-0.22884e^{-9.40512t}
+ \end{array}
+ \end{equation*}
+% eQ0tf:=Matrix(3, 1, {(1, 1) = -0.3252349872e-1*exp(-1.594875162*t)-.1008098346*exp(-9.405124838*t)+.1333333333, (2, 1) = .1333333329+0.1934742180e-1*exp(-1.594875162*t)+.8473192450*exp(-9.405124838*t), (3, 1) = -.2288467146*exp(-9.405124838*t)+.1333333334+0.9551338120e-1*exp(-1.594875162*t)})
+for the values above, the flipping time is $t_{1}:= 0.339073069$, where $\lambda_{1}$ from $3$ becomes $1$ and $\mu_{2}$ from $2$ becomes $5$.\\\\
+The updated gamble at time $t_{1}$ is
+\begin{equation*}  
+ f_{t_1}= 
+ \begin{array}{|c|}
+  0.1102405\\
+  0.1795189\\
+  0.1795189
+ \end{array}
+ %Matrix(3, 1, {(1, 1) = .1102405039, (2, 1) = .1795189918, (3, 1) = .1795189923})
+ \end{equation*}\\\\
+
+--- Second Iteration ---\\
+Now the generator matrix of the process is
+\begin{equation*} 
+ \underline{Q}_{1}= 
+ \begin{array}{|rrr|}
+  -1 & 1 & 0 \\
+  5 & -6 & 1 \\
+  0 & 5 & -5 
+ \end{array}
+ \end{equation*}
+ %Matrix([[-1, 1, 0], [5, -6, 1], [0, 5, -5]]),
+according to the changes in $\lambda_{1}$ and $\mu_{2}$.
+Generator matrix $\underline{Q}_1$ is diagonalisable and yields 
+\begin{equation*} 
+ e^{\underline{Q}_{1}t}f_{t_1}= 
+ \begin{array}{|r|}
+ 0.123649-0.004205e^{-8.23606t}-0.009202e^{-3.76393t}\\
+ 0.123649+0.030433e^{-8.23606t}+0.025436e^{-3.76393t}\\
+ 0.123649-0.047022e^{-8.23606t}+0.102892e^{-3.76393t}
+ \end{array}
+ \end{equation*}
+% Matrix(3, 1, {(1, 1) = .1236492435-0.420579868e-2*exp(-8.236067978*t)-0.920294094e-2*exp(-3.763932022*t), (2, 1) = 0.3043344521e-1*exp(-8.236067978*t)+.1236492434+0.2543630324e-1*exp(-3.763932022*t), (3, 1) = .1028920075*exp(-3.763932022*t)-0.470222587e-1*exp(-8.236067978*t)+.1236492436})
+For the matrix above there is no flipping time and by taking $t\to\infty$, we have that
+$\underline{E}(X=1) = 0.123649243$.\\\\\\
+
+
+***Upper probability ($\overline{E}(X=1)$)***\\
+
+--- First Iteration ---\\
+In this case, we can directly find $\underline{Q}_{0}$, which is
+\begin{equation*} 
+ \overline{Q}_{0}= 
+ \begin{array}{|rrr|}
+  -3 & 3 & 0 \\
+  2 & -3 & 1 \\
+  0 & 5 & -5 \\
+ \end{array}
+ \end{equation*}
+which is diagonalisable and yields the following
+\begin{equation*} 
+ e^{\overline{Q}_{0}t}f= 
+ \begin{array}{|r|}
+  0.535714-0.24999e^{-4t}-0.28571e^{-7t}\\
+  0.535714+0.08333e^{-4t}+0.38095e^{-7t}\\
+  0.535714+0.416661e^{-4t}-0.95238e^{-7t}
+ \end{array}
+ \end{equation*}
+% eQ0tf:=Matrix(3, 1, {(1, 1) = -.2499999999*exp(-4.*t)-.2857142859*exp(-7.*t)+.5357142858, (2, 1) = .5357142852+0.8333333330e-1*exp(-4.*t)+.3809523811*exp(-7.*t), (3, 1) = -.9523809525*exp(-7.*t)+.5357142860+.4166666670*exp(-4.*t)})
+for the values above, the flipping time is $t_{1}:= 0.4620981202$, where $\lambda_{1}$ from $1$ becomes $3$ and $\mu_{2}$ from $5$ becomes $2$.\\\\
+The updated gamble at time $t_{1}$ is
+\begin{equation*}  
+ f_{t_1}= 
+ \begin{array}{|c|}
+  0.485092\\
+  0.563837\\
+  0.563837
+ \end{array}
+ %Matrix(3, 1, {(1, 1) = .4850924579, (2, 1) = .5638375230, (3, 1) = .5638375237})
+ \end{equation*}\\\\
+
+--- Second Iteration ---\\
+Now the generator matrix of the process is
+\begin{equation*} 
+ \overline{Q}_{1}= 
+ \begin{array}{|rrr|}
+  -3 & 3 & 0 \\
+  2 & -5 & 3 \\
+  0 & 2 & -2 
+ \end{array}
+ \end{equation*}
+ %Matrix([[-3, 3, 0], [2, -5, 3], [0, 2, -2]])
+according to the changes in $\lambda_{1}$ and $\mu_{2}$.
+Generator matrix $\overline{Q}_1$ is diagonalisable and yields 
+\begin{equation*} 
+ e^{\overline{Q}_{1}t}f_{t_1}= 
+ \begin{array}{|r|}
+ 0.547259-0.015856e^{-7.44948t}-0.046311e^{-2.55051t}\\
+ 0.547259+0.023516e^{-7.44948t}-0.006938e^{-2.55051t}\\
+ 0.547259-0.008630e^{-7.44948t}+0.025208e^{-2.55051t}
+ \end{array}
+ \end{equation*}
+% Matrix(3, 1, {(1, 1) = .5472596149-0.158557969e-1*exp(-7.449489743*t)-0.4631136002e-1*exp(-2.550510257*t), (2, 1) = 0.235167354e-1*exp(-7.449489743*t)+.5472596152-0.693882739e-2*exp(-2.550510257*t), (3, 1) = 0.2520871175e-1*exp(-2.550510257*t)-0.86308027e-2*exp(-7.449489743*t)+.5472596150})
+For the matrix above there is no flipping time and by taking $t\to\infty$, we have that
+$\overline{E}(X=1) = 0.547259615$.\\\\\\\\
+\textbf{Lower and Upper probabilities for states 1 and 2 when the state space is $\stateset:=\{0,1,2,3\}$}(The lower and upper probabilities of states 0 and 3 follow are computed similarly, due to monotonicity, to the respective ones of 0 and 2 for the state space is $\{0,1,2\}$)\\
+
+
+% State 0, i.e. $f=[1,0,0,0]^{T}$
+
+% -----------
+
+% Lower probability = 0.2105263158 -- No flipping time, Matrix([[-3, 3, 0], [2, -5, 3], [0, 2, -2]]), i.e $\lambda_{i}=\overline{\lambda}=3$ and $\mu_{i}=\underline{\mu}=2$ for all $i\in\stateset$\\
+
+% Upper probability = 0.8064516129 -- No flipping time-Matrix([[-1, 1, 0], [5, -6, 1], [0, 5, -5]]), i.e $\lambda_{i}=\underline{\lambda}=1$ and $\mu_{i}=\overline{\mu}=5$ for all $i\in\stateset$\\
+
+--- \textbf{State 1} ($f\coloneqq[0,1,0,0]^T$) ---\\
+
+***Lower probability ($\underline{E}(X=1)$)***\\
+
+--- First Iteration ---\\
+Again we encounter the problem that we do not know directly which generator matrix $Q$ minimises $Qf$.
+We know that the form of the initial generator matrix, $\underline{Q}_{0}$, should be
+\begin{equation*} 
+ \underline{Q}_{0}= 
+ \begin{array}{|rrrr|}
+  -1 & 1 & 0 & 0 \\
+  5 & -8 & 3 & 0 \\
+  0 & 2 & ? & ? \\
+  0 & 0 & ? & ? 
+ \end{array}
+ \end{equation*}
+ where for the unknown values (?) we test the possible combinations of extreme points $\{\underline{\lambda},\overline{\lambda}\}\times\{\underline{\mu},\overline{\mu}\}$.\\\\\\
+We start with the generator matrix 
+\begin{equation*} 
+ Q_{0a}= 
+ \begin{array}{|rrrr|}
+  -1 & 1 & 0 & 0 \\
+  5 & -8 & 3 & 0 \\
+  0 & 2 & -5 & 3 \\
+  0 & 0 & 5 & -5 
+ \end{array}
+ \end{equation*}
+% Q0a := Matrix([[-1.0, 1.0, 0., 0.], [5.0, -8.0, 3.0, 0.], [0., 2.0, -5.0, 3.0], [0., 0., 5.0, -5.0]])
+% Eigenvectors and their inverses
+% [[-0.5         0.31514304 -0.07636804  0.10298864]
+%  [-0.5        -0.02596395  0.73221067 -0.65188641]
+%  [-0.5        -0.58510792 -0.50435412 -0.31730256]
+%  [-0.5        -0.746766    0.45128968  0.68099672]]
+% [[-1.19047619 -0.23809524 -0.35714286 -0.21428571]
+%  [ 1.04167794 -0.01716431 -0.58020701 -0.44430662]
+%  [-0.33786726  0.64788884 -0.66940858  0.35938699]
+%  [ 0.49211336 -0.62298522 -0.45485258  0.58572444]]
+which is diagonalisable and yields the following
+\begin{equation*} 
+ e^{Q_{0a}t}f= 
+ \begin{array}{|r|}
+  0.119047-0.04947e^{-10.58791t}-0.06416e^{-7.32969t}-0.00540e^{-1.08238t}\\
+  0.119047+0.47439e^{-10.58791t}+0.40611e^{-7.32969t}+ 0.00044e^{-1.08238t}  \\
+  0.119047-0.32676e^{-10.58791t}+ 0.19767e^{-7.32969t}+ 0.01004e^{-1.08238t}  \\
+  0.119047+0.29238e^{-10.58791t}- 0.42425e^{-7.32969t}+ 0.01281e^{-1.08238t}  
+ \end{array}
+ \end{equation*}
+% eQ0tf:=[[ -0.0494780026757232$e^{-10.5879198806914t}$ - 0.0641604019326391$e$(-7.32969229967929*t) - 0.00540921443925667$e$(-1.08238781962931*t) + 0.119047619047619$e$(-2.22044604925031e-16*t)]
+% [ 0.474391125511469$e$(-10.5879198806914*t) + 0.406115602057355$e$(-7.32969229967929*t) + 0.000445653383557735$e$(-1.08238781962931*t) + 0.119047619047619$e$(-2.22044604925031e-16*t)]
+% [ -0.326765403852027$e$(-10.5879198806914*t) + 0.197674808314207$e$(-7.32969229967929*t) + 0.0100429764902019$e$(-1.08238781962931*t) + 0.119047619047619$e$(-2.22044604925031e-16*t)]
+% [ 0.292385548494654$e$(-10.5879198806914*t) - 0.424250894294965$e$(-7.32969229967929*t) + 0.012817726752692$e$(-1.08238781962931*t) + 0.119047619047619$e$(-2.22044604925031e-16*t)]]
+for the values above, the flipping time is $t_{1}:= 0.5682803520$, where $\lambda_{1}$ from $3$ becomes $1$ and $\mu_{2}$ from $2$ becomes $5$.\\\\
+The updated gamble at time $t_{1}:= 0.5682803520$ is
+\begin{equation*}  
+ f_{t_1}= 
+ \begin{array}{|c|}
+  0.115006\\
+  0.126749\\
+  0.126749\\
+  0.120102  
+ \end{array}
+ \end{equation*}\\\\\\
+% t1:= 0.5682803520, f(1) and f(2), hence l1 and m2 change
+%updated gamble = Matrix(4, 1, {(1, 1) = .1150068066+0.1382563053e-14*I, (2, 1) = .1267495599-0.4094226054e-13*I, (3, 1) = .1267491807+0.7771686030e-13*I, (4, 1) = .1201029295-0.9171760687e-13*I})
+We take now generator matrix 
+\begin{equation*} 
+ Q_{0b}= 
+ \begin{array}{|rrrr|}
+  -1 & 1 & 0 & 0 \\
+  5 & -8 & 3 & 0 \\
+  0 & 2 & -5 & 3 \\
+  0 & 0 & 2 & -2 
+ \end{array}
+ \end{equation*}
+ which is also diagonalisable and yields
+ % Q0b := Matrix([[-1,1,0,0],[5,-8,3,0],[0,2,-5,3],[0,0,2,-2]])
+\begin{equation*} 
+ e^{Q_{0b}t}f= 
+ \begin{array}{|r|}
+  0.10256-0.07790e^{-9.97710t}- 0.04501e^{-5.28298t}+ 0.02035e^{-0.73991t}\\
+  0.10256+0.69936e^{-9.97710t}+ 0.19277e^{-5.28298t}+ 0.00529e^{-0.73991t}\\
+  0.10256-0.33106e^{-9.97710t}+ 0.24960e^{-5.28298t}- 0.02110e^{-0.73991t}\\
+  0.10256+0.08300e^{-9.97710t}- 0.15206e^{-5.28298t}- 0.03350e^{-0.73991t}  
+ \end{array}
+ \end{equation*}
+ % eQ0tf:=[[ -0.0779054769043385$e$(-9.97710623307476*t) - 0.0450100230586763$e$(-5.28298012668265*t) + 0.0203513973989123$e$(-0.739913640242596*t) + 0.102564102564102$e$(2.57459787482833e-17*t)]
+ %[ 0.699365742308599$e$(-9.97710623307476*t) + 0.192777034261839$e$(-5.28298012668265*t) + 0.00529312086545942$e$(-0.739913640242596*t) + 0.102564102564102$e$(2.57459787482833e-17*t)]
+ %[ -0.331064327931864$e$(-9.97710623307476*t) + 0.249609716167326$e$(-5.28298012668265*t) - 0.0211094907995641$e$(-0.739913640242596*t) + 0.102564102564102$e$(2.57459787482833e-17*t)]
+ %[ 0.0830036151603954$e$(-9.97710623307476*t) - 0.152062885875309$e$(-5.28298012668265*t) - 0.0335048318491888$e$(-0.739913640242596*t) + 0.102564102564102$e$(2.57459787482833e-17*t)]]
+for the values above, the flipping time is $t_{1}:= 0.6403990997$, where $\lambda_{0}$ from $1$ becomes $3$ and $\mu_{1}$ from $5$ becomes $2$.\\\\
+The updated gamble at time $t_{1}:= 0.6403990997$ is
+\begin{equation} \label{eq:ind_s1_4_f1}
+ f_{t_1}= 
+ \begin{array}{|c|}
+  0.113576\\
+  0.113576\\
+  0.097336\\
+  0.076682  
+ \end{array}
+ \end{equation}\\\\\\
+ % t1:= 0.6403990997, f(0) and f(1), hence l0 and m1 change
+%updated gamble = Matrix(4, 1, {(1, 1) = .1135766323-0.2733214480e-12*I, (2, 1) = .1135766323+0.2173956598e-11*I, (3, 1) = 0.9733649580e-1-0.4689821958e-12*I, (4, 1) = 0.7668242781e-1-0.4616713694e-13*I})
+We take now generator matrix 
+\begin{equation*} 
+ Q_{0c}= 
+ \begin{array}{|rrrr|}
+  -1 & 1 & 0 & 0 \\
+  5 & -8 & 3 & 0 \\
+  0 & 2 & -3 & 1 \\
+  0 & 0 & 5 & -5 
+ \end{array}
+ \end{equation*}
+ which is also diagonalisable and yields
+ % Q0c = Matrix([[-1,1,0,0],[5,-8,3,0],[0,2,-3,1],[0,0,5,-5]])
+\begin{equation*} 
+ e^{Q_{0c}t}f= 
+ \begin{array}{|r|}
+  0.12820-0.08861e^{-9.65331t}- 0.01960e^{-6t}- 0.01998e^{-1.34668t}\\
+  0.12820+0.76682e^{-9.65331t}+ 0.09803e^{-6t}+ 0.00692e^{-1.34668t}\\
+  0.12820-0.27490e^{-9.65331t}+ 0.09803e^{-6t}+ 0.04866e^{-1.34668t}\\
+  0.12820+0.29538e^{-9.65331t}- 0.49019e^{-6t}+ 0.06660e^{-1.34668t}  
+ \end{array}
+ \end{equation*}
+%  eQ0tf:=[[ -0.0886167816488844$e$(-9.65331193145905*t) - 0.0196078431372549$e$(-6.0*t) - 0.0199805034189889$e$(-1.34668806854096*t) + 0.128205128205128$e$(2.22044604925031e-16*t)]
+% [ 0.766828653969792$e$(-9.65331193145905*t) + 0.0980392156862746$e$(-6.0*t) + 0.00692700213880534$e$(-1.34668806854096*t) + 0.128205128205128$e$(2.22044604925031e-16*t)]
+% [ -0.274907684916169$e$(-9.65331193145905*t) + 0.0980392156862744$e$(-6.0*t) + 0.0486633410247667$e$(-1.34668806854096*t) + 0.128205128205128$e$(2.22044604925031e-16*t)]
+% [ 0.295389272162948$e$(-9.65331193145905*t) - 0.490196078431372$e$(-6.0*t) + 0.0666016780632961$e$(-1.34668806854096*t) + 0.128205128205128$e$(2.22044604925031e-16*t)]]
+for the values above, the flipping time is $t_{1}:= 0.38731403185$, where $\lambda_{1}$ from $3$ becomes $1$ and $\mu_{2}$ from $2$ becomes $5$.\\\\
+The updated gamble at time $t_{1}:= 0.38731403185$ is
+\begin{equation*} 
+ f_{t_1}= 
+ \begin{array}{|c|}
+  0.112318\\
+  0.16015\\
+  0.16015\\
+  0.126776  
+ \end{array}
+ \end{equation*}\\\\\\
+ % t1:= 0.38731403185, f(1) and f(2), hence l1 and m2 change updated gamble = Matrix(4, 1, {(1, 1) = .1123183253, (2, 1) = .1601501863, (3, 1) = .1601501872, (4, 1) = .1267763536})
+ The last generator matrix we have to consider is
+\begin{equation*} 
+ Q_{0d}= 
+ \begin{array}{|rrrr|}
+  -1 & 1 & 0 & 0 \\
+  5 & -8 & 3 & 0 \\
+  0 & 2 & -3 & 1 \\
+  0 & 0 & 2 & -2 
+ \end{array}
+ \end{equation*}
+ which is also diagonalisable and yields
+ % Q0d = np.array([[-1,1,0,0],[5,-8,3,0],[0,2,-3,1],[0,0,2,-2]])
+\begin{equation*} 
+ e^{Q_{0d}t}f= 
+ \begin{array}{|r|}
+ 0.12121-0.09547e^{-9.54138t}- 0.02573e^{-3.45861t}\\
+  0.12121+0.81551e^{-9.54138t}+ 0.06326e^{-3.45861t}\\
+  0.12121-0.25987e^{-9.54138t}+ 0.13866e^{-3.45861t}\\
+  0.12121+0.06892e^{-9.54138t}- 0.19013e^{-3.45861t}
+ \end{array}
+ \end{equation*}
+%  eQ0tf:=[[ -0.0954785730647727$e$(-9.54138126514911*t) - 0.0257335481473485$e$(-3.45861873485089*t) - 2.157944886736e-17$e$(-1.0*t) + 0.121212121212121$e$(5.1635269239109e-16*t)]
+% [ 0.815518895198621$e$(-9.54138126514911*t) + 0.0632689835892584$e$(-3.45861873485089*t) + 8.92606466687637e-33$e$(-1.0*t) + 0.121212121212121$e$(5.1635269239109e-16*t)]
+% [ -0.25987756037013$e$(-9.54138126514911*t) + 0.138665439158009$e$(-3.45861873485089*t) + 3.59657481122666e-17$e$(-1.0*t) + 0.121212121212121$e$(5.1635269239109e-16*t)]
+% [ 0.0689204142405846$e$(-9.54138126514911*t) - 0.190132535452706$e$(-3.45861873485089*t) + 7.19314962245332e-17$e$(-1.0*t) + 0.121212121212121$e$(5.1635269239109e-16*t)]]
+for the values above, the flipping time is $t_{1}:= 0.4369206243$, where $\lambda_{1}$ from $3$ becomes $1$ and $\mu_{2}$ from $2$ becomes $5$.\\\\
+The updated gamble at time $t_{1}:= 0.4369206243$ is
+\begin{equation*} 
+ f_{t_1}= 
+ \begin{array}{|c|}
+  0.114056\\
+  0.147789\\
+  0.147789\\
+  0.080324  
+ \end{array}
+ \end{equation*}\\\\\\
+% t1:= 0.4369206243, f(1) and f(2), hence l1 and m2 change updated gamble = Matrix(4, 1, {(1, 1) = .1140567187, (2, 1) = .1477893305, (3, 1) = .1477893302, (4, 1) = 0.8032410728e-1})
+
+--- Second Iteration ---\\
+The minimum, row-wise, vector is the $f_{t_1}$ from \eqref{eq:ind_s1_4_f1} associated with generator matrix $\underline{Q}_{0}=Q_{0b}$.
+Now the generator matrix of the process is
+\begin{equation*} 
+ \underline{Q}_{1}= 
+ \begin{array}{|rrrr|}
+  -3 & 3 & 0 & 0 \\
+  2 & -5 & 3 & 0 \\
+  0 & 2 & -5 & 3 \\
+  0 & 0 & 2 & -2 
+ \end{array}
+ \end{equation*}
+according to the changes in $\lambda_{0}$ and $\mu_{1}$, at flipping time point $t_{1}\coloneqq 0.6403990997$.
+Generator matrix $\underline{Q}_1$ is diagonalisable and yields 
+\begin{equation*} 
+ e^{\underline{Q}_{1}t}f_{t_1}= 
+ \begin{array}{|r|}
+ 0.093754+0.002527e^{-8.46410t}-0.009294e^{-5t}+0.028864e^{-1.53589t}\\
+ 0.093754-0.000460e^{-8.46410t}+0.006196e^{-5t}+0.014086e^{-1.53589t}\\
+ 0.093754+0.000363e^{-8.46410t}+0.006196e^{-5t}-0.002976e^{-1.53589t}\\
+ 0.093754-0.000112e^{-8.46410t}-0.004130e^{-5t}-0.012828e^{-1.53589t}  
+ \end{array}
+ \end{equation*}
+% (from Q0b) Q1 := Matrix([[-3,3,0,0],[2,-5,3,0],[0,2,-5,3],[0,0,2,-2]])
+% Matrix(4, 1, {(1, 1) = 0.9375407882e-1+0.25274635e-3*exp(-8.464101615*t)-0.929433068e-2*exp(-5.*t)+0.2886413789e-1*exp(-1.535898385*t), (2, 1) = -0.46034388e-3*exp(-8.464101615*t)+0.9375407874e-1+0.619622048e-2*exp(-5.*t)+0.1408667698e-1*exp(-1.535898385*t), (3, 1) = 0.619622043e-2*exp(-5.*t)+0.36306168e-3*exp(-8.464101615*t)+0.9375407880e-1-0.2976865208e-2*exp(-1.535898385*t), (4, 1) = -0.1282850569e-1*exp(-1.535898385*t)-0.413081362e-2*exp(-5.*t)-0.11233166e-3*exp(-8.464101615*t)+0.9375407877e-1})
+% no flipping time t2
+%lower prob = 0.0937540788
+For the matrix above there is no flipping time and by taking $t\to\infty$, we have that
+$\underline{E}(X=1) = 0.0937540788$.\\\\\\
+
+
+***Upper probability ($\overline{E}(X=1)$)***\\
+
+--- First Iteration ---
+
+Again we encounter the problem that we do not know directly which generator matrix $Q$ minimises $Qf$.
+We know that the form of the initial generator matrix should be
+\begin{equation*} 
+ \overline{Q}_{0}= 
+ \begin{array}{|rrrr|}
+  -3 & 3 & 0 & 0 \\
+  2 & -3 & 1 & 0 \\
+  0 & 5 & ? & ? \\
+  0 & 0 & ? & ? 
+ \end{array}
+ \end{equation*}\\\\
+We start with the generator matrix 
+\begin{equation*} 
+ Q_{0a}= 
+ \begin{array}{|rrrr|}
+  -3 & 3 & 0 & 0 \\
+  2 & -3 & 1 & 0 \\
+  0 & 5 & -8 & 3 \\
+  0 & 0 & 5 & -5 
+ \end{array}
+ \end{equation*}
+% Q0a := Matrix([[-3,3,0,0],[2,-3,1,0],[0,5,-8,3],[0,0,5,-5])
+which is diagonalisable and yields the following
+\begin{equation*} 
+ e^{Q_{0a}t}f= 
+ \begin{array}{|r|}
+  0.50335-0.02255e^{-11.12559t}- 0.53512e^{-5.38945t}+ 0.05432e^{-2.48495t}\\
+  0.50335+0.06109e^{-11.12559t}+ 0.42622e^{-5.38945t}+ 0.00932e^{-2.48495t}\\
+  0.50335-0.45132e^{-11.12559t}+ 0.05181e^{-5.38945t}- 0.10385e^{-2.48495t}\\
+  0.50335+0.36838e^{-11.12559t}- 0.66527e^{-5.38945t}- 0.20646e^{-2.48495t}  
+ \end{array}
+ \end{equation*}
+% eQ0tf:= [[ -0.0225565178214933$e$(-11.1255911947135*t) - 0.535128593563363$e$(-5.38945499254273*t) + 0.0543294066868703$e$(-2.48495381274377*t) + 0.503355704697986$e$(1.04980154561764e-15*t)]
+%[ 0.0610950141979078$e$(-11.1255911947135*t) + 0.426221896514117$e$(-5.38945499254273*t) + 0.00932738458998848$e$(-2.48495381274377*t) + 0.503355704697987$e$(1.04980154561764e-15*t)]
+% [ -0.45132007376443$e$(-11.1255911947135*t) + 0.0518191485700378$e$(-5.38945499254273*t) - 0.103854779503595$e$(-2.48495381274377*t) + 0.503355704697986$e$(1.04980154561764e-15*t)]
+% [ 0.368388992522002$e$(-11.1255911947135*t) - 0.665277754326795$e$(-5.38945499254273*t) - 0.206466942893193$e$(-2.48495381274377*t) + 0.503355704697986$e$(1.04980154561764e-15*t)]]
+for the values above, the flipping time is $t_{1}:= 1.054169799$, where $\lambda_{2}$ from $3$ becomes $1$ and $\mu_{3}$ from $5$ becomes $2$.\\\\
+The updated gamble at time $t_{1}:= 1.054169799$ is
+\begin{equation*}  
+ f_{t_1}= 
+ \begin{array}{|c|}
+  0.505488\\
+  0.505488\\
+  0.495964\\
+  0.486052  
+ \end{array}
+ \end{equation*}\\\\\\
+% t1:= 1.054169799, f(0) and f(1), hence l0 and m1 change
+%updated gamble = Matrix(4, 1, {(1, 1) = .5054884511-0.4470076635e-13*I, (2, 1) = .5054884512+0.4812107722e-13*I, (3, 1) = .4959644775-0.8410133317e-13*I, (4, 1) = .4860529374-0.1250249744e-13*I})
+We consider now the generator matrix 
+\begin{equation*} 
+ Q_{0b}= 
+ \begin{array}{|rrrr|}
+  -3 & 3 & 0 & 0 \\
+  2 & -3 & 1 & 0 \\
+  0 & 5 & -8 & 3 \\
+  0 & 0 & 2 & -2 
+ \end{array}
+ \end{equation*}
+% Q0b := Matrix([[-3.0, 3.0, 0., 0.], [2.0, -3.0, 1.0, 0.], [0., 5.0, -8.0, 3.0], [0., 0., 2.0, -2.0]])
+which is diagonalisable and yields the following
+\begin{equation*} 
+ e^{Q_{0b}t}f= 
+ \begin{array}{|r|}
+  0.46153-0.05349e^{-9.65331t}- 0.52941e^{-5t}+ 0.12136e^{-1.34668t}\\
+  0.46153+0.11863e^{-9.65331t}+ 0.35294e^{-5t}+ 0.06688e^{-1.34668t}\\
+  0.46153-0.68232e^{-9.65331t}+ 0.35294e^{-5t}- 0.13214e^{-1.34668t}\\
+  0.46153+0.17830e^{-9.65331t}- 0.23529e^{-5t}- 0.40455e^{-1.34668t}  
+ \end{array}
+ \end{equation*}
+% eQ0tf:= [[ -0.0534928933043711$e$(-9.65331193145904*t) - 0.529411764705882$e$(-5.0*t) + 0.121366196471792$e$(-1.34668806854096*t) + 0.461538461538462$e$(1.37435128030003e-16*t)]
+% [ 0.118634968423412$e$(-9.65331193145904*t) + 0.352941176470588$e$(-5.0*t) + 0.0668853935675382$e$(-1.34668806854096*t) + 0.461538461538461$e$(1.37435128030003e-16*t)]
+% [ -0.682329664291011$e$(-9.65331193145904*t) + 0.352941176470589$e$(-5.0*t) - 0.132149973718039$e$(-1.34668806854096*t) + 0.461538461538461$e$(1.37435128030003e-16*t)]
+% [ 0.178309644347903$e$(-9.65331193145904*t) - 0.235294117647059$e$(-5.0*t) - 0.404553988239305$e$(-1.34668806854096*t) + 0.461538461538462$e$(1.37435128030003e-16*t)]]
+for the values above, the flipping time is $t_{1}:= 0.7637751743$, where $\lambda_{0}$ from $3$ becomes $1$ and $\mu_{1}$ from $2$ becomes $5$.\\\\
+The updated gamble at time $t_{1}:= 0.7637751743$ is
+\begin{equation*} 
+ f_{t_1}= 
+ \begin{array}{|c|}
+  0.493273\\
+  0.493273\\
+  0.421611\\
+  0.311849  
+ \end{array}
+ \end{equation*}\\\\\\
+% t1:= 0.7637751743, f(0) and f(1), hence l0 and m1 change
+%updated gamble = Matrix(4, 1, {(1, 1) = .4932736900, (2, 1) = .4932736895, (3, 1) = .4216117632, (4, 1) = .3118494387})
+We consider now the generator matrix 
+\begin{equation*} 
+ Q_{0c}= 
+ \begin{array}{|rrrr|}
+  -3 & 3 & 0 & 0 \\
+  2 & -3 & 1 & 0 \\
+  0 & 5 & -6 & 1 \\
+  0 & 0 & 5 & -5 
+ \end{array}
+ \end{equation*}
+% Q0c = Matrix([[-3.0, 3.0, 0., 0.], [2.0, -3.0, 1.0, 0.], [0., 5.0, -6.0, 1.0], [0., 0., 5.0, -5.0]])
+which is diagonalisable and yields the following
+\begin{equation*} 
+ e^{Q_{0c}t}f= 
+ \begin{array}{|r|}
+  0.52447-0.08031e^{-8.53662t}- 0.42431e^{-5.30677t}- 0.01984e^{-3.15659t}\\
+  0.52447+0.14821e^{-8.53662t}+ 0.32626e^{-5.30677t}+ 0.00103e^{-3.15659t}\\
+  0.52447-0.66001e^{-8.53662t}+ 0.09600e^{-5.30677t} + 0.03952e^{-3.15659t}\\
+  0.52447+0.93310e^{-8.53662t}- 1.56479e^{-5.30677t}+ 0.10721e^{-3.15659t}  
+ \end{array}
+ \end{equation*}
+% [[ -0.0803118712920433$e$(-8.53662962120579*t) - 0.424319164164894$e$(-5.30677486612787*t) - 0.0198444890185866$e$(-3.15659551266633*t) + 0.524475524475524$e$(8.88178419700125e-16*t)]
+% [ 0.148219028509999$e$(-8.53662962120579*t) + 0.326269594370655$e$(-5.30677486612787*t) + 0.00103585264382229$e$(-3.15659551266633*t) + 0.524475524475524$e$(8.88178419700125e-16*t)]
+% [ -0.660010121090719$e$(-8.53662962120579*t) + 0.0960078284538271$e$(-5.30677486612787*t) + 0.0395267681613671$e$(-3.15659551266633*t) + 0.524475524475524$e$(8.88178419700125e-16*t)]
+% [ 0.933106080904353$e$(-8.53662962120579*t) - 1.56479293212059$e$(-5.30677486612787*t) + 0.107211326740718$e$(-3.15659551266633*t) + 0.524475524475524$e$(8.88178419700125e-16*t)]]
+for the values above, the flipping time is $t_{1}:= 0.910933094$, where $\lambda_{1}$ from $1$ becomes $3$ and $\mu_{2}$ from $5$ becomes $2$.\\\\
+The updated gamble at time $t_{1}:= 0.910933094$ is
+\begin{equation} \label{eq:ind_s1_4_f1_u}
+ f_{t_1}= 
+ \begin{array}{|c|}
+  0.51994\\
+  0.52719\\
+  0.52719\\
+  0.51846  
+ \end{array}
+ \end{equation}\\\\\\
+% t1:= .910933094, f(1) and f(2), hence l1 and m2 change
+%updated gamble:=Matrix(4, 1, {(1, 1) = .5199478686-0.1009007918e-14*I, (2, 1) = .5271911782-0.2412942452e-15*I, (3, 1) = .5271911773+0.6837253339e-14*I, (4, 1) = .5184668566-0.1133711177e-13*I})
+We consider now the generator matrix 
+\begin{equation*} 
+ Q_{0d}= 
+ \begin{array}{|rrrr|}
+  -3 & 3 & 0 & 0 \\
+  2 & -3 & 1 & 0 \\
+  0 & 5 & -6 & 1 \\
+  0 & 0 & 2 & -2 
+ \end{array}
+ \end{equation*}
+% Q0d = Matrix([[-3.0, 3.0, 0., 0.], [2.0, -3.0, 1.0, 0.], [0., 5.0, -6.0, 1.0], [0., 0., 2.0, -2.0]])
+which is diagonalisable and yields the following
+\begin{equation*} 
+ e^{Q_{0d}t}f= 
+ \begin{array}{|r|}
+  0.50847-0.16212e^{-7.77016t}- 0.40086e^{-4.56735t}+ 0.05451e^{-1.66248t}\\
+  0.50847+0.25778e^{-7.77016t}+ 0.20943e^{-4.56735t}+ 0.02430e^{-1.66248t}\\
+  0.50847-0.90542e^{-7.77016t}+ 0.47347e^{-4.56735t} - 0.07652e^{-1.66248t}\\
+  0.50847+0.31383e^{-7.77016t}- 0.36884e^{-4.56735t}- 0.45345e^{-1.66248t}  
+ \end{array}
+ \end{equation*}
+% eQ0tf:= [[ -0.162123267975571$e$(-7.77016191034857*t) - 0.400868827030092$e$(-4.56735537309151*t) + 0.0545175187344769$e$(-1.66248271655993*t) + 0.508474576271187$e$(-1.55504366571219e-16*t)]
+% [ 0.257784745892768$e$(-7.77016191034857*t) + 0.209434636650168$e$(-4.56735537309151*t) + 0.0243060411858769$e$(-1.66248271655993*t) + 0.508474576271187$e$(-1.55504366571219e-16*t)]
+% [ -0.905428439975424$e$(-7.77016191034857*t) + 0.473479150995075$e$(-4.56735537309151*t) - 0.0765252872908373$e$(-1.66248271655993*t) + 0.508474576271186$e$(-1.55504366571219e-16*t)]
+% [ 0.313831207526975$e$(-7.77016191034857*t) - 0.368845821624554$e$(-4.56735537309151*t) - 0.453459962173608$e$(-1.66248271655993*t) + 0.508474576271187$e$(-1.55504366571219e-16*t)]]
+for the values above, the flipping time is $t_{1}:= 1.043009708$, where $\lambda_{0}$ from $3$ becomes $1$ and $\mu_{1}$ from $2$ becomes $5$.\\\\
+The updated gamble at time $t_{1}:= 1.043009708$ is
+\begin{equation*} 
+ f_{t_1}= 
+ \begin{array}{|c|}
+  0.51463\\
+  0.51463\\
+  0.49872\\
+  0.42535  
+ \end{array}
+ \end{equation*}\\\\\\
+% t1:= 1.043009708, f(0) and f(1), hence l0 and m1 change
+% updated gamble:=
+% Matrix(4, 1, {(1, 1) = `+`(.5146315653, `-`(`*`(0.5469974431e-12\
+%  , `*`(I)))), (2, 1) = `+`(.5146315645, `*`(0.5449909250e-12, 
+%    `*`(I))), (3, 1) = `+`(.4987284326, `-`(`*`(0.9650839408e-12,\
+%    `*`(I)))), (4, 1) = `+`(.4253503926, `*`(0.1269082515e-12, 
+%    `*`(I)))})
+
+
+--- Second Iteration ---
+
+The maximum, row-wise, vector is the $f_{t_1}$ from \eqref{eq:ind_s1_4_f1_u} associated with generator matrix $\overline{Q}_{0}=Q_{0c}$.
+Now the generator matrix of the process is
+\begin{equation*} 
+ \overline{Q}_{1}= 
+ \begin{array}{|rrrr|}
+  -3 & 3 & 0 & 0 \\
+  2 & -5 & 3 & 0 \\
+  0 & 2 & -3 & 1 \\
+  0 & 0 & 5 & -5 
+ \end{array}
+ \end{equation*}
+ % (from Q0c) Q1:= Matrix([[-3.0, 3.0, 0., 0.], [2.0, -5.0, 3.0, 0.], [0., 2.0, -3.0, 1.0], [0., 0., 5.0, -5.0]])
+according to the changes in $\lambda_{1}$ and $\mu_{2}$, at flipping time point $t_{1}\coloneqq 0.910933094$.
+Generator matrix $\overline{Q}_1$ is diagonalisable and yields 
+\begin{equation*} 
+ e^{\underline{Q}_{1}t}f_{t_1}= 
+ \begin{array}{|r|}
+ 0.525043-0.00008e^{-8t}-0.00280e^{-5.73205t}-0.00221e^{-2.26794t}\\
+ 0.525043+0.00013e^{-8t}+0.00255e^{-5.73205t}-0.00053e^{-2.26794t}\\
+ 0.525043-0.00008e^{-8t}+0.00124e^{-5.73205t}+0.00098e^{-2.26794t}\\
+ 0.525043+0.00013e^{-8t}-0.00850e^{-5.73205t}+0.00179e^{-2.26794t}  
+ \end{array}
+ \end{equation*}
+% eQ1tf := Matrix(4, 1, {(1, 1) = .5250432444-0.807774e-4*exp(-8.*t)-0.28032829e-2*exp(-5.732050808*t)-0.22113152e-2*exp(-2.267949192*t), (2, 1) = 0.1346288e-3*exp(-8.*t)+.5250432444+0.255290329e-2*exp(-5.732050808*t)-0.53959833e-3*exp(-2.267949192*t), (3, 1) = 0.124590353e-2*exp(-5.732050808*t)-0.807773e-4*exp(-8.*t)+.5250432444+0.98280660e-3*exp(-2.267949192*t), (4, 1) = 0.179866133e-2*exp(-2.267949192*t)-0.85096779e-2*exp(-5.732050808*t)+0.1346289e-3*exp(-8.*t)+.5250432444})
+For the matrix above there the flipping time is $t_{2}=0.715044466$, where $\lambda_{2}$ from 1 becomes 3 and $\mu_{3}$ from 5 becomes 2.
+The updated gamble is
+\begin{equation*} 
+ f_{t_2}= 
+ \begin{array}{|c|}
+  0.524559\\
+  0.524979\\
+  0.525257\\
+  0.525257  
+ \end{array}
+ \end{equation*}
+% t2:= 0.71504446605, , f(n-1) and f(n), hence change in l2 and m3
+% updated Matrix(4, 1, {(1, 1) = .5245595801, (2, 1) = .5249794444, (3, 1) = .5252578238, (4, 1) = .5252578238})
+\\\\
+
+--- Third Iteration ---
+
+According to the change in the second iteration, the generator matrix of the process is now
+\begin{equation*} 
+ \overline{Q}_{2}= 
+ \begin{array}{|rrrr|}
+  -3 & 3 & 0 & 0 \\
+  2 & -5 & 3 & 0 \\
+  0 & 2 & -5 & 3 \\
+  0 & 0 & 2 & -2 
+ \end{array}
+ \end{equation*}
+ % Matrix([[-3.0, 3.0, 0., 0.], [2, -5.0, 3.0, 0.], [0., 2.0, -5.0, 3.0], [0., 0., 2.0, -2.0]])
+which is diagonalisable and yields 
+\begin{equation*} 
+ e^{\overline{Q}_{2}t}f_{t_2}= 
+ \begin{array}{|r|}
+ 0.52512+0.000005e^{-8.46410t}-0.00012e^{-5t}-0.00044e^{-1.53589t}\\
+ 0.52512-0.000010e^{-8.46410t}+0.00008e^{-5t}-0.00021e^{-1.53589t}\\
+ 0.52512+0.000007e^{-8.46410t}+0.00008e^{-5t}+0.00004e^{-1.53589t}\\
+ 0.52512-0.000002e^{-8.46410t}-0.00005e^{-5t}+0.00019e^{-1.53589t}  
+ \end{array}
+ \end{equation*}
+% eQ1tf := Matrix(4, 1, {(1, 1) = .5251204931+0.55208e-5*exp(-8.464101615*t)-0.1259596e-3*exp(-5.*t)-0.4404738e-3*exp(-1.535898385*t), (2, 1) = -0.100554e-4*exp(-8.464101615*t)+.5251204929+0.839732e-4*exp(-5.*t)-0.21496611e-3*exp(-1.535898385*t), (3, 1) = 0.839730e-4*exp(-5.*t)+0.79300e-5*exp(-8.464101615*t)+.5251204930+0.4542711e-4*exp(-1.535898385*t), (4, 1) = 0.19576631e-3*exp(-1.535898385*t)-0.5598204e-4*exp(-5.*t)-0.245342e-5*exp(-8.464101615*t)+.5251204929})
+For the matrix above there is no flipping time and by taking $t\to\infty$, we have that
+$\overline{E}(X=1) = 0.525120493$.
+%no other flip, up prob = 0.525120493
+\\\\\\
+
+
+--- \textbf{State 2} ($f\coloneqq[0,0,1,0]^T$)---\\
+
+***Lower probability ($\underline{E}(X=2)$)***\\
+
+--- First Iteration ---\\
+Again we encounter the problem that we do not know directly which generator matrix $Q$ minimises $Qf$.
+We know that the form of the initial generator matrix should be
+\begin{equation*} 
+ \underline{Q}_{0}= 
+ \begin{array}{|rrrr|}
+  ? & ? & 0 & 0 \\
+  ? & ? & 1 & 0 \\
+  0 & 5 & -8 & 3 \\
+  0 & 0 & 2 & -2 
+ \end{array}
+ \end{equation*}
+ where for the unknown values we test the possible combinations of extreme points $\{\underline{\lambda},\overline{\lambda}\}\times\{\underline{\mu},\overline{\mu}\}$.\\\\\\
+We start with the generator matrix 
+\begin{equation*} 
+ Q_{0a}= 
+ \begin{array}{|rrrr|}
+  -1 & 1 & 0 & 0 \\
+  5 & -6 & 1 & 0 \\
+  0 & 5 & -8 & 3 \\
+  0 & 0 & 2 & -2 
+ \end{array}
+ \end{equation*}
+% Q0a := Matrix([[-1.0, 1.0, 0., 0.], [5.0, -6.0, 1.0, 0.], [0., 5.0, -8.0, 3.0], [0., 0., 2.0, -2.0]])
+which is diagonalisable and yields the following
+\begin{equation*} 
+ e^{Q_{0a}t}f= 
+ \begin{array}{|r|}
+  0.03076+0.02032e^{-10.13248t}-0.03211e^{-5.7523t}-0.01897e^{-1.1152t}\\
+  0.03076-0.18557e^{-10.13248t}+0.15262e^{-5.7523t}+ 0.00218e^{-1.1152t}  \\
+  0.03076+0.66529e^{-10.13248t}+ 0.19838e^{-5.7523t}+ 0.10554e^{-1.1152t}  \\
+  0.03076-0.16361e^{-10.13248t}- 0.10573e^{-5.7523t}+ 0.23858e^{-1.1152t}  
+ \end{array}
+ \end{equation*}
+% eQ0tf:=[[ 0.0203207627667553$e$(-10.1324858863621*t) - 0.0321157428973881$e$(-5.75230775846046*t) - 0.018974250638598$e$(-1.11520635517743*t) + 0.0307692307692308$e$(3.87907619831211e-16*t)]
+%  [ -0.185579079167505$e$(-10.1324858863621*t) + 0.152623894139978$e$(-5.75230775846046*t) + 0.00218595425829589$e$(-1.11520635517743*t) + 0.0307692307692308$e$(3.87907619831211e-16*t)]
+%  [ 0.665299111630016$e$(-10.1324858863621*t) + 0.198382468938967$e$(-5.75230775846046*t) + 0.105549188661786$e$(-1.11520635517743*t) + 0.0307692307692308$e$(3.87907619831211e-16*t)]
+%  [ -0.163615189974248$e$(-10.1324858863621*t) - 0.105738911469438$e$(-5.75230775846046*t) + 0.238584870674455$e$(-1.11520635517743*t) + 0.0307692307692308$e$(3.87907619831211e-16*t)]]
+for the values above, the flipping time is $t_{1}:= 0.2977232736$, where $\lambda_{2}$ from $3$ becomes $1$ and $\mu_{3}$ from $2$ becomes $5$.\\\\
+The updated gamble at time $t_{1}:= 0.2977232736$ is
+\begin{equation} \label{eq:ind_s2_4_f1} 
+ f_{t_1}= 
+ \begin{array}{|c|}
+  0.012357\\
+  0.050783\\
+  0.174860\\
+  0.174860  
+ \end{array}
+ \end{equation}\\\\\\
+% :=Matrix(4, 1, {(1, 1) = 0.1235715678e-1-0.1723169800e-14*I, (2, 1) = 0.5078383445e-1-0.1188476322e-13*I, (3, 1) = .1748607622+0.1435443935e-12*I, (4, 1) = .1748607636-0.2736088576e-13*I})
+We take now generator matrix 
+\begin{equation*} 
+ Q_{0b}= 
+ \begin{array}{|rrrr|}
+  -1 & 1 & 0 & 0 \\
+  2 & -3 & 1 & 0 \\
+  0 & 5 & -8 & 3 \\
+  0 & 0 & 2 & -2 
+ \end{array}
+ \end{equation*}
+ which is also diagonalisable and yields
+ % Q0b:= Matrix([[-1.0, 1.0, 0., 0.], [2.0, -3.0, 1.0, 0.], [0., 5.0, -8.0, 3.0], [0., 0., 2.0, -2.0]])
+\begin{equation*} 
+ e^{Q_{0b}t}f= 
+ \begin{array}{|r|}
+  0.05714+0.01490e^{-9.57946t}-0.02861e^{-3.32005t}-0.04343e^{-1.10047t}\\
+  0.05714-0.12790e^{-9.57946t}+ 0.06639e^{-3.32005t}+ 0.00436e^{-1.10047t}\\
+  0.05714+0.81171e^{-9.57946t}+ 0.03598e^{-3.32005t}+ 0.09515e^{-1.10047t}\\
+  0.05714-0.21418e^{-9.57946t}- 0.05452e^{-3.32005t}+ 0.21156e^{-1.10047t}  
+ \end{array}
+ \end{equation*}
+ % eQ0tf:=[[ 0.0149080134198346$e$(-9.57946662987692*t) - 0.0286182489743913$e$(-3.32005527954441*t) - 0.0434326215883004$e$(-1.10047809057866*t) + 0.057142857142857$e$(-3.73040594638487e-16*t)]
+ % [ -0.127902803653228$e$(-9.57946662987692*t) + 0.066395919624353$e$(-3.32005527954441*t) + 0.00436402688601787$e$(-1.10047809057866*t) + 0.0571428571428571$e$(-3.73040594638487e-16*t)]
+ % [ 0.811716201664445$e$(-9.57946662987692*t) + 0.0359861333328019$e$(-3.32005527954441*t) + 0.0951548078598956$e$(-1.10047809057866*t) + 0.0571428571428571$e$(-3.73040594638487e-16*t)]
+ % [ -0.2141882117311$e$(-9.57946662987692*t) - 0.054522161140436$e$(-3.32005527954441*t) + 0.211567515728679$e$(-1.10047809057866*t) + 0.057142857142857$e$(-3.73040594638487e-16*t)]]]
+for the values above, the flipping time is $t_{1}:= 0.3143651106$, where $\lambda_{2}$ from $3$ becomes $1$ and $\mu_{3}$ from $2$ becomes $5$.\\\\
+The updated gamble at time $t_{1}:= 0.3143651106$ is
+\begin{equation*} 
+ f_{t_1}= 
+ \begin{array}{|c|}
+  0.017068\\
+  0.077316\\
+  0.177094\\
+  0.177094  
+ \end{array}
+ \end{equation*}\\\\\\
+ % t1:=0.3143651106 f(n-1) and f(n), hence l2 and m3 change
+ % updated gamble:=Matrix(4, 1, {(1, 1) = 0.1706823314e-1-0.5533610600e-14*I, (2, 1) = 0.7731625509e-1+0.2945625930e-13*I, (3, 1) = .1770945568-0.1700169844e-12*I, (4, 1) = .1770945576+0.5204785890e-13*I})
+We take now generator matrix 
+\begin{equation*} 
+ Q_{0c}= 
+ \begin{array}{|rrrr|}
+  -3 & 3 & 0 & 0 \\
+  5 & -6 & 1 & 0 \\
+  0 & 5 & -8 & 3 \\
+  0 & 0 & 2 & -2 
+ \end{array}
+ \end{equation*}
+ which is also diagonalisable and yields
+ % Q0c := Matrix([[-3.0, 3.0, 0., 0.], [5.0, -6.0, 1.0, 0.], [0., 5.0, -8.0, 3.0], [0., 0., 2.0, -2.0]])
+\begin{equation*} 
+ e^{Q_{0c}t}f= 
+ \begin{array}{|r|}
+  0.06315+0.075358e^{-10.60074t}- 0.106118e^{-7.14500t}- 0.032397e^{-1.25425t}\\
+  0.06315-0.190926e^{-10.60074t}+ 0.146621e^{-7.14500t}- 0.018852e^{-1.25425t}\\
+  0.06315+0.501612e^{-10.60074t}+ 0.362712e^{-7.14500t}+ 0.072517e^{-1.25425t}\\
+  0.06315-0.116643e^{-10.60074t}- 0.140996e^{-7.14500t}+ 0.194482e^{-1.25425t}  
+ \end{array}
+ \end{equation*}
+%  eQ0tf:=[[ 0.0753583618246389$e$(-10.6007432753446*t) - 0.106118925015431$e$(-7.1450048447915*t) - 0.0323973315460502$e$(-1.2542518798639*t) + 0.0631578947368422$e$(-8.42385307333489e-17*t)]
+%  [ -0.190926520626536$e$(-10.6007432753446*t) + 0.146621152771009$e$(-7.1450048447915*t) - 0.0188525268813144$e$(-1.2542518798639*t) + 0.0631578947368422$e$(-8.42385307333489e-17*t)]
+%  [ 0.501612096734285$e$(-10.6007432753446*t) + 0.362712694805435$e$(-7.1450048447915*t) + 0.0725173137234378$e$(-1.2542518798639*t) + 0.0631578947368422$e$(-8.42385307333489e-17*t)]
+%  [ -0.116643894760174$e$(-10.6007432753446*t) - 0.140996055687926$e$(-7.1450048447915*t) + 0.194482055711258$e$(-1.2542518798639*t) + 0.0631578947368421$e$(-8.42385307333489e-17*t)]]
+% ()
+for the values above, the flipping time is $t_{1}:= 0.3017854416$, where $\lambda_{2}$ from $3$ becomes $1$ and $\mu_{3}$ from $2$ becomes $5$.\\\\
+The updated gamble at time $t_{1}:= 0.3017854416$ is
+\begin{equation*} 
+ f_{t_1}= 
+ \begin{array}{|c|}
+  0.031760\\
+  0.059429\\
+  0.175274\\
+  0.175274  
+ \end{array}
+ \end{equation*}\\\\\\
+ % t1:=0.3017854416 f(n-1) and f(n), hence l2 and m3 change
+ % updated gamble:=Matrix(4, 1, {(1, 1) = 0.3176001555e-1-0.7006432300e-14*I, (2, 1) = 0.5942950207e-1+0.1169321260e-13*I, (3, 1) = .1752742783-0.1248065147e-13*I, (4, 1) = .1752742772+0.8267682100e-14*I})
+ The last generator matrix we have to consider is
+\begin{equation*} 
+ Q_{0d}= 
+ \begin{array}{|rrrr|}
+  -3 & 3 & 0 & 0 \\
+  2 & -3 & 1 & 0 \\
+  0 & 5 & -8 & 3 \\
+  0 & 0 & 2 & -2 
+ \end{array}
+ \end{equation*}
+ which is also diagonalisable and yields
+ % Q0c := Matrix([[-3.0, 3.0, 0., 0.], [2.0, -3.0, 1.0, 0.], [0., 5.0, -8.0, 3.0], [0., 0., 2.0, -2.0]])
+\begin{equation*} 
+ e^{Q_{0d}t}f= 
+ \begin{array}{|r|}
+ 0.09230+0.061532e^{-9.65331t}- 0.105882e^{-5t}- 0.047958e^{-1.34668t}\\
+  0.09230-0.136465e^{-9.65331t}+ 0.070588e^{-5t}- 0.026429e^{-1.34668t}\\
+  0.09230+0.784884e^{-9.65331t}+ 0.070588e^{-5t}+ 0.092307e^{-1.34668t}\\
+  0.09230-0.205109e^{-9.65331t}- 0.047058e^{-5t}+ 0.159860e^{-1.34668t}  
+ \end{array}
+ \end{equation*}
+%  eQ0tf:=[[ 0.0615329331905876$e$(-9.65331193145904*t) - 0.105882352941177$e$(-5.0*t) - 0.0479582725571032$e$(-1.34668806854096*t) + 0.0923076923076922$e$(1.37435128030003e-16*t)]
+%  [ -0.136465932858202$e$(-9.65331193145904*t) + 0.0705882352941178$e$(-5.0*t) - 0.0264299947436077$e$(-1.34668806854096*t) + 0.0923076923076922$e$(1.37435128030003e-16*t)]
+%  [ 0.78488455294199$e$(-9.65331193145904*t) + 0.0705882352941179$e$(-5.0*t) + 0.0522195194562001$e$(-1.34668806854096*t) + 0.0923076923076922$e$(1.37435128030003e-16*t)]
+%  [ -0.205109777301958$e$(-9.65331193145904*t) - 0.0470588235294119$e$(-5.0*t) + 0.159860908523677$e$(-1.34668806854096*t) + 0.0923076923076922$e$(1.37435128030003e-16*t)]]
+% ()
+for the values above, the flipping time is $t_{1}:= 0.3176058928$, where $\lambda_{2}$ from $3$ becomes $1$ and $\mu_{3}$ from $2$ becomes $5$.\\\\
+The updated gamble at time $t_{1}:= 0.3176058928$ is
+\begin{equation*} 
+ f_{t_1}= 
+ \begin{array}{|c|}
+  0.024765\\
+  0.059429\\
+  0.177360\\
+  0.177360  
+ \end{array}
+ \end{equation*}\\\\\\
+% t1:=0.3176058928 f(n-1) and f(n), hence l2 and m3 change
+
+% updated gamble:=Matrix(4, 1, {(1, 1) = 0.4227237769e-1, (2, 1) = 0.8313794788e-1, (3, 1) = .1773609346, (4, 1) = .1773609344})
+
+--- Second Iteration ---\\
+The minimum, row-wise, vector is the $f_{t_1}$ from \eqref{eq:ind_s2_4_f1} associated with generator matrix $Q_{0a}$.
+Now the generator matrix of the process is
+\begin{equation*} 
+ \underline{Q}_{1}= 
+ \begin{array}{|rrrr|}
+  -1 & 1 & 0 & 0 \\
+  5 & -6 & 1 & 0 \\
+  0 & 5 & -6 & 1 \\
+  0 & 0 & 5 & -5 
+ \end{array}
+ \end{equation*}
+according to the changes in $\lambda_{2}$ and $\mu_{3}$, at flipping time point $t_{1}\coloneqq 0.2977232736$.
+Generator matrix $\underline{Q}_1$ is diagonalisable and yields 
+\begin{equation*} 
+ e^{\underline{Q}_{1}t}f_{t_1}= 
+ \begin{array}{|r|}
+ 0.0247654+0.001092e^{-9.16227t}-0.003202e^{-6t}-0.010298e^{-2.83772t}\\
+ 0.0247654-0.008918e^{-9.16227t}+0.016011e^{-6t}+0.018926e^{-2.83772t}\\
+ 0.0247654+0.022740e^{-9.16227t}+0.016011e^{-6t}-0.024765e^{-2.83772t}\\
+ 0.0247654+0.027317e^{-9.16227t}-0.080055e^{-6t}-0.257468e^{-2.83772t}  
+ \end{array}
+ \end{equation*}
+% eQ1tf:= Matrix(4, 1, {(1, 1) = 0.2476541689e-1+0.1092699408e-2*exp(-9.162277660*t)-0.3202223119e-2*exp(-6.*t)-0.1029873639e-1*exp(-2.837722340*t), (2, 1) = -0.891891595e-2*exp(-9.162277660*t)+0.2476541689e-1+0.1601111558e-1*exp(-6.*t)+0.1892621796e-1*exp(-2.837722340*t), (3, 1) = 0.1601111565e-1*exp(-6.*t)+0.2274059161e-1*exp(-9.162277660*t)+0.2476541677e-1+.1113436381*exp(-2.837722340*t), (4, 1) = .2574684098*exp(-2.837722340*t)-0.8005557778e-1*exp(-6.*t)-0.2731748530e-1*exp(-9.162277660*t)+0.2476541679e-1})
+For the matrix above there is no flipping time and by taking $t\to\infty$, we have that
+$\underline{E}(X=2) = 0.0247654$.\\\\\\
+
+***Upper probability ($\overline{E}(X=2)$)***\\
+
+--- First Iteration ---
+
+Again we encounter the problem that we do not know directly which generator matrix $Q$ minimises $Qf$.
+We know that the form of the initial generator matrix should be
+\begin{equation*} 
+ \overline{Q}_{0}= 
+ \begin{array}{|rrrr|}
+  ? & ? & 0 & 0 \\
+  ? & ? & 3 & 0 \\
+  0 & 2 & -3 & 1 \\
+  0 & 0 & 5 & -5 
+ \end{array}
+ \end{equation*}\\\\
+We start with the generator matrix 
+\begin{equation*} 
+ Q_{0a}= 
+ \begin{array}{|rrrr|}
+  -1 & 1 & 0 & 0 \\
+  5 & -8 & 3 & 0 \\
+  0 & 2 & -3 & 1 \\
+  0 & 0 & 5 & -5 
+ \end{array}
+ \end{equation*}
+% Q0a:= Matrix([[-1.0, 1.0, 0., 0.], [5.0, -8.0, 3.0, 0.], [0., 2.0, -3.0, 1.0], [0., 0., 5.0, -5.0]])
+which is diagonalisable and yields the following
+\begin{equation*} 
+ e^{Q_{0a}t}f= 
+ \begin{array}{|r|}
+  0.19230+0.04765e^{-9.65331t}- 0.02941e^{-6t}- 0.21054e^{-1.34668t}\\
+  0.19230-0.41236e^{-9.65331t}+ 0.14705e^{-6t}+ 0.07299e^{-1.34668t}\\
+  0.19230+0.14783e^{-9.65331t}+ 0.14705e^{-6t}+ 0.51280e^{-1.34668t}\\
+  0.19230-0.15884e^{-9.65331t}- 0.73529e^{-6t}+ 0.70183e^{-1.34668t}  
+ \end{array}
+ \end{equation*}
+% eQ0tf:= [[ 0.0476536071553272$e$(-9.65331193145905*t) - 0.0294117647058824$e$(-6.0*t) - 0.210549534757137$e$(-1.34668806854096*t) + 0.192307692307692$e$(2.22044604925031e-16*t)]
+ % [ -0.412361527374254$e$(-9.65331193145905*t) + 0.147058823529412$e$(-6.0*t) + 0.0729950115371501$e$(-1.34668806854096*t) + 0.192307692307693$e$(2.22044604925031e-16*t)]
+ % [ 0.14783139916863$e$(-9.65331193145905*t) + 0.147058823529412$e$(-6.0*t) + 0.512802084994265$e$(-1.34668806854096*t) + 0.192307692307692$e$(2.22044604925031e-16*t)]
+ % [ -0.158845357184424$e$(-9.65331193145905*t) - 0.735294117647059$e$(-6.0*t) + 0.70183178252379$e$(-1.34668806854096*t) + 0.192307692307692$e$(2.22044604925031e-16*t)]]
+for the values above, the flipping time is $t_{1}:= 0.3508833687$, where $\lambda_{2}$ from $1$ becomes $3$ and $\mu_{3}$ from $5$ becomes $2$.\\\\
+The updated gamble at time $t_{1}:= 0.3508833687$ is
+\begin{equation*}  
+ f_{t_1}= 
+ \begin{array}{|c|}
+  0.059074\\
+  0.241788\\
+  0.534910\\
+  0.534910  
+ \end{array}
+ \end{equation*}\\\\\\
+% :=Matrix(4, 1, {(1, 1) = 0.590745710e-1, (2, 1) = .2417882211, (3, 1) = .5349105139, (4, 1) = .5349105140})
+We consider now the generator matrix 
+\begin{equation*} 
+ Q_{0b}= 
+ \begin{array}{|rrrr|}
+  -1 & 1 & 0 & 0 \\
+  2 & -5 & 3 & 0 \\
+  0 & 2 & -3 & 1 \\
+  0 & 0 & 5 & -5 
+ \end{array}
+ \end{equation*}
+% Q0b := Matrix([[-1.0, 1.0, 0., 0.], [2.0, -5.0, 3.0, 0.], [0., 2.0, -3.0, 1.0], [0., 0., 5.0, -5.0]]);
+which is diagonalisable and yields the following
+\begin{equation*} 
+ e^{Q_{0b}t}f= 
+ \begin{array}{|r|}
+  0.3125+0.06761e^{-7.57802t}- 0.01248e^{-5.20506t}- 0.36762e^{-1.21691t}\\
+  0.3125-0.44475e^{-7.57802t}+ 0.05251e^{-5.20506t}+ 0.07974e^{-1.21691t}\\
+  0.3125+0.33712e^{-7.57802t}+ 0.00473e^{-5.20506t}+ 0.34563e^{-1.21691t}\\
+  0.3125-0.65384e^{-7.57802t}- 0.11547e^{-5.20506t}+ 0.45682e^{-1.21691t}  
+ \end{array}
+ \end{equation*}
+% eQ0tf:= [[ 0.0676129513915471$e$(-7.57802063330344*t) - 0.0124890885681177$e$(-5.20506763920773*t) - 0.36762386282343$e$(-1.21691172748883*t) + 0.3125$e$(2.22044604925031e-16*t)]
+ % [ -0.444759389332139$e$(-7.57802063330344*t) + 0.052517462180991$e$(-5.20506763920773*t) + 0.079741927151148$e$(-1.21691172748883*t) + 0.3125$e$(2.22044604925031e-16*t)]
+ % [ 0.337124326590199$e$(-7.57802063330344*t) + 0.00473618171653271$e$(-5.20506763920773*t) + 0.345639491693269$e$(-1.21691172748883*t) + 0.3125$e$(2.22044604925031e-16*t)]
+ % [ -0.653843344454177$e$(-7.57802063330344*t) - 0.115478525398516$e$(-5.20506763920773*t) + 0.456821869852693$e$(-1.21691172748883*t) + 0.3125$e$(2.22044604925031e-16*t)]]
+for the values above, the flipping time is $t_{1}:= 0.3854708723$, where $\lambda_{2}$ from $1$ becomes $3$ and $\mu_{3}$ from $5$ becomes $2$.\\\\
+The updated gamble at time $t_{1}:= 0.3854708723$ is
+\begin{equation*} 
+ f_{t_1}= 
+ \begin{array}{|c|}
+  0.08448\\
+  0.34548\\
+  0.54752\\
+  0.54752  
+ \end{array}
+ \end{equation*}\\\\\\
+% updated gamble := Matrix(4, 1, {(1, 1) = 0.8448685175e-1+0.1202081030e-13*I, (2, 1) = .3454856735-0.8199224400e-13*I, (3, 1) = .5475225685+0.6653703580e-13*I, (4, 1) = .5475225685-0.1395164369e-12*I})
+We consider now the generator matrix 
+\begin{equation*} 
+ Q_{0c}= 
+ \begin{array}{|rrrr|}
+  -3 & 3 & 0 & 0 \\
+  5 & -8 & 3 & 0 \\
+  0 & 2 & -3 & 1 \\
+  0 & 0 & 5 & -5 
+ \end{array}
+ \end{equation*}
+% Q0c := Matrix([[-3.0, 3.0, 0., 0.], [5.0, -8.0, 3.0, 0.], [0., 2.0, -3.0, 1.0], [0., 0., 5.0, -5.0]]);
+which is diagonalisable and yields the following
+\begin{equation*} 
+ e^{Q_{0c}t}f= 
+ \begin{array}{|r|}
+  0.33582+0.11988e^{-10.7912t}- 0.09084e^{-6.20871t}- 0.36486e^{-2t}\\
+  0.33582-0.31136e^{-10.7912t}+ 0.09716e^{-6.20871t}- 0.12162e^{-2t}\\
+  0.33582+ 0.08988e^{-10.7912t}+ 0.20942e^{-6.20871t} + 0.36486e^{-2t}\\
+  0.33582-0.07760e^{-10.7912t}- 0.86632e^{-6.20871t}+ 0.60810e^{-2t}  
+ \end{array}
+ \end{equation*}
+% [[ 0.119889800166391$e$(-10.7912878474779*t) - 0.090845830823914$e$(-6.20871215252208*t) - 0.364864864864865$e$(-2.0*t) + 0.335820895522388$e$(-8.52182907573606e-16*t)]
+% [ -0.311365314357653$e$(-10.7912878474779*t) + 0.0971660404568862$e$(-6.20871215252208*t) - 0.121621621621621$e$(-2.0*t) + 0.335820895522388$e$(-8.52182907573606e-16*t)]
+% [ 0.0898870724202348$e$(-10.7912878474779*t) + 0.209427167192513$e$(-6.20871215252208*t) + 0.364864864864865$e$(-2.0*t) + 0.335820895522388$e$(-8.52182907573606e-16*t)]
+% [ -0.0776054262778356$e$(-10.7912878474779*t) - 0.86632357735266$e$(-6.20871215252208*t) + 0.608108108108108$e$(-2.0*t) + 0.335820895522388$e$(-8.52182907573606e-16*t)]]
+for the values above, the flipping time is $t_{1}:= 0.3602411839$, where $\lambda_{2}$ from $1$ becomes $3$ and $\mu_{3}$ from $5$ becomes $2$.\\\\
+The updated gamble at time $t_{1}:= 0.3602411839$ is
+\begin{equation*} 
+ f_{t_1}= 
+ \begin{array}{|c|}
+  0.15106\\
+  0.28064\\
+  0.53754\\
+  0.53754  
+ \end{array}
+ \end{equation*}\\\\\\
+% Matrix(4, 1, {(1, 1) = .1510612321, (2, 1) = .2806467535, (3, 1) = .5375469587, (4, 1) = .5375469567})
+We consider now the generator matrix 
+\begin{equation*} 
+ Q_{0d}= 
+ \begin{array}{|rrrr|}
+  -3 & 3 & 0 & 0 \\
+  2 & -5 & 3 & 0 \\
+  0 & 2 & -3 & 1 \\
+  0 & 0 & 5 & -5 
+ \end{array}
+ \end{equation*}
+% Q0d := Matrix([[-3.0, 3.0, 0., 0.], [2.0, -5.0, 3.0, 0.], [0., 2.0, -3.0, 1.0], [0., 0., 5.0, -5.0]]);
+which is diagonalisable and yields the following
+\begin{equation*} 
+ e^{Q_{0d}t}f= 
+ \begin{array}{|r|}
+  0.43269+0.259618e^{-8t}- 0.14630e^{-5.73205t}- 0.54600e^{-2.26794t}\\
+  0.43269-0.43269e^{-8t}+ 0.13323e^{-5.73205t}- 0.13323e^{-2.26794t}\\
+  0.43269+ 0.25961e^{-8t}+ 0.06502e^{-5.73205t} + 0.242669e^{-2.26794t}\\
+  0.43269--0.43269e^{-8t}- 0.44411e^{-5.73205t}+ 0.44411e^{-2.26794t}  
+ \end{array}
+ \end{equation*}
+% eQ0tf:= [[ 0.259615384615384$e$(-7.99999999999999*t) - 0.146301829895899$e$(-5.73205080756888*t) - 0.546005862411793$e$(-2.26794919243112*t) + 0.432692307692307$e$(4.44089209850063e-16*t)]
+% [ -0.432692307692307$e$(-7.99999999999999*t) + 0.133234677505298$e$(-5.73205080756888*t) - 0.133234677505298$e$(-2.26794919243112*t) + 0.432692307692307$e$(4.44089209850063e-16*t)]
+% [ 0.259615384615385$e$(-7.99999999999999*t) + 0.0650230355092883$e$(-5.73205080756888*t) + 0.242669272183019$e$(-2.26794919243112*t) + 0.432692307692308$e$(4.44089209850063e-16*t)]
+% [ -0.432692307692308$e$(-7.99999999999999*t) - 0.444115591684327$e$(-5.73205080756888*t) + 0.444115591684327$e$(-2.26794919243112*t) + 0.432692307692308$e$(4.44089209850063e-16*t)]]
+for the values above, the flipping time is $t_{1}:= 0.3951040505$, where $\lambda_{2}$ from $1$ becomes $3$ and $\mu_{3}$ from $5$ becomes $2$.\\\\
+The updated gamble at time $t_{1}:= 0.3951040505$ is
+\begin{equation*} 
+ f_{t_1}= 
+ \begin{array}{|c|}
+  0.20564\\
+  0.37380\\
+  0.54950\\
+  0.54950  
+ \end{array}
+ \end{equation*}
+ which also the largest among the multiple $f_{t_1}$ that we found.\\\\\\
+% updated gamble := Matrix(4, 1, {(1, 1) = .2056410598, (2, 1) = .3738052614, (3, 1) = .5495003882, (4, 1) = .5495003887})
+
+
+--- Second Iteration ---
+
+The maximum, row-wise, vector is the aforementioned $f_{t_1}$ associated with generator matrix $\overline{Q}_{0}=Q_{0d}$.
+Now the generator matrix of the process is
+\begin{equation*} 
+ \overline{Q}_{1}= 
+ \begin{array}{|rrrr|}
+  -3 & 3 & 0 & 0 \\
+  2 & -5 & 3 & 0 \\
+  0 & 2 & -5 & 3 \\
+  0 & 0 & 2 & -2 
+ \end{array}
+ \end{equation*}
+ % (from Q0d) Q1:= Matrix([[-3.0, 3.0, 0., 0.], [2.0, -5.0, 3.0, 0.], [0., 2.0, -5.0, 3.0], [0., 0., 2.0, -2.0]]);
+according to the changes in $\lambda_{2}$ and $\mu_{3}$, at flipping time point $t_{1}\coloneqq 0.3951040505$.
+Generator matrix $\overline{Q}_1$ is diagonalisable and yields 
+\begin{equation*} 
+ e^{\overline{Q}_{1}t}f_{t_1}= 
+ \begin{array}{|r|}
+ 0.474743+0.012064e^{-8.46410t}-0.050449e^{-5t}-0.230716e^{-1.53589t}\\
+ 0.474743-0.021973e^{-8.46410t}+0.033632e^{-5t}+0.018926e^{-1.53589t}\\
+ 0.474743+0.017329e^{-8.46410t}+0.033632e^{-5t}-0.023794e^{-1.53589t}\\
+ 0.474743-0.005361e^{-8.46410t}-0.022421e^{-5t}+0.102540e^{-1.53589t}  
+ \end{array}
+ \end{equation*}
+% eQ1tf := Matrix(4, 1, {(1, 1) = .4747432170+0.1206406983e-1*exp(-8.464101615*t)-0.504492605e-1*exp(-5.*t)-.2307169665*exp(-1.535898385*t), (2, 1) = -0.219731014e-1*exp(-8.464101615*t)+.4747432170+0.3363284033e-1*exp(-5.*t)-.1125976941*exp(-1.535898385*t), (3, 1) = 0.3363284019e-1*exp(-5.*t)+0.173296384e-1*exp(-8.464101615*t)+.4747432168+0.2379469202e-1*exp(-1.535898385*t), (4, 1) = .1025408740*exp(-1.535898385*t)-0.2242189348e-1*exp(-5.*t)-0.536180862e-2*exp(-8.464101615*t)+.4747432168})
+For the matrix above there is no flipping time and by taking $t\to\infty$, we have that
+$\overline{E}(X=2) = 0.474743217$.\\\\\\
+
+
+% Lower probability = 0.03225806452
+
+% No flipping time--- Matrix([[-1, 1, 0], [5, -6, 1], [0, 5, -5]]), $\lambda_{i}=\underline{\lambda}=1$ and $\mu_{i}=\overline{\mu}=5$\\
+
+% Upper probability = 0.4736841978 
+
+% No flipping time--- Matrix([[-3, 3, 0], [2, -5, 3], [0, 2, -2]]), i.e $\lambda_{i}=\overline{\lambda}=3$ and $\mu_{i}=\underline{\mu}=2$
+
+
+% $f=[1,8,5]^T$
+
+% $\stateset:=\{0,1,2,3\}$, $\lambda \in[1,3]$ and $\mu \in [2,5]$
+
+% $f=[10,2,5,7]^T$ 
+% $f=[1,5,3,9]^T$ 
+
+
+\bibliographystyle{plain}
+\bibliography{general}
+
+
+
+
+\end{document}
