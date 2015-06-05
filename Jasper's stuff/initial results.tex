@@ -107,11 +107,11 @@ C\in\filter, A\in\events_{\geq t}, t\in[0,+\infty)
 \end{equation*}
 We denote the set of all such stochastic processes by $\processes$.
 
-Let $\gamblesX$ be the set of all real-valued functions on $\states$. Consider any stochastic process $P\in\processes$ and any $t,s\in[0,+\infty)$ such that $t<s$. The transition matrix $P_t^s$ is then an $m\times m$ matrix that is defined by
+Let $\gamblesX$ be the set of all real-valued functions on $\states$. Consider any stochastic process $P\in\processes$ and any $t,s\in[0,+\infty)$ such that $t<s$. The transition matrix $T_t^s$ is then an $m\times m$ matrix that is defined by
 \begin{equation*}
-P_t^s(i,j)\coloneqq P(X_s=x_s\vert X_t=x_t)\text{ for all $x_s,x_t\in\states$}.
+T_t^s(i,j)\coloneqq P(X_s=x_s\vert X_t=x_t)\text{ for all $x_s,x_t\in\states$}.
 \end{equation*}
-The transition operator $T_t^s$ is a map from $\gamblesX$ to $\gamblesX$, defined for all $f\in\gamblesX$ by $T_t^sf\coloneqq P_t^sf$.
+Obviously, this transition, matrix $T_t^s$ can also be regarded as a map from $\gamblesX$ to $\gamblesX$, defined for all $f\in\gamblesX$ by $T_t^s(f)\coloneqq T_t^sf$.
 
 We say that a stochastic process $P\in\processes$ satisfies the \emph{Markov property} when, for any time sequence $0\leq t_1<t_2,\dots,t_{n}<t<s$ and set of states $x_{t_1},x_{t_2},\dots,x_{t_n},x_t,x_s\in\states$:
 \begin{equation*}
@@ -123,8 +123,6 @@ We denote the set of all stochastic processes that satisfy this Markov property 
 \begin{lemma}
 Consider any $P\in\mprocesses$. Then
 \begin{equation*}
-P_t^s=\prod_{k=1}^n P_{t_{k-1}}^{t_k} \coloneqq P_{t_0}^{t_1}P_{t_1}^{t_2}\cdots P_{t_{n-1}}^{t_n}
-\text{ and }
 T_t^s=\prod_{k=1}^n T_{t_{k-1}}^{t_k} \coloneqq T_{t_0}^{t_1}T_{t_1}^{t_2}\cdots T_{t_{n-1}}^{t_n}
 \end{equation*}
 for every sequence $0\leq t=t_0<t_1<t_2,\dots,t_{n}=s$.
@@ -159,7 +157,7 @@ Consider now any $t,s\in[0,+\infty)$ such that $t<s$ and let $\rateset$ be an ar
 where the limit is taken with respect to the set $\mathcal{U}_{[t,s]}$ of all sequences $t=t_1<t_2<\dots<t_n=s$ and where, for any $u\in\mathcal{U}_{[t,s]}$, we first define $\Delta_i\coloneqq t_i-t_{i-1}$ for all $i\in\{1,\dots,n\}$ and then let $\sigma(u)\coloneqq\max\{\Delta_i\colon i\in\{1,\dots,n\}\}$. The following result establishes that the limit in Equation~\eqref{eq:lowerbound} exists.
 
 \begin{theorem}
-Consider any $t,s\in[0,+\infty)$ such that $t<s$ and let $\rateset$ be an arbitrary bounded set of rate matrices with corresponding lower transition rate operator $\lrate$. Then for all $f\in\gamblesX$, there is some $g\in\gamblesX$ such that
+Consider any $t,s\in[0,+\infty)$ such that $t<s$ and let $\rateset$ be an arbitrary bounded set of rate matrices with corresponding lower transition operator $\lbound_t^s$. For all \mbox{$f\in\gamblesX$}, there will then be some $g\in\gamblesX$ such that:
 \begin{equation*}
 (\forall\epsilon>0)\,
 (\exists\delta>0)\,
@@ -171,9 +169,56 @@ Consider any $t,s\in[0,+\infty)$ such that $t<s$ and let $\rateset$ be an arbitr
 *** I am confident that this is true, but proving it will not be trivial... ***
 \end{proof}
 
+The left derivative of $\lbound_t^s$ with respect to $t$ furthermore satisfies Damjan's differential equation.
+
+\begin{proposition}
+Consider any $t,s\in[0,+\infty)$ such that $t<s$ and let $\rateset$ be an arbitrary bounded set of rate matrices with corresponding lower transition operator $\lbound_t^s$. For all \mbox{$f\in\gamblesX$}, we then have that
+\begin{equation*}
+(\forall\epsilon>0)\,
+(\exists\delta>0)\,
+(\forall\Delta\in(0,\delta))~
+\Big\vert\Big\vert\frac{L_{t-\Delta}^sf-L_t^sf}{\Delta}-\lrate L_t^sf\Big\vert\Big\vert<\epsilon.
+\end{equation*}
+
+\end{proposition}
+\begin{proof}
+*** I am confident that this is true, but proving it will not be trivial... ***
+\end{proof}
+
 \section{The Markovian (but possibly time-inhomogeneous) case}
 
+For any bounded set of rate matrices $\rateset$, we consider the set $\mprocesses_{\rateset}$ of all $P\in\mprocesses$ such that
+\begin{equation*}
+(\forall\epsilon>0)\,
+(\exists\delta>0)\,
+(\forall t\in[0,+\infty))\,
+(\forall\Delta\in(0,\delta))\,
+(\exists Q\in\rateset)~
+\Big\vert\Big\vert\frac{P_t^{t+\Delta}-I}{\Delta}-Q\Big\vert\Big\vert<\epsilon.
+\end{equation*}
+%\vspace{5pt}
 
+\begin{theorem}
+Consider any $t,s\in[0,+\infty)$ such that $t<s$ and let $\rateset$ be an arbitrary bounded set of rate matrices with corresponding lower transition rate operator $\lrate$. Then for any $P\in\mprocesses_\rateset$:
+\begin{equation*}
+\lbound_t^sf(x)\leq T_t^sf(x)
+\text{ for all $f\in\gamblesX$ and all $x\in\states$.}
+\end{equation*}
+\end{theorem}
+\begin{proof}
+*** I am confident that this is true, but proving it will not be trivial... ***
+\end{proof}
+
+\begin{theorem}
+Consider any $t,s\in[0,+\infty)$ such that $t<s$ and let $\rateset$ be an arbitrary compact and bounded set of rate matrices that has separately specified rows, with corresponding lower transition rate operator $\lrate$. Then for all $f\in\gamblesX$, there is some $P\in\mprocesses_Q$ such that
+\begin{equation*}
+\lbound_t^sf(x)=T_t^sf(x)
+\text{ for all $x\in\states$.}
+\end{equation*}
+\end{theorem}
+\begin{proof}
+*** The time-inhomogenous Markov chain for which $Q_v\coloneqq\lrate\lbound_v^sf$ establishes the equality. ***
+\end{proof}
 
 \bibliographystyle{plain} 
 %\bibliography{general}
