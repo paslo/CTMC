@@ -123,7 +123,7 @@ P(X_s=x_s\vert X_t=x_t)=P(X_s=x_s\vert X_{t_1}=X_t=x_t,x_{t_1},X_{t_2}=x_{t_2}, 
 We denote the set of all stochastic processes that satisfy this Markov property by $\mprocesses$
 
 
-\begin{lemma}
+\begin{lemma}\label{lemma:transitionmatrixfactorises}
 Consider any $P\in\mprocesses$. Then
 \begin{equation*}
 T_t^s=\prod_{k=1}^n T_{t_{k-1}}^{t_k} \coloneqq T_{t_0}^{t_1}T_{t_1}^{t_2}\cdots T_{t_{n-1}}^{t_n}
@@ -170,7 +170,7 @@ $\norm{\lambda A}=\abs{\lambda}\norm{A}$
 \item
 $\norm{Af}\leq\norm{A}\norm{f}$
 \item
-$\norm{T}\leq 1$ if $T$ is a transition matrix.
+$\norm{T}\leq 1$ if $T$ is a stochastic matrix.
 \end{enumerate}
 \vspace{5pt}
 
@@ -181,8 +181,8 @@ Finally, for any set $\mathcal{A}$ of $n\times n$ matrices, we define
 \norm{\mathcal{A}}\coloneqq\sup\{\norm{A}\colon A\in\mathcal{A}\}.
 \end{equation*}
 
-\begin{lemma}
-Consider two sequences $A_1,\dots,A_n$ and $B_1,\dots,B_n$ of transition matrixes such that, for all $i\in\{1,\dots,n\}$, $\norm{A_i-B_i}\leq c$. Then
+\begin{lemma}\label{lemma:differenceproductoftransition}
+Consider two sequences $A_1,\dots,A_n$ and $B_1,\dots,B_n$ of stochastic matrixes such that, for all $i\in\{1,\dots,n\}$, $\norm{A_i-B_i}\leq c$. Then
 \begin{equation*}
 \norm{\prod_{i=1}^nA_i-\prod_{i=1}^nB_i}\leq nc
 \end{equation*}
@@ -217,9 +217,11 @@ $Q(x,y)\geq0$ for all $x,y\in\states$ such that $x\neq y$.
 
 A set $\rateset$ of rate matrices is said to be bounded if $\inf\{Q(x,x)\colon Q\in\rateset\}>-\infty$ for all $x\in\states$ or, equivalently, if $\norm{\rateset}<\infty$. For any such bounded set $\rateset$ of rate matrices, the corresponding \emph{lower transition rate operator} $\lrate$ is a map from $\gamblesX$ to $\gamblesX$. For all $f\in\gamblesX$, $\lrate f$ is defined by
 
-\begin{equation*}
+\begin{equation}\label{eq:deflowerbound}
 (\lrate f)(x)\coloneqq\inf\{(Qf)(x)\colon Q\in\rateset\}\text{ for all $x\in\states$}.
-\end{equation*}.
+\end{equation}.
+
+*** I still need to define what `having separately specified rows' means ***
 
 Consider now any $t,s\in[0,+\infty)$ such that $t<s$ and let $\rateset$ be an arbitrary bounded set of rate matrices with corresponding lower transition rate operator $\lrate$. The lower transition operator $\lbound_t^s$ is then a map from $\gamblesX$ to $\gamblesX$, defined by
 \begin{equation}\label{eq:lowerbound}
@@ -227,23 +229,22 @@ Consider now any $t,s\in[0,+\infty)$ such that $t<s$ and let $\rateset$ be an ar
 \end{equation}
 where the limit is taken with respect to the set $\mathcal{U}_{[t,s]}$ of all sequences $t=t_0<t_1<\dots<t_n=s$ and where, for any $u\in\mathcal{U}_{[t,s]}$, we first define $\Delta_i\coloneqq t_i-t_{i-1}$ for all $i\in\{1,\dots,n\}$ and then let $\sigma(u)\coloneqq\max\{\Delta_i\colon i\in\{1,\dots,n\}\}$. The following result establishes that the limit in Equation~\eqref{eq:lowerbound} exists.
 
-\begin{theorem}
-Consider any $t,s\in[0,+\infty)$ such that $t<s$ and let $\rateset$ be an arbitrary bounded set of rate matrices with corresponding lower transition operator $\lbound_t^s$. For all \mbox{$f\in\gamblesX$}, there will then be some $g\in\gamblesX$ such that:
+\begin{theorem}\label{theo:convergencelowerbound}
+Consider any $t,s\in[0,+\infty)$ such that $t<s$ and let $\rateset$ be an arbitrary bounded set of rate matrices with corresponding lower transition rate operator $\lrate$. For all \mbox{$f\in\gamblesX$} and $x\in\states$, there will then be some $\alpha\in\reals$ such that:
 \begin{equation*}
 (\forall\epsilon>0)\,
 (\exists\delta>0)\,
-(\forall u\in\mathcal{U}_{[t,s]}\colon\sigma(u)<\delta)~
-\lVert g - \prod_{k=1}^n(I+\Delta_k\lrate)f \rVert<\epsilon.
+(\forall u\in\mathcal{U}_{[t,s]}\colon\sigma(u)<\delta)~\abs{\alpha - \left(\left(\prod_{k=1}^n(I+\Delta_k\lrate)\right)(f)\right)(x)}<\epsilon.
 \end{equation*}
 \end{theorem}
 \begin{proof}
-*** I am confident that this is true, but proving it will not be trivial... ***
+*** I am confident that this is true, but proving it will not be trivial... One way to do it would be to use arguments similar to the ones that I used in (the proof of) Lemma~\ref{lemma:smallerpartition}. ***
 \end{proof}
 
 The left derivative of $\lbound_t^s$ with respect to $t$ furthermore satisfies Damjan's differential equation.
 
 \begin{proposition}
-Consider any $t,s\in[0,+\infty)$ such that $t<s$ and let $\rateset$ be an arbitrary bounded set of rate matrices with corresponding lower transition operator $\lbound_t^s$. For all \mbox{$f\in\gamblesX$}, we then have that
+Consider any $t,s\in[0,+\infty)$ such that $t<s$ and let $\rateset$ be an arbitrary bounded set of rate matrices with corresponding lower transition rate operator $\lrate$ and lower transition operator $\lbound_t^s$. For all \mbox{$f\in\gamblesX$}, we then have that
 \begin{equation*}
 (\forall\epsilon>0)\,
 (\exists\delta>0)\,
@@ -259,14 +260,14 @@ Consider any $t,s\in[0,+\infty)$ such that $t<s$ and let $\rateset$ be an arbitr
 \section{The Markovian (but possibly time-inhomogeneous) case}
 
 For any bounded set of rate matrices $\rateset$, we consider the set $\mprocesses_{\rateset}$ of all $P\in\mprocesses$ such that
-\begin{equation*}
+\begin{equation}\label{eq:conditionforMarkov}
 (\forall\epsilon>0)\,
 (\exists\delta>0)\,
 (\forall t\in[0,+\infty))\,
 (\forall\Delta\in(0,\delta))\,
 (\exists Q\in\rateset)~
 \Big\lVert\frac{T_t^{t+\Delta}-I}{\Delta}-Q\Big\rVert<\epsilon.
-\end{equation*}
+\end{equation}
 %\vspace{5pt}
 
 \begin{theorem}
@@ -277,7 +278,67 @@ Consider any $t,s\in[0,+\infty)$ such that $t<s$ and let $\rateset$ be an arbitr
 \end{equation*}
 \end{theorem}
 \begin{proof}
-*** I am confident that this is true, but proving it will not be trivial... ***
+Consider any $P\in\mprocesses_\rateset$ and any $f\in\gamblesX$ and $x\in\states$. Assume \emph{ex absurdo} that $\lbound_t^sf(x)>T_t^sf(x)$. We prove that this leads to a contradiction.  Let $C\coloneqq t-s$ and choose $\epsilon>0$ small enough such that
+\begin{equation}\label{eq:chooseepsilon}
+\epsilon(1+C\norm{f})<\lbound_t^sf(x)-T_t^sf(x).
+\end{equation}
+Since $P\in\mprocesses_\rateset$, it follows from Equation~\eqref{eq:conditionforMarkov} that there is some $\delta>0$ such that
+\begin{equation}\label{eq:1conditionforMarkov}
+(\forall \tau\in[0,+\infty))\,
+(\forall\Delta\in(0,\delta))\,
+(\exists Q\in\rateset)~
+\Big\lVert\frac{T_\tau^{\tau+\Delta}-I}{\Delta}-Q\Big\rVert<\epsilon.
+\end{equation}
+Furthermore, because of Equation~\eqref{eq:deflowerbound} and Theorem~\ref{theo:convergencelowerbound}, there is some $\delta'>0$ such that
+\begin{equation}\label{eq:deltaprimeformula}
+(\forall u\in\mathcal{U}_{[t,s]}\colon\sigma(u)<\delta')~\abs{\lbound_t^sf(x) - \left(\left(\prod_{k=1}^n(I+\Delta_k\lrate)\right)(f)\right)(x)}<\epsilon.
+\end{equation}
+Now choose $n>\max\{\nicefrac{C}{\delta},\nicefrac{C}{\delta'},C\norm{\rateset}\}$. Then for $\Delta\coloneqq\nicefrac{C}{n}$, we find that $\Delta<\delta$, $\Delta<\delta'$ and $\Delta\norm{\rateset}<1$. 
+
+For all $k\in\{0,1,\dots,n\}$, define $t_k\coloneqq t+k\Delta$. Since $\Delta<\delta$, it follows from Equation~\eqref{eq:1conditionforMarkov} that, for all $i\in\{1,\dots,n\}$, there is some $Q_i\in\rateset$ such that 
+\begin{equation*}
+\norm{T_{t_{i-1}}^{t_i}-(I+\Delta Q_i)}
+=\norm{\frac{T_{t_{i-1}}^{t_i}-I}{\Delta}-Q_i}\Delta
+<\epsilon\Delta.
+\end{equation*}
+Furthermore, for all $i\in\{1,\dots,n\}$, since $\abs{\Delta Q_i(x,y)}\leq\norm{\Delta Q_i}=\Delta\norm{Q_i}\leq\Delta\norm{\rateset}<1$ for all $x,y\in\states$, we have that $I+\Delta Q_i$ is a stochastic matrix.
+Therefore, due to Lemmas~\ref{lemma:transitionmatrixfactorises} and~\ref{lemma:differenceproductoftransition}, we find that
+\begin{equation*}
+\norm{T_t^s-\prod_{i=1}^n(I+\Delta Q_i)}
+=\norm{\prod_{i=1}^n T_{t_{i-1}}^{t_i}-\prod_{i=1}^n(I+\Delta Q_i)}
+\leq\epsilon\Delta n=\epsilon C,
+\end{equation*}
+which implies that
+\begin{align}
+\abs{T_t^sf(x)-\left(\left(\prod_{i=1}^n(I+\Delta Q_i)\right)(f)\right)(x)}
+&\leq
+\norm{T_t^sf-\left(\prod_{i=1}^n(I+\Delta Q_i)\right)(f)}\notag\\
+&\leq
+\norm{T_t^s-\prod_{i=1}^n(I+\Delta Q_i)}\norm{f}
+\leq\epsilon C\norm{f}.\label{eq:firstpartofbound}
+\end{align}
+\noindent
+Equation~\eqref{eq:deflowerbound} implies that
+\begin{equation}
+\left(\left(\prod_{i=1}^n(I+\Delta Q_i)\right)(f)\right)(x)
+\geq
+\left((I+\Delta\lrate)^n(f)\right)(x)\label{eq:middlepartofbound}
+\end{equation}
+and, since $\Delta<\delta'$, it follows from Equation~\eqref{eq:deltaprimeformula} that
+\begin{equation}\label{eq:lastpartofbound}
+\abs{\lbound_t^sf(x) - \left((I+\Delta\lrate)^n(f)\right)(x)}<\epsilon.
+\end{equation}
+\noindent
+By combining Equations~\eqref{eq:firstpartofbound}, \eqref{eq:middlepartofbound} and~\eqref{eq:lastpartofbound}, we find that
+\begin{align*}
+T_t^sf(x)
+&>
+\left(\left(\prod_{i=1}^n(I+\Delta Q_i)\right)(f)\right)(x)-\epsilon C\norm{f}\\
+&\geq
+\left((I+\Delta\lrate)^n(f)\right)(x)-\epsilon C\norm{f}
+>\lbound_t^sf(x)-\epsilon-\epsilon C\norm{f},
+\end{align*}
+which provides the required contradiction; see Equation~\eqref{eq:chooseepsilon}.
 \end{proof}
 
 \begin{theorem}
@@ -291,9 +352,9 @@ Consider any $t,s\in[0,+\infty)$ such that $t<s$ and let $\rateset$ be an arbitr
 *** The time-inhomogenous Markov chain for which $Q_v\coloneqq\lrate\lbound_v^sf$ establishes the equality. ***
 \end{proof}
 
-\section{Lemma's that might turn out to be useful}
+\section{Lemma's which I think will turn out to be useful}
 
-\begin{lemma}
+\begin{lemma}\label{lemma:smallerpartition}
 Consider a rate matrix $Q$. Then for all $\epsilon>0$, there is some $\delta>0$ such that for all $\Delta_1,\dots,\Delta_n>0$ with $\Delta\coloneqq\sum_{j=1}^n\Delta_j<\delta$, it holds that
 \begin{equation*}
 \Delta<\delta\then\left\lVert\left(\prod_{j=1}^n[I+\Delta_j Q]\right)-(I+\Delta Q)\right\rVert<\epsilon\Delta
@@ -320,17 +381,8 @@ Fix $\epsilon>0$. Since $\frac{d}{dt}e^{t\lVert Q\rVert}\vert_{t=0}=\lVert Q\rVe
 \end{multline*}
 \end{proof}
 
-\begin{lemma}
-***
-\end{lemma}
-\begin{proof}
-Consider any $P\in\mprocesses_\rateset$ and any $f\in\gamblesX$ and $x\in\states$. Assume \emph{ex absurdo} that $\lbound_t^sf(x)>T_t^sf(x)$. Choose $\epsilon>0$ such that $2\epsilon<\lbound_t^sf(x)-T_t^sf(x)$.
 
-Consider any $u\in\mathcal{U}_{[t,s]}$ such that $\sigma(u)<\epsilon$.
-\begin{equation*}
-***
-\end{equation*}
-\end{proof}
+
 
 \bibliographystyle{plain} 
 %\bibliography{general}
