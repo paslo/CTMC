@@ -220,6 +220,35 @@ Consider any $t,s\in[0,+\infty)$ such that $t<s$ and let $\rateset$ be an arbitr
 *** The time-inhomogenous Markov chain for which $Q_v\coloneqq\lrate\lbound_v^sf$ establishes the equality. ***
 \end{proof}
 
+\section{Lemma's that might turn out to be useful}
+
+\begin{lemma}
+Consider a rate matrix $Q$. Then for all $\epsilon>0$, there is some $\delta>0$ such that for all $\Delta_1,\dots,\Delta_n>0$ with $\Delta\coloneqq\sum_{j=1}^n\Delta_j<\delta$:
+\begin{equation*}
+\Delta<\delta\then\left\lVert\left(\prod_{j=1}^n[I+\Delta_j Q]\right)-(I+\Delta Q)\right\rVert<\epsilon\Delta
+\end{equation*}
+
+
+\end{lemma}
+\begin{proof}
+Fix $\epsilon>0$. Since $\frac{d}{dt}e^{t\lVert Q\rVert}\vert_{t=0}=Q$, there is some $\delta>0$ such that, for all $0<t<\delta$, $\big\vert e^{t\lVert Q\rVert}- (1+t\lVert Q\rVert)\big\vert<\epsilon t$. Consider now any $\Delta_1,\dots,\Delta_n>0$ such that $\Delta\coloneqq\sum_{j=1}^n\Delta_j<\delta$. Then
+\begin{multline*}
+\left\lVert\left(\prod_{j=1}^n[I+\Delta_j Q]\right)-(I+\Delta Q)\right\rVert\\
+\begin{aligned}
+&=
+\left\lVert\left(I+Q\sum_{j=1}^n\Delta_j+Q^2\sum_{1\leq j<j'\leq n}\Delta_j\Delta_{j'}+ \dots +Q^n\prod_{j=1}^n\Delta_j\right)-(I+\Delta Q)\right\rVert\\
+&=
+\left\lVert Q^2\sum_{1\leq j<j'\leq n}\Delta_j\Delta_{j'}+ \dots +Q^n\prod_{j=1}^n\Delta_j \right\rVert\\
+&\leq
+{\lVert Q\rVert}^2\sum_{1\leq j<j'\leq n}\Delta_j\Delta_{j'}+ \dots +{\lVert Q\rVert}^n\prod_{j=1}^n\Delta_j\\
+&=\left(\prod_{j=1}^n[1+\Delta_j\lVert Q\rVert]\right)-(1+\Delta\lVert Q\rVert)\\
+&\leq \left(1+\frac{\Delta\lVert Q\rVert}{n}\right)^n-(1+\Delta\lVert Q\rVert)
+\leq e^{\Delta\lVert Q\rVert}-(1+\Delta\lVert Q\rVert)
+<\epsilon\Delta.
+\end{aligned}
+\end{multline*}
+\end{proof}
+
 \bibliographystyle{plain} 
 %\bibliography{general}
 
