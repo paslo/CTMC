@@ -156,6 +156,8 @@ $\norm{f}=0\asa f=0$
 \item
 $\norm{f+g}\leq\norm{f}+\norm{g}$
 \item
+$\norm{\lambda f}=\abs{\lambda}\norm{f}$
+\item
 $\norm{A}\geq0$
 \item
 $\norm{A}=0\asa A=0$
@@ -168,7 +170,7 @@ $\norm{\lambda A}=\abs{\lambda}\norm{A}$
 \item
 $\norm{Af}\leq\norm{A}\norm{f}$
 \item
-$\norm{A}\leq 1$ if $A$ is stochastic.
+$\norm{T}\leq 1$ if $T$ is a transition matrix.
 \end{enumerate}
 \vspace{5pt}
 
@@ -178,6 +180,24 @@ Finally, for any set $\mathcal{A}$ of $n\times n$ matrices, we define
 \begin{equation*}
 \norm{\mathcal{A}}\coloneqq\sup\{\norm{A}\colon A\in\mathcal{A}\}.
 \end{equation*}
+
+\begin{lemma}
+Consider two sequences $A_1,\dots,A_n$ and $B_1,\dots,B_n$ of transition matrixes such that, for all $i\in\{1,\dots,n\}$, $\norm{A_i-B_i}\leq c$. Then
+\begin{equation*}
+\norm{\prod_{i=1}^nA_i-\prod_{i=1}^nB_i}\leq nc
+\end{equation*}
+\end{lemma}
+\begin{proof}
+We provide a proof by induction. For $n=1$, the result is trivially true. Assume that the result holds for $n=k-1$. The following derivation then shows that it also holds for $n=k$: 
+\begin{align*}
+\norm{\prod_{i=1}^nA_i-\prod_{i=1}^nB_i}
+&=
+\norm{\prod_{i=1}^{n}A_i-\left(\prod_{i=1}^{n-1}A_i\right)B_n+\left(\prod_{i=1}^{n-1}A_i\right)B_n-\prod_{i=1}^{n}B_i}\\
+&\leq
+\left(\prod_{i=1}^{n-1}\norm{A_i}\right)\norm{A_n-B_n}+\norm{\prod_{i=1}^{n-1}A_i-\prod_{i=1}^{n-1}B_i}\norm{B_n}\\
+&\leq c + \norm{\prod_{i=1}^{n-1}A_i-\prod_{i=1}^{n-1}B_i}\leq c+(n-1)c= nc.
+\end{align*}
+\end{proof}
 
 
 
