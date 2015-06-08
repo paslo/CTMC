@@ -55,6 +55,9 @@
 \newcommand{\asa}{\Leftrightarrow}
 \newcommand{\then}{\Rightarrow}
 
+\newcommand{\norm}[1]{\left\lVert #1 \right\rVert}
+\newcommand{\abs}[1]{\left\vert #1 \right\vert}
+
 \begin{document}
 \title{Continuous-time Imprecise Markov Chains}
 \author{Jasper De Bock}
@@ -131,6 +134,54 @@ for every sequence $0\leq t=t_0<t_1<t_2,\dots,t_{n}=s$.
 This property is well known and therefore stated without proof.
 \end{proof}
 
+\section{The norms that are used in this document}
+
+For any vector $f\in\gamblesX$, we let $\norm{f}\coloneqq\norm{f}_{\infty}\coloneqq\max\{\abs {f(x)}\colon x\in\states\}$ be the maximum norm. For any $n\times n$ matrix $A$, we consider the induced operator norm
+
+\begin{equation*}
+\norm{A}\coloneqq\sup\{\norm{Af}\colon f\in\gamblesX,\norm{f}=1\}
+=
+\max\{\sum_{y\in\states}\abs{A(x,y)}\colon x\in\states\}.
+\end{equation*}
+
+\noindent
+These norms satisfy the following properties. For all $f,g\in\gamblesX$, all $n\times n$ matrices $A,B$ and all $\lambda\in\reals$, we have that
+\vspace{5pt}
+
+\begin{enumerate}[label=N\arabic*:]
+\item
+$\norm{f}\geq0$
+\item
+$\norm{f}=0\asa f=0$
+\item
+$\norm{f+g}\leq\norm{f}+\norm{g}$
+\item
+$\norm{A}\geq0$
+\item
+$\norm{A}=0\asa A=0$
+\item
+$\norm{A+B}\leq\norm{A}+\norm{B}$
+\item
+$\norm{AB}\leq\norm{A}\norm{B}$
+\item
+$\norm{\lambda A}=\abs{\lambda}\norm{A}$
+\item
+$\norm{Af}\leq\norm{A}\norm{f}$
+\item
+$\norm{A}\leq 1$ if $A$ is stochastic.
+\end{enumerate}
+\vspace{5pt}
+
+\noindent
+Finally, for any set $\mathcal{A}$ of $n\times n$ matrices, we define
+
+\begin{equation*}
+\norm{\mathcal{A}}\coloneqq\sup\{\norm{A}\colon A\in\mathcal{A}\}.
+\end{equation*}
+
+
+
+
 \section{Sets of rate matrices and lower transition operators}
 
 A real-valued $m\times m$ matrix $Q$ is said to be a rate matrix if
@@ -144,7 +195,7 @@ $Q(x,y)\geq0$ for all $x,y\in\states$ such that $x\neq y$.
 \end{enumerate}
 \vspace{5pt}
 
-A set $\rateset$ of rate matrices is said to be bounded if $\inf\{Q(x,x)\colon Q\in\rateset\}>-\infty$ for all $x\in\states$. For any such bounded set $\rateset$ of rate matrices, the corresponding \emph{lower transition rate operator} $\lrate$ is a map from $\gamblesX$ to $\gamblesX$. For all $f\in\gamblesX$, $\lrate f$ is defined by
+A set $\rateset$ of rate matrices is said to be bounded if $\inf\{Q(x,x)\colon Q\in\rateset\}>-\infty$ for all $x\in\states$ or, equivalently, if $\norm{\rateset}<\infty$. For any such bounded set $\rateset$ of rate matrices, the corresponding \emph{lower transition rate operator} $\lrate$ is a map from $\gamblesX$ to $\gamblesX$. For all $f\in\gamblesX$, $\lrate f$ is defined by
 
 \begin{equation*}
 (\lrate f)(x)\coloneqq\inf\{(Qf)(x)\colon Q\in\rateset\}\text{ for all $x\in\states$}.
@@ -162,7 +213,7 @@ Consider any $t,s\in[0,+\infty)$ such that $t<s$ and let $\rateset$ be an arbitr
 (\forall\epsilon>0)\,
 (\exists\delta>0)\,
 (\forall u\in\mathcal{U}_{[t,s]}\colon\sigma(u)<\delta)~
-\vert\vert g - \prod_{k=1}^n(I+\Delta_k\lrate)f \vert\vert<\epsilon.
+\lVert g - \prod_{k=1}^n(I+\Delta_k\lrate)f \rVert<\epsilon.
 \end{equation*}
 \end{theorem}
 \begin{proof}
@@ -177,7 +228,7 @@ Consider any $t,s\in[0,+\infty)$ such that $t<s$ and let $\rateset$ be an arbitr
 (\forall\epsilon>0)\,
 (\exists\delta>0)\,
 (\forall\Delta\in(0,\delta))~
-\Big\vert\Big\vert\frac{L_{t-\Delta}^sf-L_t^sf}{\Delta}-\lrate L_t^sf\Big\vert\Big\vert<\epsilon.
+\Big\lVert\frac{L_{t-\Delta}^sf-L_t^sf}{\Delta}-\lrate L_t^sf\Big\rVert<\epsilon.
 \end{equation*}
 
 \end{proposition}
@@ -194,7 +245,7 @@ For any bounded set of rate matrices $\rateset$, we consider the set $\mprocesse
 (\forall t\in[0,+\infty))\,
 (\forall\Delta\in(0,\delta))\,
 (\exists Q\in\rateset)~
-\Big\vert\Big\vert\frac{P_t^{t+\Delta}-I}{\Delta}-Q\Big\vert\Big\vert<\epsilon.
+\Big\lVert\frac{P_t^{t+\Delta}-I}{\Delta}-Q\Big\rVert<\epsilon.
 \end{equation*}
 %\vspace{5pt}
 
