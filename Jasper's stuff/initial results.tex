@@ -202,7 +202,7 @@ We provide a proof by induction. For $n=1$, the result is trivially true. Assume
 
 
 
-\section{Sets of rate matrices and lower transition operators}
+\section{Sets of rate matrices and lower transition (rate) operators}
 
 A real-valued $m\times m$ matrix $Q$ is said to be a rate matrix if
 
@@ -214,14 +214,60 @@ $\sum_{y\in\states}Q(x,y)=0$ for all $x\in\states$;
 $Q(x,y)\geq0$ for all $x,y\in\states$ such that $x\neq y$.
 \end{enumerate}
 \vspace{5pt}
+\noindent
+We use $\mathcal{R}$ to denote the set of all rate matrices. Clearly, $\mathcal{R}$ is closed under finite sums and multiplication with non-negative scalars. For any set $\rateset\subseteq\mathcal{R}$ of rate matrices, we let
+\begin{equation*}
+\rateset_x\coloneqq\{Q(x,\cdot)\colon Q\in\rateset\}
+\text{ for all $x\in\states$.}
+\end{equation*}
+We say that $\rateset$ has \emph{separately specified rows} if
+\begin{equation*}
+Q\in\rateset\asa(\forall x\in\states)~Q(x,\cdot)\in\rateset_x.
+\end{equation*}
+A set $\rateset\subseteq\mathcal{R}$ of rate matrices is said to be bounded if $\inf\{Q(x,x)\colon Q\in\rateset\}>-\infty$ for all $x\in\states$ or, equivalently, if $\norm{\rateset}<\infty$. 
 
-A set $\rateset$ of rate matrices is said to be bounded if $\inf\{Q(x,x)\colon Q\in\rateset\}>-\infty$ for all $x\in\states$ or, equivalently, if $\norm{\rateset}<\infty$. For any such bounded set $\rateset$ of rate matrices, the corresponding \emph{lower transition rate operator} $\lrate$ is a map from $\gamblesX$ to $\gamblesX$. For all $f\in\gamblesX$, $\lrate f$ is defined by
+For any bounded set $\rateset$ of rate matrices, the corresponding \emph{lower transition rate operator} $\lrate$ is a map from $\gamblesX$ to $\gamblesX$. For all $f\in\gamblesX$, $\lrate f$ is defined by
 
 \begin{equation}\label{eq:deflowerbound}
 (\lrate f)(x)\coloneqq\inf\{(Qf)(x)\colon Q\in\rateset\}\text{ for all $x\in\states$}.
 \end{equation}.
 
-*** I still need to define what `having separately specified rows' means ***
+We will call a map $\lrate$ from $\gamblesX$ to $\gamblesX$ a \emph{coherent} lower transition operator if, for all $f,g\in\gamblesX$, $\lambda>0$ and $\mu\in\reals$:
+
+\vspace{5pt}
+\begin{enumerate}[label=LR\arabic*:]
+\item
+$\lrate(\mu)=0$;
+\item
+$\lrate(f+g)\geq\lrate(f)+\lrate(g)$;
+\item
+$\lrate(\lambda f)=\lambda\lrate(f)$;
+\item
+$\lrate(\ind{y})(x)\geq0$ for all $x,y\in\states$ such that $x\neq y$.
+\end{enumerate}
+\vspace{5pt}
+
+\begin{lemma}\label{lemma:lrateiscoherent}
+For any bounded set $\rateset$ of rate matrices, the corresponding lower transition operator $\lrate$ is coherent.
+\end{lemma}
+\begin{proof}
+This is immediate.
+\end{proof}
+
+For any coherent lower transition rate operator $\lrate$, we use $\rateset_{\lrate}$ to denote the set of all rate matrices $Q$ that dominate $\lrate$, in the sense that
+\begin{equation*}
+Qf\geq\lrate f\text{ for all $f\in\gamblesX$.}
+\end{equation*}
+
+\begin{lemma}
+Consider a coherent lower transition rate operator $\lrate$ and let $\rateset_{\lrate}$ be the corresponding set of dominating rate matrices. Then $\rateset_{\lrate}$ is closed, bounded and convex, and has separately specified rows. Also, for all $f\in\gamblesX$, there is some $Q\in\rateset_{\lrate}$ such that $\lrate f=Qf$.
+\end{lemma}
+\begin{proof}
+*** This is not trivial, but I am convinced it is true (we would have to adapt the proof for a similar well-known result for coherent lower previsions) ***
+\end{proof}
+
+\noindent
+If $\lrate$ is the coherent lower transition rate operator that corresponds to some boundes set $\rateset$ of rate matrices, then clearly: $\rateset\subseteq\rateset_{\lrate}$.
 
 Consider now any $t,s\in[0,+\infty)$ such that $t<s$ and let $\rateset$ be an arbitrary bounded set of rate matrices with corresponding lower transition rate operator $\lrate$. The lower transition operator $\lbound_t^s$ is then a map from $\gamblesX$ to $\gamblesX$, defined by
 \begin{equation}\label{eq:lowerbound}
@@ -254,7 +300,7 @@ Consider any $t,s\in[0,+\infty)$ such that $t<s$ and let $\rateset$ be an arbitr
 
 \end{proposition}
 \begin{proof}
-*** I am confident that this is true, but proving it will not be trivial... ***
+*** I am confident that this is true, but proving it might not be trivial... ***
 \end{proof}
 
 \section{The Markovian (but possibly time-inhomogeneous) case}
@@ -342,7 +388,7 @@ which provides the required contradiction; see Equation~\eqref{eq:chooseepsilon}
 \end{proof}
 
 \begin{theorem}
-Consider any $t,s\in[0,+\infty)$ such that $t<s$ and let $\rateset$ be an arbitrary compact and bounded set of rate matrices that has separately specified rows, with corresponding lower transition rate operator $\lrate$. Then for all $f\in\gamblesX$, there is some $P\in\mprocesses_Q$ such that
+Consider any $t,s\in[0,+\infty)$ such that $t<s$ and let $\rateset$ be an arbitrary closed and bounded set of rate matrices that has separately specified rows, with corresponding lower transition rate operator $\lrate$. Then for all $f\in\gamblesX$, there is some $P\in\mprocesses_Q$ such that
 \begin{equation*}
 \lbound_t^sf(x)=T_t^sf(x)
 \text{ for all $x\in\states$.}
