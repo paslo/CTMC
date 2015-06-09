@@ -136,19 +136,29 @@ This property is well known and therefore stated without proof.
 
 \section{The norms that are used in this document}
 
-For any vector $f\in\gamblesX$, we let $\norm{f}\coloneqq\norm{f}_{\infty}\coloneqq\max\{\abs {f(x)}\colon x\in\states\}$ be the maximum norm. For any $n\times n$ matrix $A$, we consider the induced operator norm
-
+For any vector $f\in\gamblesX$, we let $\norm{f}\coloneqq\norm{f}_{\infty}\coloneqq\max\{\abs {f(x)}\colon x\in\states\}$ be the maximum norm. For any operator $A$ from $\gamblesX$ to $\gamblesX$ that is non-negatively homogeneous, meaning that
 \begin{equation*}
-\norm{A}\coloneqq\sup\{\norm{Af}\colon f\in\gamblesX,\norm{f}=1\}
+A(\lambda f)=\lambda A(f)\text{ for all $f\in\gamblesX$ and all $\lambda\geq0$,}
+\end{equation*}
+we consider the induced operator norm
+\begin{equation*}
+\norm{A}\coloneqq\sup\{\norm{Af}\colon f\in\gamblesX,\norm{f}=1\}.
+\end{equation*}
+If $A$ is an $n\times n$ matrix, we have that
+\begin{equation*}
+\norm{A}
 =
 \max\{\sum_{y\in\states}\abs{A(x,y)}\colon x\in\states\}.
 \end{equation*}
 
+
 \noindent
-These norms satisfy the following properties. For all $f,g\in\gamblesX$, all $n\times n$ matrices $A,B$ and all $\lambda\in\reals$, we have that
+These norms satisfy the following properties. For all $f,g\in\gamblesX$, all $A,B$ from $\gamblesX$ to $\gamblesX$ that are non-negatively homogeneous, all $\lambda\in\reals$ and all $x\in\states$, we have that
 \vspace{5pt}
 
 \begin{enumerate}[label=N\arabic*:]
+\item
+$\abs{f(x)}\leq\norm{f}$
 \item
 $\norm{f}\geq0$
 \item
@@ -170,7 +180,7 @@ $\norm{\lambda A}=\abs{\lambda}\norm{A}$
 \item
 $\norm{Af}\leq\norm{A}\norm{f}$
 \item
-$\norm{T}\leq 1$ if $T$ is a stochastic matrix.
+$\norm{A}\leq 1$ if $A$ is a stochastic matrix.
 \end{enumerate}
 \vspace{5pt}
 
@@ -202,7 +212,7 @@ We provide a proof by induction. For $n=1$, the result is trivially true. Assume
 
 
 
-\section{Sets of rate matrices and lower transition (rate) operators}
+\section{Sets of rate matrices and lower transition rate operators}
 
 A real-valued $m\times m$ matrix $Q$ is said to be a rate matrix if
 
@@ -269,28 +279,44 @@ Consider a coherent lower transition rate operator $\lrate$ and let $\rateset_{\
 \noindent
 If $\lrate$ is the coherent lower transition rate operator that corresponds to some bounded set $\rateset$ of rate matrices, then clearly: $\rateset\subseteq\rateset_{\lrate}$.
 
-Consider now any $t,s\in[0,+\infty)$ such that $t<s$ and let $\rateset$ be an arbitrary bounded set of rate matrices with corresponding lower transition rate operator $\lrate$. The lower transition operator $\lbound_t^s$ is then a map from $\gamblesX$ to $\gamblesX$, defined by
+\section{Lower transition operators}
+
+We will call a map $\lt$ from $\gamblesX$ to $\gamblesX$ a \emph{coherent lower transition operator} if, for all $f,g\in\gamblesX$, $\lambda>0$ and $\mu\in\reals$:
+
+\vspace{5pt}
+\begin{enumerate}[label=C\arabic*:]
+\item
+$\lt f\geq\min f$
+\item
+$\lt(f+g)\geq\lt(f)+\lt(g)$;
+\item
+$\lt(\lambda f)=\lambda\lt(f)$.
+\end{enumerate}
+\vspace{5pt}
+
+
+Consider now any $t,s\in[0,+\infty)$ such that $t<s$ and let $\lrate$ be an arbitrary coherent lower transition rate operator . The corresponding lower transition operator $\lbound_t^s$ is then a map from $\gamblesX$ to $\gamblesX$, defined by
 \begin{equation}\label{eq:lowerbound}
 \lbound_t^s\coloneqq\lim_{\sigma(u)\to0}\prod_{k=1}^n(I+\Delta_k\lrate),
 \end{equation}
-where the limit is taken with respect to the set $\mathcal{U}_{[t,s]}$ of all sequences $t=t_0<t_1<\dots<t_n=s$ and where, for any $u\in\mathcal{U}_{[t,s]}$, we first define $\Delta_i\coloneqq t_i-t_{i-1}$ for all $i\in\{1,\dots,n\}$ and then let $\sigma(u)\coloneqq\max\{\Delta_i\colon i\in\{1,\dots,n\}\}$. The following result establishes that the limit in Equation~\eqref{eq:lowerbound} exists.
+where the limit is taken with respect to the set $\mathcal{U}_{[t,s]}$ of all sequences $t=t_0<t_1<\dots<t_n=s$ and where, for any $u\in\mathcal{U}_{[t,s]}$, we first define $\Delta_i\coloneqq t_i-t_{i-1}$ for all $i\in\{1,\dots,n\}$ and then let $\sigma(u)\coloneqq\max\{\Delta_i\colon i\in\{1,\dots,n\}\}$. The following result establishes that the limit in Equation~\eqref{eq:lowerbound} exists, and that it is a coherent lower transition operator.
 
 \begin{theorem}\label{theo:convergencelowerbound}
-Consider any $t,s\in[0,+\infty)$ such that $t<s$ and let $\rateset$ be an arbitrary bounded set of rate matrices with corresponding lower transition rate operator $\lrate$. For all \mbox{$f\in\gamblesX$} and $x\in\states$, there will then be some $\alpha\in\reals$ such that:
+For any $t,s\in[0,+\infty)$ such that $t<s$ and any coherent lower transition rate operator $\lrate$, there is a coherent lower transition operator $\lbound_t^s$ such that 
 \begin{equation*}
 (\forall\epsilon>0)\,
 (\exists\delta>0)\,
-(\forall u\in\mathcal{U}_{[t,s]}\colon\sigma(u)<\delta)~\abs{\alpha - \left(\left(\prod_{k=1}^n(I+\Delta_k\lrate)\right)(f)\right)(x)}<\epsilon.
+(\forall u\in\mathcal{U}_{[t,s]}\colon\sigma(u)<\delta)~\norm{\lbound_t^s - \prod_{k=1}^n(I+\Delta_k\lrate)}<\epsilon.
 \end{equation*}
 \end{theorem}
 \begin{proof}
 *** I am confident that this is true, but proving it will not be trivial... One way to do it would be to use arguments similar to the ones that I used in (the proof of) Lemma~\ref{lemma:smallerpartition}. ***
 \end{proof}
 
-The left derivative of $\lbound_t^s$ with respect to $t$ furthermore satisfies Damjan's differential equation.
+The derivative of $\lbound_t^s$ with respect to $t$ furthermore satisfies differential equations in the style of Damjan.
 
 \begin{proposition}
-Consider any $t,s\in[0,+\infty)$ such that $t<s$ and let $\rateset$ be an arbitrary bounded set of rate matrices with corresponding lower transition rate operator $\lrate$ and lower transition operator $\lbound_t^s$. For all \mbox{$f\in\gamblesX$}, we then have that
+Consider any $t,s\in[0,+\infty)$ such that $t<s$, let $\lrate$ be an arbitrary coherent lower transition rate operator and let $\lbound_t^s$ be the corresponding lower transition operator. Then
 \begin{equation*}
 (\forall\epsilon>0)\,
 (\exists\delta>0)\,
