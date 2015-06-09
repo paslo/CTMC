@@ -237,12 +237,10 @@ Q\in\rateset\asa(\forall x\in\states)~Q(x,\cdot)\in\rateset_x.
 A set $\rateset\subseteq\mathcal{R}$ of rate matrices is said to be bounded if $\inf\{Q(x,x)\colon Q\in\rateset\}>-\infty$ for all $x\in\states$ or, equivalently, if $\norm{\rateset}<\infty$. 
 
 For any bounded set $\rateset$ of rate matrices, the corresponding \emph{lower transition rate operator} $\lrate$ is a map from $\gamblesX$ to $\gamblesX$. For all $f\in\gamblesX$, $\lrate f$ is defined by
-
 \begin{equation}\label{eq:deflowerbound}
 (\lrate f)(x)\coloneqq\inf\{(Qf)(x)\colon Q\in\rateset\}\text{ for all $x\in\states$}.
 \end{equation}
-
-We will call a map $\lrate$ from $\gamblesX$ to $\gamblesX$ a \emph{coherent} lower transition rate operator if, for all $f,g\in\gamblesX$, $\lambda>0$ and $\mu\in\reals$:
+We will call a map $\lrate$ from $\gamblesX$ to $\gamblesX$ a \emph{coherent} lower transition rate operator if, for all $f,g\in\gamblesX$, $\lambda\geq0$ and $\mu\in\reals$:
 
 \vspace{5pt}
 \begin{enumerate}[label=LR\arabic*:]
@@ -270,7 +268,7 @@ Qf\geq\lrate f\text{ for all $f\in\gamblesX$.}
 \end{equation*}
 
 \begin{lemma}
-Consider a coherent lower transition rate operator $\lrate$ and let $\rateset_{\lrate}$ be the corresponding set of dominating rate matrices. Then $\rateset_{\lrate}$ is closed, bounded and convex, and has separately specified rows. Also, for all $f\in\gamblesX$, there is some $Q\in\rateset_{\lrate}$ such that $\lrate f=Qf$.
+Consider a coherent lower transition rate operator $\lrate$ and let $\rateset_{\lrate}$ be the corresponding set of dominating rate matrices. Then $\rateset_{\lrate}$ is closed, bounded and convex, and has separately specified rows. Also, for all $f\in\gamblesX$, there is some $Q\in\rateset_{\lrate}$ such that $\lrate f=Qf$. Furthermore, $\norm{\lrate}<\infty$.
 \end{lemma}
 \begin{proof}
 *** This is not trivial, but I am convinced it is true (we would have to adapt the proof for a similar well-known result for coherent lower previsions) ***
@@ -281,7 +279,7 @@ If $\lrate$ is the coherent lower transition rate operator that corresponds to s
 
 \section{Lower transition operators}
 
-We will call a map $\lt$ from $\gamblesX$ to $\gamblesX$ a \emph{coherent lower transition operator} if, for all $f,g\in\gamblesX$, $\lambda>0$ and $\mu\in\reals$:
+We will call a map $\lt$ from $\gamblesX$ to $\gamblesX$ a \emph{coherent lower transition operator} if, for all $f,g\in\gamblesX$, $\lambda\geq0$ and $\mu\in\reals$:
 
 \vspace{5pt}
 \begin{enumerate}[label=C\arabic*:]
@@ -316,14 +314,20 @@ For any $t,s\in[0,+\infty)$ such that $t<s$ and any coherent lower transition ra
 The derivative of $\lbound_t^s$ with respect to $t$ furthermore satisfies differential equations in the style of Damjan.
 
 \begin{proposition}
-Consider any $t,s\in[0,+\infty)$ such that $t<s$, let $\lrate$ be an arbitrary coherent lower transition rate operator and let $\lbound_t^s$ be the corresponding lower transition operator. Then
+Consider any $t,s\in[0,+\infty)$ such that $t<s$, let $\lrate$ be an arbitrary coherent lower transition rate operator and let $\lbound_t^s$ be the corresponding lower transition operator. Then $\frac{d}{dt}\lbound_t^s=-\lrate\lbound_t^s$ and $\frac{d}{ds}\lbound_t^s=\lrate$, meaning that
 \begin{equation*}
 (\forall\epsilon>0)\,
 (\exists\delta>0)\,
-(\forall\Delta\in(0,\delta))~
-\Big\lVert\frac{L_{t-\Delta}^sf-L_t^sf}{\Delta}-\lrate L_t^sf\Big\rVert<\epsilon.
+(\forall\Delta\in(-\delta,\delta))~
+\Big\lVert\frac{L_{t+\Delta}^s-L_t^s}{\Delta}+\lrate L_t^s\Big\rVert<\epsilon
 \end{equation*}
-
+and
+\begin{equation*}
+(\forall\epsilon>0)\,
+(\exists\delta>0)\,
+(\forall\Delta\in(-\delta,\delta))~
+\Big\lVert\frac{L_{t}^{s+\Delta}-L_t^s}{\Delta}-\lrate \Big\rVert<\epsilon.
+\end{equation*}
 \end{proposition}
 \begin{proof}
 *** I am confident that this is true, but proving it might not be trivial... ***
