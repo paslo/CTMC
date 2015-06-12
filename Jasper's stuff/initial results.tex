@@ -308,7 +308,7 @@ For any $t,s\in[0,+\infty)$ such that $t<s$ and any coherent lower transition ra
 \end{equation*}
 \end{theorem}
 \begin{proof}
-*** I am confident that this is true, but proving it will not be trivial... One way to do it would be to use arguments similar to the ones that I used in (the proof of) Lemma~\ref{lemma:smallerpartition}. ***
+See the rough sketch in Section~\ref{sec:proofsketch}.
 \end{proof}
 
 The derivative of $\lbound_t^s$ with respect to $t$ furthermore satisfies differential equations in the style of Damjan.
@@ -454,6 +454,333 @@ Fix $\epsilon>0$. Since $\frac{d}{dt}e^{t\lVert Q\rVert}\vert_{t=0}=\lVert Q\rVe
 \end{aligned}
 \end{multline*}
 \end{proof}
+
+\section{Rough sketch of the proof of Theorem~\ref{theo:convergencelowerbound}}\label{sec:proofsketch}
+
+This section gives a rough sketch of the proof of Theorem~\ref{theo:convergencelowerbound}. There are still many claims in here, which need to be proved, but the general structure of the proof is completely there. I won't work on this anymore (at least for now). Feel free to use this structure to come up with a solid formal proof. 
+
+
+We start with a bunch of lemma's and propositions.
+
+\begin{lemma}\label{lemma:normQsmallenough}
+If $0<\Delta\leq\nicefrac{1}{\norm{\lrate}}$, then $I+\Delta\lrate$ is a coherent lower transition operator.
+\end{lemma}
+\begin{proof}
+Just check each of the three defining properties. C2 and C3 are trivial. C1 requires a bit more work.
+\end{proof}
+
+\begin{lemma}\label{lemma:compositioncoherence}
+If $\lt_1,\lt_2,\dots,\lt_n$ are coherent lower transition operators, then  $\lt_1\lt_2\cdots\lt_n$ is also a coherent lower transition operator.
+\end{lemma}
+\begin{proof}
+Simply check each of the properties.
+\end{proof}
+
+\begin{lemma}\label{lemma:productiscoherent}
+Consider any sequence $0<\Delta_i\leq\nicefrac{1}{\norm{\lrate}}$, $i=1,\dots,n$. Then
+\begin{equation*}
+\prod_{k=i}^n(I+\Delta_i\lrate)
+\end{equation*}
+is a coherent lower transition operator.
+\end{lemma}
+\begin{proof}
+Trivial consequence of Lemma~\ref{lemma:normQsmallenough} and~\ref{lemma:compositioncoherence}.
+\end{proof}
+
+\begin{lemma}\label{lemma:normofcoherenttrans}
+For any coherent lower transition operator $\lt$, we have that $\norm{\lt}\leq 1$.
+\end{lemma}
+\begin{proof}
+This can be shown to follow from coherence.
+\end{proof}
+
+\begin{lemma}\label{lemma:differencenormofcoherenttrans}
+For any coherent lower transition operator $\lt$ and any two non-negatively homogeneous operators $A$, $B$, we have that $\norm{\lt A-\lt B}\leq \norm{A-B}$.
+\end{lemma}
+\begin{proof}
+This can be shown to follow from coherence.
+\end{proof}
+
+\begin{lemma}\label{lemma:differencenormofcoherenttransrate}
+Consider any two non-negatively homogeneous operators $A$, $B$. It then holds that $\norm{\lrate A-\lrate B}\leq 2\norm{\lrate}\norm{A-B}$.
+\end{lemma}
+\begin{proof}
+This can be shown to follow from the definition of the norm and the properties of $\lrate$.
+\end{proof}
+
+
+\begin{lemma}\label{lemma:justtheindicator}
+Consider any sequence $0<\Delta_i\leq\nicefrac{1}{\norm{\lrate}}$, $i=1,\dots,n$, and let $\Delta\coloneqq\sum_{i=1}^n\Delta_i$. Then
+\begin{equation*}
+\norm{\prod_{i=1}^n(I+\Delta_i\lrate)-I}\leq\Delta\norm{\lrate}.
+\end{equation*}
+\end{lemma}
+\begin{proof}
+\begin{align*}
+\norm{\prod_{i=1}^n(I+\Delta_i\lrate)-I}
+&=\norm{\prod_{i=1}^n(I+\Delta_i\lrate)-\prod_{i=1}^{n-1}(I+\Delta_i\lrate)+\prod_{i=1}^{n-1}(I+\Delta_i\lrate)-I}\\
+&\leq\norm{\prod_{i=1}^n(I+\Delta_i\lrate)-\prod_{i=1}^{n-1}(I+\Delta_i\lrate)}+\norm{\prod_{i=1}^{n-1}(I+\Delta_i\lrate)-I}\\
+&\leq\norm{(I+\Delta_n\lrate)-I}+\norm{\prod_{i=1}^{n-1}(I+\Delta_i\lrate)-I}\\
+&=\Delta_n\norm{\lrate}+\norm{\prod_{i=1}^{n-1}(I+\Delta_i\lrate)-I}
+\end{align*}
+where the last inequality follows from Lemma~\ref{lemma:differencenormofcoherenttrans}. By repeating this argument over and over again (actually, by induction), we find that
+\begin{align*}
+\norm{\prod_{i=1}^n(I+\Delta_i\lrate)-I}
+\leq \Delta_n\norm{\lrate} +\Delta_{n-1}\norm{\lrate}+\cdots
++\Delta_1\norm{\lrate}
+=\Delta\norm{\lrate}.
+\end{align*}
+\end{proof}
+
+\begin{lemma}\label{lemma:justthelinearpart}
+Consider any sequence $0<\Delta_i\leq\nicefrac{1}{\norm{\lrate}}$, $i=1,\dots,n$, and let $\Delta\coloneqq\sum_{i=1}^n\Delta_i$. Then
+\begin{equation*}
+\norm{\prod_{i=1}^n(I+\Delta_i\lrate)-(I+\Delta\lrate)}\leq\Delta^2\norm{\lrate}^2.
+\end{equation*}
+\end{lemma}
+\begin{proof}
+\begin{align*}
+&\norm{\prod_{i=1}^n(I+\Delta_i\lrate)-(I+\Delta\lrate)}\\
+&=\norm{\prod_{i=2}^n(I+\Delta_i\lrate)+\Delta_1\lrate\left(\prod_{i=2}^n(I+\Delta_i\lrate)\right)-(I+\sum_{i=2}^n\Delta_i\lrate)-\Delta_1\lrate}\\
+&\leq\norm{\prod_{i=2}^n(I+\Delta_i\lrate)-(I+\sum_{i=2}^n\Delta_i\lrate)}+\norm{\Delta_1\lrate\left(\prod_{i=2}^n(I+\Delta_i\lrate)\right)-\Delta_1\lrate}\\
+&\leq\norm{\prod_{i=2}^n(I+\Delta_i\lrate)-(I+\sum_{i=2}^n\Delta_i\lrate)}+\Delta_1\norm{\lrate\left(\prod_{i=2}^n(I+\Delta_i\lrate)\right)-\lrate}\\
+&\leq\norm{\prod_{i=2}^n(I+\Delta_i\lrate)-(I+\sum_{i=2}^n\Delta_i\lrate)}+\Delta_1 2\norm{\lrate}\norm{\prod_{i=2}^n(I+\Delta_i\lrate)-I},
+\end{align*}
+where the last inequality follows from Lemma~\ref{lemma:differencenormofcoherenttransrate}. Due to Lemma~\ref{lemma:justtheindicator}, this implies that
+\begin{align*}
+&\norm{\prod_{i=1}^n(I+\Delta_i\lrate)-(I+\Delta\lrate)}\\
+&\leq\norm{\prod_{i=2}^n(I+\Delta_i\lrate)-(I+\sum_{i=2}^n\Delta_i\lrate)}+\Delta_1 2\norm{\lrate}\left(\sum_{i=2}^n\Delta_i\right)\norm{\lrate}\\
+&=\norm{\prod_{i=2}^n(I+\Delta_i\lrate)-(I+\sum_{i=2}^n\Delta_i\lrate)}+2\norm{\lrate}^2\Delta_1\left(\sum_{i=2}^n\Delta_i\right).
+\end{align*}
+By continuing in this way (applying induction) we find that
+\begin{align*}
+&\norm{\prod_{i=1}^n(I+\Delta_i\lrate)-(I+\Delta\lrate)}\\
+&\leq
+\norm{\prod_{i=n}^n(I+\Delta_i\lrate)-(I+\sum_{i=n}^n\Delta_i\lrate)}
++2\norm{\lrate}^2\Delta_{n-1}\left(\sum_{i=n}^n\Delta_i\right)
++\cdots
++2\norm{\lrate}^2\Delta_1\left(\sum_{i=2}^n\Delta_i\right)\norm{\lrate}\\
+&=2\norm{\lrate}^2\Delta_{n-1}\left(\sum_{i=n}^n\Delta_i\right)
++\cdots
++2\norm{\lrate}^2\Delta_1\left(\sum_{i=2}^n\Delta_i\right)\norm{\lrate}\\
+&=2\norm{\lrate}^2\sum_{k=1}^n\Delta_k\sum_{i=k+1}^n\Delta_i\\
+&\leq2\norm{\lrate}^2\frac{1}{2}\left(\sum_{k=1}^n\Delta_k\right)^2=\Delta^2\norm{\lrate}^2
+\end{align*}
+\end{proof}
+
+\begin{lemma}\label{lemma:differencebetweennested}
+For any $k\in\{1,\dots,n\}$, consider a sequence of $\Delta_{k,i}>0$, $i=1,\dots,n_k$ and let $\Delta_k\coloneqq\sum_{i=1}^{n_k}\Delta_{n,k}$. Let $\Delta\coloneqq\sum_{k=1}^n\Delta_k$ and let $\alpha\coloneqq\max\{\Delta_k\colon k\in\{1,\dots,n\}\}$. If $\alpha\leq\nicefrac{1}{\norm{\lrate}}$, then
+\begin{equation*}
+\norm{\prod_{k=1}^n\left(\prod_{i=1}^{n_k}(I+\Delta_{k,i}\lrate)\right)
+-
+\prod_{k=1}^n(I+\Delta_k\lrate)
+}
+\leq\alpha\Delta\norm{\lrate}^2.
+\end{equation*}
+\end{lemma}
+\begin{proof}
+\begin{align*}
+&\norm{\prod_{k=1}^n\left(\prod_{i=1}^{n_k}(I+\Delta_{k,i}\lrate)\right)
+-
+\prod_{k=1}^n(I+\Delta_k\lrate)
+}\\
+&=\norm{\left(\prod_{k=1}^{n-1}\left(\prod_{i=1}^{n_k}(I+\Delta_{k,i}\lrate)\right)\right)\left(\prod_{i=1}^{n_n}(I+\Delta_{n,i}\lrate)\right)
+-
+\left(\prod_{k=1}^{n-1}(I+\Delta_k\lrate)\right)(I+\Delta_n\lrate)
+}\\
+&\leq\norm{
+\left(\prod_{k=1}^{n-1}\left(\prod_{i=1}^{n_k}(I+\Delta_{k,i}\lrate)\right)\right)\left(\prod_{i=1}^{n_n}(I+\Delta_{n,i}\lrate)\right)
+-
+\left(\prod_{k=1}^{n-1}(I+\Delta_k\lrate)\right)
+\left(\prod_{i=1}^{n_n}(I+\Delta_{n,i}\lrate)\right)
+}\\
+&~~~~+\norm{
+\left(\prod_{k=1}^{n-1}(I+\Delta_k\lrate)\right)
+\left(\prod_{i=1}^{n_n}(I+\Delta_{n,i}\lrate)\right)
+-
+\left(\prod_{k=1}^{n-1}(I+\Delta_k\lrate)\right)(I+\Delta_n\lrate)
+}\\
+&=\norm{
+\left(
+\left(
+\prod_{k=1}^{n-1}\left(\prod_{i=1}^{n_k}(I+\Delta_{k,i}\lrate)\right)
+\right)
+-
+\left(\prod_{k=1}^{n-1}(I+\Delta_k\lrate)\right)
+\right)
+\left(\prod_{i=1}^{n_n}(I+\Delta_{n,i}\lrate)\right)
+}\\
+&~~~~+\norm{
+\left(\prod_{k=1}^{n-1}(I+\Delta_k\lrate)\right)
+\left(\prod_{i=1}^{n_n}(I+\Delta_{n,i}\lrate)\right)
+-
+\left(\prod_{k=1}^{n-1}(I+\Delta_k\lrate)\right)(I+\Delta_n\lrate)
+}\\
+&\leq\norm{
+\left(
+\prod_{k=1}^{n-1}\left(\prod_{i=1}^{n_k}(I+\Delta_{k,i}\lrate)\right)
+\right)
+-
+\left(\prod_{k=1}^{n-1}(I+\Delta_k\lrate)\right)
+}
+\norm{
+\left(\prod_{i=1}^{n_n}(I+\Delta_{n,i}\lrate)\right)
+}\\
+&~~~~+\norm{
+\left(\prod_{k=1}^{n-1}(I+\Delta_k\lrate)\right)
+\left(\prod_{i=1}^{n_n}(I+\Delta_{n,i}\lrate)\right)
+-
+\left(\prod_{k=1}^{n-1}(I+\Delta_k\lrate)\right)(I+\Delta_n\lrate)
+},
+\end{align*}
+
+\noindent
+which, because of Lemma~\ref{lemma:productiscoherent}, \ref{lemma:normofcoherenttrans} and~\ref{lemma:differencenormofcoherenttrans}, implies that
+
+\begin{align*}
+&\norm{\prod_{k=1}^n\left(\prod_{i=1}^{n_k}(I+\Delta_{k,i}\lrate)\right)
+-
+\prod_{k=1}^n(I+\Delta_k\lrate)
+}\\
+&\leq\norm{
+\left(
+\prod_{k=1}^{n-1}\left(\prod_{i=1}^{n_k}(I+\Delta_{k,i}\lrate)\right)
+\right)
+-
+\left(\prod_{k=1}^{n-1}(I+\Delta_k\lrate)\right)
+}\\
+&~~~~+\norm{
+\left(\prod_{i=1}^{n_n}(I+\Delta_{n,i}\lrate)\right)
+-
+(I+\Delta_n\lrate)
+}\\
+&\leq
+\norm{
+\left(
+\prod_{k=1}^{n-1}\left(\prod_{i=1}^{n_k}(I+\Delta_{k,i}\lrate)\right)
+\right)
+-
+\left(\prod_{k=1}^{n-1}(I+\Delta_k\lrate)\right)
+}
++
+\Delta_n^2\norm{\lrate}^2,
+\end{align*}
+where the last inequality follows from Lemma~\ref{lemma:justthelinearpart}.
+
+By continuing in this way (applying induction), we find that
+\begin{align*}
+\norm{\prod_{k=1}^n\left(\prod_{i=1}^{n_k}(I+\Delta_{k,i}\lrate)\right)
+-
+\prod_{k=1}^n(I+\Delta_k\lrate)
+}
+&\leq
+\Delta_1^2\norm{\lrate}^2+\cdot+\Delta_k^2\norm{\lrate}^2+\cdot
++
+\Delta_n^2\norm{\lrate}^2\\
+&\leq
+\alpha\Delta_1\norm{\lrate}^2+\cdot+\alpha\Delta_k\norm{\lrate}^2+\cdot
++
+\alpha\Delta_n\norm{\lrate}^2\\
+&=
+\alpha\Delta\norm{\lrate}^2
+\end{align*}
+
+
+\end{proof}
+
+
+For any $u\in\mathcal{U}_{[t,s]}$, we now let
+\begin{equation*}
+\Phi_u\coloneqq\prod_{k=1}^n(I+\Delta_k\lrate).
+\end{equation*}
+
+\begin{proposition}\label{prop:differencebetweenu}
+Consider any $u,u^*\in\mathcal{U}_{[t,s]}$ such that $\sigma(u)<\alpha$ and $\sigma(u^*)<\alpha$, with $0<\alpha\leq\nicefrac{1}{\norm{\lrate}}$. Let $\Delta\coloneqq t-s$. Then $\norm{\Phi_u-\Phi_{u^*}}\leq 2\alpha\Delta\norm{\lrate}^2$
+\end{proposition}
+\begin{proof}
+Consider any $u'\in\mathcal{U}_{[t,s]}$ that is finer than $u$ and $u^*$, meaning that the timepoints it consists of contain the timepoints in $u$ and the timepoints in $u^*$. For example, let $u'$ be the ordered union of the timepoints in $u$ and $u^*$.
+
+This implies that, for all $k\in\{1,\dots,n\}$, there is some sequence $\Delta_{k,i}>0$, $i\in\{1,\dots,n_k\}$, such that $\Delta_k=\sum_{i=1}^{n_k}\Delta_{k,i}$ and
+\begin{equation*}
+\Phi_{u'}\coloneqq\prod_{k=1}^n\left(\prod_{i=1}^{n_k}(I+\Delta_{k,i}\lrate)\right).
+\end{equation*}
+It then follows from Lemma~\ref{lemma:differencebetweennested} that $\norm{\Phi_{u'}-\Phi_u}\leq\alpha\Delta\norm{\lrate}^2$. 
+
+Similarly, for all $k\in\{1,\dots,n^*\}$, there is some sequence $\Delta^*_{k,i}>0$, $i\in\{1,\dots,n_k\}$, such that $\Delta^*_k=\sum_{i=1}^{n_k}\Delta^*_{k,i}$ and
+\begin{equation*}
+\Phi_{u'}\coloneqq\prod_{k=1}^{n^*}\left(\prod_{i=1}^{n^*_k}(I+\Delta^*_{k,i}\lrate)\right).
+\end{equation*}
+It then follows from Lemma~\ref{lemma:differencebetweennested} that $\norm{\Phi_{u'}-\Phi_{u^*}}\leq\alpha\Delta\norm{\lrate}^2$.
+
+Hence, we find that
+\begin{equation*}
+\norm{\Phi_{u}-\Phi_{u^*}}
+=
+\norm{\Phi_{u}-\Phi_{u'}+\Phi_{u'}-\Phi_{u^*}}
+\leq
+\norm{\Phi_{u}-\Phi_{u'}}
++
+\norm{\Phi_{u'}-\Phi_{u^*}}
+\leq2\alpha\Delta\norm{\lrate}^2.
+\end{equation*}
+\end{proof}
+
+\begin{corollary}\label{corol:cauchy}
+For every sequence $u_1,u_2,\dots,u_n,\dots$ in $\mathcal{U}_{[t,s]}$ such that $\lim_{n\to\infty}\sigma(u_n)=0$, the corresponding sequence $\Phi_{u_1},\Phi_{u_2},\dots,\Phi_{u_n},\dots$ is a \emph{cauchy sequence}, meaning that
+\begin{equation*}
+(\forall \epsilon>0)(\exists N\in\nats)(\forall n,m\geq N)
+\norm{\Phi_{u_n}-\Phi_{u_m}}<\epsilon.
+\end{equation*}
+\end{corollary}
+\begin{proof}
+This follows almost directly from Proposition~\ref{prop:differencebetweenu}.
+\end{proof}
+
+\begin{lemma}\label{lemma:completemetricspace}
+The set of all coherent lower transition operators is a complete metric space.
+\end{lemma}
+\begin{proof}
+Since a coherent lower transition operator is just a finite vector of coherent lower previsions, this result should follow fairly easily for the (known) fact that the set of all coherent lower previsions (on a given fixed space) is a complete metric space.
+\end{proof}
+
+\begin{corollary}\label{corol:limitexistsandiscoherent}
+For every sequence $u_1,u_2,\dots,u_n,\dots$ in $\mathcal{U}_{[t,s]}$ such that $\lim_{n\to\infty}\sigma(u_n)=0$, the corresponding sequence $\Phi_{u_1},\Phi_{u_2},\dots,\Phi_{u_n},\dots$ converges to a coherent lower transition operator.
+\end{corollary}
+\begin{proof}
+Since $\lim_{n\to\infty}\sigma(u_n)=0$, and because of Lemma~\ref{lemma:productiscoherent}, there is some index $i$ such that the sequence $\Phi_{u_i},\Phi_{u_{i+1}},\dots,\Phi_{u_n},\dots$ consists of coherent lower transition operators. Due to Corollary~\ref{corol:cauchy}, this sequence is cauchy and therefore, because of Lemma~\ref{lemma:completemetricspace}, this sequence has a limit that is also a coherent lower transition operator. Since the limit starting from $i$ and the limit starting from $1$ are identical (initial elements do not influence the limit), we find that the sequence $\Phi_{u_1},\Phi_{u_2},\dots,\Phi_{u_n},\dots$ has a limit, and that this limit is a coherent lower transition operator.
+\end{proof}
+
+Proving Theorem~\ref{theo:convergencelowerbound} is now easy. Just consider any sequence $u_1,u_2,\dots,u_n,\dots$ in $\mathcal{U}_{[t,s]}$ such that $\lim_{n\to\infty}\sigma(u_n)=0$. Due to Corollary~\ref{corol:limitexistsandiscoherent}, the sequence $\Phi_{u_1},\Phi_{u_2},\dots,\Phi_{u_n},\dots$ converges to a coherent lower transition operator, which we denote by $\lbound_t^s$. 
+
+Consider now any $\epsilon>0$ and let $\Delta\coloneqq t-s$ and
+\begin{equation*}
+\delta\coloneqq\min\left\{\frac{\epsilon}{4\Delta\norm{\lrate}^2},\frac{1}{\norm{\lrate}}\right\}.
+\end{equation*}
+
+Since $\Phi_{u_1},\Phi_{u_2},\dots,\Phi_{u_n},\dots$ converges to $\lbound_t^s$, there is some $N\in\nats$ such that
+\begin{equation*}
+(\forall n\geq N)~\norm{\lbound_t^s - \Phi_{u_n}}<\frac{\epsilon}{2}.
+\end{equation*}
+Therefore, since $\lim_{n\to\infty}\sigma(u_n)=0$, there is some $N^*\geq N$ such that
+\begin{equation*}
+\sigma(u_{N^*})<\delta\text{ and }\norm{\lbound_t^s - \Phi_{u_{N^*}}}<\frac{\epsilon}{2}
+\end{equation*}
+
+Consider now any $u\in\mathcal{U}_{[t,s]}$ such that $\sigma(u)<\delta$. Then
+
+\begin{equation*}
+\norm{\lbound_t^s - \Phi_u}\leq\norm{\lbound_t^s-\Phi_{u_{N^*}}}
++\norm{\Phi_{u_{N^*}}-\Phi_u}
+<\frac{\epsilon}{2}+2\delta\Delta\norm{\lrate}^2\leq\epsilon,
+\end{equation*}
+where the strict inequality follows from Proposition~\ref{prop:differencebetweenu}.
+In summary, we have shown that there is some coherent lower transition operator $\lbound_t^s$ such that
+\begin{equation*}
+(\forall\epsilon>0)\,
+(\exists\delta>0)\,
+(\forall u\in\mathcal{U}_{[t,s]}\colon\sigma(u)<\delta)~\norm{\lbound_t^s - \Phi_u}<\epsilon,
+\end{equation*}
+thereby proving Theorem~\ref{theo:convergencelowerbound}.
 
 
 \bibliographystyle{plain} 
