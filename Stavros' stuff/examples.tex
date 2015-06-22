@@ -1,4 +1,5 @@
 \documentclass{article}
+\usepackage{comment}
 \usepackage{amssymb,amsthm}
 \usepackage{algorithmic}
 \usepackage{algorithm}
@@ -14,11 +15,24 @@
 
 \newcommand{\statesymbol}{X}
 \newcommand{\statessymbol}{\mathcal{X}}
+\newcommand{\matrices}{\mathcal{Q}}
+\newcommand{\lmatrixi}[1]{\underline{\matrices}_{#1}}
+\newcommand{\umatrixi}[1]{\overline{\matrices}_{#1}}
 \newcommand{\states}[1]{\statessymbol_{#1}}
 \newcommand{\stateset}{\statessymbol}
+\newcommand{\lexp}{\underline{E}}
+\newcommand{\uexp}{\overline{E}}
+\newcommand{\norm}[1]{\left\lVert #1 \right\rVert}
+\newcommand{\abs}[1]{\left\vert #1 \right\vert}
+\newcommand{\de}{\delta}
+\newcommand{\ve}{\varepsilon}
 
 \newtheorem{Theorem}{Theorem}
 \newtheorem{Definition}{Definition}
+\newtheorem{Lemma}{Lemma}
+\newtheorem{Corollary}{Corollary}
+\newtheorem{Proposition}{Proposition}
+\newtheorem{Assumption}{Assumption}
 
 \title{}
 \date{}
@@ -30,6 +44,439 @@
 
 \begin{document}
 \maketitle
+\section{Preiliminaries}
+
+\subsection{Markov Chains and Expectations}
+\textcolor{red}{*** This part is to be done later...}\\
+We know from (precise) probability theory that given a function $f$ on the state space, the expectation is defined by 
+\begin{equation*}
+E
+\end{equation*} 
+Consider now a set of probability distributions over $\stateset$. 
+Then, we call \emph{lower expectation} of $f$, the minimum expectation on $f$ that is obtained by any probability distribution in the set ...
+That is 
+\begin{equation*}
+\lexp
+\end{equation*} 
+similarly, we have the \emph{upper expectation}, which is defined by....
+\begin{equation*}
+\uexp.
+\end{equation*}  
+One of the fundamental textbooks on imprecise probabilities and also on lower and upper expectations--often called as previsions--is the one in ref?.
+\textcolor{red}{***}\\
+
+\subsection{Norms}
+
+The norm we consider for matrices is the infinite norm $\|\cdot\|_{\infty}$, defines by
+\begin{equation*}
+\norm{Q}_{\infty}\coloneqq \sup_{i\in\stateset}|\sum_{j\in\stateset}{Q(i,j)}|
+\end{equation*}
+with $Q$ an $|\stateset|\times|\stateset|$ matrix.\\
+
+more to be added...
+% Before presenting some properties around the expectations of a given vector $h$, we need to state some assumptions for the norms that we consider through out this document.
+
+% \textcolor{red}{for matrices, we either have the operator norm or the $\infty$-norm}, for the vectors we use the supremum norm.
+% The properties of the norms used are the following
+
+\subsection{Imprecision}
+
+Consider a continuous time Markov process with state space $\stateset\coloneqq\{0,\ldots,N\}$ and $N\in\nats$.\footnote{we do not consider zero to be a natural number.}
+Such a process is characterised--in the precise case--by a single transition rate matrix $N\times N$ denoted by $Q$ and its of its elements by $Q(i,j)$ with $i,j\in\stateset$.
+Each row $i$ of $Q$ represents the rates to move from state $i$ to any state of the process.
+For any matrix $Q$, the following properties hold
+\begin{itemize}
+\item[P1.]$Q(i,j)\geq0$, $\forall i,j\in\stateset$ such that $i\neq j$
+\item[P2.]$\sum_{j\in\stateset}Q(i,j)=0$, $\forall i\in\stateset$
+\end{itemize}
+Assume that instead of a single rate matrix, we are given a set of matrices $\matrices$.
+Consider that for each matrix $Q$ in $\matrices$, we can determine the rates for each row separately.
+That is, $\matrices_{i}\coloneqq\{Q(i,\cdot):Q\in\matrices\}$, for all $i\in\stateset$.
+We assume that our matrices in $\matrices$ are those with rows determined separately.
+\begin{Assumption} \label{ass:rates}
+$Q\in\matrices$ if and only if $(\forall i\in\stateset) \ Q(i,\cdot)\in\matrices_{i}$
+\end{Assumption}
+We introduce some definitions for comparing vectors, which are based on point-wise comparison.
+\begin{Definition} \label{def:leq_qh}
+Given any real-valued function $h$ on $\stateset$ and $ Q, Q' \in \matrices$, then 
+\begin{equation*}
+\begin{split}
+& Qh\leq  Q'h \text{ if and only if }  (Qh)(i)\leq  Q'h(i) \text{, for all } i\in\stateset
+\text{ and }\\
+& Qh\geq  Q'h \text{ if and only if }  (Qh)(i)\geq  Q'h(i) \text{, for all } i\in\stateset.
+\end{split}
+\end{equation*}
+\end{Definition}
+
+\begin{Definition} \label{def:l_qh}
+Given any real-valued function $h$ on $\stateset$ and $ Q, Q' \in \matrices$, then 
+\begin{equation*} 
+\begin{split}
+ Q h< Q'h &\text{ if and only if } \exists I\subseteq\stateset\text{ and }I\neq\varnothing \text{, such that }\\ 
+& (Qh)(i')<  (Q'h)(i') \text{, for all } i'\in I \text{ and }\\
+ & (Qh)(i)=  (Q'h)(i) \text{, for all } i\in\stateset\setminus I,
+\end{split}
+\end{equation*}
+and similarly 
+\begin{equation*} 
+\begin{split}
+ Qh> Q'h &\text{ if and only if } \exists I\subseteq\stateset\text{ and }I\neq\varnothing \text{, such that }\\ 
+& (Q h)(i')>  (Q'h)(i') \text{, for all } i'\in I \text{ and }\\
+& (Q h)(i)=  (Q'h)(i) \text{, for all } i\in\stateset\setminus I.
+\end{split}
+\end{equation*}
+\end{Definition}
+\begin{Definition} \label{def:eq_qh}
+Given any real-valued function $h$ on $\stateset$ and $ Q, Q' \in \matrices$, then 
+\begin{equation*}
+ Q h= Q'h \text{ if and only if }  (Q h)(i)=  (Q'h)(i) \text{, for all } i\in\stateset.
+\end{equation*}
+\end{Definition}
+
+\noindent
+Based on Definitions \ref{def:leq_qh}, \ref{def:l_qh} and \ref{def:eq_qh}, we define the sets of matrices 
+\begin{equation} \label{eq:lset1}
+\lmatrixi{1}\coloneqq\left\{Q\in\matrices:Qh\leq Q'h\text{, }\forall Q'\in\matrices\setminus Q\right\} 
+\end{equation} 
+\begin{equation*}
+\umatrixi{1}\coloneqq\left\{Q\in\matrices:Qh\geq Q'h\text{, }\forall Q'\in\matrices\setminus Q\right\}
+\end{equation*} 
+
+\noindent
+From the  aforementioned definitions, we can derive the following corollaries
+\begin{Corollary} \label{cor:comparison}
+Given  $ Q, Q'$ in $\matrices$ and a real-valued function $h$ on $\stateset$, then  
+\begin{equation*}
+\begin{split}
+& Q h\leq  Q'h \text{ if and only if }  Q h <  Q'h \text{ or }  Q h =  Q'h
+\text{, and }\\
+& Q h\geq  Q'h \text{ if and only if }  Q h >  Q'h \text{ or }  Q h =  Q'h.
+\end{split}
+\end{equation*}
+\end{Corollary}
+\begin{Corollary} \label{cor:empty}
+The sets of matrices $\lmatrixi{1}$ and $\umatrixi{1}$ cannot be empty.
+\end{Corollary}
+\begin{proof}
+Immediate from the Assumption \ref{ass:rates}.
+\end{proof}
+
+\noindent
+We will focus on the set $\lmatrixi{1}$ and on the lower expectations and the results for the upper expectations follow similarly.
+
+
+\begin{Proposition} \label{prop:singleton}
+Given a real-valued function $h$ on $\stateset$, then $\lmatrixi{1}$ is a singleton if and only if it exists $ Q^{*}$ in $\matrices$, such that for all $ Q ' \in\matrices\setminus Q^{*}$
+\begin{equation*}
+ Q^{*}h< Q'h
+\end{equation*} 
+\end{Proposition}
+\begin{proof}
+First we prove that 
+\begin{equation} \label{imp:1}
+\exists Q^{*}\in\matrices\text{, such that } Q^{*}h< Q'h\text{, }\forall Q ' \in\matrices\setminus Q^{*}\Rightarrow \lmatrixi{1}=\{ Q^{*}\}
+\end{equation}
+
+\noindent
+Since $ Q^{*}h< Q'h$ holds, it also holds---due to Corollary \ref{cor:comparison}---that $ Q^{*}h \leq Q'h$, for all $ Q ' \in\matrices\setminus Q^{*}$.
+Therefore, due to Equation \eqref{eq:lset1}, $ Q^{*}\in\lmatrixi{1}$.
+From the left side of the implication in \eqref{imp:1}, combined with Corollary \ref{cor:comparison}, we have that 
+\begin{equation} \label{imp:2}
+\begin{split}
+&\exists Q^{*}\in\matrices\text{, such that } Q^{*}h< Q'h\text{, }\forall Q ' \in\matrices\setminus Q^{*}\Rightarrow \\
+&\not\exists Q'\in\matrices\setminus Q^{*}\text{, such that } Q'h\leq Q^{*}h
+\end{split}
+\end{equation}
+and because of Equation \eqref{eq:lset1} and Corollary \ref{cor:empty}, we have that $\lmatrixi{1}=\{ Q^{*}\}$.
+% Assume that $\lmatrixi{1}$ does not contain only $ Q^{*}$.
+% We will prove by contradiction that this statement is false.
+
+% \noindent
+% Let $ Q$ in $\lmatrixi{1}$ with $ Q\neq Q^{*}$.
+% From Equation \eqref{eq:lset1}, we have that
+% \begin{equation*}
+%  Q h \leq  Q''h\text{, }\forall Q''\in\matrices\setminus Q,
+% \end{equation*}
+% which implies that
+% \begin{equation} \label{ineq:leq}
+%  Q h \leq  Q^{*}h.
+% \end{equation}
+% By taking the initial statement in \eqref{imp:1}, we have that
+% \begin{equation*}
+%  Q^{*} h <  Q'h\text{, }\forall Q'\in\matrices\setminus Q' 
+% \end{equation*}
+% which implies that
+% \begin{equation*}
+%  Q^{*} h <  Q h 
+% \end{equation*}
+% and which contradicts with Inequality \eqref{ineq:leq}.
+% Hence, there is no $ Q$ in $\lmatrixi{1}$ with $ Q\neq Q^{*}$, and therefore $\lmatrixi{1}=\{ Q^{*}\}$.
+
+\noindent
+To complete the proof, we need to prove that
+\begin{equation*} 
+\lmatrixi{1}\text{ is a singleton }\Rightarrow \exists Q^{*}\in\matrices\text{, such that } Q^{*}h< Q'h\text{, }\forall Q ' \in\matrices\setminus Q^{*}
+\end{equation*}
+If $\lmatrixi{1}$ is a singleton, then, due to \eqref{eq:lset1}, we have that
+\begin{equation*} 
+\exists Q^{*}\in\matrices\text{, such that } Q^{*}h\leq Q'h\text{, }\forall Q ' \in\matrices\setminus Q^{*}
+\end{equation*}
+which, due to Corollary \ref{cor:comparison}, implies that
+\begin{equation} \label{imp:3}
+ Q^{*}h< Q'h \text{ or }  Q^{*}h= Q'h\text{, }\forall Q' \in\matrices\setminus Q^{*}. 
+\end{equation}
+Clearly, we cannot have $ Q^{*}h= Q'h$ as this would imply that $\lmatrixi{1}$ is not a singleton. 
+Therefore, from \eqref{imp:3}, we conclude that $ Q^{*}h< Q'h \text{, }\forall Q' \in\matrices\setminus Q^{*}$.
+\end{proof}
+
+\noindent
+Another property derived from the definitions is the following
+\begin{Proposition} \label{prop:not_singleton}
+Given a real-valued function $h$ on $\stateset$, then $\lmatrixi{1}$ is not a singleton if and only if for any $ Q', Q''$ in $\lmatrixi{1}$, it holds that 
+\begin{equation*}
+ Q'h= Q''h.
+\end{equation*} 
+\end{Proposition}
+\begin{proof}
+We prove the 'if' part as the 'only if' is trivial. 
+\textcolor{red}{still need to be done, but it is only a few lines}
+Given that $\lmatrixi{1}$, then (we have at least two matrices the one less or equal to the other, hence both of them equal...)since the matrices where chosen arbitrarily then it follows...
+\end{proof}
+
+Now we deal with the exponential of a given rate matrix $Q$, which is defined by the Taylor series as follows
+\begin{equation}
+e^{tQ}=\sum_{k=0}^{\infty}{\frac{t^{k}Q^{k}}{k!}}
+\end{equation}
+Our goal is to find minimum (or maximum), point-wise, expected values of $e^{tQ}h$ for a given function $h$ on $\stateset$ and $Q\in\matrices$.
+We start with the following property, which relates the values of the exponentials $e^{Qt}h$ to the values of their first derivative with respect to time.
+\begin{Proposition} \label{prop:exp_1}
+Given a real-valued function $h$ on $\stateset$, and $ Q, Q'$ in $\matrices$, such that $ (Q h)(i)< (Q'h)(i)$ for all $i\in\stateset$.
+Then, we have that
+\begin{equation*}
+(\exists\de>0)(\forall t\in(0,\de))\text{ }e^{t Q}h<e^{t Q'}h.
+\end{equation*}
+\end{Proposition}
+
+\begin{proof}
+% \begin{equation*}
+% \mathbf{A}(t)=\frac{\partial}{\partial s}\bigl[\mathbf{T}_{t}^{s}\bigr]\Big\vert_{s=t}\,,
+% \end{equation*}
+We know that our system satisfies the following equation
+\begin{equation} \label{eq:kol_forw}
+\frac{\partial}{\partial t}\bigl[e^{tQ}h\bigr]\Big\vert_{t=0}=Q h.
+\end{equation}
+which comes from the definition of the first derivative of $e^{t Q}h$ evaluated at $t=0$.\footnote{we do not need the whole derivation of the equation because it already proved in some literature. We do so for ease of comprehension.}
+That is 
+\begin{equation*}
+\begin{split}
+&\lim_{c\to0}{\frac{e^{c Q}h-h}{c}}=\lim_{c\to0}{\frac{e^{c Q}-I}{c}h}=\lim_{c\to0}{\frac{\sum_{k=0}^{\infty}{\frac{c^{k}Q^{k}}{k!}}-I}{c}h}\\
+=&\lim_{c\to0}{\frac{I+c Q+\sum_{k=2}^{\infty}{\frac{c^{k}Q^{k}}{k!}}-I}{c}h}=Q h+\lim_{c\to0}{\frac{\sum_{k=2}^{\infty}{\frac{c^{k}Q^{k}}{k!}}}{c}h}
+\end{split}
+\end{equation*}
+where $I$ is the identity matrix.\\\\
+Further on, we prove that 
+\begin{equation*}
+\lim_{c\to0}{\frac{\sum_{k=2}^{\infty}{\frac{c^{k}Q^{k}}{k!}}}{c}h}=0,
+\end{equation*}
+which is true, if the following holds
+\begin{equation*}
+(\forall\ve>0)(\exists \de>0)(\forall t \in(0,\de))\norm{\frac{1}{t}\sum_{k=2}^{\infty}{\frac{t^{k}Q^{k}}{k!}}h}<\ve.
+\end{equation*}
+For the aforementioned norm, we have that
+\begin{equation*}
+\begin{split}
+&\norm{\frac{1}{t}\sum_{k=2}^{\infty}{\frac{t^{k}Q^{k}}{k!}}h}=\frac{1}{t}\norm{\sum_{k=2}^{\infty}{\frac{t^{k}Q^{k}}{k!}}h}\leq\frac{1}{t}\sum_{k=2}^{\infty}{\norm{\frac{t^{k}Q^{k}}{k!}h}}=\frac{1}{t}\sum_{k=2}^{\infty}{\frac{t^{k}}{k!}\norm{Q^{k}h}}\\
+\leq&\frac{1}{t}\sum_{k=2}^{\infty}{\frac{t^{k}}{k!}\norm{Q^{k}}\norm{h}}\leq\frac{1}{t}\sum_{k=2}^{\infty}{\frac{t^{k}}{k!}\norm{Q}^{k}\norm{h}}=\frac{1}{t}(e^{t\norm{Q}}-1-t\norm{Q})\norm{h}.
+\end{split}
+\end{equation*}
+where all the steps, except for the last, come from the properties of the norm used.
+The last step comes from the Taylor series, which is used to calculate an exponential as follows
+\begin{equation} \label{taylor}
+e^{t\alpha}=\sum_{k=0}^{\infty}\frac{t^{k}\alpha^{k}}{k!}
+\end{equation}
+for any $\alpha\in\reals$.
+In order to complete the proof of $\lim_{c\to0}{\frac{\sum_{k=2}^{\infty}{\frac{c^{k}Q^{k}}{k!}}}{c}h}=0$, we need to prove that
+\begin{equation} \label{eq:lim0}
+(\forall\ve>0)(\exists \de'>0)(\forall t \in(0,\de'))\norm{\frac{1}{t}\sum_{k=2}^{\infty}{\frac{t^{k}Q^{k}}{k!}}h}\leq\frac{1}{t}(e^{t\norm{Q}}-1-t\norm{Q})\norm{h}<\ve,
+\end{equation}
+for which we have
+\begin{equation*}
+\frac{1}{t}(e^{t\norm{Q}}-1-t\norm{Q})\norm{h}<\ve\Rightarrow \frac{e^{t\norm{Q}}-1}{t}-\norm{Q}<\frac{\ve}{\norm{h}}.
+\end{equation*}
+By setting $\ve'=\frac{\ve}{\norm{h}}$, we have that
+\begin{equation*}
+\frac{e^{t\norm{Q}}-1}{t}-\norm{Q}<\ve'\Rightarrow \abs{\frac{e^{t\norm{Q}}-1}{t}-\norm{Q}}<\ve'
+\end{equation*}
+where the implication comes from \eqref{eq:lim0} and it further implies that
+\begin{equation*}
+(\forall\ve'>0)(\exists \de'>0)(\forall t \in(0,\de'))\abs{\frac{e^{t\norm{Q}}-1}{t}-\norm{Q}}<\ve'.
+\end{equation*}
+Therefore, we have that
+\begin{equation*}
+(\forall\ve'>0)(\exists \de'>0)(\forall t \in(0,\de'))\norm{\frac{1}{t}\sum_{k=2}^{\infty}{\frac{t^{k}Q^{k}}{k!}}h}<\ve'
+\end{equation*}
+
+\noindent
+\noindent
+To continue with the main proof, we take again Equation~\eqref{eq:kol_forw}, we have that
+\begin{equation*}
+(\forall\ve>0)(\exists \de'>0)(\forall t \in(0,\de'))\norm{\frac{e^{tQ}-I}{t}h-Qh}<\ve
+\end{equation*}
+which implies that
+\begin{equation*}
+t\norm{\frac{e^{tQ}-I}{t}h-Qh}<t\ve\Rightarrow \norm{e^{tQ}h-h-tQh}<t\ve
+\end{equation*}
+which holds still for any $\ve>0$, by taking $\de^{*}\coloneqq\min\{\de',1\}$, which implies that $t\ve<\de^{*}\ve\leq\ve$.
+Hence, for any $Q,Q'\in \matrices$, it holds that
+\begin{equation*}
+\begin{split}
+&(\forall\ve>0)(\exists \de>0)(\forall t \in(0,\de)) \norm{e^{tQ}h-h-tQh}<t\ve\\
+&(\forall\ve>0)(\exists \de'>0)(\forall t \in(0,\de')) \norm{e^{tQ'}h-h-tQ'h}<t\ve
+\end{split}
+\end{equation*}
+Now consider $\de_{1}\coloneqq\{\de,\de'\}$, then
+\begin{equation*}
+\begin{split}
+&(\forall\ve>0)(\forall t \in(0,\de_{1})) \norm{e^{tQ}h-h-tQh}<t\ve\\
+&(\forall\ve>0)(\forall t \in(0,\de_{1})) \norm{e^{tQ'}h-h-tQ'h}<t\ve
+\end{split}
+\end{equation*}
+Taking the second statement, we have that
+\begin{equation*}
+\norm{e^{tQ'}h-h-tQ'h}<t\ve \Rightarrow \sup_{i\in\stateset}|(e^{tQ'}h-h-tQ'h)(i)|<t\ve
+\end{equation*}
+which implies that
+\begin{equation} \label{eq:exp_abs}
+|(e^{tQ'}h-h-tQ'h)(i)|<t\ve \Rightarrow -t\ve<(e^{tQ'}h-h-tQ'h)(i)<t\ve \text{, for all } i\in\stateset.
+\end{equation}
+similar arguments hold for $Q$ as well.
+Taking \eqref{eq:exp_abs}, we have that
+\begin{equation} \label{eq:exp_geq}
+(e^{tQ'}h)(i) > h(i)+t(Q'h)(i)-t\ve 
+\end{equation}
+Since we know that $(Q'h)(i)>(Qh)(i)$ for all $i\in\stateset$, then we have that
+\begin{equation} \label{eq:beta}
+(\exists b>0) Q'h)(i)>(Qh)(i)+b \text{ for all } i\in\stateset
+\end{equation} 
+Taking inequality \eqref{eq:exp_geq}, we have that
+\begin{equation} \label{eq:last}
+\begin{split}
+&(e^{tQ'}h)(i) > h(i)+t(Q'h)(i)-t\ve > h(i)+t(Qh)(i)+tb-t\ve \\
+>& (e^{tQ'}h)(i)-t\ve+tb-t\ve=(e^{tQ}h)(i)+t(b-2\ve),
+\end{split}
+\end{equation}
+where the second inequality comes from \eqref{eq:beta} and the third from \eqref{eq:exp_geq} with respect to $Q$.
+Take now inequality \eqref{eq:last} for $\ve=c/2$, we have $e^{tQ'}h>e^{tQ}$ for any $t\in(0,\de^{*})$.
+\end{proof}
+\textcolor{red}{I am not exactly sure how it is proven for the case when $Q'h\geq Qh$, where for some $i$ it is $Q'h(i)=Qh(i)$ and for the rest $i'$ we have $Q'h(i')>Qh(i')$}
+
+It is possible that we have $Q'h=Qh$, for $Q'\neq Q$.
+The following proposition shows that we can use the second derivative of $e^{tQ}h$ and $e^{tQ'}h$ in order to compare them point-wise.
+% An example of that case is the probability of state $1$, for state space $\stateset=\{0,1,2,3,4\}$, which is the indicator function
+\begin{Proposition} \label{prop:exp_2}
+Given a real-valued function $h$ on $\stateset$, and $ Q, Q'$ in $\matrices$, such that $Q h=Q'h$ and $(Q'^{2}h)(i)>(Q^{2}h)(i)$ for all $i\in\stateset$.
+Then, we have that
+\begin{equation*}
+(\exists\de>0)(\forall t\in(0,\de))\text{ }e^{t Q}h<e^{t Q'}h.
+\end{equation*}
+\end{Proposition}
+
+\begin{proof}
+% \begin{equation*}
+% \mathbf{A}(t)=\frac{\partial}{\partial s}\bigl[\mathbf{T}_{t}^{s}\bigr]\Big\vert_{s=t}\,,
+% \end{equation*}
+We know that our system satisfies the following equation
+\begin{equation} \label{eq:kol_forw_2}
+\frac{\partial^{2}}{\partial^{2} t}\bigl[e^{tQ}h\bigr]\Big\vert_{t=0}=Q^{2} h.
+\end{equation}
+which comes from the definition of the second derivative of $e^{t Q}h$ evaluated at $t=0$.
+That is 
+\begin{equation*}
+\begin{split}
+&\lim_{c\to0}\frac{\frac{\partial}{\partial t}[e^{(t+c)Q}]\Big\vert_{t=0}-\frac{\partial}{\partial t}[e^{tQ}]\Big\vert_{t=0}}{c}h=
+\lim_{c\to0}\frac{\frac{e^{2c}-e^{c}}{c}-\frac{e^{2c}-I}{c}}{c}h=\\
+=&\lim_{c\to0}{\frac{e^{2cQ}-2e^{cQ}+I}{c^{2}}h}=\lim_{c\to0}\frac{(e^{cQ}-I)^{2}}{c^{2}}h=(\lim_{c\to0}\frac{e^{cQ}-I}{c})^{2}h=Q^{2}h
+\end{split}
+\end{equation*}
+where $I$ is the identity matrix.\\
+
+\noindent
+By taking Equation~\eqref{eq:kol_forw_2}, we have that
+\begin{equation*}
+(\forall\ve>0)(\exists \de>0)(\forall t \in(0,\de))\norm{\frac{(e^{tQ}-I)^{2}}{t^{2}}h-Q^{2}h}<\ve
+\end{equation*}
+which implies that
+\begin{equation*}
+t^{2}\norm{\frac{(e^{tQ}-I)^{2}}{t^{2}}h-Q^{2}h}<t^{2}\ve\Rightarrow \norm{(e^{tQ}-I)^{2}h-t^{2}Q^{2}h}<t^{2}\ve
+\end{equation*}
+which holds still for any $\ve>0$, by taking $\de^{*}\coloneqq\min\{\de,1\}$, which implies that $t^{2}\ve<\de^{*}\ve\leq\ve$.
+Hence, for $Q,Q'\in \matrices$, it holds that
+\begin{equation*}
+\begin{split}
+&(\forall\ve>0)(\exists \de>0)(\forall t \in(0,\de)) \norm{(e^{tQ}-I)^{2}h-t^{2}Q^{2}h}<t^{2}\ve\\
+&(\forall\ve>0)(\exists \de'>0)(\forall t \in(0,\de')) \norm{(e^{tQ'}-I)^{2}h-t^{2}Q'^{2}h}<t^{2}\ve
+\end{split}
+\end{equation*}
+Now consider $\de_{2}\coloneqq\{\de,\de'\}$, then
+\begin{equation*}
+\begin{split}
+&(\forall\ve>0)(\exists \de_{2}>0)(\forall t \in(0,\de_{2})) \norm{(e^{tQ}-I)^{2}h-t^{2}Q^{2}h}<t^{2}\ve\\
+&(\forall\ve>0)(\exists \de'_{2}>0)(\forall t \in(0,\de'_{2})) \norm{(e^{tQ'}-I)^{2}h-t^{2}Q'^{2}h}<t^{2}\ve
+\end{split}
+\end{equation*}
+Taking the second statement, we have that
+\begin{equation*}
+\norm{(e^{tQ'}-I)^{2}h-tQ'^{2}h}<t^{2}\ve \Rightarrow \sup_{i\in\stateset}|((e^{tQ'}-I)^{2}h-tQ'^{2}h)(i)|<t^{2}\ve
+\end{equation*}
+which implies that
+\begin{equation} \label{eq:exp_abs_2}
+|((e^{tQ'}-I)^{2}h-tQ'^{2}h)(i)|<t^{2}\ve \Rightarrow -t^{2}\ve<((e^{tQ'}-I)^{2}h-tQ'^{2}h)(i)<t^{2}\ve \text{, } \forall i\in\stateset.
+\end{equation}
+similar arguments hold for $Q$ as well.
+Taking \eqref{eq:exp_abs_2}, we have that
+\begin{equation} \label{eq:exp_geq_2}
+((e^{tQ'}-I)^{2}h)(i) > h(i)+t^{2}(Q'^{2}h)(i)-t^{2}\ve 
+\end{equation}
+in which the left hand is equal to 
+\begin{equation*}
+((e^{tQ'}-I)^{2}h)(i)=(e^{2tQ'}h)(i)-2(e^{tQ'}h)(i)+h(i).
+\end{equation*}
+Now, Inequality \eqref{eq:exp_geq_2} becomes
+\begin{equation} \label{eq:exp_geq_2b}
+(e^{2tQ'}h)(i) > 2(e^{tQ'}h)(i)-h(i)+t^{2}(Q'^{2}h)(i)-t^{2}\ve 
+\end{equation}
+Since we know that $(Q'^{2}h)(i)>(Q^{2}h)(i)$ for all $i\in\stateset$, then we have that
+\begin{equation} \label{eq:beta_2}
+(\exists b>0) Q'^{2}h)(i)>(Q^{2}h)(i)+b \text{ for all } i\in\stateset
+\end{equation} 
+Taking inequality \eqref{eq:exp_geq_2b}, we have that
+\begin{equation} \label{eq:exp_geq_3}
+(e^{2tQ'}h)(i) > 2(e^{tQ'}h)(i)-h(i)+t^{2}(Q^{2}h)(i)+t^{2}b-t^{2}\ve 
+\end{equation}
+From inequality \eqref{eq:last} in Proposition \ref{prop:exp_1}, we know that
+\begin{equation*} 
+e^{Q't}h>e^{Qt}h+t(b-2\ve)\text{, with } b>0
+\end{equation*}
+and since now $Q'h=Qh$, which means that $b=0$, we have that $e^{Q't}h>e^{Qt}h-2t\ve$.
+Combining this with Inequality \eqref{eq:exp_geq_3}, we have that
+\begin{equation*} 
+(e^{2tQ'}h)(i) > 2(e^{tQ}h)(i)-4t\ve-h(i)+t^{2}(Q^{2}h)(i)+t^{2}b-t^{2}\ve 
+\end{equation*}
+which combined with \eqref{eq:exp_abs_2}, with respect to $Q$ results in
+\begin{equation} \label{eq:last_2}
+(e^{2tQ'}h)(i) > (e^{2tQ}h)(i)-4t\ve+t^{2}b-2t^{2}\ve 
+\end{equation}
+and by selecting an $\ve$, such that $t^{2}b-2t^{2}\ve-4t\ve=0$, we have $e^{2tQ'}h>e^{2tQ}$ for any $t\in(0,\de^{*})$.\\\\
+\end{proof}
+
+***
+
+Remianing....case equal or smaller....genral case for $k$th derivative.
+The rest sections are the same in comments, nothing is else is added.
+
+***
+
+\begin{comment}
 
 \section{General Description}
 
@@ -1369,7 +1816,12 @@ $\overline{E}(X=2) = 0.474743217$.\\\\\\
 
 % $f=[10,2,5,7]^T$ 
 % $f=[1,5,3,9]^T$ 
+THE PART THAT FOLLOWS WILL BE MOVED IN ANOTHER PLACE\\\\\\
 
+***The model
+
+***Solution to the dif Eq.
+\end{comment}
 
 \bibliographystyle{plain}
 \bibliography{general}
