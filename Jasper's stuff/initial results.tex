@@ -4,7 +4,7 @@
 \usepackage{mathptmx}
 \usepackage{courier}
 \usepackage{amssymb}
-\usepackage{mathtools}
+%\usepackage{mathtools}
 \usepackage{amsthm}
 \usepackage{enumerate}
 \usepackage{enumitem}
@@ -58,9 +58,11 @@
 \newcommand{\norm}[1]{\left\lVert #1 \right\rVert}
 \newcommand{\abs}[1]{\left\vert #1 \right\vert}
 
+\newcommand{\coloneqq}{:\!=}
+
 \begin{document}
 \title{Continuous-time Imprecise Markov Chains}
-\author{Jasper De Bock}
+\author{Jasper De Bock\and Thomas Krak}
 %\address{Ghent University, SYSTeMS Research Group, Technologiepark -- Zwijnaarde 914, 9052 Zwijnaarde, Belgium}
 %\email{jasper.debock@ugent.be}
 
@@ -782,6 +784,426 @@ In summary, we have shown that there is some coherent lower transition operator 
 \end{equation*}
 thereby proving Theorem~\ref{theo:convergencelowerbound}.
 
+\newpage
+\section{The Non-Markovian Case}
+
+\subsection{Notation and some initial problems}
+
+We first need some notation. For any $\omega\in\Omega$ and $u\in\mathcal{U}_{[0,t]}$, define the $u$-discretized path $\omega^u\coloneqq \omega(t_1),\ldots,\omega(t_n)$. Let the complete set of all such discretized paths be written $\Omega_{\mathcal{U}_{[0,t]}}$. Denote sequence concatenation as $\omega^u\oplus x\coloneqq \omega(t_1),\ldots,\omega(t_n),x$.
+
+Now, note that in the Markovian case, the transition operator $T_t^s$ is a conditional expectation operator on a given function $f\in\gamblesX$,
+\begin{align*}
+T_t^s f &\equiv \mathbb{E}[f(X_s)\,\vert\,X_t] \\
+ &= \sum_{y\in\states} f(y)\cdot P(X_s=y\,\vert\,X_t)\,,
+\end{align*}
+which clearly is then itself a function of $X_t$, so that
+\begin{align*}
+[T_t^s f](x) \equiv \mathbb{E}[f(X_s)\,\vert\,X_t=x]\,.
+\end{align*}
+In other words, as mentioned in Section 2, the operator $T_t^s$ is a map from $\gamblesX$ to $\gamblesX$.
+
+For the non-Markovian case, we will need to introduce the notion of a \emph{history-dependent} transition operator, say $T_t^s(\omega^u)$, which we define as
+\begin{align*}
+T_t^s(\omega^u) f &\coloneqq \mathbb{E}[f(X_s)\,\vert\,X_t,\omega^u] \\
+ &= \sum_{y\in\states} f(y)\cdot P(X_s=y\,\vert\,X_t, \omega^u) \\
+ &= \sum_{y\in\states} f(y)\cdot P(X_s=y\,\vert\,X_t, X_{t_1}=\omega(t_1),\ldots,X_{t_n}=\omega(t_n))\,.
+\end{align*}
+Clearly, this is again a function only of $X_t$, so that $[T_t^s(\omega^u) f](x)$ is properly defined. Observe that $T_t^s(\omega^u)$ is still a map from $\gamblesX$ to $\gamblesX$.
+
+However, if we want to factorize the operator $T_t^s(\omega^u)$, say on some time point $\tau$, where $t\leq \tau\leq s$, we will also need the notion of a \emph{variable history}. Denote with $\omega^u\otimes X_t$ the collection
+\begin{equation*}
+\omega^u\otimes X_t \coloneqq \{\omega^u\oplus x_t\,:\,x_t\in\states\}\,.
+\end{equation*}
+Define now a \emph{variable history}-dependent operator $T_\tau^s(\omega^u\otimes X_t)$ as
+\begin{align*}
+T_\tau^s(\omega^u\otimes X_t)f \coloneqq \mathbb{E}[f(X_s)\,\vert\,X_\tau,\omega^u,X_t]\,,
+\end{align*}
+which is to say that
+\begin{align*}
+\bigl[T_\tau^s(\omega^u\otimes X_t)f\bigr] \cong \bigl\{T_\tau^s(\omega^u\oplus x_t)f \,:\, x_t\in\states\bigr\}\,.
+\end{align*}
+Note that this is a function in both $X_\tau$ and $X_t$, so that $T_\tau^s(\omega^u\otimes X_t)$ is a map from $\gamblesX$ to $\gambles(\states\times\states)$. 
+
+This is problematic. To see why, note that from the rules of expectation, we have
+\begin{align*}
+\mathbb{E}_{X_\tau}\bigl[ \mathbb{E}_{X_s}[f(X_s)\,\vert\,X_\tau,\omega^u,X_t] \,\vert\,X_t,\omega^u\bigr] &= \mathbb{E}_{X_\tau}\left[ \sum_{x_s\in\states} f(x_s)\cdot P(X_s=x_s\,\vert\,X_\tau,\omega^u,X_t) \,\bigg\vert\,X_t,\omega^u\right] \\
+ = \sum_{x_\tau\in\states} P(X_\tau=x_\tau\,\vert\,X_t,\omega^u)&\cdot \sum_{x_s\in\states} f(x_s)\cdot P(X_s=x_s\,\vert\,X_\tau=x_\tau,\omega^u,X_t) \\
+ &= \sum_{x_\tau\in\states}\sum_{x_s\in\states}f(x_s)\cdot P(X_s=x_s, X_\tau=x_\tau\,\vert\,X_t,\omega^u) \\
+ &= \sum_{x_s\in\states} f(x_s)\cdot P(X_s=x_s\,\vert\,X_t,\omega^u) \\
+ &= \mathbb{E}[f(X_s)\,\vert\,X_t,\omega^u]\,.
+\end{align*}
+What this says is that we can `split up' the computation of an expectation at time $s$ given the state at time $t$, by nesting expectations conditional on the possible states at time $\tau$. The problem now occurs when we try to do something similar in operator notation. Clearly, we would want the following to be properly defined:
+\begin{equation*}
+T_t^\tau(\omega^u)T_\tau^s(\omega^u\otimes X_t) f\,,
+\end{equation*}
+which it is not, since the leftmost operator is a map from $\gamblesX$ to $\gamblesX$, while the term $[T_\tau^s(\omega^u\otimes X_t) f]$ yields an element in $\gambles(\states\times\states)$.
+
+One way around this is to observe that the derivation with expectation operators only worked because the notation and conventions allows one to nest them like this.
+
+In other words, we can choose to simply go with the intuitive interpretation of the notation, and say that since
+\begin{equation*}
+T_\tau^s(\omega^u\otimes X_t) \equiv \mathbb{E}_{X_s}[\,\cdot\,\vert\,X_\tau,\omega^u,X_t]\,,
+\end{equation*}
+we will read
+\begin{equation*}
+T_t^\tau(\omega^u)T_\tau^s(\omega^u\otimes X_t) \coloneqq \mathbb{E}_{X_\tau}\bigl[ \mathbb{E}_{X_s}[\,\cdot\,\vert\, X_\tau,\omega^u,X_t] \,\big\vert\,X_t,\omega^u\bigr]\,.
+\end{equation*}
+The downside to this approach is that it is no longer clear what a given operator does, and that one can only read this from context. That is, under this interpretation, we would move away from saying that $T_t^s(\omega^u)$ is strictly a map from $\gamblesX$ to $\gamblesX$.
+The upshot is that it is now relatively easy to provide a decomposition for $T_t^s(\omega^u)$.
+\begin{lemma}
+Consider any history dependent transition matrix $T_t^s(\omega^u)$ and sequence $u^*\in\mathcal{U}_{(t,s]}$ such that $t=\!:t_0<t_1,\ldots,t_n=s$. Then,
+\begin{equation*}
+T_t^s(\omega^u) = \prod_{i=1}^{n} T_{t_{i-1}}^{t_i}(\omega^u\otimes_{j=0}^{i-1}X_{t_j})
+\end{equation*}
+\end{lemma}
+\begin{proof}
+This is mostly directly from definition. Since
+\begin{equation*}
+T_{t_{i-1}}^{t_i}(\omega^u\otimes_{j=0}^{i-1}X_{t_j}) \equiv \mathbb{E}_{X_{t_i}}\bigl[\,\cdot\,\vert\,\omega^u\otimes_{j=0}^{i-1}X_{t_j}\bigr]\,,
+\end{equation*}
+we can interpret
+\begin{align*}
+\prod_{i=1}^{n} T_{t_{i-1}}^{t_i}(\omega^u\otimes_{j=0}^{i-1}X_{t_j}) &\equiv \mathbb{E}_{X_{t_1}}\bigl[\cdots\mathbb{E}_{X_{t_n}}[\,\cdot\,\vert\,\omega^u\otimes_{j=0}^{n-1}X_{t_j}]\cdots\,\vert\,\omega^u\otimes X_{t_0}\bigr] \\
+ &= \mathbb{E}_{X_{t_n}}\bigl[\,\cdot\,\vert\,\omega^u\otimes X_{t_0}\bigr] \\
+ &= T_t^s(\omega^u)\,.
+\end{align*}
+\end{proof}
+
+Another point is that, for the purposes of this work, we are also interested in rate matrices $Q$. These are, again, maps from $\gamblesX$ to $\gamblesX$. For the non-Markovian case, however, we will also need history-dependent rate matrices $Q(\omega^u)$, as well as variable history dependent rate matrices $Q(\omega^u\otimes X)$.
+
+We will again choose to go with the intuitive interpretation that for rate `matrices' $Q_1(\omega^u)$ and $Q_2(\omega^u\otimes X_1)$,
+\begin{align*}
+\bigl[Q_1(\omega^u)Q_2(\omega^u\otimes X_1)f\bigr](x) &\coloneqq Q_1(\omega^u)_{(x,\cdot)}\bigl[Q_2(\omega^u\oplus x)f\bigr] \\
+ &= \sum_{y\in\states} Q_1(\omega^u)_{(x,y)}\bigl[Q_2(\omega^u\oplus x)f\bigr](y) \\
+ &= \sum_{y\in\states} Q_1(\omega^u)_{(x,y)} Q_2(\omega^u\oplus x)_{y,\cdot}f \\
+ &= \sum_{y\in\states} Q_1(\omega^u)_{(x,y)} \sum_{z\in\states}Q_2(\omega^u\oplus x)_{y,z}f(z)\,.
+\end{align*}
+In the general case, for a sequence of variable history dependent matrices $A_1(\omega^u\otimes X_0),\ldots,A_n(\omega^u\otimes_{j=1}^nX_j)$, where the $X_0$ is only for convenience so that $\omega^u\otimes X_0\equiv\omega^u$, we will interpret
+\begin{align*}
+\left[\left[\prod_{i=1}^n A_i(\omega^u\otimes_{j=0}^{i-1}X_j)\right]\,\cdot\,\right] \equiv \sum_{x_1}\cdots\sum_{x_{n+1}}\prod_{i=1}^{n}A_i(\omega^u\oplus_{j=0}^{i-1}x_j)_{(x_i,x_{i+1})}[\,\cdot\,]
+\end{align*}
+%Similarly, for rate `matrices' $Q_1(\omega^u),Q_2(\omega^u\otimes X_1)$, and $Q_3(\omega^u\otimes X_1\otimes X_2)$, we have
+%\begin{align*}
+%\bigl[Q_1(\omega^u)Q_2(\omega^u\otimes X_1)Q_3(\omega^u\otimes X_1\otimes X_2)f\bigr](x) &= Q_1(\omega^u)_{(x,\cdot)}\big[Q_2(\omega^u\oplus x)Q_3(\omega^u\oplus x\otimes X_2)f\big] \\
+%= \sum_{y\in\states}Q_1(\omega^u)_{(x,y)}&\big[Q_2(\omega^u\oplus x)Q_3(\omega^u\oplus x\otimes X_2)f\big](y) \\
+%= \sum_{y\in\states}Q_1(\omega^u)_{(x,y)}&Q_2(\omega^u\oplus x)_{(y,\cdot)}\big[Q_3(\omega^u\oplus x\oplus y)f\big] \\
+%= \sum_{y\in\states}Q_1(\omega^u)_{(x,y)}&\sum_{z\in\states}Q_2(\omega^u\oplus x)_{(y,z)}\big[Q_3(\omega^u\oplus x\oplus y)f\big](z) \\
+%= \sum_{y\in\states}Q_1(\omega^u)_{(x,y)}&\sum_{z\in\states}Q_2(\omega^u\oplus x)_{(y,z)}Q_3(\omega^u\oplus x\oplus y)_{(z,\cdot)}f \\
+%= \sum_{y\in\states}Q_1(\omega^u)_{(x,y)}&\sum_{z\in\states}Q_2(\omega^u\oplus x)_{(y,z)}\sum_{w\in\states}Q_3(\omega^u\oplus x\oplus y)_{(z,w)}f(w)\,.
+%\end{align*}
+From now on, we will drop the scare-quotes around `matrix', assuming that it is clear from context what is meant. We will also sometimes abbreviate `variable history dependent matrix' as `\emph{v.h.d. matrix}'.
+
+We will finally need some conventions for summation of operators. For a given matrix $A$ and v.h.d. matrix $B(\omega^u\otimes X)$, we define
+\begin{equation*}
+\bigl[A + B(\omega^u\otimes X)\bigr] \cong \bigl\{A + B(\omega^u\oplus x)\,:\,x\in\states\bigr\}\,.
+\end{equation*}
+Furthermore, for two v.h.d. matrices $A(\omega^u\otimes X)$ and $B(\omega^u\otimes X)$, we will say
+\begin{equation*}
+\bigl[A(\omega^u\otimes X) + B(\omega^u\otimes X)\bigr] \cong \bigl\{A(\omega^u\oplus x) + B(\omega^u\oplus x)\,:\,x\in\states\bigr\}
+\end{equation*}
+
+\subsection{History-dependent norms and their properties} 
+
+Having moved away from saying that an operator $A(\omega^u)$ is strictly a map from $\gamblesX$ to $\gamblesX$, we now run into some problems regarding the definition of its norm.
+
+For a fixed (i.e., non-variable) history dependent operator $A(\omega^u)$, we will simply define the norm as before, that is
+\begin{equation*}
+\norm{A(\omega^u)} \coloneqq \sup\{\norm{A(\omega^u)f}\,:\,f\in\gamblesX, \norm{f}=1\}\,.
+\end{equation*}
+
+For variable history-dependent operators, note that they in some sense denote a collection of operators; this is already made clear by the congruence relation
+\begin{equation*}
+A(\omega^u\otimes X) \cong \bigl\{A(\omega^u\oplus x)\,:\,x\in\states\bigr\}\,.
+\end{equation*}
+It would thus appear to make sense to define their norm in the way that we previously defined the norm for sets of operators. Hence, we define
+\begin{equation*}
+\norm{A(\omega^u\otimes X)} \coloneqq \max\bigl\{\norm{A(\omega^u\oplus x)}\,:\,x\in\states\bigr\}\,.
+\end{equation*}
+We now have the following result.
+\begin{proposition}
+Consider two history dependent matrices $A_1(\omega^u)$ and $A_2(\omega^u\otimes X_1)$. Then,
+\begin{equation*}
+\norm{A_1(\omega^u)A_2(\omega^u\otimes X)} \leq \norm{A_1(\omega^u)}\cdot\norm{A_2(\omega^u\otimes X_1)}\,.
+\end{equation*}
+\end{proposition}
+\begin{proof}
+Note that $[A_1(\omega^u)A_2(\omega^u\otimes X)]$ is non-variable history dependent. Hence,
+\begin{align*}
+&\quad \norm{A_1(\omega^u)A_2(\omega^u\otimes X)} \\
+&= \sup\bigl\{\norm{A_1(\omega^u)A_2(\omega^u\otimes X)f}\,:\,f\in\gamblesX, \norm{f}=1\bigr\} \\
+ &= \sup\left\{\max\left\{\left\vert \bigl[A_1(\omega^u)A_2(\omega^u\otimes X)f\bigr](x)\right\vert\,:\,x\in\states\right\}\,:\,f\in\gamblesX, \norm{f}=1\right\} \\
+ &= \sup\left\{\max\left\{\left\vert A_1(\omega^u)_{(x,\cdot)}\bigl[A_2(\omega^u\oplus x)f\bigr]\right\vert\,:\,x\in\states\right\}\,:\,f\in\gamblesX, \norm{f}=1\right\} \\
+ &= \sup\left\{\max\left\{\left\vert\sum_{y\in\states}A_1(\omega^u)_{(x,y)}\bigl[A_2(\omega^u\oplus x)f\bigr](y)\right\vert\,:\,x\in\states\right\}\,:\,f\in\gamblesX, \norm{f}=1\right\} \\
+ &\leq \sup\left\{\max\left\{\sum_{y\in\states}\left\vert A_1(\omega^u)_{(x,y)}\bigl[A_2(\omega^u\oplus x)f\bigr](y)\right\vert\,:\,x\in\states\right\}\,:\,f\in\gamblesX, \norm{f}=1\right\} \\
+ &= \sup\left\{\max\left\{\sum_{y\in\states}\left\vert A_1(\omega^u)_{(x,y)}\right\vert\cdot\left\vert\bigl[A_2(\omega^u\oplus x)f\bigr](y)\right\vert\,:\,x\in\states\right\}\,:\,f\in\gamblesX, \norm{f}=1\right\} \\
+ &\leq \sup\left\{\max\left\{\sum_{y\in\states}\left\vert A_1(\omega^u)_{(x,y)}\right\vert\cdot \max\left\{\left\vert\bigl[A_2(\omega^u\oplus x)f\bigr](z)\right\vert\,:\,z\in\states\right\}\,:\,x\in\states\right\}\,:\,f\in\gamblesX, \norm{f}=1\right\} \\
+% &= \sup\left\{\max\left\{\sum_{y\in\states}\left\vert A_1(\omega^u)_{(x,y)}\right\vert\cdot \norm{A_2(\omega^u\oplus x)f}\,:\,x\in\states\right\}\,:\,f\in\gamblesX, \norm{f}=1\right\} \\
+ &= \sup\left\{\max\left\{\norm{A_2(\omega^u\oplus x)f}\cdot \sum_{y\in\states}\left\vert A_1(\omega^u)_{(x,y)}\right\vert \,:\,x\in\states\right\}\,:\,f\in\gamblesX, \norm{f}=1\right\} \\
+ &\leq \sup\left\{\max\left\{\max\left\{\norm{A_2(\omega^u\oplus z)f}\,:\,z\in\states\right\}\cdot \sum_{y\in\states}\left\vert A_1(\omega^u)_{(x,y)}\right\vert \,:\,x\in\states\right\}\,:\,f\in\gamblesX, \norm{f}=1\right\} \\
+ &= \sup\left\{\max\left\{\norm{A_2(\omega^u\oplus z)f}\,:\,z\in\states\right\}\cdot \max\left\{ \sum_{y\in\states}\left\vert A_1(\omega^u)_{(x,y)}\right\vert \,:\,x\in\states\right\}\,:\,f\in\gamblesX, \norm{f}=1\right\} \\
+ &= \sup\left\{\max\left\{\norm{A_2(\omega^u\oplus z)f}\,:\,z\in\states\right\}\cdot \norm{A_1(\omega^u)}\,:\,f\in\gamblesX, \norm{f}=1\right\} \\
+ &= \norm{A_1(\omega^u)}\cdot \sup\left\{\max\left\{\norm{A_2(\omega^u\oplus z)f}\,:\,z\in\states\right\} \,:\,f\in\gamblesX, \norm{f}=1\right\} \\
+ &= \norm{A_1(\omega^u)}\cdot \max\left\{\sup\left\{\norm{A_2(\omega^u\oplus z)f} \,:\,f\in\gamblesX, \norm{f}=1\right\}\,:\,z\in\states\right\} \\
+ &= \norm{A_1(\omega^u)}\cdot \max\left\{\norm{A_2(\omega^u\oplus z)}\,:\,z\in\states\right\} \\
+ &= \norm{A_1(\omega^u)}\cdot \norm{A_2(\omega^u\otimes X)}\,.
+% &= \sup\left\{\max\left\{\left\vert\sum_{y\in\states}A_1(\omega^u)_{(x,y)}\sum_{z\in\states}A_2(\omega^u\oplus x)_{(y,z)}f(z)\right\vert\,:\,x\in\states\right\}\,:\,f\in\gamblesX, \norm{f}=1\right\} \\
+% &\leq \sup\left\{\max\left\{\sum_{y\in\states}\left\vert A_1(\omega^u)_{(x,y)}\sum_{z\in\states}A_2(\omega^u\oplus x)_{(y,z)}f(z)\right\vert\,:\,x\in\states\right\}\,:\,f\in\gamblesX, \norm{f}=1\right\} \\
+% &= \sup\left\{\max\left\{\sum_{y\in\states}\left\vert A_1(\omega^u)_{(x,y)}\right\vert\cdot\left\vert\sum_{z\in\states}A_2(\omega^u\oplus x)_{(y,z)}f(z)\right\vert\,:\,x\in\states\right\}\,:\,f\in\gamblesX, \norm{f}=1\right\} \\
+% &\leq \sup\left\{\max\left\{\sum_{y\in\states}\left\vert A_1(\omega^u)_{(x,y)}\right\vert\cdot\max\left\{\left\vert\sum_{z\in\states}A_2(\omega^u\oplus x)_{(w,z)}f(z)\right\vert\,:\,w\in\states\right\}\,:\,x\in\states\right\}\,:\,f\in\gamblesX, \norm{f}=1\right\} \\
+\end{align*}
+\end{proof}
+We now extent this result to arbitrary sequences of operators.
+\begin{proposition}
+Consider a sequence of history dependent matrices $A_1(\omega^u\otimes X_0),A_2(\omega^u\otimes X_0\otimes X_1),\ldots,A_n(\omega^u\otimes_{j=0}^{n-1}X_j)$, where we have written $\omega^u\otimes X_0\equiv \omega^u$ for notational convenience. Then,
+\begin{equation*}
+\norm{\prod_{i=1}^n A_i(\omega^u\otimes_{j=0}^{i-1}X_j)} \leq \prod_{i=1}^{n} \norm{A_i(\omega^u\otimes_{j=0}^{i-1}X_j)}\,.
+\end{equation*}
+\end{proposition}
+\begin{proof}
+Again note that the product of the elements in the sequence is non-variable history dependent. Thus,
+\begin{align*}
+&\quad \norm{\prod_{i=1}^n A_i(\omega^u\otimes_{j=0}^{i-1}X_j)} \\
+ &= \sup\left\{\norm{\left[\prod_{i=1}^n A_i(\omega^u\otimes_{j=0}^{i-1}X_j)\right]f}\,:\,f\in\gamblesX,\norm{f}=1\right\} \\
+ &= \sup\left\{\max\left\{\left\vert\left[\left[\prod_{i=1}^n A_i(\omega^u\otimes_{j=0}^{i-1}X_j)\right]f\right](x_1)\right\vert\,:\,x_1\in\states\right\}\,:\,f\in\gamblesX,\norm{f}=1\right\} \\
+ &= \sup\left\{\max\left\{\left\vert\left[A_1(\omega^u)\left[\prod_{i=2}^n A_i(\omega^u\otimes_{j=1}^{i-1}X_j)\right]f\right](x_1)\right\vert\,:\,x_1\in\states\right\}\,:\,f\in\gamblesX,\norm{f}=1\right\} \\
+ &= \sup\left\{\max\left\{\left\vert A_1(\omega^u)_{(x_1,\cdot)}\left[\left[\prod_{i=2}^n A_i(\omega^u\oplus x_1\otimes_{j=2}^{i-1}X_j)\right]f\right]\right\vert\,:\,x_1\in\states\right\}\,:\,f\in\gamblesX,\norm{f}=1\right\} \\
+ &= \sup\left\{\max\left\{\left\vert \sum_{x_2\in\states}A_1(\omega^u)_{(x_1,x_2)}\left[\left[\prod_{i=2}^n A_i(\omega^u\oplus x_1\otimes_{j=2}^{i-1}X_j)\right]f\right](x_2)\right\vert\,:\,x_1\in\states\right\}\,:\,f\in\gamblesX,\norm{f}=1\right\} \\
+ &\leq \sup\left\{\max\left\{ \sum_{x_2\in\states}\left\vert A_1(\omega^u)_{(x_1,x_2)}\left[\left[\prod_{i=2}^n A_i(\omega^u\oplus x_1\otimes_{j=2}^{i-1}X_j)\right]f\right](x_2)\right\vert\,:\,x_1\in\states\right\}\,:\,f\in\gamblesX,\norm{f}=1\right\} \\
+ &= \sup\left\{\max\left\{ \sum_{x_2\in\states}\left\vert A_1(\omega^u)_{(x_1,x_2)}\right\vert\cdot\left\vert\left[\left[\prod_{i=2}^n A_i(\omega^u\oplus x_1\otimes_{j=2}^{i-1}X_j)\right]f\right](x_2)\right\vert\,:\,x_1\in\states\right\}\,:\,f\in\gamblesX,\norm{f}=1\right\} \\
+ &\leq \sup\left\{\max\left\{ \sum_{x_2\in\states}\left\vert A_1(\omega^u)_{(x_1,x_2)}\right\vert\cdot\max\left\{\left\vert\left[\left[\prod_{i=2}^n A_i(\omega^u\oplus x_1\otimes_{j=2}^{i-1}X_j)\right]f\right](y)\right\vert\,:\,y\in\states\right\}\,:\,x_1\in\states\right\}\,:\,f\in\gamblesX,\norm{f}=1\right\} \\
+ &= \sup\left\{\max\left\{ \sum_{x_2\in\states}\left\vert A_1(\omega^u)_{(x_1,x_2)}\right\vert\cdot\norm{\left[\prod_{i=2}^n A_i(\omega^u\oplus x_1\otimes_{j=2}^{i-1}X_j)\right]f}\,:\,x_1\in\states\right\}\,:\,f\in\gamblesX,\norm{f}=1\right\} \\
+ &\leq \sup\left\{\max\left\{\norm{\left[\prod_{i=2}^n A_i(\omega^u\oplus x_1\otimes_{j=2}^{i-1}X_j)\right]f}\,:\,x_1\in\states\right\}\cdot\max\left\{ \sum_{x_2\in\states}\left\vert A_1(\omega^u)_{(x_1,x_2)}\right\vert\,:\,x_1\in\states\right\}\,:\,f\in\gamblesX,\norm{f}=1\right\} \\
+ &= \norm{A_1(\omega^u)}\cdot\sup\left\{\max\left\{\norm{\left[\prod_{i=2}^n A_i(\omega^u\oplus x_1\otimes_{j=2}^{i-1}X_j)\right]f}\,:\,x_1\in\states\right\}\,:\,f\in\gamblesX,\norm{f}=1\right\} \\
+ &= \norm{A_1(\omega^u)}\cdot\norm{A_2(\omega^u\otimes X_1)\prod_{i=3}^n A_i(\omega^u\otimes_{j=1}^{i-1}X_j)}\,.
+\end{align*}
+The induction step is now trivial since it uses the same derivation as above. For example:
+\begin{align*}
+&\quad \norm{A_2(\omega^u\otimes X_1)\prod_{i=3}^n A_i(\omega^u\otimes_{j=1}^{i-1}X_j)} \\
+ &= \max\left\{ \norm{A_2(\omega^u\oplus x_1)\prod_{i=3}^n A_i(\omega^u\oplus x_1\otimes_{j=2}^{i-1}X_j)} \,:\,x_1\in\states\right\} \\
+ &\leq \max\left\{ \norm{A_2(\omega^u\oplus x_1)}\cdot\max\left\{\norm{A_3(\omega^u\oplus x_1\oplus x_2)\prod_{i=4}^n A_i(\omega^u\oplus x_1\oplus x_2\otimes_{j=3}^{i-1}X_j)}\,:\,x_2\in\states\right\} \,:\,x_1\in\states\right\} \\
+ &\leq \max\left\{ \norm{A_2(\omega^u\otimes X_1)}\cdot\max\left\{\norm{A_3(\omega^u\oplus x_1\oplus x_2)\prod_{i=4}^n A_i(\omega^u\oplus x_1\oplus x_2\otimes_{j=3}^{i-1}X_j)}\,:\,x_2\in\states\right\} \,:\,x_1\in\states\right\} \\
+ &= \norm{A_2(\omega^u\otimes X_1)}\cdot \max\left\{ \max\left\{\norm{A_3(\omega^u\oplus x_1\oplus x_2)\prod_{i=4}^n A_i(\omega^u\oplus x_1\oplus x_2\otimes_{j=3}^{i-1}X_j)}\,:\,x_2\in\states\right\} \,:\,x_1\in\states\right\} \\
+ &= \norm{A_2(\omega^u\otimes X_1)}\cdot \max\left\{ \norm{A_3(\omega^u\oplus x_1\oplus x_2)\prod_{i=4}^n A_i(\omega^u\oplus x_1\oplus x_2\otimes_{j=3}^{i-1}X_j)} \,:\,x_1,x_2\in\states\right\}\,.
+\end{align*}
+It should be clear that repeatedly applying this step yields the proposition.
+\end{proof}
+
+\begin{lemma}
+Consider a v.h.d. matrix $C(\omega^u\otimes_{j=0}^n X_j)$ and two sequences of v.h.d. matrices $A_1(\omega^u\otimes X_0),\ldots, A_n(\omega^u\otimes_{j=0}^{n-1}X_j)$ and $B_1(\omega^u\otimes X_0),\ldots, B_n(\omega^u\otimes_{j=0}^{n-1}X_j)$. Then,
+\begin{align*}
+&\quad \norm{\left[\prod_{i=1}^nA(\omega^u\otimes_{j=0}^{i-1} X_j) - \prod_{i=1}^nB(\omega^u\otimes_{j=0}^{i-1} X_j)\right]C(\omega^u\otimes_{j=0}^n X_j)} \\
+ &\quad\quad\quad\leq \norm{\prod_{i=1}^nA(\omega^u\otimes_{j=0}^{i-1} X_j) - \prod_{i=1}^nB(\omega^u\otimes_{j=0}^{i-1} X_j)}\norm{C(\omega^u\otimes_{j=0}^n X_j)}\,.
+\end{align*}
+\end{lemma}
+\begin{proof}
+Note that the result is a non-v.h.d. matrix. Hence, expanding the definition of the norm:
+\begin{align*}
+&\quad \norm{\left[\prod_{i=1}^nA(\omega^u\otimes_{j=0}^{i-1} X_j) - \prod_{i=1}^nB(\omega^u\otimes_{j=0}^{i-1} X_j)\right]C(\omega^u\otimes_{j=0}^n X_j)} \\
+&= \max\left\{ \sum_{x_{n+2}\in\states}\left\vert \left[\left[\prod_{i=1}^nA(\omega^u\otimes_{j=0}^{i-1} X_j) - \prod_{i=1}^nB(\omega^u\otimes_{j=0}^{i-1} X_j)\right]C(\omega^u\otimes_{j=0}^n X_j)\right]_{(x_1,x_{n+2})}\right\vert \,:\,x_1\in\states\right\} \\
+&= \max\left\{\sum_{x_{n+2}}\left\vert \sum_{x_2}\cdots\sum_{x_{n+1}}\left(\prod_{i=1}^{n} A_i(\omega^u\oplus_{j=0}^{i-1})_{(x_i,x_{i+1})} - \prod_{i=1}^{n} B_i(\omega^u\oplus_{j=0}^{i-1})_{(x_i,x_{i+1})}\right)C(\omega^u\oplus_{j=0}^nx_j)_{(x_{n+1},x_{n+2})}\right\vert\,:\,x_1\in\states\right\}
+\end{align*}
+{\bf TODO} Finish this. But, to be fair, I'm honestly not sure if this lemma even holds...
+%For brevity, define the map $D$ as
+%\begin{equation*}
+%D \coloneqq \left[\prod_{i=1}^nA(\omega^u\otimes_{j=0}^{i-1} X_j) - \prod_{i=1}^nB(\omega^u\otimes_{j=0}^{i-1} X_j)\right]\,.
+%\end{equation*}
+%We then again start by expanding the definition of the norm:
+%\begin{align*}
+%&\quad \norm{ DC(\omega^u\otimes_{j=0}^n X_j)} \\
+% &= \sup\left\{ \norm{\bigl[DC(\omega^u\otimes_{j=0}^n X_j)\bigr]f} \,:\,f\in\gamblesX,\norm{f}=1\right\} \\
+% &= \sup\left\{ \max\left\{ \left\vert\left[\bigl[DC(\omega^u\otimes_{j=0}^n X_j)\bigr]f\right](x)\right\vert\,:\,x\in\states\right\} \,:\,f\in\gamblesX,\norm{f}=1\right\} \\
+% &= \sup\left\{ \max\left\{ \left\vert
+%\sum_{x_2\in\states}\cdots\sum_{x_n\in\states}\sum_{x_{n+1}\in\states} D(x\oplus_{j=2}^{n-1}x_j)_{(x_n,x_{n+1})}\left[C(\omega^u\oplus x\oplus_{j=2}^nx_j)f\right](x_{n+1})
+%\right\vert\,:\,x\in\states\right\} \,:\,f\in\gamblesX,\norm{f}=1\right\} \\
+% &\leq \sup\left\{ \max\left\{ 
+%\sum_{x_2\in\states}\cdots\sum_{x_n\in\states}\sum_{x_{n+1}\in\states} \left\vert D(x\oplus_{j=2}^{n-1}x_j)_{(x_n,x_{n+1})}\left[C(\omega^u\oplus x\oplus_{j=2}^nx_j)f\right](x_{n+1})
+%\right\vert\,:\,x\in\states\right\} \,:\,f\in\gamblesX,\norm{f}=1\right\} \\
+% &= \sup\left\{ \max\left\{ 
+%\sum_{x_2\in\states}\cdots\sum_{x_n\in\states}\sum_{x_{n+1}\in\states} \left\vert D(x\oplus_{j=2}^{n-1}x_j)_{(x_n,x_{n+1})}\right\vert\cdot\left\vert\left[C(\omega^u\oplus x\oplus_{j=2}^nx_j)f\right](x_{n+1})
+%\right\vert\,:\,x\in\states\right\} \,:\,f\in\gamblesX,\norm{f}=1\right\} \\
+% &\leq \sup\left\{ \max\left\{ 
+%\sum_{x_2\in\states}\cdots\sum_{x_n\in\states}\sum_{x_{n+1}\in\states} \left\vert D(x\oplus_{j=2}^{n-1}x_j)_{(x_n,x_{n+1})}\right\vert\cdot\norm{C(\omega^u\oplus x\oplus_{j=2}^nx_j)f} \,:\,x\in\states\right\} \,:\,f\in\gamblesX,\norm{f}=1\right\} \\
+% &\leq \sup\left\{ \max\left\{ 
+%\sum_{x_2\in\states}\cdots\sum_{x_n\in\states}\sum_{x_{n+1}\in\states} \left\vert D(x\oplus_{j=2}^{n-1}x_j)_{(x_n,x_{n+1})}\right\vert\cdot\max\left\{\norm{C(\omega^u\oplus x'\oplus_{j=2}^nx_j')f}\,:\,x',x_2',\ldots,x_n'\in\states\right\} \,:\,x\in\states\right\} \,:\,f\in\gamblesX,\norm{f}=1\right\} \\
+% &= \sup\left\{ \max\left\{\norm{C(\omega^u\oplus x'\oplus_{j=2}^nx_j')f}\,:\,x',x_2',\ldots,x_n'\in\states\right\}\cdot\max\left\{ 
+%\sum_{x_2\in\states}\cdots\sum_{x_n\in\states}\sum_{x_{n+1}\in\states} \left\vert D(x\oplus_{j=2}^{n-1}x_j)_{(x_n,x_{n+1})}\right\vert \,:\,x\in\states\right\} \,:\,f\in\gamblesX,\norm{f}=1\right\} \\
+% &= \max\left\{ 
+%\sum_{x_2\in\states}\cdots\sum_{x_n\in\states}\sum_{x_{n+1}\in\states} \left\vert D(x\oplus_{j=2}^{n-1}x_j)_{(x_n,x_{n+1})}\right\vert \,:\,x\in\states\right\}\cdot\norm{C(\omega^u\otimes_{j=0}^nX_j)}
+%\end{align*}
+\end{proof}
+
+\subsection{Stochastic History-Dependent Matrices}
+
+We now look at some properties of stochastic v.h.d. matrices. We will say that a v.h.d. matrix $A(\omega^u\otimes X)$ is a stochastic v.h.d. matrix iff $A(\omega^u\oplus x)$ is stochastic for all $x\in\states$.
+
+\begin{lemma}
+Consider a bounded set of rate matrices $\mathcal{Q}$ and a v.h.d. rate matrix $Q(\omega^u\otimes X)$ such that $Q(\omega^u\oplus x)\in\mathcal{Q}$ for all $x\in\states$. Then, for all $\Delta>0$ such that $\Delta\norm{\mathcal{Q}}<1$, we have that $\bigl(I + \Delta Q(\omega^u\otimes X)\bigr)$ is a stochastic v.h.d. matrix.
+\end{lemma}
+\begin{proof}
+Simply note that the lemma holds for any $Q\in\mathcal{Q}$, and that
+\begin{equation*}
+\bigl(I+\Delta Q(\omega^u\otimes X)\bigr)\cong \left\{\bigl(I+\Delta Q(\omega^u\oplus x)\bigr)\,:\,x\in\states\right\}\,.
+\end{equation*}
+\end{proof}
+
+\begin{lemma}
+Consider two sequences of stochastic variable-history dependent matrices $A_1(\omega^u\otimes X_0),\ldots, A_n(\omega^u\otimes_{j=0}^{n-1}X_j)$ and $B_1(\omega^u\otimes X_0),\ldots, B_n(\omega^u\otimes_{j=0}^{n-1}X_j)$ such that for all $i\in\{1,\ldots,n\}$ and all sequences $(x_0\equiv\emptyset),x_1,\ldots,x_{n-1}$, it holds that
+\begin{equation*}
+\norm{A_i(\omega^u\oplus_{j=0}^{i-1}x_j) - B_i(\omega^u\oplus_{j=0}^{i-1}x_j)}<c\,.
+\end{equation*}
+Then,
+\begin{equation*}
+\norm{\prod_{i=1}^n A_i(\omega^u\otimes_{j=0}^{i-1}X_j) - \prod_{i=1}^n B_i(\omega^u\otimes_{j=0}^{i-1}X_j)} < nc\,.
+\end{equation*}
+\end{lemma}
+\begin{proof}
+We use induction on $n$. For $n=1$, the result trivially holds. Now, assume that it holds for $k=n-1$. We show that it also holds for $n$:
+\begin{align*}
+&\quad \norm{\prod_{i=1}^n A_i(\omega^u\otimes_{j=0}^{i-1}X_j) - \prod_{i=1}^n B_i(\omega^u\otimes_{j=0}^{i-1}X_j)} \\
+ &= \left\lVert\prod_{i=1}^n A_i(\omega^u\otimes_{j=0}^{i-1}X_j) - \prod_{i=1}^{n-1} A_i(\omega^u\otimes_{j=0}^{i-1}X_j)B_n(\omega^u\otimes_{j=0}^{n-1}X_j) \right. \\
+ &\quad\quad\quad \left.+ \prod_{i=1}^{n-1} A_i(\omega^u\otimes_{j=0}^{i-1}X_j)B_n(\omega^u\otimes_{j=0}^{n-1}X_j) - \prod_{i=1}^n B_i(\omega^u\otimes_{j=0}^{i-1}X_j)\right\lVert \\
+ &= \left\lVert\prod_{i=1}^{n-1} A_i(\omega^u\otimes_{j=0}^{i-1}X_j)\bigl[A_n(\omega^u\otimes_{j=0}^{n-1}X_j) - B_n(\omega^u\otimes_{j=0}^{n-1}X_j)\bigr] \right. \\
+ &\quad\quad\quad \left.+ \left[\prod_{i=1}^{n-1} A_i(\omega^u\otimes_{j=0}^{i-1}X_j) - \prod_{i=1}^{n-1} B_i(\omega^u\otimes_{j=0}^{i-1}X_j)\right]B_n(\omega^u\otimes_{j=0}^{n-1}X_j)\right\lVert \\
+ &\leq \norm{\prod_{i=1}^{n-1} A_i(\omega^u\otimes_{j=0}^{i-1}X_j)\bigl[A_n(\omega^u\otimes_{j=0}^{n-1}X_j) - B_n(\omega^u\otimes_{j=0}^{n-1}X_j)\bigr] } \\
+ &\quad\quad\quad + \norm{\left[\prod_{i=1}^{n-1} A_i(\omega^u\otimes_{j=0}^{i-1}X_j) - \prod_{i=1}^{n-1} B_i(\omega^u\otimes_{j=0}^{i-1}X_j)\right]B_n(\omega^u\otimes_{j=0}^{n-1}X_j)} \\
+ &\leq \left(\prod_{i=1}^{n-1} \norm{A_i(\omega^u\otimes_{j=0}^{i-1}X_j)}\right)\norm{A_n(\omega^u\otimes_{j=0}^{n-1}X_j) - B_n(\omega^u\otimes_{j=0}^{n-1}X_j) } \\
+ &\quad\quad\quad + \norm{\left[\prod_{i=1}^{n-1} A_i(\omega^u\otimes_{j=0}^{i-1}X_j) - \prod_{i=1}^{n-1} B_i(\omega^u\otimes_{j=0}^{i-1}X_j)\right]B_n(\omega^u\otimes_{j=0}^{n-1}X_j)} \\
+ &\leq 1\cdot c + \norm{\left[\prod_{i=1}^{n-1} A_i(\omega^u\otimes_{j=0}^{i-1}X_j) - \prod_{i=1}^{n-1} B_i(\omega^u\otimes_{j=0}^{i-1}X_j)\right]B_n(\omega^u\otimes_{j=0}^{n-1}X_j)} 
+\end{align*}
+{\bf TODO} The last step requires us to solve Lemma 26. Assuming that holds, we can continue as
+\begin{align*}
+&\leq c + \norm{\prod_{i=1}^{n-1} A_i(\omega^u\otimes_{j=0}^{i-1}X_j) - \prod_{i=1}^{n-1} B_i(\omega^u\otimes_{j=0}^{i-1}X_j)}\norm{B_n(\omega^u\otimes_{j=0}^{n-1}X_j)} \\
+&\leq c + (n-1)c\cdot 1 \\
+&= nc\,. 
+\end{align*}
+\end{proof}
+
+We finally need the following result.
+\begin{lemma}
+Consider any bounded set of rate matrices $\mathcal{Q}$ with lower transition rate operator $\lrate$ and any sequence $Q_1(\omega^u\otimes X_0),Q_2(\omega^u\otimes X_0\otimes X_1),\ldots,Q_n(\omega^u\otimes_{j=0}^{n-1}X_j)$ such that for all $i\in\{1,\ldots,n\}$ and all sequences $x_1,\ldots,x_n$, it holds that $Q_i(\omega^u\oplus_{j=0}^{i-1}x_j)\in\mathcal{Q}$.
+Then, for any $\Delta>0$ such that $\Delta\norm{\mathcal{Q}}<1$ and all $f\in\gamblesX$ it holds that
+\begin{equation*}
+\left[\left[\prod_{i=1}^n \bigl(I + \Delta Q_i(\omega^u\otimes_{j=0}^{i-1}X_j)\bigr)\right]f\right](x) \geq \bigl((I+\Delta\lrate)^n f\bigr)(x)\,.
+\end{equation*}
+\end{lemma}
+\begin{proof}
+First, note that for all $i\in\{1,\ldots,n\}$, the terms $\bigl(I+\Delta Q_i(\omega^u\otimes_{j=0}^{i-1})\bigr)$ are stochastic variable history dependent matrices. Hence,
+\begin{align*}
+\bigl(I+\Delta Q_i(\omega^u\otimes_{j=0}^{i-1}X_j)\bigr) &\equiv \mathbb{E}_{X_{i+1}}\left[\,\cdot\,\vert\,X_i,\omega^u,\otimes_{j=0}^{i-1}X_j\right] \\
+ &= \sum_{x_{i+1}\in\states} [\cdot](x_{i+1}) P(X_{i+1}=x_{i+1}\,\vert\,X_i,\omega^u,\otimes_{j=0}^{i-1}X_j)\,.
+\end{align*}
+We therefore have
+\begin{align*}
+\left[\left[\prod_{i=1}^n \bigl(I + \Delta Q_i(\omega^u\otimes_{j=0}^{i-1}X_j)\bigr)\right]f\right](x) = \mathbb{E}_{X_2}&\left[\cdots\mathbb{E}_{X_{n+1}}\left[f(X_{n+1})\,\vert\,X_n,\omega^u,\otimes_{j=2}^{n-1}X_j,X_1=x\right]\cdots\,\vert\,X_1=x,\omega^u\right] \\
+ = \sum_{x_2\in\states}P(X_2=x_2\,\vert\,X_1=x,\omega^u)\sum_{x_3\in\states}\cdots&\sum_{x_{n+1}\in\states} f(x_{n+1})\cdot P(X_{n+1}=x_{n+1}\,\vert\,X_n=x_n,\omega^u,\oplus_{j=2}^{n-1}x_j, X_1=x) \\
+ = \sum_{x_2\in\states}\cdots\sum_{x_{n}\in\states} P(X_2=x_2,\ldots,X_{n}=x_n\,\vert\,X_1=x,\omega^u)&\sum_{x_{n+1}\in\states} f(x_{n+1})\cdot P(X_{n+1}=x_{n+1}\,\vert\,X_n=x_n,\omega^u,\oplus_{j=2}^{n-1}x_j, X_1=x)\,.
+\end{align*}
+Introduce a function $g(\cdot)$ as
+\begin{equation*}
+g(x,x_2,\ldots,x_n) \coloneqq \sum_{x_{n+1}\in\states} f(x_{n+1})\cdot P(X_{n+1}=x_{n+1}\,\vert\,X_n=x_n,\omega^u,\oplus_{j=2}^{n-1}x_j, X_1=x)\,.
+\end{equation*}
+Note that also
+\begin{align*}
+g(x,x_2,\ldots,x_n) \equiv \left[\bigl(I + \Delta Q_n(\omega^u\oplus (X_1=x)\oplus_{j=2}^{n-1}x_j)\bigr)f\right](x_n)\,,
+\end{align*}
+and since $Q_n(\omega^u\oplus (X_1=x)\oplus_{j=2}^{n-1}x_j)\in\mathcal{Q}$, we have
+\begin{equation*}
+g(x,x_2,\ldots,x_n) \geq \bigl[(I + \Delta\lrate)f\bigr](x_n)\,.
+\end{equation*}
+Define a function $g'(\cdot)$ as
+\begin{equation*}
+g'(x_n) \coloneqq \bigl[(I + \Delta\lrate)f\bigr](x_n).
+\end{equation*}
+
+Now, we have that since
+\begin{align*}
+\left[\left[\prod_{i=1}^n \bigl(I + \Delta Q_i(\omega^u\otimes_{j=0}^{i-1}X_j)\bigr)\right]f\right](x) &= \sum_{x_2\in\states}\cdots\sum_{x_{n}\in\states} P(X_2=x_2,\ldots,X_{n}=x_n\,\vert\,X_1=x,\omega^u)\cdot g(x,x_2,\ldots,x_n)
+\end{align*}
+is a convex combination of values $g(x,x_2,\ldots,x_n)$ over all sequences $x_2,\ldots,x_n$, that
+\begin{align*}
+\left[\left[\prod_{i=1}^n \bigl(I + \Delta Q_i(\omega^u\otimes_{j=0}^{i-1}X_j)\bigr)\right]f\right](x) &\geq \sum_{x_2\in\states}\cdots\sum_{x_{n}\in\states} P(X_2=x_2,\ldots,X_{n}=x_n\,\vert\,X_1=x,\omega^u)\cdot g'(x_n) \\
+ &= \left[\left[\prod_{i=1}^{n-1} \bigl(I + \Delta Q_i(\omega^u\otimes_{j=0}^{i-1}X_j)\bigr)\right]g'\right](x) \\
+ &= \left[\left[\prod_{i=1}^{n-1} \bigl(I + \Delta Q_i(\omega^u\otimes_{j=0}^{i-1}X_j)\bigr)\right]\bigl[(I + \Delta\lrate)f\bigr]\right](x)\,.
+\end{align*}
+Repeatedly applying this argument then yields the lemma.
+\end{proof}
+
+\subsection{Imprecise Non-Markovian Stochastic Processes}
+
+We are now finally ready to show our main result for imprecise non-Markovian stochastic processes.
+
+For any bounded set of rate matrices $\mathcal{Q}$, we consider the set $\mathbb{P}_\mathcal{Q}$ of all $P\in\mathbb{P}$ such that
+\begin{equation*}
+(\forall\epsilon>0)(\exists\delta>0)(\forall t\in[0,+\infty))(\forall\Delta\in(0,\delta))(\forall\omega^u\in\Omega_{\mathcal{U}_{[0,t]}})(\exists Q\in\mathcal{Q})\norm{\frac{T_t^{t+\Delta}(\omega^u)-I}{\Delta}-Q}<\epsilon\,.
+\end{equation*}
+The following result now holds.
+\begin{theorem}
+Consider any $t,s\in[0,+\infty)$ such that $t<s$ and let $\mathcal{Q}$ be an arbitrary bounded set of rate matrices with corresponding lower transition rate operator $\lrate$. Then for any $P\in\mathbb{P}_\mathcal{Q}$, $\omega^u\in\Omega_{\mathcal{U}_{[0,t]}}$ and $f\in\gamblesX$:
+\begin{equation*}
+\bigl[L_t^sf\bigr](x) \leq \bigl[T_t^s(\omega^u)f\bigr](x)\,.
+\end{equation*}
+\end{theorem}
+\begin{proof}
+Consider any $P\in\mathbb{P}_\mathcal{Q}$ and any $\omega^u\in\Omega_{\mathcal{U}_{[0,t]}}$, $f\in\gamblesX$, and $x\in\states$. Assume \emph{ex absurdo} that $\bigl[L_t^sf\bigr](x) > \bigl[T_t^s(\omega^u)f\bigr](x)$. We prove that this leads to a contradiction. Let $C\coloneqq s-t$ and choose $\epsilon>0$ small enough such that
+\begin{equation}
+\epsilon(1+C\norm{f}) < \bigl[L_t^s\bigr](x) - \bigl[T_t^s(\omega^u)f\bigr](x)\,.
+\end{equation}
+Since $P\in\mathbb{P}_\mathcal{Q}$, we have that there is some $\delta>0$ such that
+\begin{equation}
+(\forall \tau\in[0,+\infty))(\forall\Delta\in(0,\delta))(\forall\omega^u\in\Omega_{\mathcal{U}_{[0,\tau]}})(\exists Q\in\mathcal{Q})\norm{\frac{T_\tau^{\tau+\Delta}(\omega^u)-I}{\Delta}-Q}<\epsilon\,.
+\end{equation}
+Furthermore, because of Theorem 5, there is some $\delta'>0$ such that
+\begin{equation}
+(\forall u\in\mathcal{U}_{t,s}\,:\,\sigma(u)<\delta')\left\vert \bigl[L_t^sf\bigr](x) - \left[\left[\prod_{k=1}^n\bigl(I+\Delta_k\lrate\bigr)\right]f\right](x)\right\vert < \epsilon\,.
+\end{equation}
+Now choose $n>\max\{\nicefrac{C}{\delta},\nicefrac{C}{\delta'},C\norm{\mathcal{Q}}\}$. Then for $\Delta\coloneqq\nicefrac{C}{n}$, we find that $\Delta<\delta$, $\Delta<\delta'$, and $\Delta\norm{\mathcal{Q}}<1$.
+
+For all $k\in\{0,1,\ldots,n\}$, define $t_k\coloneqq t+k\Delta$. Since $\Delta<\delta$, it follows from Equation 11 that for all sequences $(x_{t_0}\equiv\emptyset),x_{t_1},\ldots,x_{t_n}$ and all $i\in\{1,\ldots,n\}$, there is some $Q_i(\omega^u\oplus_{j=0}^{i-1}x_{t_j})\in\mathcal{Q}$ such that
+\begin{align*}
+&\quad \norm{T_{t_{i-1}}^{t_i}(\omega^u\oplus_{j=0}^{i-1}x_{t_j}) - \bigl(I+\Delta Q_i(\omega^u\oplus_{j=0}^{i-1}x_{t_j})\bigr)} \\
+ &= \norm{\frac{T_{t_{i-1}}^{t_i}(\omega^u\oplus_{j=0}^{i-1}x_{t_j}) - I}{\Delta} - Q_i(\omega^u\oplus_{j=0}^{i-1}x_{t_j})}\Delta \\
+ &< \epsilon\Delta\,.
+\end{align*}
+Furthermore, since $\Delta\norm{\mathcal{Q}}<1$, we have by Lemma 27 that $\bigl(I + \Delta Q_i(\omega^u\otimes_{j=0}^{i-1}X_{t_j})\bigr)$ is a variable history dependent stochastic matrix for all $i\in\{1,\ldots,n\}$. Therefore, we find by Lemmas 23 and 28 that
+\begin{align*}
+&\quad \norm{T_t^s(\omega^u) - \prod_{i=1}^n\bigl(I + \Delta Q_i(\omega^u\otimes_{j=0}^{i-1}X_{t_j})\bigr)} \\
+ &= \norm{\prod_{i=1}^n T_{t_{i-1}}^{t_i}(\omega^u\otimes_{j=0}^{i-1}X_{t_j}) - \prod_{i=1}^n\bigl(I + \Delta Q_i(\omega^u\otimes_{j=0}^{i-1}X_{t_j})\bigr)} \\
+ &\leq \epsilon\Delta n = \epsilon C\,.
+\end{align*}
+This implies that
+\begin{align*}
+&\quad\left\vert \bigl[T_t^s(\omega^u)f\bigr](x) - \left[\left[\prod_{i=1}^n\bigl(I + \Delta Q_i(\omega^u\otimes_{j=0}^{i-1}X_{t_j})\bigr) \right]f\right](x) \right\vert \\
+ &\leq \norm{T_t^s(\omega^u)f - \left[\prod_{i=1}^n\bigl(I + \Delta Q_i(\omega^u\otimes_{j=0}^{i-1}X_{t_j})\bigr) \right]f} \\
+ &\leq \norm{T_t^s(\omega^u) - \left[\prod_{i=1}^n\bigl(I + \Delta Q_i(\omega^u\otimes_{j=0}^{i-1}X_{t_j})\bigr) \right]}\norm{f} \\
+ &\leq \epsilon C\norm{f}\,,
+\end{align*}
+and hence,
+\begin{equation}
+\bigl[T_t^s(\omega^u)f\bigr](x) \geq \left[\left[\prod_{i=1}^n\bigl(I + \Delta Q_i(\omega^u\otimes_{j=0}^{i-1}X_{t_j})\bigr) \right]f\right](x) - \epsilon C\norm{f}\,.
+\end{equation}
+Furthermore, since $\Delta<\delta'$, it follows from Equation 12 that
+\begin{equation*}
+\left\vert \bigl[L_t^sf\bigr](x) - \left[\bigl(I + \Delta\lrate\bigr)^n f\right](x)\right\vert < \epsilon\,,
+\end{equation*}
+and hence
+\begin{equation}
+\left[\bigl(I + \Delta\lrate\bigr)^n f\right](x) > \bigl[L_t^sf\bigr](x) - \epsilon\,.
+\end{equation}
+Finally, by Lemma 29, we have
+\begin{equation}
+\left[\left[\prod_{i=1}^n\bigl(I + \Delta Q_i(\omega^u\otimes_{j=0}^{i-1}X_{t_j})\bigr) \right]f\right](x) \geq \left[\bigl(I + \Delta\lrate\bigr)^n f\right](x)\,.
+\end{equation}
+Combining equations 13, 14, and 15, yields
+\begin{align*}
+\bigl[T_t^s(\omega^u)f\bigr](x) &\geq \left[\left[\prod_{i=1}^n\bigl(I + \Delta Q_i(\omega^u\otimes_{j=0}^{i-1}X_{t_j})\bigr) \right]f\right](x) - \epsilon C\norm{f} \\
+ &\geq \left[\bigl(I + \Delta\lrate\bigr)^n f\right](x) - \epsilon C\norm{f} > \bigl[L_t^sf\bigr](x) - \epsilon - \epsilon C\norm{f}\,,
+\end{align*}
+whence
+\begin{equation*}
+\epsilon(1+C\norm{f})> \bigl[L_t^sf\bigr](x) - \bigl[T_t^s(\omega^u)f\bigr](x)\,.
+\end{equation*}
+This provides the required contradiction; see Equation 10.
+\end{proof}
 
 \bibliographystyle{plain} 
 %\bibliography{general}
