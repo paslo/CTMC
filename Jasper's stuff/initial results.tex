@@ -1205,6 +1205,155 @@ whence
 This provides the required contradiction; see Equation 10.
 \end{proof}
 
+\newpage
+\section{Alternative suggestions for notation}
+
+Let $A^s_{t_0,\dots,t_n}$ be a non-negatively homogeneous operator from gambles on $(X_{t_0},\dots,X_{t_n},X_s)$ to gambles on $(X_{t_0},\dots,X_{t_n},X_s)$
+and let
+\begin{equation*}
+\norm{A^s_{t_0,\dots,t_n}}\coloneqq\sup\Big\{\norm{A^s_{t_0,\dots,t_n}f}, \text{$f$ a gamble on $(X_{t_0},\dots,X_{t_n},X_s)$}, \norm{f}=1\Big\}.
+\end{equation*}
+As a special case, let $T^s_{t_0,\dots,t_n}$ be defined for all $f$ on $X_{t_0},\dots,X_{t_n},X_s$ by
+\begin{equation*}
+T^s_{t_0,\dots,t_n}f\coloneqq E(f(X_{t_0},\dots,X_{t_n},X_s)\vert X_{t_0},\dots,X_{t_n})
+\end{equation*}
+$T^s_t$ is now an operator that maps gambles on $(X_t,X_s)$ to gambles on $X_t$, whereas before, it was a map from gambles on $X_s$ to gambles on $X_t$. However, this is not a problem, because any gamble on $(X_t,X_s)$ is trivially a gamble on $X_s$ as well.
+
+What is nice about these definitions is that
+
+\begin{align*}
+\norm{A^{t_n}_{t_0}}
+=\norm{
+	A_{t_0}^{t_1}
+	A_{t_0,t_1}^{t_2}
+	\cdots
+	A_{t_0,\dots,t_{n-1}}^{t_n}
+}
+\leq
+\norm{A_{t_0}^{t_1}}
+	\norm{A_{t_0,t_1}^{t_2}}
+	\cdots
+	\norm{A_{t_0,\dots,t_{n-1}}^{t_n}}
+\end{align*}
+
+Furthermore:
+
+\begin{align*}
+&\norm{
+	A_{t_0}^{t_1}
+	A_{t_0,t_1}^{t_2}
+	\cdots
+	A_{t_0,\dots,t_{n-1}}^{t_n}
+	-
+	B_{t_0}^{t_1}
+	B_{t_0,t_1}^{t_2}
+	\cdots
+	B_{t_0,\dots,t_{n-1}}^{t_n}
+}\\
+&=
+\norm{
+	A_{t_0}^{t_1}
+	A_{t_0,t_1}^{t_2}
+	\cdots
+	A_{t_0,\dots,t_{n-1}}^{t_n}
+	-
+	A_{t_0}^{t_1}
+	A_{t_0,t_1}^{t_2}
+	\cdots
+	A_{t_0,\dots,t_{n-2}}^{t_{n-1}}
+	B_{t_0,\dots,t_{n-1}}^{t_n}}\\
+	&~~~~~~+
+	\norm{
+	A_{t_0}^{t_1}
+	A_{t_0,t_1}^{t_2}
+	\cdots
+	A_{t_0,\dots,t_{n-2}}^{t_{n-1}}
+	B_{t_0,\dots,t_{n-1}}^{t_n}
+	-
+	B_{t_0}^{t_1}
+	B_{t_0,t_1}^{t_2}
+	\cdots
+	B_{t_0,\dots,t_{n-1}}^{t_n}
+}\\
+&=
+\norm{
+	A_{t_0}^{t_1}
+	A_{t_0,t_1}^{t_2}
+	\cdots
+	A_{t_0,\dots,t_{n-2}}^{t_{n-1}}
+	(A_{t_0,\dots,t_{n-1}}^{t_n}-
+	B_{t_0,\dots,t_{n-1}}^{t_n})
+	}\\
+	&~~~~~~+
+	\norm{
+	(A_{t_0}^{t_1}
+	A_{t_0,t_1}^{t_2}
+	\cdots
+	A_{t_0,\dots,t_{n-2}}^{t_{n-1}}
+	-
+	B_{t_0}^{t_1}
+	B_{t_0,t_1}^{t_2}
+	\cdots
+	B_{t_0,\dots,t_{n-2}}^{t_{n-1}})
+	B_{t_0,\dots,t_{n-1}}^{t_n}
+}\\
+&=
+\norm{
+	A_{t_0}^{t_1}
+	A_{t_0,t_1}^{t_2}
+	\cdots
+	A_{t_0,\dots,t_{n-2}}^{t_{n-1}}}
+	\norm{A_{t_0,\dots,t_{n-1}}^{t_n}-
+	B_{t_0,\dots,t_{n-1}}^{t_n}
+	}\\
+	&~~~~~~+
+	\norm{
+	A_{t_0}^{t_1}
+	A_{t_0,t_1}^{t_2}
+	\cdots
+	A_{t_0,\dots,t_{n-2}}^{t_{n-1}}
+	-
+	B_{t_0}^{t_1}
+	B_{t_0,t_1}^{t_2}
+	\cdots
+	B_{t_0,\dots,t_{n-2}}^{t_{n-1}}
+	}
+	\norm{
+	B_{t_0,\dots,t_{n-1}}^{t_n}
+}.
+\end{align*}
+
+If $A$ and $B$ are stochastic, this implies that
+
+\begin{align*}
+&\norm{
+	A_{t_0}^{t_1}
+	A_{t_0,t_1}^{t_2}
+	\cdots
+	A_{t_0,\dots,t_{n-1}}^{t_n}
+	-
+	B_{t_0}^{t_1}
+	B_{t_0,t_1}^{t_2}
+	\cdots
+	B_{t_0,\dots,t_{n-1}}^{t_n}
+}\\
+&\leq
+\norm{A_{t_0,\dots,t_{n-1}}^{t_n}-
+	B_{t_0,\dots,t_{n-1}}^{t_n}
+	}+
+	\norm{
+	A_{t_0}^{t_1}
+	A_{t_0,t_1}^{t_2}
+	\cdots
+	A_{t_0,\dots,t_{n-2}}^{t_{n-1}}
+	-
+	B_{t_0}^{t_1}
+	B_{t_0,t_1}^{t_2}
+	\cdots
+	B_{t_0,\dots,t_{n-2}}^{t_{n-1}}
+	}
+\end{align*}
+
 \bibliographystyle{plain} 
 %\bibliography{general}
 
