@@ -435,17 +435,18 @@ Since $\mathcal{Q}$ is the convex hull of a finite number of extreme transition 
 \end{equation}
 \vspace{0cm}
 \paragraph{Calculating Lower Expectations} We need to find the flipping times $t_n$ and the corresponding extreme transition rate matrices $Q_{\tau_{n}}$ when calculating the lower expectation of a given $f$ on $\stateset$. 
-It is known that
-\begin{equation} \label{eq:der}
-\frac{\partial}{\partial t}\bigl[e^{tQ}f\bigr]\Big\vert_{t=0}=Qf \Rightarrow (\forall\ve>0)(\exists \de>0)(\forall t \in(0,\de))\norm{e^{tQ}f-f-tQf}_{\infty}<t\ve
-\end{equation}
-and it can be further proved that for any pair of matrices $Q, Q'$ in $\matrices$ 
+% It is known that
+% \begin{equation} \label{eq:der}
+% \frac{\partial}{\partial t}\bigl[e^{tQ}f\bigr]\Big\vert_{t=0}=Qf \Rightarrow (\forall\ve>0)(\exists \de>0)(\forall t \in(0,\de))\norm{e^{tQ}f-f-tQf}_{\infty}<t\ve
+% \end{equation}
+It can be proved that for any pair of matrices $Q, Q'$ in $\matrices$, we have that
 \begin{equation*}
-\text{if $Qf < Q'f$, then }(\exists\de>0)(\forall t\in(0,\de))\text{ }e^{t Q}f<e^{t Q'}f,
+\text{if $Qf < Q'f$, then }Q_{\tau_{0}}\neq Q'
 \end{equation*}
 where $Qf<Q'f\text{ if } Qf(i)\leq Q'f(i) \text{ for all $i\in\stateset$ and } Qf\neq Q'f$.
-In order to find $Q_{\tau_{0}}$ in \eqref{eq:min_lin}, we need to find a $Q$ such that $Qf<Q'f$, for all $Q'\in\matrices\setminus\{Q\}$.
-Since $\matrices$ has separately specified rows, we can identify $Q_{\tau_{0}}$ by minimising $Qf$ at each row separately.
+%In order to find $Q_{\tau_{0}}$ in \eqref{eq:min_lin}, we need to find a $Q$ such that $Qf<Q'f$, for all $Q'\in\matrices\setminus\{Q\}$.
+In this way, we can eliminate matrices $Q'$, which do not yield the minimum expected value of $f$ up to some $t>0$.  
+Since $\matrices$ has separately specified rows, then the matrix $Q_{\tau_{0}}$ is the one that minimises $Qf$ at each row separately.
 Hence, $Q_{\tau_{0}}$ belongs to the set 
 \begin{equation*}
 \matrices_{\tau_{0}}\coloneqq\{Q\in\matrices : Qf(i)\leq Q'f(i), \forall i\in\stateset \text{ and } \forall Q'\in\matrices\setminus\{Q\}\}.
@@ -454,23 +455,29 @@ Hence, $Q_{\tau_{0}}$ belongs to the set
 % Hence, there is $t$, small enough, such that 
 % First of all, the value of $e$blabla can be identified by its $k-$derivative at time 0.
 In practice, $\matrices_{\tau_{0}}$ might not be a singleton and in this case, for any two matrices $Q,Q'$ in $\matrices_{\tau_{0}}$, we have that $Qf=Q'f$.
-Since we know that $\frac{\partial^{k}}{\partial^k t}\bigl[e^{tQ}f\bigr]\Big\vert_{t=0}=Q^{k}f$, it can be proved that 
+It can be further proved that 
 \begin{equation} \label{eq:derk}
-\text{if } Q^{k}f<Q'^{k}f \text{ and } Q^{k'}f=Q'^{k'}f \text{ for all } k'\in\{1,\ldots,k-1\},\text{ then }(\exists\de>0)(\forall t\in(0,\de))\text{ } e^{tQ}f<e^{tQ'}f
+\text{if } Q^{k}f<Q'^{k}f \text{ and } Q^{k'}f=Q'^{k'}f \text{ for all } k'\in\{1,\ldots,k-1\},\text{ then }Q_{\tau_{0}}\neq Q'
 \end{equation}
-Therefore, if $\matrices_{\tau_{0}}$ is not a singleton, then $Q_{\tau_{0}}$ is a single matrix $Q$ of $\matrices_{\tau_{0}}$, for which \eqref{eq:derk} holds.
-\vspace{1cm}
+From \eqref{eq:derk}, we understand that if $\matrices_{\tau_{0}}$ is not a singleton, for any matrix $Q$ in $\matrices_{\tau_{0}}$ we calculate $Q^{2}f$ and we compare them, in order to eliminate more matrices.
+If still the resulted set is not a singleton, from the remaining ones we calculate $Q^{3}f$ and so on, till we are left with one matrix, which will be the matrix $Q_{\tau_{0}}$.
+%Therefore, if $\matrices_{\tau_{0}}$ is not a singleton, then $Q_{\tau_{0}}$ is a single matrix $Q$ of $\matrices_{\tau_{0}}$, for which \eqref{eq:derk} holds.
+\vspace{2cm}
 
-Having found $Q_{\tau_{0}}$, then $\underline{f}_{t_1}=e^{t_{1}Q_{\tau_{0}}}f$ and $\tau_{0}\coloneqq[t_1,0]$ due to \eqref{eq:min_lin}.
-In order to find the corresponding, if any, flipping time $t_1$, we take the derivative of $e^{tQ}\underline{f}_{t_1}$ evaluated at $t=0$.
-\begin{equation*} %\label{eq:der_t1}
-\frac{\partial}{\partial t}\bigl[e^{tQ}\underline{f}_{t_1}\bigr]\Big\vert_{t=0}=Q\underline{f}_{t_1} = Qe^{t_{1}Q_{\tau_{0}}}f
-\end{equation*}
-and due to continuity, it holds that
+Having found $Q_{\tau_{0}}$, then, due to \eqref{eq:min_lin}, $\underline{f}_{t_1}=e^{t_{1}Q_{\tau_{0}}}f$ and $\tau_{0}\coloneqq[0,t_1]$.
+The only thing left to find is the flipping time $t_1$.
+If there exists $Q_{\tau_{1}}$, such that $Q_{\tau_{1}}\neq Q_{\tau_{0}}$ and for which we obtain the minimum expected value for some $t>t_1$, then due to continuity, the derivative of the system evaluated at $t=t_1$ should be equal for both $Q_{\tau_{1}}$ and $Q_{\tau_{0}}$.
+Therefore, from \eqref{time_Kol_eq} combined with the boundary condition $\underline{f}_{t_1}$, we have that
+% \begin{equation*} %\label{eq:der_t1}
+% \frac{\partial}{\partial t}\bigl[e^{tQ}\underline{f}_{t_1}\bigr]\Big\vert_{t=0}=Q\underline{f}_{t_1} = Qe^{t_{1}Q_{\tau_{0}}}f
+% \end{equation*}
+% and due to continuity, 
 \begin{equation} \label{eq:flip1}
-Q_{\tau_{0}}e^{t_{1}Q_{\tau_{0}}}f = Qe^{t_{1}Q_{\tau_{0}}}f.
+Q_{\tau_{0}}e^{t_{1}Q_{\tau_{0}}}f = Q_{\tau_{1}}e^{t_{1}Q_{\tau_{0}}}f.
 \end{equation}
-We solve \eqref{eq:flip1} for each $i\in\stateset$ separately, since $\matrices$ has separately specified rows and the smallest positive real solution of $t_1$ is the first flipping time and the corresponding matrix $Q$ is the matrix $Q_{\tau_{1}}$.
+We solve \eqref{eq:flip1} with respect to $t_1$, for each row separately.
+At each row $i$, for $Q_{\tau_{1}}$, we test all possible extreme matrices from $\matrices_i$. 
+Among the solutions of $t_1$, the smallest positive real one is the first flipping time and the corresponding matrix is the matrix $Q_{\tau_{1}}$.
 We continue the same procedure till we find no more flipping times.
 \end{minipage}
 
@@ -557,7 +564,7 @@ The set of transition rate matrices $\mathcal{Q}$ is derived from the intervals 
 \newline 
 
 Following the procedure described before, we start by finding a matrix $Q$, such that $Qf<Q'f$ for all $Q'\in\stateset\setminus Q$.
-Due to the values of $f$, there are multiple $Q$, such that $Qf$ is pointwise minimum. 
+Due to the values of $f$, there are multiple $Q$, which minimise $Qf$. 
 These matrices have the following form 
 \vspace{0.5cm}
   \[
@@ -578,11 +585,12 @@ These matrices have the following form
  %    \end{pmatrix*}
  % \]
  where, $\lambda_{2}\in\{1,3\}$ and $\mu_{3}\in\{2,5\}$.
+ Let $\matrices^*$ be the set containing all the matrices of the above form.
  %, as we can consider only the extreme points of the respective rate intervals. 
  \columnbreak
 
 \vspace*{0.8cm}
- Continuing with the procedure, we check whether there is a matrix $Q$, such that $Q^{2}f<Q'^{2}f$ for all $Q'\in\stateset\setminus Q$. 
+ Continuing with the procedure, we check whether there is a matrix $Q$ in $\matrices^*$, such that $Q^{2}f<Q'^{2}f$ for all $Q'\in\matrices^{*}\setminus\{Q\}$. 
  Indeed, there is such a matrix and therefore we have that
 \[ 
  Q_{\tau_{0}} =
