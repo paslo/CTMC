@@ -357,7 +357,7 @@
 Consider a continuous time and finite-state Markov process with state space $\stateset$. 
 At any time $t\in[0,+\infty)$, the stochastic matrix of the process $P_{t}$ is derived from a transition rate matrix~$Q$.
 %The dimension of both $P_{t}$ and $Q$ is $\abs{\stateset}\times\abs{\stateset}$, where $\abs{\stateset}$ is the cardinality of $\stateset$.
-For $i,j\in\stateset$, the element at the $i$ row and $j$ column of $Q$ (or $P_{t}$) is denoted by $Q(i,j)$ (or $P_{t}(i,j)$).
+For $i,j\in\stateset$, the element at the $i$ row and $j$ column of $Q$ is denoted by $Q(i,j)$.
 For the matrix $Q$, the following properties hold
 \vspace{0.4cm}
 \begin{equation*}
@@ -367,7 +367,7 @@ For the matrix $Q$, the following properties hold
 \end{split}
 \end{equation*}
 A matrix $Q$ is said to be bounded if $Q(i,i)>-\infty$ for all $i\in\stateset$ or, equivalently, if $\norm{\matrices}<\infty$.
-Our results hold for various types of norm, but the one we consider is the infinite norm defined by $\norm{\matrices}\coloneqq\norm{\matrices}_{\infty}=\max\{\sum_{j\in\stateset}\abs{Q(i,j)}: x\in\stateset\}$.
+Our results hold for various types of norm, but the one we consider is the infinite norm defined by $\norm{\matrices}\coloneqq\norm{\matrices}_{\infty}=\max\{\sum_{j\in\stateset}\abs{Q(i,j)}: i\in\stateset\}$.
 \vspace{1cm}
 
 When $Q$ is bounded, then $P_{t}$ satisfies the Kolmogorov backward equation
@@ -446,11 +446,13 @@ and it can be further proved that for any pair of matrices $Q, Q'$ in $\matrices
 where $Qf<Q'f\text{ if } Qf(i)\leq Q'f(i) \text{ for all $i\in\stateset$ and } Qf\neq Q'f$.
 In order to find $Q_{\tau_{0}}$ in \eqref{eq:min_lin}, we need to find a $Q$ such that $Qf<Q'f$, for all $Q'\in\matrices\setminus\{Q\}$.
 Since $\matrices$ has separately specified rows, we can identify $Q_{\tau_{0}}$ by minimising $Qf$ at each row separately.
-Hence, $Q_{\tau_{0}}$ belongs to the set $\matrices_{\tau_{0}}\coloneqq\{Q\in\matrices : Qf(i)\leq Q'f(i), \forall i\in\stateset \text{ and } \forall Q'\in\matrices\setminus\{Q\}\}$.
-\vspace{1cm}
+Hence, $Q_{\tau_{0}}$ belongs to the set 
+\begin{equation*}
+\matrices_{\tau_{0}}\coloneqq\{Q\in\matrices : Qf(i)\leq Q'f(i), \forall i\in\stateset \text{ and } \forall Q'\in\matrices\setminus\{Q\}\}.
+\vspace{0.3cm}
+\end{equation*}
 % Hence, there is $t$, small enough, such that 
 % First of all, the value of $e$blabla can be identified by its $k-$derivative at time 0.
-
 In practice, $\matrices_{\tau_{0}}$ might not be a singleton and in this case, for any two matrices $Q,Q'$ in $\matrices_{\tau_{0}}$, we have that $Qf=Q'f$.
 Since we know that $\frac{\partial^{k}}{\partial^k t}\bigl[e^{tQ}f\bigr]\Big\vert_{t=0}=Q^{k}f$, it can be proved that 
 \begin{equation} \label{eq:derk}
@@ -460,7 +462,7 @@ Therefore, if $\matrices_{\tau_{0}}$ is not a singleton, then $Q_{\tau_{0}}$ is 
 \vspace{1cm}
 
 Having found $Q_{\tau_{0}}$, then $\underline{f}_{t_1}=e^{t_{1}Q_{\tau_{0}}}f$ and $\tau_{0}\coloneqq[t_1,0]$ due to \eqref{eq:min_lin}.
-In order to find the corresponding, if any, flipping time $t_1$, we take the derivative of $e^{tQ}\underline{f}_{t_1}$.
+In order to find the corresponding, if any, flipping time $t_1$, we take the derivative of $e^{tQ}\underline{f}_{t_1}$ evaluated at $t=0$.
 \begin{equation*} %\label{eq:der_t1}
 \frac{\partial}{\partial t}\bigl[e^{tQ}\underline{f}_{t_1}\bigr]\Big\vert_{t=0}=Q\underline{f}_{t_1} = Qe^{t_{1}Q_{\tau_{0}}}f
 \end{equation*}
@@ -500,12 +502,12 @@ Consider the state space $\stateset\coloneqq\{0,1,2,3\}$, the following set $\ma
 \begin{equation*}
 \left\{\text{
 $
- \begin{pmatrix}
+ \begin{pmatrix*}
   -p_i & p_i & 0 & 0 \\
   q_j & -q_j & 0 & 0\\
   0 & 0 & -r & r \\
   0 & 0 & s & -s 
-  \end{pmatrix}$
+  \end{pmatrix*}$
   }:
   a_i\in[\underline{a},\overline{a}]\text{ and }b_j\in[\underline{b},\overline{b}]\right\}
 \end{equation*}
@@ -555,19 +557,19 @@ The set of transition rate matrices $\mathcal{Q}$ is derived from the intervals 
 \newline 
 
 Following the procedure described before, we start by finding a matrix $Q$, such that $Qf<Q'f$ for all $Q'\in\stateset\setminus Q$.
-Due to the values of $f$, any matrix $Q'$ of the following form minimises $Q'f$
+Due to the values of $f$, there are multiple $Q$, such that $Qf$ is pointwise minimum. 
+These matrices have the following form 
 \vspace{0.5cm}
- 
   \[
-  Q'= 
- \begin{pmatrix*}[c]
+  Q^{*}= 
+ \begin{pmatrix*}[r]
   -1 & 1 & 0 & 0 \\
   5 & -8 & 3 & 0 \\
   0 & 2 & -(2+\lambda_{2}) & \lambda_{2} \\
   0 & 0 & \mu_{3} & -\mu_{3} 
  \end{pmatrix*}
+ \vspace{0.3cm}
  \]
-
  % \[
  %    \begin{pmatrix*}[r]
  %        -1 & 1 & -2\\
@@ -575,7 +577,8 @@ Due to the values of $f$, any matrix $Q'$ of the following form minimises $Q'f$
  %        0 & 0 & 1
  %    \end{pmatrix*}
  % \]
- where, $\lambda_{2}\in\{1,3\}$ and $\mu_{3}\in\{2,5\}$, as we can consider only the extreme points of the respective rate intervals. 
+ where, $\lambda_{2}\in\{1,3\}$ and $\mu_{3}\in\{2,5\}$.
+ %, as we can consider only the extreme points of the respective rate intervals. 
  \columnbreak
 
 \vspace*{0.8cm}
@@ -589,6 +592,7 @@ Due to the values of $f$, any matrix $Q'$ of the following form minimises $Q'f$
   0 & 2 & -5 & 3 \\
   0 & 0 & 2 & -2 
  \end{pmatrix*}
+ \vspace{0.3cm}
 \]
  for which the flipping time is $t_{1}=0.6403991$ and $Q_{\tau_{1}}$ is
  \[
@@ -599,6 +603,7 @@ Due to the values of $f$, any matrix $Q'$ of the following form minimises $Q'f$
   0 & 2 & -5 & 3 \\
   0 & 0 & 2 & -2 
  \end{pmatrix*}
+  \vspace{0.3cm}
 \]
 % (from Q0b) Q1 := Matrix([[-3,3,0,0],[2,-5,3,0],[0,2,-5,3],[0,0,2,-2]])
 % Matrix(4, 1, {(1, 1) = 0.9375407882e-1+0.25274635e-3*exp(-8.464101615*t)-0.929433068e-2*exp(-5.*t)+0.2886413789e-1*exp(-1.535898385*t), (2, 1) = -0.46034388e-3*exp(-8.464101615*t)+0.9375407874e-1+0.619622048e-2*exp(-5.*t)+0.1408667698e-1*exp(-1.535898385*t), (3, 1) = 0.619622043e-2*exp(-5.*t)+0.36306168e-3*exp(-8.464101615*t)+0.9375407880e-1-0.2976865208e-2*exp(-1.535898385*t), (4, 1) = -0.1282850569e-1*exp(-1.535898385*t)-0.413081362e-2*exp(-5.*t)-0.11233166e-3*exp(-8.464101615*t)+0.9375407877e-1})
