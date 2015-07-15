@@ -462,7 +462,7 @@ It can be further proved that
 From \eqref{eq:derk}, we understand that if $\matrices_{\tau_{0}}$ is not a singleton, for any matrix $Q$ in $\matrices_{\tau_{0}}$ we calculate $Q^{2}f$ and we compare them, in order to eliminate more matrices.
 If still the resulted set is not a singleton, from the remaining ones we calculate $Q^{3}f$ and so on, till we are left with one matrix, which will be the matrix $Q_{\tau_{0}}$.
 %Therefore, if $\matrices_{\tau_{0}}$ is not a singleton, then $Q_{\tau_{0}}$ is a single matrix $Q$ of $\matrices_{\tau_{0}}$, for which \eqref{eq:derk} holds.
-\vspace{2cm}
+\vspace{1cm}
 
 Having found $Q_{\tau_{0}}$, then, due to \eqref{eq:min_lin}, $\underline{f}_{t_1}=e^{t_{1}Q_{\tau_{0}}}f$ and $\tau_{0}\coloneqq[0,t_1]$.
 The only thing left to find is the flipping time $t_1$.
@@ -477,8 +477,8 @@ Q_{\tau_{0}}e^{t_{1}Q_{\tau_{0}}}f = Q_{\tau_{1}}e^{t_{1}Q_{\tau_{0}}}f.
 \end{equation}
 We solve \eqref{eq:flip1} with respect to $t_1$, for each row separately.
 At each row $i$, for $Q_{\tau_{1}}$, we test all possible extreme matrices from $\matrices_i$. 
-Among the solutions of $t_1$, the smallest positive real one is the first flipping time and the corresponding matrix is the matrix $Q_{\tau_{1}}$.
-We continue the same procedure till we find no more flipping times.
+Among the solutions of $t_1$, the smallest positive real one is the first flipping time and the corresponding matrix---if it is unique---is the matrix $Q_{\tau_{1}}$.
+If we cannot uniquely identify $Q_{\tau_{1}}$ in this way, we follow a procedure that is similar to the one that we used to identify $Q_{\tau_{0}}$. By continuing in this way, we can find all the flipping times and their corresponding transition rate matrices.
 \end{minipage}
 
 %Similarly, we use $\state{1:\infty}$ as a shorthand notation for the infinite sequence $\state{1},\ldots,\state{n},\ldots$ Also, for every $k\in\nats$ such that $k\leq n$, we let $\state{k:n}$ and $\state{k:\infty}$ be the sequences of states from time point $k$ to $n$ or infinity, respectively.
@@ -559,14 +559,13 @@ In this way, we have a set of matrices $\matrices$ with finite numbers of extrem
 \begin{minipage}[t][23.7cm]{46.5cm}
 \begin{multicols}{2}
 \vspace*{1cm}
-We calculate the lower expected probability of state 1, $\underline{E}(X_{t}=1)$, of an imprecise birth-death chain with state space $\stateset\coloneqq\{0,1,2,3\}$ for $t$ approaching infinity.  
-The set of transition rate matrices $\mathcal{Q}$ is derived from the intervals $\lambda_i \in[1,3]$ and $\mu_j \in [2,5]$, for all $i\in\{0,\dots,L-1\}$ and $j\in\{1,\dots,L\}$ and the input function is $f=[0,1,0,0]^T$.
-\newline 
+We calculate the lower expected probability of state 1, $\underline{E}(X_{t}=1\vert X_0=i)$, of an imprecise birth-death chain with state space $\stateset\coloneqq\{0,1,2,3\}$ for $t$ approaching infinity.  
+The set of transition rate matrices $\mathcal{Q}$ is derived from the intervals $\lambda_i \in[1,3]$ and $\mu_j \in [2,5]$, for all $i\in\{0,\dots,L-1\}$ and $j\in\{1,\dots,L\}$ and the input function is $f=[0,1,0,0]^T$.\\[-6mm]
 
 Following the procedure described before, we start by finding a matrix $Q$, such that $Qf<Q'f$ for all $Q'\in\stateset\setminus Q$.
 Due to the values of $f$, there are multiple $Q$, which minimise $Qf$. 
-These matrices have the following form 
-\vspace{0.5cm}
+These matrices have the following form: 
+\vspace{-0.2cm}
   \[
   Q^{*}= 
  \begin{pmatrix*}[r]
@@ -584,12 +583,13 @@ These matrices have the following form
  %        0 & 0 & 1
  %    \end{pmatrix*}
  % \]
- where, $\lambda_{2}\in\{1,3\}$ and $\mu_{3}\in\{2,5\}$.
- Let $\matrices^*$ be the set containing all the matrices of the above form.
+ where $\lambda_{2}\in\{1,3\}$ and $\mu_{3}\in\{2,5\}$. Let $\matrices^*$ be the set containing all the matrices of the above form.
  %, as we can consider only the extreme points of the respective rate intervals. 
  \columnbreak
 
-\vspace*{0.8cm}
+~
+\vspace{4mm}
+~\\
  Continuing with the procedure, we check whether there is a matrix $Q$ in $\matrices^*$, such that $Q^{2}f<Q'^{2}f$ for all $Q'\in\matrices^{*}\setminus\{Q\}$. 
  Indeed, there is such a matrix and therefore we have that
 \[ 
@@ -617,8 +617,10 @@ These matrices have the following form
 % Matrix(4, 1, {(1, 1) = 0.9375407882e-1+0.25274635e-3*exp(-8.464101615*t)-0.929433068e-2*exp(-5.*t)+0.2886413789e-1*exp(-1.535898385*t), (2, 1) = -0.46034388e-3*exp(-8.464101615*t)+0.9375407874e-1+0.619622048e-2*exp(-5.*t)+0.1408667698e-1*exp(-1.535898385*t), (3, 1) = 0.619622043e-2*exp(-5.*t)+0.36306168e-3*exp(-8.464101615*t)+0.9375407880e-1-0.2976865208e-2*exp(-1.535898385*t), (4, 1) = -0.1282850569e-1*exp(-1.535898385*t)-0.413081362e-2*exp(-5.*t)-0.11233166e-3*exp(-8.464101615*t)+0.9375407877e-1})
 % no flipping time t2
 %lower prob = 0.0937540788
-For the matrix $Q_{\tau_{1}}$ there is no flipping time and by taking $t\to\infty$, we have that
-$\underline{E}(X=1) = 0.0937540788$.
+For the matrix $Q_{\tau_{1}}$ there is no flipping time and by taking $t\to\infty$, we find that, for all $i\in\mathcal{X}$:
+\begin{equation*}
+\lim_{t\to\infty}\underline{E}(X_t=1\vert X_0=i) = 0.0937540788.
+\end{equation*}
 \end{multicols}
 \end{minipage}
 };
