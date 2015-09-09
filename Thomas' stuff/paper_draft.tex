@@ -1,0 +1,1758 @@
+\documentclass[10pt]{paper}
+%\documentclass[a4paper,reqno]{amsart}
+\usepackage[british]{babel}
+%\usepackage[garamond]{mathdesign}
+\usepackage{mathptmx}
+\usepackage{amsmath}
+\usepackage{courier}
+\usepackage{amssymb}
+%\usepackage{mathtools}
+\usepackage{amsthm}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{tikz}
+\usepackage{nicefrac}
+%\usepackage{pdfsync}
+%\usepackage{authblk}
+
+\renewcommand{\ttdefault}{cmtt}
+\newtheorem{theorem}{Theorem}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{definition}{Definition}
+\newtheorem{remark}{Remark}
+\newtheorem*{remark*}{Remark}
+
+% - macros
+
+\newcommand{\nats}{\mathbb{N}}
+\newcommand{\natswith}{\nats_{0}}
+\newcommand{\reals}{\mathbb{R}}
+
+\newcommand{\realspos}{\reals_{>0}}
+\newcommand{\realsnonneg}{\reals_{\geq 0}}
+
+\newcommand{\states}{\mathcal{X}}
+
+\newcommand{\paths}{\Omega}
+\newcommand{\path}{\omega}
+
+\newcommand{\power}{\mathcal{P}(\paths)}
+\newcommand{\nonemptypower}{\power_{\emptyset}}
+\newcommand{\events}{\mathcal{E}}
+%\newcommand{\nonemptyevents}{\events^{\emptyset}}
+\newcommand{\filter}[1][t]{\mathcal{F}_{#1}}
+\newcommand{\eventst}[1][t]{\events_{#1}}
+
+\newcommand{\processes}{\mathbb{P}}
+\newcommand{\mprocesses}{\processes^{\mathrm{M}}}
+
+
+\newcommand{\lt}{\underline{T}}
+\newcommand{\lbound}{L}
+
+\newcommand{\gambles}{\mathcal{L}}
+\newcommand{\gamblesX}{\gambles(\states)} 
+
+\newcommand{\ind}[1]{\mathbb{I}_{#1}}
+
+\newcommand{\rateset}{\mathcal{Q}}
+\newcommand{\lrate}{\underline{Q}}
+
+\newcommand{\asa}{\Leftrightarrow}
+\newcommand{\then}{\Rightarrow}
+
+\newcommand{\norm}[1]{\left\lVert #1 \right\rVert}
+\newcommand{\abs}[1]{\left\vert #1 \right\vert}
+
+\newcommand{\coloneqq}{:\!=}
+
+\newcommand{\opinset}{\,\,\widetilde{\in}\,\,}
+
+\newcommand{\argmin}{\arg\min}
+
+\title{Imprecise Continuous-Time Discrete-Space Stochastic Processes}
+
+%\author[1]{Thomas E. Krak\thanks{t.e.krak@uu.nl}}
+%\author[2]{Jasper de Bock\thanks{jasper.debock@ugent.be}}
+%\affil[1]{Universiteit Utrecht}
+%\affil[2]{Ghent University}
+
+\author{Thomas Krak \and Jasper de Bock}
+
+
+\begin{document}
+
+%\author{{\bf Thomas E. Krak} \\ Utrecht}
+%\address{Utrecht University}
+%\curraddr{}
+%\email{t.e.krak@uu.nl}
+%\thanks{}
+
+%\author{{\bf Jasper de Bock} \\ Ghent}
+%\address{Ghent University}
+
+%\author{
+	%{\bf Thomas E. Krak} \quad\quad {\bf Jasper de Bock} \\
+%	Utrecht University \quad Ghent University \\
+	%Department of Information and Computing Sciences \\
+	%Princetonplein 5, De Uithof \\
+	%3584 CC Utrecht \\
+	%The Netherlands \\
+%	\texttt{\quad\quad t.e.krak@uu.nl} \quad\quad \texttt{jasper.debock@ugent.be}
+%\and
+	%{\bf Jasper de Bock} \\
+%	Ghent University \\
+	%SYSTeMS Research Group \\
+	%Technologiepark -- Zwijnaarde 914 \\
+	%9052 Zwijnaarde \\ 
+	%Belgium \\
+%	\texttt{jasper.debock@ugent.be}
+%}
+\date{}
+\maketitle
+
+\begin{abstract}
+Lorem ipsum.
+\end{abstract}
+
+\section{Introduction}\label{sec:introduction}
+
+This paper is organized as follows. In Section~\ref{sec:prelim} we introduce notation and basic definitions used throughout this work. Section~\ref{sec:lower_operator} contains our definition for the lower transition operator, along with existence proofs and the connection to previous work from the literature. 
+
+In Sections~\ref{sec:imp_markov} and~\ref{sec:imp_non_markov} we show that this lower transition operator correctly gives the lower envelope of expectation functionals with respect to sets of Markov and non-Markov processes, respectively. In Section~\ref{sec:decomp}, we extend these results to expectation functionals on multiple time points, and show that certain decomposition properties hold when the lower envelope is taken with respect to sets of non-Markov models. 
+
+Section~\ref{sec:tractability} contains some notes on tractability aspects of  computing such lower expectations, and we describe different function classes with varying degrees of tractability. We finally close with some conclusions and an outlook to further work in Section~\ref{sec:conclusions}.
+
+\section{Preliminaries}\label{sec:prelim}
+
+\subsection{Probability Distributions and Stochastic Processes}
+Consider some finite \emph{state space} $\states=\{1,\dots,m\}$. A cadlag function from $\realsnonneg$ to $\states$ is called a \emph{path}, where cadlag means that it is right continuous for all $t\in\realsnonneg$ and that the left limit exists for all $t\in\realspos$. Let $\paths$ be the set of all paths. For any path $\path\in\paths$ and any time point $t\in\realsnonneg$, the value of $\path$ in $t$ is denoted by $\path(t)$.
+
+A subset $E$ of $\paths$ is called an \emph{event}. The set of all events is denoted by $\power$ and we let $\nonemptypower\coloneqq\power\setminus\{\emptyset\}$. For any $t\in\realsnonneg$ and $x\in\states$, we define the elementary event
+\begin{equation*}
+(X_t=x)\coloneqq\{\path\in\paths\colon\path(t)=x\}.
+\end{equation*}
+Consider now any $t\in\realsnonneg$. We then let $\events_{\geq t}$ be the algebra that is generated by all the elementary events $X_s=x$, for $s\geq t$ and $x\in\states$.\footnote{This is the smallest subset of $\power$ that contains all these elementary events and that is furthermore closed under complements, finite unions and hence also finite intersections.} Similarly, we let $\events_{\leq t}$ be the algebra that is generated by all the elementary events $X_s=x$, for $s\leq t$ and $x\in\states$. We also define $\filter\coloneqq\events_{\leq t}\setminus\{\emptyset\}$.
+
+\begin{definition}[Conditional Probability]\label{def:cond_prob}
+A full conditional finitely additive probability measure $P$ is a real-valued map from $\power\times\nonemptypower$ to $\reals$ that satisfies the following axioms. For all $A,B\in\power$ and all \mbox{$C,D\in\nonemptypower$}:
+\vspace{5pt}
+
+\begin{enumerate}[label=F\arabic*:]
+\item
+$P(C\vert C)=1$;
+\item
+$0\leq P(A\vert C)\leq 1$;
+\item
+$P(A\cup B\vert C)=P(A\vert C)+P(B\vert C)$ if $A\cap B=\emptyset$;
+\item
+$P(A\vert D)=P(A\vert C\cap D)P(C\vert D)$ if $A\subseteq C$.
+\end{enumerate}
+\vspace{5pt}
+
+\noindent
+For any $A\in\power$ and $C\in\nonemptypower$, we call $P(A\vert C)$ the probability of $A$ conditional on $C$. Also, for any $A\in\power$, we use the shorthand notation $P(A)\coloneqq P(A\vert\paths)$ and then call $P(A)$ the probability of $A$.
+\end{definition}
+
+\begin{definition}[Stochastic Process]\label{def:stoch_process}
+A \emph{stochastic process} is the restriction of a full conditional finitely additive probability measure $P$ to some subset $\mathcal{C}$ of $\power\times\nonemptypower$ that includes at least
+\begin{equation*}
+\mathcal{C^*}\coloneqq\big\{
+(A,C)
+\colon
+C\in\filter, A\in\events_{\geq t}, t\in\realsnonneg
+\big\}.
+\end{equation*}
+We denote the set of all such stochastic processes by $\processes$.
+\end{definition}
+
+\begin{definition}[Markov Property]\label{def:markov_property}
+We say that a stochastic process $P\in\processes$ satisfies the \emph{Markov property} when, for any time sequence $0\leq t_0<t_1,\dots,t_{n}<t<s$ and set of states $x_{t_0},x_{t_1},\dots,x_{t_n},x_t,x_s\in\states$:
+\begin{equation*}
+P(X_s=x_s\vert X_t=x_t)=P(X_s=x_s\vert X_t=x_t,X_{t_0}=x_{t_0},X_{t_1}=x_{t_1}, \dots, X_{t_n}=x_{t_n}).
+\end{equation*}
+We denote the set of all stochastic processes that satisfy this Markov property by $\mprocesses$.
+\end{definition}
+
+\subsection{Functions, Operators, and Norms}
+Let $\gamblesX$ denote the set of all real-valued functions on $\states$. Because $\states$ is finite, we can also interpret any function $f\in\gamblesX$ as a vector in $\reals^m$. Hence, we will in the sequel use the terms `function' and `vector' interchangeably when referring to elements of $\gamblesX$.
+
+For any vector $f\in\gamblesX$, we let
+\begin{equation*}
+\norm{f}\coloneqq\norm{f}_{\infty}\coloneqq\max\{\abs {f(x)}\colon x\in\states\}
+\end{equation*}
+be the maximum norm. For any operator $A$ from $\gamblesX$ to $\gamblesX$ that is non-negatively homogeneous, meaning that
+\begin{equation*}
+A(\lambda f)=\lambda A(f)\text{ for all $f\in\gamblesX$ and all $\lambda\geq0$,}
+\end{equation*}
+we consider the induced operator norm
+\begin{equation*}
+\norm{A}\coloneqq\sup\left\{\norm{Af}\colon f\in\gamblesX,\norm{f}=1\right\}.
+\end{equation*}
+If $A$ is an $m\times m$ matrix, we have that
+\begin{equation*}
+\norm{A}
+=
+\max\left\{\sum_{y\in\states}\abs{A(x,y)}\colon x\in\states\right\}.
+\end{equation*}
+
+\noindent
+These norms satisfy the following properties. 
+
+\begin{proposition}
+For all $f,g\in\gamblesX$, all $A,B$ from $\gamblesX$ to $\gamblesX$ that are non-negatively homogeneous, all $\lambda\in\reals$ and all $x\in\states$, we have that
+\vspace{5pt}
+
+\begin{enumerate}[label=N\arabic*:]
+\item
+$\abs{f(x)}\leq\norm{f}$
+\item
+$\norm{f}\geq0$
+\item
+$\norm{f}=0\asa f=0$
+\item
+$\norm{f+g}\leq\norm{f}+\norm{g}$
+\item
+$\norm{\lambda f}=\abs{\lambda}\norm{f}$
+\item
+$\norm{A}\geq0$
+\item
+$\norm{A}=0\asa A=0$
+\item
+$\norm{A+B}\leq\norm{A}+\norm{B}$
+\item
+$\norm{AB}\leq\norm{A}\norm{B}$
+\item
+$\norm{\lambda A}=\abs{\lambda}\norm{A}$
+\item
+$\norm{Af}\leq\norm{A}\norm{f}$
+\item
+$\norm{A}=1$ if $A$ is a stochastic matrix.
+\end{enumerate}
+\vspace{5pt}
+\end{proposition}
+
+\noindent
+Finally, for any set $\mathcal{A}$ of square matrices, we define
+
+\begin{equation*}
+\norm{\mathcal{A}}\coloneqq\sup\{\norm{A}\colon A\in\mathcal{A}\}.
+\end{equation*}
+
+\subsection{Rate Matrices}
+
+\begin{definition}[Rate Matrix]\label{def:rate_matrix}
+A real-valued $m\times m$ matrix $Q$ is said to be a \emph{rate matrix} if
+
+\vspace{5pt}
+\begin{enumerate}[label=R\arabic*:]
+\item
+$\sum_{y\in\states}Q(x,y)=0$ for all $x\in\states$;
+\item
+$Q(x,y)\geq0$ for all $x,y\in\states$ such that $x\neq y$.
+\end{enumerate}
+\vspace{5pt}
+\noindent
+We use $\mathcal{R}$ to denote the set of all rate matrices. 
+\end{definition}
+
+Clearly, $\mathcal{R}$ is closed under finite sums and multiplication with non-negative scalars. For any set $\rateset\subseteq\mathcal{R}$ of rate matrices, we let
+\begin{equation*}
+\rateset_x\coloneqq\{Q(x,\cdot)\colon Q\in\rateset\}
+\text{ for all $x\in\states$.}
+\end{equation*}
+We say that $\rateset$ has \emph{separately specified rows} if
+\begin{equation*}
+Q\in\rateset\asa(\forall x\in\states)~Q(x,\cdot)\in\rateset_x.
+\end{equation*}
+A set $\rateset\subseteq\mathcal{R}$ of rate matrices is said to be bounded if $\inf\{Q(x,x)\colon Q\in\rateset\}>-\infty$ for all $x\in\states$ or, equivalently, if $\norm{\rateset}<\infty$. 
+
+\subsection{Stochasticity and Transition Matrices}
+
+\begin{definition}[Stochastic Matrix]\label{def:stoch_matrix}
+A real-valued $m\times m$ matrix $A$ is said to be \emph{stochastic} if
+\vspace{5pt}
+\begin{enumerate}[label=S\arabic*:]
+\item
+$\sum_{y\in\states}A(x,y)=1$ for all $x\in\states$;
+\item
+$A(x,y)\geq0$ for all $x,y\in\states$.
+\end{enumerate}
+\vspace{5pt}
+\noindent
+\end{definition}
+
+\begin{definition}[Transition Matrix]\label{def:trans_matrix}
+Consider any stochastic process $P\in\processes$ and any $t,s\in\realsnonneg$ such that $t<s$. Then, the \emph{transition matrix} $T_t^s$ \emph{corresponding to} $P$ is a stochastic $m\times m$ matrix that is defined by
+\begin{equation*}
+T_t^s(x_t, x_s) \coloneqq P(X_s=x_s\,\vert X_t=x_t)\quad\text{for all $x_s,x_t\in\states$}\,.
+\end{equation*}
+\end{definition}
+Obviously, this transition matrix $T_t^s$ can also be regarded as a map from $\gamblesX$ to $\gamblesX$, defined for all $f\in\gamblesX$ by $T_t^s(f)\coloneqq T_t^sf$. Note that we have that
+\begin{equation*}
+T_t^sf = \mathbb{E}_{X_s}\left[f(X_s)\,\vert\,X_t\right]\,.
+\end{equation*}
+
+
+\begin{lemma}\label{lemma:transitionmatrixfactorises}
+Consider any $P\in\mprocesses$. Then
+\begin{equation*}
+T_t^s=\prod_{k=1}^n T_{t_{k-1}}^{t_k} \coloneqq T_{t_0}^{t_1}T_{t_1}^{t_2}\cdots T_{t_{n-1}}^{t_n}
+\end{equation*}
+for every sequence $0\leq t=t_0<t_1<t_2,\dots,t_{n}=s$.
+\end{lemma}
+\begin{proof}
+This property is well known and therefore stated without proof.
+\end{proof}
+
+\begin{lemma}\label{lemma:differenceproductoftransition}
+Consider two sequences $A_1,\dots,A_n$ and $B_1,\dots,B_n$ of stochastic matrixes such that, for all $i\in\{1,\dots,n\}$, $\norm{A_i-B_i}\leq c$. Then
+\begin{equation*}
+\norm{\prod_{i=1}^nA_i-\prod_{i=1}^nB_i}\leq nc
+\end{equation*}
+\end{lemma}
+\begin{proof}
+We provide a proof by induction. For $n=1$, the result is trivially true. Assume that the result holds for $n=k-1$. The following derivation then shows that it also holds for $n=k$: 
+\begin{align*}
+\norm{\prod_{i=1}^nA_i-\prod_{i=1}^nB_i}
+&=
+\norm{\prod_{i=1}^{n}A_i-\left(\prod_{i=1}^{n-1}A_i\right)B_n+\left(\prod_{i=1}^{n-1}A_i\right)B_n-\prod_{i=1}^{n}B_i}\\
+&\leq
+\left(\prod_{i=1}^{n-1}\norm{A_i}\right)\norm{A_n-B_n}+\norm{\prod_{i=1}^{n-1}A_i-\prod_{i=1}^{n-1}B_i}\norm{B_n}\\
+&\leq c + \norm{\prod_{i=1}^{n-1}A_i-\prod_{i=1}^{n-1}B_i}\leq c+(n-1)c= nc.
+\end{align*}
+\end{proof}
+
+\subsection{Sequences of Time Points}
+
+Throughout this work, we will make extensive use of the notion of sequences of time points. For any $t,s\in\realsnonneg$ such that $t<s$, let $u$ denote any finite sequence of time points $t_0,t_1,\ldots,t_n$ such that $t=t_0 < t_1 <\ldots < t_n = s$. We use $\mathcal{U}_{[t,s]}$ to denote the set of all such sequences. Given any $u\in\mathcal{U}_{[t,s]}$, we define for all $i\in\{1,\ldots,n\}$ the terms $\Delta_i\coloneqq t_i-t_{i-1}$.  Finally, define a function $\sigma(u)$, as
+\begin{equation*}
+\sigma(u) \coloneqq \max\bigl\{\Delta_i\,:\,i\in\{1,\ldots,n\}\bigr\}\,.
+\end{equation*}
+
+\subsection{Continuous-Time Markov Processes}
+
+\begin{definition}[Markov Process]\label{def:markov_process}
+A stochastic process $P\in\mprocesses$ is said to be a \emph{continuous-time Markov process} if the transition matrix corresponding to $P$ satisfies
+\begin{equation*}
+(\forall \epsilon\in\realspos)(\exists \delta\in\realspos)(\forall \Delta\in(0,\delta))(\forall t\in\realsnonneg)(\exists Q\in\mathcal{R}) \norm{\frac{T_t^{t+\Delta} - I}{\Delta} - Q} < \epsilon\,.
+\end{equation*}
+\end{definition}
+
+\begin{definition}[Characterizing Rate Matrix]\label{def:markov_process_char_matrix}
+Consider any continuous-time Markov process $P$, and let $Q_t$ be a function that gives for each time point $t\in\realsnonneg$ a rate matrix $Q_t\in\mathcal{R}$. We say that $Q_t$ \emph{characterizes} $P$ if it satisfies
+\begin{equation*}
+(\forall \epsilon\in\realspos)(\exists \delta\in\realspos)(\forall \Delta\in(0,\delta))(\forall t\in\realsnonneg)\norm{\frac{T_t^{t+\Delta} - I}{\Delta} - Q_t} < \epsilon\,.
+\end{equation*}
+\end{definition}
+
+\section{The Lower Transition Operator}\label{sec:lower_operator}
+
+\subsection{Lower Transition Rate Operators}
+
+\begin{definition}[Coherent Lower Transition Rate Operator]\label{def:coh_low_trans_rate}
+We will call a map $\lrate$ from $\gamblesX$ to $\gamblesX$ a \emph{coherent} lower transition rate operator if, for all $f,g\in\gamblesX$, $\lambda\geq0$ and $\mu\in\reals$:
+
+\vspace{5pt}
+\begin{enumerate}[label=LR\arabic*:]
+\item
+$\lrate(\mu)=0$;
+\item
+$\lrate(f+g)\geq\lrate(f)+\lrate(g)$;
+\item
+$\lrate(\lambda f)=\lambda\lrate(f)$;
+\item
+$\lrate(\ind{y})(x)\geq0$ for all $x,y\in\states$ such that $x\neq y$.
+\end{enumerate}
+\vspace{5pt}
+\end{definition}
+
+\begin{definition}[Lower Transition Rate Operator]\label{def:low_trans_rate}
+Consider any bounded set $\rateset$ of rate matrices. Then, the corresponding \emph{lower transition rate operator} $\lrate$ is a map from $\gamblesX$ to $\gamblesX$. For all $f\in\gamblesX$, $\lrate f$ is defined by
+\begin{equation}\label{eq:deflowerbound}
+\left[\lrate f\right](x)\coloneqq\inf\bigl\{\left[Qf\right](x)\colon Q\in\rateset\bigr\}\text{ for all $x\in\states$}.
+\end{equation}
+\end{definition}
+
+\begin{lemma}\label{lemma:lrateiscoherent}
+For any bounded set $\rateset$ of rate matrices, the corresponding lower transition rate operator $\lrate$ is coherent.
+\end{lemma}
+\begin{proof}
+This is immediate.
+\end{proof}
+
+For any coherent lower transition rate operator $\lrate$, we use $\rateset_{\lrate}$ to denote the set of all rate matrices $Q$ that dominate $\lrate$, in the sense that
+\begin{equation*}
+Qf\geq\lrate f\text{ for all $f\in\gamblesX$.}
+\end{equation*}
+
+\begin{lemma}
+Consider a coherent lower transition rate operator $\lrate$ and let $\rateset_{\lrate}$ be the corresponding set of dominating rate matrices. Then $\rateset_{\lrate}$ is closed, bounded and convex, and has separately specified rows. Also, for all $f\in\gamblesX$, there is some $Q\in\rateset_{\lrate}$ such that $\lrate f=Qf$. Furthermore, $\norm{\lrate}<\infty$.
+\end{lemma}
+\begin{proof}
+*** This is not trivial, but I am convinced it is true (we would have to adapt the proof for a similar well-known result for coherent lower previsions) ***
+\end{proof}
+
+\noindent
+If $\lrate$ is the coherent lower transition rate operator that corresponds to some bounded set $\rateset$ of rate matrices, then clearly: $\rateset\subseteq\rateset_{\lrate}$.
+
+\subsection{Lower Transition Operators}
+
+\begin{definition}[Coherent Lower Transition Operator]\label{def:coh_low_trans}
+We will call a map $\lt$ from $\gamblesX$ to $\gamblesX$ a \emph{coherent lower transition operator} if, for all $f,g\in\gamblesX$ and $\lambda\geq0$:
+
+\vspace{5pt}
+\begin{enumerate}[label=C\arabic*:]
+\item
+$\lt f\geq\min f$
+\item
+$\lt(f+g)\geq\lt(f)+\lt(g)$;
+\item
+$\lt(\lambda f)=\lambda\lt(f)$.
+\end{enumerate}
+\vspace{5pt}
+\end{definition}
+
+\begin{lemma}\label{lemma:completemetricspace}
+The set of all coherent lower transition operators is a complete metric space.
+\end{lemma}
+\begin{proof}
+Since a coherent lower transition operator is just a finite vector of coherent lower previsions, this result should follow fairly easily for the (known) fact that the set of all coherent lower previsions (on a given fixed space) is a complete metric space.
+\end{proof}
+
+We now first establish the connection between coherent lower transition rate operators and coherent lower transition operators. We will assume that we are given some coherent lower transition rate operator $\lrate$.
+
+\begin{lemma}\label{lemma:normQsmallenough}
+If $0<\Delta\leq\nicefrac{1}{\norm{\lrate}}$, then $(I+\Delta\lrate)$ is a coherent lower transition operator.
+\end{lemma}
+\begin{proof}
+Just check each of the three defining properties. C2 and C3 are trivial. C1 requires a bit more work.
+\end{proof}
+
+\begin{lemma}\label{lemma:compositioncoherence}
+If $\lt_1,\lt_2,\dots,\lt_n$ are coherent lower transition operators, then  $\lt_1\lt_2\cdots\lt_n$ is also a coherent lower transition operator.
+\end{lemma}
+\begin{proof}
+Simply check each of the properties.
+\end{proof}
+
+\begin{lemma}\label{lemma:productiscoherent}
+Consider any sequence $0<\Delta_i\leq\nicefrac{1}{\norm{\lrate}}$, $i=1,\dots,n$. Then
+\begin{equation*}
+\prod_{k=i}^n(I+\Delta_i\lrate)
+\end{equation*}
+is a coherent lower transition operator.
+\end{lemma}
+\begin{proof}
+Trivial consequence of Lemma~\ref{lemma:normQsmallenough} and~\ref{lemma:compositioncoherence}.
+\end{proof}
+
+\begin{definition}[Lower Transition Operator]\label{def:low_trans}
+Consider any $t,s\in\realsnonneg$ such that $t<s$ and let $\lrate$ be an arbitrary coherent lower transition rate operator . The corresponding \emph{lower transition operator} $\lbound_t^s$ is then a map from $\gamblesX$ to $\gamblesX$, defined by
+\begin{equation}\label{eq:lowerbound}
+\lbound_t^s\coloneqq\lim_{\sigma(u)\to0}\prod_{k=1}^n(I+\Delta_k\lrate),
+\end{equation}
+where the limit is taken with respect to the set $\mathcal{U}_{[t,s]}$ of all finite sequences of time points that partition the interval $[t,s]$.
+\end{definition}
+
+\noindent The remainder of this section establishes that the limit in Equation~\eqref{eq:lowerbound} exists, and that it is a coherent lower transition operator.
+
+The proof basically works as follows. In Lemmas~\ref{lemma:normofcoherenttrans}-\ref{lemma:differencebetweennested}, we first establish bounds on the norm of the difference between various coherent lower transition operators.
+
+For any $u\in\mathcal{U}_{[t,s]}$, we then define the operator
+\begin{equation*}
+\Phi_u\coloneqq\prod_{k=1}^n(I+\Delta_k\lrate)\,,
+\end{equation*}
+so that for any sequence $u_1,u_2,\ldots,u_n,\ldots$, we can obtain a corresponding sequence $\Phi_{u_1},\Phi_{u_2},\ldots,\Phi_{u_n},\ldots$ of operators. Using the previously established bounds, Corollary~\ref{corol:limitexistsandiscoherent} establishes that if we choose $u_1,u_2,\ldots,u_n,\ldots$ such that $\lim_{n\rightarrow\infty}\sigma(u_n)=0$, the corresponding sequence $\Phi_{u_1},\Phi_{u_2},\ldots,\Phi_{u_n},\ldots$ converges, and that its limit point is a coherent lower transition operator. Theorem~\ref{theo:convergencelowerbound} finally establishes that this limit is furthermore unique. Thus, we show that the limit in Equation~\eqref{eq:lowerbound} exists, and that $L_t^s$ is a coherent lower transition operator. 
+
+We begin with some bounds on norms.
+
+\begin{lemma}\label{lemma:normofcoherenttrans}
+For any coherent lower transition operator $\lt$, we have that $\norm{\lt}\leq 1$.
+\end{lemma}
+\begin{proof}
+This can be shown to follow from coherence.
+\end{proof}
+
+\begin{lemma}\label{lemma:differencenormofcoherenttrans}
+For any coherent lower transition operator $\lt$ and any two non-negatively homogeneous operators $A$, $B$, we have that $\norm{\lt A-\lt B}\leq \norm{A-B}$.
+\end{lemma}
+\begin{proof}
+This can be shown to follow from coherence.
+\end{proof}
+
+\begin{lemma}\label{lemma:differencenormofcoherenttransrate}
+Consider any two non-negatively homogeneous operators $A$, $B$. It then holds that $\norm{\lrate A-\lrate B}\leq 2\norm{\lrate}\norm{A-B}$.
+\end{lemma}
+\begin{proof}
+This can be shown to follow from the definition of the norm and the properties of $\lrate$.
+\end{proof}
+
+
+\begin{lemma}\label{lemma:justtheindicator}
+Consider any sequence $0<\Delta_i\leq\nicefrac{1}{\norm{\lrate}}$, $i=1,\dots,n$, and let $\Delta\coloneqq\sum_{i=1}^n\Delta_i$. Then
+\begin{equation*}
+\norm{\prod_{i=1}^n(I+\Delta_i\lrate)-I}\leq\Delta\norm{\lrate}.
+\end{equation*}
+\end{lemma}
+\begin{proof}
+See Lemma~\ref{lemma:justtheindicator_appendix} in the appendix.
+\end{proof}
+
+\begin{lemma}\label{lemma:justthelinearpart}
+Consider any sequence $0<\Delta_i\leq\nicefrac{1}{\norm{\lrate}}$, $i=1,\dots,n$, and let $\Delta\coloneqq\sum_{i=1}^n\Delta_i$. Then
+\begin{equation*}
+\norm{\prod_{i=1}^n(I+\Delta_i\lrate)-(I+\Delta\lrate)}\leq\Delta^2\norm{\lrate}^2.
+\end{equation*}
+\end{lemma}
+\begin{proof}
+See Lemma~\ref{lemma:justthelinearpart_appendix} in the appendix.
+\end{proof}
+
+\begin{lemma}\label{lemma:differencebetweennested}
+For any $k\in\{1,\dots,n\}$, consider a sequence of $\Delta_{k,i}>0$, $i=1,\dots,n_k$ and let $\Delta_k\coloneqq\sum_{i=1}^{n_k}\Delta_{n,k}$. Let $\Delta\coloneqq\sum_{k=1}^n\Delta_k$ and let $\alpha\coloneqq\max\{\Delta_k\colon k\in\{1,\dots,n\}\}$. If $\alpha\leq\nicefrac{1}{\norm{\lrate}}$, then
+\begin{equation*}
+\norm{\prod_{k=1}^n\left(\prod_{i=1}^{n_k}(I+\Delta_{k,i}\lrate)\right)
+-
+\prod_{k=1}^n(I+\Delta_k\lrate)
+}
+\leq\alpha\Delta\norm{\lrate}^2.
+\end{equation*}
+\end{lemma}
+\begin{proof}
+See Lemma~\ref{lemma:differencebetweennested_appendix} in the appendix.
+\end{proof}
+
+\noindent For any $u\in\mathcal{U}_{[t,s]}$, we now let
+\begin{equation*}
+\Phi_u\coloneqq\prod_{k=1}^n(I+\Delta_k\lrate)\,.
+\end{equation*}
+
+\begin{proposition}\label{prop:differencebetweenu}
+Consider any $t,s\in\realsnonneg$ such that $t<s$, and any $u,u^*\in\mathcal{U}_{[t,s]}$ such that $\sigma(u)<\alpha$ and $\sigma(u^*)<\alpha$, with $0<\alpha\leq\nicefrac{1}{\norm{\lrate}}$. Let $\Delta\coloneqq s-t$. Then,
+\begin{equation*}
+\norm{\Phi_u-\Phi_{u^*}}\leq 2\alpha\Delta\norm{\lrate}^2
+\end{equation*}
+\end{proposition}
+\begin{proof}
+Consider any $u'\in\mathcal{U}_{[t,s]}$ that is finer than $u$ and $u^*$, meaning that the timepoints it consists of contain the timepoints in $u$ and the timepoints in $u^*$. For example, let $u'$ be the ordered union of the timepoints in $u$ and $u^*$.
+
+This implies that, for all $k\in\{1,\dots,n\}$, there is some sequence $\Delta_{k,i}>0$, $i\in\{1,\dots,n_k\}$, such that $\Delta_k=\sum_{i=1}^{n_k}\Delta_{k,i}$ and
+\begin{equation*}
+\Phi_{u'}\coloneqq\prod_{k=1}^n\left(\prod_{i=1}^{n_k}(I+\Delta_{k,i}\lrate)\right).
+\end{equation*}
+It then follows from Lemma~\ref{lemma:differencebetweennested} that $\norm{\Phi_{u'}-\Phi_u}\leq\alpha\Delta\norm{\lrate}^2$. 
+
+Similarly, for all $k\in\{1,\dots,n^*\}$, there is some sequence $\Delta^*_{k,i}>0$, $i\in\{1,\dots,n^*_k\}$, such that $\Delta^*_k=\sum_{i=1}^{n^*_k}\Delta^*_{k,i}$ and
+\begin{equation*}
+\Phi_{u'}\coloneqq\prod_{k=1}^{n^*}\left(\prod_{i=1}^{n^*_k}(I+\Delta^*_{k,i}\lrate)\right).
+\end{equation*}
+It then follows from Lemma~\ref{lemma:differencebetweennested} that $\norm{\Phi_{u'}-\Phi_{u^*}}\leq\alpha\Delta\norm{\lrate}^2$.
+
+Hence, we find that
+\begin{equation*}
+\norm{\Phi_{u}-\Phi_{u^*}}
+=
+\norm{\Phi_{u}-\Phi_{u'}+\Phi_{u'}-\Phi_{u^*}}
+\leq
+\norm{\Phi_{u}-\Phi_{u'}}
++
+\norm{\Phi_{u'}-\Phi_{u^*}}
+\leq2\alpha\Delta\norm{\lrate}^2.
+\end{equation*}
+\end{proof}
+
+\begin{corollary}\label{corol:cauchy}
+For every sequence $u_1,u_2,\dots,u_n,\dots$ in $\mathcal{U}_{[t,s]}$ such that $\lim_{n\to\infty}\sigma(u_n)=0$, the corresponding sequence $\Phi_{u_1},\Phi_{u_2},\dots,\Phi_{u_n},\dots$ is a \emph{cauchy sequence}, meaning that
+\begin{equation*}
+(\forall \epsilon>0)(\exists N\in\nats)(\forall n,m\geq N)
+\norm{\Phi_{u_n}-\Phi_{u_m}}<\epsilon.
+\end{equation*}
+\end{corollary}
+\begin{proof}
+This follows almost directly from Proposition~\ref{prop:differencebetweenu}.
+\end{proof}
+
+\begin{corollary}\label{corol:limitexistsandiscoherent}
+For every sequence $u_1,u_2,\dots,u_n,\dots$ in $\mathcal{U}_{[t,s]}$ such that $\lim_{n\to\infty}\sigma(u_n)=0$, the corresponding sequence $\Phi_{u_1},\Phi_{u_2},\dots,\Phi_{u_n},\dots$ converges to a coherent lower transition operator.
+\end{corollary}
+\begin{proof}
+Since $\lim_{n\to\infty}\sigma(u_n)=0$, and because of Lemma~\ref{lemma:productiscoherent}, there is some index $i$ such that the sequence $\Phi_{u_i},\Phi_{u_{i+1}},\dots,\Phi_{u_n},\dots$ consists of coherent lower transition operators. Due to Corollary~\ref{corol:cauchy}, this sequence is cauchy and therefore, because of Lemma~\ref{lemma:completemetricspace}, this sequence has a limit that is also a coherent lower transition operator. Since the limit starting from $i$ and the limit starting from $1$ are identical (initial elements do not influence the limit), we find that the sequence $\Phi_{u_1},\Phi_{u_2},\dots,\Phi_{u_n},\dots$ has a limit, and that this limit is a coherent lower transition operator.
+\end{proof}
+
+\begin{theorem}\label{theo:convergencelowerbound}
+For any $t,s\in\realsnonneg$ such that $t<s$ and any coherent lower transition rate operator $\lrate$, there is a coherent lower transition operator $\lbound_t^s$ such that 
+\begin{equation*}
+(\forall\epsilon>0)\,
+(\exists\delta>0)\,
+(\forall u\in\mathcal{U}_{[t,s]}\colon\sigma(u)<\delta)~\norm{\lbound_t^s - \prod_{k=1}^n(I+\Delta_k\lrate)}<\epsilon.
+\end{equation*}
+\end{theorem}
+\begin{proof}
+Consider any sequence $u_1,u_2,\dots,u_n,\dots$ in $\mathcal{U}_{[t,s]}$ such that $\lim_{n\to\infty}\sigma(u_n)=0$. Due to Corollary~\ref{corol:limitexistsandiscoherent}, the sequence $\Phi_{u_1},\Phi_{u_2},\dots,\Phi_{u_n},\dots$ converges to a coherent lower transition operator, which we denote by $\lbound_t^s$. 
+
+Consider now any $\epsilon>0$ and let $\Delta\coloneqq s-t$ and
+\begin{equation*}
+\delta\coloneqq\min\left\{\frac{\epsilon}{4\Delta\norm{\lrate}^2},\frac{1}{\norm{\lrate}}\right\}.
+\end{equation*}
+
+\noindent Since $\Phi_{u_1},\Phi_{u_2},\dots,\Phi_{u_n},\dots$ converges to $\lbound_t^s$, there is some $N\in\nats$ such that
+\begin{equation*}
+(\forall n\geq N)~\norm{\lbound_t^s - \Phi_{u_n}}<\frac{\epsilon}{2}.
+\end{equation*}
+Therefore, since $\lim_{n\to\infty}\sigma(u_n)=0$, there is some $N^*\geq N$ such that
+\begin{equation*}
+\sigma(u_{N^*})<\delta\text{ and }\norm{\lbound_t^s - \Phi_{u_{N^*}}}<\frac{\epsilon}{2}
+\end{equation*}
+
+\noindent Consider now any $u\in\mathcal{U}_{[t,s]}$ such that $\sigma(u)<\delta$. Then
+
+\begin{equation*}
+\norm{\lbound_t^s - \Phi_u}\leq\norm{\lbound_t^s-\Phi_{u_{N^*}}}
++\norm{\Phi_{u_{N^*}}-\Phi_u}
+<\frac{\epsilon}{2}+2\delta\Delta\norm{\lrate}^2\leq\epsilon,
+\end{equation*}
+where the strict inequality follows from Proposition~\ref{prop:differencebetweenu}.
+In summary, we have shown that there is some coherent lower transition operator $\lbound_t^s$ such that
+\begin{equation*}
+(\forall\epsilon>0)\,
+(\exists\delta>0)\,
+(\forall u\in\mathcal{U}_{[t,s]}\colon\sigma(u)<\delta)~\norm{\lbound_t^s - \Phi_u}<\epsilon\,.
+\end{equation*}
+\end{proof}
+
+\subsection{Relation to Previous Work}
+
+The derivative of $\lbound_t^s$ with respect to $t$ satisfies differential equations in the style of Damjan.
+
+\begin{proposition}
+Consider any $t,s\in\realsnonneg$ such that $t<s$, let $\lrate$ be an arbitrary coherent lower transition rate operator and let $\lbound_t^s$ be the corresponding lower transition operator. Then $\frac{d}{dt}\lbound_t^s=-\lrate\lbound_t^s$ and $\frac{d}{ds}\lbound_t^s=\lbound_t^s\lrate$, meaning that
+\begin{equation*}
+(\forall\epsilon>0)\,
+(\exists\delta>0)\,
+(\forall\Delta\in(-\delta,\delta))~
+\Big\lVert\frac{L_{t+\Delta}^s-L_t^s}{\Delta}+\lrate L_t^s\Big\rVert<\epsilon
+\end{equation*}
+and
+\begin{equation*}
+(\forall\epsilon>0)\,
+(\exists\delta>0)\,
+(\forall\Delta\in(-\delta,\delta))~
+\Big\lVert\frac{L_{t}^{s+\Delta}-L_t^s}{\Delta}-\lbound_t^s\lrate \Big\rVert<\epsilon.
+\end{equation*}
+\end{proposition}
+\begin{proof}
+{\bf ATTN:} Still a work in progress.
+
+We start by trying to prove the following:
+\begin{equation*}
+(\forall \epsilon>0)(\exists\delta^*>0)(\forall\Delta\in(0,\delta^*))\norm{\frac{L_{t+\Delta}^s - L_t^s}{\Delta} + \lrate L_t^s} < \epsilon\,.
+\end{equation*}
+Start by noting that
+\begin{align*}
+\norm{\frac{L_{t+\Delta}^s - L_t^s}{\Delta} + \lrate L_t^s} &\leq \norm{\frac{L_{t+\Delta}^s - L_t^s}{\Delta}} + \norm{\lrate L_t^s} \\
+ &= \frac{1}{\Delta}\norm{L_{t+\Delta}^s - L_t^s} + \norm{\lrate L_t^s}\,.
+\end{align*}
+Choose any $\epsilon>0$, and note that by Theorem~\ref{theo:convergencelowerbound}, there is some $\delta$ such that for all $u\in\mathcal{U}_{[t,s]}$ with $\sigma(u)<\delta$, there is a corresponding $\Phi_u$ such that
+\begin{equation*}
+\norm{L_t^s - \Phi_u} < \epsilon.
+\end{equation*}
+Choose any $u$ such that $\sigma(u)<\delta$ and furthermore $\Delta_1 = \Delta$. {\bf ATTN:} Ensure that $\Delta<\delta^*\leq\delta$.
+
+Similarly, there must be some $\delta'$ such that for all $u'\in\mathcal{U}_{[t+\Delta,s]}$ with $\sigma(u')<\delta'$, there is a corresponding $\Phi_{u'}$ such that
+\begin{equation*}
+\norm{L_{t+\Delta}^s - \Phi_{u'}} < \epsilon\,.
+\end{equation*}
+Choose any such $u'$.
+Let $\hat{u}$ be the ordered union of $u$ and $u'$. Then,
+\begin{equation*}
+\norm{L_t^s - \prod_{k=1}^{\hat{n}}(I + \Delta_i\lrate)} < \epsilon\,,
+\end{equation*}
+and,
+\begin{equation*}
+\norm{L_{t+\Delta}^s - \prod_{k=2}^{\hat{n}}(I + \Delta_i\lrate)} < \epsilon\,.
+\end{equation*}
+
+%%%%%%
+%Furthermore,
+%\begin{align*}
+%\norm{\prod_{k=1}^{\hat{n}}(I + \Delta_i\lrate) - \prod_{k=2}^{\hat{n}}(I + \Delta_i\lrate)} &= \norm{\bigl((I + \Delta_1\lrate) - I\bigr)\prod_{k=2}^{\hat{n}}(I + \Delta_i\lrate)} \\
+% &= \norm{\Delta_1\lrate\prod_{k=2}^{\hat{n}}(I + \Delta_i\lrate)} \\
+% &= \Delta_1\norm{\lrate\prod_{k=2}^{\hat{n}}(I + \Delta_i\lrate)} \\
+% &\leq \Delta_1\norm{\lrate}\norm{\prod_{k=2}^{\hat{n}}(I + \Delta_i\lrate)} \\
+% &\leq \Delta_1\norm{\lrate}\,,
+%\end{align*}
+%where the last inequality follows from Lemma~\ref{lemma:normofcoherenttrans}.
+%%%%%%
+
+%Also,
+%\begin{align*}
+%\norm{\frac{L_{t+\Delta}^s - L_t^s}{\Delta} + \lrate L_t^s} &= \frac{1}{\Delta}\norm{L_{t+\Delta}^s - L_t^s + \Delta\lrate L_t^s} \\
+% &= \frac{1}{\Delta}\norm{L_{t+\Delta}^s - \prod_{k=1}^{\hat{n}}(I + \Delta_i\lrate) + \prod_{k=1}^{\hat{n}}(I + \Delta_i\lrate) - L_t^s + \Delta\lrate L_t^s} \\
+% &= \frac{1}{\Delta}\norm{L_{t+\Delta}^s - \left(I + \Delta_1\lrate\right)\prod_{k=2}^{\hat{n}}(I + \Delta_i\lrate) + \prod_{k=1}^{\hat{n}}(I + \Delta_i\lrate) - L_t^s + \Delta\lrate L_t^s} \\
+% &= \frac{1}{\Delta}\norm{L_{t+\Delta}^s - \prod_{k=2}^{\hat{n}}(I + \Delta_i\lrate) - \Delta_1\lrate\prod_{k=2}^{\hat{n}}(I + \Delta_i\lrate) + \prod_{k=1}^{\hat{n}}(I + \Delta_i\lrate) - L_t^s + \Delta\lrate L_t^s} \\
+% &= \frac{1}{\Delta}\norm{L_{t+\Delta}^s - \prod_{k=2}^{\hat{n}}(I + \Delta_i\lrate) + \prod_{k=1}^{\hat{n}}(I + \Delta_i\lrate) - \Delta_1\lrate\prod_{k=2}^{\hat{n}}(I + \Delta_i\lrate) - L_t^s + \Delta\lrate L_t^s} \\
+% &\leq \frac{1}{\Delta}\norm{L_{t+\Delta}^s - \prod_{k=2}^{\hat{n}}(I + \Delta_i\lrate)} + \frac{1}{\Delta}\norm{\prod_{k=1}^{\hat{n}}(I + \Delta_i\lrate) - \Delta_1\lrate\prod_{k=2}^{\hat{n}}(I + \Delta_i\lrate) - L_t^s + \Delta\lrate L_t^s} \\
+% &\leq \frac{\epsilon}{\Delta} + \frac{1}{\Delta}\norm{\prod_{k=1}^{\hat{n}}(I + \Delta_i\lrate) - \Delta_1\lrate\prod_{k=2}^{\hat{n}}(I + \Delta_i\lrate) - L_t^s + \Delta\lrate L_t^s} \\
+% &= \frac{\epsilon}{\Delta} + \frac{1}{\Delta}\norm{\prod_{k=2}^{\hat{n}}(I + \Delta_i\lrate) + \Delta_1\lrate\prod_{k=2}^{\hat{n}}(I + \Delta_i\lrate) - \Delta_1\lrate\prod_{k=2}^{\hat{n}}(I + \Delta_i\lrate) - L_t^s + \Delta\lrate L_t^s} \\
+% &= \frac{\epsilon}{\Delta} + \frac{1}{\Delta}\norm{\prod_{k=2}^{\hat{n}}(I + \Delta_i\lrate) - L_t^s + \Delta\lrate L_t^s} \\
+% &= \frac{\epsilon}{\Delta} + \frac{1}{\Delta}\norm{\prod_{k=2}^{\hat{n}}(I + \Delta_i\lrate) - \left(I + \Delta\lrate\right) L_t^s} \\
+% &= \frac{\epsilon}{\Delta} + \frac{1}{\Delta}\norm{\prod_{k=2}^{\hat{n}}(I + \Delta_i\lrate) - \left(I + \Delta\lrate\right)\prod_{k=1}^{\hat{n}}(I + \Delta_i\lrate) + \left(I + \Delta\lrate\right)\prod_{k=1}^{\hat{n}}(I + \Delta_i\lrate) - \left(I + \Delta\lrate\right) L_t^s} \\
+% &\leq \frac{\epsilon}{\Delta} + \frac{1}{\Delta}\norm{\prod_{k=2}^{\hat{n}}(I + \Delta_i\lrate) - \left(I + \Delta\lrate\right)\prod_{k=1}^{\hat{n}}(I + \Delta_i\lrate)} + \frac{1}{\Delta}\norm{\left(I + \Delta\lrate\right)\prod_{k=1}^{\hat{n}}(I + \Delta_i\lrate) - \left(I + \Delta\lrate\right) L_t^s}\,.
+%\end{align*}
+%Now,
+%\begin{align*}
+%\norm{\left(I + \Delta\lrate\right)\prod_{k=1}^{\hat{n}}(I + \Delta_i\lrate) - \left(I + \Delta\lrate\right) L_t^s} &\leq 2\norm{(I+\Delta\lrate)}\norm{\prod_{k=1}^{\hat{n}}(I + \Delta_i\lrate) - L_t^s} \\
+% &\leq 2(1 + \Delta\norm{\lrate})\epsilon \\
+% &= 2\epsilon + 2\epsilon\Delta\norm{\lrate}\,,
+%\end{align*}
+%so that
+%\begin{align*}
+%\norm{\frac{L_{t+\Delta}^s - L_t^s}{\Delta} + \lrate L_t^s} &\leq  \frac{1}{\Delta}\norm{\prod_{k=2}^{\hat{n}}(I + \Delta_i\lrate) - \left(I + \Delta\lrate\right)\prod_{k=1}^{\hat{n}}(I + \Delta_i\lrate)} + \epsilon\frac{1}{\Delta} + 2\epsilon\frac{1 + \Delta\norm{\lrate}}{\Delta}\,.
+%\end{align*}
+%Since,
+%\begin{align*}
+%\norm{\prod_{k=2}^{\hat{n}}(I + \Delta_i\lrate) - \left(I + \Delta\lrate\right)\prod_{k=1}^{\hat{n}}(I + \Delta_i\lrate)} &= \norm{\left(I - (I + \Delta\lrate)(I + \Delta_1\lrate)\right)\prod_{k=2}^{\hat{n}}(I + \Delta_i\lrate)} \\
+% &= \norm{\left(I - (I + \Delta\lrate) - \Delta_1(I+\Delta\lrate)\lrate\right)\prod_{k=2}^{\hat{n}}(I + \Delta_i\lrate)} \\
+% &= \norm{\left(I - (I + \Delta\lrate) - \Delta_1(\lrate+\Delta\lrate\lrate)\right)\prod_{k=2}^{\hat{n}}(I + \Delta_i\lrate)} \\
+% &= \norm{\left(-\Delta\lrate - \Delta_1\lrate-\Delta_1\Delta\lrate\lrate\right)\prod_{k=2}^{\hat{n}}(I + \Delta_i\lrate)} \\
+%\end{align*}
+
+%%%%%%
+%\begin{align*}
+%\norm{L_{t+\Delta}^s - L_t^s} &= \norm{L_{t+\Delta}^s - \prod_{k=2}^{\hat{n}}(I + \Delta_i\lrate) + \prod_{k=2}^{\hat{n}}(I + \Delta_i\lrate) - L_t^s} \\
+% &\leq \norm{L_{t+\Delta}^s - \prod_{k=2}^{\hat{n}}(I + \Delta_i\lrate)} + \norm{\prod_{k=2}^{\hat{n}}(I + \Delta_i\lrate) - L_t^s} \\
+% &\leq \norm{\prod_{k=2}^{\hat{n}}(I + \Delta_i\lrate) - L_t^s} + \epsilon \\
+% &= \norm{\prod_{k=2}^{\hat{n}}(I + \Delta_i\lrate) - \prod_{k=1}^{\hat{n}}(I + \Delta_i\lrate) + \prod_{k=1}^{\hat{n}}(I + \Delta_i\lrate) - L_t^s} + \epsilon \\
+% &\leq \norm{\prod_{k=2}^{\hat{n}}(I + \Delta_i\lrate) - \prod_{k=1}^{\hat{n}}(I + \Delta_i\lrate)} + \norm{\prod_{k=1}^{\hat{n}}(I + \Delta_i\lrate) - L_t^s} + \epsilon \\
+% &\leq \norm{\prod_{k=2}^{\hat{n}}(I + \Delta_i\lrate) - \prod_{k=1}^{\hat{n}}(I + \Delta_i\lrate)} + 2\epsilon \\
+% &\leq \Delta_1\norm{\lrate} + 2\epsilon\,.
+%\end{align*}
+%Now,
+%\begin{align*}
+%\norm{\lrate \prod_{k=2}^{\hat{n}}(I + \Delta_i\lrate) - \lrate \prod_{k=1}^{\hat{n}}(I + \Delta_i\lrate)} &\leq 2\norm{\lrate}\norm{\prod_{k=2}^{\hat{n}}(I + \Delta_i\lrate) -  \prod_{k=1}^{\hat{n}}(I + \Delta_i\lrate)} \\
+% &\leq 2\Delta_1 \norm{\lrate}^2\norm{\prod_{k=2}^{\hat{n}}(I + \Delta_i\lrate)}
+%\end{align*}
+
+%%%%%%
+%Furthermore,
+%\begin{align*}
+%\norm{\lrate L_t^s} &= \norm{\lrate L_t^s - \lrate \prod_{k=1}^{\hat{n}}(I + \Delta_i\lrate) + \lrate \prod_{k=1}^{\hat{n}}(I + \Delta_i\lrate)} \\
+% &\leq \norm{\lrate L_t^s - \lrate \prod_{k=1}^{\hat{n}}(I + \Delta_i\lrate)} + \norm{\lrate \prod_{k=1}^{\hat{n}}(I + \Delta_i\lrate)} \\
+% &\leq \norm{\lrate \prod_{k=1}^{\hat{n}}(I + \Delta_i\lrate)} + 2\norm{\lrate}\epsilon \\
+% &\leq \norm{\lrate} + 2\norm{\lrate}\epsilon\,.
+%%%%%%
+
+% &\leq \norm{\lrate}\norm{\prod_{k=1}^{\hat{n}}(I + \Delta_i\lrate)} + 2\norm{\lrate}\epsilon \\
+% &\leq \norm{\lrate}\norm{(I + \Delta_1\lrate)}\norm{\prod_{k=2}^{\hat{n}}(I + \Delta_i\lrate)} + 2\norm{\lrate}\epsilon \\
+% &\leq \left(\norm{I} + \norm{\Delta_1\lrate}\right)\norm{\lrate}\norm{\prod_{k=2}^{\hat{n}}(I + \Delta_i\lrate)} + 2\norm{\lrate}\epsilon \\
+% &= \left(1 + \Delta_1\norm{\lrate}\right)\norm{\lrate}\norm{\prod_{k=2}^{\hat{n}}(I + \Delta_i\lrate)} + 2\norm{\lrate}\epsilon \\
+% &= \norm{\lrate}\norm{\prod_{k=2}^{\hat{n}}(I + \Delta_i\lrate)} + \Delta_1\norm{\lrate}^2\norm{\prod_{k=2}^{\hat{n}}(I + \Delta_i\lrate)} + 2\norm{\lrate}\epsilon \\
+%\end{align*}
+We try something else:
+\begin{align*}
+\norm{\frac{L_{t+\Delta}^s - L_t^s}{\Delta} + \lrate L_t^s} &= \frac{1}{\Delta}\norm{L_{t+\Delta}^s - L_t^s + \Delta\lrate L_t^s} \\
+ &= \frac{1}{\Delta}\norm{L_{t+\Delta}^s - \prod_{i=2}^{\hat{n}}(I + \Delta_i\lrate) + \prod_{i=2}^{\hat{n}}(I + \Delta_i\lrate) - L_t^s + \Delta\lrate L_t^s} \\
+ &\leq \frac{1}{\Delta}\norm{L_{t+\Delta}^s - \prod_{i=2}^{\hat{n}}(I + \Delta_i\lrate)} + \frac{1}{\Delta}\norm{\prod_{i=2}^{\hat{n}}(I + \Delta_i\lrate) - L_t^s + \Delta\lrate L_t^s} \\
+ &\leq \frac{\epsilon}{\Delta} + \frac{1}{\Delta}\norm{\prod_{i=2}^{\hat{n}}(I + \Delta_i\lrate) - L_t^s + \Delta\lrate L_t^s} \\
+ &= \frac{\epsilon}{\Delta} + \frac{1}{\Delta}\norm{\prod_{i=2}^{\hat{n}}(I + \Delta_i\lrate) - \prod_{i=1}^{\hat{n}}(I + \Delta_i\lrate) + \prod_{i=1}^{\hat{n}}(I + \Delta_i\lrate) - L_t^s + \Delta\lrate L_t^s} \\
+ &\leq \frac{\epsilon}{\Delta} + \frac{1}{\Delta}\norm{\prod_{i=2}^{\hat{n}}(I + \Delta_i\lrate) - \prod_{i=1}^{\hat{n}}(I + \Delta_i\lrate) + \Delta\lrate L_t^s} + \frac{1}{\Delta}\norm{\prod_{i=1}^{\hat{n}}(I + \Delta_i\lrate) - L_t^s} \\
+ &\leq \frac{2\epsilon}{\Delta} + \frac{1}{\Delta}\norm{\prod_{i=2}^{\hat{n}}(I + \Delta_i\lrate) - \prod_{i=1}^{\hat{n}}(I + \Delta_i\lrate) + \Delta\lrate L_t^s} \\
+ &= \frac{2\epsilon}{\Delta} + \frac{1}{\Delta}\norm{\prod_{i=2}^{\hat{n}}(I + \Delta_i\lrate) - \prod_{i=1}^{\hat{n}}(I + \Delta_i\lrate) + \Delta\lrate L_t^s - \Delta\lrate\prod_{i=1}^{\hat{n}}(I + \Delta_i\lrate) + \Delta\lrate\prod_{i=1}^{\hat{n}}(I + \Delta_i\lrate)} \\
+ &\leq \frac{2\epsilon}{\Delta} + \frac{1}{\Delta}\norm{\prod_{i=2}^{\hat{n}}(I + \Delta_i\lrate) - \prod_{i=1}^{\hat{n}}(I + \Delta_i\lrate) + \Delta\lrate\prod_{i=1}^{\hat{n}}(I + \Delta_i\lrate)} + \frac{1}{\Delta}\norm{\Delta\lrate L_t^s - \Delta\lrate\prod_{i=1}^{\hat{n}}(I + \Delta_i\lrate)} \\
+ &= \frac{2\epsilon}{\Delta} + \frac{1}{\Delta}\norm{\prod_{i=2}^{\hat{n}}(I + \Delta_i\lrate) - \prod_{i=1}^{\hat{n}}(I + \Delta_i\lrate) + \Delta\lrate\prod_{i=1}^{\hat{n}}(I + \Delta_i\lrate)} + \norm{\lrate L_t^s - \lrate\prod_{i=1}^{\hat{n}}(I + \Delta_i\lrate)} \\
+ &\leq \frac{2\epsilon}{\Delta} + \frac{1}{\Delta}\norm{\prod_{i=2}^{\hat{n}}(I + \Delta_i\lrate) - \prod_{i=1}^{\hat{n}}(I + \Delta_i\lrate) + \Delta\lrate\prod_{i=1}^{\hat{n}}(I + \Delta_i\lrate)} + 2\norm{\lrate}\norm{L_t^s - \prod_{i=1}^{\hat{n}}(I + \Delta_i\lrate)} \\
+ &\leq \frac{2\epsilon}{\Delta} + 2\epsilon\norm{\lrate} + \frac{1}{\Delta}\norm{\prod_{i=2}^{\hat{n}}(I + \Delta_i\lrate) - \prod_{i=1}^{\hat{n}}(I + \Delta_i\lrate) + \Delta\lrate\prod_{i=1}^{\hat{n}}(I + \Delta_i\lrate)}. \\
+\end{align*}
+Now,
+\begin{align*}
+\norm{\prod_{i=2}^{\hat{n}}(I + \Delta_i\lrate) - \prod_{i=1}^{\hat{n}}(I + \Delta_i\lrate) + \Delta\lrate\prod_{i=1}^{\hat{n}}(I + \Delta_i\lrate)} &= \norm{\prod_{i=2}^{\hat{n}}(I + \Delta_i\lrate) - \left(I + \Delta\lrate\right)\prod_{i=1}^{\hat{n}}(I + \Delta_i\lrate)} \\
+ &= \norm{\prod_{i=2}^{\hat{n}}(I + \Delta_i\lrate) - \left(I + \Delta\lrate\right)\left(I + \Delta_1\lrate\right)\prod_{i=2}^{\hat{n}}(I + \Delta_i\lrate)} \\
+ &= \norm{\left(I - \left(I + \Delta\lrate\right)\left(I + \Delta_1\lrate\right)\right)\prod_{i=2}^{\hat{n}}(I + \Delta_i\lrate)} \\
+ &= \norm{\left(I - \left(I + \Delta\lrate\right) - \left(I + \Delta\lrate\right)\Delta_1\lrate\right)\prod_{i=2}^{\hat{n}}(I + \Delta_i\lrate)} \\
+ &\leq \norm{I - \left(I + \Delta\lrate\right) - \left(I + \Delta\lrate\right)\Delta_1\lrate}\norm{\prod_{i=2}^{\hat{n}}(I + \Delta_i\lrate)} \\
+ &\leq \norm{I - \left(I + \Delta\lrate\right) - \left(I + \Delta\lrate\right)\Delta_1\lrate} \\
+ &= \norm{-\Delta\lrate - \left(I + \Delta\lrate\right)\Delta_1\lrate} \\
+ &= \norm{\Delta\lrate + \left(I + \Delta\lrate\right)\Delta_1\lrate} \\
+ &\leq \norm{\Delta\lrate} + \norm{\left(I + \Delta\lrate\right)\Delta_1\lrate} \\
+ &\leq \Delta\norm{\lrate} + \norm{\left(I + \Delta\lrate\right)}\norm{\Delta_1\lrate} \\
+ &\leq \Delta\norm{\lrate} + \Delta_1\norm{\lrate} \\
+ &= 2\Delta\norm{\lrate}\,,
+\end{align*}
+where the last equality follows from the fact that we chose $\Delta_1=\Delta$. Thus,
+\begin{align*}
+\norm{\frac{L_{t+\Delta}^s - L_t^s}{\Delta} + \lrate L_t^s} &\leq \frac{2\epsilon}{\Delta} + 2\epsilon\norm{\lrate} + \frac{2\Delta\norm{\lrate}}{\Delta} \\
+ &= \frac{2\epsilon}{\Delta} + 2\epsilon\norm{\lrate} + 2\norm{\lrate} \\
+ &= 2\left(\frac{\epsilon}{\Delta} + \epsilon\norm{\lrate} + \norm{\lrate}\right).
+\end{align*}
+Trying something, assume we chose $\Delta < \delta^*$ and $\delta^*<\nicefrac{1}{\norm{\lrate}}$. Continuing:
+\begin{align*}
+ &\leq 2\left(\frac{\epsilon}{\delta^*} + \epsilon\norm{\lrate} + \norm{\lrate}\right) \\
+ &\leq 2\left(\epsilon\norm{\lrate} + \epsilon\norm{\lrate} + \norm{\lrate}\right) \\
+ &= 4\epsilon\norm{\lrate} + 2\norm{\lrate} \\
+\end{align*}
+\end{proof}
+
+\section{Imprecise Continuous-Time Markov Chains}\label{sec:imp_markov}
+
+\begin{definition}[Set of Markov Processes]\label{def:markov_process_set}
+For any bounded set of rate matrices $\rateset$, we define the set $\mprocesses_{\rateset}$ of all continuous-time Markov processes \emph{consistent} with $\rateset$. Formally, we let $\mprocesses_{\rateset}$ be the set of all $P\in\mprocesses$ such that
+\begin{equation}\label{eq:conditionforMarkov}
+(\forall\epsilon>0)\,
+(\exists\delta>0)\,
+(\forall t\in[0,+\infty))\,
+(\forall\Delta\in(0,\delta))\,
+(\exists Q\in\rateset)~
+\Big\lVert\frac{T_t^{t+\Delta}-I}{\Delta}-Q\Big\rVert<\epsilon.
+\end{equation}
+\end{definition}
+%\vspace{5pt}
+
+\begin{theorem}
+Consider any $t,s\in[0,+\infty)$ such that $t<s$ and let $\rateset$ be an arbitrary bounded set of rate matrices with corresponding lower transition rate operator $\lrate$. Then for any $P\in\mprocesses_\rateset$ and $f\in\gamblesX$:
+\begin{equation*}
+\lbound_t^sf(x)\leq T_t^sf(x).
+\end{equation*}
+\end{theorem}
+\begin{proof}
+Consider any $P\in\mprocesses_\rateset$ and any $f\in\gamblesX$ and $x\in\states$. Assume \emph{ex absurdo} that $\lbound_t^sf(x)>T_t^sf(x)$. We prove that this leads to a contradiction.  Let $C\coloneqq s-t$ and choose $\epsilon>0$ small enough such that
+\begin{equation}\label{eq:chooseepsilon}
+\epsilon(1+C\norm{f})<\lbound_t^sf(x)-T_t^sf(x).
+\end{equation}
+Since $P\in\mprocesses_\rateset$, it follows from Equation~\eqref{eq:conditionforMarkov} that there is some $\delta>0$ such that
+\begin{equation}\label{eq:1conditionforMarkov}
+(\forall \tau\in[0,+\infty))\,
+(\forall\Delta\in(0,\delta))\,
+(\exists Q\in\rateset)~
+\Big\lVert\frac{T_\tau^{\tau+\Delta}-I}{\Delta}-Q\Big\rVert<\epsilon.
+\end{equation}
+Furthermore, because of Equation~\eqref{eq:deflowerbound} and Theorem~\ref{theo:convergencelowerbound}, there is some $\delta'>0$ such that
+\begin{equation}\label{eq:deltaprimeformula}
+(\forall u\in\mathcal{U}_{[t,s]}\colon\sigma(u)<\delta')~\abs{\lbound_t^sf(x) - \left(\left(\prod_{k=1}^n(I+\Delta_k\lrate)\right)(f)\right)(x)}<\epsilon.
+\end{equation}
+Now choose $n>\max\{\nicefrac{C}{\delta},\nicefrac{C}{\delta'},C\norm{\rateset}\}$. Then for $\Delta\coloneqq\nicefrac{C}{n}$, we find that $\Delta<\delta$, $\Delta<\delta'$ and $\Delta\norm{\rateset}<1$. 
+
+For all $k\in\{0,1,\dots,n\}$, define $t_k\coloneqq t+k\Delta$. Since $\Delta<\delta$, it follows from Equation~\eqref{eq:1conditionforMarkov} that, for all $i\in\{1,\dots,n\}$, there is some $Q_i\in\rateset$ such that 
+\begin{equation*}
+\norm{T_{t_{i-1}}^{t_i}-(I+\Delta Q_i)}
+=\norm{\frac{T_{t_{i-1}}^{t_i}-I}{\Delta}-Q_i}\Delta
+<\epsilon\Delta.
+\end{equation*}
+Furthermore, for all $i\in\{1,\dots,n\}$, since $\abs{\Delta Q_i(x,y)}\leq\norm{\Delta Q_i}=\Delta\norm{Q_i}\leq\Delta\norm{\rateset}<1$ for all $x,y\in\states$, we have that $I+\Delta Q_i$ is a stochastic matrix.
+Therefore, due to Lemmas~\ref{lemma:transitionmatrixfactorises} and~\ref{lemma:differenceproductoftransition}, we find that
+\begin{equation*}
+\norm{T_t^s-\prod_{i=1}^n(I+\Delta Q_i)}
+=\norm{\prod_{i=1}^n T_{t_{i-1}}^{t_i}-\prod_{i=1}^n(I+\Delta Q_i)}
+\leq\epsilon\Delta n=\epsilon C,
+\end{equation*}
+which implies that
+\begin{align}
+\abs{T_t^sf(x)-\left(\left(\prod_{i=1}^n(I+\Delta Q_i)\right)(f)\right)(x)}
+&\leq
+\norm{T_t^sf-\left(\prod_{i=1}^n(I+\Delta Q_i)\right)(f)}\notag\\
+&\leq
+\norm{T_t^s-\prod_{i=1}^n(I+\Delta Q_i)}\norm{f}
+\leq\epsilon C\norm{f}.\label{eq:firstpartofbound}
+\end{align}
+\noindent
+Equation~\eqref{eq:deflowerbound} implies that
+\begin{equation}
+\left(\left(\prod_{i=1}^n(I+\Delta Q_i)\right)(f)\right)(x)
+\geq
+\left((I+\Delta\lrate)^n(f)\right)(x)\label{eq:middlepartofbound}
+\end{equation}
+and, since $\Delta<\delta'$, it follows from Equation~\eqref{eq:deltaprimeformula} that
+\begin{equation}\label{eq:lastpartofbound}
+\abs{\lbound_t^sf(x) - \left((I+\Delta\lrate)^n(f)\right)(x)}<\epsilon.
+\end{equation}
+\noindent
+By combining Equations~\eqref{eq:firstpartofbound}, \eqref{eq:middlepartofbound} and~\eqref{eq:lastpartofbound}, we find that
+\begin{align*}
+T_t^sf(x)
+&\geq
+\left(\left(\prod_{i=1}^n(I+\Delta Q_i)\right)(f)\right)(x)-\epsilon C\norm{f}\\
+&\geq
+\left((I+\Delta\lrate)^n(f)\right)(x)-\epsilon C\norm{f}
+>\lbound_t^sf(x)-\epsilon-\epsilon C\norm{f},
+\end{align*}
+which provides the required contradiction; see Equation~\eqref{eq:chooseepsilon}.
+\end{proof}
+
+\begin{theorem}
+Consider any $t,s\in[0,+\infty)$ such that $t<s$ and let $\rateset$ be an arbitrary closed and bounded set of rate matrices that has separately specified rows, with corresponding lower transition rate operator $\lrate$. Then for all $f\in\gamblesX$, there is some $P\in\mprocesses_{\rateset}$ such that
+\begin{equation*}
+\lbound_t^sf=T_t^sf.
+\end{equation*}
+Specifically, this equality is established by the time-inhomogenous Markov chain that is characterized by 
+\begin{equation*}
+Q_\tau(x_\tau,\cdot)\coloneqq \argmin\left\{ Q(x_\tau,\cdot)\bigl[\lbound_\tau^sf\bigr]\,:\,Q(x_\tau,\cdot)\in\mathcal{Q}_{x_\tau}\right\}\quad\text{for all $x_\tau\in\states$ and $\tau\in[t,s]$}\,.
+\end{equation*}
+\end{theorem}
+\begin{proof}
+{\bf TODO:} Prove this.
+\end{proof}
+
+\section{Imprecise Continuous-Time Non-Markov Processes}\label{sec:imp_non_markov}
+
+\subsection{Operators and Norms, Revisited}
+For any $t,s \in \realsnonneg$ such that $t < s$, let $\mathcal{U}_{[t,s]}$ denote the set of all finite sequences $t=t_0 < t_1 < \cdots < t_n=s$ as before. For any $u\in\mathcal{U}_{[t,s]}$, we will now define
+\begin{equation*}
+\states^u\coloneqq \prod_{i=0}^n\states
+\end{equation*}
+to be the joint state space at times $t_0,\ldots,t_n$. Let $\gambles(\states^u)$ denote the set of gambles on $(X_{t_0},\ldots,X_{t_n})$. For any $u\in\mathcal{U}_{[t,t']}$ and $v\in\mathcal{U}_{[s,s']}$, denote $\states^{u\cup v}\coloneqq\states^u\times\states^v$.
+
+For a given $u\in\mathcal{U}_{[t,s]}$ and $\omega\in\Omega$, define the $u$-discretized path $\omega^u\coloneqq \omega(t_0),\ldots,\omega(t_n)$. Denote the entire set of $u$-discretized paths as $\Omega_{\mathcal{U}_{[t,s]}}$. For any $\omega^u\in\Omega_{\mathcal{U}_{[t,s]}}$ and $f\in\gambles(\states^u)$, we introduce the shorthand notation
+\begin{equation*}
+f(\omega^u) \equiv f(\omega(t_0),\ldots,\omega(t_n))\,.
+\end{equation*}
+
+Now, for any $t,s\in\realsnonneg$ such that $t<s$, and any $u\in\mathcal{U}_{[0,t]}$, let $A_u^{\{s\}}$ be a non-negatively homogeneous operator from $\gambles(\states^{u\cup \{s\}})$ to $\gambles(\states^u)$.
+As before, define the norm for any vector $f\in\gambles(\states^u)$ as
+\begin{equation*}
+\norm{f}\coloneqq\norm{f}_\infty\coloneqq\max\left\{\bigl\vert f(x_{t_0},\ldots,x_{t_n})\bigr\vert\,:\,(x_{t_0},\ldots,x_{t_n})\in\states^u\right\}\,.
+\end{equation*}
+For a non-negatively homogeneous operator $A_u^{\{s\}}$, we then define its norm as
+\begin{equation*}
+\norm{A_u^{\{s\}}} \coloneqq \sup\left\{ \norm{A_u^{\{s\}}f}\,:\,f\in\gambles(\states^{u\cup \{s\}}),\norm{f}=1 \right\}\,.
+\end{equation*}
+This norm satisfies the following properties. 
+
+\begin{proposition}For all $t,s,s'\in\realsnonneg$ such that $t<s<s'$, all $u\in\mathcal{U}_{[0,t]}$, all $f,g\in\gambles(\states^u)$ and $h\in\gambles(\states^{u\cup\{s\}})$, all $A_u^{\{s\}},B_u^{\{s\}}$ from $\gambles(\states^{u\cup \{s\}})$ to $\gambles(\states^u)$ and $C_{u\cup \{s\}}^{\{s'\}}$ from $\gambles(\states^{u\cup \{s\}\cup \{s'\}})$ to $\gambles(\states^{u\cup \{s\}})$ that are non-negatively homogeneous, all $\lambda\in\mathbb{R}$ and all $\omega^u\in\Omega_{\mathcal{U}_{[0,t]}}$, we have that
+\vspace{5pt}
+
+\begin{enumerate}[label=N\arabic*:]
+\item
+$\abs{f(\omega^u)}\leq\norm{f}$
+\item
+$\norm{f}\geq0$
+\item
+$\norm{f}=0\asa f=0$
+\item
+$\norm{f+g}\leq\norm{f}+\norm{g}$
+\item
+$\norm{\lambda f}=\abs{\lambda}\norm{f}$
+\item
+$\norm{A_u^{\{s\}}}\geq0$
+\item
+$\norm{A_u^{\{s\}}}=0\asa A_u^{\{s\}}=0$
+\item
+$\norm{A_u^{\{s\}}+B_u^{\{s\}}}\leq\norm{A_u^{\{s\}}}+\norm{B_u^{\{s\}}}$
+\item
+$\norm{A_u^{\{s\}}C_{u\cup \{s\}}^{\{s'\}}}\leq\norm{A_u^{\{s\}}}\norm{C_{u\cup \{s\}}^{\{s'\}}}$
+\item
+$\norm{\lambda A_u^{\{s\}}}=\abs{\lambda}\norm{A_u^{\{s\}}}$
+\item
+$\norm{A_u^{\{s\}}h}\leq\norm{A_u^{\{s\}}}\norm{h}$
+\item
+$\norm{A_u^{\{s\}}}=1$ if $A_u^{\{s\}}$ is stochastic.
+\end{enumerate}
+\vspace{5pt}
+\end{proposition}
+
+Moving on, we will write an operator with a specific history as $A_u^{\{s\}}(\omega^u)$, defined for all $f\in\gambles(\states^{u\cup\{s\}})$ as
+\begin{equation*}
+A_u^{\{s\}}(\omega^u)f \coloneqq \left[A_u^{\{s\}}f\right](\omega^u)\,.
+\end{equation*}
+Thus, $A_u^{\{s\}}(\omega^u)$ is a map from $\gambles(\states^{u\cup\{s\}})$ to $\mathbb{R}$. %For example, we have for any $g\in\gambles(\states^{\{s\}})$ that
+%\begin{equation*}
+%T_u^{\{s\}}(\omega^u)g = \mathbb{E}_{X_s}\bigl[g(X_s)\,\vert\,X_{t_0}=\omega(t_0),\ldots,X_{t_n}=\omega(t_n)\bigr]\,.
+%\end{equation*}
+We will use a similar notation to denote ``partially fixed'' histories. Importantly, we will write $A_u^{\{s\}}(x_{t_0},\ldots,x_{t_{n-1}})$ for the map from $\gambles(\states^{u\cup\{s\}})$ to $\gambles(\states^{\{t_n\}})$. This operator will be defined for all $f\in\gambles(\states^{u\cup\{s\}})$ and all $(x_{t_0},\ldots,x_{t_n})\in\states^u$ by
+\begin{equation*}
+\left[A_u^{\{s\}}(x_{t_0},\ldots,x_{t_{n-1}})f\right](x_{t_n}) \coloneqq A_u^{\{s\}}(x_{t_0},\ldots,x_{t_n})f\,.
+\end{equation*}
+
+\begin{lemma}\label{lemma:nonmarkov_fixedhistory_bound_to_global_bound}
+Consider two operators $A_u^{\{s\}}$ and $B_u^{\{s\}}$ such that for all $(x_{t_0},\ldots,x_{t_{n-1}})\in\states^{\{t_0,\ldots,t_{n-1}\}}$ it holds that $\norm{A_u^{\{s\}}(x_{t_0},\ldots,x_{t_{n-1}}) - B_u^{\{s\}}(x_{t_0},\ldots,x_{t_{n-1}})} \leq c$. Then,
+\begin{equation*}
+\norm{A_u^{\{s\}} - B_u^{\{s\}}} \leq c\,.
+\end{equation*}
+\end{lemma}
+\begin{proof}
+From the definition of the norm, we have
+\begin{align*}
+&\quad\norm{A_u^{\{s\}} - B_u^{\{s\}}} \\
+&= \sup\left\{\norm{\left(A_u^{\{s\}} - B_u^{\{s\}}\right)f}\,:\,f\in\gambles(\states^{u\cup\{s\}}),\norm{f}=1\right\} \\
+&= \sup\left\{\max\left\{\left\vert \left[\left(A_u^{\{s\}} - B_u^{\{s\}}\right)f\right](x_{t_0},\ldots,x_{t_n}) \right\vert\,:\,(x_{t_0},\ldots,x_{t_n})\in\states^u\right\}\,:\,f\in\gambles(\states^{u\cup\{s\}}),\norm{f}=1\right\} \\
+&= \sup\left\{\max\left\{\left\vert \left[\left(A_u^{\{s\}} - B_u^{\{s\}}\right)(x_{t_0},\ldots,x_{t_{n-1}})f\right](x_{t_n}) \right\vert\,:\,(x_{t_0},\ldots,x_{t_n})\in\states^u\right\}\,:\,f\in\gambles(\states^{u\cup\{s\}}),\norm{f}=1\right\} \\
+&\leq \sup\left\{\max\left\{\norm{ \left(A_u^{\{s\}} - B_u^{\{s\}}\right)(x_{t_0},\ldots,x_{t_{n-1}})f} \,:\,(x_{t_0},\ldots,x_{t_n})\in\states^u\right\}\,:\,f\in\gambles(\states^{u\cup\{s\}}),\norm{f}=1\right\} \\
+&= \sup\left\{\max\left\{\norm{ \left(A_u^{\{s\}} - B_u^{\{s\}}\right)(x_{t_0},\ldots,x_{t_{n-1}})f} \,:\,(x_{t_0},\ldots,x_{t_{n-1}})\in\states^u\right\}\,:\,f\in\gambles(\states^{u\cup\{s\}}),\norm{f}=1\right\} \\
+&\leq \sup\left\{\max\left\{\norm{ \left(A_u^{\{s\}} - B_u^{\{s\}}\right)(x_{t_0},\ldots,x_{t_{n-1}})} \,:\,(x_{t_0},\ldots,x_{t_{n-1}})\in\states^u\right\}\,:\,f\in\gambles(\states^{u\cup\{s\}}),\norm{f}=1\right\} \\
+&= \max\left\{\norm{ \left(A_u^{\{s\}} - B_u^{\{s\}}\right)(x_{t_0},\ldots,x_{t_{n-1}})} \,:\,(x_{t_0},\ldots,x_{t_{n-1}})\in\states^u\right\} \\
+&= \max\left\{\norm{ A_u^{\{s\}}(x_{t_0},\ldots,x_{t_{n-1}}) - B_u^{\{s\}}(x_{t_0},\ldots,x_{t_{n-1}})} \,:\,(x_{t_0},\ldots,x_{t_{n-1}})\in\states^u\right\} \\
+&\leq \max\left\{c \,:\,(x_{t_0},\ldots,x_{t_{n-1}})\in\states^u\right\} \\
+&= c\,,
+\end{align*}
+where the last inequality follows from the assumed bound on all fixed-history norms.
+\end{proof}
+
+\subsubsection{Linear Operators and Matrices}
+
+%We will next establish the relationship between matrices and `linear' operators from $\gambles(\states^{u\cup\{s\}})$ to $\gambles(\states^u)$. This is done by considering operators with partially fixed histories $(x_{t_0},\ldots,x_{t_{n-1}})$.
+
+\begin{definition}[Linear Operator]\label{def:multivariable_linear}
+For any $t,s\in\realsnonneg$ such that $t<s$ and any $u\in\mathcal{U}_{[0,t]}$, we will call a map $A_u^{\{s\}}$ from $\gambles(\states^{u\cup\{s\}})$ to $\gambles(\states^u)$ a \emph{linear} operator iff, for all $f\in\gambles(\states^{u\cup\{s\}})$ and all $\omega^u\in\Omega_{\mathcal{U}_{[0,t]}}$, the operator $A_u^{\{s\}}(\omega^u)$ is a linear map from $\gambles(\states^{u\cup\{s\}})$ to $\reals$, given by
+\begin{align*}
+A_u^{\{s\}}(\omega^u)f &= \sum_{x_s\in\states} A_u^{\{s\}}(\omega^u,x_s)f(\omega^u,x_s) \\
+ &= \sum_{x_s\in\states} A_u^{\{s\}}(x_{t_0},\ldots,x_{t_n},x_s)f(x_{t_0},\ldots,x_{t_n},x_s)\,.
+\end{align*}
+\end{definition}
+
+\begin{proposition}\label{prop:full_history_to_partial_history}
+Consider any $t,s\in\realsnonneg$ such that $t<s$, any $u\in\mathcal{U}_{[0,t]}$, any linear operator $A_u^{\{s\}}$ from $\gambles(\states^{u\cup\{s\}})$ to $\gambles(\states^u)$, and any $f\in\gambles(\states^{u\cup\{s\}})$. Then, for all $(x_{t_0},\ldots,x_{t_n})\in\states^u$,
+\begin{equation*}
+\left[A_u^{\{s\}}f\right](x_{t_0},\ldots,x_{t_n}) = \left[A_u^{\{s\}}(x_{t_0},\ldots,x_{t_{n-1}})f(x_{t_0},\ldots,x_{t_n},X_s)\right](x_{t_n})\,.
+\end{equation*}
+\end{proposition}
+\begin{proof}
+Consider any $(x_{t_0},\ldots,x_{t_n})\in\states^u$. Because $A_u^{\{s\}}$ is a linear operator, we have from the definition of $A_u^{\{s\}}(x_{t_0},\ldots,x_{t_n})$ and Definition~\ref{def:multivariable_linear} that
+\begin{align*}
+\left[A_u^{\{s\}}f\right](x_{t_0},\ldots,x_{t_n}) &= A_u^{\{s\}}(x_{t_0},\ldots,x_{t_n})f \\
+ &= \sum_{x_s\in\states} A_u^{\{s\}}(x_{t_0},\ldots,x_{t_n},x_s)f(x_{t_0},\ldots,x_{t_n},x_s)\,.
+\end{align*}
+Define a function $g\in\gambles(\states^{\{s\}})$, as
+\begin{equation*}
+g(x_s) \coloneqq f(x_{t_0},\ldots,x_{t_n},x_s)\,,
+\end{equation*}
+or in other words, $g = f(x_{t_0},\ldots,x_{t_n},X_s)$.
+
+Now, consider that the operator $A_u^{\{s\}}(x_{t_0},\ldots,x_{t_{n-1}})$ is a map from $\gambles(\states^{u\cup\{s\}})$ to $\gambles(\states^{\{t_n\}})$, and since it is a linear operator, it is defined for all $h\in\gambles(\states^{u\cup\{s\}})$ by
+\begin{align*}
+\left[A_u^{\{s\}}(x_{t_0},\ldots,x_{t_{n-1}})h\right](x_{t_n}) &= A_u^{\{s\}}(x_{t_0},\ldots,x_{t_{n}})h \\
+ &= \sum_{x_s\in\states} A_u^{\{s\}}(x_{t_0},\ldots,x_{t_n},x_s)h(x_{t_0},\ldots,x_{t_n},x_s)\,.
+\end{align*}
+Since $\gambles(\states^{\{s\}})\subset\gambles(\states^{u\cup\{s\}})$, we have that $g\in\gambles(\states^{u\cup\{s\}})$, and so by substituting $g$ into the above, we find
+\begin{align*}
+\left[A_u^{\{s\}}(x_{t_0},\ldots,x_{t_{n-1}})g\right](x_{t_n}) &= \left[A_u^{\{s\}}(x_{t_0},\ldots,x_{t_{n-1}})f(x_{t_0},\ldots,x_{t_n},X_s)\right](x_{t_n}) \\
+ &= A_u^{\{s\}}(x_{t_0},\ldots,x_{t_{n}})f(x_{t_0},\ldots,x_{t_n},X_s)\\
+%&= \sum_{x_s\in\states} A_u^{\{s\}}(x_{t_0},\ldots,x_{t_{n-1}},x_{t_n},x_s) g(x_s) \\
+&= \sum_{x_s\in\states} A_u^{\{s\}}(x_{t_0},\ldots,x_{t_n},x_s) f(x_{t_0},\ldots,x_{t_n},x_s) \\
+&= \left[A_u^{\{s\}}f\right](x_{t_0},\ldots,x_{t_n})\,.
+\end{align*}
+\end{proof}
+
+Moving on, note that if $A_u^{\{s\}}(x_{t_0},\ldots,x_{t_{n-1}})$ is a linear operator with a partially fixed history, and thus a map from $\gambles(\states^{u\cup\{s\}})$ to $\gambles(\states^{\{t_n\}})$, it it functionally identical to a matrix when applied to functions $f\in\gambles(\states^{\{s\}})$. Hence, for a given matrix $M$ and operator $A_u^{\{s\}}(x_{t_0},\ldots,x_{t_{n-1}})$, we will write
+\begin{align*}
+A_u^{\{s\}}(x_{t_0},&\ldots,x_{t_{n-1}}) \cong M \\
+&\Leftrightarrow \\
+(\forall x_{t_n}\in\states)(\forall x_s\in\states): &\quad A_u^{\{s\}}(x_{t_0},\ldots,x_{t_{n-1}},x_{t_n},x_s) = M(x_{t_n},x_s)\,.
+\end{align*}
+Similarly, for a given set of matrices $\mathcal{M}$, we use the notation
+\begin{align*}
+A_u^{\{s\}}(x_{t_0},&\ldots,x_{t_{n-1}})\opinset\mathcal{M} \\
+&\Leftrightarrow \\
+(\exists M\in\mathcal{M}): &\quad A_u^{\{s\}}(x_{t_0},\ldots,x_{t_{n-1}}) \cong M\,.
+\end{align*}
+Finally, we will define addition and subtraction operators. For any matrix $M$ and linear operator $A_u^{\{s\}}(x_{t_0},\ldots,x_{t_{n-1}})$ from $\gambles(\states^{u\cup\{s\}})$ to $\gambles(\states^{\{t_n\}})$, we will define a new operator $\left(M + A_u^{\{s\}}(x_{t_0},\ldots,x_{t_{n-1}})\right)$ from $\gambles(\states^{u\cup\{s\}})$ to $\gambles(\states^{\{t_n\}})$, defined for all $f\in\gambles(\states^{u\cup\{s\}})$ as
+\begin{align*}
+\left[\left(M + A_u^{\{s\}}(x_{t_0},\ldots,x_{t_{n-1}})\right)f\right](x_{t_n}) &\coloneqq \sum_{x_s\in\states} \left(M + A_u^{\{s\}}(x_{t_0},\ldots,x_{t_{n-1}})\right)(x_{t_n},x_s) f(x_{t_0},\ldots,x_{t_n},x_s) \\
+ &= \sum_{x_s\in\states} \left(M(x_{t_n},x_s) + A_u^{\{s\}}(x_{t_0},\ldots,x_{t_n},x_s)\right)f(x_{t_0},\ldots,x_{t_n},x_s)\,.
+\end{align*}
+We then extend this operator to an operator $\left(M + A_u^{\{s\}}\right)(x_{t_0},\ldots,x_{t_n})$ with fully fixed history, and thus a map from $\gambles(\states^{u\cup\{s\}})$ to $\mathbb{R}$, defined for all $f\in\gambles(\states^{u\cup\{s\}})$ as
+\begin{equation*}
+\left(M + A_u^{\{s\}}\right)(x_{t_0},\ldots,x_{t_n})f \coloneqq \left[\left(M + A_u^{\{s\}}(x_{t_0},\ldots,x_{t_{n-1}})\right)f\right](x_{t_n})\,.
+\end{equation*}
+This finally leads us to consider the corresponding map $\left(M + A_u^{\{s\}}\right)$ from $\gambles(\states^{u\cup\{s\}})$ to $\gambles(\states^u)$, defined as
+\begin{equation*}
+\left[\left(M + A_u^{\{s\}}\right)f\right](x_{t_0},\ldots,x_{t_n}) \coloneqq \left(M + A_u^{\{s\}}\right)(x_{t_0},\ldots,x_{t_n})f\,.
+\end{equation*}
+
+
+\subsubsection{Stochastic Operators}
+
+%We will now look at some properties of stochastic operators. 
+\begin{definition}[Stochastic Operator]\label{def:stoch_op}
+We say that a linear operator $A_u^{\{s\}}$ is \emph{stochastic} iff $A_u^{\{s\}}(\omega^u)$ is stochastic for all $\omega^u\in\Omega_{\mathcal{U}_{[0,t]}}$. For a given $\omega^u\in\Omega_{\mathcal{U}_{[0,t]}}$, an operator $A_u^{\{s\}}(\omega^u)$ is said to be stochastic iff, 
+\begin{enumerate}[label=SO\arabic*:]
+%\item $A_u^{\{s\}}(\omega^u)$ is a linear operator from $\gambles(\states^{u\cup \{s\}})$ to $\mathbb{R}$.%, given by 
+%\begin{equation*}
+%A_u^{\{s\}}(\omega^u)f = \sum_{x_s\in\states}A_u^{\{s\}}(\omega^u,x_s)f(\omega^u,x_s)\,.
+%\end{equation*}
+\item $\sum_{x_s\in\states}A_u^{\{s\}}(\omega^u,x_s) = 1$.
+\item $A_u^{\{s\}}(\omega^u, x_s) \geq 0 $ for all $x_s\in\states$.
+\end{enumerate}
+\end{definition}
+
+
+As a special case of a stochastic operator from $\gambles(\states^{u\cup\{s\}})$ to $\gambles(\states^u)$, we will define for all $f\in\gambles(\states^{u\cup\{s\}})$ the operator
+\begin{equation*}
+T_u^{\{s\}}f \coloneqq \mathbb{E}_{X_{s}}\bigl[f(X_{t_0},\ldots,X_{t_n},X_s)\,\vert\,X_{t_0},\ldots,X_{t_n}\bigr]\,.
+\end{equation*}
+Because it holds trivially that $\gambles(\states^{\{s\}})\subset \gambles(\states^{u\cup\{s\}})$, we can simply use the same notation for any $g\in\gambles(\states^{\{s\}})$, so that
+\begin{equation*}
+T_u^{\{s\}}g \equiv \mathbb{E}_{X_s}\bigl[g(X_s)\,\vert\,X_{t_0},\ldots,X_{t_n}\bigr]\,.
+\end{equation*}
+%We have the following result for transition operators.
+\begin{lemma}\label{lemma:nonmarkov_transition_decompose}
+Consider any $t,s\in\realsnonneg$ such that $t<s$, any $u\in\mathcal{U}_{[0,t]}$, and any $P\in\mathbb{P}$ with transition operator $T_u^{\{s\}}$. Then, for all $v\in\mathcal{U}_{[t,s]}$ such that $v= \tau_0,\ldots,\tau_m$, it holds that
+\begin{align*}
+T_u^{\{s\}} = \prod_{i=1}^{m} T_{u\cup\{\tau_0,\ldots,\tau_{i-1}\}}^{\{\tau_i\}} \coloneqq T_{u\cup\{\tau_0\}}^{\{\tau_1\}}T_{u\cup\{\tau_0,\tau_1\}}^{\{\tau_2\}}\cdots T_{u\cup\{\tau_0,\ldots,\tau_{m-1}\}}^{\{\tau_m\}}
+\end{align*}
+\end{lemma}
+\begin{proof}
+This follows directly from the definition and composition properties of expectation.
+\end{proof}
+
+%We next have the following result.
+
+\begin{lemma}\label{lemma:nonmarkov_operator_bound_to_product_bound}
+Consider any $t,s\in\realsnonneg$ such that $t<s$, and any two sequences $u\in\mathcal{U}_{[0,t]}$ and $v\in\mathcal{U}_{[t,s]}$ such that $v=\tau_0,\ldots,\tau_m$. Consider then two sequences of stochastic operators $A_{u\cup\{\tau_0\}}^{\{\tau_1\}},\ldots,A_{u\cup\{\tau_0,\ldots,\tau_{m-1}\}}^{\{\tau_m\}}$ and $B_{u\cup\{\tau_0\}}^{\{\tau_1\}},\ldots,B_{u\cup\{\tau_0,\ldots,\tau_{m-1}\}}^{\{\tau_m\}}$ such that for all $i\in\{1,\ldots,m\}$, it holds that $\norm{A_{u\cup\{\tau_0,\ldots,\tau_{i-1}\}}^{\{\tau_i\}} - B_{u\cup\{\tau_0,\ldots,\tau_{i-1}\}}^{\{\tau_i\}}}\leq c$. Then,
+\begin{equation*}
+\norm{\prod_{i=1}^m A_{u\cup\{\tau_0,\ldots,\tau_{i-1}\}}^{\{\tau_i\}} - \prod_{i=1}^m B_{u\cup\{\tau_0,\ldots,\tau_{i-1}\}}^{\{\tau_i\}}} \leq mc.
+\end{equation*}
+\end{lemma}
+\begin{proof}
+The proof is completely analogous to the proof of Lemma~\ref{lemma:differenceproductoftransition}.
+%We use induction on $m$. For $m=1$, the result trivially holds. Assume that it also holds for $k=m-1$. We now show that it also holds for $m$:
+%\begin{align*}
+%&\quad \norm{\prod_{i=1}^m A_{u\cup\{\tau_0,\ldots,\tau_{i-1}\}}^{\{\tau_i\}} - \prod_{i=1}^m B_{u\cup\{\tau_0,\ldots,\tau_{i-1}\}}^{\{\tau_i\}}} \\
+%&= \left\Vert \prod_{i=1}^m A_{u\cup\{\tau_0,\ldots,\tau_{i-1}\}}^{\{\tau_i\}} - \left(\prod_{i=1}^{m-1} A_{u\cup\{\tau_0,\ldots,\tau_{i-1}\}}^{\{\tau_i\}}\right)B_{u\cup\{\tau_0,\ldots,\tau_{m-1}\}}^{\{\tau_m\}}  \right.\\
+%&\quad\quad\quad\left.+ \left(\prod_{i=1}^{m-1} A_{u\cup\{\tau_0,\ldots,\tau_{i-1}\}}^{\{\tau_i\}}\right)B_{u\cup\{\tau_0,\ldots,\tau_{m-1}\}}^{\{\tau_m\}} - \prod_{i=1}^m B_{u\cup\{\tau_0,\ldots,\tau_{i-1}\}}^{\{\tau_i\}}\right\Vert \\
+%&= \left\Vert \left(\prod_{i=1}^{m-1} A_{u\cup\{\tau_0,\ldots,\tau_{i-1}\}}^{\{\tau_i\}}\right)\left(A_{u\cup\{\tau_0,\ldots,\tau_{m-1}\}}^{\{\tau_m\}} - B_{u\cup\{\tau_0,\ldots,\tau_{m-1}\}}^{\{\tau_m\}}\right) \right. \\
+%&\quad\quad\quad\left.+ \left(\prod_{i=1}^{m-1} A_{u\cup\{\tau_0,\ldots,\tau_{i-1}\}}^{\{\tau_i\}} - \prod_{i=1}^{m-1} B_{u\cup\{\tau_0,\ldots,\tau_{i-1}\}}^{\{\tau_i\}}\right)B_{u\cup\{\tau_0,\ldots,\tau_{m-1}\}}^{\{\tau_m\}} \right\Vert \\
+%&\leq \left\Vert \left(\prod_{i=1}^{m-1} A_{u\cup\{\tau_0,\ldots,\tau_{i-1}\}}^{\{\tau_i\}}\right)\left(A_{u\cup\{\tau_0,\ldots,\tau_{m-1}\}}^{\{\tau_m\}} - B_{u\cup\{\tau_0,\ldots,\tau_{m-1}\}}^{\{\tau_m\}}\right) \right\Vert \\
+%&\quad\quad\quad+ \left\Vert\left(\prod_{i=1}^{m-1} A_{u\cup\{\tau_0,\ldots,\tau_{i-1}\}}^{\{\tau_i\}} - \prod_{i=1}^{m-1} B_{u\cup\{\tau_0,\ldots,\tau_{i-1}\}}^{\{\tau_i\}}\right)B_{u\cup\{\tau_0,\ldots,\tau_{m-1}\}}^{\{\tau_m\}} \right\Vert \\
+%&\leq \left(\prod_{i=1}^{m-1}\left\Vert A_{u\cup\{\tau_0,\ldots,\tau_{i-1}\}}^{\{\tau_i\}}\right\Vert \right)\left\Vert A_{u\cup\{\tau_0,\ldots,\tau_{m-1}\}}^{\{\tau_m\}} - B_{u\cup\{\tau_0,\ldots,\tau_{m-1}\}}^{\{\tau_m\}}\right\Vert \\
+%&\quad\quad\quad+ \left\Vert\prod_{i=1}^{m-1} A_{u\cup\{\tau_0,\ldots,\tau_{i-1}\}}^{\{\tau_i\}} - \prod_{i=1}^{m-1} B_{u\cup\{\tau_0,\ldots,\tau_{i-1}\}}^{\{\tau_i\}}\right\Vert\left\Vert B_{u\cup\{\tau_0,\ldots,\tau_{m-1}\}}^{\{\tau_m\}} \right\Vert \\
+%&= \left\Vert A_{u\cup\{\tau_0,\ldots,\tau_{m-1}\}}^{\{\tau_m\}} - B_{u\cup\{\tau_0,\ldots,\tau_{m-1}\}}^{\{\tau_m\}}\right\Vert + \left\Vert\prod_{i=1}^{m-1} A_{u\cup\{\tau_0,\ldots,\tau_{i-1}\}}^{\{\tau_i\}} - \prod_{i=1}^{m-1} B_{u\cup\{\tau_0,\ldots,\tau_{i-1}\}}^{\{\tau_i\}}\right\Vert \\
+%&\leq c + (m-1)c \\
+%&= mc\,.
+%\end{align*}
+\end{proof}
+
+\subsubsection{Rate Operators}
+
+We start the section on rate operators by establishing the link between rate operators and rate matrices. 
+\begin{definition}[Rate Operator]\label{def:rate_op}
+We call a linear operator $Q_u^{\{s\}}$ a \emph{rate} operator iff, for all $(x_{t_0},\ldots,x_{t_n})\in\states^u$,
+\begin{enumerate}[label=RO\arabic*:]
+%\item The operator $Q_u^{\{s\}}(\omega^u)$ is a linear operator from $\gambles(\states^{u\cup\{s\}})$ to $\mathbb{R}$.%, given by
+%\begin{equation*}
+%Q_u^{\{s\}}(\omega^u)f = \sum_{x_s\in\states} Q_u^{\{s\}}(\omega^u,x_s)f(\omega^u,x_s)\,.
+%\end{equation*}
+\item $\sum_{x_s\in\states} Q_u^{\{s\}}(x_{t_0},\ldots,x_{t_n},x_s) = 0$.
+\item $Q_u^{\{s\}}(x_{t_0},\ldots,x_{t_n},x_s) \geq 0$ for all $x_{t_n}\neq x_s$.
+\end{enumerate}
+\end{definition}
+
+%\noindent We now have the following result for rate operators.
+
+\begin{lemma}\label{lemma:nonmarkov_fixed_history_rate_stochastic}
+Consider a bounded set of rate matrices $\mathcal{Q}$ and a rate operator $Q_u^{\{s\}}$ such that for all $(x_{t_0},\ldots,x_{t_{n-1}})\in\states^{\{t_0,\ldots,t_{n-1}\}}$, it holds that $Q_u^{\{s\}}(x_{t_0},\ldots,x_{t_{n-1}})\opinset\mathcal{Q}$. Let $I$ denote the identity matrix. Then, for all $\Delta\in\realspos$ such that $\Delta<\nicefrac{1}{\norm{\mathcal{Q}}}$, the operator
+\begin{equation*}
+\left(I + \Delta Q_u^{\{s\}}\right)(x_{t_0},\ldots,x_{t_{n}}) = \left(I + \Delta Q_u^{\{s\}}(x_{t_0},\ldots,x_{t_{n-1}})\right)(x_{t_n})
+\end{equation*}
+is stochastic for all $(x_{t_0},\ldots,x_{t_{n}})\in\states^{u}$.
+\end{lemma}
+\begin{proof}
+Simply check the conditions for stochasticity of a fixed-history operator.
+\end{proof}
+
+\begin{corollary}\label{lemma:nonmarkov_rate_stochastic}
+Consider a bounded set of rate matrices $\mathcal{Q}$ and a history-dependent operator $Q_u^{\{s\}}$ such that for all $(x_{t_0},\ldots,x_{t_{n-1}})\in\states^{\{t_0,\ldots,t_{n-1}\}}$, it holds that $Q_u^{\{s\}}(x_{t_0},\ldots,x_{t_{n-1}})\opinset\mathcal{Q}$. Let $I$ denote the identity matrix. Then, for all $\Delta\in\realspos$ such that $\Delta<\nicefrac{1}{\norm{\mathcal{Q}}}$, the operator
+\begin{equation*}
+\left(I + \Delta Q_u^{\{s\}}\right)
+\end{equation*}
+is stochastic.
+\end{corollary}
+\begin{proof}
+This is immediate from Lemma \ref{lemma:nonmarkov_fixed_history_rate_stochastic} and the definition of stochasticity.
+\end{proof}
+
+%We finally need the following result.
+\begin{lemma}\label{lemma:nonmarkov_rateproduct_bounded_by_lrate}
+Consider any bounded set of rate matrices $\mathcal{Q}$ with lower rate matrix $\lrate$, any $t,s\in\realsnonneg$ such that $t<s$, any $u\in\mathcal{U}_{[0,t]}$ and $v\in\mathcal{U}_{[t,s]}$ such that $u=t_0,\ldots,t_n$ and $v=t_{n+0},\ldots,t_{n+m}$, and any sequence of rate operators $Q_{\{t_0,\ldots,t_{n+0}\}}^{\{t_{n+1}\}},\ldots,Q_{\{t_0,\ldots,t_{n+m-1}\}}^{\{t_{n+m}\}}$ such that for all $i\in\{1,\ldots,m\}$, all $(x_{t_0},\ldots,x_{t_n})\in\states^u$, and all $(x_{t_{n+1}},\ldots,x_{t_{n+m}})\in\states^{\{t_{n+1},\ldots,t_{n+m}\}}$ it holds that 
+\begin{equation*}
+Q_{\{t_0,\ldots,t_{n+i-1}\}}^{\{t_{n+i}\}}(x_{t_0},\ldots,x_{t_{n+i-2}})\opinset\mathcal{Q}\,.
+\end{equation*}
+Then, for all $\Delta\in\realspos$ such that $\Delta<\nicefrac{1}{\norm{\mathcal{Q}}}$, all $f\in\gambles(\states^{\{s\}})$, and all $(x_{t_0},\ldots,x_{t_n})\in\states^u$,
+\begin{align*}
+\left[\left(\prod_{i=1}^m \left(I + \Delta Q_{\{t_0,\ldots,t_{n+i-1}\}}^{\{t_{n+i}\}} \right)\right)f\right](x_{t_0},\ldots,x_{t_n}) &\geq \left[\left(I + \Delta \lrate\right)^m f\right](x_{t_0},\ldots,x_{t_n})\\
+ &= \left[\left(I + \Delta \lrate\right)^m f\right](x_{t_n})\,.
+\end{align*}
+\end{lemma}
+\begin{proof}
+Start by noting that for all $i\in\{1,\ldots,m\}$, the terms $\left(I + \Delta Q_{\{t_0,\ldots,t_{n+i-1}\}}^{\{t_{n+i}\}}\right)$ are stochastic operators, by Corollary~\ref{lemma:nonmarkov_rate_stochastic}. Hence,
+\begin{align*}
+&\quad \left[\left(\prod_{i=1}^m \left(I + \Delta Q_{\{t_0,\ldots,t_{n+i-1}\}}^{\{t_{n+i}\}} \right)\right)f\right](x_{t_0},\ldots,x_{t_n}) \\
+&= \mathbb{E}_{X_{t_{n+1}}}\left[\cdots\mathbb{E}_{X_s}\left[f(X_s)\,\vert\,X^u=(x_{t_0},\ldots,x_{t_n}),X_{t_{n+1}},\ldots,X_{t_{n+m-1}}\right]\cdots\,\vert\,X^u=(x_{t_0},\ldots,x_{t_n})\right] \\
+%&= \sum_{x_{t_{n+1}}} P\left(X_{t_{n+1}}=x_{t_{n+1}}\,\vert\,X^u=(x_{t_0},\ldots,x_{t_n})\right) \sum_{x_{t_{n+2}}}\cdots\sum_{x_s}f(x_s)P\left(X_s=x_s\,\vert\,X^u=(x_{t_0},\ldots,x_{t_n}),X_{t_{n+1}}=x_{t_{n+1}},\ldots,X_{t_{n+m-1}}=x_{t_{n+m-1}}\right) \\
+&= \sum_{x_{t_{n+1}}}\cdots\sum_{x_{t_{n+m-1}}} P\left(X_{t_{n+1}}=x_{t_{n+1}},\ldots,X_{t_{n+m-1}}=x_{t_{n+m-1}}\,\vert\,X^u=(x_{t_0},\ldots,x_{t_n})\right)g(x_{t_0},\ldots,x_{t_{n+m-1}})\,,
+\end{align*}
+where
+\begin{equation*}
+g(x_{t_0},\ldots,x_{t_{n+m-1}}) \coloneqq \sum_{x_s}f(x_s)P\left(X_s=x_s\,\vert\,X_{t_0}=x_{t_0},\ldots,X_{t_{n+m-1}}=x_{t_{n+m-1}}\right)\,.
+\end{equation*}
+Note that also,
+\begin{align*}
+g(x_{t_0},\ldots,x_{t_{n+m-1}}) &= \left[\left(I+\Delta Q_{\{t_0,\ldots,t_{n+m-1}\}}^{\{t_{n+m}\}}\right)f\right](x_{t_0},\ldots,x_{t_{n+m-1}}) \\
+ &= \left[\left(I+\Delta Q_{\{t_0,\ldots,t_{n+m-1}\}}^{\{t_{n+m}\}}\right)(x_{t_0},\ldots,x_{t_{n+m-2}})f\right](x_{t_{n+m-1}})
+\end{align*}
+Since by assumption $Q_{\{t_0,\ldots,t_{n+m-1}\}}^{\{t_{n+m}\}}(x_{t_0},\ldots,x_{t_{n+m-2}})\opinset\mathcal{Q}$, we have that
+\begin{align*}
+g(x_{t_0},\ldots,x_{t_{n+m-1}}) &= \left[\left(I+\Delta Q_{\{t_0,\ldots,t_{n+m-1}\}}^{\{t_{n+m}\}}\right)(x_{t_0},\ldots,x_{t_{n+m-2}})f\right](x_{t_{n+m-1}})\\
+ &\geq \left[\left(I + \Delta\lrate\right)f\right](x_{t_{n+m-1}})\,.
+\end{align*}
+Define a new function
+\begin{equation*}
+g'(x_{t_{n+m-1}}) \coloneqq \left[\left(I + \Delta\lrate\right)f\right](x_{t_{n+m-1}})\,,
+\end{equation*}
+and note that for all $(x_{t_0},\ldots,x_{t_n})$ and $(x_{t_{n+1}},\ldots,x_{t_{n+m-1}})$, it holds that $g(x_{t_0},\ldots,x_{t_{n+m-1}}) \geq g'(x_{t_{n+m-1}})$.
+Because
+\begin{equation*}
+\sum_{x_{t_{n+1}}}\cdots\sum_{x_{t_{n+m-1}}} P\left(X_{t_{n+1}}=x_{t_{n+1}},\ldots,X_{t_{n+m-1}}=x_{t_{n+m-1}}\,\vert\,X^u=(x_{t_0},\ldots,x_{t_n})\right)g(x_{t_0},\ldots,x_{t_{n+m-1}})
+\end{equation*}
+is a convex combination of values $g(x_{t_0},\ldots,x_{t_{n+m-1}})$ over all combinations $(x_{t_{n+1}},\ldots,x_{t_{n+m-1}})$, we have that
+\begin{align*}
+&\quad \left[\left(\prod_{i=1}^m \left(I + \Delta Q_{\{t_0,\ldots,t_{n+i-1}\}}^{\{t_{n+i}\}} \right)\right)f\right](x_{t_0},\ldots,x_{t_n}) \\
+&= \sum_{x_{t_{n+1}}}\cdots\sum_{x_{t_{n+m-1}}} P\left(X_{t_{n+1}}=x_{t_{n+1}},\ldots,X_{t_{n+m-1}}=x_{t_{n+m-1}}\,\vert\,X^u=(x_{t_0},\ldots,x_{t_n})\right)g(x_{t_0},\ldots,x_{t_{n+m-1}}) \\
+&\geq \sum_{x_{t_{n+1}}}\cdots\sum_{x_{t_{n+m-1}}} P\left(X_{t_{n+1}}=x_{t_{n+1}},\ldots,X_{t_{n+m-1}}=x_{t_{n+m-1}}\,\vert\,X^u=(x_{t_0},\ldots,x_{t_n})\right)g'(x_{t_{n+m-1}}) \\
+&= \left[\left(\prod_{i=1}^{m-1} \left(I + \Delta Q_{\{t_0,\ldots,t_{n+i-1}\}}^{\{t_{n+i}\}} \right)\right)g'\right](x_{t_0},\ldots,x_{t_n}) \\
+&= \left[\left(\prod_{i=1}^{m-1} \left(I + \Delta Q_{\{t_0,\ldots,t_{n+i-1}\}}^{\{t_{n+i}\}} \right)\right)\bigl(\left(I + \Delta\lrate\right)f\bigr)\right](x_{t_0},\ldots,x_{t_n})\,.
+\end{align*}
+Repeatedly applying this argument, i.e. using induction on $m$, then yields the full lemma.
+\end{proof}
+
+\subsection{Non-Markovian Stochastic Processes}
+
+\begin{definition}[Non-Markovian Process]\label{def:nonmarkov_process}
+A stochastic process $P\in\mathbb{P}$ is said to be a \emph{non-Markovian stochastic process} if the transition matrix corresponding to $P$ satisfies
+\begin{align*}
+(\forall \epsilon\in\realspos)&(\exists \delta\in\realspos): \\
+&(\forall t\in\realsnonneg)(\forall \Delta\in(0,\delta))(\forall u\in\mathcal{U}_{[0,t]})(\forall (x_{t_0},\ldots,x_{t_{n-1}})\in\states^{\{t_0,\ldots,t_{n-1}\}}): \\
+&\quad\quad\quad\quad(\exists Q\in\mathcal{R})\norm{\frac{T_u^{\{t+\Delta\}}\bigl(x_{t_0},\ldots,x_{t_{n-1}}\bigr) - I}{\Delta} - Q} < \epsilon\,.
+\end{align*}
+\end{definition}
+
+\noindent Let $Q_u(\cdot)$ be a function that gives for each $u\in\mathcal{U}_{[0,t]}$ and each $(x_{t_0},\ldots,x_{t_{n-1}})\in\states^{\{t_0,\ldots,t_{n-1}\}}$ a rate matrix $Q_u(x_{t_0},\ldots,x_{t_{n-1}})\in\mathcal{R}$.
+
+\begin{definition}[Characterizing Rate Function]\label{def:nonmarkov_char_rate}
+Consider any non-Markovian stochastic process $P$. We say that a function $Q_u(\cdot)$ \emph{characterizes} $P$ if it satisfies
+\begin{align*}
+(\forall \epsilon\in\realspos)&(\exists \delta\in\realspos): \\
+&(\forall t\in\realsnonneg)(\forall \Delta\in(0,\delta))(\forall u\in\mathcal{U}_{[0,t]})(\forall (x_{t_0},\ldots,x_{t_{n-1}})\in\states^{\{t_0,\ldots,t_{n-1}\}}): \\
+&\quad\quad\quad\quad\norm{\frac{T_u^{\{t+\Delta\}}\bigl(x_{t_0},\ldots,x_{t_{n-1}}\bigr) - I}{\Delta} - Q_u(x_{t_0},\ldots,x_{t_{n-1}})} < \epsilon\,.
+\end{align*}
+\end{definition}
+
+\begin{lemma}\label{lemma:rate_exists_implies_rate_op_exists}
+Consider any non-Markovian stochastic process $P$, and let $Q_u(\cdot)$ be a function that characterizes $P$. Choose any $\epsilon\in\realspos$, let $\delta\in\realspos$ be such that
+\begin{align*}
+&(\forall t\in\realsnonneg)(\forall \Delta\in(0,\delta))(\forall u\in\mathcal{U}_{[0,t]})(\forall (x_{t_0},\ldots,x_{t_{n-1}})\in\states^{\{t_0,\ldots,t_{n-1}\}}): \\
+&\quad\quad\quad\quad\norm{\frac{T_u^{\{t+\Delta\}}\bigl(x_{t_0},\ldots,x_{t_{n-1}}\bigr) - I}{\Delta} - Q_u(x_{t_0},\ldots,x_{t_{n-1}})} < \epsilon\,,
+\end{align*}
+and fix $t\in\realsnonneg$, $\Delta\in(0,\delta)$ and $u\in\mathcal{Q}_{[0,t]}$.
+
+Let $Q_u^{\{t+\Delta\}}$ be a rate operator that satisfies for all $(x_{t_0},\ldots,x_{t_{n-1}})\in\states^{\{t_0,\ldots,t_{n-1}\}}$ and $x_t,x_s\in\states$,
+\begin{equation*}
+\left[Q_u^{\{t+\Delta\}}(x_{t_0},\ldots,x_{t_{n-1}})\right](x_{t_n},x_s) = \left[Q_u(x_{t_0},\ldots,x_{t_{n-1}})\right](x_{t_n},x_s)\,.
+\end{equation*}
+Then,
+\begin{equation*}
+(\forall (x_{t_0},\ldots,x_{t_{n-1}})\in\states^{\{t_0,\ldots,t_{n-1}\}})
+\norm{\frac{T_u^{\{t+\Delta\}}\bigl(x_{t_0},\ldots,x_{t_{n-1}}\bigr) - I}{\Delta} - Q_u^{\{t+\Delta\}}(x_{t_0},\ldots,x_{t_{n-1}})} < \epsilon\,.
+\end{equation*}
+\end{lemma}
+\begin{proof}
+{\bf TODO:} Prove this. Shouldn't be too hard though.
+\end{proof}
+
+\subsection{Imprecise Non-Markovian Stochastic Processes.} 
+
+%We are now finally ready to characterize the set of non-Markovian stochastic processes consistent with a given set of rate matrices $\mathcal{Q}$, and show how to compute bounds on the expectation.
+
+\begin{definition}[Set of Non-Markov Processes]\label{def:nonmarkov_set}
+For any bounded set of rate matrices $\mathcal{Q}$, we consider the set $\mathbb{P}_\mathcal{Q}$ of all non-Markovian stochastic processes \emph{consistent} with $\mathcal{Q}$. Formally, we let $\mathbb{P}_{\mathcal{Q}}$ be the set of all $P\in\mathbb{P}$ such that
+\newline
+\begin{align*}
+(\forall \epsilon\in\realspos)&(\exists \delta\in\realspos): \\
+&(\forall t\in\realsnonneg)(\forall \Delta\in(0,\delta))(\forall u\in\mathcal{U}_{[0,t]})(\forall (x_{t_0},\ldots,x_{t_{n-1}})\in\states^{\{t_0,\ldots,t_{n-1}\}}): \\
+&\quad\quad\quad\quad(\exists Q\in\mathcal{Q})\norm{\frac{T_u^{\{t+\Delta\}}\bigl(x_{t_0},\ldots,x_{t_{n-1}}\bigr) - I}{\Delta} - Q} < \epsilon\,.
+\end{align*}
+\end{definition}
+
+\begin{theorem}\label{theorem:nonmarkov_single_var_lower_bounded}
+Consider any $t,s\in\realsnonneg$ such that $t<s$, and let $\mathcal{Q}$ be an arbitrary bounded set of rate matrices with corresponding lower transition rate operator $\lrate$. Then, for any $P\in\mathbb{P}_{\mathcal{Q}}$, any $u\in\mathcal{U}_{[0,t]}$, any $(x_{t_0},\ldots,x_{t_n})\in\states^u$, and any $f\in\gambles(\states^{\{s\}})$:
+\begin{equation*}
+\left[L_{t_n}^s f\right](x_{t_n}) \leq \left[T_u^{\{s\}}(x_{t_0},\ldots,x_{t_{n-1}})f\right](x_{t_n})\,.
+\end{equation*}
+\end{theorem}
+\begin{proof}
+Consider any $P\in\mathbb{P}_{\mathcal{Q}}$, any $u\in\mathcal{U}_{[0,t]}$, any $(x_{t_0},\ldots,x_{t_n})\in\states^u$, and any $f\in\gambles(\states^{\{s\}})$. Assume \emph{ex absurdo} that $\left[L_{t_n}^sf\right](x_{t_n}) > \left[T_u^{\{s\}}(x_{t_0},\ldots,x_{t_{n-1}})f\right](x_{t_n})$. We prove that this leads to a contradiction. Let $C\coloneqq s-t$ and choose $\epsilon\in\realspos$ small enough such that
+\begin{equation}
+\epsilon(1 + C\norm{f}) < \left[L_{t_n}^sf\right](x_{t_n}) - \left[T_u^{\{s\}}(x_{t_0},\ldots,x_{t_{n-1}})f\right](x_{t_n})\,.
+\end{equation}
+Since $P\in\mathbb{P}_\mathcal{Q}$, we have that there is some $\delta\in\realspos$ such that
+\begin{align}
+(\forall \tau\in\realsnonneg)&(\forall\Delta\in(0,\delta))(\forall u^*\in\mathcal{U}_{[0,\tau]})(\forall (x_{t_0^*},\ldots,x_{t_{n-1}^*})\in\states^{\{t_0^*,\ldots,t_{n-1}^*\}}): \\
+&(\exists Q\in\mathcal{Q}) \norm{\frac{T_{u^*}^{\{\tau+\Delta\}}(x_{t_0^*},\ldots,x_{t_{n-1}^*}) - I}{\Delta} - Q} < \epsilon\,.\label{eq:nonmarkov_rate_exists}
+\end{align}
+Furthermore, because of Theorem 5, there is some $\delta'\in\realspos$ such that
+\begin{equation}
+(\forall v\in\mathcal{U}_{[t,s]} : \sigma(v) < \delta') \left\vert \left[L_{t_n}^s f\right](x_{t_n}) - \left[\left(\prod_{k=1}^m(I + \Delta_k\lrate)\right)f\right](x_{t_n})\right\vert < \epsilon\,.\label{eq:nonmarkov_lower_exists}
+\end{equation}
+Now, choose $m > \max\{\nicefrac{C}{\delta}, \nicefrac{C}{\delta'},C\norm{\mathcal{Q}} \}$. Then for $\Delta\coloneqq\nicefrac{C}{m}$, we find that $\Delta<\delta$, $\Delta<\delta'$, and $\Delta\norm{\mathcal{Q}}<1$.
+
+For all $k\in\{0,1,\ldots,m\}$, define $t_{n+k}\coloneqq t+k\Delta$. Since $\Delta<\delta$, it follows from Equation~\eqref{eq:nonmarkov_rate_exists} and Lemma~\ref{lemma:rate_exists_implies_rate_op_exists} that for all $(x_{t_{n+1}},\ldots,x_{t_{n+m}})\in\states^{\{t_{n+1},\ldots,t_{n+m}\}}$ and all $i\in\{1,\ldots,m\}$, there is some
+\begin{equation*}
+Q_{u\cup\{t_{n+0},\ldots,t_{n+i-1}\}}^{\{t_{n+i}\}}(x_{t_0},\ldots,x_{t_{n+i-2}})\opinset\mathcal{Q}\,,
+\end{equation*}
+such that
+\begin{align*}
+&\quad \norm{T_{u\cup\{t_{n+0},\ldots,t_{n+i-1}\}}^{\{t_{n+i}\}}(x_{t_0},\ldots,x_{t_{n+i-2}}) - \left(I + \Delta Q_{u\cup\{t_{n+0},\ldots,t_{n+i-1}\}}^{\{t_{n+i}\}}(x_{t_0},\ldots,x_{t_{n+i-2}})\right)} \\
+ &= \norm{\frac{T_{u\cup\{t_{n+0},\ldots,t_{n+i-1}\}}^{\{t_{n+i}\}}(x_{t_0},\ldots,x_{t_{n+i-2}}) - I}{\Delta} - Q_{u\cup\{t_{n+0},\ldots,t_{n+i-1}\}}^{\{t_{n+i}\}}(x_{t_0},\ldots,x_{t_{n+i-2}})}\Delta \\
+ &<\epsilon\Delta\,.
+\end{align*}
+Furthermore, since $\Delta\norm{\mathcal{Q}}<1$, we have by Corollary \ref{lemma:nonmarkov_rate_stochastic} that
+\begin{equation*}
+\left(I + \Delta Q_{u\cup\{t_{n+0},\ldots,t_{n+i-1}\}}^{\{t_{n+i}\}}\right)
+\end{equation*}
+is a stochastic operator for all $i\in\{1,\ldots,m\}$. Therefore, we find by Lemmas \ref{lemma:nonmarkov_transition_decompose}, \ref{lemma:nonmarkov_fixedhistory_bound_to_global_bound}, and \ref{lemma:nonmarkov_operator_bound_to_product_bound} that
+\begin{align*}
+&\quad \norm{T_u^{\{s\}} - \prod_{i=1}^m\left(I + \Delta Q_{u\cup\{t_{n+0},\ldots,t_{n+i-1}\}}^{\{t_{n+i}\}}\right)} \\
+&= \norm{\prod_{i=1}^m T_{u\cup\{t_{n+0},\ldots,t_{n+i-1}\}}^{\{t_{n+i}\}} - \prod_{i=1}^m\left(I + \Delta Q_{u\cup\{t_{n+0},\ldots,t_{n+i-1}\}}^{\{t_{n+i}\}}\right)} \\
+&\leq \epsilon\Delta m \\
+&= \epsilon C.
+\end{align*}
+This implies that
+\begin{align*}
+&\quad\left\vert \left[T_{u}^{\{s\}}(x_{t_0},\ldots,x_{t_{n-1}})f\right](x_{t_n}) - \left[\left(\prod_{i=1}^m\left(I + \Delta Q_{u\cup\{t_{n+0},\ldots,t_{n+i-1}\}}^{\{t_{n+i}\}}\right)\right)(x_{t_0},\ldots,x_{t_{n-1}})f\right](x_{t_n})\right\vert \\
+%&= \left\vert T_{u}^{\{s\}}(x_{t_0},\ldots,x_{t_{n}})f - \left(\prod_{i=1}^m\left(I + \Delta Q_{u\cup\{t_{n+0},\ldots,t_{n+i-1}\}}^{\{t_{n+i}\}}\right)\right)(x_{t_0},\ldots,x_{t_{n}})f\right\vert \\
+&= \left\vert \left[T_{u}^{\{s\}}f\right](x_{t_0},\ldots,x_{t_{n}}) - \left[\left(\prod_{i=1}^m\left(I + \Delta Q_{u\cup\{t_{n+0},\ldots,t_{n+i-1}\}}^{\{t_{n+i}\}}\right)\right)f\right](x_{t_0},\ldots,x_{t_{n}})\right\vert \\
+&\leq \norm{T_{u}^{\{s\}}f - \left(\prod_{i=1}^m\left(I + \Delta Q_{u\cup\{t_{n+0},\ldots,t_{n+i-1}\}}^{\{t_{n+i}\}}\right)\right)f} \\
+&\leq \norm{T_{u}^{\{s\}} - \left(\prod_{i=1}^m\left(I + \Delta Q_{u\cup\{t_{n+0},\ldots,t_{n+i-1}\}}^{\{t_{n+i}\}}\right)\right)}\norm{f} \\
+&\leq \epsilon C\norm{f}\,,
+\end{align*}
+and hence,
+\begin{equation}\label{eq:nonmarkov_trans_bounded}
+\left[T_u^{\{s\}}(x_{t_0},\ldots,x_{t_{n-1}})f\right](x_{t_n}) \geq \left[\left(\prod_{i=1}^m\left(I + \Delta Q_{u\cup\{t_{n+0},\ldots,t_{n+i-1}\}}^{\{t_{n+i}\}}\right)\right)(x_{t_0},\ldots,x_{t_{n-1}})f\right](x_{t_n}) - \epsilon C\norm{f}\,.
+\end{equation}
+Furthermore, since $\Delta<\delta'$, it follows from Equation~\eqref{eq:nonmarkov_lower_exists} that
+\begin{equation*}
+\Bigl\vert \left[L_{t_n}^sf\right](x_{t_n}) - \left[\left(I + \Delta\lrate\right)^mf\right](x_{t_n})\Bigr\vert < \epsilon\,,
+\end{equation*}
+and hence
+\begin{equation}\label{eq:nonmarkov_lowerrate_bounded}
+\left[\left(I+\Delta\lrate\right)^mf\right](x_{t_n}) > \left[L_{t_n}^sf\right](x_{t_n}) - \epsilon\,.
+\end{equation}
+Finally, by Lemma \ref{lemma:nonmarkov_rateproduct_bounded_by_lrate}, we have
+\begin{align}
+&\quad \left[\left(\prod_{i=1}^m\left(I + \Delta Q_{u\cup\{t_{n+0},\ldots,t_{n+i-1}\}}^{\{t_{n+i}\}}\right) \right)(x_{t_0},\ldots,x_{t_{n-1}})f\right](x_{t_n}) \\
+&= \left[\left(\prod_{i=1}^m\left(I + \Delta Q_{u\cup\{t_{n+0},\ldots,t_{n+i-1}\}}^{\{t_{n+i}\}}\right) \right)f\right](x_{t_0},\ldots,x_{t_n}) \\
+&\geq \left[\left(I+\Delta\lrate\right)^m\right](x_{t_n})\,.\label{eq:nonmarkov_rate_bounded}
+\end{align}
+Combining Equations~\eqref{eq:nonmarkov_trans_bounded} and~\eqref{eq:nonmarkov_rate_bounded} then shows
+\begin{align*}
+\left[T_u^{\{s\}}(x_{t_0},\ldots,x_{t_{n-1}})f\right](x_{t_n}) &\geq \left[\left(\prod_{i=1}^m\left(I + \Delta Q_{u\cup\{t_{n+0},\ldots,t_{n+i-1}\}}^{\{t_{n+i}\}}\right)\right)(x_{t_0},\ldots,x_{t_{n-1}})f\right](x_{t_n}) - \epsilon C\norm{f} \\
+&\geq \left[\left(I+\Delta\lrate\right)^m\right](x_{t_n}) - \epsilon C\norm{f}\,,
+\end{align*}
+so that by Equation~\eqref{eq:nonmarkov_lowerrate_bounded},
+\begin{equation*}
+\left[T_u^{\{s\}}(x_{t_0},\ldots,x_{t_{n-1}})f\right](x_{t_n}) > \left[L_{t_n}^sf\right](x_{t_n}) - \epsilon -\epsilon C\norm{f}\,,
+\end{equation*}
+which implies
+\begin{equation*}
+\epsilon(1 + C\norm{f}) > \left[L_{t_n}^sf\right](x_{t_n}) - \left[T_u^{\{s\}}(x_{t_0},\ldots,x_{t_{n-1}})f\right](x_{t_n})\,.
+\end{equation*}
+This provides the required contradiction; see Equation 16.
+\end{proof}
+
+\begin{theorem}\label{theorem:nonmarkov_single_variable_lower_envelope}
+Consider any $t,s\in\realsnonneg$ such that $t<s$, and let $\mathcal{Q}$ be an arbitrary closed and bounded set of rate matrices that has separately specified rows, with corresponding lower transition rate operator $\lrate$. Then, for all $f\in\gambles(\states^{\{s\}})$, there is some $P\in\mathbb{P}_\mathcal{Q}$ such that, for all $u\in\mathcal{U}_{[0,t]}$ and $(x_{t_0},\ldots,x_{t_n})\in\states^u$,
+\begin{equation*}
+\left[L_{t_n}^{s}f\right](x_{t_n}) = \left[T_{u}^{\{s\}}f\right](x_{t_0},\ldots,x_{t_n})\,.
+\end{equation*}
+\end{theorem}
+\begin{proof}
+*** The time-inhomogeneous Markov chain for which $Q_{\tau}\coloneqq \lrate L_{\tau}^sf$ establishes the equality. ***
+\end{proof}
+
+Note that so far, all the results of this section were for the case $f\in\gambles(\states^{\{s\}})$. We now generalize this to the full domain of the operators, that is, to the case of functions $f\in\gambles(\states^{u\cup\{s\}})$.
+
+%This requires us to first introduce a new lower-transition operator, as well as reformulate some of the earlier results from this section. 
+
+\begin{definition}[Lower Full Conditional Expectation Operator]\label{def:low_full_cond_exp_op}
+Let $L_u^{\{s\}}$ be a map from $\gambles(\states^{u\cup\{s\}})$ to $\gambles(\states^u)$, defined for all $f\in\gambles(\states^{u\cup\{s\}})$ and $(x_{t_0},\ldots,x_{t_n})\in\states^u$ as
+\begin{equation*}
+\left[L_u^{\{s\}}f\right](x_{t_0},\ldots,x_{t_n}) \coloneqq \left[L_{t_n}^s f(x_{t_0},\ldots,x_{t_{n}},X_s)\right](x_{t_n})\,,
+\end{equation*}
+where $L_{t_n}^s$ is the normal lower transition operator given by Definition~\ref{def:low_trans}.
+\end{definition}
+
+\begin{theorem}\label{theorem:nonmarkov_historic_variable_lower_bounded}
+Consider any $t,s\in\realsnonneg$ such that $t<s$, and let $\mathcal{Q}$ be an arbitrary bounded set of rate matrices with corresponding lower transition rate operator $\lrate$. Then, for any $P\in\mathbb{P}_\mathcal{Q}$, any $u\in\mathcal{U}_{[0,t]}$, any $(x_{t_0},\ldots,x_{t_n})\in\states^u$, and any $f\in\gambles(\states^{u\cup\{s\}})$:
+\begin{equation*}
+\left[L_u^{\{s\}}f\right](x_{t_0},\ldots,x_{t_n}) \leq \left[T_u^{\{s\}}f\right](x_{t_0},\ldots,x_{t_n})\,.
+\end{equation*}
+\end{theorem}
+\begin{proof}
+By Proposition~\ref{prop:full_history_to_partial_history}, we have
+\begin{equation*}
+\left[T_u^{\{s\}}f\right](x_{t_0},\ldots,x_{t_n}) = \left[T_u^{\{s\}}(x_{t_0},\ldots,x_{t_{n-1}})f(x_{t_0},\ldots,x_{t_n},X_s)\right](x_{t_n})\,,
+\end{equation*}
+and by Definition~\ref{def:low_full_cond_exp_op},
+\begin{equation*}
+\left[L_u^{\{s\}}f\right](x_{t_0},\ldots,x_{t_n}) = \left[L_{t_n}^s f(x_{t_0},\ldots,x_{t_{n}},X_s)\right](x_{t_n})\,.
+\end{equation*}
+Now, define a function $g\in\gambles(\states^{\{s\}})$ as
+\begin{equation*}
+g(x_s) \coloneqq f(x_{t_0},\ldots,x_{t_n},x_s)\,.
+\end{equation*}
+Substituting into the above, it remains to show that
+\begin{equation*}
+\left[L_{t_n}^s g\right](x_{t_n}) \leq \left[T_u^{\{s\}}(x_{t_0},\ldots,x_{t_{n-1}})g\right](x_{t_n})\,,
+\end{equation*}
+which was proved in Theorem~\ref{theorem:nonmarkov_single_var_lower_bounded}.
+\end{proof}
+
+\begin{theorem}\label{theorem:nonmarkov_historic_variable_lower_envelope}
+Consider any $t,s\in\realsnonneg$ such that $t<s$, and let $\mathcal{Q}$ be an arbitrary closed and bounded set of rate matrices that has separately specified rows, with corresponding lower transition rate operator $\lrate$. Then, for all $u\in\mathcal{U}_{[0,t]}$ and all $f\in\gambles(\states^{u\cup\{s\}})$, there is some $P\in\mathbb{P}_\mathcal{Q}$ such that, for all $(x_{t_0},\ldots,x_{t_n})\in\states^u$,
+\begin{equation*}
+\left[L_{u}^{\{s\}}f\right](x_{t_0},\ldots,x_{t_n}) = \left[T_{u}^{\{s\}}f\right](x_{t_0},\ldots,x_{t_n})\,.
+\end{equation*}
+\end{theorem}
+\begin{proof}
+*** The non-Markovian stochastic process for which 
+\begin{equation*}
+Q_{u\cup\{\tau\}}(x_{t_0},\ldots,x_{t_{n}})\coloneqq \lrate L_{\tau}^sf(x_{t_0},\ldots,x_{t_n},X_s)
+\end{equation*}
+establishes the equality. ***
+\end{proof}
+
+%Let $\lrate_{u}^{\{s\}}$ be a map from $\gambles(\states^{u\cup\{s\}})$ to $\gambles(\states^u)$, defined for all $f\in\gambles(\states^{u\cup\{s\}})$ and $(x_{t_0},\ldots,x_{t_n})\in\states^u$ as
+%\begin{equation*}
+%\left[\lrate_u^{\{s\}}f\right](x_{t_0},\ldots,x_{t_n}) \coloneqq \left[\lrate f(x_{t_0},\ldots,x_{t_{n}},X_s)\right](x_{t_n})\,.
+%\end{equation*}
+
+\section{Decompositions of Lower Expectation Functionals}\label{sec:decomp}
+
+We now generalize the results from the previous sections to the lower bound of expectations on functions $f\in\gambles(\states^{u\cup v})$, where $v\in\mathcal{U}_{[s,s']}$.
+
+We again start with some notation. For any $t,s,s'\in\realsnonneg$ such that $t<s<s'$, any $u\in\mathcal{U}_{[0,t]}$ and any $v\in\mathcal{U}_{[s,s']}$, let $A_u^v$ be a non-negatively homogeneous operator from $\gambles(\states^{u\cup v})$ to $\gambles(\states^u)$. Define the norm as before, i.e.,
+\begin{equation*}
+\norm{A_u^v} \coloneqq \sup\left\{\norm{A_u^v}\,:\,f\in\gambles(\states^{u\cup v}), \norm{f}=1\right\}\,.
+\end{equation*}
+This norm satisfies all properties N6-N12 from the previous section. The default notation for sequences of time points will be $u=t_0,\ldots,t_n$ and $v=\tau_0,\ldots,\tau_m$, where we will assume that $t_n\leq \tau_0$.
+
+As a special case of such an operator, define for all $f\in\gambles(\states^{u\cup v})$ the operator
+\begin{equation*}
+T_u^vf \coloneqq \mathbb{E}_{X_{\tau_0},\ldots,X_{\tau_m}}\left[f(X_{t_0},\ldots,X_{t_n},X_{\tau_0},\ldots,X_{\tau_m})\,\vert\,X_{t_0},\ldots,X_{t_n}\right]\,.
+\end{equation*}
+This also satisfies for all $g\in\gambles(\states^v)$ the equality
+\begin{equation*}
+T_u^vg = \mathbb{E}_{X_{\tau_0},\ldots,X_{\tau_m}}\left[g(X_{\tau_0},\ldots,X_{\tau_m})\,\vert\,X_{t_0},\ldots,X_{t_n}\right]\,.
+\end{equation*}
+
+\begin{proposition}\label{proposition:nonmarkov_multi_variable_decompose}
+Consider any $t,s,s'\in\realsnonneg$ such that $t<s<s'$, any $u\in\mathcal{U}_{[0,t]}$ and $v\in\mathcal{U}_{[s,s']}$, and any $P\in\mathbb{P}$ that has, for all $i\in\{1,\ldots,m\}$, transition operators
+\begin{equation*}
+T_{u\cup\{\tau_0,\ldots,\tau_{i-1}\}}^{\{\tau_i\}}\,.
+\end{equation*}
+Then, the expectation operator $T_u^v$ corresponding to $P$ satisfies, for all $f\in\gambles(\states^{u\cup v})$,
+\begin{equation*}
+T_u^v f = T_u^{\{\tau_0\}}T_{u\cup\{\tau_0\}}^{\{\tau_1\}}\cdots T_{u\cup\{\tau_0,\ldots,\tau_{m-1}\}}^{\{\tau_m\}} f\,.
+\end{equation*}
+\end{proposition}
+\begin{proof}
+%We will use backward induction on $m$. Note that
+%\begin{equation*}
+%T_{u\cup\{\tau_0,\ldots,\tau_{m-1}\}}^{\{\tau_m\}} g = \mathbb{E}_{X_{\tau_m}}\left[g(X_{\tau_0},\ldots,X_{\tau_m})\,\vert\,X_{t_0},\ldots,X_{t_n},X_{\tau_0},\ldots,X_{\tau_{m-1}}\right]
+%\end{equation*}
+This is immediate from the decomposition properties of expectation, i.e.,
+\begin{align*}
+&\quad T_u^{\{\tau_0\}}T_{u\cup\{\tau_0\}}^{\{\tau_1\}}\cdots T_{u\cup\{\tau_0,\ldots,\tau_{m-1}\}}^{\{\tau_m\}} f \\
+ &= \mathbb{E}_{X_{\tau_0}}\left[\cdots\mathbb{E}_{X_{\tau_m}}\left[f(X_{t_0},\ldots,X_{t_n},X_{\tau_0},\ldots,X_{\tau_m})\,\vert\,X_{t_0},\ldots,X_{t_n},X_{\tau_0},\ldots,X_{\tau_{m-1}}\right]\cdots\,\vert\,X_{t_0},\ldots,X_{t_n}\right] \\
+ &= \mathbb{E}_{X_{\tau_0},\ldots,X_{\tau_m}}\left[f(X_{t_0},\ldots,X_{t_n},X_{\tau_0},\ldots,X_{\tau_m})\,\vert\,X_{t_0},\ldots,X_{t_n}\right] \\
+ &= T_u^v f\,.
+\end{align*}
+\end{proof}
+
+\begin{definition}[Lower Joint Expectation Operator]\label{def:low_joint_exp_op}
+Recall the extended operator $L_u^{\{s\}}$ from Definition~\ref{def:low_full_cond_exp_op}, and define a new operator $L_u^v$ from $\gambles(\states^{u\cup v})$ to $\gambles(\states^u)$, as
+\begin{equation*}
+L_u^v \coloneqq L_u^{\{\tau_0\}}L_{u\cup\{\tau_0\}}^{\{\tau_1\}}\cdots L_{u\cup\{\tau_0,\ldots,\tau_{m-1}\}}^{\{\tau_m\}}.
+\end{equation*}
+\end{definition}
+
+\begin{theorem}\label{theorem:nonmarkov_multi_variable_lower_bounded}
+Consider any $t,s,s'\in\realsnonneg$ such that $t<s<s'$, and let $\mathcal{Q}$ be an arbitrary bounded set of rate matrices with corresponding lower transition rate operator $\lrate$. Then, for any $P\in\mathbb{P}_\mathcal{Q}$, any $u\in\mathcal{U}_{[0,t]}$ and $v\in\mathcal{U}_{[s,s']}$, any $f\in\gambles(\states^{u\cup v})$ and any $(x_{t_0},\ldots,x_{t_n})\in\states^u$, it holds that
+\begin{equation*}
+\left[L_u^v f\right](x_{t_0},\ldots,x_{t_n}) \leq \left[T_u^v f\right](x_{t_0},\ldots,x_{t_n})\,.
+\end{equation*}
+\end{theorem}
+\begin{proof}
+Consider any $(x_{t_0},\ldots,x_{t_n})\in\states^u$. Using the decomposition from Proposition~\ref{proposition:nonmarkov_multi_variable_decompose}, we find that
+\begin{align*}
+&\quad \left[T_u^vf\right](x_{t_0},\ldots,x_{t_n}) \\
+&= \left[T_u^{\{\tau_0\}}T_{u\cup\{\tau_0\}}^{\{\tau_1\}}\cdots T_{u\cup\{\tau_0,\ldots,\tau_{m-1}\}}^{\{\tau_m\}} f\right](x_{t_0},\ldots,x_{t_n}) \\
+&= \mathbb{E}_{X_{\tau_0}}\left[\cdots\mathbb{E}_{X_{\tau_m}}\left[f(x_{t_0},\ldots,x_{t_n},X_{\tau_0},\ldots,X_{\tau_m})\,\vert\,X^u=(x_{t_0},\ldots,x_{t_n}),X_{\tau_0},\ldots,X_{\tau_{m-1}}\right]\cdots\,\vert\,X^u=(x_{t_0},\ldots,x_{t_n})\right] \\
+&= \mathbb{E}_{X_{\tau_0},\ldots,X_{\tau_{m-1}}}\left[\mathbb{E}_{X_{\tau_m}}\left[f(x_{t_0},\ldots,x_{t_n},X_{\tau_0},\ldots,X_{\tau_m})\,\vert\,X^u=(x_{t_0},\ldots,x_{t_n}),X_{\tau_0},\ldots,X_{\tau_{m-1}}\right]\,\vert\,X^u=(x_{t_0},\ldots,x_{t_n})\right] \\
+&= \sum_{x_{\tau_0}}\cdots\sum_{x_{\tau_{m-1}}} P\left(X_{\tau_0}=x_{\tau_0},\ldots,X_{\tau_{m-1}}=x_{\tau_{m-1}}\,\vert\,X^u=(x_{t_0},\ldots,x_{t_n})\right)g(x_{\tau_0},\ldots,x_{\tau_{m-1}})\,,
+\end{align*}
+where
+\begin{equation*}
+g(x_{\tau_0},\ldots,x_{\tau_{m-1}}) \coloneqq \left[T_{u\cup\{\tau_0,\ldots,\tau_{m-1}\}}^{\{\tau_m\}}f\right](x_{t_0},\ldots,x_{t_n},x_{\tau_0},\ldots,x_{\tau_{m-1}})\,.
+\end{equation*}
+Define a new function $g'(\cdot)$ as
+\begin{equation*}
+g'(x_{\tau_0},\ldots,x_{\tau_{m-1}}) \coloneqq \left[L_{u\cup\{\tau_0,\ldots,\tau_{m-1}\}}^{\{\tau_m\}}f\right](x_{t_0},\ldots,x_{t_n},x_{\tau_0},\ldots,x_{\tau_{m-1}})\,,
+\end{equation*}
+and note that by Theorem~\ref{theorem:nonmarkov_historic_variable_lower_bounded} we have for all $(x_{\tau_0},\ldots,x_{\tau_{m-1}})\in\states^{\{\tau_0,\ldots,\tau_{m-1}\}}$ that
+\begin{equation}\label{equation:nonmarkov_multiple_variable_theorem_eq}
+g'(x_{\tau_0},\ldots,x_{\tau_{m-1}}) \leq g(x_{\tau_0},\ldots,x_{\tau_{m-1}})\,.
+\end{equation}
+Now, because
+\begin{equation*}
+\sum_{x_{\tau_0}}\cdots\sum_{x_{\tau_{m-1}}} P\left(X_{\tau_0}=x_{\tau_0},\ldots,X_{\tau_{m-1}}=x_{\tau_{m-1}}\,\vert\,X^u=(x_{t_0},\ldots,x_{t_n})\right)g(x_{\tau_0},\ldots,x_{\tau_{m-1}})
+\end{equation*}
+is a convex combination of values $g(x_{\tau_0},\ldots,x_{\tau_{m-1}})$ over all combinations $(x_{\tau_0},\ldots,x_{\tau_{m-1}})\in\states^{\{\tau_0,\ldots,\tau_{m-1}\}}$, we have by Equation~\ref{equation:nonmarkov_multiple_variable_theorem_eq} that
+\begin{align*}
+&\quad \left[T_u^vf\right](x_{t_0},\ldots,x_{t_n}) \\
+&= \sum_{x_{\tau_0}}\cdots\sum_{x_{\tau_{m-1}}} P\left(X_{\tau_0}=x_{\tau_0},\ldots,X_{\tau_{m-1}}=x_{\tau_{m-1}}\,\vert\,X^u=(x_{t_0},\ldots,x_{t_n})\right)g(x_{\tau_0},\ldots,x_{\tau_{m-1}}) \\
+&\geq \sum_{x_{\tau_0}}\cdots\sum_{x_{\tau_{m-1}}} P\left(X_{\tau_0}=x_{\tau_0},\ldots,X_{\tau_{m-1}}=x_{\tau_{m-1}}\,\vert\,X^u=(x_{t_0},\ldots,x_{t_n})\right)g'(x_{\tau_0},\ldots,x_{\tau_{m-1}}) \\
+&= \left[T_u^{\{\tau_0\}}T_{u\cup\{\tau_0\}}^{\{\tau_1\}}\cdots T_{u\cup\{\tau_0,\ldots,\tau_{m-2}\}}^{\{\tau_{m-1}\}}L_{u\cup\{\tau_0,\ldots,\tau_{m-1}\}}^{\{\tau_m\}} f\right](x_{t_0},\ldots,x_{t_n})\,.
+\end{align*}
+Repeatedly applying this argument, i.e. using backward induction on $m$, finally reveals
+\begin{align*}
+\left[T_u^vf\right](x_{t_0},\ldots,x_{t_n}) &= \left[T_u^{\{\tau_0\}}T_{u\cup\{\tau_0\}}^{\{\tau_1\}}\cdots T_{u\cup\{\tau_0,\ldots,\tau_{m-1}\}}^{\{\tau_m\}} f\right](x_{t_0},\ldots,x_{t_n}) \\
+ &\geq \left[L_u^{\{\tau_0\}}L_{u\cup\{\tau_0\}}^{\{\tau_1\}}\cdots L_{u\cup\{\tau_0,\ldots,\tau_{m-1}\}}^{\{\tau_m\}} f\right](x_{t_0},\ldots,x_{t_n}) \\
+ &= \left[L_u^v f\right](x_{t_0},\ldots,x_{t_n})\,.
+\end{align*}
+\end{proof}
+
+\begin{theorem}\label{theorem:nonmarkov_multi_variable_lower_envelope}
+Consider any $t,s,s'\in\realsnonneg$ such that $t<s<s'$, and let $\mathcal{Q}$ be an arbitrary closed and bounded set of rate matrices that has separately specified rows, with corresponding lower transition rate operator $\lrate$. Then, for all $u\in\mathcal{U}_{[0,t]}$, all $v\in\mathcal{U}_{[s,s']}$, and all $f\in\gambles(\states^{u\cup v})$, there is some $P\in\mathbb{P}_\mathcal{Q}$ such that, for all $(x_{t_0},\ldots,x_{t_n})\in\states^u$,
+\begin{equation*}
+\left[L_u^v f\right](x_{t_0},\ldots,x_{t_n}) = \left[T_u^v f\right](x_{t_0},\ldots,x_{t_n})\,.
+\end{equation*}
+\end{theorem}
+\begin{proof}
+*** The non-Markovian stochastic process for which, for all $i\in\{0,\ldots,{m-1}\}$ and all $(x_{\tau_0},\ldots,x_{\tau_i})\in\states^{\{\tau_0,\ldots,\tau_i\}}$,
+\begin{equation*}
+Q_{u\cup\{\tau_0,\ldots,\tau_i,\mu\}}(x_{t_0},\ldots,x_{t_n},x_{\tau_0},\ldots,x_{\tau_i}) \coloneqq \lrate L_\mu^{\tau_{i+1}} \left[L_{u\cup\{\tau_0,\ldots,\tau_{i+1}\}}^{\{\tau_{i+2}\}}f\right](x_{t_0},\ldots,x_{t_n},x_{\tau_0},\ldots,x_{\tau_i})
+\end{equation*}
+establishes the equality. ***
+\end{proof}
+
+\section{Tractability Aspects}\label{sec:tractability}
+
+In the sequel, for a given $f\in\gambles(\states^{u\cup v})$, we will refer to the transition operator corresponding to the distribution $P\in\mathbb{P}_\mathcal{Q}$ that satisfies Theorem~\ref{theorem:nonmarkov_multi_variable_lower_envelope} 
+as $\lt_u^v$.
+
+\begin{proposition}
+For any $f\in\gambles(\states^{u\cup v})$ and given the corresponding $\lt_u^v$, computing $\left[\lt_u^v f\right](x_{t_0},\ldots,x_{t_n})$ is not more difficult than computing $\left[T_u^v f\right](x_{t_0},\ldots,x_{t_n})$ for an arbitrary $P\in\mathbb{P}_{\mathcal{Q}}$. Specifically, this takes a number of operations that is exponential in $m$.
+\end{proposition}
+\begin{proof}
+The first claim is immediate from the fact that $\lt_u^v$ corresponds to a $P\in\mathbb{P}_\mathcal{Q}$. The difficulty of the computation follows from the fact that it is an expectation on $m$ variables, which requires summing over all values $(x_{\tau_0},\ldots,x_{\tau_m})\in\states^v$.
+\end{proof}
+
+\begin{proposition}
+Identifying the $\lt_u^v$ corresponding to a given $f\in\gambles(\states^{u\cup v})$ is intractable.
+\end{proposition}
+\begin{proof}
+The problem is essentially that for all combinations $(x_{\tau_0},\ldots,x_{\tau_m})\in\states^v$, we need to perform an optimization to find the corresponding $\lrate$. Clearly, the number of optimizations required is exponential in $m$.
+\end{proof}
+
+\begin{proposition}
+There is a subclass of gambles $\mathcal{C}(\states^{u\cup v})\subset\gambles(\states^{u\cup v})$, so that for $f\in\mathcal{C}(\states^{u\cup v})$, identifying the corresponding $\lt_u^v$ is tractable, i.e., the required number of times that $\lrate$ needs to be computed is linear in $m$.
+\end{proposition}
+\begin{proof}
+As a trivial example, take $\mathcal{C}(\states^{u\cup v}) = \gambles(\states^{\{s'\}})$. {\bf Claim: } This class can be made a lot bigger.
+\end{proof}
+
+
+\section{Conclusions \& Future Work}\label{sec:conclusions}
+
+\begin{thebibliography}{99}
+\bibitem{foo2015}
+	Foo Bar, \emph{Dummy Bib Items}, 2015.
+
+\end{thebibliography}
+
+\appendix
+
+\section{Proofs of Lemmas from Section~\ref{sec:lower_operator}}
+
+\begin{lemma}\label{lemma:justtheindicator_appendix}
+Consider any sequence $0<\Delta_i\leq\nicefrac{1}{\norm{\lrate}}$, $i=1,\dots,n$, and let $\Delta\coloneqq\sum_{i=1}^n\Delta_i$. Then
+\begin{equation*}
+\norm{\prod_{i=1}^n(I+\Delta_i\lrate)-I}\leq\Delta\norm{\lrate}.
+\end{equation*}
+\end{lemma}
+\begin{proof}
+\begin{align*}
+\norm{\prod_{i=1}^n(I+\Delta_i\lrate)-I}
+&=\norm{\prod_{i=1}^n(I+\Delta_i\lrate)-\prod_{i=1}^{n-1}(I+\Delta_i\lrate)+\prod_{i=1}^{n-1}(I+\Delta_i\lrate)-I}\\
+&\leq\norm{\prod_{i=1}^n(I+\Delta_i\lrate)-\prod_{i=1}^{n-1}(I+\Delta_i\lrate)}+\norm{\prod_{i=1}^{n-1}(I+\Delta_i\lrate)-I}\\
+&\leq\norm{(I+\Delta_n\lrate)-I}+\norm{\prod_{i=1}^{n-1}(I+\Delta_i\lrate)-I}\\
+&=\Delta_n\norm{\lrate}+\norm{\prod_{i=1}^{n-1}(I+\Delta_i\lrate)-I}
+\end{align*}
+where the last inequality follows from Lemma~\ref{lemma:differencenormofcoherenttrans}. By repeating this argument over and over again (actually, by induction), we find that
+\begin{align*}
+\norm{\prod_{i=1}^n(I+\Delta_i\lrate)-I}
+\leq \Delta_n\norm{\lrate} +\Delta_{n-1}\norm{\lrate}+\cdots
++\Delta_1\norm{\lrate}
+=\Delta\norm{\lrate}.
+\end{align*}
+\end{proof}
+
+
+\begin{lemma}\label{lemma:justthelinearpart_appendix}
+Consider any sequence $0<\Delta_i\leq\nicefrac{1}{\norm{\lrate}}$, $i=1,\dots,n$, and let $\Delta\coloneqq\sum_{i=1}^n\Delta_i$. Then
+\begin{equation*}
+\norm{\prod_{i=1}^n(I+\Delta_i\lrate)-(I+\Delta\lrate)}\leq\Delta^2\norm{\lrate}^2.
+\end{equation*}
+\end{lemma}
+\begin{proof}
+\begin{align*}
+&\norm{\prod_{i=1}^n(I+\Delta_i\lrate)-(I+\Delta\lrate)}\\
+&=\norm{\prod_{i=2}^n(I+\Delta_i\lrate)+\Delta_1\lrate\left(\prod_{i=2}^n(I+\Delta_i\lrate)\right)-(I+\sum_{i=2}^n\Delta_i\lrate)-\Delta_1\lrate}\\
+&\leq\norm{\prod_{i=2}^n(I+\Delta_i\lrate)-(I+\sum_{i=2}^n\Delta_i\lrate)}+\norm{\Delta_1\lrate\left(\prod_{i=2}^n(I+\Delta_i\lrate)\right)-\Delta_1\lrate}\\
+&\leq\norm{\prod_{i=2}^n(I+\Delta_i\lrate)-(I+\sum_{i=2}^n\Delta_i\lrate)}+\Delta_1\norm{\lrate\left(\prod_{i=2}^n(I+\Delta_i\lrate)\right)-\lrate}\\
+&\leq\norm{\prod_{i=2}^n(I+\Delta_i\lrate)-(I+\sum_{i=2}^n\Delta_i\lrate)}+\Delta_1 2\norm{\lrate}\norm{\prod_{i=2}^n(I+\Delta_i\lrate)-I},
+\end{align*}
+where the last inequality follows from Lemma~\ref{lemma:differencenormofcoherenttransrate}. Due to Lemma~\ref{lemma:justtheindicator}, this implies that
+\begin{align*}
+&\norm{\prod_{i=1}^n(I+\Delta_i\lrate)-(I+\Delta\lrate)}\\
+&\leq\norm{\prod_{i=2}^n(I+\Delta_i\lrate)-(I+\sum_{i=2}^n\Delta_i\lrate)}+\Delta_1 2\norm{\lrate}\left(\sum_{i=2}^n\Delta_i\right)\norm{\lrate}\\
+&=\norm{\prod_{i=2}^n(I+\Delta_i\lrate)-(I+\sum_{i=2}^n\Delta_i\lrate)}+2\norm{\lrate}^2\Delta_1\left(\sum_{i=2}^n\Delta_i\right).
+\end{align*}
+By continuing in this way (applying induction) we find that
+\begin{align*}
+&\norm{\prod_{i=1}^n(I+\Delta_i\lrate)-(I+\Delta\lrate)}\\
+&\leq
+\norm{\prod_{i=n}^n(I+\Delta_i\lrate)-(I+\sum_{i=n}^n\Delta_i\lrate)}
++2\norm{\lrate}^2\Delta_{n-1}\left(\sum_{i=n}^n\Delta_i\right)
++\cdots
++2\norm{\lrate}^2\Delta_1\left(\sum_{i=2}^n\Delta_i\right)\\
+&=2\norm{\lrate}^2\Delta_{n-1}\left(\sum_{i=n}^n\Delta_i\right)
++\cdots
++2\norm{\lrate}^2\Delta_1\left(\sum_{i=2}^n\Delta_i\right)\\
+&=2\norm{\lrate}^2\sum_{k=1}^n\Delta_k\sum_{i=k+1}^n\Delta_i\\
+&\leq2\norm{\lrate}^2\frac{1}{2}\left(\sum_{k=1}^n\Delta_k\right)^2=\Delta^2\norm{\lrate}^2
+\end{align*}
+\end{proof}
+
+\begin{lemma}\label{lemma:differencebetweennested_appendix}
+For any $k\in\{1,\dots,n\}$, consider a sequence of $\Delta_{k,i}>0$, $i=1,\dots,n_k$ and let $\Delta_k\coloneqq\sum_{i=1}^{n_k}\Delta_{n,k}$. Let $\Delta\coloneqq\sum_{k=1}^n\Delta_k$ and let $\alpha\coloneqq\max\{\Delta_k\colon k\in\{1,\dots,n\}\}$. If $\alpha\leq\nicefrac{1}{\norm{\lrate}}$, then
+\begin{equation*}
+\norm{\prod_{k=1}^n\left(\prod_{i=1}^{n_k}(I+\Delta_{k,i}\lrate)\right)
+-
+\prod_{k=1}^n(I+\Delta_k\lrate)
+}
+\leq\alpha\Delta\norm{\lrate}^2.
+\end{equation*}
+\end{lemma}
+\begin{proof}
+\begin{align*}
+&\norm{\prod_{k=1}^n\left(\prod_{i=1}^{n_k}(I+\Delta_{k,i}\lrate)\right)
+-
+\prod_{k=1}^n(I+\Delta_k\lrate)
+}\\
+&=\norm{\left(\prod_{k=1}^{n-1}\left(\prod_{i=1}^{n_k}(I+\Delta_{k,i}\lrate)\right)\right)\left(\prod_{i=1}^{n_n}(I+\Delta_{n,i}\lrate)\right)
+-
+\left(\prod_{k=1}^{n-1}(I+\Delta_k\lrate)\right)(I+\Delta_n\lrate)
+}\\
+&\leq\norm{
+\left(\prod_{k=1}^{n-1}\left(\prod_{i=1}^{n_k}(I+\Delta_{k,i}\lrate)\right)\right)\left(\prod_{i=1}^{n_n}(I+\Delta_{n,i}\lrate)\right)
+-
+\left(\prod_{k=1}^{n-1}(I+\Delta_k\lrate)\right)
+\left(\prod_{i=1}^{n_n}(I+\Delta_{n,i}\lrate)\right)
+}\\
+&~~~~+\norm{
+\left(\prod_{k=1}^{n-1}(I+\Delta_k\lrate)\right)
+\left(\prod_{i=1}^{n_n}(I+\Delta_{n,i}\lrate)\right)
+-
+\left(\prod_{k=1}^{n-1}(I+\Delta_k\lrate)\right)(I+\Delta_n\lrate)
+}\\
+&=\norm{
+\left(
+\left(
+\prod_{k=1}^{n-1}\left(\prod_{i=1}^{n_k}(I+\Delta_{k,i}\lrate)\right)
+\right)
+-
+\left(\prod_{k=1}^{n-1}(I+\Delta_k\lrate)\right)
+\right)
+\left(\prod_{i=1}^{n_n}(I+\Delta_{n,i}\lrate)\right)
+}\\
+&~~~~+\norm{
+\left(\prod_{k=1}^{n-1}(I+\Delta_k\lrate)\right)
+\left(\prod_{i=1}^{n_n}(I+\Delta_{n,i}\lrate)\right)
+-
+\left(\prod_{k=1}^{n-1}(I+\Delta_k\lrate)\right)(I+\Delta_n\lrate)
+}\\
+&\leq\norm{
+\left(
+\prod_{k=1}^{n-1}\left(\prod_{i=1}^{n_k}(I+\Delta_{k,i}\lrate)\right)
+\right)
+-
+\left(\prod_{k=1}^{n-1}(I+\Delta_k\lrate)\right)
+}
+\norm{
+\left(\prod_{i=1}^{n_n}(I+\Delta_{n,i}\lrate)\right)
+}\\
+&~~~~+\norm{
+\left(\prod_{k=1}^{n-1}(I+\Delta_k\lrate)\right)
+\left(\prod_{i=1}^{n_n}(I+\Delta_{n,i}\lrate)\right)
+-
+\left(\prod_{k=1}^{n-1}(I+\Delta_k\lrate)\right)(I+\Delta_n\lrate)
+},
+\end{align*}
+
+\noindent
+which, because of Lemma~\ref{lemma:productiscoherent}, \ref{lemma:normofcoherenttrans} and~\ref{lemma:differencenormofcoherenttrans}, implies that
+
+\begin{align*}
+&\norm{\prod_{k=1}^n\left(\prod_{i=1}^{n_k}(I+\Delta_{k,i}\lrate)\right)
+-
+\prod_{k=1}^n(I+\Delta_k\lrate)
+}\\
+&\leq\norm{
+\left(
+\prod_{k=1}^{n-1}\left(\prod_{i=1}^{n_k}(I+\Delta_{k,i}\lrate)\right)
+\right)
+-
+\left(\prod_{k=1}^{n-1}(I+\Delta_k\lrate)\right)
+}\\
+&~~~~+\norm{
+\left(\prod_{i=1}^{n_n}(I+\Delta_{n,i}\lrate)\right)
+-
+(I+\Delta_n\lrate)
+}\\
+&\leq
+\norm{
+\left(
+\prod_{k=1}^{n-1}\left(\prod_{i=1}^{n_k}(I+\Delta_{k,i}\lrate)\right)
+\right)
+-
+\left(\prod_{k=1}^{n-1}(I+\Delta_k\lrate)\right)
+}
++
+\Delta_n^2\norm{\lrate}^2,
+\end{align*}
+where the last inequality follows from Lemma~\ref{lemma:justthelinearpart}.
+
+By continuing in this way (applying induction), we find that
+\begin{align*}
+\norm{\prod_{k=1}^n\left(\prod_{i=1}^{n_k}(I+\Delta_{k,i}\lrate)\right)
+-
+\prod_{k=1}^n(I+\Delta_k\lrate)
+}
+&\leq
+\Delta_1^2\norm{\lrate}^2+\cdot+\Delta_k^2\norm{\lrate}^2+\cdot
++
+\Delta_n^2\norm{\lrate}^2\\
+&\leq
+\alpha\Delta_1\norm{\lrate}^2+\cdot+\alpha\Delta_k\norm{\lrate}^2+\cdot
++
+\alpha\Delta_n\norm{\lrate}^2\\
+&=
+\alpha\Delta\norm{\lrate}^2
+\end{align*}
+
+
+\end{proof}
+
+\end{document}
