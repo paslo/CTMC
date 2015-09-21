@@ -241,6 +241,13 @@ Finally, for any set $\mathcal{A}$ of square matrices, we define
 \norm{\mathcal{A}}\coloneqq\sup\{\norm{A}\colon A\in\mathcal{A}\}.
 \end{equation*}
 
+\subsection{Sequences of Time Points}
+
+Throughout this work, we will make extensive use of the notion of sequences of time points. For any $t,s\in\realsnonneg$ such that $t<s$, let $u$ denote any finite sequence of time points $t_0,t_1,\ldots,t_n$ such that $t=t_0 < t_1 <\ldots < t_n = s$. We use $\mathcal{U}_{[t,s]}$ to denote the set of all such sequences. Given any $u\in\mathcal{U}_{[t,s]}$, we define for all $i\in\{1,\ldots,n\}$ the terms $\Delta_i\coloneqq t_i-t_{i-1}$.  Finally, define a function $\sigma(u)$, as
+\begin{equation*}
+\sigma(u) \coloneqq \max\bigl\{\Delta_i\,:\,i\in\{1,\ldots,n\}\bigr\}\,.
+\end{equation*}
+
 \subsection{Rate Matrices}
 
 \begin{definition}[Rate Matrix]\label{def:rate_matrix}
@@ -284,17 +291,50 @@ $A(x,y)\geq0$ for all $x,y\in\states$.
 \noindent
 \end{definition}
 
+\begin{proposition}\label{prop:stochastic_from_rate_matrix}
+Consider any $m\times m$ rate matrix $Q\in\mathcal{R}$, and any $0\leq \Delta \leq \nicefrac{1}{\norm{Q}}$. Let $I$ denote the $m\times m$ identity matrix. Then, the matrix $[I+\Delta Q]$ is stochastic.
+\end{proposition}
+\begin{proof}
+Let $A=[I+\Delta Q]$. We will verify the properties from Definition~\ref{def:stoch_matrix}.
+
+We start with property S1. Consider any $x\in\states$. Then
+\begin{equation*}
+\sum_{y\states} A(x,y) = \sum_{y\in\states} [I + \Delta Q](x,y) = \sum_{y\in\states}I(x,y) + \Delta \sum_{y\in\states}Q(x,y) = 1\,,
+\end{equation*}
+where we used property R1 from Definition~\ref{def:rate_matrix}.
+
+For property S2, note that $0\leq \Delta \leq \nicefrac{1}{\norm{Q}}$. Whence, for all $x\in\states$, we have $-1\leq \Delta Q(x,x) \leq 0$, so that $[I+\Delta Q](x,x) \geq 0$. Furthermore, for all $x,y\in\states$ s.t. $x\neq y$, we have $0\leq \Delta Q(x,y) \leq 1$, so that $[I+\Delta Q](x,y)\geq 0$.
+\end{proof}
+
+\begin{proposition}\label{prop:rate_from_stochastic_matrix}
+Consider any stochastic $m\times m$ matrix $A$, and any $\Delta\in\realspos$. Let $I$ denote the $m\times m$ identity matrix. Then, $[\nicefrac{1}{\Delta}\cdot(A-I)]$ is a rate matrix.
+\end{proposition}
+\begin{proof}
+This follows from a similar argument as the proof of Proposition~\ref{prop:stochastic_from_rate_matrix}; simply verify the properties from Definition~\ref{def:rate_matrix}.
+\end{proof}
+
 \begin{definition}[Transition Matrix]\label{def:trans_matrix}
 Consider any stochastic process $P\in\processes$ and any $t,s\in\realsnonneg$ such that $t<s$. Then, the \emph{transition matrix} $T_t^s$ \emph{corresponding to} $P$ is a stochastic $m\times m$ matrix that is defined by
 \begin{equation*}
 T_t^s(x_t, x_s) \coloneqq P(X_s=x_s\,\vert X_t=x_t)\quad\text{for all $x_s,x_t\in\states$}\,.
 \end{equation*}
 \end{definition}
-Obviously, this transition matrix $T_t^s$ can also be regarded as a map from $\gamblesX$ to $\gamblesX$, defined for all $f\in\gamblesX$ by $T_t^s(f)\coloneqq T_t^sf$. Note that we have that
-\begin{equation*}
-T_t^sf = \mathbb{E}_{X_s}\left[f(X_s)\,\vert\,X_t\right]\,.
-\end{equation*}
+Obviously, this transition matrix $T_t^s$ can also be regarded as a map from $\gamblesX$ to $\gamblesX$, defined for all $f\in\gamblesX$ by $T_t^s(f)\coloneqq T_t^sf$. Note that for all $x_t\in\states$ we have that
+\begin{align*}
+\left[T_t^sf\right](x_t) &= \sum_{x_s\in\states}f(x_s)P(X_s=x_s\,\vert\,X_t=x_t)\\
+ &= \mathbb{E}_{X_s}\left[f(X_s)\,\vert\,X_t=x_t\right]\,.
+\end{align*}
 
+\begin{proposition}\label{prop:transitionmatrixhasprocess}
+Consider any $t,s\in\realsnonneg$ such that $t<s$, and any stochastic $m\times m$ matrix $A$. Then, there is at least one stochastic process $P\in\mprocesses$ that satisfies the Markov property, and that has a corresponding transition matrix $T_t^s$ such that
+\begin{equation*}
+T_t^s = A\,.
+\end{equation*}
+\end{proposition}
+\begin{proof}
+This is immediate from Definition~\ref{def:trans_matrix} and the fact that $\mprocesses$ contains all Markov processes, according to Definition~\ref{def:markov_property}.\newline
+{\bf ATTN:} Not sure how to give an in-depth argument for this, but I don't see how it could be false.
+\end{proof}
 
 \begin{lemma}\label{lemma:transitionmatrixfactorises}
 Consider any $P\in\mprocesses$. Then
@@ -304,7 +344,70 @@ T_t^s=\prod_{k=1}^n T_{t_{k-1}}^{t_k} \coloneqq T_{t_0}^{t_1}T_{t_1}^{t_2}\cdots
 for every sequence $0\leq t=t_0<t_1<t_2,\dots,t_{n}=s$.
 \end{lemma}
 \begin{proof}
-This property is well known and therefore stated without proof.
+This property is well known and therefore stated without proof. {\bf TODO:} Ref.
+\end{proof}
+
+\begin{proposition}\label{prop:transitionmatrix_factorized_has_process}
+Consider any $t,s\in\realsnonneg$ such that $t<s$, any sequence of time points $u\in\mathcal{U}_{[t,s]}$, and any sequence of stochastic matrices $A_1,\ldots,A_n$. Then, there is at least one stochastic process $P\in\mprocesses$ such that, for all $i\in\{1,\ldots,n\}$, $P$ has corresponding transition matrix $T_{t_{i-1}}^{t_i}$ on the interval $[t_{i-1},t_i]$, and
+\begin{equation*}
+T_{t_{i-1}}^{t_i} = A_i\,.
+\end{equation*}
+Furthermore, $P$ has a corresponding transition matrix $T_t^s$ on the interval $[t,s]$ such that
+\begin{equation*}
+T_t^s = \prod_{i=1}^n A_i\,.
+\end{equation*}
+\end{proposition}
+\begin{proof}
+Should be true. Final statement is trivial assuming the first is true. First statement should be true, given that $\mprocesses$ contains \emph{all} Markov processes, and a finite sequence of well-defined stochastic matrices should be non-degenerate.
+
+{\bf ATTN:} Does need a proof though.
+\end{proof}
+
+\begin{lemma}\label{lemma:linear_factorization_has_process}
+Consider any $t,s\in\realsnonneg$ such that $t<s$, any bounded set of rate matrices $\mathcal{Q}\subset\mathcal{R}$, any sequence of time points $u\in\mathcal{U}_{[t,s]}$ such that $\sigma(u)<\nicefrac{1}{\norm{\mathcal{Q}}}$, and any sequence of rate matrices $Q_1,\ldots,Q_n$ such that $Q_i\in\mathcal{Q}$ for all $i\in\{1,\ldots,n\}$. 
+
+Consider the induced sequence of matrices $[I + \Delta_1 Q_1],\ldots,[I+\Delta_n Q_n]$. Then,
+\begin{enumerate}
+\item The matrix $[I+\Delta_i Q_i]$ is stochastic for all $i\in\{1,\ldots,n\}$.
+\item There is at least one stochastic process $P\in\mprocesses$ such that $T_{t_{i-1}}^{t_i}=[I+\Delta_i Q_i]$ for all $i\in\{1,\ldots,n\}$, and $T_t^s = \prod_{i=1}^n[I+\Delta_i Q_i]$.
+\end{enumerate}
+\end{lemma}
+\begin{proof}
+The first claim is immediate from Proposition~\ref{prop:stochastic_from_rate_matrix}. The second claim is immediate from Proposition~\ref{prop:transitionmatrix_factorized_has_process}.
+\end{proof}
+
+\begin{lemma}\label{lemma:exponential_matrix_has_process}
+Consider any rate matrix $Q$, any $t,s\in\realsnonneg$ such that $t<s$, and any sequence of sequences of time points $u_1,u_2,\ldots,u_n,\ldots$ such that $u_i\in\mathcal{U}_{[t,s]}$ and $\lim_{n\rightarrow\infty}\sigma(u_n)= 0$. For each $u_i$, define the stochastic matrix
+\begin{equation*}
+\Phi_i \coloneqq \prod_{k=1}^{n_i} [I+\Delta^i_k Q]\,.
+\end{equation*}
+Then, the corresponding sequence $\Phi_1,\Phi_2,\ldots,\Phi_n,\ldots$ converges, with solution
+\begin{equation*}
+\lim_{n\rightarrow\infty}\Phi_n = \exp\{(s-t)Q\}\,,
+\end{equation*}
+where the right hand side denotes the matrix exponential.
+
+Furthermore, there is at least one stochastic process $P\in\mprocesses$ such that, for all $\tau,\tau'\in[t,s]$ such that $\tau<\tau'$, this process has corresponding transition matrix
+\begin{equation*}
+T_\tau^{\tau'} = \exp\{(\tau'-\tau)Q\}\,.
+\end{equation*}
+\end{lemma}
+\begin{proof}
+The claim of convergence is well-known. The last claim is then immediate from Lemma~\ref{lemma:linear_factorization_has_process}.
+\end{proof}
+
+\begin{corollary}\label{corollary:exponential_process_approximates_everywhere_and_has_derivative}
+Consider any rate matrix $Q$ and any $t,s\in\realsnonneg$ such that $t<s$. Then, there is at least one stochastic process $P\in\mprocesses$ such that, for all $\tau\in[t,s]$, this process has corresponding transition matrix $T_t^\tau$, and
+\begin{equation*}
+(\forall \epsilon\in\realspos)(\exists \delta\in\realspos)(\forall u\in\mathcal{U}_{[t,\tau]}\,:\,\sigma(u)<\delta) \norm{T_t^\tau - \prod_{k=1}^n[I+\Delta_i Q]} < \epsilon\,.
+\end{equation*}
+Furthermore, this process' transition matrix satisfies
+\begin{equation*}
+(\forall \epsilon>0)(\exists \delta>0)(\forall \Delta\in(0,\delta))(\forall \tau\in[t,s))\norm{\frac{T_\tau^{\tau+\Delta} - I}{\Delta} - Q} < \epsilon\,.
+\end{equation*}
+\end{corollary}
+\begin{proof}
+This is immediate from Lemma~\ref{lemma:exponential_matrix_has_process}.
 \end{proof}
 
 \begin{lemma}\label{lemma:differenceproductoftransition}
@@ -324,13 +427,6 @@ We provide a proof by induction. For $n=1$, the result is trivially true. Assume
 &\leq c + \norm{\prod_{i=1}^{n-1}A_i-\prod_{i=1}^{n-1}B_i}\leq c+(n-1)c= nc.
 \end{align*}
 \end{proof}
-
-\subsection{Sequences of Time Points}
-
-Throughout this work, we will make extensive use of the notion of sequences of time points. For any $t,s\in\realsnonneg$ such that $t<s$, let $u$ denote any finite sequence of time points $t_0,t_1,\ldots,t_n$ such that $t=t_0 < t_1 <\ldots < t_n = s$. We use $\mathcal{U}_{[t,s]}$ to denote the set of all such sequences. Given any $u\in\mathcal{U}_{[t,s]}$, we define for all $i\in\{1,\ldots,n\}$ the terms $\Delta_i\coloneqq t_i-t_{i-1}$.  Finally, define a function $\sigma(u)$, as
-\begin{equation*}
-\sigma(u) \coloneqq \max\bigl\{\Delta_i\,:\,i\in\{1,\ldots,n\}\bigr\}\,.
-\end{equation*}
 
 \subsection{Continuous-Time Markov Processes}
 
@@ -629,169 +725,79 @@ The derivative of $\lbound_t^s$ with respect to $t$ satisfies differential equat
 
 \begin{proposition}
 Consider any $t,s\in\realsnonneg$ such that $t<s$, let $\lrate$ be an arbitrary coherent lower transition rate operator and let $\lbound_t^s$ be the corresponding lower transition operator. Then $\frac{d}{dt}\lbound_t^s=-\lrate\lbound_t^s$ and $\frac{d}{ds}\lbound_t^s=\lbound_t^s\lrate$, meaning that
-\begin{equation*}
+\begin{equation}\label{eq:lower_deriv_backward}
 (\forall\epsilon>0)\,
 (\exists\delta>0)\,
-(\forall\Delta\in(-\delta,\delta))~
+(\forall\Delta\,:\,0<\lvert\Delta\rvert <\delta)~
 \Big\lVert\frac{L_{t+\Delta}^s-L_t^s}{\Delta}+\lrate L_t^s\Big\rVert<\epsilon
-\end{equation*}
+\end{equation}
 and
-\begin{equation*}
+\begin{equation}\label{eq:lower_deriv_forward}
 (\forall\epsilon>0)\,
 (\exists\delta>0)\,
-(\forall\Delta\in(-\delta,\delta))~
+(\forall\Delta\,:\,0<\lvert\Delta\rvert<\delta)~
 \Big\lVert\frac{L_{t}^{s+\Delta}-L_t^s}{\Delta}-\lbound_t^s\lrate \Big\rVert<\epsilon.
-\end{equation*}
+\end{equation}
 \end{proposition}
 \begin{proof}
-{\bf ATTN:} Still a work in progress.
-
-We start by trying to prove the following:
+We start by proving Equation~\eqref{eq:lower_deriv_backward}. Choose any $\epsilon\in\realspos$, and let
+\begin{equation}\label{eq:derivative_max_delta}
+\delta \coloneqq \frac{\epsilon}{3\norm{\lrate}^2}.
+\end{equation}
+Then, consider any $\Delta\neq 0$ such that $\lvert\Delta\rvert<\delta$. We will show that
 \begin{equation*}
-(\forall \epsilon>0)(\exists\delta^*>0)(\forall\Delta\in(0,\delta^*))\norm{\frac{L_{t+\Delta}^s - L_t^s}{\Delta} + \lrate L_t^s} < \epsilon\,.
+\Big\lVert\frac{L_{t+\Delta}^s-L_t^s}{\Delta}+\lrate L_t^s\Big\rVert<\epsilon
 \end{equation*}
-Start by noting that
-\begin{align*}
-\norm{\frac{L_{t+\Delta}^s - L_t^s}{\Delta} + \lrate L_t^s} &\leq \norm{\frac{L_{t+\Delta}^s - L_t^s}{\Delta}} + \norm{\lrate L_t^s} \\
- &= \frac{1}{\Delta}\norm{L_{t+\Delta}^s - L_t^s} + \norm{\lrate L_t^s}\,.
-\end{align*}
-Choose any $\epsilon>0$, and note that by Theorem~\ref{theo:convergencelowerbound}, there is some $\delta$ such that for all $u\in\mathcal{U}_{[t,s]}$ with $\sigma(u)<\delta$, there is a corresponding $\Phi_u$ such that
+Start by rewriting the statement slightly to prevent having to consider different cases for positive and negative $\Delta$. Let $t'\coloneqq\max\{t,t+\Delta\}$, and let $\Delta'\coloneqq t'-t$. Then,
 \begin{equation*}
-\norm{L_t^s - \Phi_u} < \epsilon.
+\Big\lVert\frac{L_{t+\Delta}^s-L_t^s}{\Delta}+\lrate L_t^s\Big\rVert = \norm{\frac{L_{t'}^s - L_{t'-\lvert\Delta\rvert}^s}{\lvert\Delta\rvert}+\lrate L_{t'-\Delta'}^s}\,.
 \end{equation*}
-Choose any $u$ such that $\sigma(u)<\delta$ and furthermore $\Delta_1 = \Delta$. {\bf ATTN:} Ensure that $\Delta<\delta^*\leq\delta$.
-
-Similarly, there must be some $\delta'$ such that for all $u'\in\mathcal{U}_{[t+\Delta,s]}$ with $\sigma(u')<\delta'$, there is a corresponding $\Phi_{u'}$ such that
-\begin{equation*}
-\norm{L_{t+\Delta}^s - \Phi_{u'}} < \epsilon\,.
-\end{equation*}
-Choose any such $u'$.
-Let $\hat{u}$ be the ordered union of $u$ and $u'$. Then,
-\begin{equation*}
-\norm{L_t^s - \prod_{k=1}^{\hat{n}}(I + \Delta_i\lrate)} < \epsilon\,,
-\end{equation*}
-and,
-\begin{equation*}
-\norm{L_{t+\Delta}^s - \prod_{k=2}^{\hat{n}}(I + \Delta_i\lrate)} < \epsilon\,.
-\end{equation*}
-
-%%%%%%
-%Furthermore,
-%\begin{align*}
-%\norm{\prod_{k=1}^{\hat{n}}(I + \Delta_i\lrate) - \prod_{k=2}^{\hat{n}}(I + \Delta_i\lrate)} &= \norm{\bigl((I + \Delta_1\lrate) - I\bigr)\prod_{k=2}^{\hat{n}}(I + \Delta_i\lrate)} \\
-% &= \norm{\Delta_1\lrate\prod_{k=2}^{\hat{n}}(I + \Delta_i\lrate)} \\
-% &= \Delta_1\norm{\lrate\prod_{k=2}^{\hat{n}}(I + \Delta_i\lrate)} \\
-% &\leq \Delta_1\norm{\lrate}\norm{\prod_{k=2}^{\hat{n}}(I + \Delta_i\lrate)} \\
-% &\leq \Delta_1\norm{\lrate}\,,
-%\end{align*}
-%where the last inequality follows from Lemma~\ref{lemma:normofcoherenttrans}.
-%%%%%%
-
-%Also,
-%\begin{align*}
-%\norm{\frac{L_{t+\Delta}^s - L_t^s}{\Delta} + \lrate L_t^s} &= \frac{1}{\Delta}\norm{L_{t+\Delta}^s - L_t^s + \Delta\lrate L_t^s} \\
-% &= \frac{1}{\Delta}\norm{L_{t+\Delta}^s - \prod_{k=1}^{\hat{n}}(I + \Delta_i\lrate) + \prod_{k=1}^{\hat{n}}(I + \Delta_i\lrate) - L_t^s + \Delta\lrate L_t^s} \\
-% &= \frac{1}{\Delta}\norm{L_{t+\Delta}^s - \left(I + \Delta_1\lrate\right)\prod_{k=2}^{\hat{n}}(I + \Delta_i\lrate) + \prod_{k=1}^{\hat{n}}(I + \Delta_i\lrate) - L_t^s + \Delta\lrate L_t^s} \\
-% &= \frac{1}{\Delta}\norm{L_{t+\Delta}^s - \prod_{k=2}^{\hat{n}}(I + \Delta_i\lrate) - \Delta_1\lrate\prod_{k=2}^{\hat{n}}(I + \Delta_i\lrate) + \prod_{k=1}^{\hat{n}}(I + \Delta_i\lrate) - L_t^s + \Delta\lrate L_t^s} \\
-% &= \frac{1}{\Delta}\norm{L_{t+\Delta}^s - \prod_{k=2}^{\hat{n}}(I + \Delta_i\lrate) + \prod_{k=1}^{\hat{n}}(I + \Delta_i\lrate) - \Delta_1\lrate\prod_{k=2}^{\hat{n}}(I + \Delta_i\lrate) - L_t^s + \Delta\lrate L_t^s} \\
-% &\leq \frac{1}{\Delta}\norm{L_{t+\Delta}^s - \prod_{k=2}^{\hat{n}}(I + \Delta_i\lrate)} + \frac{1}{\Delta}\norm{\prod_{k=1}^{\hat{n}}(I + \Delta_i\lrate) - \Delta_1\lrate\prod_{k=2}^{\hat{n}}(I + \Delta_i\lrate) - L_t^s + \Delta\lrate L_t^s} \\
-% &\leq \frac{\epsilon}{\Delta} + \frac{1}{\Delta}\norm{\prod_{k=1}^{\hat{n}}(I + \Delta_i\lrate) - \Delta_1\lrate\prod_{k=2}^{\hat{n}}(I + \Delta_i\lrate) - L_t^s + \Delta\lrate L_t^s} \\
-% &= \frac{\epsilon}{\Delta} + \frac{1}{\Delta}\norm{\prod_{k=2}^{\hat{n}}(I + \Delta_i\lrate) + \Delta_1\lrate\prod_{k=2}^{\hat{n}}(I + \Delta_i\lrate) - \Delta_1\lrate\prod_{k=2}^{\hat{n}}(I + \Delta_i\lrate) - L_t^s + \Delta\lrate L_t^s} \\
-% &= \frac{\epsilon}{\Delta} + \frac{1}{\Delta}\norm{\prod_{k=2}^{\hat{n}}(I + \Delta_i\lrate) - L_t^s + \Delta\lrate L_t^s} \\
-% &= \frac{\epsilon}{\Delta} + \frac{1}{\Delta}\norm{\prod_{k=2}^{\hat{n}}(I + \Delta_i\lrate) - \left(I + \Delta\lrate\right) L_t^s} \\
-% &= \frac{\epsilon}{\Delta} + \frac{1}{\Delta}\norm{\prod_{k=2}^{\hat{n}}(I + \Delta_i\lrate) - \left(I + \Delta\lrate\right)\prod_{k=1}^{\hat{n}}(I + \Delta_i\lrate) + \left(I + \Delta\lrate\right)\prod_{k=1}^{\hat{n}}(I + \Delta_i\lrate) - \left(I + \Delta\lrate\right) L_t^s} \\
-% &\leq \frac{\epsilon}{\Delta} + \frac{1}{\Delta}\norm{\prod_{k=2}^{\hat{n}}(I + \Delta_i\lrate) - \left(I + \Delta\lrate\right)\prod_{k=1}^{\hat{n}}(I + \Delta_i\lrate)} + \frac{1}{\Delta}\norm{\left(I + \Delta\lrate\right)\prod_{k=1}^{\hat{n}}(I + \Delta_i\lrate) - \left(I + \Delta\lrate\right) L_t^s}\,.
-%\end{align*}
-%Now,
-%\begin{align*}
-%\norm{\left(I + \Delta\lrate\right)\prod_{k=1}^{\hat{n}}(I + \Delta_i\lrate) - \left(I + \Delta\lrate\right) L_t^s} &\leq 2\norm{(I+\Delta\lrate)}\norm{\prod_{k=1}^{\hat{n}}(I + \Delta_i\lrate) - L_t^s} \\
-% &\leq 2(1 + \Delta\norm{\lrate})\epsilon \\
-% &= 2\epsilon + 2\epsilon\Delta\norm{\lrate}\,,
-%\end{align*}
-%so that
-%\begin{align*}
-%\norm{\frac{L_{t+\Delta}^s - L_t^s}{\Delta} + \lrate L_t^s} &\leq  \frac{1}{\Delta}\norm{\prod_{k=2}^{\hat{n}}(I + \Delta_i\lrate) - \left(I + \Delta\lrate\right)\prod_{k=1}^{\hat{n}}(I + \Delta_i\lrate)} + \epsilon\frac{1}{\Delta} + 2\epsilon\frac{1 + \Delta\norm{\lrate}}{\Delta}\,.
-%\end{align*}
-%Since,
-%\begin{align*}
-%\norm{\prod_{k=2}^{\hat{n}}(I + \Delta_i\lrate) - \left(I + \Delta\lrate\right)\prod_{k=1}^{\hat{n}}(I + \Delta_i\lrate)} &= \norm{\left(I - (I + \Delta\lrate)(I + \Delta_1\lrate)\right)\prod_{k=2}^{\hat{n}}(I + \Delta_i\lrate)} \\
-% &= \norm{\left(I - (I + \Delta\lrate) - \Delta_1(I+\Delta\lrate)\lrate\right)\prod_{k=2}^{\hat{n}}(I + \Delta_i\lrate)} \\
-% &= \norm{\left(I - (I + \Delta\lrate) - \Delta_1(\lrate+\Delta\lrate\lrate)\right)\prod_{k=2}^{\hat{n}}(I + \Delta_i\lrate)} \\
-% &= \norm{\left(-\Delta\lrate - \Delta_1\lrate-\Delta_1\Delta\lrate\lrate\right)\prod_{k=2}^{\hat{n}}(I + \Delta_i\lrate)} \\
-%\end{align*}
-
-%%%%%%
-%\begin{align*}
-%\norm{L_{t+\Delta}^s - L_t^s} &= \norm{L_{t+\Delta}^s - \prod_{k=2}^{\hat{n}}(I + \Delta_i\lrate) + \prod_{k=2}^{\hat{n}}(I + \Delta_i\lrate) - L_t^s} \\
-% &\leq \norm{L_{t+\Delta}^s - \prod_{k=2}^{\hat{n}}(I + \Delta_i\lrate)} + \norm{\prod_{k=2}^{\hat{n}}(I + \Delta_i\lrate) - L_t^s} \\
-% &\leq \norm{\prod_{k=2}^{\hat{n}}(I + \Delta_i\lrate) - L_t^s} + \epsilon \\
-% &= \norm{\prod_{k=2}^{\hat{n}}(I + \Delta_i\lrate) - \prod_{k=1}^{\hat{n}}(I + \Delta_i\lrate) + \prod_{k=1}^{\hat{n}}(I + \Delta_i\lrate) - L_t^s} + \epsilon \\
-% &\leq \norm{\prod_{k=2}^{\hat{n}}(I + \Delta_i\lrate) - \prod_{k=1}^{\hat{n}}(I + \Delta_i\lrate)} + \norm{\prod_{k=1}^{\hat{n}}(I + \Delta_i\lrate) - L_t^s} + \epsilon \\
-% &\leq \norm{\prod_{k=2}^{\hat{n}}(I + \Delta_i\lrate) - \prod_{k=1}^{\hat{n}}(I + \Delta_i\lrate)} + 2\epsilon \\
-% &\leq \Delta_1\norm{\lrate} + 2\epsilon\,.
-%\end{align*}
-%Now,
-%\begin{align*}
-%\norm{\lrate \prod_{k=2}^{\hat{n}}(I + \Delta_i\lrate) - \lrate \prod_{k=1}^{\hat{n}}(I + \Delta_i\lrate)} &\leq 2\norm{\lrate}\norm{\prod_{k=2}^{\hat{n}}(I + \Delta_i\lrate) -  \prod_{k=1}^{\hat{n}}(I + \Delta_i\lrate)} \\
-% &\leq 2\Delta_1 \norm{\lrate}^2\norm{\prod_{k=2}^{\hat{n}}(I + \Delta_i\lrate)}
-%\end{align*}
-
-%%%%%%
-%Furthermore,
-%\begin{align*}
-%\norm{\lrate L_t^s} &= \norm{\lrate L_t^s - \lrate \prod_{k=1}^{\hat{n}}(I + \Delta_i\lrate) + \lrate \prod_{k=1}^{\hat{n}}(I + \Delta_i\lrate)} \\
-% &\leq \norm{\lrate L_t^s - \lrate \prod_{k=1}^{\hat{n}}(I + \Delta_i\lrate)} + \norm{\lrate \prod_{k=1}^{\hat{n}}(I + \Delta_i\lrate)} \\
-% &\leq \norm{\lrate \prod_{k=1}^{\hat{n}}(I + \Delta_i\lrate)} + 2\norm{\lrate}\epsilon \\
-% &\leq \norm{\lrate} + 2\norm{\lrate}\epsilon\,.
-%%%%%%
-
-% &\leq \norm{\lrate}\norm{\prod_{k=1}^{\hat{n}}(I + \Delta_i\lrate)} + 2\norm{\lrate}\epsilon \\
-% &\leq \norm{\lrate}\norm{(I + \Delta_1\lrate)}\norm{\prod_{k=2}^{\hat{n}}(I + \Delta_i\lrate)} + 2\norm{\lrate}\epsilon \\
-% &\leq \left(\norm{I} + \norm{\Delta_1\lrate}\right)\norm{\lrate}\norm{\prod_{k=2}^{\hat{n}}(I + \Delta_i\lrate)} + 2\norm{\lrate}\epsilon \\
-% &= \left(1 + \Delta_1\norm{\lrate}\right)\norm{\lrate}\norm{\prod_{k=2}^{\hat{n}}(I + \Delta_i\lrate)} + 2\norm{\lrate}\epsilon \\
-% &= \norm{\lrate}\norm{\prod_{k=2}^{\hat{n}}(I + \Delta_i\lrate)} + \Delta_1\norm{\lrate}^2\norm{\prod_{k=2}^{\hat{n}}(I + \Delta_i\lrate)} + 2\norm{\lrate}\epsilon \\
-%\end{align*}
-We try something else:
-\begin{align*}
-\norm{\frac{L_{t+\Delta}^s - L_t^s}{\Delta} + \lrate L_t^s} &= \frac{1}{\Delta}\norm{L_{t+\Delta}^s - L_t^s + \Delta\lrate L_t^s} \\
- &= \frac{1}{\Delta}\norm{L_{t+\Delta}^s - \prod_{i=2}^{\hat{n}}(I + \Delta_i\lrate) + \prod_{i=2}^{\hat{n}}(I + \Delta_i\lrate) - L_t^s + \Delta\lrate L_t^s} \\
- &\leq \frac{1}{\Delta}\norm{L_{t+\Delta}^s - \prod_{i=2}^{\hat{n}}(I + \Delta_i\lrate)} + \frac{1}{\Delta}\norm{\prod_{i=2}^{\hat{n}}(I + \Delta_i\lrate) - L_t^s + \Delta\lrate L_t^s} \\
- &\leq \frac{\epsilon}{\Delta} + \frac{1}{\Delta}\norm{\prod_{i=2}^{\hat{n}}(I + \Delta_i\lrate) - L_t^s + \Delta\lrate L_t^s} \\
- &= \frac{\epsilon}{\Delta} + \frac{1}{\Delta}\norm{\prod_{i=2}^{\hat{n}}(I + \Delta_i\lrate) - \prod_{i=1}^{\hat{n}}(I + \Delta_i\lrate) + \prod_{i=1}^{\hat{n}}(I + \Delta_i\lrate) - L_t^s + \Delta\lrate L_t^s} \\
- &\leq \frac{\epsilon}{\Delta} + \frac{1}{\Delta}\norm{\prod_{i=2}^{\hat{n}}(I + \Delta_i\lrate) - \prod_{i=1}^{\hat{n}}(I + \Delta_i\lrate) + \Delta\lrate L_t^s} + \frac{1}{\Delta}\norm{\prod_{i=1}^{\hat{n}}(I + \Delta_i\lrate) - L_t^s} \\
- &\leq \frac{2\epsilon}{\Delta} + \frac{1}{\Delta}\norm{\prod_{i=2}^{\hat{n}}(I + \Delta_i\lrate) - \prod_{i=1}^{\hat{n}}(I + \Delta_i\lrate) + \Delta\lrate L_t^s} \\
- &= \frac{2\epsilon}{\Delta} + \frac{1}{\Delta}\norm{\prod_{i=2}^{\hat{n}}(I + \Delta_i\lrate) - \prod_{i=1}^{\hat{n}}(I + \Delta_i\lrate) + \Delta\lrate L_t^s - \Delta\lrate\prod_{i=1}^{\hat{n}}(I + \Delta_i\lrate) + \Delta\lrate\prod_{i=1}^{\hat{n}}(I + \Delta_i\lrate)} \\
- &\leq \frac{2\epsilon}{\Delta} + \frac{1}{\Delta}\norm{\prod_{i=2}^{\hat{n}}(I + \Delta_i\lrate) - \prod_{i=1}^{\hat{n}}(I + \Delta_i\lrate) + \Delta\lrate\prod_{i=1}^{\hat{n}}(I + \Delta_i\lrate)} + \frac{1}{\Delta}\norm{\Delta\lrate L_t^s - \Delta\lrate\prod_{i=1}^{\hat{n}}(I + \Delta_i\lrate)} \\
- &= \frac{2\epsilon}{\Delta} + \frac{1}{\Delta}\norm{\prod_{i=2}^{\hat{n}}(I + \Delta_i\lrate) - \prod_{i=1}^{\hat{n}}(I + \Delta_i\lrate) + \Delta\lrate\prod_{i=1}^{\hat{n}}(I + \Delta_i\lrate)} + \norm{\lrate L_t^s - \lrate\prod_{i=1}^{\hat{n}}(I + \Delta_i\lrate)} \\
- &\leq \frac{2\epsilon}{\Delta} + \frac{1}{\Delta}\norm{\prod_{i=2}^{\hat{n}}(I + \Delta_i\lrate) - \prod_{i=1}^{\hat{n}}(I + \Delta_i\lrate) + \Delta\lrate\prod_{i=1}^{\hat{n}}(I + \Delta_i\lrate)} + 2\norm{\lrate}\norm{L_t^s - \prod_{i=1}^{\hat{n}}(I + \Delta_i\lrate)} \\
- &\leq \frac{2\epsilon}{\Delta} + 2\epsilon\norm{\lrate} + \frac{1}{\Delta}\norm{\prod_{i=2}^{\hat{n}}(I + \Delta_i\lrate) - \prod_{i=1}^{\hat{n}}(I + \Delta_i\lrate) + \Delta\lrate\prod_{i=1}^{\hat{n}}(I + \Delta_i\lrate)}. \\
-\end{align*}
 Now,
 \begin{align*}
-\norm{\prod_{i=2}^{\hat{n}}(I + \Delta_i\lrate) - \prod_{i=1}^{\hat{n}}(I + \Delta_i\lrate) + \Delta\lrate\prod_{i=1}^{\hat{n}}(I + \Delta_i\lrate)} &= \norm{\prod_{i=2}^{\hat{n}}(I + \Delta_i\lrate) - \left(I + \Delta\lrate\right)\prod_{i=1}^{\hat{n}}(I + \Delta_i\lrate)} \\
- &= \norm{\prod_{i=2}^{\hat{n}}(I + \Delta_i\lrate) - \left(I + \Delta\lrate\right)\left(I + \Delta_1\lrate\right)\prod_{i=2}^{\hat{n}}(I + \Delta_i\lrate)} \\
- &= \norm{\left(I - \left(I + \Delta\lrate\right)\left(I + \Delta_1\lrate\right)\right)\prod_{i=2}^{\hat{n}}(I + \Delta_i\lrate)} \\
- &= \norm{\left(I - \left(I + \Delta\lrate\right) - \left(I + \Delta\lrate\right)\Delta_1\lrate\right)\prod_{i=2}^{\hat{n}}(I + \Delta_i\lrate)} \\
- &\leq \norm{I - \left(I + \Delta\lrate\right) - \left(I + \Delta\lrate\right)\Delta_1\lrate}\norm{\prod_{i=2}^{\hat{n}}(I + \Delta_i\lrate)} \\
- &\leq \norm{I - \left(I + \Delta\lrate\right) - \left(I + \Delta\lrate\right)\Delta_1\lrate} \\
- &= \norm{-\Delta\lrate - \left(I + \Delta\lrate\right)\Delta_1\lrate} \\
- &= \norm{\Delta\lrate + \left(I + \Delta\lrate\right)\Delta_1\lrate} \\
- &\leq \norm{\Delta\lrate} + \norm{\left(I + \Delta\lrate\right)\Delta_1\lrate} \\
- &\leq \Delta\norm{\lrate} + \norm{\left(I + \Delta\lrate\right)}\norm{\Delta_1\lrate} \\
- &\leq \Delta\norm{\lrate} + \Delta_1\norm{\lrate} \\
- &= 2\Delta\norm{\lrate}\,,
+\norm{\frac{L_{t'}^s - L_{t'-\lvert\Delta\rvert}^s}{\lvert\Delta\rvert}+\lrate L_{t'-\Delta'}^s} &= \norm{\frac{L_{t'}^s - L_{t'-\lvert\Delta\rvert}^{t'}L_{t'}^s}{\lvert\Delta\rvert}+\lrate L_{t'-\Delta'}^{t'}L_{t'}^s} \\
+ &\leq \norm{\frac{I - L_{t'-\lvert\Delta\rvert}^{t'}}{\lvert\Delta\rvert}+\lrate L_{t'-\Delta'}^{t'}}\norm{L_{t'}^s} \\
+ &\leq \norm{\frac{I - L_{t'-\lvert\Delta\rvert}^{t'}}{\lvert\Delta\rvert}+\lrate L_{t'-\Delta'}^{t'}} \\
+ &= \norm{\frac{I - L_{0}^{\lvert\Delta\rvert}}{\lvert\Delta\rvert}+\lrate L_{0}^{\Delta'}} \\
+ &= \norm{\frac{L_{0}^{\lvert\Delta\rvert} - I}{\lvert\Delta\rvert}-\lrate L_{0}^{\Delta'}} \\
+ &\leq \norm{\frac{L_{0}^{\lvert\Delta\rvert} - I}{\lvert\Delta\rvert}-\lrate} + \norm{\lrate - \lrate L_{0}^{\Delta'}} \\
+ &\leq \frac{1}{\lvert\Delta\rvert}\cdot\norm{L_{0}^{\lvert\Delta\rvert} - (I+\lvert\Delta\rvert\lrate)} + 2\norm{\lrate}\norm{I - L_{0}^{\Delta'}} \\
+ &\leq \lvert\Delta\rvert\cdot\norm{\lrate}^2 + 2\Delta'\norm{\lrate}^2.
 \end{align*}
-where the last equality follows from the fact that we chose $\Delta_1=\Delta$. Thus,
+Because $\Delta'$ satisfies either $\Delta'=0$ or $\Delta'=\lvert\Delta\rvert$, we have that $\Delta'\leq\lvert\Delta\rvert$. Thus,
 \begin{align*}
-\norm{\frac{L_{t+\Delta}^s - L_t^s}{\Delta} + \lrate L_t^s} &\leq \frac{2\epsilon}{\Delta} + 2\epsilon\norm{\lrate} + \frac{2\Delta\norm{\lrate}}{\Delta} \\
- &= \frac{2\epsilon}{\Delta} + 2\epsilon\norm{\lrate} + 2\norm{\lrate} \\
- &= 2\left(\frac{\epsilon}{\Delta} + \epsilon\norm{\lrate} + \norm{\lrate}\right).
+\norm{\frac{L_{t'}^s - L_{t'-\lvert\Delta\rvert}^s}{\lvert\Delta\rvert}+\lrate L_{t'-\Delta'}^s} &\leq \lvert\Delta\rvert\cdot\norm{\lrate}^2 + 2\Delta'\norm{\lrate}^2 \\
+ &\leq \lvert\Delta\rvert\cdot\norm{\lrate}^2 + 2\lvert\Delta\rvert\cdot\norm{\lrate}^2 \\
+ &= 3\lvert\Delta\rvert\cdot\norm{\lrate}^2 \\
+ &< 3\delta\norm{\lrate}^2 \\
+ &= \epsilon\,,
 \end{align*}
-Trying something, assume we chose $\Delta < \delta^*$ and $\delta^*<\nicefrac{1}{\norm{\lrate}}$. Continuing:
+where the last step used Equation~\eqref{eq:derivative_max_delta}. This concludes the proof of Equation~\eqref{eq:lower_deriv_backward}. We will now prove Equation~\eqref{eq:lower_deriv_forward}.
+
+Again choose any $\epsilon\in\realspos$, and let $\delta$ be given by
+\begin{equation*}
+\delta \coloneqq \frac{\epsilon}{2\norm{\lrate}^2}\,.
+\end{equation*}
+Consider any $\Delta\neq 0$ such that $\lvert\Delta\rvert<\delta$. We will show that
+\begin{equation*}
+\Big\lVert\frac{L_{t}^{s+\Delta}-L_t^s}{\Delta}-\lbound_t^s\lrate \Big\rVert<\epsilon\,.
+\end{equation*}
+We again first rewrite the statement to prevent having to perform case-work in the sign of $\Delta$. Let $s'\coloneqq\min\{s,s+\Delta\}$, and let $\Delta'\coloneqq s-s'$. Then,
+\begin{equation*}
+\Big\lVert\frac{L_{t}^{s+\Delta}-L_t^s}{\Delta}-\lbound_t^s\lrate \Big\rVert = \norm{\frac{L_t^{s'+\lvert\Delta\rvert} - L_t^{s'}}{\lvert\Delta\rvert} - L_t^{s'+\Delta'}\lrate}\,.
+\end{equation*}
+Now,
 \begin{align*}
- &\leq 2\left(\frac{\epsilon}{\delta^*} + \epsilon\norm{\lrate} + \norm{\lrate}\right) \\
- &\leq 2\left(\epsilon\norm{\lrate} + \epsilon\norm{\lrate} + \norm{\lrate}\right) \\
- &= 4\epsilon\norm{\lrate} + 2\norm{\lrate} \\
+\norm{\frac{L_t^{s'+\lvert\Delta\rvert} - L_t^{s'}}{\lvert\Delta\rvert} - L_t^{s'+\Delta'}\lrate} &= \norm{\frac{L_t^{s'}L_{s'}^{s'+\lvert\Delta\rvert} - L_t^{s'}}{\lvert\Delta\rvert} - L_t^{s'}L_{s'}^{s'+\Delta'}\lrate} \\
+ &\leq \norm{L_t^{s'}}\norm{\frac{L_{s'}^{s'+\lvert\Delta\rvert} - I}{\lvert\Delta\rvert} - L_{s'}^{s'+\Delta'}\lrate} \\
+ &\leq \norm{\frac{L_{s'}^{s'+\lvert\Delta\rvert} - I}{\lvert\Delta\rvert} - L_{s'}^{s'+\Delta'}\lrate} \\
+ &= \norm{\frac{L_{0}^{\lvert\Delta\rvert} - I}{\lvert\Delta\rvert} - L_{0}^{\Delta'}\lrate} \\
+ &\leq \norm{\frac{L_{0}^{\lvert\Delta\rvert} - I}{\lvert\Delta\rvert} - \lrate} + \norm{\lrate - L_{0}^{\Delta'}\lrate} \\
+ &\leq \frac{1}{\lvert\Delta\rvert}\cdot\norm{L_{0}^{\lvert\Delta\rvert} - (I+\lvert\Delta\rvert\lrate)} + \norm{\lrate}\norm{I - L_{0}^{\Delta'}} \\
+ &\leq \lvert\Delta\rvert\cdot\norm{\lrate}^2 + \Delta'\norm{\lrate}^2 \\
+ &\leq \lvert\Delta\rvert\cdot\norm{\lrate}^2 + \lvert\Delta\rvert\cdot\norm{\lrate}^2 \\
+ &= 2\lvert\Delta\rvert\cdot\norm{\lrate}^2 \\
+ &< 2\delta\norm{\lrate}^2 \\
+ &= \epsilon\,.
 \end{align*}
 \end{proof}
 
@@ -881,17 +887,76 @@ which provides the required contradiction; see Equation~\eqref{eq:chooseepsilon}
 \end{proof}
 
 \begin{theorem}
-Consider any $t,s\in[0,+\infty)$ such that $t<s$ and let $\rateset$ be an arbitrary closed and bounded set of rate matrices that has separately specified rows, with corresponding lower transition rate operator $\lrate$. Then for all $f\in\gamblesX$, there is some $P\in\mprocesses_{\rateset}$ such that
+Consider any $t,s\in\realsnonneg$ such that $t<s$ and let $\rateset$ be an arbitrary closed and bounded set of rate matrices that has separately specified rows, with corresponding lower transition rate operator $\lrate$. Then for all $f\in\gamblesX$ and $\epsilon\in\realspos$, there is some $P\in\mprocesses_{\rateset}$ such that
 \begin{equation*}
-\lbound_t^sf=T_t^sf.
-\end{equation*}
-Specifically, this equality is established by the time-inhomogenous Markov chain that is characterized by 
-\begin{equation*}
-Q_\tau(x_\tau,\cdot)\coloneqq \argmin\left\{ Q(x_\tau,\cdot)\bigl[\lbound_\tau^sf\bigr]\,:\,Q(x_\tau,\cdot)\in\mathcal{Q}_{x_\tau}\right\}\quad\text{for all $x_\tau\in\states$ and $\tau\in[t,s]$}\,.
+\norm{\lbound_t^sf-T_t^sf} < \epsilon\,.
 \end{equation*}
 \end{theorem}
 \begin{proof}
-{\bf TODO:} Prove this.
+Choose any $f\in\gamblesX$ and any $\epsilon\in\realspos$.
+
+Define a \emph{lower-characterizing rate matrix} $Q_\tau$ as
+\begin{equation}\label{eq:lower_char_rate_matrix}
+Q_\tau(x_\tau,\cdot)\coloneqq \argmin\left\{ Q(x_\tau,\cdot)\bigl[\lbound_\tau^sf\bigr]\,:\,Q(x_\tau,\cdot)\in\mathcal{Q}_{x_\tau}\right\}\quad\text{for all $x_\tau\in\states$ and $\tau\in[t,s]$}\,.
+\end{equation}
+Note that the $\argmin\{\cdot\}$ may be set-valued, in which case take an arbitrary element.
+Furthermore, let $Q_\tau \coloneqq Q_t$ for all $\tau\in[0,t]$, and let $Q_\tau\coloneqq Q_s$ for all $\tau>s$.
+
+Let $C\coloneqq (s-t)$, define
+\begin{equation}\label{eq:delta_required_for_tight_bound}
+\delta \coloneqq \frac{\epsilon}{2C\norm{\mathcal{Q}}^2\norm{f}}\,,
+\end{equation}
+and choose any $n>\nicefrac{C}{\delta}$. Then, for $\Delta\coloneqq \nicefrac{C}{n}$, we have $\Delta<\delta$.
+
+For all $k\in\{0,\ldots,n\}$, define $t_k=t+k\Delta$. Let $u\coloneqq t_0,t_1,\ldots,t_n$. Finally, define a piecewise-constant approximation $Q_\tau^u$ to $Q_\tau$ such that, for all $k\in\{1,\ldots,n\}$,
+\begin{equation}\label{eq:lower_char_matrix_linear_approx}
+Q_\tau^u \coloneqq Q_{t_k},\quad\text{for all $\tau\in (t_{k-1},t_k]$}\,.
+\end{equation}
+Let $Q_\tau^u\coloneqq Q_{t_0}$ for all $\tau\leq t_0$ and let $Q_\tau^u\coloneqq Q_{t_n}$ for all $\tau>t_n$.
+
+Then, by Corollary~\ref{corollary:exponential_process_approximates_everywhere_and_has_derivative}, there is some $P\in\mathbb{P}_\mathcal{Q}^M$ that is characterized by $Q_\tau^u$, with corresponding transition matrix $T_t^s$. Furthermore,
+\begin{align*}
+\norm{L_t^sf - T_t^sf} &= \norm{L_{t_0}^{t_n}f - T_{t_0}^{t_n}f} \\
+ &\leq \norm{L_{t_0}^{t_n}f - T_{t_0}^{t_{n-1}}L_{t_{n-1}}^{t_n}f} + \norm{T_{t_0}^{t_{n-1}}L_{t_{n-1}}^{t_n}f - T_{t_0}^{t_n}f} \\
+ &\leq \norm{L_{t_0}^{t_{n-1}}L_{t_{n-1}}^{t_n}f - T_{t_0}^{t_{n-1}}L_{t_{n-1}}^{t_n}f} + \norm{{T_{t_0}^{t_{n-1}}}}\cdot\norm{L_{t_{n-1}}^{t_n}f - T_{t_{n-1}}^{t_n}f} \\
+ &\leq \norm{L_{t_0}^{t_{n-1}}\left[L_{t_{n-1}}^{t_n}f\right] - T_{t_0}^{t_{n-1}}\left[L_{t_{n-1}}^{t_n}f\right]} + \norm{L_{t_{n-1}}^{t_n}f - T_{t_{n-1}}^{t_n}f} \,.
+\end{align*}
+Recursion on the first summand yields
+\begin{align*}
+\norm{L_t^sf - T_t^sf} &\leq \norm{L_{t_0}^{t_{n-1}}\left[L_{t_{n-1}}^{t_n}f\right] - T_{t_0}^{t_{n-1}}\left[L_{t_{n-1}}^{t_n}f\right]} + \norm{L_{t_{n-1}}^{t_n}f - T_{t_{n-1}}^{t_n}f} \\
+ &\leq \norm{L_{t_0}^{t_{n-2}}\left[L_{t_{n-2}}^{t_n}f\right] - T_{t_0}^{t_{n-2}}\left[L_{t_{n-2}}^{t_n}f\right]} \\
+ &\quad\quad\quad+ \norm{L_{t_{n-2}}^{t_{n-1}}\left[L_{t_{n-1}}^{t_n}f\right] - T_{t_{n-2}}^{t_{n-1}}\left[L_{t_{n-1}}^{t_n}f\right]} + \norm{L_{t_{n-1}}^{t_n}f - T_{t_{n-1}}^{t_n}f} \\
+&\vdots \\
+ &\leq \sum_{i=1}^{n} \norm{L_{t_{i-1}}^{t_i}\left[L_{t_i}^{t_n}f\right] - T_{t_{i-1}}^{t_i}\left[L_{t_i}^{t_n}f\right]}\,.
+\end{align*}
+For all $i\in\{1,\ldots,n\}$, we have
+\begin{align*}
+&\quad \norm{L_{t_{i-1}}^{t_i}\left[L_{t_i}^{t_n}f\right] - T_{t_{i-1}}^{t_i}\left[L_{t_i}^{t_n}f\right]} \\
+&\leq \norm{L_{t_{i-1}}^{t_i}\left[L_{t_i}^{t_n}f\right] - \left[I+\Delta\lrate\right]L_{t_i}^{t_n}f} + \norm{\left[I+\Delta\lrate\right]L_{t_i}^{t_n}f - T_{t_{i-1}}^{t_i}\left[L_{t_i}^{t_n}f\right]} \\
+&\leq \norm{L_{t_{i-1}}^{t_i} - \left[I+\Delta\lrate\right]}\cdot\norm{f} + \norm{\left[I+\Delta\lrate\right]L_{t_i}^{t_n}f - T_{t_{i-1}}^{t_i}\left[L_{t_i}^{t_n}f\right]} \\
+&\leq \Delta^2\norm{\lrate}^2\norm{f} + \norm{\left[I+\Delta\lrate\right]L_{t_i}^{t_n}f - T_{t_{i-1}}^{t_i}\left[L_{t_i}^{t_n}f\right]} \\
+&\leq \Delta^2\norm{\mathcal{Q}}^2\norm{f} + \norm{\left[I+\Delta\lrate\right]L_{t_i}^{t_n}f - T_{t_{i-1}}^{t_i}\left[L_{t_i}^{t_n}f\right]}\,.
+\end{align*}
+By Equation~\eqref{eq:lower_char_rate_matrix}, we have $Q_{t_i}L_{t_i}^{t_n}f = \lrate L_{t_i}^{t_n}f$. Furthermore, by Equation~\eqref{eq:lower_char_matrix_linear_approx}, we have $Q_{t_i}^u=Q_{t_i}$, so that
+\begin{align*}
+\norm{L_{t_{i-1}}^{t_i}\left[L_{t_i}^{t_n}f\right] - T_{t_{i-1}}^{t_i}\left[L_{t_i}^{t_n}f\right]} &\leq \Delta^2\norm{\mathcal{Q}}^2\norm{f} + \norm{\left[I+\Delta\lrate\right]L_{t_i}^{t_n}f - T_{t_{i-1}}^{t_i}\left[L_{t_i}^{t_n}f\right]} \\
+ &= \Delta^2\norm{\mathcal{Q}}^2\norm{f} + \norm{\left[I+\Delta Q_{t_i}^u\right]L_{t_i}^{t_n}f - T_{t_{i-1}}^{t_i}\left[L_{t_i}^{t_n}f\right]} \\
+ &\leq \Delta^2\norm{\mathcal{Q}}^2\norm{f} + \norm{\left[I+\Delta Q_{t_i}^u\right] - T_{t_{i-1}}^{t_i}}\cdot\norm{f}\\
+ &\leq 2\Delta^2\norm{\mathcal{Q}}^2\norm{f}\,,
+\end{align*}
+where the last step used Corollary~\ref{corollary:exponential_process_approximates_everywhere_and_has_derivative}.
+
+Thus, we find
+\begin{align*}
+\norm{L_t^sf - T_t^sf} &\leq \sum_{i=1}^n \norm{L_{t_{i-1}}^{t_i}\left[L_{t_i}^{t_n}f\right] - T_{t_{i-1}}^{t_i}\left[L_{t_i}^{t_n}f\right]} \\
+ &\leq \sum_{i=1}^n 2\Delta^2\norm{\mathcal{Q}}^2\norm{f} \\
+ &= 2n\Delta^2\norm{\mathcal{Q}}^2\norm{f} \\
+ &= 2C\Delta\norm{\mathcal{Q}}^2\norm{f}\,,
+\end{align*}
+so that by Equation~\eqref{eq:delta_required_for_tight_bound} and the fact that $\Delta<\delta$, we have
+\begin{equation*}
+\norm{L_t^sf - T_t^sf} \leq 2C\Delta\norm{\mathcal{Q}}^2\norm{f} < 2C\delta\norm{\mathcal{Q}}^2\norm{f} = \epsilon\,.
+\end{equation*}
 \end{proof}
 
 \section{Imprecise Continuous-Time Non-Markov Processes}\label{sec:imp_non_markov}
