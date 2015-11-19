@@ -15,6 +15,9 @@
 %\usepackage{pdfsync}
 %\usepackage{authblk}
 
+\theoremstyle{definition}
+\newtheorem{exmp}{Example}%[section]
+
 \renewcommand{\ttdefault}{cmtt}
 \newtheorem{theorem}{Theorem}
 \newtheorem{proposition}[theorem]{Proposition}
@@ -72,6 +75,7 @@
 
 \newcommand{\argmin}{\arg\min}
 
+
 \title{Imprecise Continuous-Time Discrete-Space Stochastic Processes}
 
 %\author[1]{Thomas E. Krak\thanks{t.e.krak@uu.nl}}
@@ -80,7 +84,6 @@
 %\affil[2]{Ghent University}
 
 \author{Thomas Krak \and Jasper de Bock}
-
 
 \begin{document}
 
@@ -464,6 +467,18 @@ TODO
 \label{sec:iCTMC}
 
 *** starten van een set van Q's (bounded), en dan drie manieren beschouwen om imprecies te maken:
+
+Consider any set $\rateset\subseteq\mathcal{R}$ of rate matrices. Then $\rateset$ is said to be \emph{non-empty} if $\rateset\neq\emptyset$ and $\rateset$ is said to be \emph{bounded} if $\norm{\rateset}<+\infty$. The following proposition provides a simple alternative characterisation of boundedness.
+
+\begin{proposition}
+A set of rate matrices $\rateset\subseteq\mathcal{R}$ is bounded if and only if
+\begin{equation*}
+\inf\{Q(x,x)\colon Q\in\rateset\}>-\infty\text{~~for all $x\in\states$.}
+\end{equation*}
+\end{proposition}
+\begin{proof}
+*** moet dit nog invullen ***
+\end{proof}
 
 \subsection{*** onder van homogene ***}
 
@@ -873,70 +888,71 @@ Now,
 
 \subsection{Onderenveloppe dualiteit Q Qonder}
 
-One of the objectives of this paper is to establish a connection between the operator $\lbound_t^s$ that we have just introduced, and the different types of imprecise continous-time Markov chains that were discussed in Section~\ref{sec:iCTMC}. Since, the former is derived from a lower transition rate operator $\lrate$ and the latter are derived from a set of rate matrices $\rateset$, the obvious first step is to establish a connection between $\rateset$ and $\lrate$. %In order to do that, we start by discussing some properties of sets of rate matrices.
+One of the objectives of this paper is to establish a connection between the operator $\lbound_t^s$ that we have just introduced, and the different types of imprecise continous-time Markov chains that were discussed in Section~\ref{sec:iCTMC}. Since the former is derived from a lower transition rate operator $\lrate$ and the latter are derived from a non-empty bounded set of rate matrices $\rateset$, the obvious first step is to investigate the connection between lower transition rate operators and non-empty bounded sets of rate matrices.
+% $\rateset$ and $\lrate$. 
+%In order to do that, we start by discussing some properties of sets of rate matrices.
 
-Consider any set $\rateset\subseteq\mathcal{R}$ of rate matrices. Then $\rateset$ is said to be \emph{non-empty} if $\rateset\neq\emptyset$ and $\rateset$ is said to be \emph{bounded} if $\norm{\rateset}<+\infty$. The following proposition provides a simple alternative characterisation of boundedness.
+We start by considering a non-empty bounded set $\rateset\subseteq\mathcal{R}$ of rate matrices. For any $f\in\gamblesX$,
+\begin{equation}\label{eq:correspondinglowertrans}
+\lrate f\coloneqq\inf\{Qf\colon Q\in\rateset\}\\[2mm]
+\end{equation}
+is then again an element of $\gamblesX$.\footnote{%Since $\rateset$ is non-empty, the components of $\lrate f$ cannot be $+\infty$.
+Since $\rateset$ is bounded,~\ref{N:normAf} implies that $\norm{Qf}\leq\norm{Q}\norm{f}<+\infty$ for all $Q\in\rateset$. Therefore, and since $\rateset$ is non-empty, the components of $\lrate f$ cannot be infinite. Hence, $\lrate f$ is a real-valued function on $\states$.}
+Therefore, $\lrate$ is a map from $\gamblesX$ to $\gamblesX$. It is a matter of straightforward verification to see that $\lrate$ is a lower transition operator.
 
 \begin{proposition}
-A set of rate matrices $\rateset\subseteq\mathcal{R}$ is bounded if and only if
-\begin{equation*}
-\inf\{Q(x,x)\colon Q\in\rateset\}>-\infty\text{~~for all $x\in\states$.}
-\end{equation*}
+For any non-empty bounded set $\rateset\subseteq\mathcal{R}$ of rate matrices, the corresponding operator $\lrate\colon\gamblesX\to\gamblesX$, as defined by Equation~\eqref{eq:correspondinglowertrans}, is a lower transition rate operator.
 \end{proposition}
 \begin{proof}
-*** moet dit nog invullen ***
+*** TO BE COMPLETED ***
 \end{proof}
 
-If a $\rateset$ is non-empty and bounded, then for any $f\in\gamblesX$,
-\begin{equation*}
-\lrate f\coloneqq\inf\{Qf\colon Q\in\rateset\}
-\end{equation*}
-will be a real number,\footnote{Since $\rateset$ is non-empty, $\lrate f$ cannot be $+\infty$. 
-Since $\rateset$ is bounded,~\ref{N:normAf} implies that $\norm{Qf}\leq\norm{Q}\norm{f}<+\infty$ for all $Q\in\rateset$, and therefore, $\lrate f$ cannot be $-\infty$.} and therefore, $\lrate$ 
+\noindent
+Because of this result, it makes sense to call $\lrate$, as defined by Equation~\eqref{eq:correspondinglowertrans}, the \emph{lower transition operator that corresponds to $\rateset$}. %As we have just seen, every non-empty bounded set $\rateset\subseteq\mathcal{R}$ of rate matrices has such a corresponding lower transition rate operator $\lrate$. 
+However, this correspondence is not one-to-one. As the following example establishes, multiple non-empty bounded sets of rate matrices may have the same corresponding lower transition rate operator.
 
+\begin{exmp}
+*** TO BE COMPLETED ***
+\end{exmp}
 
+If
 
-
-
-
-
-
-\begin{equation*}
-\rateset_x\coloneqq\{Q(x,\cdot)\colon Q\in\rateset\}
-\text{ for all $x\in\states$.}
-\end{equation*}
-We say that $\rateset$ has \emph{separately specified rows} if
-\begin{equation*}
-Q\in\rateset\asa(\forall x\in\states)~Q(x,\cdot)\in\rateset_x.
-\end{equation*}
-A set $\rateset\subseteq\mathcal{R}$ of rate matrices is said to be bounded if $\inf\{Q(x,x)\colon Q\in\rateset\}>-\infty$ for all $x\in\states$ or, equivalently, if $\norm{\rateset}<\infty$. 
-
-
-\begin{definition}\label{def:low_trans_rate}
-Consider a map $\lrate\colon\gamblesX\to\gamblesX$ and a bounded set $\rateset$ of rate matrices. Then $\lrate$ is said to be the lower envelope of $\rateset$ if
-\begin{equation}\label{eq:deflowerbound}
-\lrate f=\inf\bigl\{Qf\colon Q\in\rateset\bigr\}\text{ for all $f\in\gamblesX$}.
+Conversely, with any lower transition rate operator $\lrate$, we can associate the following set of dominating rate matrices:
+\begin{equation}\label{eq:dominatingratematrices}
+\rateset_{\lrate}\coloneqq
+\left\{
+Q\in\mathcal{R}
+\colon
+Qf\geq\lrate f\text{ for all $f\in\gamblesX$}
+\right\}
 \end{equation}
+As we will show in proposition~\ref{prop:dominatingproperties} below, this set of dominating rate matrices satisfies some very nice properties: it is non-empty, bounded, closed and convex, and it has \emph{separately specified rows}.
+
+\begin{definition}
+A set of rate matrices $\rateset\subseteq\mathcal{R}$ has separately specified rows if
+\begin{equation*}
+\rateset=\left\{
+Q\in\mathcal{R}
+\colon
+(\forall x\in\states)~Q(x,\cdot)\in\rateset_x\right\},
+\end{equation*}
+where, for every $x\in\states$, $\rateset_x\coloneqq\{Q(x,\cdot)\colon Q\in\rateset\}$ is some set of rows from which the $x$-th row of the rate matrices in $\rateset$ are taken.
 \end{definition}
 
-\begin{lemma}\label{lemma:lrateiscoherent}
-For any bounded set $\rateset$ of rate matrices, the corresponding lower transition rate operator $\lrate$ is coherent, as per Definition~\ref{def:coh_low_trans_rate}.
-\end{lemma}
-\begin{proof}
-This is immediate.
-\end{proof}
-
-For any coherent lower transition rate operator $\lrate$, we use $\rateset_{\lrate}$ to denote the set of all rate matrices $Q$ that dominate $\lrate$, in the sense that
-\begin{equation*}
-Qf\geq\lrate f\text{ for all $f\in\gamblesX$.}
-\end{equation*}
-
-\begin{lemma}
-Consider a coherent lower transition rate operator $\lrate$ and let $\rateset_{\lrate}$ be the corresponding set of dominating rate matrices. Then $\rateset_{\lrate}$ is closed, bounded and convex, and has separately specified rows. Furthermore, for all $f\in\gamblesX$, there is some $Q\in\rateset_{\lrate}$ such that $\lrate f=Qf$.
-\end{lemma}
+\begin{proposition}\label{prop:dominatingproperties}
+Consider a lower transition rate operator $\lrate$ and let $\rateset_{\lrate}$ be the corresponding set of dominating rate matrices, as defined by Equation~\eqref{eq:dominatingratematrices}. Then $\rateset_{\lrate}$ is non-empty, bounded, closed and convex, and it has separately specified rows. Furthermore, for all $f\in\gamblesX$, there is some $Q\in\rateset_{\lrate}$ such that $\lrate f=Qf$.
+\end{proposition}
 \begin{proof}
 *** This is not trivial, but I am convinced it is true (we would have to adapt the proof for a similar well-known result for coherent lower previsions) ***
 \end{proof}
+
+
+\begin{exmp}
+*** TO BE COMPLETED ***
+\end{exmp}
+
+
+$\rateset$ needs to have tree additional properties: it must to be \emph{bounded} and \emph{convex}, and it must have \emph{separately specified rows}. The first two properties require no further explanation
 
 \begin{corollary}
 Consider a closed, bounded and convex set $\rateset$ of rate matrices that has separately specified rows. If $\lrate_\rateset$
