@@ -212,7 +212,7 @@ These norms satisfy the following properties.
 For all $f,g\in\gamblesX$, all $A,B$ from $\gamblesX$ to $\gamblesX$ that are non-negatively homogeneous, all $\lambda\in\reals$ and all $x\in\states$, we have that
 \vspace{5pt}
 
-\begin{enumerate}[label=N\arabic*:]
+\begin{enumerate}[label=N\arabic*:,ref=N\arabic*]
 \item
 $\abs{f(x)}\leq\norm{f}$
 \item
@@ -233,7 +233,7 @@ $\norm{A+B}\leq\norm{A}+\norm{B}$
 $\norm{AB}\leq\norm{A}\norm{B}$
 \item
 $\norm{\lambda A}=\abs{\lambda}\norm{A}$
-\item
+\item\label{N:normAf}
 $\norm{Af}\leq\norm{A}\norm{f}$
 \item
 $\norm{A}=1$ if $A$ is a stochastic matrix.
@@ -461,6 +461,7 @@ TODO
 %\section{The Lower Transition Operator}\label{sec:lower_operator}
 
 \section{Imprecise Continuous-Time Markov chains}
+\label{sec:iCTMC}
 
 *** starten van een set van Q's (bounded), en dan drie manieren beschouwen om imprecies te maken:
 
@@ -530,6 +531,7 @@ This is immediate from Definitions \ref{def:lower_markov} and \ref{def:lower_non
 \end{proof}
 
 \section{An important lower transition operator}
+\label{sec:lowertrans}
 
 
 
@@ -584,7 +586,7 @@ Since a coherent lower transition operator is just a finite vector of coherent l
 We now first establish the connection between coherent lower transition rate operators and coherent lower transition operators. We will assume that we are given some coherent lower transition rate operator $\lrate$.
 
 \begin{lemma}\label{lemma:normQsmallenough}
-If $0<\Delta\leq\nicefrac{1}{\norm{\lrate}}$, then $(I+\Delta\lrate)$ is a coherent lower transition operator.
+If $0<\Delta\norm{\lrate}\leq1$, then $(I+\Delta\lrate)$ is a coherent lower transition operator.
 \end{lemma}
 \begin{proof}
 Just check each of the three defining properties. C2 and C3 are trivial. C1 requires a bit more work.
@@ -871,7 +873,34 @@ Now,
 
 \subsection{Onderenveloppe dualiteit Q Qonder}
 
-For any set $\rateset\subseteq\mathcal{R}$ of rate matrices, we let
+One of the objectives of this paper is to establish a connection between the operator $\lbound_t^s$ that we have just introduced, and the different types of imprecise continous-time Markov chains that were discussed in Section~\ref{sec:iCTMC}. Since, the former is derived from a lower transition rate operator $\lrate$ and the latter are derived from a set of rate matrices $\rateset$, the obvious first step is to establish a connection between $\rateset$ and $\lrate$. %In order to do that, we start by discussing some properties of sets of rate matrices.
+
+Consider any set $\rateset\subseteq\mathcal{R}$ of rate matrices. Then $\rateset$ is said to be \emph{non-empty} if $\rateset\neq\emptyset$ and $\rateset$ is said to be \emph{bounded} if $\norm{\rateset}<+\infty$. The following proposition provides a simple alternative characterisation of boundedness.
+
+\begin{proposition}
+A set of rate matrices $\rateset\subseteq\mathcal{R}$ is bounded if and only if
+\begin{equation*}
+\inf\{Q(x,x)\colon Q\in\rateset\}>-\infty\text{~~for all $x\in\states$.}
+\end{equation*}
+\end{proposition}
+\begin{proof}
+*** moet dit nog invullen ***
+\end{proof}
+
+If a $\rateset$ is non-empty and bounded, then for any $f\in\gamblesX$,
+\begin{equation*}
+\lrate f\coloneqq\inf\{Qf\colon Q\in\rateset\}
+\end{equation*}
+will be a real number,\footnote{Since $\rateset$ is non-empty, $\lrate f$ cannot be $+\infty$. 
+Since $\rateset$ is bounded,~\ref{N:normAf} implies that $\norm{Qf}\leq\norm{Q}\norm{f}<+\infty$ for all $Q\in\rateset$, and therefore, $\lrate f$ cannot be $-\infty$.} and therefore, $\lrate$ 
+
+
+
+
+
+
+
+
 \begin{equation*}
 \rateset_x\coloneqq\{Q(x,\cdot)\colon Q\in\rateset\}
 \text{ for all $x\in\states$.}
@@ -882,10 +911,11 @@ Q\in\rateset\asa(\forall x\in\states)~Q(x,\cdot)\in\rateset_x.
 \end{equation*}
 A set $\rateset\subseteq\mathcal{R}$ of rate matrices is said to be bounded if $\inf\{Q(x,x)\colon Q\in\rateset\}>-\infty$ for all $x\in\states$ or, equivalently, if $\norm{\rateset}<\infty$. 
 
-\begin{definition}[Lower Transition Rate Operator]\label{def:low_trans_rate}
-Consider any bounded set $\rateset$ of rate matrices. Then, the corresponding \emph{lower transition rate operator} $\lrate$ is a map from $\gamblesX$ to $\gamblesX$. For all $f\in\gamblesX$, $\lrate f$ is defined by
+
+\begin{definition}\label{def:low_trans_rate}
+Consider a map $\lrate\colon\gamblesX\to\gamblesX$ and a bounded set $\rateset$ of rate matrices. Then $\lrate$ is said to be the lower envelope of $\rateset$ if
 \begin{equation}\label{eq:deflowerbound}
-\left[\lrate f\right](x)\coloneqq\inf\bigl\{\left[Qf\right](x)\colon Q\in\rateset\bigr\}\text{ for all $x\in\states$}.
+\lrate f=\inf\bigl\{Qf\colon Q\in\rateset\bigr\}\text{ for all $f\in\gamblesX$}.
 \end{equation}
 \end{definition}
 
@@ -902,11 +932,18 @@ Qf\geq\lrate f\text{ for all $f\in\gamblesX$.}
 \end{equation*}
 
 \begin{lemma}
-Consider a coherent lower transition rate operator $\lrate$ and let $\rateset_{\lrate}$ be the corresponding set of dominating rate matrices. Then $\rateset_{\lrate}$ is closed, bounded and convex, and has separately specified rows. Also, for all $f\in\gamblesX$, there is some $Q\in\rateset_{\lrate}$ such that $\lrate f=Qf$. Furthermore, $\norm{\lrate}<\infty$.
+Consider a coherent lower transition rate operator $\lrate$ and let $\rateset_{\lrate}$ be the corresponding set of dominating rate matrices. Then $\rateset_{\lrate}$ is closed, bounded and convex, and has separately specified rows. Furthermore, for all $f\in\gamblesX$, there is some $Q\in\rateset_{\lrate}$ such that $\lrate f=Qf$.
 \end{lemma}
 \begin{proof}
 *** This is not trivial, but I am convinced it is true (we would have to adapt the proof for a similar well-known result for coherent lower previsions) ***
 \end{proof}
+
+\begin{corollary}
+Consider a closed, bounded and convex set $\rateset$ of rate matrices that has separately specified rows. If $\lrate_\rateset$
+\end{corollary}
+
+
+Also, $\norm{\lrate}<\infty$.
 
 \noindent
 If $\lrate$ is the coherent lower transition rate operator that corresponds to some bounded set $\rateset$ of rate matrices, then clearly: $\rateset\subseteq\rateset_{\lrate}$.
