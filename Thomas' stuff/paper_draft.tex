@@ -601,7 +601,7 @@ Since a coherent lower transition operator is just a finite vector of coherent l
 We now first establish the connection between coherent lower transition rate operators and coherent lower transition operators. We will assume that we are given some coherent lower transition rate operator $\lrate$.
 
 \begin{lemma}\label{lemma:normQsmallenough}
-If $0<\Delta\norm{\lrate}\leq1$, then $(I+\Delta\lrate)$ is a coherent lower transition operator.
+If $0\leq\Delta\norm{\lrate}\leq1$, then $(I+\Delta\lrate)$ is a coherent lower transition operator.
 \end{lemma}
 \begin{proof}
 Just check each of the three defining properties. C2 and C3 are trivial. C1 requires a bit more work.
@@ -902,7 +902,7 @@ is then again an element of $\gamblesX$.\footnote{%Since $\rateset$ is non-empty
 Since $\rateset$ is bounded,~\ref{N:normAf} implies that $\norm{Qf}\leq\norm{Q}\norm{f}<+\infty$ for all $Q\in\rateset$. Therefore, and since $\rateset$ is non-empty, the components of $\lrate f$ cannot be infinite. Hence, $\lrate f$ is a real-valued function on $\states$.}
 Therefore, $\lrate$ is a map from $\gamblesX$ to $\gamblesX$. We call this operator $\lrate$, as defined by Equation~\eqref{eq:correspondinglowertrans}, the \emph{lower envelope} of $\rateset$. It is a matter of straightforward verification to see that $\lrate$ is a lower transition operator.
 
-\begin{proposition}
+\begin{proposition}\label{prop:lowerenvelopeislowertrans}
 For any non-empty bounded set $\rateset\subseteq\mathcal{R}$ of rate matrices, the corresponding operator $\lrate\colon\gamblesX\to\gamblesX$, as defined by Equation~\eqref{eq:correspondinglowertrans}, is a lower transition rate operator.
 \end{proposition}
 \begin{proof}
@@ -911,7 +911,7 @@ For any non-empty bounded set $\rateset\subseteq\mathcal{R}$ of rate matrices, t
 
 \noindent
 Inspired by this result, we will also refer to the lower envelope of $\rateset$ as the \emph{lower transition operator that corresponds to $\rateset$}. %As we have just seen, every non-empty bounded set $\rateset\subseteq\mathcal{R}$ of rate matrices has such a corresponding lower transition rate operator $\lrate$. 
-However, this correspondence is not one-to-one. As the following example establishes, multiple non-empty bounded sets of rate matrices may have the same corresponding lower transition rate operator.
+However, this correspondence is not one-to-one. As the following example establishes, different non-empty bounded sets of rate matrices may have the same corresponding lower transition rate operator.
 
 \begin{exmp}
 *** TO BE COMPLETED ***
@@ -933,6 +933,18 @@ As our next result shows, this set $\rateset_{\lrate}$ is non-empty and bounded,
 Consider a lower transition rate operator $\lrate$ and let $\rateset_{\lrate}$ be the corresponding set of dominating rate matrices, as defined by Equation~\eqref{eq:dominatingratematrices}. Then $\rateset_{\lrate}$ is non-empty and bounded and, for all $f\in\gamblesX$, there is some $Q\in\rateset_{\lrate}$ such that $\lrate f=Qf$.
 \end{proposition}
 \begin{proof}
+Fix any $f\in\gamblesX$. *** choose $\Delta$ appropriately *** Define $\lt\coloneqq I+\Delta\lrate$. Since we know from Proposition~\ref{prop:lowerenvelopeislowertrans} that $\lrate$ is a lower transition rate operator, it follows from Lemma~\ref{lemma:normQsmallenough} that $\lt$ is a lower transition operator. For any $x\in\states$, we now let
+\begin{equation*}
+\lt_x(g)\coloneqq(\lt g)(x)
+\text{~~for all $g\in\gamblesX$.}
+\end{equation*}
+Since $\lt$ is a lower transition operator, it follows that $\lt_x\colon \gamblesX\to\reals$ is subadditive, positively homogeneous and bounded below by the minimum operator. Hence, by definition~\cite[Definition~2.3.3]{Walley:1991vk}, $\lt_x$ is a coherent lower prevision on $\gamblesX$. Because of \cite[Theorem~3.3.3(b)]{Walley:1991vk}, this implies the existence of an expectation operator $E_x$ on $\gamblesX$---Reference~\cite{Walley:1991vk} calls this a linear prevision on $\gamblesX$---such that $E_xg\geq\lt_xg$ for all $g\in\gamblesX$ and $E_xf=\lt_xf$. 
+
+
+Now let $\mathbb{P}$ be the set of all linear maps $P\colon\gamblesX\to\reals$ that dominate the minimum operator; using the terminology in Reference~\cite{Walley:1991vk}, this is the set of all linear previsions on $\gamblesX$; using more conventional terminology, this is simply the set of all expectation operators on $\gamblesX$. 
+
+
+
 *** TO BE COMPLETED ***
 \end{proof}
 
@@ -1915,5 +1927,9 @@ By continuing in this way (applying induction), we find that
 
 
 \end{proof}
+
+
+\bibliographystyle{plain} 
+\bibliography{general}
 
 \end{document}
