@@ -470,10 +470,10 @@ TODO
 
 Consider any set $\rateset\subseteq\mathcal{R}$ of rate matrices. Then $\rateset$ is said to be \emph{non-empty} if $\rateset\neq\emptyset$ and $\rateset$ is said to be \emph{bounded} if $\norm{\rateset}<+\infty$. The following proposition provides a simple alternative characterisation of boundedness.
 
-\begin{proposition}
+\begin{proposition}\label{prop:alternativedefforbounded}
 A set of rate matrices $\rateset\subseteq\mathcal{R}$ is bounded if and only if
 \begin{equation*}
-\inf\{Q(x,x)\colon Q\in\rateset\}>-\infty\text{~~for all $x\in\states$.}
+\inf\left\{Q(x,x)\colon Q\in\rateset\right\}>-\infty\text{~~for all $x\in\states$.}
 \end{equation*}
 \end{proposition}
 \begin{proof}
@@ -598,6 +598,13 @@ The set of all coherent lower transition operators is a complete metric space.
 Since a coherent lower transition operator is just a finite vector of coherent lower previsions, this result should follow fairly easily for the (known) fact that the set of all coherent lower previsions (on a given fixed space) is a complete metric space.
 \end{proof}
 
+\begin{lemma}\label{lem:normlratefinite}
+Let $\lrate$ be a lower transition rate operator. Then $0\leq\norm{\lrate}<+\infty$.
+\end{lemma}
+\begin{proof}
+*** TO BE COMPLETED ***
+\end{proof}
+
 We now first establish the connection between coherent lower transition rate operators and coherent lower transition operators. We will assume that we are given some coherent lower transition rate operator $\lrate$.
 
 \begin{lemma}\label{lemma:normQsmallenough}
@@ -624,8 +631,6 @@ is a coherent lower transition operator.
 \begin{proof}
 Trivial consequence of Lemma~\ref{lemma:normQsmallenough} and~\ref{lemma:compositioncoherence}.
 \end{proof}
-
-Also, $\norm{\lrate}<\infty$.
 
 \subsection{*** The operator of interest ***}
 
@@ -933,23 +938,26 @@ As our next result shows, this set $\rateset_{\lrate}$ is non-empty and bounded,
 Consider a lower transition rate operator $\lrate$ and let $\rateset_{\lrate}$ be the corresponding set of dominating rate matrices, as defined by Equation~\eqref{eq:dominatingratematrices}. Then $\rateset_{\lrate}$ is non-empty and bounded and, for all $f\in\gamblesX$, there is some $Q\in\rateset_{\lrate}$ such that $\lrate f=Qf$.
 \end{proposition}
 \begin{proof}
-Fix any $f\in\gamblesX$. *** choose $\Delta$ appropriately *** Define $\lt\coloneqq I+\Delta\lrate$. Since we know from Proposition~\ref{prop:lowerenvelopeislowertrans} that $\lrate$ is a lower transition rate operator, it follows from Lemma~\ref{lemma:normQsmallenough} that $\lt$ is a lower transition operator. For any $x\in\states$, we now let
+Fix any $f\in\gamblesX$. Choose $\Delta>0$ small enough such that $0\leq\Delta\norm{\lrate}\leq 1$ (this always possible because of Lemma~\ref{lem:normlratefinite}). Define $\lt\coloneqq I+\Delta\lrate$. Since $\lrate$ is a lower transition rate operator, it follows from Lemma~\ref{lemma:normQsmallenough} that $\lt$ is a lower transition operator. For any $x\in\states$, we now let
 \begin{equation*}
-\lt_x(g)\coloneqq(\lt g)(x)
+\lt_xg\coloneqq(\lt g)(x)
 \text{~~for all $g\in\gamblesX$.}
 \end{equation*}
-Since $\lt$ is a lower transition operator, it follows that $\lt_x\colon \gamblesX\to\reals$ is subadditive, positively homogeneous and bounded below by the minimum operator. Hence, by definition~\cite[Definition~2.3.3]{Walley:1991vk}, $\lt_x$ is a coherent lower prevision on $\gamblesX$. Because of \cite[Theorem~3.3.3(b)]{Walley:1991vk}, this implies the existence of an expectation operator $E_x$ on $\gamblesX$---Reference~\cite{Walley:1991vk} calls this a linear prevision on $\gamblesX$---such that $E_xg\geq\lt_xg$ for all $g\in\gamblesX$ and $E_xf=\lt_xf$. 
+Since $\lt$ is a lower transition operator, it follows that $\lt_x\colon \gamblesX\to\reals$ is subadditive, positively homogeneous and bounded below by the minimum operator. Hence, by definition~\cite[Definition~2.3.3]{Walley:1991vk}, $\lt_x$ is a coherent lower prevision on $\gamblesX$. Because of \cite[Theorem~3.3.3(b)]{Walley:1991vk}, this implies the existence of an expectation operator $E_x$ on $\gamblesX$---Reference~\cite{Walley:1991vk} calls this a linear prevision on $\gamblesX$---such that $E_xg\geq\lt_xg$ for all $g\in\gamblesX$ and $E_xf=\lt_xf$. Let $P_x$ be the unique probability mass function that corresponds to $E_x$. For all $x,y\in\states$, we now let $T(x,y)\coloneqq P_x(y)\coloneqq E_x(\ind{x})$. Then $T$ is clearly a stochastic matrix. Furthermore, for every $x\in\states$ and $g\in\gamblesX$, we have that $(Tg)(x)=E_xg$. Hence, it follows that $Tg\geq\lt g$ for all $g\in\gamblesX$ and that $Tf=\lt f$. Now let $Q\coloneqq\nicefrac{1}{\Delta}(T-I)$, which, because of Proposition~\ref{prop:rate_from_stochastic_matrix}, is a rate matrix. Since $Tf=\lt f$, it then follows that
+\begin{equation*}
+Qf=\frac{1}{\Delta}(Tf-f)\geq\frac{1}{\Delta}{\lt f-f}=\lrate f.
+\end{equation*}
+Similarly, since $Tg\geq\lt g$ for all $g\in\gamblesX$, it follows that $Qg\geq\lrate g$, or equivalently, since $Q$ is a rate matrix, that $Q\in\rateset_{\lrate}$. Since $f$ was arbitrary, this proofs that, for all $f\in\gamblesX$, there is some $Q\in\rateset_{\lrate}$ such that $Qf=\lrate f$. Since $\gamblesX$ is non-empty, this clearly implies that $\rateset_{\lrate}$ is non-empty.
 
-
-Now let $\mathbb{P}$ be the set of all linear maps $P\colon\gamblesX\to\reals$ that dominate the minimum operator; using the terminology in Reference~\cite{Walley:1991vk}, this is the set of all linear previsions on $\gamblesX$; using more conventional terminology, this is simply the set of all expectation operators on $\gamblesX$. 
-
-
-
-*** TO BE COMPLETED ***
+We end this proof by showing that $\rateset_{\lrate}$ is bounded. Consider any $x\in\states$. Then for all $Q\in\rateset_{\lrate}$, we have that $Q(x,x)=(Q\ind{x})(x)\geq(\lrate\ind{x})(x)$, which implies that
+\begin{equation*}
+\inf\left\{Q(x,x)\colon Q\in\rateset_{\lrate}\right\}\geq(\lrate\ind{x})(x)>-\infty.
+\end{equation*}
+Since $x\in\states$ is arbitary, Proposition~\ref{prop:alternativedefforbounded} now guarantees that $\rateset_{\lrate}$ is bounded. 
 \end{proof}
 
 \noindent
-Therefore, and because---as discussed above---every non-empty bounded set of rate matrices that has $\lrate$ as its lower envelope is a subset of $\rateset_{\lrate}$, we conclude that $\rateset_{\lrate}$ is the largest non-empty bounded set of rate matrices that has $\lrate$ as its lower envelope.
+Because of this result, and since---as discussed above---every non-empty bounded set of rate matrices that has $\lrate$ as its lower envelope is a subset of $\rateset_{\lrate}$, it follows that $\rateset_{\lrate}$ is the largest non-empty bounded set of rate matrices that has $\lrate$ as its lower envelope.
 Furthermore, as we will show in proposition~\ref{prop:dominatingproperties} below, this set $\rateset_{\lrate}$ is also closed and convex, and has \emph{separately specified rows}.
 
 \begin{definition}
