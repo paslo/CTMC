@@ -625,6 +625,8 @@ is a coherent lower transition operator.
 Trivial consequence of Lemma~\ref{lemma:normQsmallenough} and~\ref{lemma:compositioncoherence}.
 \end{proof}
 
+Also, $\norm{\lrate}<\infty$.
+
 \subsection{*** The operator of interest ***}
 
 \begin{definition}[Lower Transition Operator]\label{def:low_trans}
@@ -898,7 +900,7 @@ We start by considering a non-empty bounded set $\rateset\subseteq\mathcal{R}$ o
 \end{equation}
 is then again an element of $\gamblesX$.\footnote{%Since $\rateset$ is non-empty, the components of $\lrate f$ cannot be $+\infty$.
 Since $\rateset$ is bounded,~\ref{N:normAf} implies that $\norm{Qf}\leq\norm{Q}\norm{f}<+\infty$ for all $Q\in\rateset$. Therefore, and since $\rateset$ is non-empty, the components of $\lrate f$ cannot be infinite. Hence, $\lrate f$ is a real-valued function on $\states$.}
-Therefore, $\lrate$ is a map from $\gamblesX$ to $\gamblesX$. It is a matter of straightforward verification to see that $\lrate$ is a lower transition operator.
+Therefore, $\lrate$ is a map from $\gamblesX$ to $\gamblesX$. We call this operator $\lrate$, as defined by Equation~\eqref{eq:correspondinglowertrans}, the \emph{lower envelope} of $\rateset$. It is a matter of straightforward verification to see that $\lrate$ is a lower transition operator.
 
 \begin{proposition}
 For any non-empty bounded set $\rateset\subseteq\mathcal{R}$ of rate matrices, the corresponding operator $\lrate\colon\gamblesX\to\gamblesX$, as defined by Equation~\eqref{eq:correspondinglowertrans}, is a lower transition rate operator.
@@ -908,25 +910,35 @@ For any non-empty bounded set $\rateset\subseteq\mathcal{R}$ of rate matrices, t
 \end{proof}
 
 \noindent
-Because of this result, it makes sense to call $\lrate$, as defined by Equation~\eqref{eq:correspondinglowertrans}, the \emph{lower transition operator that corresponds to $\rateset$}. %As we have just seen, every non-empty bounded set $\rateset\subseteq\mathcal{R}$ of rate matrices has such a corresponding lower transition rate operator $\lrate$. 
+Inspired by this result, we will also refer to the lower envelope of $\rateset$ as the \emph{lower transition operator that corresponds to $\rateset$}. %As we have just seen, every non-empty bounded set $\rateset\subseteq\mathcal{R}$ of rate matrices has such a corresponding lower transition rate operator $\lrate$. 
 However, this correspondence is not one-to-one. As the following example establishes, multiple non-empty bounded sets of rate matrices may have the same corresponding lower transition rate operator.
 
 \begin{exmp}
 *** TO BE COMPLETED ***
 \end{exmp}
 
-If
-
-Conversely, with any lower transition rate operator $\lrate$, we can associate the following set of dominating rate matrices:
+Next, we consider some fixed lower transition rate operator $\lrate$.
+All the non-empty bounded sets $\rateset$ of rate matrices that have $\lrate$ as their lower envelope then share a common property: they consist of rate matrices $Q$ that dominate $\lrate$, in the sense that $Qf\geq\lrate f$ for all $f\in\gamblesX$. Therefore, each of these sets $\rateset$ is contained in the following set of dominating rate matrices:
 \begin{equation}\label{eq:dominatingratematrices}
 \rateset_{\lrate}\coloneqq
 \left\{
 Q\in\mathcal{R}
 \colon
 Qf\geq\lrate f\text{ for all $f\in\gamblesX$}
-\right\}
+\right\}.
 \end{equation}
-As we will show in proposition~\ref{prop:dominatingproperties} below, this set of dominating rate matrices satisfies some very nice properties: it is non-empty, bounded, closed and convex, and it has \emph{separately specified rows}.
+As our next result shows, this set $\rateset_{\lrate}$ is non-empty and bounded, and has $\lrate$ as its lower envelope. Even stronger, the infimum in Equation~\eqref{eq:correspondinglowertrans} is reached---can be replaced by a minimum.
+
+\begin{proposition}
+Consider a lower transition rate operator $\lrate$ and let $\rateset_{\lrate}$ be the corresponding set of dominating rate matrices, as defined by Equation~\eqref{eq:dominatingratematrices}. Then $\rateset_{\lrate}$ is non-empty and bounded and, for all $f\in\gamblesX$, there is some $Q\in\rateset_{\lrate}$ such that $\lrate f=Qf$.
+\end{proposition}
+\begin{proof}
+*** TO BE COMPLETED ***
+\end{proof}
+
+\noindent
+Therefore, and because---as discussed above---every non-empty bounded set of rate matrices that has $\lrate$ as its lower envelope is a subset of $\rateset_{\lrate}$, we conclude that $\rateset_{\lrate}$ is the largest non-empty bounded set of rate matrices that has $\lrate$ as its lower envelope.
+Furthermore, as we will show in proposition~\ref{prop:dominatingproperties} below, this set $\rateset_{\lrate}$ is also closed and convex, and has \emph{separately specified rows}.
 
 \begin{definition}
 A set of rate matrices $\rateset\subseteq\mathcal{R}$ has separately specified rows if
@@ -940,10 +952,10 @@ where, for every $x\in\states$, $\rateset_x\coloneqq\{Q(x,\cdot)\colon Q\in\rate
 \end{definition}
 
 \begin{proposition}\label{prop:dominatingproperties}
-Consider a lower transition rate operator $\lrate$ and let $\rateset_{\lrate}$ be the corresponding set of dominating rate matrices, as defined by Equation~\eqref{eq:dominatingratematrices}. Then $\rateset_{\lrate}$ is non-empty, bounded, closed and convex, and it has separately specified rows. Furthermore, for all $f\in\gamblesX$, there is some $Q\in\rateset_{\lrate}$ such that $\lrate f=Qf$.
+Consider a lower transition rate operator $\lrate$ and let $\rateset_{\lrate}$ be the corresponding set of dominating rate matrices, as defined by Equation~\eqref{eq:dominatingratematrices}. Then $\rateset_{\lrate}$ is closed and convex, and has separately specified rows.
 \end{proposition}
 \begin{proof}
-*** This is not trivial, but I am convinced it is true (we would have to adapt the proof for a similar well-known result for coherent lower previsions) ***
+*** TO BE COMPLETED ***
 \end{proof}
 
 
@@ -951,19 +963,17 @@ Consider a lower transition rate operator $\lrate$ and let $\rateset_{\lrate}$ b
 *** TO BE COMPLETED ***
 \end{exmp}
 
-
-$\rateset$ needs to have tree additional properties: it must to be \emph{bounded} and \emph{convex}, and it must have \emph{separately specified rows}. The first two properties require no further explanation
-
-\begin{corollary}
-Consider a closed, bounded and convex set $\rateset$ of rate matrices that has separately specified rows. If $\lrate_\rateset$
-\end{corollary}
-
-
-Also, $\norm{\lrate}<\infty$.
-
 \noindent
-If $\lrate$ is the coherent lower transition rate operator that corresponds to some bounded set $\rateset$ of rate matrices, then clearly: $\rateset\subseteq\rateset_{\lrate}$.
+These additional properties characterise $\rateset_{\lrate}$ completely, in the sense that no other set satisfies them.
 
+\begin{proposition}
+Consider any non-empty, bounded, closed and convex set of rate matrices $\rateset\subseteq\mathcal{R}$ with separately specified rows that has $\lrate$ as its lower envelope. Then $\rateset=\rateset_{\lrate}$.
+\end{proposition}
+\begin{proof}
+*** TO BE COMPLETED ***
+\end{proof}
+
+We conclude from all of this that non-empty bounded sets of rate matrices are more informative that lower transition rate matrices. Different non-empty bounded sets of rate matrices $\rateset$ may have the same lower transition rate operator $\lrate$ and therefore, in general, knowledge of $\lrate$ does not suffice to reconstruct $\rateset$; we can only reconstruct an outer approximation $\rateset_{\lrate}$, which is guaranteed to include $\rateset$. This changes if, besides non-empty and bounded, $\rateset$ is also closed and convex and has separately specified rows. In that case, $\lrate$ serves as an alternative representation for $\rateset$ because, since $\rateset=\rateset_{\lrate}$, we can use $\lrate$ to reconstruct $\rateset$. In other words: there is a one-to-one correspondence between lower transition rate operators and non-empty, bounded, closed and convex sets of rate matrices that have separately specified rows.
 
 %\section{Imprecise Continuous-Time Markov Chains}\label{sec:imp_markov}
 
