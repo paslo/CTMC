@@ -558,26 +558,26 @@ This is immediate from Definitions \ref{def:lower_markov} and \ref{def:lower_non
 
 \subsection{Lower Transition (Rate) Operators}
 
-\begin{definition}[Coherent Lower Transition Rate Operator]\label{def:coh_low_trans_rate}
-We will call a map $\lrate$ from $\gamblesX$ to $\gamblesX$ a \emph{coherent} lower transition rate operator if, for all $f,g\in\gamblesX$, $\lambda\geq0$ and $\mu\in\reals$:
+\begin{definition}[Lower Transition Rate Operator]\label{def:coh_low_trans_rate}
+We will call a map $\lrate$ from $\gamblesX$ to $\gamblesX$ a lower transition rate operator if, for all $f,g\in\gamblesX$, $\lambda\geq0$ and $\mu\in\reals$:
 
 \vspace{5pt}
-\begin{enumerate}[label=LR\arabic*:]
-\item
+\begin{enumerate}[label=LR\arabic*:,ref=LR\arabic*]
+\item\label{LR:constantzero}
 $\lrate(\mu)=0$;
-\item
+\item\label{LR:subadditive}
 $\lrate(f+g)\geq\lrate(f)+\lrate(g)$;
-\item
+\item\label{LR:homo}
 $\lrate(\lambda f)=\lambda\lrate(f)$;
-\item
+\item\label{LR:nondiagpos}
 $\lrate(\ind{y})(x)\geq0$ for all $x,y\in\states$ such that $x\neq y$.
 \end{enumerate}
 \vspace{5pt}
 \end{definition}
 
 
-\begin{definition}[Coherent Lower Transition Operator]\label{def:coh_low_trans}
-We will call a map $\lt$ from $\gamblesX$ to $\gamblesX$ a \emph{coherent lower transition operator} if, for all $f,g\in\gamblesX$ and $\lambda\geq0$:
+\begin{definition}[Lower Transition Operator]\label{def:coh_low_trans}
+We will call a map $\lt$ from $\gamblesX$ to $\gamblesX$ a lower transition operator if, for all $f,g\in\gamblesX$ and $\lambda\geq0$:
 
 \vspace{5pt}
 \begin{enumerate}[label=C\arabic*:]
@@ -592,7 +592,7 @@ $\lt(\lambda f)=\lambda\lt(f)$.
 \end{definition}
 
 \begin{lemma}\label{lemma:completemetricspace}
-The set of all coherent lower transition operators is a complete metric space.
+The set of all lower transition operators is a complete metric space.
 \end{lemma}
 \begin{proof}
 Since a coherent lower transition operator is just a finite vector of coherent lower previsions, this result should follow fairly easily for the (known) fact that the set of all coherent lower previsions (on a given fixed space) is a complete metric space.
@@ -608,14 +608,14 @@ Let $\lrate$ be a lower transition rate operator. Then $0\leq\norm{\lrate}<+\inf
 We now first establish the connection between coherent lower transition rate operators and coherent lower transition operators. We will assume that we are given some coherent lower transition rate operator $\lrate$.
 
 \begin{lemma}\label{lemma:normQsmallenough}
-If $0\leq\Delta\norm{\lrate}\leq1$, then $(I+\Delta\lrate)$ is a coherent lower transition operator.
+If $0\leq\Delta\norm{\lrate}\leq1$, then $(I+\Delta\lrate)$ is a lower transition operator.
 \end{lemma}
 \begin{proof}
 Just check each of the three defining properties. C2 and C3 are trivial. C1 requires a bit more work.
 \end{proof}
 
 \begin{lemma}\label{lemma:compositioncoherence}
-If $\lt_1,\lt_2,\dots,\lt_n$ are coherent lower transition operators, then  $\lt_1\lt_2\cdots\lt_n$ is also a coherent lower transition operator.
+If $\lt_1,\lt_2,\dots,\lt_n$ are lower transition operators, then  $\lt_1\lt_2\cdots\lt_n$ is also a lower transition operator.
 \end{lemma}
 \begin{proof}
 Simply check each of the properties.
@@ -626,7 +626,7 @@ Consider any sequence $0<\Delta_i\leq\nicefrac{1}{\norm{\lrate}}$, $i=1,\dots,n$
 \begin{equation*}
 \prod_{k=i}^n(I+\Delta_i\lrate)
 \end{equation*}
-is a coherent lower transition operator.
+is a lower transition operator.
 \end{lemma}
 \begin{proof}
 Trivial consequence of Lemma~\ref{lemma:normQsmallenough} and~\ref{lemma:compositioncoherence}.
@@ -911,7 +911,7 @@ Therefore, $\lrate$ is a map from $\gamblesX$ to $\gamblesX$. We call this opera
 For any non-empty bounded set $\rateset\subseteq\mathcal{R}$ of rate matrices, the corresponding operator $\lrate\colon\gamblesX\to\gamblesX$, as defined by Equation~\eqref{eq:correspondinglowertrans}, is a lower transition rate operator.
 \end{proposition}
 \begin{proof}
-*** TO BE COMPLETED ***
+Consider any $Q\in\rateset$. It then follows from Definition~\ref{def:rate_matrix} that the matrix $Q$, when regarded as a map from $\gamblesX$ to $\gamblesX$, satisfies \ref{LR:constantzero}--\ref{LR:nondiagpos}. Since each of these properties is preserved under taking lower envelopes, it follows that $\lrate$ satisfies \ref{LR:constantzero}--\ref{LR:nondiagpos}, which means that $\lrate$ is a lower transition rate operator.
 \end{proof}
 
 \noindent
