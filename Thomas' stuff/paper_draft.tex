@@ -251,6 +251,46 @@ Finally, for any set $\mathcal{A}$ of square matrices, we define
 \norm{\mathcal{A}}\coloneqq\sup\{\norm{A}\colon A\in\mathcal{A}\}.
 \end{equation*}
 
+\subsubsection{wat notatie voor meerdere variabelen}
+
+*** dit kan opzich wel korter denk ik, maar kunnen we bij oppoetsen straks nog wel even checken ***
+
+We will also find it convenient to have notation for functions defined on the state space at multiple time points.
+To this end, consider any $t,s\in\realsnonneg$ such that $t<s$, and any $u\in\mathcal{U}_{[t,s]}$. We will now define
+\begin{equation*}
+\states^u\coloneqq \prod_{i=0}^n\states
+\end{equation*}
+to be the joint state space at times $t_0,\ldots,t_n$. Let $\gambles(\states^u)$ denote the set of functions on $(X_{t_0},\ldots,X_{t_n})$.
+
+For any $t,t',s\in\realsnonneg$ such that $t<t'<s$ and any $u\in\mathcal{U}_{[t,t']}$, let $\states^{\{s\}}$ denote the state space at time $s$, and let
+\begin{equation*}
+\states^{u\cup\{s\}} \coloneqq \states^u\times\states^{\{s\}}
+\end{equation*}
+denote the joint state space at times $t_0,\ldots,t_n,s$. Similarly, for any $t,t',s,s'\in\realsnonneg$ such that $t<t'<s<s'$, any $u\in\mathcal{U}_{[t,t']}$ and $v\in\mathcal{U}_{[s,s']}$, let
+\begin{equation*}
+\states^{u\cup v}\coloneqq\states^u\times\states^v\,.
+\end{equation*}
+Let the sets of functions $\gambles(\states^{u\cup\{s\}})$ and $\gambles(\states^{u\cup v})$ be defined in the obvious manner.
+
+For any function $f\in\gambles(\states^{\{t_0\}}\times\cdots\times\states^{\{t_n\}})$, let the norm $\norm{f}$ be defined as
+\begin{equation*}
+\norm{f} \coloneqq \max\left\{ f(x_{t_0},\ldots,x_{t_n})\,:\,(x_{t_0},\ldots,x_{t_n})\in \states^{\{t_0\}}\times\cdots\times\states^{\{t_n\}}\right\}\,.
+\end{equation*}
+
+For the sake of brevity, we will also write a joint state assignment as
+\begin{equation*}
+\left(X_{t_0,\ldots,t_n}=x_{t_0,\ldots,t_n}\right)\equiv (X_{t_0}=x_{t_0},\ldots,X_{t_n}=x_{t_n})\,.
+\end{equation*}
+
+%In order to re-use the lower transition operator $L_t^s$ from Definition~\ref{def:low_trans}, we will finally have to introduce some conventions. Note that $L_t^s$ is a map from $\gamblesX$ to $\gamblesX$, so it is straightforward to apply to functions $g\in\gambles(\states^{\{s\}})$. This is because these functions only depend on a single variable. However, $L_t^s$ is not yet properly defined for, e.g., functions $f\in\gambles(\states^{u\cup\{s\}})$. To this end, let first 
+%\begin{equation*}
+%f(x_{t_0},\ldots,x_{t_n},X_{s})\in\gambles(\states^{\{s\}})
+%\end{equation*}
+%denote the restriction of any $f\in\gambles(\states^{u\cup\{s\}})$ to $\gambles(\states^{\{s\}})$, for all $(x_{t_0},\ldots,x_{t_n})\in\states^u$. Similarly, for all $(x_{t_0},\ldots,x_{t_{n-1}})\in\states^{\{t_0,\ldots,t_{n-1}\}}$, let
+%\begin{equation*} f(x_{t_0},\ldots,x_{t_{n-1}},X_{t_n},X_s)\in\gambles(\states^{\{t_n,s\}})\,,
+%\end{equation*}
+%and so forth.
+
 \section{Precise Continuous-Time Markov Chains}
 
 *** tralala ***
@@ -813,7 +853,7 @@ In summary, we have shown that there is some coherent lower transition operator 
 
 The derivative of $\lbound_t^s$ with respect to $t$ satisfies differential equations in the style of Damjan.
 
-\begin{proposition}
+\begin{proposition}\label{prop:lower_transition_has_deriv}
 Consider any $t,s\in\realsnonneg$ such that $t<s$, let $\lrate$ be an arbitrary coherent lower transition rate operator and let $\lbound_t^s$ be the corresponding lower transition operator. Then $\frac{d}{dt}\lbound_t^s=-\lrate\lbound_t^s$ and $\frac{d}{ds}\lbound_t^s=\lbound_t^s\lrate$, meaning that
 \begin{equation}\label{eq:lower_deriv_backward}
 (\forall\epsilon>0)\,
@@ -829,67 +869,7 @@ and
 \Big\lVert\frac{L_{t}^{s+\Delta}-L_t^s}{\Delta}-\lbound_t^s\lrate \Big\rVert<\epsilon.
 \end{equation}
 \end{proposition}
-\begin{proof}
-We start by proving Equation~\eqref{eq:lower_deriv_backward}. Choose any $\epsilon\in\realspos$, and let
-\begin{equation}\label{eq:derivative_max_delta}
-\delta \coloneqq \frac{\epsilon}{3\norm{\lrate}^2}.
-\end{equation}
-Then, consider any $\Delta\neq 0$ such that $\lvert\Delta\rvert<\delta$. We will show that
-\begin{equation*}
-\Big\lVert\frac{L_{t+\Delta}^s-L_t^s}{\Delta}+\lrate L_t^s\Big\rVert<\epsilon
-\end{equation*}
-Start by rewriting the statement slightly to prevent having to consider different cases for positive and negative $\Delta$. Let $t'\coloneqq\max\{t,t+\Delta\}$, and let $\Delta'\coloneqq t'-t$. Then,
-\begin{equation*}
-\Big\lVert\frac{L_{t+\Delta}^s-L_t^s}{\Delta}+\lrate L_t^s\Big\rVert = \norm{\frac{L_{t'}^s - L_{t'-\lvert\Delta\rvert}^s}{\lvert\Delta\rvert}+\lrate L_{t'-\Delta'}^s}\,.
-\end{equation*}
-Now,
-\begin{align*}
-\norm{\frac{L_{t'}^s - L_{t'-\lvert\Delta\rvert}^s}{\lvert\Delta\rvert}+\lrate L_{t'-\Delta'}^s} &= \norm{\frac{L_{t'}^s - L_{t'-\lvert\Delta\rvert}^{t'}L_{t'}^s}{\lvert\Delta\rvert}+\lrate L_{t'-\Delta'}^{t'}L_{t'}^s} \\
- &\leq \norm{\frac{I - L_{t'-\lvert\Delta\rvert}^{t'}}{\lvert\Delta\rvert}+\lrate L_{t'-\Delta'}^{t'}}\norm{L_{t'}^s} \\
- &\leq \norm{\frac{I - L_{t'-\lvert\Delta\rvert}^{t'}}{\lvert\Delta\rvert}+\lrate L_{t'-\Delta'}^{t'}} \\
- &= \norm{\frac{I - L_{0}^{\lvert\Delta\rvert}}{\lvert\Delta\rvert}+\lrate L_{0}^{\Delta'}} \\
- &= \norm{\frac{L_{0}^{\lvert\Delta\rvert} - I}{\lvert\Delta\rvert}-\lrate L_{0}^{\Delta'}} \\
- &\leq \norm{\frac{L_{0}^{\lvert\Delta\rvert} - I}{\lvert\Delta\rvert}-\lrate} + \norm{\lrate - \lrate L_{0}^{\Delta'}} \\
- &\leq \frac{1}{\lvert\Delta\rvert}\cdot\norm{L_{0}^{\lvert\Delta\rvert} - (I+\lvert\Delta\rvert\lrate)} + 2\norm{\lrate}\norm{I - L_{0}^{\Delta'}} \\
- &\leq \lvert\Delta\rvert\cdot\norm{\lrate}^2 + 2\Delta'\norm{\lrate}^2.
-\end{align*}
-Because $\Delta'$ satisfies either $\Delta'=0$ or $\Delta'=\lvert\Delta\rvert$, we have that $\Delta'\leq\lvert\Delta\rvert$. Thus,
-\begin{align*}
-\norm{\frac{L_{t'}^s - L_{t'-\lvert\Delta\rvert}^s}{\lvert\Delta\rvert}+\lrate L_{t'-\Delta'}^s} &\leq \lvert\Delta\rvert\cdot\norm{\lrate}^2 + 2\Delta'\norm{\lrate}^2 \\
- &\leq \lvert\Delta\rvert\cdot\norm{\lrate}^2 + 2\lvert\Delta\rvert\cdot\norm{\lrate}^2 \\
- &= 3\lvert\Delta\rvert\cdot\norm{\lrate}^2 \\
- &< 3\delta\norm{\lrate}^2 \\
- &= \epsilon\,,
-\end{align*}
-where the last step used Equation~\eqref{eq:derivative_max_delta}. This concludes the proof of Equation~\eqref{eq:lower_deriv_backward}. We will now prove Equation~\eqref{eq:lower_deriv_forward}.
-
-Again choose any $\epsilon\in\realspos$, and let $\delta$ be given by
-\begin{equation*}
-\delta \coloneqq \frac{\epsilon}{2\norm{\lrate}^2}\,.
-\end{equation*}
-Consider any $\Delta\neq 0$ such that $\lvert\Delta\rvert<\delta$. We will show that
-\begin{equation*}
-\Big\lVert\frac{L_{t}^{s+\Delta}-L_t^s}{\Delta}-\lbound_t^s\lrate \Big\rVert<\epsilon\,.
-\end{equation*}
-We again first rewrite the statement to prevent having to perform case-work in the sign of $\Delta$. Let $s'\coloneqq\min\{s,s+\Delta\}$, and let $\Delta'\coloneqq s-s'$. Then,
-\begin{equation*}
-\Big\lVert\frac{L_{t}^{s+\Delta}-L_t^s}{\Delta}-\lbound_t^s\lrate \Big\rVert = \norm{\frac{L_t^{s'+\lvert\Delta\rvert} - L_t^{s'}}{\lvert\Delta\rvert} - L_t^{s'+\Delta'}\lrate}\,.
-\end{equation*}
-Now,
-\begin{align*}
-\norm{\frac{L_t^{s'+\lvert\Delta\rvert} - L_t^{s'}}{\lvert\Delta\rvert} - L_t^{s'+\Delta'}\lrate} &= \norm{\frac{L_t^{s'}L_{s'}^{s'+\lvert\Delta\rvert} - L_t^{s'}}{\lvert\Delta\rvert} - L_t^{s'}L_{s'}^{s'+\Delta'}\lrate} \\
- &\leq \norm{L_t^{s'}}\norm{\frac{L_{s'}^{s'+\lvert\Delta\rvert} - I}{\lvert\Delta\rvert} - L_{s'}^{s'+\Delta'}\lrate} \\
- &\leq \norm{\frac{L_{s'}^{s'+\lvert\Delta\rvert} - I}{\lvert\Delta\rvert} - L_{s'}^{s'+\Delta'}\lrate} \\
- &= \norm{\frac{L_{0}^{\lvert\Delta\rvert} - I}{\lvert\Delta\rvert} - L_{0}^{\Delta'}\lrate} \\
- &\leq \norm{\frac{L_{0}^{\lvert\Delta\rvert} - I}{\lvert\Delta\rvert} - \lrate} + \norm{\lrate - L_{0}^{\Delta'}\lrate} \\
- &\leq \frac{1}{\lvert\Delta\rvert}\cdot\norm{L_{0}^{\lvert\Delta\rvert} - (I+\lvert\Delta\rvert\lrate)} + \norm{\lrate}\norm{I - L_{0}^{\Delta'}} \\
- &\leq \lvert\Delta\rvert\cdot\norm{\lrate}^2 + \Delta'\norm{\lrate}^2 \\
- &\leq \lvert\Delta\rvert\cdot\norm{\lrate}^2 + \lvert\Delta\rvert\cdot\norm{\lrate}^2 \\
- &= 2\lvert\Delta\rvert\cdot\norm{\lrate}^2 \\
- &< 2\delta\norm{\lrate}^2 \\
- &= \epsilon\,.
-\end{align*}
-\end{proof}
+\noindent The proof for the above proposition can be found in Appendix~\ref{sec:proof_appendix}.
 
 \section{*** Simple functions ***}
 
@@ -1370,35 +1350,10 @@ where the second equality uses Definition~\ref{def:lower_non_markov}.
 
 \section{*** More complex functions *** }
 
-\subsection{wat notatie voor meerdere variabelen}\label{sec:imp_non_markov}
+%\subsection{wat notatie voor meerdere variabelen}\label{sec:imp_non_markov}
 
-We will now move on to consider non-Markovian stochastic processes. Due to the need to consider multiple time points in such a process' history, we will find it convenient to switch from a transition-matrix notation to using (conditional) expectation operators. We will start by introducing some notation for functions which makes explicit the time points that we are considering.
-
-Consider any $t,s\in\realsnonneg$ such that $t<s$, and any $u\in\mathcal{U}_{[t,s]}$. We will now define
-\begin{equation*}
-\states^u\coloneqq \prod_{i=0}^n\states
-\end{equation*}
-to be the joint state space at times $t_0,\ldots,t_n$. Let $\gambles(\states^u)$ denote the set of functions on $(X_{t_0},\ldots,X_{t_n})$.
-
-For any $t,t',s\in\realsnonneg$ such that $t<t'<s$ and any $u\in\mathcal{U}_{[t,t']}$, let $\states^{\{s\}}$ denote the state space at time $s$, and let
-\begin{equation*}
-\states^{u\cup\{s\}} \coloneqq \states^u\times\states^{\{s\}}
-\end{equation*}
-denote the joint state space at times $t_0,\ldots,t_n,s$. Similarly, for any $t,t',s,s'\in\realsnonneg$ such that $t<t'<s<s'$, any $u\in\mathcal{U}_{[t,t']}$ and $v\in\mathcal{U}_{[s,s']}$, let
-\begin{equation*}
-\states^{u\cup v}\coloneqq\states^u\times\states^v\,.
-\end{equation*}
-Let the sets of functions $\gambles(\states^{u\cup\{s\}})$ and $\gambles(\states^{u\cup v})$ be defined in the obvious manner.
-
-For any function $f\in\gambles(\states^{\{t_0\}}\times\cdots\times\states^{\{t_n\}})$, let the norm $\norm{f}$ be defined as
-\begin{equation*}
-\norm{f} \coloneqq \max\left\{ f(x_{t_0},\ldots,x_{t_n})\,:\,(x_{t_0},\ldots,x_{t_n})\in \states^{\{t_0\}}\times\cdots\times\states^{\{t_n\}}\right\}\,.
-\end{equation*}
-
-For the sake of brevity, we will write any joint state assignment as
-\begin{equation*}
-\left(X_{t_0,\ldots,t_n}=x_{t_0,\ldots,t_n}\right)\equiv (X_{t_0}=x_{t_0},\ldots,X_{t_n}=x_{t_n})\,.
-\end{equation*}
+We will now move on to consider non-Markovian stochastic processes. Due to the need to consider multiple time points in such a process' history, we will find it convenient to switch from a transition-matrix notation to using (conditional) expectation operators. 
+%We will start by introducing some notation for functions which makes explicit the time points that we are considering.
 
 \begin{definition}
 Consider any stochastic process $P\in\processes$, any $t,t',s\in\realsnonneg$ such that $t<t'<s$, any $u\in\mathcal{U}_{[t,t']}$, and any $f\in\gambles(\states^{u\cup\{s\}})$. Then, the \emph{expectation of $f$ at time $s$ given the states at times $u$}, with respect to $P$, is a map $\mathbb{E}$ from $\gambles(\states^{u\cup\{s\}})$ to $\gambles(\states^u)$, defined for all $(x_{t_0},\ldots,x_{t_n})\in\states^u$, as
@@ -1410,15 +1365,6 @@ Consider any stochastic process $P\in\processes$, any $t,t',s\in\realsnonneg$ su
 \begin{equation*}
 \mathbb{E}_{X_s}[g(X_s)\,\vert\,X_{t_0,\ldots,t_n}=x_{t_0,\ldots,t_n}] = \sum_{x_s\in\states^{\{s\}}} g(x_s)P(X_s=x_s\,\vert\,X_{t_0,\ldots,t_n}=x_{t_0,\ldots,t_n})\,.
 \end{equation*}
-
-In order to re-use the lower transition operator $L_t^s$ from Definition~\ref{def:low_trans}, we will finally have to introduce some conventions. Note that $L_t^s$ is a map from $\gamblesX$ to $\gamblesX$, so it is straightforward to apply to functions $g\in\gambles(\states^{\{s\}})$. This is because these functions only depend on a single variable. However, $L_t^s$ is not yet properly defined for, e.g., functions $f\in\gambles(\states^{u\cup\{s\}})$. To this end, let first 
-\begin{equation*}
-f(x_{t_0},\ldots,x_{t_n},X_{s})\in\gambles(\states^{\{s\}})
-\end{equation*}
-denote the restriction of any $f\in\gambles(\states^{u\cup\{s\}})$ to $\gambles(\states^{\{s\}})$, for all $(x_{t_0},\ldots,x_{t_n})\in\states^u$. Similarly, for all $(x_{t_0},\ldots,x_{t_{n-1}})\in\states^{\{t_0,\ldots,t_{n-1}\}}$, let
-\begin{equation*} f(x_{t_0},\ldots,x_{t_{n-1}},X_{t_n},X_s)\in\gambles(\states^{\{t_n,s\}})\,,
-\end{equation*}
-and so forth.
 
 % \begin{definition}
 % Consider any $t,t',s\in\realsnonneg$ such that $t<t'<s$, any $u\in\mathcal{U}_{[t,t']}$, any $g\in\gambles(\states^{\{s\}})$ and any $f\in\gambles(\states^{u\cup\{s\}})$. Let $\rateset$ be an arbitrary bounded set of rate matrices with corresponding lower transition rate operator $\lrate$. We will define the \emph{lower expectation operator} $\underline{\mathbb{E}}$, for all $(x_{t_0},\ldots,x_{t_n})\in\states^u$, as
@@ -1745,16 +1691,12 @@ establishes the equality. ***
 \end{proof}
 
 
-
-\begin{thebibliography}{99}
-\bibitem{foo2015}
-	Foo Bar, \emph{Dummy Bib Items}, 2015.
-
-\end{thebibliography}
+\bibliographystyle{plain} 
+\bibliography{general}
 
 \appendix
 
-\section{Proofs of Lemmas from Section~\ref{sec:lower_operator}}
+\section{Proofs of Lemmas from Section~\ref{sec:lower_operator}}\label{sec:proof_appendix}
 
 \begin{lemma}\label{lemma:justtheindicator_appendix}
 Consider any sequence $0<\Delta_i\leq\nicefrac{1}{\norm{\lrate}}$, $i=1,\dots,n$, and let $\Delta\coloneqq\sum_{i=1}^n\Delta_i$. Then
@@ -1932,12 +1874,68 @@ By continuing in this way (applying induction), we find that
 &=
 \alpha\Delta\norm{\lrate}^2
 \end{align*}
-
-
 \end{proof}
 
+\begin{proof}[Proof of Proposition~\ref{prop:lower_transition_has_deriv}]
+We start by proving Equation~\eqref{eq:lower_deriv_backward}. Choose any $\epsilon\in\realspos$, and let
+\begin{equation}\label{eq:derivative_max_delta}
+\delta \coloneqq \frac{\epsilon}{3\norm{\lrate}^2}.
+\end{equation}
+Then, consider any $\Delta\neq 0$ such that $\lvert\Delta\rvert<\delta$. We will show that
+\begin{equation*}
+\Big\lVert\frac{L_{t+\Delta}^s-L_t^s}{\Delta}+\lrate L_t^s\Big\rVert<\epsilon
+\end{equation*}
+Start by rewriting the statement slightly to prevent having to consider different cases for positive and negative $\Delta$. Let $t'\coloneqq\max\{t,t+\Delta\}$, and let $\Delta'\coloneqq t'-t$. Then,
+\begin{equation*}
+\Big\lVert\frac{L_{t+\Delta}^s-L_t^s}{\Delta}+\lrate L_t^s\Big\rVert = \norm{\frac{L_{t'}^s - L_{t'-\lvert\Delta\rvert}^s}{\lvert\Delta\rvert}+\lrate L_{t'-\Delta'}^s}\,.
+\end{equation*}
+Now,
+\begin{align*}
+\norm{\frac{L_{t'}^s - L_{t'-\lvert\Delta\rvert}^s}{\lvert\Delta\rvert}+\lrate L_{t'-\Delta'}^s} &= \norm{\frac{L_{t'}^s - L_{t'-\lvert\Delta\rvert}^{t'}L_{t'}^s}{\lvert\Delta\rvert}+\lrate L_{t'-\Delta'}^{t'}L_{t'}^s} \\
+ &\leq \norm{\frac{I - L_{t'-\lvert\Delta\rvert}^{t'}}{\lvert\Delta\rvert}+\lrate L_{t'-\Delta'}^{t'}}\norm{L_{t'}^s} \\
+ &\leq \norm{\frac{I - L_{t'-\lvert\Delta\rvert}^{t'}}{\lvert\Delta\rvert}+\lrate L_{t'-\Delta'}^{t'}} \\
+ &= \norm{\frac{I - L_{0}^{\lvert\Delta\rvert}}{\lvert\Delta\rvert}+\lrate L_{0}^{\Delta'}} \\
+ &= \norm{\frac{L_{0}^{\lvert\Delta\rvert} - I}{\lvert\Delta\rvert}-\lrate L_{0}^{\Delta'}} \\
+ &\leq \norm{\frac{L_{0}^{\lvert\Delta\rvert} - I}{\lvert\Delta\rvert}-\lrate} + \norm{\lrate - \lrate L_{0}^{\Delta'}} \\
+ &\leq \frac{1}{\lvert\Delta\rvert}\cdot\norm{L_{0}^{\lvert\Delta\rvert} - (I+\lvert\Delta\rvert\lrate)} + 2\norm{\lrate}\norm{I - L_{0}^{\Delta'}} \\
+ &\leq \lvert\Delta\rvert\cdot\norm{\lrate}^2 + 2\Delta'\norm{\lrate}^2.
+\end{align*}
+Because $\Delta'$ satisfies either $\Delta'=0$ or $\Delta'=\lvert\Delta\rvert$, we have that $\Delta'\leq\lvert\Delta\rvert$. Thus,
+\begin{align*}
+\norm{\frac{L_{t'}^s - L_{t'-\lvert\Delta\rvert}^s}{\lvert\Delta\rvert}+\lrate L_{t'-\Delta'}^s} &\leq \lvert\Delta\rvert\cdot\norm{\lrate}^2 + 2\Delta'\norm{\lrate}^2 \\
+ &\leq \lvert\Delta\rvert\cdot\norm{\lrate}^2 + 2\lvert\Delta\rvert\cdot\norm{\lrate}^2 \\
+ &= 3\lvert\Delta\rvert\cdot\norm{\lrate}^2 \\
+ &< 3\delta\norm{\lrate}^2 \\
+ &= \epsilon\,,
+\end{align*}
+where the last step used Equation~\eqref{eq:derivative_max_delta}. This concludes the proof of Equation~\eqref{eq:lower_deriv_backward}. We will now prove Equation~\eqref{eq:lower_deriv_forward}.
 
-\bibliographystyle{plain} 
-\bibliography{general}
+Again choose any $\epsilon\in\realspos$, and let $\delta$ be given by
+\begin{equation*}
+\delta \coloneqq \frac{\epsilon}{2\norm{\lrate}^2}\,.
+\end{equation*}
+Consider any $\Delta\neq 0$ such that $\lvert\Delta\rvert<\delta$. We will show that
+\begin{equation*}
+\Big\lVert\frac{L_{t}^{s+\Delta}-L_t^s}{\Delta}-\lbound_t^s\lrate \Big\rVert<\epsilon\,.
+\end{equation*}
+We again first rewrite the statement to prevent having to perform case-work in the sign of $\Delta$. Let $s'\coloneqq\min\{s,s+\Delta\}$, and let $\Delta'\coloneqq s-s'$. Then,
+\begin{equation*}
+\Big\lVert\frac{L_{t}^{s+\Delta}-L_t^s}{\Delta}-\lbound_t^s\lrate \Big\rVert = \norm{\frac{L_t^{s'+\lvert\Delta\rvert} - L_t^{s'}}{\lvert\Delta\rvert} - L_t^{s'+\Delta'}\lrate}\,.
+\end{equation*}
+Now,
+\begin{align*}
+\norm{\frac{L_t^{s'+\lvert\Delta\rvert} - L_t^{s'}}{\lvert\Delta\rvert} - L_t^{s'+\Delta'}\lrate} &= \norm{\frac{L_t^{s'}L_{s'}^{s'+\lvert\Delta\rvert} - L_t^{s'}}{\lvert\Delta\rvert} - L_t^{s'}L_{s'}^{s'+\Delta'}\lrate} \\
+ &\leq \norm{L_t^{s'}}\norm{\frac{L_{s'}^{s'+\lvert\Delta\rvert} - I}{\lvert\Delta\rvert} - L_{s'}^{s'+\Delta'}\lrate} \\
+ &\leq \norm{\frac{L_{s'}^{s'+\lvert\Delta\rvert} - I}{\lvert\Delta\rvert} - L_{s'}^{s'+\Delta'}\lrate} \\
+ &= \norm{\frac{L_{0}^{\lvert\Delta\rvert} - I}{\lvert\Delta\rvert} - L_{0}^{\Delta'}\lrate} \\
+ &\leq \norm{\frac{L_{0}^{\lvert\Delta\rvert} - I}{\lvert\Delta\rvert} - \lrate} + \norm{\lrate - L_{0}^{\Delta'}\lrate} \\
+ &\leq \frac{1}{\lvert\Delta\rvert}\cdot\norm{L_{0}^{\lvert\Delta\rvert} - (I+\lvert\Delta\rvert\lrate)} + \norm{\lrate}\norm{I - L_{0}^{\Delta'}} \\
+ &\leq \lvert\Delta\rvert\cdot\norm{\lrate}^2 + \Delta'\norm{\lrate}^2 \\
+ &\leq \lvert\Delta\rvert\cdot\norm{\lrate}^2 + \lvert\Delta\rvert\cdot\norm{\lrate}^2 \\
+ &= 2\lvert\Delta\rvert\cdot\norm{\lrate}^2 \\
+ &< 2\delta\norm{\lrate}^2 \\
+ &= \epsilon\,.
+\end{align*}
+\end{proof}
 
 \end{document}
