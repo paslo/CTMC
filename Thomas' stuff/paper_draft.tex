@@ -75,6 +75,7 @@
 
 \newcommand{\argmin}{\arg\min}
 
+\newcommand{\exampleend}{\hfill$\Diamond$}
 
 \title{Imprecise Continuous-Time Discrete-Space Stochastic Processes}
 
@@ -913,6 +914,7 @@ However, this correspondence is not one-to-one. As the following example establi
 
 \begin{exmp}
 *** TO BE COMPLETED ***
+\exampleend
 \end{exmp}
 
 Next, we consider some fixed lower transition rate operator $\lrate$.
@@ -987,6 +989,7 @@ Consider a lower transition rate operator $\lrate$ and let $\rateset_{\lrate}$ b
 
 \begin{exmp}
 *** TO BE COMPLETED ***
+\exampleend
 \end{exmp}
 
 \noindent
@@ -1027,33 +1030,38 @@ Consider any $P\in\processes_\rateset$, any $t,s\in\realsnonneg$ such that $t<s$
 which then implies $[L_t^s g](x_{t_n}) \leq \mathbb{E}[g(X_s)\,\vert\,X_{t_0,\ldots,t_n}=x_{t_0,\ldots,t_n}]$. Start by choosing any $\epsilon\in\realspos$, and let $C\coloneqq (s-t)$.
 
 Because $P\in\processes_\rateset$, it follows from Definition~\ref{def:set_non_markov_process} that there is some $\delta\in\realspos$ such that
-\begin{align*}
+\begin{align}\label{eq:nonmarkov_bound_proof_deriv_bounded}
+\begin{split}
  &(\forall \tau\in\realsnonneg)\,(\forall\Delta\in(0,\delta))\,(\forall v\in\mathcal{U}_{[0,\tau]})\,(\forall(x_{\tau_0},\ldots,x_{\tau_{m-1}})\in\states^{\{\tau_0,\ldots,\tau_{m-1}\}})\,(\exists Q\in\rateset)\,: \\
  &(\forall f\in\gambles(\states^{v\cup\{\tau+\Delta\}}))\,(\forall x_{\tau_m}\in\states^{\{\tau_m\}}): \\
- &\abs{\frac{\mathbb{E}[f(x_{\tau_0},\ldots,x_{\tau_m},X_{\tau+\Delta})\,\vert\,X_{\tau_0,\ldots,\tau_m}=x_{\tau_0,\ldots,\tau_m}] - f(x_{\tau_0},\ldots,x_{\tau_m},x_{\tau_m})}{\Delta} - \left[Q f(x_{\tau_0},\ldots,x_{\tau_{m}},X_{\tau+\Delta})\right](x_{\tau_m})} \\ 
- &\quad\quad < \frac{\epsilon}{2C\norm{g}}\cdot\norm{f}\,.
-\end{align*}
+ &\left\lvert \frac{\mathbb{E}[f(x_{\tau_0},\ldots,x_{\tau_m},X_{\tau+\Delta})\,\vert\,X_{\tau_0,\ldots,\tau_m}=x_{\tau_0,\ldots,\tau_m}] 
+ - f(x_{\tau_0},\ldots,x_{\tau_m},x_{\tau_m})}{\Delta} \right. \\
+ &\quad\quad\quad\quad\quad\quad - \left[Q f(x_{\tau_0},\ldots,x_{\tau_{m}},X_{\tau+\Delta})\right](x_{\tau_m})\biggr\rvert \quad < \quad\frac{\epsilon}{2C\norm{g}}\cdot\norm{f}\,.
+\end{split}
+\end{align}
 Furthermore, it follows from Theorem~\ref{theo:convergencelowerbound} that there is some $\delta'\in\realspos$ such that
-\begin{equation}
+\begin{equation}\label{eq:nonmarkov_bound_proof_lbound_approx}
 (\forall v\in\mathcal{U}_{[t,s]}\,:\,\sigma(v)<\delta')\,(\forall x_t\in\states)\abs{\left[L_t^s g\right](x_t) - \left[\prod_{k=1}^n(I+\Delta_i\lrate)g\right](x_t)} < \frac{\epsilon}{2}\,.
 \end{equation}
 
 Let $\delta^*\coloneqq\min\{\delta,\delta'\}$, and choose any $n>\nicefrac{C}{\delta^*}$. Then, for $\Delta\coloneqq\nicefrac{C}{n}$, we have $\Delta<\delta$ and $\Delta<\delta'$.
 
-Equation {\bf EQREF} now implies that for all $\tau\in\realspos$, all $v\in\mathcal{U}_{[0,\tau]}$, and all $(x_{\tau_0},\ldots,x_{\tau_{m-1}})\in\states^{\{\tau_0,\ldots,\tau_{m-1}\}}$, there is some $Q^v_{x_{\tau_0},\ldots,x_{\tau_{m-1}}}\in\rateset$ such that, for all $f\in\gambles(\states^{v\cup\{\tau+\Delta\}})$ and all $x_{\tau_m}\in\states^{\{\tau_m\}}$,
-\begin{align}
+Equation \eqref{eq:nonmarkov_bound_proof_deriv_bounded} now implies that for all $\tau\in\realspos$, all $v\in\mathcal{U}_{[0,\tau]}$, and all $(x_{\tau_0},\ldots,x_{\tau_{m-1}})\in\states^{\{\tau_0,\ldots,\tau_{m-1}\}}$, there is some $Q^v_{x_{\tau_0},\ldots,x_{\tau_{m-1}}}\in\rateset$ such that, for all $f\in\gambles(\states^{v\cup\{\tau+\Delta\}})$ and all $x_{\tau_m}\in\states^{\{\tau_m\}}$,
+\begin{align}\label{eq:nonmarkov_bound_proof_deriv_inequal}
+\begin{split}
  &\left[(I + \Delta Q^v_{x_{\tau_0},\ldots,x_{\tau_{m-1}}})f(x_{\tau_0},\ldots,x_{\tau_m},X_{\tau+\Delta})\right](x_{\tau_m}) - \frac{\Delta\epsilon\norm{f}}{2C\norm{g}} \\
  &\quad< \mathbb{E}[f(x_{\tau_0},\ldots,x_{\tau_m},X_{\tau+\Delta})\,\vert\,X_{\tau_0,\ldots,\tau_m}=x_{\tau_0,\ldots,\tau_m}]\,.
+\end{split}
 \end{align}
-Now, note that by the basic rules of probability,
+Now, note that by the basic properties of probability,
 \begin{align*}
 \mathbb{E}[g(X_s)\,\vert\,X_{t_0,\ldots,t_n}=x_{t_0,\ldots,t_n}] &= \mathbb{E}\bigl[\mathbb{E}[g(X_s)\,\vert\,X_{t_0,\ldots,t_n}=x_{t_0,\ldots,t_n},X_{s-\Delta}]\,\vert\,X_{t_0,\ldots,t_n}=x_{t_0,\ldots,t_n}\bigr]\,.
 \end{align*}
-By choosing $\tau=(s-\Delta)$, setting $v=t_0,\ldots,t_n,(s-\Delta)$, and noting that $g\in\gambles(\states^{\{s\}})=\gambles(\states^{\{\tau+\Delta\}})\subset\gambles(\states^{v\cup\{\tau+\Delta\}})$, we find from Equation {\bf EQREF} that for all $(x_{t_0},\ldots,x_{t_n})\in\states^{u}$ there is some $Q^v_{x_{t_0},\ldots,x_{t_n}}\in\rateset$ such that, for all $x_{s-\Delta}\in\states^{\{s-\Delta\}}$,
+By choosing $\tau=(s-\Delta)$, setting $v=t_0,\ldots,t_n,(s-\Delta)$, and noting that $g\in\gambles(\states^{\{s\}})=\gambles(\states^{\{\tau+\Delta\}})\subset\gambles(\states^{v\cup\{\tau+\Delta\}})$, we find from Equation \eqref{eq:nonmarkov_bound_proof_deriv_inequal} that for all $(x_{t_0},\ldots,x_{t_n})\in\states^{u}$ there is some $Q^v_{x_{t_0},\ldots,x_{t_n}}\in\rateset$ such that, for all $x_{s-\Delta}\in\states^{\{s-\Delta\}}$,
 \begin{equation*}
 \left[(I + \Delta Q^v_{x_{t_0},\ldots,x_{t_n}})g\right](x_{s-\Delta}) - \frac{\Delta\epsilon}{2C} < \mathbb{E}[g(X_s)\,\vert\,X_{t_0,\ldots,t_n}=x_{t_0,\ldots,t_n},X_{s-\Delta}=x_{s-\Delta}]\,.
 \end{equation*}
-Furthermore, we find using Definition~\ref{def:low_trans_rate} and the fact that $Q^v_{x_{t_0},\ldots,x_{t_n}}\in\rateset$, that
+Furthermore, we find using Equation~\eqref{eq:correspondinglowertrans} and the fact that $Q^v_{x_{t_0},\ldots,x_{t_n}}\in\rateset$, that
 \begin{equation*}
 \left[(I + \Delta \lrate)g\right](x_{s-\Delta}) - \frac{\Delta\epsilon}{2C} \leq \left[(I + \Delta Q^v_{x_{t_0},\ldots,x_{t_n}})g\right](x_{s-\Delta}) - \frac{\Delta\epsilon}{2C}\,.
 \end{equation*}
@@ -1073,7 +1081,7 @@ Hence, we can repeat this argument, factoring the expectation at time points $(s
  &= \left[(I+\Delta\lrate)^ng\right](x_{t_n}) - \frac{\epsilon}{2}\,.
 \end{align*}
 
-It follows from Equation {\bf EQREF} and the fact that $\Delta<\delta'$, that
+It follows from Equation \eqref{eq:nonmarkov_bound_proof_lbound_approx} and the fact that $\Delta<\delta'$, that
 \begin{equation*}
 \left[L_t^s g\right](x_{t_n}) - \frac{\epsilon}{2} < \left[(I+\Delta\lrate)^n g\right](x_{t_n})\,,
 \end{equation*}
@@ -1093,13 +1101,13 @@ Because the $\epsilon\in\realspos$ was arbitrary, this concludes the proof.
 *** lalala $L_t^s$ kan arbitrair dicht benaderd worden ***
 
 \begin{theorem}\label{theorem:lower_markov_bound_is_tight}
-Consider any $t,s\in\realsnonneg$ such that $t<s$, and let $\rateset$ be an arbitrary non-empty bounded set of rate matrices with corresponding lower transition rate operator $\lrate$. Then for all $f\in\gamblesX$ and $\epsilon\in\realspos$, there exists a $P\in\mprocesses_{\rateset}$ such that
+Consider any $t,s\in\realsnonneg$ such that $t<s$, and let $\rateset$ be an arbitrary non-empty bounded set of rate matrices that has separately specified rows, with corresponding lower transition rate operator $\lrate$. Then for all $f\in\gamblesX$ and $\epsilon\in\realspos$, there exists a $P\in\mprocesses_{\rateset}$ such that
 \begin{equation*}
 \norm{\lbound_t^sf-T_t^sf} < \epsilon\,.
 \end{equation*}
 \end{theorem}
 \begin{proof}
-Choose any $f\in\gamblesX$ and any $\epsilon\in\realspos$, and let $C\coloneqq (s-t)$.
+Choose any $f\in\gamblesX$ and any $\epsilon\in\realspos$. Let $C\coloneqq (s-t)$.
 
 By Lemma~\ref{lemma:rateset_has_arginf}, for all $\tau\in[t,s]$ there is some rate matrix $Q_\tau\in\rateset$ such that
 \begin{equation}\label{eq:lower_char_rate_matrix}
@@ -1178,7 +1186,7 @@ so that by Equation~\eqref{eq:delta_required_for_tight_bound} and the fact that 
 *** lalala $L_t^s$ doet wat we willen ***
 
 \begin{corollary}\label{cor:lower_operator_is_infimum}
-Consider any $t,s\in\realsnonneg$ such that $t<s$, and let $\rateset$ be an arbitrary non-empty bounded set of rate matrices with corresponding lower transition rate operator $\lrate$. Then, for all $g\in\gambles(\states^{\{s\}})$ and $x\in\states$,
+Consider any $t,s\in\realsnonneg$ such that $t<s$, and let $\rateset$ be an arbitrary non-empty bounded set of rate matrices that has separately specified rows, with corresponding lower transition rate operator $\lrate$. Then, for all $g\in\gambles(\states^{\{s\}})$ and $x\in\states$,
 \begin{equation*}
 \left[L_t^sg\right](x) = \underline{\mathbb{E}}^\mathrm{M}[g(X_s)\,\vert\,X_t=x]\,,%\inf\Bigl\{\left[T_t^sf\right](x)\,:\,P\in\mprocesses_\rateset\Bigr\}\,.
 \end{equation*}
@@ -1224,23 +1232,23 @@ Together this implies, using Definition~\ref{def:lower_non_markov}, that
 
 *** lalala met andere woorden, $L_t^s$ doet niet alleen wat we willen voor Markov ketens, zoals al vastgesteld in eerder werk van Damjan, maar het werkt ook voor niet-Markov ketens! ***
 
-\section{*** More complex functions *** }
+\section{Functions Defined on Multiple Time Points}
 
 %\subsection{wat notatie voor meerdere variabelen}\label{sec:imp_non_markov}
 
-We will now move on to consider non-Markovian stochastic processes. Due to the need to consider multiple time points in such a process' history, we will find it convenient to switch from a transition-matrix notation to using (conditional) expectation operators. 
+%We will now move on to consider non-Markovian stochastic processes. Due to the need to consider multiple time points in such a process' history, we will find it convenient to switch from a transition-matrix notation to using (conditional) expectation operators. 
 %We will start by introducing some notation for functions which makes explicit the time points that we are considering.
 
-\begin{definition}
-Consider any stochastic process $P\in\processes$, any $t,t',s\in\realsnonneg$ such that $t<t'<s$, any $u\in\mathcal{U}_{[t,t']}$, and any $f\in\gambles(\states^{u\cup\{s\}})$. Then, the \emph{expectation of $f$ at time $s$ given the states at times $u$}, with respect to $P$, is a map $\mathbb{E}$ from $\gambles(\states^{u\cup\{s\}})$ to $\gambles(\states^u)$, defined for all $(x_{t_0},\ldots,x_{t_n})\in\states^u$, as
-\begin{equation*}
-\mathbb{E}_{X_s}[f(x_{t_0},\ldots,x_{t_n},X_s)\,\vert\,X_{t_0,\ldots,t_n}=x_{t_0,\ldots,t_n}] \coloneqq \sum_{x_s\in\states^{\{s\}}} f(x_{t_0},\ldots,x_{t_n},x_s)P(X_s=x_s\,\vert\,X_{t_0,\ldots,t_n}=x_{t_0,\ldots,t_n})\,.
-\end{equation*}
-\end{definition}
-\noindent Note that $\gambles(\states^{\{s\}})\subset\gambles(\states^{u\cup\{s\}})$, so that for any $g\in\gambles(\states^{\{s\}})$,
-\begin{equation*}
-\mathbb{E}_{X_s}[g(X_s)\,\vert\,X_{t_0,\ldots,t_n}=x_{t_0,\ldots,t_n}] = \sum_{x_s\in\states^{\{s\}}} g(x_s)P(X_s=x_s\,\vert\,X_{t_0,\ldots,t_n}=x_{t_0,\ldots,t_n})\,.
-\end{equation*}
+%\begin{definition}
+%Consider any stochastic process $P\in\processes$, any $t,t',s\in\realsnonneg$ such that $t<t'<s$, any $u\in\mathcal{U}_{[t,t']}$, and any $f\in\gambles(\states^{u\cup\{s\}})$. Then, the \emph{expectation of $f$ at time $s$ given the states at times $u$}, with respect to $P$, is a map $\mathbb{E}$ from $\gambles(\states^{u\cup\{s\}})$ to $\gambles(\states^u)$, defined for all $(x_{t_0},\ldots,x_{t_n})\in\states^u$, as
+%\begin{equation*}
+%\mathbb{E}_{X_s}[f(x_{t_0},\ldots,x_{t_n},X_s)\,\vert\,X_{t_0,\ldots,t_n}=x_{t_0,\ldots,t_n}] \coloneqq \sum_{x_s\in\states^{\{s\}}} f(x_{t_0},\ldots,x_{t_n},x_s)P(X_s=x_s\,\vert\,X_{t_0,\ldots,t_n}=x_{t_0,\ldots,t_n})\,.
+%\end{equation*}
+%\end{definition}
+%\noindent Note that $\gambles(\states^{\{s\}})\subset\gambles(\states^{u\cup\{s\}})$, so that for any $g\in\gambles(\states^{\{s\}})$,
+%\begin{equation*}
+%\mathbb{E}_{X_s}[g(X_s)\,\vert\,X_{t_0,\ldots,t_n}=x_{t_0,\ldots,t_n}] = \sum_{x_s\in\states^{\{s\}}} g(x_s)P(X_s=x_s\,\vert\,X_{t_0,\ldots,t_n}=x_{t_0,\ldots,t_n})\,.
+%\end{equation*}
 
 % \begin{definition}
 % Consider any $t,t',s\in\realsnonneg$ such that $t<t'<s$, any $u\in\mathcal{U}_{[t,t']}$, any $g\in\gambles(\states^{\{s\}})$ and any $f\in\gambles(\states^{u\cup\{s\}})$. Let $\rateset$ be an arbitrary bounded set of rate matrices with corresponding lower transition rate operator $\lrate$. We will define the \emph{lower expectation operator} $\underline{\mathbb{E}}$, for all $(x_{t_0},\ldots,x_{t_n})\in\states^u$, as
@@ -1254,111 +1262,188 @@ Consider any stochastic process $P\in\processes$, any $t,t',s\in\realsnonneg$ su
 % \end{definition}
 
 
-\subsection{*** functies met in tijdstip in de toekomst en de rest in het verleden ***}
+\subsection{*** functies met een tijdstip in de toekomst en de rest in het verleden ***}
 
-*** dit is triviaal en moet wat in de tekst komen, volgt uit eigenschappen van verwachtingswaarden ***
+*** deze moeten nog even netjes opgeschreven worden en wat uitleg ervoor dat dit triviaal gevolg is van eerdere sectie en eigenschappen van verwachtingswaarden ***
 
-\begin{theorem}
-Consider any $t,s\in\realsnonneg$ such that $t<s$, and let $\rateset$ be an arbitrary bounded set of rate matrices with corresponding lower transition rate operator $\lrate$. Then, for any $P\in\processes_\rateset$, any $u\in\mathcal{U}_{[0,t]}$, any $(x_{t_0},\ldots,x_{t_n})\in\states^u$, and any $f\in\gambles(\states^{u\cup\{s\}})$,
+*** mogelijk is dit ook zonde van de ruimte, en volstaat het om het alleen in de tekst te beschrijven. we moeten alleen wel naar deze resultaten kunnen verwijzen omdat we ze in de volgende sectie gebruiken... *** 
+
+Hence, we have the following results.
+\begin{proposition}
+In essentie, voor alle $f\in\gambles(\states^{u\cup\{s\}})$, alle $P\in\processes_\rateset$, en alle $(x_{t_0},\ldots,x_{t_n})\in\states^u$,
 \begin{equation*}
-\underline{\mathbb{E}}_{X_s}[f(x_{t_0},\ldots,x_{t_n},X_s)\,\vert\,X_{t_0,\ldots,t_n}=x_{t_0,\ldots,t_n}] \leq \mathbb{E}_{X_s}[f(x_{t_0},\ldots,x_{t_n},X_s)\,\vert\,X_{t_0,\ldots,t_n}=x_{t_0,\ldots,t_n}]\,.
+\left[L_t^s f\right](x_{t_0},\ldots,x_{t_n}) \leq \mathbb{E}[f(x_{t_0},\ldots,x_{t_n},X_s)\,\vert\,X_{t_0,\ldots,t_n}=x_{t_0,\ldots,t_n}]\,.
 \end{equation*}
-\end{theorem}
+\end{proposition}
 \begin{proof}
-Consider any $P\in\processes_\rateset$, any $t,s\in\realsnonneg$ such that $t<s$, any $u\in\mathcal{U}_{[0,t]}$, any $f\in\gambles(\states^{u\cup\{s\}})$, and any $(x_{t_0},\ldots,x_{t_n})\in\states^u$.
-
-Note that
-\begin{equation*}
-f(x_{t_0},\ldots,x_{t_n},X_s)\in\gambles(\states^{\{s\}})
-\end{equation*}
-is the restriction of $f\in\gambles(\states^{u\cup\{s\}})$ to $\gambles(\states^{\{s\}})$. Hence, we can define a function $g\in\gambles(\states^{\{s\}})$ as
-\begin{equation*}
-g(x_s) \coloneqq f(x_{t_0},\ldots,x_{t_n},x_s)\,,\quad\quad\text{for all $x_s\in\states^{\{s\}}$}\,.
-\end{equation*}
-Then,
-\begin{equation*}
-\mathbb{E}_{X_s}[f(x_{t_0},\ldots,x_{t_n},X_s)\,\vert\,X_{t_0,\ldots,t_n}=x_{t_0,\ldots,t_n}] = \mathbb{E}_{X_s}[g(X_s)\,\vert\,X_{t_0,\ldots,t_n}=x_{t_0,\ldots,t_n}]\,,
-\end{equation*}
-and
-\begin{equation*}
-\underline{\mathbb{E}}_{X_s}[f(x_{t_0},\ldots,x_{t_n},X_s)\,\vert\,X_{t_0,\ldots,t_n}=x_{t_0,\ldots,t_n}] = \underline{\mathbb{E}}_{X_s}[g(X_s)\,\vert\,X_{t_0,\ldots,t_n}=x_{t_0,\ldots,t_n}]\,.
-\end{equation*}
-Thus, it remains to show that
-\begin{equation*}
-\underline{\mathbb{E}}_{X_s}[g(X_s)\,\vert\,X_{t_0,\ldots,t_n}=x_{t_0,\ldots,t_n}] \leq \mathbb{E}_{X_s}[g(X_s)\,\vert\,X_{t_0,\ldots,t_n}=x_{t_0,\ldots,t_n}]\,.
-\end{equation*}
-Because $g\in\gambles(\states^{\{s\}})$, this was shown to hold by Theorem~\ref{theorem:nonmarkov_single_var_lower_bounded}.
+{\bf TODO} This is immediate.
 \end{proof}
 
-\begin{theorem}
-Consider any $t,s\in\realsnonneg$ such that $t<s$, and let $\rateset$ be an arbitrary closed and bounded set of rate matrices that has separately specified rows, with corresponding lower transition rate operator $\lrate$. Then for any $u\in\mathcal{U}_{[0,t]}$, any $g\in\gambles(\states^{\{s\}})$, and any $\epsilon\in\realspos$, there is some $P\in\processes_\rateset$ such that $P$ is Markovian, i.e. also $P\in\mprocesses_\rateset$, and furthermore,
+\begin{proposition}
+In essentie, voor alle $f\in\gambles(\states^{u\cup\{s\}})$ en alle $\epsilon\in\realspos$, is er een $P\in\mprocesses_\rateset$ zodat
 \begin{equation*}
-\norm{\underline{\mathbb{E}}_{X_s}[g(X_s)\,\vert\,X_{t_0,\ldots,t_n}] - \mathbb{E}_{X_s}[g(X_s)\,\vert\,X_{t_0,\ldots,t_n}]} < \epsilon\,.
+\norm{L_t^s f - \mathbb{E}[f(X_{t_0},\ldots,X_{t_n},X_s)\,\vert\,X_{t_0,\ldots,t_n}]} < \epsilon\,.
 \end{equation*}
-\end{theorem}
+\end{proposition}
 \begin{proof}
-Because $g\in\gambles(\states^{\{s\}})$, we have by Definition~{\bf REF} that
-\begin{equation*}
-\underline{\mathbb{E}}_{X_s}[g(X_s)\,\vert\,X_{t_0,\ldots,t_n}] = \underline{\mathbb{E}}_{X_s}[g(X_s)\,\vert\,X_{t_n}] = L_{t_n}^s g\,.
-\end{equation*}
-Furthermore, by Theorem~{\bf REF} there is some $P\in\mprocesses_\rateset$ with
-\begin{equation*}
-\mathbb{E}_{X_{s}}[g(X_s)\,\vert\,X_{t_0,\ldots,t_n}] =  \mathbb{E}_{X_{s}}[g(X_s)\,\vert\,X_{t_n}] = T_{t_n}^sf
-\end{equation*}
-by virtue of the Markov property, and
-\begin{equation*}
-\norm{\underline{\mathbb{E}}_{X_s}[g(X_s)\,\vert\,X_{t_0,\ldots,t_n}] - \mathbb{E}_{X_{s}}[g(X_s)\,\vert\,X_{t_0,\ldots,t_n}]} = \norm{L_{t_n}^sg - T_{t_n}^sg}< \epsilon\,.
-\end{equation*}
-Because $P\in\mprocesses_\rateset$ and $\mprocesses_\rateset\subseteq\processes_\rateset$, we have $P\in\processes_\rateset$, which concludes the proof.
+{\bf TODO} This is immediate.
 \end{proof}
+
+\begin{corollary}
+voor alle $f\in\gambles(\states^{u\cup\{s\}})$,
+\begin{equation*}
+\left[L_t^s f\right](x_{t_0},\ldots,x_{t_n}) = \underline{\mathbb{E}}^{\mathrm{M}}[f(x_{t_0},\ldots,x_{t_n},X_s)\,\vert\,X_{t_0,\ldots,t_n}=x_{t_0,\ldots,t_n}]
+\end{equation*}
+en
+\begin{equation*}
+\left[L_t^s f\right](x_{t_0},\ldots,x_{t_n}) = \underline{\mathbb{E}}[f(x_{t_0},\ldots,x_{t_n},X_s)\,\vert\,X_{t_0,\ldots,t_n}=x_{t_0,\ldots,t_n}]
+\end{equation*}
+\end{corollary}
+\begin{proof}
+{\bf TODO} This is immediate.
+\end{proof}
+
+%\begin{theorem}
+%Consider any $t,s\in\realsnonneg$ such that $t<s$, and let $\rateset$ be an arbitrary bounded set of rate matrices with corresponding lower transition rate operator $\lrate$. Then, for any $P\in\processes_\rateset$, any $u\in\mathcal{U}_{[0,t]}$, any $(x_{t_0},\ldots,x_{t_n})\in\states^u$, and any $f\in\gambles(\states^{u\cup\{s\}})$,
+%\begin{equation*}
+%\underline{\mathbb{E}}_{X_s}[f(x_{t_0},\ldots,x_{t_n},X_s)\,\vert\,X_{t_0,\ldots,t_n}=x_{t_0,\ldots,t_n}] \leq \mathbb{E}_{X_s}[f(x_{t_0},\ldots,x_{t_n},X_s)\,\vert\,X_{t_0,\ldots,t_n}=x_{t_0,\ldots,t_n}]\,.
+%\end{equation*}
+%\end{theorem}
+%\begin{proof}
+%Consider any $P\in\processes_\rateset$, any $t,s\in\realsnonneg$ such that $t<s$, any $u\in\mathcal{U}_{[0,t]}$, any $f\in\gambles(\states^{u\cup\{s\}})$, and any $(x_{t_0},\ldots,x_{t_n})\in\states^u$.
+%
+%Note that
+%\begin{equation*}
+%f(x_{t_0},\ldots,x_{t_n},X_s)\in\gambles(\states^{\{s\}})
+%\end{equation*}
+%is the restriction of $f\in\gambles(\states^{u\cup\{s\}})$ to $\gambles(\states^{\{s\}})$. Hence, we can define a function $g\in\gambles(\states^{\{s\}})$ as
+%\begin{equation*}
+%g(x_s) \coloneqq f(x_{t_0},\ldots,x_{t_n},x_s)\,,\quad\quad\text{for all $x_s\in\states^{\{s\}}$}\,.
+%\end{equation*}
+%Then,
+%\begin{equation*}
+%\mathbb{E}_{X_s}[f(x_{t_0},\ldots,x_{t_n},X_s)\,\vert\,X_{t_0,\ldots,t_n}=x_{t_0,\ldots,t_n}] = \mathbb{E}_{X_s}[g(X_s)\,\vert\,X_{t_0,\ldots,t_n}=x_{t_0,\ldots,t_n}]\,,
+%\end{equation*}
+%and
+%\begin{equation*}
+%\underline{\mathbb{E}}_{X_s}[f(x_{t_0},\ldots,x_{t_n},X_s)\,\vert\,X_{t_0,\ldots,t_n}=x_{t_0,\ldots,t_n}] = \underline{\mathbb{E}}_{X_s}[g(X_s)\,\vert\,X_{t_0,\ldots,t_n}=x_{t_0,\ldots,t_n}]\,.
+%\end{equation*}
+%Thus, it remains to show that
+%\begin{equation*}
+%\underline{\mathbb{E}}_{X_s}[g(X_s)\,\vert\,X_{t_0,\ldots,t_n}=x_{t_0,\ldots,t_n}] \leq \mathbb{E}_{X_s}[g(X_s)\,\vert\,X_{t_0,\ldots,t_n}=x_{t_0,\ldots,t_n}]\,.
+%\end{equation*}
+%Because $g\in\gambles(\states^{\{s\}})$, this was shown to hold by Theorem~\ref{theorem:nonmarkov_single_var_lower_bounded}.
+%\end{proof}
+
+%\begin{theorem}
+%Consider any $t,s\in\realsnonneg$ such that $t<s$, and let $\rateset$ be an arbitrary closed and bounded set of rate matrices that has separately specified rows, with corresponding lower transition rate operator $\lrate$. Then for any $u\in\mathcal{U}_{[0,t]}$, any $g\in\gambles(\states^{\{s\}})$, and any $\epsilon\in\realspos$, there is some $P\in\processes_\rateset$ such that $P$ is Markovian, i.e. also $P\in\mprocesses_\rateset$, and furthermore,
+%\begin{equation*}
+%\norm{\underline{\mathbb{E}}_{X_s}[g(X_s)\,\vert\,X_{t_0,\ldots,t_n}] - \mathbb{E}_{X_s}[g(X_s)\,\vert\,X_{t_0,\ldots,t_n}]} < \epsilon\,.
+%\end{equation*}
+%\end{theorem}
+%\begin{proof}
+%Because $g\in\gambles(\states^{\{s\}})$, we have by Definition~{\bf REF} that
+%\begin{equation*}
+%\underline{\mathbb{E}}_{X_s}[g(X_s)\,\vert\,X_{t_0,\ldots,t_n}] = \underline{\mathbb{E}}_{X_s}[g(X_s)\,\vert\,X_{t_n}] = L_{t_n}^s g\,.
+%\end{equation*}
+%Furthermore, by Theorem~{\bf REF} there is some $P\in\mprocesses_\rateset$ with
+%\begin{equation*}
+%\mathbb{E}_{X_{s}}[g(X_s)\,\vert\,X_{t_0,\ldots,t_n}] =  \mathbb{E}_{X_{s}}[g(X_s)\,\vert\,X_{t_n}] = T_{t_n}^sf
+%\end{equation*}
+%by virtue of the Markov property, and
+%\begin{equation*}
+%\norm{\underline{\mathbb{E}}_{X_s}[g(X_s)\,\vert\,X_{t_0,\ldots,t_n}] - \mathbb{E}_{X_{s}}[g(X_s)\,\vert\,X_{t_0,\ldots,t_n}]} = \norm{L_{t_n}^sg - T_{t_n}^sg}< \epsilon\,.
+%\end{equation*}
+%Because $P\in\mprocesses_\rateset$ and $\mprocesses_\rateset\subseteq\processes_\rateset$, we have $P\in\processes_\rateset$, which concludes the proof.
+%\end{proof}
 
 \subsection{Decompositie}
 
-*** dit bewijs mag weg, de essentie ervan zal terugkeren ergens in de decompositie denk ik ***
+*** tralala, werkt dit allemaal ook voor functies met meerdere tijdstippen in de toekomst? nee: ***
 
-\begin{theorem}
-Consider any $t,s\in\realsnonneg$ such that $t<s$, and let $\rateset$ be an arbitrary closed and bounded set of rate matrices that has separately specified rows, with corresponding lower transition rate operator $\lrate$. Then for any $u\in\mathcal{U}_{[0,t]}$, any $f\in\gambles(\states^{u\cup\{s\}})$, and any $\epsilon\in\realspos$, there is some $P\in\processes_\rateset$ such that
+\begin{exmp}
+{\bf TODO} Laat voorbeeld zien dat soms
 \begin{equation*}
-\norm{\underline{\mathbb{E}}_{X_s}[f(X_{t_0},\ldots,X_{t_n},X_s)\,\vert\,X_{t_0,\ldots,t_n}] - \mathbb{E}_{X_s}[f(X_{t_0},\ldots,X_{t_n},X_s)\,\vert\,X_{t_0,\ldots,t_n}]} < \epsilon\,.
+\underline{\mathbb{E}}^\mathrm{M}[f(X_{s_0},\ldots,X_{s_m})\,\vert\,X_{t_0},\ldots,X_{t_n}] \neq \underline{\mathbb{E}}[f(X_{s_0},\ldots,X_{s_m})\,\vert\,X_{t_0},\ldots,X_{t_n}].
 \end{equation*}
-\end{theorem}
+\exampleend
+\end{exmp}
+
+*** we hebben wel het volgende, per simpele eigenschappen van verwachtingswaarden ***
+\begin{proposition}
+voor alle $f\in\gambles(\states^{u\cup v})$, alle $P\in\processes_\rateset$, en alle $(x_{t_0},\ldots,x_{t_n})\in\states^u$,
+\begin{equation*}
+\left[L_{t_n}^{s_0}L_{s_0}^{s_1}\cdots L_{s_{m-1}}^{s_m}f\right](x_{t_0},\ldots,x_{t_n}) \leq \mathbb{E}[f(x_{t_0},\ldots,x_{t_n},X_{s_0},\ldots,X_{s_m})\,\vert\,X_{t_0,\ldots,t_n}=x_{t_0,\ldots,t_n}]\,.
+\end{equation*}
+\end{proposition}
 \begin{proof}
-Choose any $u\in\mathcal{U}_{[0,t]}$, any $f\in\gambles(\states^{u\cup\{s\}})$, and any $\epsilon\in\realspos$.
+{\bf TODO} *** deze is triviaal ***
+\end{proof}
 
-Define a \emph{lower-characterizing rate matrix} $Q_{x_{t_0},\ldots,x_{t_n},\tau}$ as
+*** dit kan ook: ***
+\begin{proposition}
+voor alle $f\in\gambles(\states^{u\cup v})$ en $\epsilon>0$, bestaat er een $P\in\processes_\rateset$ zodat
 \begin{equation*}
-Q_{x_{t_0},\ldots,x_{t_n},\tau}(x_\tau,\cdot) \coloneqq \argmin\bigl\{Q(x_\tau,\cdot)\left[\underline{\mathbb{E}}_{X_s}[f(x_{t_0},\ldots,x_{t_n},X_s)\,\vert\,X_{t_0,\ldots,t_n}=x_{t_0,\ldots,t_n},X_{\tau}]\right]\,:\,Q(x_\tau,\cdot)\in\rateset_{x_\tau}\bigr\}\,,
+\norm{L_{t_n}^{s_0}L_{s_0}^{s_1}\cdots L_{s_{m-1}}^{s_m}f - \mathbb{E}[f(X_{t_0},\ldots,X_{t_n},X_{s_0},\ldots,X_{s_m})\,\vert\,X_{t_0,\ldots,t_n}]} < \epsilon\,.
 \end{equation*}
-for all $x_\tau\in\states^{\{\tau\}}$, all $\tau\in[t,s]$, and all $(x_{t_0},\ldots,x_{t_n})\in\states^u$. Note that the $\argmin\{\cdot\}$ may be set-valued, in which case take an arbitrary element. Furthermore, for all $(x_{t_0},\ldots,x_{t_n})\in\states^u$, let $Q_{x_{t_0},\ldots,x_{t_n},\tau}\coloneqq Q_{x_{t_0},\ldots,x_{t_n},t}$ for all $\tau\in[0,t]$, and let $Q_{x_{t_0},\ldots,x_{t_n},\tau}\coloneqq Q_{x_{t_0},\ldots,x_{t_n},s}$ for all $\tau>s$.
+\end{proposition}
+\begin{proof}
+{\bf TODO} *** deze is nog een beetje ingewikkeld, we moeten weer een process bouwen en laten zien dat die in $\processes_\rateset$ zit ***
+\end{proof}
 
-Let $C\coloneqq (s-t)$, define
+*** ergo, we hebben dit: ***
+\begin{proposition}
 \begin{equation*}
-\delta\coloneqq \min\left\{\frac{\epsilon}{2C\norm{\rateset}^2\norm{f}}, \frac{1}{\norm{\lrate}}\right\}\,,
+\left[L_{t_n}^{s_0}L_{s_0}^{s_1}\cdots L_{s_{m-1}}^{s_m}f\right](x_{t_0},\ldots,x_{t_n}) = \underline{\mathbb{E}}[f(x_{t_0},\ldots,x_{t_n},X_{s_0},\ldots,X_{s_m})\,\vert\,X_{t_0,\ldots,t_n}=x_{t_0,\ldots,t_n}]\,.
 \end{equation*}
-and choose any $m>\nicefrac{C}{\delta}$. Then, for $\Delta\coloneqq\nicefrac{C}{m}$, we have $\Delta<\delta$.
+\end{proposition}
+\begin{proof}
+{\bf TODO} *** triviaal gevolg ***
+\end{proof}
 
-For all $k\in\{0,\ldots,m\}$, define $\tau_k\coloneqq t+k\Delta$. Let $v\coloneqq \tau_0,\tau_1,\ldots,\tau_m$. Finally, define for all $(x_{t_0},\ldots,x_{t_n})\in\states^u$ a piecewise-constant approximation $Q_{x_{t_0},\ldots,x_{t_n},\tau}^v$ to $Q_{x_{t_0},\ldots,x_{t_n},\tau}$ such that, for all $k\in\{1,\ldots,m\}$,
-\begin{equation*}
-Q_{x_{t_0},\ldots,x_{t_n},\tau}^v\coloneqq Q_{x_{t_0},\ldots,x_{t_n},\tau_k}\,,\quad\text{for all $\tau\in(\tau_{k-1},\tau_k]$}\,.
-\end{equation*}
-Let $Q_{x_{t_0},\ldots,x_{t_n},\tau}^v\coloneqq Q_{x_{t_0},\ldots,x_{t_n},\tau_0}$ for all $\tau\leq\tau_0$ and let $Q_{x_{t_0},\ldots,x_{t_n},\tau}^v\coloneqq Q_{x_{t_0},\ldots,x_{t_n},\tau_m}$ for all $\tau>\tau_m$.
-
-Then, for all $(x_{t_0},\ldots,x_{t_n})\in\states^u$, $Q_{x_{t_0},\ldots,x_{t_n},\tau}^v$ is a piecewise-constant matrix which takes values $Q_{x_{t_0},\ldots,x_{t_n},\tau}^v\in\rateset$ for all $\tau\in\realsnonneg$. Hence, by Proposition {\bf REF}, there is some $P\in\processes_\rateset$ that is characterized by the collection $Q_{X_{t_0},\ldots,X_{t_n},\tau}^v$ of all $Q_{x_{t_0},\ldots,x_{t_n},\tau}^v$. 
-
-Let $\mathbb{E}$ be the expectation operator associated with this $P$. Then,
-\begin{align*}
-&\quad \norm{\underline{\mathbb{E}}_{X_s}[f(X_{t_0},\ldots,X_{t_n},X_s)\,\vert\,X_{t_0,\ldots,t_n}] - \mathbb{E}_{X_s}[f(X_{t_0},\ldots,X_{t_n},X_s)\,\vert\,X_{t_0,\ldots,t_n}]} \\
-&= \norm{\underline{\mathbb{E}}_{X_{\tau_m}}[f(X_{t_0},\ldots,X_{t_n},X_{\tau_m})\,\vert\,X_{t_0,\ldots,t_n}] - \mathbb{E}_{X_{\tau_m}}[f(X_{t_0},\ldots,X_{t_n},X_{\tau_m})\,\vert\,X_{t_0,\ldots,t_n}]} \\
-&= \norm{\underline{\mathbb{E}}_{X_{\tau_{m-1}}}\bigl[\underline{\mathbb{E}}_{X_{\tau_m}}[f(X_{t_0},\ldots,X_{t_n},X_{\tau_m})\,\vert\,X_{t_0,\ldots,t_n,\tau_{m-1}}]\,\big\vert\,X_{t_0,\ldots,t_n}\bigr] - \mathbb{E}_{X_{\tau_{m-1}}}\bigl[\mathbb{E}_{X_{\tau_m}}[f(X_{t_0},\ldots,X_{t_n},X_{\tau_m})\,\vert\,X_{t_0,\ldots,t_n,\tau_{m-1}}]\,\big\vert\,X_{t_0,\ldots,t_n}\bigr]} \\
-&\leq \norm{\underline{\mathbb{E}}_{X_{\tau_{m-1}}}\bigl[\underline{\mathbb{E}}_{X_{\tau_m}}[f(X_{t_0},\ldots,X_{t_n},X_{\tau_m})\,\vert\,X_{t_0,\ldots,t_n,\tau_{m-1}}]\,\big\vert\,X_{t_0,\ldots,t_n}\bigr] - \mathbb{E}_{X_{\tau_{m-1}}}\bigl[\underline{\mathbb{E}}_{X_{\tau_m}}[f(X_{t_0},\ldots,X_{t_n},X_{\tau_m})\,\vert\,X_{t_0,\ldots,t_n,\tau_{m-1}}]\,\big\vert\,X_{t_0,\ldots,t_n}\bigr]} \\
-&\quad + \norm{\mathbb{E}_{X_{\tau_{m-1}}}\bigl[\underline{\mathbb{E}}_{X_{\tau_m}}[f(X_{t_0},\ldots,X_{t_n},X_{\tau_m})\,\vert\,X_{t_0,\ldots,t_n,\tau_{m-1}}]\,\big\vert\,X_{t_0,\ldots,t_n}\bigr] - \mathbb{E}_{X_{\tau_{m-1}}}\bigl[\mathbb{E}_{X_{\tau_m}}[f(X_{t_0},\ldots,X_{t_n},X_{\tau_m})\,\vert\,X_{t_0,\ldots,t_n,\tau_{m-1}}]\,\big\vert\,X_{t_0,\ldots,t_n}\bigr]} \\
-&\leq \norm{\underline{\mathbb{E}}_{X_{\tau_{m-1}}}\bigl[\underline{\mathbb{E}}_{X_{\tau_m}}[f(X_{t_0},\ldots,X_{t_n},X_{\tau_m})\,\vert\,X_{t_0,\ldots,t_n,\tau_{m-1}}]\,\big\vert\,X_{t_0,\ldots,t_n}\bigr] - \mathbb{E}_{X_{\tau_{m-1}}}\bigl[\underline{\mathbb{E}}_{X_{\tau_m}}[f(X_{t_0},\ldots,X_{t_n},X_{\tau_m})\,\vert\,X_{t_0,\ldots,t_n,\tau_{m-1}}]\,\big\vert\,X_{t_0,\ldots,t_n}\bigr]} \\
-&\quad + \norm{\underline{\mathbb{E}}_{X_{\tau_m}}[f(X_{t_0},\ldots,X_{t_n},X_{\tau_m})\,\vert\,X_{t_0,\ldots,t_n,\tau_{m-1}}] - \mathbb{E}_{X_{\tau_m}}[f(X_{t_0},\ldots,X_{t_n},X_{\tau_m})\,\vert\,X_{t_0,\ldots,t_n,\tau_{m-1}}]}\,, \end{align*}
-where the last step used convexity of the expectation operator and the definition of the norm. Recursion on the first summand yields
-\begin{align*}
-&\quad \norm{\underline{\mathbb{E}}_{X_s}[f(X_{t_0},\ldots,X_{t_n},X_s)\,\vert\,X_{t_0,\ldots,t_n}] - \mathbb{E}_{X_s}[f(X_{t_0},\ldots,X_{t_n},X_s)\,\vert\,X_{t_0,\ldots,t_n}]} \\
-&\leq \norm{\underline{\mathbb{E}}_{X_{\tau_{m-1}}}\bigl[\underline{\mathbb{E}}_{X_{\tau_m}}[f(X_{t_0},\ldots,X_{t_n},X_{\tau_m})\,\vert\,X_{t_0,\ldots,t_n,\tau_{m-1}}]\,\big\vert\,X_{t_0,\ldots,t_n}\bigr] - \mathbb{E}_{X_{\tau_{m-1}}}\bigl[\underline{\mathbb{E}}_{X_{\tau_m}}[f(X_{t_0},\ldots,X_{t_n},X_{\tau_m})\,\vert\,X_{t_0,\ldots,t_n,\tau_{m-1}}]\,\big\vert\,X_{t_0,\ldots,t_n}\bigr]} \\
-&\quad\quad\quad + \norm{\underline{\mathbb{E}}_{X_{\tau_m}}[g(X_{\tau_m})\,\vert\,X_{t_0,\ldots,t_n,\tau_{m-1}}] - \mathbb{E}_{X_{\tau_m}}[g(X_{\tau_m})\,\vert\,X_{t_0,\ldots,t_n,\tau_{m-1}}]} \\
+%\begin{theorem}
+%Consider any $t,s\in\realsnonneg$ such that $t<s$, and let $\rateset$ be an arbitrary closed and bounded set of rate matrices that has separately specified rows, with corresponding lower transition rate operator $\lrate$. Then for any $u\in\mathcal{U}_{[0,t]}$, any $f\in\gambles(\states^{u\cup\{s\}})$, and any $\epsilon\in\realspos$, there is some $P\in\processes_\rateset$ such that
+%\begin{equation*}
+%\norm{\underline{\mathbb{E}}_{X_s}[f(X_{t_0},\ldots,X_{t_n},X_s)\,\vert\,X_{t_0,\ldots,t_n}] - \mathbb{E}_{X_s}[f(X_{t_0},\ldots,X_{t_n},X_s)\,\vert\,X_{t_0,\ldots,t_n}]} < \epsilon\,.
+%\end{equation*}
+%\end{theorem}
+%\begin{proof}
+%Choose any $u\in\mathcal{U}_{[0,t]}$, any $f\in\gambles(\states^{u\cup\{s\}})$, and any $\epsilon\in\realspos$.
+%
+%Define a \emph{lower-characterizing rate matrix} $Q_{x_{t_0},\ldots,x_{t_n},\tau}$ as
+%\begin{equation*}
+%Q_{x_{t_0},\ldots,x_{t_n},\tau}(x_\tau,\cdot) \coloneqq \argmin\bigl\{Q(x_\tau,\cdot)\left[\underline{\mathbb{E}}_{X_s}[f(x_{t_0},\ldots,x_{t_n},X_s)\,\vert\,X_{t_0,\ldots,t_n}=x_{t_0,\ldots,t_n},X_{\tau}]\right]\,:\,Q(x_\tau,\cdot)\in\rateset_{x_\tau}\bigr\}\,,
+%\end{equation*}
+%for all $x_\tau\in\states^{\{\tau\}}$, all $\tau\in[t,s]$, and all $(x_{t_0},\ldots,x_{t_n})\in\states^u$. Note that the $\argmin\{\cdot\}$ may be set-valued, in which case take an arbitrary element. Furthermore, for all $(x_{t_0},\ldots,x_{t_n})\in\states^u$, let $Q_{x_{t_0},\ldots,x_{t_n},\tau}\coloneqq Q_{x_{t_0},\ldots,x_{t_n},t}$ for all $\tau\in[0,t]$, and let $Q_{x_{t_0},\ldots,x_{t_n},\tau}\coloneqq Q_{x_{t_0},\ldots,x_{t_n},s}$ for all $\tau>s$.
+%
+%Let $C\coloneqq (s-t)$, define
+%\begin{equation*}
+%\delta\coloneqq \min\left\{\frac{\epsilon}{2C\norm{\rateset}^2\norm{f}}, \frac{1}{\norm{\lrate}}\right\}\,,
+%\end{equation*}
+%and choose any $m>\nicefrac{C}{\delta}$. Then, for $\Delta\coloneqq\nicefrac{C}{m}$, we have $\Delta<\delta$.
+%
+%For all $k\in\{0,\ldots,m\}$, define $\tau_k\coloneqq t+k\Delta$. Let $v\coloneqq \tau_0,\tau_1,\ldots,\tau_m$. Finally, define for all $(x_{t_0},\ldots,x_{t_n})\in\states^u$ a piecewise-constant approximation $Q_{x_{t_0},\ldots,x_{t_n},\tau}^v$ to $Q_{x_{t_0},\ldots,x_{t_n},\tau}$ such that, for all $k\in\{1,\ldots,m\}$,
+%\begin{equation*}
+%Q_{x_{t_0},\ldots,x_{t_n},\tau}^v\coloneqq Q_{x_{t_0},\ldots,x_{t_n},\tau_k}\,,\quad\text{for all $\tau\in(\tau_{k-1},\tau_k]$}\,.
+%\end{equation*}
+%Let $Q_{x_{t_0},\ldots,x_{t_n},\tau}^v\coloneqq Q_{x_{t_0},\ldots,x_{t_n},\tau_0}$ for all $\tau\leq\tau_0$ and let $Q_{x_{t_0},\ldots,x_{t_n},\tau}^v\coloneqq Q_{x_{t_0},\ldots,x_{t_n},\tau_m}$ for all $\tau>\tau_m$.
+%
+%Then, for all $(x_{t_0},\ldots,x_{t_n})\in\states^u$, $Q_{x_{t_0},\ldots,x_{t_n},\tau}^v$ is a piecewise-constant matrix which takes values $Q_{x_{t_0},\ldots,x_{t_n},\tau}^v\in\rateset$ for all $\tau\in\realsnonneg$. Hence, by Proposition {\bf REF}, there is some $P\in\processes_\rateset$ that is characterized by the collection $Q_{X_{t_0},\ldots,X_{t_n},\tau}^v$ of all $Q_{x_{t_0},\ldots,x_{t_n},\tau}^v$. 
+%
+%Let $\mathbb{E}$ be the expectation operator associated with this $P$. Then,
+%\begin{align*}
+%&\quad \norm{\underline{\mathbb{E}}_{X_s}[f(X_{t_0},\ldots,X_{t_n},X_s)\,\vert\,X_{t_0,\ldots,t_n}] - \mathbb{E}_{X_s}[f(X_{t_0},\ldots,X_{t_n},X_s)\,\vert\,X_{t_0,\ldots,t_n}]} \\
+%&= \norm{\underline{\mathbb{E}}_{X_{\tau_m}}[f(X_{t_0},\ldots,X_{t_n},X_{\tau_m})\,\vert\,X_{t_0,\ldots,t_n}] - \mathbb{E}_{X_{\tau_m}}[f(X_{t_0},\ldots,X_{t_n},X_{\tau_m})\,\vert\,X_{t_0,\ldots,t_n}]} \\
+%&= \norm{\underline{\mathbb{E}}_{X_{\tau_{m-1}}}\bigl[\underline{\mathbb{E}}_{X_{\tau_m}}[f(X_{t_0},\ldots,X_{t_n},X_{\tau_m})\,\vert\,X_{t_0,\ldots,t_n,\tau_{m-1}}]\,\big\vert\,X_{t_0,\ldots,t_n}\bigr] - \mathbb{E}_{X_{\tau_{m-1}}}\bigl[\mathbb{E}_{X_{\tau_m}}[f(X_{t_0},\ldots,X_{t_n},X_{\tau_m})\,\vert\,X_{t_0,\ldots,t_n,\tau_{m-1}}]\,\big\vert\,X_{t_0,\ldots,t_n}\bigr]} \\
+%&\leq \norm{\underline{\mathbb{E}}_{X_{\tau_{m-1}}}\bigl[\underline{\mathbb{E}}_{X_{\tau_m}}[f(X_{t_0},\ldots,X_{t_n},X_{\tau_m})\,\vert\,X_{t_0,\ldots,t_n,\tau_{m-1}}]\,\big\vert\,X_{t_0,\ldots,t_n}\bigr] - \mathbb{E}_{X_{\tau_{m-1}}}\bigl[\underline{\mathbb{E}}_{X_{\tau_m}}[f(X_{t_0},\ldots,X_{t_n},X_{\tau_m})\,\vert\,X_{t_0,\ldots,t_n,\tau_{m-1}}]\,\big\vert\,X_{t_0,\ldots,t_n}\bigr]} \\
+%&\quad + \norm{\mathbb{E}_{X_{\tau_{m-1}}}\bigl[\underline{\mathbb{E}}_{X_{\tau_m}}[f(X_{t_0},\ldots,X_{t_n},X_{\tau_m})\,\vert\,X_{t_0,\ldots,t_n,\tau_{m-1}}]\,\big\vert\,X_{t_0,\ldots,t_n}\bigr] - \mathbb{E}_{X_{\tau_{m-1}}}\bigl[\mathbb{E}_{X_{\tau_m}}[f(X_{t_0},\ldots,X_{t_n},X_{\tau_m})\,\vert\,X_{t_0,\ldots,t_n,\tau_{m-1}}]\,\big\vert\,X_{t_0,\ldots,t_n}\bigr]} \\
+%&\leq \norm{\underline{\mathbb{E}}_{X_{\tau_{m-1}}}\bigl[\underline{\mathbb{E}}_{X_{\tau_m}}[f(X_{t_0},\ldots,X_{t_n},X_{\tau_m})\,\vert\,X_{t_0,\ldots,t_n,\tau_{m-1}}]\,\big\vert\,X_{t_0,\ldots,t_n}\bigr] - \mathbb{E}_{X_{\tau_{m-1}}}\bigl[\underline{\mathbb{E}}_{X_{\tau_m}}[f(X_{t_0},\ldots,X_{t_n},X_{\tau_m})\,\vert\,X_{t_0,\ldots,t_n,\tau_{m-1}}]\,\big\vert\,X_{t_0,\ldots,t_n}\bigr]} \\
+%&\quad + \norm{\underline{\mathbb{E}}_{X_{\tau_m}}[f(X_{t_0},\ldots,X_{t_n},X_{\tau_m})\,\vert\,X_{t_0,\ldots,t_n,\tau_{m-1}}] - \mathbb{E}_{X_{\tau_m}}[f(X_{t_0},\ldots,X_{t_n},X_{\tau_m})\,\vert\,X_{t_0,\ldots,t_n,\tau_{m-1}}]}\,, \end{align*}
+%where the last step used convexity of the expectation operator and the definition of the norm. Recursion on the first summand yields
+%\begin{align*}
+%&\quad \norm{\underline{\mathbb{E}}_{X_s}[f(X_{t_0},\ldots,X_{t_n},X_s)\,\vert\,X_{t_0,\ldots,t_n}] - \mathbb{E}_{X_s}[f(X_{t_0},\ldots,X_{t_n},X_s)\,\vert\,X_{t_0,\ldots,t_n}]} \\
+%&\leq \norm{\underline{\mathbb{E}}_{X_{\tau_{m-1}}}\bigl[\underline{\mathbb{E}}_{X_{\tau_m}}[f(X_{t_0},\ldots,X_{t_n},X_{\tau_m})\,\vert\,X_{t_0,\ldots,t_n,\tau_{m-1}}]\,\big\vert\,X_{t_0,\ldots,t_n}\bigr] - \mathbb{E}_{X_{\tau_{m-1}}}\bigl[\underline{\mathbb{E}}_{X_{\tau_m}}[f(X_{t_0},\ldots,X_{t_n},X_{\tau_m})\,\vert\,X_{t_0,\ldots,t_n,\tau_{m-1}}]\,\big\vert\,X_{t_0,\ldots,t_n}\bigr]} \\
+%&\quad\quad\quad + \norm{\underline{\mathbb{E}}_{X_{\tau_m}}[g(X_{\tau_m})\,\vert\,X_{t_0,\ldots,t_n,\tau_{m-1}}] - \mathbb{E}_{X_{\tau_m}}[g(X_{\tau_m})\,\vert\,X_{t_0,\ldots,t_n,\tau_{m-1}}]} \\
 %&= \norm{\underline{\mathbb{E}}_{X_{\tau_{m-2}}}\bigl[\underline{\mathbb{E}}_{X_{\tau_{m-1}}}[\underline{\mathbb{E}}_{X_{\tau_m}}[g(X_{\tau_m})\,\vert\,X_{\tau_{m-1}}]\,\vert\,X_{\tau_{m-2}}]\,\big\vert\,X_{t_0,\ldots,t_n}\bigr] - \mathbb{E}_{X_{\tau_{m-2}}}\bigl[\mathbb{E}_{X_{\tau_{m-1}}}[\underline{\mathbb{E}}_{X_{\tau_m}}[g(X_{\tau_m})\,\vert\,X_{\tau_{m-1}}]\,\vert\,X_{t_0,\ldots,t_n,\tau_{m-2}}]\,\big\vert\,X_{t_0,\ldots,t_n}\bigr]} \\
 %&\quad\quad\quad + \norm{\underline{\mathbb{E}}_{X_{\tau_m}}[g(X_{\tau_m})\,\vert\,X_{t_0,\ldots,t_n,\tau_{m-1}}] - \mathbb{E}_{X_{\tau_m}}[g(X_{\tau_m})\,\vert\,X_{t_0,\ldots,t_n,\tau_{m-1}}]} \\
 %&= \norm{\underline{\mathbb{E}}_{X_{\tau_{m-2}}}\bigl[\underline{\mathbb{E}}_{X_{\tau_m}}[g(X_{\tau_m})\,\vert\,X_{\tau_{m-2}}]\,\big\vert\,X_{t_0,\ldots,t_n}\bigr] - \mathbb{E}_{X_{\tau_{m-2}}}\bigl[\mathbb{E}_{X_{\tau_{m-1}}}[\underline{\mathbb{E}}_{X_{\tau_m}}[g(X_{\tau_m})\,\vert\,X_{\tau_{m-1}}]\,\vert\,X_{t_0,\ldots,t_n,\tau_{m-2}}]\,\big\vert\,X_{t_0,\ldots,t_n}\bigr]} \\
@@ -1372,55 +1457,55 @@ where the last step used convexity of the expectation operator and the definitio
 %&= \norm{\underline{\mathbb{E}}_{X_{\tau_{m-2}}}\bigl[\underline{\mathbb{E}}_{X_{\tau_m}}[g(X_{\tau_m})\,\vert\,X_{\tau_{m-2}}]\,\big\vert\,X_{t_0,\ldots,t_n}\bigr] - \mathbb{E}_{X_{\tau_{m-2}}}[ \underline{\mathbb{E}}_{X_{\tau_m}}[g(X_{\tau_m})\,\vert\,X_{\tau_{m-2}}] \,\vert\,X_{t_0,\ldots,t_n}]} \\
 %&\quad\quad\quad + \norm{ \underline{\mathbb{E}}_{X_{\tau_{m-1}}}[\underline{\mathbb{E}}_{X_{\tau_m}}[g(X_{\tau_m})\,\vert\,X_{\tau_{m-1}}]\,\vert\,X_{t_0,\ldots,t_n,\tau_{m-2}}] - \mathbb{E}_{X_{\tau_{m-1}}}[\underline{\mathbb{E}}_{X_{\tau_m}}[g(X_{\tau_m})\,\vert\,X_{\tau_{m-1}}]\,\vert\,X_{t_0,\ldots,t_n,\tau_{m-2}}]} \\
 %&\quad\quad\quad + \norm{\underline{\mathbb{E}}_{X_{\tau_m}}[g(X_{\tau_m})\,\vert\,X_{t_0,\ldots,t_n,\tau_{m-1}}] - \mathbb{E}_{X_{\tau_m}}[g(X_{\tau_m})\,\vert\,X_{t_0,\ldots,t_n,\tau_{m-1}}]} \\
-&\vdots \\
-&\leq \sum_{i=1}^m \norm{\underline{\mathbb{E}}_{X_{\tau_i}}\bigl[ \underline{\mathbb{E}}_{X_{\tau_m}}[f(X_{t_0},\ldots,X_{t_n},X_{\tau_m})\,\vert\,X_{t_0,\ldots,t_n,\tau_i}] \,\big\vert\,X_{t_0,\ldots,t_n,\tau_{i-1}}\bigr] - \mathbb{E}_{X_{\tau_i}}\bigl[ \underline{\mathbb{E}}_{X_{\tau_m}}[f(X_{t_0},\ldots,X_{t_n},X_{\tau_m})\,\vert\,X_{t_0,\ldots,t_n,\tau_i}] \,\big\vert\,X_{t_0,\ldots,t_n,\tau_{i-1}}\bigr]}\,.
-\end{align*}
-For all $i\in\{1,\ldots,m\}$, we have
-\begin{align*}
-&\quad \norm{\underline{\mathbb{E}}_{X_{\tau_i}}\bigl[ \underline{\mathbb{E}}_{X_{\tau_m}}[f(X_{t_0},\ldots,X_{t_n},X_{\tau_m})\,\vert\,X_{t_0,\ldots,t_n,\tau_i}] \,\big\vert\,X_{t_0,\ldots,t_n,\tau_{i-1}}\bigr] - \mathbb{E}_{X_{\tau_i}}\bigl[ \underline{\mathbb{E}}_{X_{\tau_m}}[f(X_{t_0},\ldots,X_{t_n},X_{\tau_m})\,\vert\,X_{t_0,\ldots,t_n,\tau_i}] \,\big\vert\,X_{t_0,\ldots,t_n,\tau_{i-1}}\bigr]} \\
-&\leq \norm{\underline{\mathbb{E}}_{X_{\tau_i}}\bigl[ \underline{\mathbb{E}}_{X_{\tau_m}}[f(X_{t_0},\ldots,X_{t_n},X_{\tau_m})\,\vert\,X_{t_0,\ldots,t_n,\tau_i}] \,\big\vert\,X_{t_0,\ldots,t_n,\tau_{i-1}}\bigr] - [I+\Delta \lrate]\underline{\mathbb{E}}_{X_{\tau_m}}[f(X_{t_0},\ldots,X_{t_n},X_{\tau_m})\,\vert\,X_{t_0,\ldots,t_n,\tau_i}]} \\
-&\quad\quad + \norm{[I+\Delta \lrate]\underline{\mathbb{E}}_{X_{\tau_m}}[f(X_{t_0},\ldots,X_{t_n},X_{\tau_m})\,\vert\,X_{t_0,\ldots,t_n,\tau_i}] - \mathbb{E}_{X_{\tau_i}}\bigl[ \underline{\mathbb{E}}_{X_{\tau_m}}[f(X_{t_0},\ldots,X_{t_n},X_{\tau_m})\,\vert\,X_{t_0,\ldots,t_n,\tau_i}] \,\big\vert\,X_{t_0,\ldots,t_n,\tau_{i-1}}\bigr]} \\
-&\leq 2\Delta^2\norm{\rateset}^2\norm{f}\,,
-\end{align*}
-where the last step needs a bit more detail. Thus, we find
-\begin{align*}
-&\quad \norm{\underline{\mathbb{E}}_{X_s}[f(X_{t_0},\ldots,X_{t_n},X_s)\,\vert\,X_{t_0,\ldots,t_n}] - \mathbb{E}_{X_s}[f(X_{t_0},\ldots,X_{t_n},X_s)\,\vert\,X_{t_0,\ldots,t_n}]} \\
-&\leq \sum_{i=1}^m 2\Delta^2\norm{\rateset}^2\norm{f} \\
-&= 2n\Delta^2\norm{\rateset}^2\norm{f} \\
-&= 2C\Delta\norm{\rateset}^2\norm{f}\,,
-\end{align*}
-so that by Equation {\bf REF} and the fact that $\Delta<\delta$, we have
-\begin{align*}
-&\quad \norm{\underline{\mathbb{E}}_{X_s}[f(X_{t_0},\ldots,X_{t_n},X_s)\,\vert\,X_{t_0,\ldots,t_n}] - \mathbb{E}_{X_s}[f(X_{t_0},\ldots,X_{t_n},X_s)\,\vert\,X_{t_0,\ldots,t_n}]} \\
-&\leq 2C\Delta\norm{\rateset}^2\norm{f} \\
-&< 2C\delta\norm{\rateset}^2\norm{f} \\
-&\leq \epsilon\,.
-\end{align*}
-\end{proof}
-
-*** kan dit weg? ***
-\begin{corollary}
-Consider any $t,s\in\realsnonneg$ such that $t<s$, and let $\rateset$ be an arbitrary closed and bounded set of rate matrices that has separately specified rows, with corresponding lower transition rate operator $\lrate$. Then for all $u\in\mathcal{U}_{[0,t]}$, all $g\in\gambles(\states^{\{s\}})$, and all $(x_{t_0},\ldots,x_{t_n})\in\states^u$,
-\begin{equation*}
-\underline{\mathbb{E}}_{X_s}[g(X_s)\,\vert\,X_{t_0,\ldots,t_n}=x_{t_0,\ldots,t_n}] = \inf\Bigl\{ \mathbb{E}_{X_s}[g(X_s)\,\vert\,X_{t_0,\ldots,t_n}=x_{t_0,\ldots,t_n}]\,:\, P\in\processes_\rateset \Bigr\}\,.
-\end{equation*}
-\end{corollary}
-\begin{proof}
-This is immediate.
-\end{proof}
-
-
-*** kan dit weg? ****
-
-\begin{corollary}
-Consider any $t,s\in\realsnonneg$ such that $t<s$, and let $\rateset$ be an arbitrary closed and bounded set of rate matrices that has separately specified rows, with corresponding lower transition rate operator $\lrate$. Then for all $u\in\mathcal{U}_{[0,t]}$, all $f\in\gambles(\states^{u\cup\{s\}})$, and all $(x_{t_0},\ldots,x_{t_n})\in\states^u$,
-\begin{equation*}
-\underline{\mathbb{E}}_{X_s}[f(x_{t_0},\ldots,x_{t_n},X_s)\,\vert\,X_{t_0,\ldots,t_n}=x_{t_0,\ldots,t_n}] = \inf\Bigl\{ \mathbb{E}_{X_s}[f(x_{t_0},\ldots,x_{t_n},X_s)\,\vert\,X_{t_0,\ldots,t_n}=x_{t_0,\ldots,t_n}]\,:\, P\in\processes_\rateset \Bigr\}\,.
-\end{equation*}
-\end{corollary}
-\begin{proof}
-This is immediate.
-\end{proof}
+%&\vdots \\
+%&\leq \sum_{i=1}^m \norm{\underline{\mathbb{E}}_{X_{\tau_i}}\bigl[ \underline{\mathbb{E}}_{X_{\tau_m}}[f(X_{t_0},\ldots,X_{t_n},X_{\tau_m})\,\vert\,X_{t_0,\ldots,t_n,\tau_i}] \,\big\vert\,X_{t_0,\ldots,t_n,\tau_{i-1}}\bigr] - \mathbb{E}_{X_{\tau_i}}\bigl[ \underline{\mathbb{E}}_{X_{\tau_m}}[f(X_{t_0},\ldots,X_{t_n},X_{\tau_m})\,\vert\,X_{t_0,\ldots,t_n,\tau_i}] \,\big\vert\,X_{t_0,\ldots,t_n,\tau_{i-1}}\bigr]}\,.
+%\end{align*}
+%For all $i\in\{1,\ldots,m\}$, we have
+%\begin{align*}
+%&\quad \norm{\underline{\mathbb{E}}_{X_{\tau_i}}\bigl[ \underline{\mathbb{E}}_{X_{\tau_m}}[f(X_{t_0},\ldots,X_{t_n},X_{\tau_m})\,\vert\,X_{t_0,\ldots,t_n,\tau_i}] \,\big\vert\,X_{t_0,\ldots,t_n,\tau_{i-1}}\bigr] - \mathbb{E}_{X_{\tau_i}}\bigl[ \underline{\mathbb{E}}_{X_{\tau_m}}[f(X_{t_0},\ldots,X_{t_n},X_{\tau_m})\,\vert\,X_{t_0,\ldots,t_n,\tau_i}] \,\big\vert\,X_{t_0,\ldots,t_n,\tau_{i-1}}\bigr]} \\
+%&\leq \norm{\underline{\mathbb{E}}_{X_{\tau_i}}\bigl[ \underline{\mathbb{E}}_{X_{\tau_m}}[f(X_{t_0},\ldots,X_{t_n},X_{\tau_m})\,\vert\,X_{t_0,\ldots,t_n,\tau_i}] \,\big\vert\,X_{t_0,\ldots,t_n,\tau_{i-1}}\bigr] - [I+\Delta \lrate]\underline{\mathbb{E}}_{X_{\tau_m}}[f(X_{t_0},\ldots,X_{t_n},X_{\tau_m})\,\vert\,X_{t_0,\ldots,t_n,\tau_i}]} \\
+%&\quad\quad + \norm{[I+\Delta \lrate]\underline{\mathbb{E}}_{X_{\tau_m}}[f(X_{t_0},\ldots,X_{t_n},X_{\tau_m})\,\vert\,X_{t_0,\ldots,t_n,\tau_i}] - \mathbb{E}_{X_{\tau_i}}\bigl[ \underline{\mathbb{E}}_{X_{\tau_m}}[f(X_{t_0},\ldots,X_{t_n},X_{\tau_m})\,\vert\,X_{t_0,\ldots,t_n,\tau_i}] \,\big\vert\,X_{t_0,\ldots,t_n,\tau_{i-1}}\bigr]} \\
+%&\leq 2\Delta^2\norm{\rateset}^2\norm{f}\,,
+%\end{align*}
+%where the last step needs a bit more detail. Thus, we find
+%\begin{align*}
+%&\quad \norm{\underline{\mathbb{E}}_{X_s}[f(X_{t_0},\ldots,X_{t_n},X_s)\,\vert\,X_{t_0,\ldots,t_n}] - \mathbb{E}_{X_s}[f(X_{t_0},\ldots,X_{t_n},X_s)\,\vert\,X_{t_0,\ldots,t_n}]} \\
+%&\leq \sum_{i=1}^m 2\Delta^2\norm{\rateset}^2\norm{f} \\
+%&= 2n\Delta^2\norm{\rateset}^2\norm{f} \\
+%&= 2C\Delta\norm{\rateset}^2\norm{f}\,,
+%\end{align*}
+%so that by Equation {\bf REF} and the fact that $\Delta<\delta$, we have
+%\begin{align*}
+%&\quad \norm{\underline{\mathbb{E}}_{X_s}[f(X_{t_0},\ldots,X_{t_n},X_s)\,\vert\,X_{t_0,\ldots,t_n}] - \mathbb{E}_{X_s}[f(X_{t_0},\ldots,X_{t_n},X_s)\,\vert\,X_{t_0,\ldots,t_n}]} \\
+%&\leq 2C\Delta\norm{\rateset}^2\norm{f} \\
+%&< 2C\delta\norm{\rateset}^2\norm{f} \\
+%&\leq \epsilon\,.
+%\end{align*}
+%\end{proof}
+%
+%*** kan dit weg? ***
+%\begin{corollary}
+%Consider any $t,s\in\realsnonneg$ such that $t<s$, and let $\rateset$ be an arbitrary closed and bounded set of rate matrices that has separately specified rows, with corresponding lower transition rate operator $\lrate$. Then for all $u\in\mathcal{U}_{[0,t]}$, all $g\in\gambles(\states^{\{s\}})$, and all $(x_{t_0},\ldots,x_{t_n})\in\states^u$,
+%\begin{equation*}
+%\underline{\mathbb{E}}_{X_s}[g(X_s)\,\vert\,X_{t_0,\ldots,t_n}=x_{t_0,\ldots,t_n}] = \inf\Bigl\{ \mathbb{E}_{X_s}[g(X_s)\,\vert\,X_{t_0,\ldots,t_n}=x_{t_0,\ldots,t_n}]\,:\, P\in\processes_\rateset \Bigr\}\,.
+%\end{equation*}
+%\end{corollary}
+%\begin{proof}
+%This is immediate.
+%\end{proof}
+%
+%
+%*** kan dit weg? ****
+%
+%\begin{corollary}
+%Consider any $t,s\in\realsnonneg$ such that $t<s$, and let $\rateset$ be an arbitrary closed and bounded set of rate matrices that has separately specified rows, with corresponding lower transition rate operator $\lrate$. Then for all $u\in\mathcal{U}_{[0,t]}$, all $f\in\gambles(\states^{u\cup\{s\}})$, and all $(x_{t_0},\ldots,x_{t_n})\in\states^u$,
+%\begin{equation*}
+%\underline{\mathbb{E}}_{X_s}[f(x_{t_0},\ldots,x_{t_n},X_s)\,\vert\,X_{t_0,\ldots,t_n}=x_{t_0,\ldots,t_n}] = \inf\Bigl\{ \mathbb{E}_{X_s}[f(x_{t_0},\ldots,x_{t_n},X_s)\,\vert\,X_{t_0,\ldots,t_n}=x_{t_0,\ldots,t_n}]\,:\, P\in\processes_\rateset \Bigr\}\,.
+%\end{equation*}
+%\end{corollary}
+%\begin{proof}
+%This is immediate.
+%\end{proof}
 
 \subsection{Algoritmes}\label{sec:tractability}
 
@@ -1455,116 +1540,116 @@ As a trivial example, take $\mathcal{C}(\states^{u\cup v}) = \gambles(\states^{\
 
 *** I would discuss sigma-additivity things here: explain that this is possible with our approach by using Kolmogorovs extension theorem, say that this would allow us to consider for example the lower and upper expected time till absorbtion. ***
 
-
-\section{*** Dit mag volgens mij volledig weg ***}\label{sec:decomp}
-
-We now generalize the results from the previous sections to the lower bound of expectations on functions $f\in\gambles(\states^{u\cup v})$, where $v\in\mathcal{U}_{[s,s']}$.
-
-We again start with some notation. For any $t,s,s'\in\realsnonneg$ such that $t<s<s'$, any $u\in\mathcal{U}_{[0,t]}$ and any $v\in\mathcal{U}_{[s,s']}$, let $A_u^v$ be a non-negatively homogeneous operator from $\gambles(\states^{u\cup v})$ to $\gambles(\states^u)$. Define the norm as before, i.e.,
-\begin{equation*}
-\norm{A_u^v} \coloneqq \sup\left\{\norm{A_u^v}\,:\,f\in\gambles(\states^{u\cup v}), \norm{f}=1\right\}\,.
-\end{equation*}
-This norm satisfies all properties N6-N12 from the previous section. The default notation for sequences of time points will be $u=t_0,\ldots,t_n$ and $v=\tau_0,\ldots,\tau_m$, where we will assume that $t_n\leq \tau_0$.
-
-As a special case of such an operator, define for all $f\in\gambles(\states^{u\cup v})$ the operator
-\begin{equation*}
-T_u^vf \coloneqq \mathbb{E}_{X_{\tau_0},\ldots,X_{\tau_m}}\left[f(X_{t_0},\ldots,X_{t_n},X_{\tau_0},\ldots,X_{\tau_m})\,\vert\,X_{t_0},\ldots,X_{t_n}\right]\,.
-\end{equation*}
-This also satisfies for all $g\in\gambles(\states^v)$ the equality
-\begin{equation*}
-T_u^vg = \mathbb{E}_{X_{\tau_0},\ldots,X_{\tau_m}}\left[g(X_{\tau_0},\ldots,X_{\tau_m})\,\vert\,X_{t_0},\ldots,X_{t_n}\right]\,.
-\end{equation*}
-
-\begin{proposition}\label{proposition:nonmarkov_multi_variable_decompose}
-Consider any $t,s,s'\in\realsnonneg$ such that $t<s<s'$, any $u\in\mathcal{U}_{[0,t]}$ and $v\in\mathcal{U}_{[s,s']}$, and any $P\in\mathbb{P}$ that has, for all $i\in\{1,\ldots,m\}$, transition operators
-\begin{equation*}
-T_{u\cup\{\tau_0,\ldots,\tau_{i-1}\}}^{\{\tau_i\}}\,.
-\end{equation*}
-Then, the expectation operator $T_u^v$ corresponding to $P$ satisfies, for all $f\in\gambles(\states^{u\cup v})$,
-\begin{equation*}
-T_u^v f = T_u^{\{\tau_0\}}T_{u\cup\{\tau_0\}}^{\{\tau_1\}}\cdots T_{u\cup\{\tau_0,\ldots,\tau_{m-1}\}}^{\{\tau_m\}} f\,.
-\end{equation*}
-\end{proposition}
-\begin{proof}
+%
+%\section{*** Dit mag volgens mij volledig weg ***}\label{sec:decomp}
+%
+%We now generalize the results from the previous sections to the lower bound of expectations on functions $f\in\gambles(\states^{u\cup v})$, where $v\in\mathcal{U}_{[s,s']}$.
+%
+%We again start with some notation. For any $t,s,s'\in\realsnonneg$ such that $t<s<s'$, any $u\in\mathcal{U}_{[0,t]}$ and any $v\in\mathcal{U}_{[s,s']}$, let $A_u^v$ be a non-negatively homogeneous operator from $\gambles(\states^{u\cup v})$ to $\gambles(\states^u)$. Define the norm as before, i.e.,
+%\begin{equation*}
+%\norm{A_u^v} \coloneqq \sup\left\{\norm{A_u^v}\,:\,f\in\gambles(\states^{u\cup v}), \norm{f}=1\right\}\,.
+%\end{equation*}
+%This norm satisfies all properties N6-N12 from the previous section. The default notation for sequences of time points will be $u=t_0,\ldots,t_n$ and $v=\tau_0,\ldots,\tau_m$, where we will assume that $t_n\leq \tau_0$.
+%
+%As a special case of such an operator, define for all $f\in\gambles(\states^{u\cup v})$ the operator
+%\begin{equation*}
+%T_u^vf \coloneqq \mathbb{E}_{X_{\tau_0},\ldots,X_{\tau_m}}\left[f(X_{t_0},\ldots,X_{t_n},X_{\tau_0},\ldots,X_{\tau_m})\,\vert\,X_{t_0},\ldots,X_{t_n}\right]\,.
+%\end{equation*}
+%This also satisfies for all $g\in\gambles(\states^v)$ the equality
+%\begin{equation*}
+%T_u^vg = \mathbb{E}_{X_{\tau_0},\ldots,X_{\tau_m}}\left[g(X_{\tau_0},\ldots,X_{\tau_m})\,\vert\,X_{t_0},\ldots,X_{t_n}\right]\,.
+%\end{equation*}
+%
+%\begin{proposition}\label{proposition:nonmarkov_multi_variable_decompose}
+%Consider any $t,s,s'\in\realsnonneg$ such that $t<s<s'$, any $u\in\mathcal{U}_{[0,t]}$ and $v\in\mathcal{U}_{[s,s']}$, and any $P\in\mathbb{P}$ that has, for all $i\in\{1,\ldots,m\}$, transition operators
+%\begin{equation*}
+%T_{u\cup\{\tau_0,\ldots,\tau_{i-1}\}}^{\{\tau_i\}}\,.
+%\end{equation*}
+%Then, the expectation operator $T_u^v$ corresponding to $P$ satisfies, for all $f\in\gambles(\states^{u\cup v})$,
+%\begin{equation*}
+%T_u^v f = T_u^{\{\tau_0\}}T_{u\cup\{\tau_0\}}^{\{\tau_1\}}\cdots T_{u\cup\{\tau_0,\ldots,\tau_{m-1}\}}^{\{\tau_m\}} f\,.
+%\end{equation*}
+%\end{proposition}
+%\begin{proof}
 %We will use backward induction on $m$. Note that
 %\begin{equation*}
 %T_{u\cup\{\tau_0,\ldots,\tau_{m-1}\}}^{\{\tau_m\}} g = \mathbb{E}_{X_{\tau_m}}\left[g(X_{\tau_0},\ldots,X_{\tau_m})\,\vert\,X_{t_0},\ldots,X_{t_n},X_{\tau_0},\ldots,X_{\tau_{m-1}}\right]
 %\end{equation*}
-This is immediate from the decomposition properties of expectation, i.e.,
-\begin{align*}
-&\quad T_u^{\{\tau_0\}}T_{u\cup\{\tau_0\}}^{\{\tau_1\}}\cdots T_{u\cup\{\tau_0,\ldots,\tau_{m-1}\}}^{\{\tau_m\}} f \\
- &= \mathbb{E}_{X_{\tau_0}}\left[\cdots\mathbb{E}_{X_{\tau_m}}\left[f(X_{t_0},\ldots,X_{t_n},X_{\tau_0},\ldots,X_{\tau_m})\,\vert\,X_{t_0},\ldots,X_{t_n},X_{\tau_0},\ldots,X_{\tau_{m-1}}\right]\cdots\,\vert\,X_{t_0},\ldots,X_{t_n}\right] \\
- &= \mathbb{E}_{X_{\tau_0},\ldots,X_{\tau_m}}\left[f(X_{t_0},\ldots,X_{t_n},X_{\tau_0},\ldots,X_{\tau_m})\,\vert\,X_{t_0},\ldots,X_{t_n}\right] \\
- &= T_u^v f\,.
-\end{align*}
-\end{proof}
-
-\begin{definition}[Lower Joint Expectation Operator]\label{def:low_joint_exp_op}
-Recall the extended operator $L_u^{\{s\}}$ from Definition~\ref{def:low_full_cond_exp_op}, and define a new operator $L_u^v$ from $\gambles(\states^{u\cup v})$ to $\gambles(\states^u)$, as
-\begin{equation*}
-L_u^v \coloneqq L_u^{\{\tau_0\}}L_{u\cup\{\tau_0\}}^{\{\tau_1\}}\cdots L_{u\cup\{\tau_0,\ldots,\tau_{m-1}\}}^{\{\tau_m\}}.
-\end{equation*}
-\end{definition}
-
-\begin{theorem}\label{theorem:nonmarkov_multi_variable_lower_bounded}
-Consider any $t,s,s'\in\realsnonneg$ such that $t<s<s'$, and let $\mathcal{Q}$ be an arbitrary bounded set of rate matrices with corresponding lower transition rate operator $\lrate$. Then, for any $P\in\mathbb{P}_\mathcal{Q}$, any $u\in\mathcal{U}_{[0,t]}$ and $v\in\mathcal{U}_{[s,s']}$, any $f\in\gambles(\states^{u\cup v})$ and any $(x_{t_0},\ldots,x_{t_n})\in\states^u$, it holds that
-\begin{equation*}
-\left[L_u^v f\right](x_{t_0},\ldots,x_{t_n}) \leq \left[T_u^v f\right](x_{t_0},\ldots,x_{t_n})\,.
-\end{equation*}
-\end{theorem}
-\begin{proof}
-Consider any $(x_{t_0},\ldots,x_{t_n})\in\states^u$. Using the decomposition from Proposition~\ref{proposition:nonmarkov_multi_variable_decompose}, we find that
-\begin{align*}
-&\quad \left[T_u^vf\right](x_{t_0},\ldots,x_{t_n}) \\
-&= \left[T_u^{\{\tau_0\}}T_{u\cup\{\tau_0\}}^{\{\tau_1\}}\cdots T_{u\cup\{\tau_0,\ldots,\tau_{m-1}\}}^{\{\tau_m\}} f\right](x_{t_0},\ldots,x_{t_n}) \\
-&= \mathbb{E}_{X_{\tau_0}}\left[\cdots\mathbb{E}_{X_{\tau_m}}\left[f(x_{t_0},\ldots,x_{t_n},X_{\tau_0},\ldots,X_{\tau_m})\,\vert\,X^u=(x_{t_0},\ldots,x_{t_n}),X_{\tau_0},\ldots,X_{\tau_{m-1}}\right]\cdots\,\vert\,X^u=(x_{t_0},\ldots,x_{t_n})\right] \\
-&= \mathbb{E}_{X_{\tau_0},\ldots,X_{\tau_{m-1}}}\left[\mathbb{E}_{X_{\tau_m}}\left[f(x_{t_0},\ldots,x_{t_n},X_{\tau_0},\ldots,X_{\tau_m})\,\vert\,X^u=(x_{t_0},\ldots,x_{t_n}),X_{\tau_0},\ldots,X_{\tau_{m-1}}\right]\,\vert\,X^u=(x_{t_0},\ldots,x_{t_n})\right] \\
-&= \sum_{x_{\tau_0}}\cdots\sum_{x_{\tau_{m-1}}} P\left(X_{\tau_0}=x_{\tau_0},\ldots,X_{\tau_{m-1}}=x_{\tau_{m-1}}\,\vert\,X^u=(x_{t_0},\ldots,x_{t_n})\right)g(x_{\tau_0},\ldots,x_{\tau_{m-1}})\,,
-\end{align*}
-where
-\begin{equation*}
-g(x_{\tau_0},\ldots,x_{\tau_{m-1}}) \coloneqq \left[T_{u\cup\{\tau_0,\ldots,\tau_{m-1}\}}^{\{\tau_m\}}f\right](x_{t_0},\ldots,x_{t_n},x_{\tau_0},\ldots,x_{\tau_{m-1}})\,.
-\end{equation*}
-Define a new function $g'(\cdot)$ as
-\begin{equation*}
-g'(x_{\tau_0},\ldots,x_{\tau_{m-1}}) \coloneqq \left[L_{u\cup\{\tau_0,\ldots,\tau_{m-1}\}}^{\{\tau_m\}}f\right](x_{t_0},\ldots,x_{t_n},x_{\tau_0},\ldots,x_{\tau_{m-1}})\,,
-\end{equation*}
-and note that by Theorem~\ref{theorem:nonmarkov_historic_variable_lower_bounded} we have for all $(x_{\tau_0},\ldots,x_{\tau_{m-1}})\in\states^{\{\tau_0,\ldots,\tau_{m-1}\}}$ that
-\begin{equation}\label{equation:nonmarkov_multiple_variable_theorem_eq}
-g'(x_{\tau_0},\ldots,x_{\tau_{m-1}}) \leq g(x_{\tau_0},\ldots,x_{\tau_{m-1}})\,.
-\end{equation}
-Now, because
-\begin{equation*}
-\sum_{x_{\tau_0}}\cdots\sum_{x_{\tau_{m-1}}} P\left(X_{\tau_0}=x_{\tau_0},\ldots,X_{\tau_{m-1}}=x_{\tau_{m-1}}\,\vert\,X^u=(x_{t_0},\ldots,x_{t_n})\right)g(x_{\tau_0},\ldots,x_{\tau_{m-1}})
-\end{equation*}
-is a convex combination of values $g(x_{\tau_0},\ldots,x_{\tau_{m-1}})$ over all combinations $(x_{\tau_0},\ldots,x_{\tau_{m-1}})\in\states^{\{\tau_0,\ldots,\tau_{m-1}\}}$, we have by Equation~\ref{equation:nonmarkov_multiple_variable_theorem_eq} that
-\begin{align*}
-&\quad \left[T_u^vf\right](x_{t_0},\ldots,x_{t_n}) \\
-&= \sum_{x_{\tau_0}}\cdots\sum_{x_{\tau_{m-1}}} P\left(X_{\tau_0}=x_{\tau_0},\ldots,X_{\tau_{m-1}}=x_{\tau_{m-1}}\,\vert\,X^u=(x_{t_0},\ldots,x_{t_n})\right)g(x_{\tau_0},\ldots,x_{\tau_{m-1}}) \\
-&\geq \sum_{x_{\tau_0}}\cdots\sum_{x_{\tau_{m-1}}} P\left(X_{\tau_0}=x_{\tau_0},\ldots,X_{\tau_{m-1}}=x_{\tau_{m-1}}\,\vert\,X^u=(x_{t_0},\ldots,x_{t_n})\right)g'(x_{\tau_0},\ldots,x_{\tau_{m-1}}) \\
-&= \left[T_u^{\{\tau_0\}}T_{u\cup\{\tau_0\}}^{\{\tau_1\}}\cdots T_{u\cup\{\tau_0,\ldots,\tau_{m-2}\}}^{\{\tau_{m-1}\}}L_{u\cup\{\tau_0,\ldots,\tau_{m-1}\}}^{\{\tau_m\}} f\right](x_{t_0},\ldots,x_{t_n})\,.
-\end{align*}
-Repeatedly applying this argument, i.e. using backward induction on $m$, finally reveals
-\begin{align*}
-\left[T_u^vf\right](x_{t_0},\ldots,x_{t_n}) &= \left[T_u^{\{\tau_0\}}T_{u\cup\{\tau_0\}}^{\{\tau_1\}}\cdots T_{u\cup\{\tau_0,\ldots,\tau_{m-1}\}}^{\{\tau_m\}} f\right](x_{t_0},\ldots,x_{t_n}) \\
- &\geq \left[L_u^{\{\tau_0\}}L_{u\cup\{\tau_0\}}^{\{\tau_1\}}\cdots L_{u\cup\{\tau_0,\ldots,\tau_{m-1}\}}^{\{\tau_m\}} f\right](x_{t_0},\ldots,x_{t_n}) \\
- &= \left[L_u^v f\right](x_{t_0},\ldots,x_{t_n})\,.
-\end{align*}
-\end{proof}
-
-\begin{theorem}\label{theorem:nonmarkov_multi_variable_lower_envelope}
-Consider any $t,s,s'\in\realsnonneg$ such that $t<s<s'$, and let $\mathcal{Q}$ be an arbitrary closed and bounded set of rate matrices that has separately specified rows, with corresponding lower transition rate operator $\lrate$. Then, for all $u\in\mathcal{U}_{[0,t]}$, all $v\in\mathcal{U}_{[s,s']}$, and all $f\in\gambles(\states^{u\cup v})$, there is some $P\in\mathbb{P}_\mathcal{Q}$ such that, for all $(x_{t_0},\ldots,x_{t_n})\in\states^u$,
-\begin{equation*}
-\left[L_u^v f\right](x_{t_0},\ldots,x_{t_n}) = \left[T_u^v f\right](x_{t_0},\ldots,x_{t_n})\,.
-\end{equation*}
-\end{theorem}
-\begin{proof}
-*** The non-Markovian stochastic process for which, for all $i\in\{0,\ldots,{m-1}\}$ and all $(x_{\tau_0},\ldots,x_{\tau_i})\in\states^{\{\tau_0,\ldots,\tau_i\}}$,
-\begin{equation*}
-Q_{u\cup\{\tau_0,\ldots,\tau_i,\mu\}}(x_{t_0},\ldots,x_{t_n},x_{\tau_0},\ldots,x_{\tau_i}) \coloneqq \lrate L_\mu^{\tau_{i+1}} \left[L_{u\cup\{\tau_0,\ldots,\tau_{i+1}\}}^{\{\tau_{i+2}\}}f\right](x_{t_0},\ldots,x_{t_n},x_{\tau_0},\ldots,x_{\tau_i})
-\end{equation*}
-establishes the equality. ***
-\end{proof}
+%This is immediate from the decomposition properties of expectation, i.e.,
+%\begin{align*}
+%&\quad T_u^{\{\tau_0\}}T_{u\cup\{\tau_0\}}^{\{\tau_1\}}\cdots T_{u\cup\{\tau_0,\ldots,\tau_{m-1}\}}^{\{\tau_m\}} f \\
+% &= \mathbb{E}_{X_{\tau_0}}\left[\cdots\mathbb{E}_{X_{\tau_m}}\left[f(X_{t_0},\ldots,X_{t_n},X_{\tau_0},\ldots,X_{\tau_m})\,\vert\,X_{t_0},\ldots,X_{t_n},X_{\tau_0},\ldots,X_{\tau_{m-1}}\right]\cdots\,\vert\,X_{t_0},\ldots,X_{t_n}\right] \\
+% &= \mathbb{E}_{X_{\tau_0},\ldots,X_{\tau_m}}\left[f(X_{t_0},\ldots,X_{t_n},X_{\tau_0},\ldots,X_{\tau_m})\,\vert\,X_{t_0},\ldots,X_{t_n}\right] \\
+% &= T_u^v f\,.
+%\end{align*}
+%\end{proof}
+%
+%\begin{definition}[Lower Joint Expectation Operator]\label{def:low_joint_exp_op}
+%Recall the extended operator $L_u^{\{s\}}$ from Definition~\ref{def:low_full_cond_exp_op}, and define a new operator $L_u^v$ from $\gambles(\states^{u\cup v})$ to $\gambles(\states^u)$, as
+%\begin{equation*}
+%L_u^v \coloneqq L_u^{\{\tau_0\}}L_{u\cup\{\tau_0\}}^{\{\tau_1\}}\cdots L_{u\cup\{\tau_0,\ldots,\tau_{m-1}\}}^{\{\tau_m\}}.
+%\end{equation*}
+%\end{definition}
+%
+%\begin{theorem}\label{theorem:nonmarkov_multi_variable_lower_bounded}
+%Consider any $t,s,s'\in\realsnonneg$ such that $t<s<s'$, and let $\mathcal{Q}$ be an arbitrary bounded set of rate matrices with corresponding lower transition rate operator $\lrate$. Then, for any $P\in\mathbb{P}_\mathcal{Q}$, any $u\in\mathcal{U}_{[0,t]}$ and $v\in\mathcal{U}_{[s,s']}$, any $f\in\gambles(\states^{u\cup v})$ and any $(x_{t_0},\ldots,x_{t_n})\in\states^u$, it holds that
+%\begin{equation*}
+%\left[L_u^v f\right](x_{t_0},\ldots,x_{t_n}) \leq \left[T_u^v f\right](x_{t_0},\ldots,x_{t_n})\,.
+%\end{equation*}
+%\end{theorem}
+%\begin{proof}
+%Consider any $(x_{t_0},\ldots,x_{t_n})\in\states^u$. Using the decomposition from Proposition~\ref{proposition:nonmarkov_multi_variable_decompose}, we find that
+%\begin{align*}
+%&\quad \left[T_u^vf\right](x_{t_0},\ldots,x_{t_n}) \\
+%&= \left[T_u^{\{\tau_0\}}T_{u\cup\{\tau_0\}}^{\{\tau_1\}}\cdots T_{u\cup\{\tau_0,\ldots,\tau_{m-1}\}}^{\{\tau_m\}} f\right](x_{t_0},\ldots,x_{t_n}) \\
+%&= \mathbb{E}_{X_{\tau_0}}\left[\cdots\mathbb{E}_{X_{\tau_m}}\left[f(x_{t_0},\ldots,x_{t_n},X_{\tau_0},\ldots,X_{\tau_m})\,\vert\,X^u=(x_{t_0},\ldots,x_{t_n}),X_{\tau_0},\ldots,X_{\tau_{m-1}}\right]\cdots\,\vert\,X^u=(x_{t_0},\ldots,x_{t_n})\right] \\
+%&= \mathbb{E}_{X_{\tau_0},\ldots,X_{\tau_{m-1}}}\left[\mathbb{E}_{X_{\tau_m}}\left[f(x_{t_0},\ldots,x_{t_n},X_{\tau_0},\ldots,X_{\tau_m})\,\vert\,X^u=(x_{t_0},\ldots,x_{t_n}),X_{\tau_0},\ldots,X_{\tau_{m-1}}\right]\,\vert\,X^u=(x_{t_0},\ldots,x_{t_n})\right] \\
+%&= \sum_{x_{\tau_0}}\cdots\sum_{x_{\tau_{m-1}}} P\left(X_{\tau_0}=x_{\tau_0},\ldots,X_{\tau_{m-1}}=x_{\tau_{m-1}}\,\vert\,X^u=(x_{t_0},\ldots,x_{t_n})\right)g(x_{\tau_0},\ldots,x_{\tau_{m-1}})\,,
+%\end{align*}
+%where
+%\begin{equation*}
+%g(x_{\tau_0},\ldots,x_{\tau_{m-1}}) \coloneqq \left[T_{u\cup\{\tau_0,\ldots,\tau_{m-1}\}}^{\{\tau_m\}}f\right](x_{t_0},\ldots,x_{t_n},x_{\tau_0},\ldots,x_{\tau_{m-1}})\,.
+%\end{equation*}
+%Define a new function $g'(\cdot)$ as
+%\begin{equation*}
+%g'(x_{\tau_0},\ldots,x_{\tau_{m-1}}) \coloneqq \left[L_{u\cup\{\tau_0,\ldots,\tau_{m-1}\}}^{\{\tau_m\}}f\right](x_{t_0},\ldots,x_{t_n},x_{\tau_0},\ldots,x_{\tau_{m-1}})\,,
+%\end{equation*}
+%and note that by Theorem~\ref{theorem:nonmarkov_historic_variable_lower_bounded} we have for all $(x_{\tau_0},\ldots,x_{\tau_{m-1}})\in\states^{\{\tau_0,\ldots,\tau_{m-1}\}}$ that
+%\begin{equation}\label{equation:nonmarkov_multiple_variable_theorem_eq}
+%g'(x_{\tau_0},\ldots,x_{\tau_{m-1}}) \leq g(x_{\tau_0},\ldots,x_{\tau_{m-1}})\,.
+%\end{equation}
+%Now, because
+%\begin{equation*}
+%\sum_{x_{\tau_0}}\cdots\sum_{x_{\tau_{m-1}}} P\left(X_{\tau_0}=x_{\tau_0},\ldots,X_{\tau_{m-1}}=x_{\tau_{m-1}}\,\vert\,X^u=(x_{t_0},\ldots,x_{t_n})\right)g(x_{\tau_0},\ldots,x_{\tau_{m-1}})
+%\end{equation*}
+%is a convex combination of values $g(x_{\tau_0},\ldots,x_{\tau_{m-1}})$ over all combinations $(x_{\tau_0},\ldots,x_{\tau_{m-1}})\in\states^{\{\tau_0,\ldots,\tau_{m-1}\}}$, we have by Equation~\ref{equation:nonmarkov_multiple_variable_theorem_eq} that
+%\begin{align*}
+%&\quad \left[T_u^vf\right](x_{t_0},\ldots,x_{t_n}) \\
+%&= \sum_{x_{\tau_0}}\cdots\sum_{x_{\tau_{m-1}}} P\left(X_{\tau_0}=x_{\tau_0},\ldots,X_{\tau_{m-1}}=x_{\tau_{m-1}}\,\vert\,X^u=(x_{t_0},\ldots,x_{t_n})\right)g(x_{\tau_0},\ldots,x_{\tau_{m-1}}) \\
+%&\geq \sum_{x_{\tau_0}}\cdots\sum_{x_{\tau_{m-1}}} P\left(X_{\tau_0}=x_{\tau_0},\ldots,X_{\tau_{m-1}}=x_{\tau_{m-1}}\,\vert\,X^u=(x_{t_0},\ldots,x_{t_n})\right)g'(x_{\tau_0},\ldots,x_{\tau_{m-1}}) \\
+%&= \left[T_u^{\{\tau_0\}}T_{u\cup\{\tau_0\}}^{\{\tau_1\}}\cdots T_{u\cup\{\tau_0,\ldots,\tau_{m-2}\}}^{\{\tau_{m-1}\}}L_{u\cup\{\tau_0,\ldots,\tau_{m-1}\}}^{\{\tau_m\}} f\right](x_{t_0},\ldots,x_{t_n})\,.
+%\end{align*}
+%Repeatedly applying this argument, i.e. using backward induction on $m$, finally reveals
+%\begin{align*}
+%\left[T_u^vf\right](x_{t_0},\ldots,x_{t_n}) &= \left[T_u^{\{\tau_0\}}T_{u\cup\{\tau_0\}}^{\{\tau_1\}}\cdots T_{u\cup\{\tau_0,\ldots,\tau_{m-1}\}}^{\{\tau_m\}} f\right](x_{t_0},\ldots,x_{t_n}) \\
+% &\geq \left[L_u^{\{\tau_0\}}L_{u\cup\{\tau_0\}}^{\{\tau_1\}}\cdots L_{u\cup\{\tau_0,\ldots,\tau_{m-1}\}}^{\{\tau_m\}} f\right](x_{t_0},\ldots,x_{t_n}) \\
+% &= \left[L_u^v f\right](x_{t_0},\ldots,x_{t_n})\,.
+%\end{align*}
+%\end{proof}
+%
+%\begin{theorem}\label{theorem:nonmarkov_multi_variable_lower_envelope}
+%Consider any $t,s,s'\in\realsnonneg$ such that $t<s<s'$, and let $\mathcal{Q}$ be an arbitrary closed and bounded set of rate matrices that has separately specified rows, with corresponding lower transition rate operator $\lrate$. Then, for all $u\in\mathcal{U}_{[0,t]}$, all $v\in\mathcal{U}_{[s,s']}$, and all $f\in\gambles(\states^{u\cup v})$, there is some $P\in\mathbb{P}_\mathcal{Q}$ such that, for all $(x_{t_0},\ldots,x_{t_n})\in\states^u$,
+%\begin{equation*}
+%\left[L_u^v f\right](x_{t_0},\ldots,x_{t_n}) = \left[T_u^v f\right](x_{t_0},\ldots,x_{t_n})\,.
+%\end{equation*}
+%\end{theorem}
+%\begin{proof}
+%*** The non-Markovian stochastic process for which, for all $i\in\{0,\ldots,{m-1}\}$ and all $(x_{\tau_0},\ldots,x_{\tau_i})\in\states^{\{\tau_0,\ldots,\tau_i\}}$,
+%\begin{equation*}
+%Q_{u\cup\{\tau_0,\ldots,\tau_i,\mu\}}(x_{t_0},\ldots,x_{t_n},x_{\tau_0},\ldots,x_{\tau_i}) \coloneqq \lrate L_\mu^{\tau_{i+1}} \left[L_{u\cup\{\tau_0,\ldots,\tau_{i+1}\}}^{\{\tau_{i+2}\}}f\right](x_{t_0},\ldots,x_{t_n},x_{\tau_0},\ldots,x_{\tau_i})
+%\end{equation*}
+%establishes the equality. ***
+%\end{proof}
 
 
 \bibliographystyle{plain} 
