@@ -478,6 +478,18 @@ Then, there exists a stochastic process $P\in\mprocesses$ such that $Q_t$ charac
 {\bf TODO.}
 \end{proof}
 
+*** deze moeten we ergens kwijt, ik heb hem maar even hier neergezet. beetje onhandig alleen aangezien we boundedness van $\rateset$ hier nog niet gedefinieerd hebben ***
+
+\begin{lemma}\label{lemma:bound_precise_linear_approx}
+Let $Q_\tau$ be any piecewise-constant function that gives for each time point $\tau\in\realsnonneg$ a rate matrix in some non-empty bounded set of rate matrices $\rateset$. By Theorem~\ref{theorem:continuous_rate_matrix_has_process}, there is then some Markov process $P\in\mprocesses_\rateset$ that is characterized by $Q_\tau$. Consider any $t\in\realsnonneg$ and any $\Delta\in\realsnonneg$ such that $Q_\tau$ is constant on the interval $[t,t+\Delta]$. Then, the transition matrix $T_t^{t+\Delta}$ corresponding to $P$ satisfies
+\begin{equation*}
+\norm{\left[I + \Delta Q_t\right] - T_t^{t+\Delta}} \leq \Delta^2\norm{\rateset}^2\,.
+\end{equation*}
+\end{lemma}
+\begin{proof}
+{\bf TODO}
+\end{proof}
+
 \subsubsection{*** non-markov version (?) ***}
 TODO
 
@@ -871,11 +883,12 @@ and
 \end{proposition}
 \noindent The proof for the above proposition can be found in Appendix~\ref{sec:proof_appendix}.
 
-\section{*** Simple functions ***}
+\section{Connections Between $L_t^s$ and Imprecise Continuous-Time Markov Chains}
 
-\subsection{Onderenveloppe dualiteit Q Qonder}
+One of the objectives of this paper is to establish a connection between the operator $\lbound_t^s$ that we have just introduced, and the different types of imprecise continous-time Markov chains that were discussed in Section~\ref{sec:iCTMC}. Since the former is derived from a lower transition rate operator $\lrate$ and the latter are derived from a non-empty bounded set of rate matrices $\rateset$, an obvious first step is to investigate the connection between lower transition rate operators and non-empty bounded sets of rate matrices.
 
-One of the objectives of this paper is to establish a connection between the operator $\lbound_t^s$ that we have just introduced, and the different types of imprecise continous-time Markov chains that were discussed in Section~\ref{sec:iCTMC}. Since the former is derived from a lower transition rate operator $\lrate$ and the latter are derived from a non-empty bounded set of rate matrices $\rateset$, the obvious first step is to investigate the connection between lower transition rate operators and non-empty bounded sets of rate matrices.
+\subsection{Connections Between $\lrate$ and Sets of Rate Matrices $\rateset$}
+
 % $\rateset$ and $\lrate$. 
 %In order to do that, we start by discussing some properties of sets of rate matrices.
 
@@ -938,7 +951,7 @@ Since $x\in\states$ is arbitary, Proposition~\ref{prop:alternativedefforbounded}
 
 \noindent
 Because of this result, and since---as discussed above---every non-empty bounded set of rate matrices that has $\lrate$ as its lower envelope is a subset of $\rateset_{\lrate}$, it follows that $\rateset_{\lrate}$ is the largest non-empty bounded set of rate matrices that has $\lrate$ as its lower envelope.
-Furthermore, as we will show in proposition~\ref{prop:dominatingproperties} below, this set $\rateset_{\lrate}$ is also closed and convex, and has \emph{separately specified rows}.
+Furthermore, as we will show in Proposition~\ref{prop:dominatingproperties} below, this set $\rateset_{\lrate}$ is also closed and convex, and has \emph{separately specified rows}.
 
 \begin{definition}
 A set of rate matrices $\rateset\subseteq\mathcal{R}$ has separately specified rows if
@@ -950,7 +963,19 @@ Q\in\mathcal{R}
 \end{equation*}
 where, for every $x\in\states$, $\rateset_x\coloneqq\{Q(x,\cdot)\colon Q\in\rateset\}$ is some set of rows from which the $x$-th row of the rate matrices in $\rateset$ are taken.
 \end{definition}
-Thus, a set of rate matrices has separately specified rows if it is closed under taking arbitrary combinations of rows from its elements.
+Thus, a set of rate matrices has separately specified rows if it is closed under taking arbitrary combinations of rows from its elements. We will later need the following result.
+\begin{lemma}\label{lemma:rateset_has_arginf}
+Let $\rateset$ be an arbitrary non-empty bounded set of rate matrices that has separately specified rows, with corresponding lower transition rate operator $\lrate$. Then for all $f\in\gamblesX$ and $\epsilon\in\realspos$, there exists a $Q\in\rateset$ such that
+\begin{equation*}
+\norm{\lrate f - Qf} < \epsilon\,.
+\end{equation*}
+\end{lemma}
+\begin{proof}
+This is immediate from the definition of the lower envelope of $\rateset$, as given by Equation~\eqref{eq:correspondinglowertrans}, and the fact that $\rateset$ has separately specified rows.
+
+{\bf ATTN:} *** werkt dit eigenlijk ook als $\rateset$ geen separately specified rows heeft? Equation~\eqref{eq:correspondinglowertrans} is een beetje ambigu over of hij component-wise is of globaal, maar geen idee wat globaal zou betekenen. Als component-wise (zoals we eerder hadden), lijkt me dat we s.s.r. sowieso nodig hebben voor deze eigenschap (en dus ook voor benaderbaarheid van $L_t^s$)? ***
+\end{proof}
+
 
 \begin{proposition}\label{prop:dominatingproperties}
 Consider a lower transition rate operator $\lrate$ and let $\rateset_{\lrate}$ be the corresponding set of dominating rate matrices, as defined by Equation~\eqref{eq:dominatingratematrices}. Then $\rateset_{\lrate}$ is closed and convex, and has separately specified rows.
@@ -982,83 +1007,12 @@ We conclude from all of this that non-empty bounded sets of rate matrices are mo
 
 %This section contains the new, simplified proofs.
 
-\subsection{*** Inequality ***}
+\subsection{Connections Between $L_t^s$ and Lower Expectations $\underline{\mathbb{E}}$}
 
-%\begin{theorem}\label{theorem:markov_single_var_lower_bounded_new}
-%*** gaat weg want speciaal geval van *** Consider any $t,s\in\realsnonneg$ such that $t<s$ and let $\rateset$ be an arbitrary bounded set of rate matrices with corresponding lower transition rate operator $\lrate$. Then for any $P\in\mprocesses_\rateset$ and $f\in\gamblesX$:
-%\begin{equation*}
-%\left[\lbound_t^sf\right](x)\leq \left[T_t^sf\right](x).
-%\end{equation*}
-%\end{theorem}
-%\begin{proof}
-%Consider any $P\in\mprocesses_\rateset$, any $t,s\in\realsnonneg$ such that $t<s$, and any $f\in\gamblesX$. We will show that for all $\epsilon\in\realspos$,
-%\begin{equation*}
-%\left[L_t^sf\right](x) < \left[T_t^sf\right](x)+\epsilon\,,
-%\end{equation*}
-%which then implies $\left[\lbound_t^sf\right](x)\leq \left[T_t^sf\right](x)$. Start by choosing any $\epsilon\in\realspos$.
-%
-%Let $C\coloneqq (s-t)$. Because $P\in\mprocesses_\rateset$, it follows from Definition~\ref{def:markov_process_set_new} that there is some $\delta\in\realspos$ such that
-%\begin{align}
-%&(\forall \tau\in\realsnonneg)\,
-%(\forall\Delta\in(0,\delta))\,
-%(\exists Q\in\rateset)\,:\\
-% &\,(\forall g\in\gamblesX)(\forall x\in\states)~
-%\left\lvert\frac{\mathbb{E}_{X_{\tau+\Delta}}[g(X_{\tau+\Delta})\,\vert\,X_\tau=x]-g(x)}{\Delta}-\left[Qg\right](x)\right\rvert<\frac{\epsilon}{2C\norm{f}}\cdot\norm{g}.\label{eq:markov_single_var_precise_approx}
-%\end{align}
-%Furthermore, it follows from Theorem~\ref{theo:convergencelowerbound} that there is some $\delta'\in\realspos$ such that
-%\begin{equation}\label{eq:markov_single_var_lower_trans_approx}
-%(\forall u\in\mathcal{U}_{[s,t]}\,:\,\sigma(u)<\delta')\,(\forall x\in\states)\,\left\lvert \left[L_t^sf\right](x) - \left[\prod_{k=1}^n(I+\Delta_i\lrate)f\right](x)\right\rvert < \frac{\epsilon}{2}\,.
-%\end{equation}
-%Let $\delta^*\coloneqq\min\{\delta,\delta'\}$, and choose any $n>\nicefrac{C}{\delta^*}$. Then, for $\Delta\coloneqq\nicefrac{C}{n}$, we have $\Delta<\delta$ and $\Delta<\delta'$.
-%
-%Equation~\eqref{eq:markov_single_var_precise_approx} now implies that for all $\tau\in\realspos$, there is a $Q_\tau\in\rateset$ such that
-%\begin{equation}\label{eq:markov_single_var_precise_bound}
-%\left[(I + \Delta Q_\tau)f\right](x) - \frac{\Delta\epsilon}{2C} < \mathbb{E}_{X_{\tau+\Delta}}[f(X_{\tau+\Delta})\,\vert\,X_\tau=x]\,,\quad\text{for all $x\in\states$}\,.
-%\end{equation}
-%Furthermore, Equation~\eqref{eq:markov_single_var_lower_trans_approx} implies that
-%\begin{equation}\label{eq:markov_single_var_lower_bound}
-%\left[L_t^sf\right](x) - \frac{\epsilon}{2} < \left[(I+\Delta\lrate)^nf\right](x)\,,\quad\text{for all $x\in\states$}\,.
-%\end{equation}
-%
-%Now, we have
-%\begin{align*}
-%\left[T_t^sf\right](x) &= \mathbb{E}_{X_{s}}[f(X_{s})\,\vert\,X_t=x] \\
-% &= \mathbb{E}_{X_{s-\Delta}}\left[\mathbb{E}_{X_s}[f(X_s)\,\vert\,X_{s-\Delta},X_t=x]\,\vert\,X_t=x\right] \\
-% &= \mathbb{E}_{X_{s-\Delta}}\left[\mathbb{E}_{X_s}[f(X_s)\,\vert\,X_{s-\Delta}]\,\vert\,X_t=x\right]\,,
-%\end{align*}
-%where the last step made use of the Markov property. From Equation~\ref{eq:markov_single_var_precise_bound}, we now find that there is some $Q_{s-\Delta}\in\rateset$ such that for all $x_{s-\Delta}\in\states$,
-%\begin{equation*}
-%\left[(I+\Delta Q_{s-\Delta})f\right](x_{s-\Delta}) - \frac{\Delta\epsilon}{2C} < \mathbb{E}_{X_s}[f(X_s)\,\vert\,X_{s-\Delta}=x_{s-\Delta}]\,.
-%\end{equation*}
-%Using Definition~\ref{def:low_trans_rate}, we then have that
-%\begin{align*}
-%\mathbb{E}_{X_s}[f(X_s)\,\vert\,X_{s-\Delta}=x_{s-\Delta}] &> \left[(I+\Delta Q_{s-\Delta})f\right](x_{s-\Delta}) - \frac{\Delta\epsilon}{2C} \\
-% &\geq \left[(I+\Delta \lrate)f\right](x_{s-\Delta}) - \frac{\Delta\epsilon}{2C}\,.
-%\end{align*}
-%Because the expectation operator in the equality below takes a convex combination of values, we find by substitution that
-%\begin{align*}
-%\left[T_t^sf\right](x) &= \mathbb{E}_{X_{s-\Delta}}\left[\mathbb{E}_{X_s}[f(X_s)\,\vert\,X_{s-\Delta}]\,\vert\,X_t=x\right] \\
-% &> \mathbb{E}_{X_{s-\Delta}}\left[\left[(I+\Delta\lrate)f\right](X_{s-\Delta})\,\vert\,X_t=x\right] - \frac{\Delta\epsilon}{2C}\,.
-%\end{align*}
-%Repeatedly applying this argument, i.e. factoring the expectation at time points $(s-2\Delta),\ldots,(s-(n-1)\Delta)$, then reveals
-%\begin{align*}
-%\left[T_t^sf\right](x) &> \left[(I+\Delta\lrate)^nf\right](x) - n\cdot\frac{\Delta\epsilon}{2C} \\
-% &= \left[(I+\Delta\lrate)^nf\right](x) - \frac{C\epsilon}{2C} \\
-% &= \left[(I+\Delta\lrate)^nf\right](x) - \frac{\epsilon}{2}\,.
-%\end{align*}
-%We then find using Equation~\ref{eq:markov_single_var_lower_bound} that
-%\begin{align*}
-%\left[T_t^sf\right](x) &> \left[(I+\Delta\lrate)^nf\right](x) - \frac{\epsilon}{2} \\
-% &> \left[L_t^sf\right](x) - \frac{\epsilon}{2} - \frac{\epsilon}{2}\,,
-%\end{align*}
-%so that we finally obtain
-%\begin{equation*}
-%\left[L_t^sf\right](x) < \left[T_t^sf\right](x) + \epsilon\,.
-%\end{equation*}
-%Because the $\epsilon\in\realspos$ was arbitrary, this concludes the proof.
-%\end{proof}
+*** lalala nu gaan we het over $L_t^s$ hebben ***
 
-*** dit is de correcte algemenere versie ***
+*** $L_t^s$ is een lower bound van verwachtingswaarden ***
+
 \begin{theorem}\label{theorem:nonmarkov_single_var_lower_bounded}
 Consider any $t,s\in\realsnonneg$ such that $t<s$, and let $\rateset$ be an arbitrary bounded set of rate matrices with corresponding lower transition rate operator $\lrate$. Then, for any $P\in\processes_\rateset$, any $u\in\mathcal{U}_{[0,t]}$, any $(x_{t_0},\ldots,x_{t_n})\in\states^u$, and any $g\in\gambles(\states^{\{s\}})$,
 \begin{equation*}
@@ -1136,116 +1090,7 @@ Thus, we have found that
 Because the $\epsilon\in\realspos$ was arbitrary, this concludes the proof.
 \end{proof}
 
-%\subsection{Old Version}
-
-%This section contains the old, more complicated proofs.
-
-%\begin{definition}[Set of Markov Processes]\label{def:markov_process_set}
-%For any bounded set of rate matrices $\rateset$, we define the set $\mprocesses_{\rateset}$ of all continuous-time Markov processes \emph{consistent} with $\rateset$. Formally, we let $\mprocesses_{\rateset}$ be the set of all $P\in\mprocesses$ such that
-%\begin{equation}\label{eq:conditionforMarkov}
-%(\forall\epsilon>0)\,
-%(\exists\delta>0)\,
-%(\forall t\in[0,+\infty))\,
-%(\forall\Delta\in(0,\delta))\,
-%(\exists Q\in\rateset)~
-%\Big\lVert\frac{T_t^{t+\Delta}-I}{\Delta}-Q\Big\rVert<\epsilon.
-%\end{equation}
-%\end{definition}
-%\vspace{5pt}
-
-%\begin{theorem}\label{theorem:markov_single_var_lower_bounded}
-%Consider any $t,s\in[0,+\infty)$ such that $t<s$ and let $\rateset$ be an arbitrary bounded set of rate matrices with corresponding lower transition rate operator $\lrate$. Then for any $P\in\mprocesses_\rateset$ and $f\in\gamblesX$:
-%\begin{equation*}
-%\lbound_t^sf(x)\leq T_t^sf(x).
-%\end{equation*}
-%\end{theorem}
-%\begin{proof}
-%Consider any $P\in\mprocesses_\rateset$ and any $f\in\gamblesX$ and $x\in\states$. Assume \emph{ex absurdo} that $\lbound_t^sf(x)>T_t^sf(x)$. We prove that this leads to a contradiction.  Let $C\coloneqq s-t$ and choose $\epsilon>0$ small enough such that
-%\begin{equation}\label{eq:chooseepsilon}
-%\epsilon(1+C\norm{f})<\lbound_t^sf(x)-T_t^sf(x).
-%\end{equation}
-%Since $P\in\mprocesses_\rateset$, it follows from Equation~\eqref{eq:conditionforMarkov} that there is some $\delta>0$ such that
-%\begin{equation}\label{eq:1conditionforMarkov}
-%(\forall \tau\in[0,+\infty))\,
-%(\forall\Delta\in(0,\delta))\,
-%(\exists Q\in\rateset)~
-%\Big\lVert\frac{T_\tau^{\tau+\Delta}-I}{\Delta}-Q\Big\rVert<\epsilon.
-%\end{equation}
-%Furthermore, because of Equation~\eqref{eq:deflowerbound} and Theorem~\ref{theo:convergencelowerbound}, there is some $\delta'>0$ such that
-%\begin{equation}\label{eq:deltaprimeformula}
-%(\forall u\in\mathcal{U}_{[t,s]}\colon\sigma(u)<\delta')~\abs{\lbound_t^sf(x) - \left(\left(\prod_{k=1}^n(I+\Delta_k\lrate)\right)(f)\right)(x)}<\epsilon.
-%\end{equation}
-%Now choose $n>\max\{\nicefrac{C}{\delta},\nicefrac{C}{\delta'},C\norm{\rateset}\}$. Then for $\Delta\coloneqq\nicefrac{C}{n}$, we find that $\Delta<\delta$, $\Delta<\delta'$ and $\Delta\norm{\rateset}<1$. 
-
-%For all $k\in\{0,1,\dots,n\}$, define $t_k\coloneqq t+k\Delta$. Since $\Delta<\delta$, it follows from Equation~\eqref{eq:1conditionforMarkov} that, for all $i\in\{1,\dots,n\}$, there is some $Q_i\in\rateset$ such that 
-%\begin{equation*}
-%\norm{T_{t_{i-1}}^{t_i}-(I+\Delta Q_i)}
-%=\norm{\frac{T_{t_{i-1}}^{t_i}-I}{\Delta}-Q_i}\Delta
-%<\epsilon\Delta.
-%\end{equation*}
-%Furthermore, for all $i\in\{1,\dots,n\}$, since $\abs{\Delta Q_i(x,y)}\leq\norm{\Delta Q_i}=\Delta\norm{Q_i}\leq\Delta\norm{\rateset}<1$ for all $x,y\in\states$, we have that $I+\Delta Q_i$ is a stochastic matrix.
-%Therefore, due to Lemmas~\ref{lemma:transitionmatrixfactorises} and~\ref{lemma:differenceproductoftransition}, we find that
-%\begin{equation*}
-%\norm{T_t^s-\prod_{i=1}^n(I+\Delta Q_i)}
-%=\norm{\prod_{i=1}^n T_{t_{i-1}}^{t_i}-\prod_{i=1}^n(I+\Delta Q_i)}
-%\leq\epsilon\Delta n=\epsilon C,
-%\end{equation*}
-%which implies that
-%\begin{align}
-%\abs{T_t^sf(x)-\left(\left(\prod_{i=1}^n(I+\Delta Q_i)\right)(f)\right)(x)}
-%&\leq
-%\norm{T_t^sf-\left(\prod_{i=1}^n(I+\Delta Q_i)\right)(f)}\notag\\
-%&\leq
-%\norm{T_t^s-\prod_{i=1}^n(I+\Delta Q_i)}\norm{f}
-%\leq\epsilon C\norm{f}.\label{eq:firstpartofbound}
-%\end{align}
-%\noindent
-%Equation~\eqref{eq:deflowerbound} implies that
-%\begin{equation}
-%\left(\left(\prod_{i=1}^n(I+\Delta Q_i)\right)(f)\right)(x)
-%\geq
-%\left((I+\Delta\lrate)^n(f)\right)(x)\label{eq:middlepartofbound}
-%\end{equation}
-%and, since $\Delta<\delta'$, it follows from Equation~\eqref{eq:deltaprimeformula} that
-%\begin{equation}\label{eq:lastpartofbound}
-%\abs{\lbound_t^sf(x) - \left((I+\Delta\lrate)^n(f)\right)(x)}<\epsilon.
-%\end{equation}
-%\noindent
-%By combining Equations~\eqref{eq:firstpartofbound}, \eqref{eq:middlepartofbound} and~\eqref{eq:lastpartofbound}, we find that
-%\begin{align*}
-%T_t^sf(x)
-%&\geq
-%\left(\left(\prod_{i=1}^n(I+\Delta Q_i)\right)(f)\right)(x)-\epsilon C\norm{f}\\
-%&\geq
-%\left((I+\Delta\lrate)^n(f)\right)(x)-\epsilon C\norm{f}
-%>\lbound_t^sf(x)-\epsilon-\epsilon C\norm{f},
-%\end{align*}
-%which provides the required contradiction; see Equation~\eqref{eq:chooseepsilon}.
-%\end{proof}
-
-\subsection{*** Bereikbaarheid ***}
-
-*** heb hem even hier neergezet, kan misschien beter in sectie over relatie tussen $\rateset$ en $\lrate$. ***
-\begin{lemma}\label{lemma:rateset_has_arginf}
-Let $\rateset$ be an arbitrary non-empty bounded set of rate matrices with corresponding lower transition rate operator $\lrate$. Then for all $f\in\gamblesX$ and $\epsilon\in\realspos$, there exists a $Q\in\rateset$ such that
-\begin{equation*}
-\norm{\lrate f - Qf} < \epsilon\,.
-\end{equation*}
-\end{lemma}
-\begin{proof}
-This is immediate from the definition of the corresponding lower transition rate operator for $\rateset$, as given by Equation~\eqref{eq:correspondinglowertrans}.
-\end{proof}
-
-*** deze moeten we ook nog ergens uitwerken en neerzetten ***
-\begin{lemma}\label{lemma:bound_precise_linear_approx}
-Let $Q_\tau$ be any piecewise-constant function that gives for each time point $\tau\in\realsnonneg$ a rate matrix in some non-empty bounded set of rate matrices $\rateset$. By Theorem~\ref{theorem:continuous_rate_matrix_has_process}, there is then some Markov process $P\in\mprocesses_\rateset$ that is characterized by $Q_\tau$. Consider any $t\in\realsnonneg$ and any $\Delta\in\realsnonneg$ such that $Q_\tau$ is constant on the interval $[t,t+\Delta]$. Then, the transition matrix $T_t^{t+\Delta}$ corresponding to $P$ satisfies
-\begin{equation*}
-\norm{\left[I + \Delta Q_t\right] - T_t^{t+\Delta}} \leq \Delta^2\norm{\rateset}^2\,.
-\end{equation*}
-\end{lemma}
-\begin{proof}
-{\bf TODO}
-\end{proof}
+*** lalala $L_t^s$ kan arbitrair dicht benaderd worden ***
 
 \begin{theorem}\label{theorem:lower_markov_bound_is_tight}
 Consider any $t,s\in\realsnonneg$ such that $t<s$, and let $\rateset$ be an arbitrary non-empty bounded set of rate matrices with corresponding lower transition rate operator $\lrate$. Then for all $f\in\gamblesX$ and $\epsilon\in\realspos$, there exists a $P\in\mprocesses_{\rateset}$ such that
@@ -1330,6 +1175,8 @@ so that by Equation~\eqref{eq:delta_required_for_tight_bound} and the fact that 
 \end{equation*}
 \end{proof}
 
+*** lalala $L_t^s$ doet wat we willen ***
+
 \begin{corollary}\label{cor:lower_operator_is_infimum}
 Consider any $t,s\in\realsnonneg$ such that $t<s$, and let $\rateset$ be an arbitrary non-empty bounded set of rate matrices with corresponding lower transition rate operator $\lrate$. Then, for all $g\in\gambles(\states^{\{s\}})$ and $x\in\states$,
 \begin{equation*}
@@ -1341,11 +1188,11 @@ and furthermore,
 \end{equation*}
 \end{corollary}
 \begin{proof}
-We start by proving the first statement. By Theorem~\ref{theorem:nonmarkov_single_var_lower_bounded} and Proposition~\ref{prop:lower_exp_markov_bounded_by_nonmarkov}, we have that, for all $P\in\mprocesses_\rateset$ with expectation operator $\mathbb{E}$,
+We start by proving the first statement. By Theorem~\ref{theorem:nonmarkov_single_var_lower_bounded} and Proposition~\ref{prop:lower_exp_markov_bounded_by_nonmarkov}, we have that for all $P\in\mprocesses_\rateset$ with expectation operator $\mathbb{E}$,
 \begin{equation*}
 \left[L_t^sg\right](x) \leq \mathbb{E}[g(X_s)\,\vert\,X_t=x]\,.
 \end{equation*}
-Furthermore, by Theorem~\ref{theorem:lower_markov_bound_is_tight}, we have that for all $\epsilon\in\realspos$, there is some $P\in\mprocesses_\rateset$ such that
+Furthermore, by Theorem~\ref{theorem:lower_markov_bound_is_tight}, we have that for all $\epsilon\in\realspos$ there is some $P\in\mprocesses_\rateset$ such that
 \begin{equation*}
 \norm{L_t^sg - T_t^sg} < \epsilon\,.
 \end{equation*}
@@ -1375,6 +1222,7 @@ Together this implies, using Definition~\ref{def:lower_non_markov}, that
 %\end{equation*}
 %\end{definition}
 
+*** lalala met andere woorden, $L_t^s$ doet niet alleen wat we willen voor Markov ketens, zoals al vastgesteld in eerder werk van Damjan, maar het werkt ook voor niet-Markov ketens! ***
 
 \section{*** More complex functions *** }
 
