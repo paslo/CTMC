@@ -467,7 +467,7 @@ Consider any continuous-time Markov process $P$, and let $Q_t$ be a function tha
 \end{equation*}
 \end{definition}
 
-\begin{theorem}\label{theorem:continuous_rate_matrixes_has_process}
+\begin{theorem}\label{theorem:continuous_rate_matrix_has_process}
 Consider any right-continuous function $Q_t$ that gives for each time point $t\in\realsnonneg$ a rate matrix $Q_t\in\mathcal{R}$, where by right-continuity we mean that for all $t\in\realsnonneg$,
 \begin{equation*}
 \lim_{s\downarrow t} Q_s = Q_t\,.
@@ -575,7 +575,7 @@ Consider any bounded set of rate matrices $\rateset$, and the corresponding sets
 This is immediate from Definitions \ref{def:markov_process_set_new} and \ref{def:set_non_markov_process}.
 \end{proof}
 
-\begin{proposition}
+\begin{proposition}\label{prop:lower_exp_markov_bounded_by_nonmarkov}
 Consider any $t,s\in\realsnonneg$ such that $t<s$, any bounded set of rate matrices $\rateset$, any $f\in\gamblesX$, and any $x_t\in\states$. Then,
 \begin{equation*}
 \underline{\mathbb{E}}^\mathrm{M}[f(X_s)\,\vert\,X_t=x_t] \geq \underline{\mathbb{E}}[f(X_s)\,\vert\,X_t=x_t]\,.
@@ -895,7 +895,7 @@ Consider any $Q\in\rateset$. It then follows from Definition~\ref{def:rate_matri
 \end{proof}
 
 \noindent
-Inspired by this result, we will also refer to the lower envelope of $\rateset$ as the \emph{lower transition operator that corresponds to $\rateset$}. %As we have just seen, every non-empty bounded set $\rateset\subseteq\mathcal{R}$ of rate matrices has such a corresponding lower transition rate operator $\lrate$. 
+Inspired by this result, we will also refer to the lower envelope of $\rateset$ as the \emph{lower transition rate operator that corresponds to $\rateset$}. %As we have just seen, every non-empty bounded set $\rateset\subseteq\mathcal{R}$ of rate matrices has such a corresponding lower transition rate operator $\lrate$. 
 However, this correspondence is not one-to-one. As the following example establishes, different non-empty bounded sets of rate matrices may have the same corresponding lower transition rate operator.
 
 \begin{exmp}
@@ -950,6 +950,7 @@ Q\in\mathcal{R}
 \end{equation*}
 where, for every $x\in\states$, $\rateset_x\coloneqq\{Q(x,\cdot)\colon Q\in\rateset\}$ is some set of rows from which the $x$-th row of the rate matrices in $\rateset$ are taken.
 \end{definition}
+Thus, a set of rate matrices has separately specified rows if it is closed under taking arbitrary combinations of rows from its elements.
 
 \begin{proposition}\label{prop:dominatingproperties}
 Consider a lower transition rate operator $\lrate$ and let $\rateset_{\lrate}$ be the corresponding set of dominating rate matrices, as defined by Equation~\eqref{eq:dominatingratematrices}. Then $\rateset_{\lrate}$ is closed and convex, and has separately specified rows.
@@ -973,7 +974,7 @@ Consider any non-empty, bounded, closed and convex set of rate matrices $\ratese
 *** TO BE COMPLETED ***
 \end{proof}
 
-We conclude from all of this that non-empty bounded sets of rate matrices are more informative that lower transition rate matrices. Different non-empty bounded sets of rate matrices $\rateset$ may have the same lower transition rate operator $\lrate$ and therefore, in general, knowledge of $\lrate$ does not suffice to reconstruct $\rateset$; we can only reconstruct an outer approximation $\rateset_{\lrate}$, which is guaranteed to include $\rateset$. This changes if, besides non-empty and bounded, $\rateset$ is also closed and convex and has separately specified rows. In that case, $\lrate$ serves as an alternative representation for $\rateset$ because, since $\rateset=\rateset_{\lrate}$, we can use $\lrate$ to reconstruct $\rateset$. In other words: there is a one-to-one correspondence between lower transition rate operators and non-empty, bounded, closed and convex sets of rate matrices that have separately specified rows.
+We conclude from all of this that non-empty bounded sets of rate matrices are more informative than lower transition rate matrices. Different non-empty bounded sets of rate matrices $\rateset$ may have the same lower transition rate operator $\lrate$ and therefore, in general, knowledge of $\lrate$ does not suffice to reconstruct $\rateset$; we can only reconstruct an outer approximation $\rateset_{\lrate}$, which is guaranteed to include $\rateset$. This changes if, besides non-empty and bounded, $\rateset$ is also closed and convex and has separately specified rows. In that case, $\lrate$ serves as an alternative representation for $\rateset$ because, since $\rateset=\rateset_{\lrate}$, we can use $\lrate$ to reconstruct $\rateset$. In other words: there is a one-to-one correspondence between lower transition rate operators and non-empty, bounded, closed and convex sets of rate matrices that have separately specified rows.
 
 %\section{Imprecise Continuous-Time Markov Chains}\label{sec:imp_markov}
 
@@ -1075,7 +1076,7 @@ Because $P\in\processes_\rateset$, it follows from Definition~\ref{def:set_non_m
 \begin{align*}
  &(\forall \tau\in\realsnonneg)\,(\forall\Delta\in(0,\delta))\,(\forall v\in\mathcal{U}_{[0,\tau]})\,(\forall(x_{\tau_0},\ldots,x_{\tau_{m-1}})\in\states^{\{\tau_0,\ldots,\tau_{m-1}\}})\,(\exists Q\in\rateset)\,: \\
  &(\forall f\in\gambles(\states^{v\cup\{\tau+\Delta\}}))\,(\forall x_{\tau_m}\in\states^{\{\tau_m\}}): \\
- &\abs{\frac{\mathbb{E}_{X_{\tau+\Delta}}[f(x_{\tau_0},\ldots,x_{\tau_m},X_{\tau+\Delta})\,\vert\,X_{\tau_0,\ldots,\tau_m}=x_{\tau_0,\ldots,\tau_m}] - f(x_{\tau_0},\ldots,x_{\tau_m},x_{\tau_m})}{\Delta} - \left[Q f(x_{\tau_0},\ldots,x_{\tau_{m}},X_{\tau+\Delta})\right](x_{\tau_m})} \\ 
+ &\abs{\frac{\mathbb{E}[f(x_{\tau_0},\ldots,x_{\tau_m},X_{\tau+\Delta})\,\vert\,X_{\tau_0,\ldots,\tau_m}=x_{\tau_0,\ldots,\tau_m}] - f(x_{\tau_0},\ldots,x_{\tau_m},x_{\tau_m})}{\Delta} - \left[Q f(x_{\tau_0},\ldots,x_{\tau_{m}},X_{\tau+\Delta})\right](x_{\tau_m})} \\ 
  &\quad\quad < \frac{\epsilon}{2C\norm{g}}\cdot\norm{f}\,.
 \end{align*}
 Furthermore, it follows from Theorem~\ref{theo:convergencelowerbound} that there is some $\delta'\in\realspos$ such that
@@ -1090,7 +1091,7 @@ Equation {\bf EQREF} now implies that for all $\tau\in\realspos$, all $v\in\math
  &\left[(I + \Delta Q^v_{x_{\tau_0},\ldots,x_{\tau_{m-1}}})f(x_{\tau_0},\ldots,x_{\tau_m},X_{\tau+\Delta})\right](x_{\tau_m}) - \frac{\Delta\epsilon\norm{f}}{2C\norm{g}} \\
  &\quad< \mathbb{E}[f(x_{\tau_0},\ldots,x_{\tau_m},X_{\tau+\Delta})\,\vert\,X_{\tau_0,\ldots,\tau_m}=x_{\tau_0,\ldots,\tau_m}]\,.
 \end{align}
-Now, note that
+Now, note that by the basic rules of probability,
 \begin{align*}
 \mathbb{E}[g(X_s)\,\vert\,X_{t_0,\ldots,t_n}=x_{t_0,\ldots,t_n}] &= \mathbb{E}\bigl[\mathbb{E}[g(X_s)\,\vert\,X_{t_0,\ldots,t_n}=x_{t_0,\ldots,t_n},X_{s-\Delta}]\,\vert\,X_{t_0,\ldots,t_n}=x_{t_0,\ldots,t_n}\bigr]\,.
 \end{align*}
@@ -1126,9 +1127,9 @@ so that
 \begin{align*}
 \mathbb{E}[g(X_s)\,\vert\,X_{t_0,\ldots,t_n}=x_{t_0,\ldots,t_n}] &> \left[(I+\Delta\lrate)^ng\right](x_{t_n}) - \frac{\epsilon}{2} \\
  &> [L_t^s g](x_{t_n}) - \frac{\epsilon}{2} - \frac{\epsilon}{2} \\
- &= [L_t^s g](x_{t_n}) - \epsilon\,,
+ &= [L_t^s g](x_{t_n}) - \epsilon\,.
 \end{align*}
-where the last step used Definition~\ref{def:set_non_markov_process}. Thus, we have found that
+Thus, we have found that
 \begin{equation*}
 [L_t^s g](x_{t_n}) < \mathbb{E}[g(X_s)\,\vert\,X_{t_0,\ldots,t_n}=x_{t_0,\ldots,t_n}] + \epsilon\,.
 \end{equation*}
@@ -1224,28 +1225,52 @@ Because the $\epsilon\in\realspos$ was arbitrary, this concludes the proof.
 
 \subsection{*** Bereikbaarheid ***}
 
-*** bespreken waaraan de verzameling van Q's moet voldoen opdat dit zou gelde ***
+*** heb hem even hier neergezet, kan misschien beter in sectie over relatie tussen $\rateset$ en $\lrate$. ***
+\begin{lemma}\label{lemma:rateset_has_arginf}
+Let $\rateset$ be an arbitrary non-empty bounded set of rate matrices with corresponding lower transition rate operator $\lrate$. Then for all $f\in\gamblesX$ and $\epsilon\in\realspos$, there exists a $Q\in\rateset$ such that
+\begin{equation*}
+\norm{\lrate f - Qf} < \epsilon\,.
+\end{equation*}
+\end{lemma}
+\begin{proof}
+This is immediate from the definition of the corresponding lower transition rate operator for $\rateset$, as given by Equation~\eqref{eq:correspondinglowertrans}.
+\end{proof}
+
+*** deze moeten we ook nog ergens uitwerken en neerzetten ***
+\begin{lemma}\label{lemma:bound_precise_linear_approx}
+Let $Q_\tau$ be any piecewise-constant function that gives for each time point $\tau\in\realsnonneg$ a rate matrix in some non-empty bounded set of rate matrices $\rateset$. By Theorem~\ref{theorem:continuous_rate_matrix_has_process}, there is then some Markov process $P\in\mprocesses_\rateset$ that is characterized by $Q_\tau$. Consider any $t\in\realsnonneg$ and any $\Delta\in\realsnonneg$ such that $Q_\tau$ is constant on the interval $[t,t+\Delta]$. Then, the transition matrix $T_t^{t+\Delta}$ corresponding to $P$ satisfies
+\begin{equation*}
+\norm{\left[I + \Delta Q_t\right] - T_t^{t+\Delta}} \leq \Delta^2\norm{\rateset}^2\,.
+\end{equation*}
+\end{lemma}
+\begin{proof}
+{\bf TODO}
+\end{proof}
 
 \begin{theorem}\label{theorem:lower_markov_bound_is_tight}
-*** moet nog dichtgetimmerd worden *** 
-Consider any $t,s\in\realsnonneg$ such that $t<s$ and let $\rateset$ be an arbitrary closed and bounded set of rate matrices that has separately specified rows, with corresponding lower transition rate operator $\lrate$. Then for all $f\in\gamblesX$ and $\epsilon\in\realspos$, there is some $P\in\mprocesses_{\rateset}$ such that
+Consider any $t,s\in\realsnonneg$ such that $t<s$, and let $\rateset$ be an arbitrary non-empty bounded set of rate matrices with corresponding lower transition rate operator $\lrate$. Then for all $f\in\gamblesX$ and $\epsilon\in\realspos$, there exists a $P\in\mprocesses_{\rateset}$ such that
 \begin{equation*}
 \norm{\lbound_t^sf-T_t^sf} < \epsilon\,.
 \end{equation*}
 \end{theorem}
 \begin{proof}
-Choose any $f\in\gamblesX$ and any $\epsilon\in\realspos$.
+Choose any $f\in\gamblesX$ and any $\epsilon\in\realspos$, and let $C\coloneqq (s-t)$.
 
-Define a \emph{lower-characterizing rate matrix} $Q_\tau$ as
+By Lemma~\ref{lemma:rateset_has_arginf}, for all $\tau\in[t,s]$ there is some rate matrix $Q_\tau\in\rateset$ such that
 \begin{equation}\label{eq:lower_char_rate_matrix}
-Q_\tau(x_\tau,\cdot)\coloneqq \argmin\left\{ Q(x_\tau,\cdot)\bigl[\lbound_\tau^sf\bigr]\,:\,Q(x_\tau,\cdot)\in\mathcal{Q}_{x_\tau}\right\}\quad\text{for all $x_\tau\in\states$ and $\tau\in[t,s]$}\,.
+\norm{\lrate \lbound_\tau^sf - Q_\tau \lbound_\tau^sf} < \frac{\epsilon}{2C}\,.
 \end{equation}
-Note that the $\argmin\{\cdot\}$ may be set-valued, in which case take an arbitrary element.
-Furthermore, let $Q_\tau \coloneqq Q_t$ for all $\tau\in[0,t]$, and let $Q_\tau\coloneqq Q_s$ for all $\tau>s$.
+To fix $Q_\tau$'s values outside of the interval $[t,s]$, let $Q_\tau \coloneqq Q_t$ for all $\tau\in[0,t]$, and let $Q_\tau\coloneqq Q_s$ for all $\tau>s$.
+%Define a \emph{lower-characterizing rate matrix} $Q_\tau$ as
+%\begin{equation}\label{eq:lower_char_rate_matrix}
+%Q_\tau(x_\tau,\cdot)\coloneqq \argmin\left\{ Q(x_\tau,\cdot)\bigl[\lbound_\tau^sf\bigr]\,:\,Q(x_\tau,\cdot)\in\mathcal{Q}_{x_\tau}\right\}\quad\text{for all $x_\tau\in\states$ and $\tau\in[t,s]$}\,.
+%\end{equation}
+%Note that the $\argmin\{\cdot\}$ may be set-valued, in which case take an arbitrary element.
+%Furthermore, let $Q_\tau \coloneqq Q_t$ for all $\tau\in[0,t]$, and let $Q_\tau\coloneqq Q_s$ for all $\tau>s$.
 
-Let $C\coloneqq (s-t)$, define
+Next, define
 \begin{equation}\label{eq:delta_required_for_tight_bound}
-\delta \coloneqq \min\left\{\frac{\epsilon}{2C\norm{\mathcal{Q}}^2\norm{f}},\frac{1}{\norm{\lrate}}\right\}\,,
+\delta \coloneqq \min\left\{\frac{\epsilon}{4C\norm{\mathcal{Q}}^2\norm{f}},\frac{1}{\norm{\lrate}}\right\}\,,
 \end{equation}
 and choose any $n>\nicefrac{C}{\delta}$. Then, for $\Delta\coloneqq \nicefrac{C}{n}$, we have $\Delta<\delta$.
 
@@ -1255,7 +1280,9 @@ Q_\tau^u \coloneqq Q_{t_k},\quad\text{for all $\tau\in (t_{k-1},t_k]$}\,.
 \end{equation}
 Let $Q_\tau^u\coloneqq Q_{t_0}$ for all $\tau\leq t_0$ and let $Q_\tau^u\coloneqq Q_{t_n}$ for all $\tau>t_n$.
 
-Then, by Corollary~\ref{corollary:exponential_process_approximates_everywhere_and_has_derivative}, there is some $P\in\mathbb{P}_\mathcal{Q}^M$ that is characterized by $Q_\tau^u$, with corresponding transition matrix $T_t^s$. Furthermore,
+{\bf ATTN:} *** $Q_\tau^u$ is left-continuous, so the statement below may need some work. ***
+
+Then, by Theorem~\ref{theorem:continuous_rate_matrix_has_process}, there is some $P\in\mathbb{P}_\mathcal{Q}^M$ that is characterized by $Q_\tau^u$, with corresponding transition matrix $T_t^s$. Furthermore,
 \begin{align*}
 \norm{L_t^sf - T_t^sf} &= \norm{L_{t_0}^{t_n}f - T_{t_0}^{t_n}f} \\
  &\leq \norm{L_{t_0}^{t_n}f - T_{t_0}^{t_{n-1}}L_{t_{n-1}}^{t_n}f} + \norm{T_{t_0}^{t_{n-1}}L_{t_{n-1}}^{t_n}f - T_{t_0}^{t_n}f} \\
@@ -1278,30 +1305,33 @@ For all $i\in\{1,\ldots,n\}$, we have
 &\leq \Delta^2\norm{\lrate}^2\norm{f} + \norm{\left[I+\Delta\lrate\right]L_{t_i}^{t_n}f - T_{t_{i-1}}^{t_i}\left[L_{t_i}^{t_n}f\right]} \\
 &\leq \Delta^2\norm{\mathcal{Q}}^2\norm{f} + \norm{\left[I+\Delta\lrate\right]L_{t_i}^{t_n}f - T_{t_{i-1}}^{t_i}\left[L_{t_i}^{t_n}f\right]}\,.
 \end{align*}
-By Equation~\eqref{eq:lower_char_rate_matrix}, we have $Q_{t_i}L_{t_i}^{t_n}f = \lrate L_{t_i}^{t_n}f$. Furthermore, by Equation~\eqref{eq:lower_char_matrix_linear_approx}, we have $Q_{t_i}^u=Q_{t_i}$, so that
+By Equation~\eqref{eq:lower_char_rate_matrix}, we have $\norm{Q_{t_i}L_{t_i}^{t_n}f - \lrate L_{t_i}^{t_n}f} < \nicefrac{\epsilon}{2C}$. Furthermore, by Equation~\eqref{eq:lower_char_matrix_linear_approx}, we have $Q_{t_i}^u=Q_{t_i}$, so that
 \begin{align*}
-\norm{L_{t_{i-1}}^{t_i}\left[L_{t_i}^{t_n}f\right] - T_{t_{i-1}}^{t_i}\left[L_{t_i}^{t_n}f\right]} &\leq \Delta^2\norm{\mathcal{Q}}^2\norm{f} + \norm{\left[I+\Delta\lrate\right]L_{t_i}^{t_n}f - T_{t_{i-1}}^{t_i}\left[L_{t_i}^{t_n}f\right]} \\
- &= \Delta^2\norm{\mathcal{Q}}^2\norm{f} + \norm{\left[I+\Delta Q_{t_i}^u\right]L_{t_i}^{t_n}f - T_{t_{i-1}}^{t_i}\left[L_{t_i}^{t_n}f\right]} \\
- &\leq \Delta^2\norm{\mathcal{Q}}^2\norm{f} + \norm{\left[I+\Delta Q_{t_i}^u\right] - T_{t_{i-1}}^{t_i}}\cdot\norm{f}\\
- &\leq 2\Delta^2\norm{\mathcal{Q}}^2\norm{f}\,,
+ &\quad \norm{L_{t_{i-1}}^{t_i}\left[L_{t_i}^{t_n}f\right] - T_{t_{i-1}}^{t_i}\left[L_{t_i}^{t_n}f\right]} \\
+ &\leq \Delta^2\norm{\mathcal{Q}}^2\norm{f} + \norm{\left[I+\Delta\lrate\right]L_{t_i}^{t_n}f - T_{t_{i-1}}^{t_i}\left[L_{t_i}^{t_n}f\right]} \\
+ &\leq \Delta^2\norm{\mathcal{Q}}^2\norm{f} + \norm{\left[I+\Delta Q_{t_i}^u\right]L_{t_i}^{t_n}f - T_{t_{i-1}}^{t_i}\left[L_{t_i}^{t_n}f\right]} + \norm{\left[I+\Delta \lrate\right]L_{t_i}^{t_n}f - \left[I+\Delta Q_{t_i}^u\right]L_{t_i}^{t_n}f} \\
+ &= \Delta^2\norm{\mathcal{Q}}^2\norm{f} + \norm{\left[I+\Delta Q_{t_i}^u\right]L_{t_i}^{t_n}f - T_{t_{i-1}}^{t_i}\left[L_{t_i}^{t_n}f\right]} + \Delta\norm{\lrate L_{t_i}^{t_n}f - Q_{t_i}L_{t_i}^{t_n}f} \\
+ &\leq \Delta^2\norm{\mathcal{Q}}^2\norm{f} + \norm{\left[I+\Delta Q_{t_i}^u\right]L_{t_i}^{t_n}f - T_{t_{i-1}}^{t_i}\left[L_{t_i}^{t_n}f\right]} + \frac{\Delta\epsilon}{2C} \\
+ &\leq \Delta^2\norm{\mathcal{Q}}^2\norm{f} + \norm{\left[I+\Delta Q_{t_i}^u\right] - T_{t_{i-1}}^{t_i}}\cdot\norm{f} + \frac{\Delta\epsilon}{2C} \\
+ &\leq 2\Delta^2\norm{\mathcal{Q}}^2\norm{f} + \frac{\Delta\epsilon}{2C}\,,
 \end{align*}
-where the last step used Corollary~\ref{corollary:exponential_process_approximates_everywhere_and_has_derivative}.
+where the last step used Lemma~\ref{lemma:bound_precise_linear_approx}.
 
-Thus, we find
+Thus, using the fact that $n\Delta=C$, we find
 \begin{align*}
 \norm{L_t^sf - T_t^sf} &\leq \sum_{i=1}^n \norm{L_{t_{i-1}}^{t_i}\left[L_{t_i}^{t_n}f\right] - T_{t_{i-1}}^{t_i}\left[L_{t_i}^{t_n}f\right]} \\
- &\leq \sum_{i=1}^n 2\Delta^2\norm{\mathcal{Q}}^2\norm{f} \\
- &= 2n\Delta^2\norm{\mathcal{Q}}^2\norm{f} \\
- &= 2C\Delta\norm{\mathcal{Q}}^2\norm{f}\,,
+ &\leq \sum_{i=1}^n 2\Delta^2\norm{\mathcal{Q}}^2\norm{f} + \frac{\Delta\epsilon}{2C} \\
+ &= 2n\Delta^2\norm{\mathcal{Q}}^2\norm{f} + n\frac{\Delta\epsilon}{2C}\\
+ &= 2C\Delta\norm{\mathcal{Q}}^2\norm{f} + \frac{\epsilon}{2}\,,
 \end{align*}
 so that by Equation~\eqref{eq:delta_required_for_tight_bound} and the fact that $\Delta<\delta$, we have
 \begin{equation*}
-\norm{L_t^sf - T_t^sf} \leq 2C\Delta\norm{\mathcal{Q}}^2\norm{f} < 2C\delta\norm{\mathcal{Q}}^2\norm{f} = \epsilon\,.
+\norm{L_t^sf - T_t^sf} \leq 2C\Delta\norm{\mathcal{Q}}^2\norm{f} + \frac{\epsilon}{2} < 2C\delta\norm{\mathcal{Q}}^2\norm{f} + \frac{\epsilon}{2} \leq \frac{\epsilon}{2} + \frac{\epsilon}{2} = \epsilon\,.
 \end{equation*}
 \end{proof}
 
 \begin{corollary}\label{cor:lower_operator_is_infimum}
-Consider any $t,s\in\realsnonneg$ such that $t<s$, and let $\rateset$ be an arbitrary closed and bounded set of rate matrices that has separately specified rows, with corresponding lower transition rate operator $\lrate$. Then, for all $g\in\gambles(\states^{\{s\}})$ and $x\in\states$,
+Consider any $t,s\in\realsnonneg$ such that $t<s$, and let $\rateset$ be an arbitrary non-empty bounded set of rate matrices with corresponding lower transition rate operator $\lrate$. Then, for all $g\in\gambles(\states^{\{s\}})$ and $x\in\states$,
 \begin{equation*}
 \left[L_t^sg\right](x) = \underline{\mathbb{E}}^\mathrm{M}[g(X_s)\,\vert\,X_t=x]\,,%\inf\Bigl\{\left[T_t^sf\right](x)\,:\,P\in\mprocesses_\rateset\Bigr\}\,.
 \end{equation*}
@@ -1311,33 +1341,31 @@ and furthermore,
 \end{equation*}
 \end{corollary}
 \begin{proof}
-We start by proving the first statement. By Proposition~\ref{prop:markov_set_subset_of_nonmarkov_set} and Theorem~\ref{theorem:nonmarkov_single_var_lower_bounded}, we have that, for all $P\in\mprocesses_\rateset$ with expectation operator $\mathbb{E}$,
+We start by proving the first statement. By Theorem~\ref{theorem:nonmarkov_single_var_lower_bounded} and Proposition~\ref{prop:lower_exp_markov_bounded_by_nonmarkov}, we have that, for all $P\in\mprocesses_\rateset$ with expectation operator $\mathbb{E}$,
 \begin{equation*}
 \left[L_t^sg\right](x) \leq \mathbb{E}[g(X_s)\,\vert\,X_t=x]\,.
 \end{equation*}
-Furthermore, by Theorem~\ref{theorem:lower_markov_bound_is_tight}, we have that for all $\epsilon\in\realsnonneg$, there is some $P\in\mprocesses_\rateset$ such that
+Furthermore, by Theorem~\ref{theorem:lower_markov_bound_is_tight}, we have that for all $\epsilon\in\realspos$, there is some $P\in\mprocesses_\rateset$ such that
 \begin{equation*}
 \norm{L_t^sg - T_t^sg} < \epsilon\,.
 \end{equation*}
-Together this implies that
+Together this implies, using Definition~\ref{def:lower_markov}, that
 \begin{equation*}
-\left[L_t^sg\right](x) = \inf\left\{\left[T_t^sf\right](x)\,:\,P\in\mprocesses_\rateset\right\} = \underline{\mathbb{E}}^{\mathrm{M}}\left[g(X_s)\,\vert\,X_t=x\right]\,,
+\left[L_t^sg\right](x) = \inf\left\{\left[T_t^sf\right](x)\,:\,P\in\mprocesses_\rateset\right\} = \underline{\mathbb{E}}^{\mathrm{M}}\left[g(X_s)\,\vert\,X_t=x\right]\,.
 \end{equation*}
-where the second equality uses Definition~\ref{def:lower_markov}.
 
 We now move on to the second statement. By Theorem~\ref{theorem:nonmarkov_single_var_lower_bounded} we have that for all $P\in\processes_\rateset$ with expectation operator $\mathbb{E}$,
 \begin{equation*}
 \left[L_t^sg\right](x) \leq \mathbb{E}[g(X_s)\,\vert\,X_t=x]\,.
 \end{equation*}
-Furthermore, using Proposition~\ref{prop:markov_set_subset_of_nonmarkov_set} and Theorem~\ref{theorem:lower_markov_bound_is_tight}, we have that for all $\epsilon\in\realsnonneg$ there is some $P\in\processes_\rateset$ such that
+Furthermore, using Theorem~\ref{theorem:lower_markov_bound_is_tight} and Proposition~\ref{prop:markov_set_subset_of_nonmarkov_set}, we have that for all $\epsilon\in\realsnonneg$ there is some $P\in\processes_\rateset$ such that
 \begin{equation*}
 \norm{L_t^sg - T_t^sg} < \epsilon\,.
 \end{equation*}
-Together this implies that
+Together this implies, using Definition~\ref{def:lower_non_markov}, that
 \begin{equation*}
-\left[L_t^sg\right](x) = \inf\left\{\left[T_t^sf\right](x)\,:\,P\in\processes_\rateset\right\} = \underline{\mathbb{E}}\left[g(X_s)\,\vert\,X_t=x\right]\,,
+\left[L_t^sg\right](x) = \inf\left\{\left[T_t^sf\right](x)\,:\,P\in\processes_\rateset\right\} = \underline{\mathbb{E}}\left[g(X_s)\,\vert\,X_t=x\right]\,.
 \end{equation*}
-where the second equality uses Definition~\ref{def:lower_non_markov}.
 \end{proof}
 
 %\begin{definition}\label{def:lower_expectation}
