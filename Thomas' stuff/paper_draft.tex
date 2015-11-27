@@ -1012,12 +1012,12 @@ We conclude from all of this that non-empty bounded sets of rate matrices are mo
 
 \subsection{Connections Between $L_t^s$ and Lower Expectations $\underline{\mathbb{E}}$}
 
-*** lalala nu gaan we het over $L_t^s$ hebben ***
+Having established a strong connection between the operator $\lrate$ and non-empty bounded sets of rate matrices $\rateset$, we will now turn to the connection between the operator $L_t^s$ and lower expectations $\underline{\mathbb{E}}$ with respect to sets of (non-)Markov processes. Specifically, we will in this section focus on the lower expectation of functions defined on the state space at a single point in time. In Section~\ref{sec:funcs_multi_time_points} we will then use and generalize these results when we consider functions defined on the state space at multiple time points.
 
-*** $L_t^s$ is een lower bound van verwachtingswaarden ***
+As the following result shows, the operator $L_t^s$ induced by a lower transition rate operator $\lrate$ corresponds to a lower bound on the expectation of a function at time $s$, with respect to the set $\processes_\rateset$ of non-Markov processes induced by any set $\rateset$ of which $\lrate$ is the lower envelope.
 
 \begin{theorem}\label{theorem:nonmarkov_single_var_lower_bounded}
-Consider any $t,s\in\realsnonneg$ such that $t<s$, and let $\rateset$ be an arbitrary bounded set of rate matrices with corresponding lower transition rate operator $\lrate$. Then, for any $P\in\processes_\rateset$, any $u\in\mathcal{U}_{[0,t]}$, any $(x_{t_0},\ldots,x_{t_n})\in\states^u$, and any $g\in\gambles(\states^{\{s\}})$,
+Consider any $t,s\in\realsnonneg$ such that $t<s$, and let $\rateset$ be an arbitrary non-empty bounded set of rate matrices with corresponding lower transition rate operator $\lrate$. Then, for any $P\in\processes_\rateset$, any $u\in\mathcal{U}_{[0,t]}$, any $(x_{t_0},\ldots,x_{t_n})\in\states^u$, and any $g\in\gambles(\states^{\{s\}})$,
 \begin{equation*}
 [L_t^s g](x_{t_n}) \leq \mathbb{E}[g(X_s)\,\vert\,X_{t_0,\ldots,t_n}=x_{t_0,\ldots,t_n}]\,.
 \end{equation*}
@@ -1046,7 +1046,7 @@ Furthermore, it follows from Theorem~\ref{theo:convergencelowerbound} that there
 
 Let $\delta^*\coloneqq\min\{\delta,\delta'\}$, and choose any $n>\nicefrac{C}{\delta^*}$. Then, for $\Delta\coloneqq\nicefrac{C}{n}$, we have $\Delta<\delta$ and $\Delta<\delta'$.
 
-Equation \eqref{eq:nonmarkov_bound_proof_deriv_bounded} now implies that for all $\tau\in\realspos$, all $v\in\mathcal{U}_{[0,\tau]}$, and all $(x_{\tau_0},\ldots,x_{\tau_{m-1}})\in\states^{\{\tau_0,\ldots,\tau_{m-1}\}}$, there is some $Q^v_{x_{\tau_0},\ldots,x_{\tau_{m-1}}}\in\rateset$ such that, for all $f\in\gambles(\states^{v\cup\{\tau+\Delta\}})$ and all $x_{\tau_m}\in\states^{\{\tau_m\}}$,
+Equation \eqref{eq:nonmarkov_bound_proof_deriv_bounded} now implies that for all $\tau\in\realspos$, all $v\in\mathcal{U}_{[0,\tau]}$ such that $v=\tau_0,\ldots,\tau_m$, and all $(x_{\tau_0},\ldots,x_{\tau_{m-1}})\in\states^{\{\tau_0,\ldots,\tau_{m-1}\}}$, there is some $Q^v_{x_{\tau_0},\ldots,x_{\tau_{m-1}}}\in\rateset$ such that, for all $f\in\gambles(\states^{v\cup\{\tau+\Delta\}})$ and all $x_{\tau_m}\in\states^{\{\tau_m\}}$,
 \begin{align}\label{eq:nonmarkov_bound_proof_deriv_inequal}
 \begin{split}
  &\left[(I + \Delta Q^v_{x_{\tau_0},\ldots,x_{\tau_{m-1}}})f(x_{\tau_0},\ldots,x_{\tau_m},X_{\tau+\Delta})\right](x_{\tau_m}) - \frac{\Delta\epsilon\norm{f}}{2C\norm{g}} \\
@@ -1081,11 +1081,11 @@ Hence, we can repeat this argument, factoring the expectation at time points $(s
  &= \left[(I+\Delta\lrate)^ng\right](x_{t_n}) - \frac{\epsilon}{2}\,.
 \end{align*}
 
-It follows from Equation \eqref{eq:nonmarkov_bound_proof_lbound_approx} and the fact that $\Delta<\delta'$, that
+It follows from Equation \eqref{eq:nonmarkov_bound_proof_lbound_approx} and the fact that $\Delta<\delta'$,
 \begin{equation*}
 \left[L_t^s g\right](x_{t_n}) - \frac{\epsilon}{2} < \left[(I+\Delta\lrate)^n g\right](x_{t_n})\,,
 \end{equation*}
-so that
+so that by substitution,
 \begin{align*}
 \mathbb{E}[g(X_s)\,\vert\,X_{t_0,\ldots,t_n}=x_{t_0,\ldots,t_n}] &> \left[(I+\Delta\lrate)^ng\right](x_{t_n}) - \frac{\epsilon}{2} \\
  &> [L_t^s g](x_{t_n}) - \frac{\epsilon}{2} - \frac{\epsilon}{2} \\
@@ -1098,7 +1098,7 @@ Thus, we have found that
 Because the $\epsilon\in\realspos$ was arbitrary, this concludes the proof.
 \end{proof}
 
-*** lalala $L_t^s$ kan arbitrair dicht benaderd worden ***
+As this previous result showed, $L_t^sf$ is a lower bound on the expectation of a function $f\in\gamblesX$, with respect to a set of non-Markov processes $\processes_\rateset$ induced by some non-empty bounded set of rate matrices $\rateset$. Our next result establishes that this bound is tight if $\rateset$ also has separately specified rows. Specifically, we show that $L_t^sf$ can then be approximated to arbitrary precision by carefully choosing a Markov process $P$ from the set $\mprocesses_\rateset$.
 
 \begin{theorem}\label{theorem:lower_markov_bound_is_tight}
 Consider any $t,s\in\realsnonneg$ such that $t<s$, and let $\rateset$ be an arbitrary non-empty bounded set of rate matrices that has separately specified rows, with corresponding lower transition rate operator $\lrate$. Then for all $f\in\gamblesX$ and $\epsilon\in\realspos$, there exists a $P\in\mprocesses_{\rateset}$ such that
@@ -1150,7 +1150,7 @@ Recursion on the first summand yields
 &\vdots \\
  &\leq \sum_{i=1}^{n} \norm{L_{t_{i-1}}^{t_i}\left[L_{t_i}^{t_n}f\right] - T_{t_{i-1}}^{t_i}\left[L_{t_i}^{t_n}f\right]}\,.
 \end{align*}
-For all $i\in\{1,\ldots,n\}$, we have
+For all $i\in\{1,\ldots,n\}$, we have using Lemma~\ref{lemma:justthelinearpart} and the facts that $\Delta<\delta\leq\nicefrac{1}{\norm{\lrate}}$ and $\norm{\lrate}\leq\norm{\rateset}$,
 \begin{align*}
 &\quad \norm{L_{t_{i-1}}^{t_i}\left[L_{t_i}^{t_n}f\right] - T_{t_{i-1}}^{t_i}\left[L_{t_i}^{t_n}f\right]} \\
 &\leq \norm{L_{t_{i-1}}^{t_i}\left[L_{t_i}^{t_n}f\right] - \left[I+\Delta\lrate\right]L_{t_i}^{t_n}f} + \norm{\left[I+\Delta\lrate\right]L_{t_i}^{t_n}f - T_{t_{i-1}}^{t_i}\left[L_{t_i}^{t_n}f\right]} \\
@@ -1183,7 +1183,7 @@ so that by Equation~\eqref{eq:delta_required_for_tight_bound} and the fact that 
 \end{equation*}
 \end{proof}
 
-*** lalala $L_t^s$ doet wat we willen ***
+Together, Theorems~\ref{theorem:nonmarkov_single_var_lower_bounded} and~\ref{theorem:lower_markov_bound_is_tight} establish a strong connection between $L_t^s$ and lower expectations $\underline{\mathbb{E}}$. In particular, for functions defined on a single point in time, they turn out to be equivalent, as the result below establishes.
 
 \begin{corollary}\label{cor:lower_operator_is_infimum}
 Consider any $t,s\in\realsnonneg$ such that $t<s$, and let $\rateset$ be an arbitrary non-empty bounded set of rate matrices that has separately specified rows, with corresponding lower transition rate operator $\lrate$. Then, for all $g\in\gambles(\states^{\{s\}})$ and $x\in\states$,
@@ -1230,9 +1230,15 @@ Together this implies, using Definition~\ref{def:lower_non_markov}, that
 %\end{equation*}
 %\end{definition}
 
-*** lalala met andere woorden, $L_t^s$ doet niet alleen wat we willen voor Markov ketens, zoals al vastgesteld in eerder werk van Damjan, maar het werkt ook voor niet-Markov ketens! ***
+One somewhat unsurprising result is therefore that $L_t^s$ computes the lower expectation of functions $f\in\gamblesX$ with respect to sets of Markov processes $\mprocesses_\rateset$. The reason that this is to be expected is the previously established correspondence between $L_t^s$ and the solution of the differential equation introduced in {\bf DAMJANREF}, which was there shown to compute exactly this.
 
-\section{Functions Defined on Multiple Time Points}
+A rather more surprising result, perhaps, is that this \emph{same} operator also computes lower expectations with respect to sets $\processes_\rateset$ of non-Markov processes.
+
+*** misschien nog iets over dat de precieze non-Markov dingen normaal als ``moeilijk'' gezien worden? ***
+
+*** lalala sterker nog, zoals we in de volgende sectie gaan zien, kunnen we met $L_t^s$ dingen uitrekenen voor niet-Markov sets die niet kunnen voor Markov sets ***
+
+\section{Functions Defined on Multiple Time Points}\label{sec:funcs_multi_time_points}
 
 %\subsection{wat notatie voor meerdere variabelen}\label{sec:imp_non_markov}
 
