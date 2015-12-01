@@ -252,7 +252,7 @@ Finally, for any set $\mathcal{A}$ of square matrices, we define
 \norm{\mathcal{A}}\coloneqq\sup\{\norm{A}\colon A\in\mathcal{A}\}.
 \end{equation*}
 
-\subsubsection{wat notatie voor meerdere variabelen}
+\subsubsection{wat notatie voor meerdere variabelen}\label{sec:multivar_notation}
 
 *** dit kan opzich wel korter denk ik, maar kunnen we bij oppoetsen straks nog wel even checken ***
 
@@ -281,6 +281,11 @@ For any function $f\in\gambles(\states^{\{t_0\}}\times\cdots\times\states^{\{t_n
 For the sake of brevity, we will also write a joint state assignment as
 \begin{equation*}
 \left(X_{t_0,\ldots,t_n}=x_{t_0,\ldots,t_n}\right)\equiv (X_{t_0}=x_{t_0},\ldots,X_{t_n}=x_{t_n})\,.
+\end{equation*}
+
+Finally, for a function $f\in\gambles(\states^{u\cup\{s\}})$, we will write $f(x_{t_0},\ldots,x_{t_n},X_s)$ for the restriction of $f$ to $\states^{\{s\}}$. Thus, $f(x_{t_0},\ldots,x_{t_n},X_s)$ corresponds to a function $g\in\gambles(\states^{\{s\}})$ such that
+\begin{equation*}
+g(x_s) \equiv f(x_{t_0},\ldots,x_{t_n},x_s),\quad\text{for all $x_s\in\states^{\{s\}}$}\,.
 \end{equation*}
 
 %In order to re-use the lower transition operator $L_t^s$ from Definition~\ref{def:low_trans}, we will finally have to introduce some conventions. Note that $L_t^s$ is a map from $\gamblesX$ to $\gamblesX$, so it is straightforward to apply to functions $g\in\gambles(\states^{\{s\}})$. This is because these functions only depend on a single variable. However, $L_t^s$ is not yet properly defined for, e.g., functions $f\in\gambles(\states^{u\cup\{s\}})$. To this end, let first 
@@ -1014,7 +1019,7 @@ We conclude from all of this that non-empty bounded sets of rate matrices are mo
 
 Having established a strong connection between the operator $\lrate$ and non-empty bounded sets of rate matrices $\rateset$, we will now turn to the connection between the operator $L_t^s$ and lower expectations $\underline{\mathbb{E}}$ with respect to sets of (non-)Markov processes. Specifically, we will in this section focus on the lower expectation of functions defined on the state space at a single point in time. In Section~\ref{sec:funcs_multi_time_points} we will then use and generalize these results when we consider functions defined on the state space at multiple time points.
 
-As the following result shows, the operator $L_t^s$ induced by a lower transition rate operator $\lrate$ corresponds to a lower bound on the expectation of a function at time $s$, with respect to the set $\processes_\rateset$ of non-Markov processes induced by any set $\rateset$ of which $\lrate$ is the lower envelope.
+As the following result shows, the operator $L_t^s$ induced by a lower transition rate operator $\lrate$ computes a lower bound on the expectation of a function $g\in\gambles(\states^{\{s\}})$, with respect to the set $\processes_\rateset$ of non-Markov processes induced by any set $\rateset$ of which $\lrate$ is the lower envelope.
 
 \begin{theorem}\label{theorem:nonmarkov_single_var_lower_bounded}
 Consider any $t,s\in\realsnonneg$ such that $t<s$, and let $\rateset$ be an arbitrary non-empty bounded set of rate matrices with corresponding lower transition rate operator $\lrate$. Then, for any $P\in\processes_\rateset$, any $u\in\mathcal{U}_{[0,t]}$, any $(x_{t_0},\ldots,x_{t_n})\in\states^u$, and any $g\in\gambles(\states^{\{s\}})$,
@@ -1098,7 +1103,7 @@ Thus, we have found that
 Because the $\epsilon\in\realspos$ was arbitrary, this concludes the proof.
 \end{proof}
 
-As this previous result showed, $L_t^sf$ is a lower bound on the expectation of a function $f\in\gamblesX$, with respect to a set of non-Markov processes $\processes_\rateset$ induced by some non-empty bounded set of rate matrices $\rateset$. Our next result establishes that this bound is tight if $\rateset$ also has separately specified rows. Specifically, we show that $L_t^sf$ can then be approximated to arbitrary precision by carefully choosing a Markov process $P$ from the set $\mprocesses_\rateset$.
+As this previous result showed, $L_t^sg$ is a lower bound on the expectation of a function $g\in\gambles(\states^{\{s\}})$, with respect to a set of non-Markov processes $\processes_\rateset$ induced by some non-empty bounded set of rate matrices $\rateset$. Our next result establishes that this bound is tight if $\rateset$ also has separately specified rows. Specifically, we show that $L_t^sg$ can then be approximated to arbitrary precision by carefully choosing a Markov process $P$ from the set $\mprocesses_\rateset$.
 
 \begin{theorem}\label{theorem:lower_markov_bound_is_tight}
 Consider any $t,s\in\realsnonneg$ such that $t<s$, and let $\rateset$ be an arbitrary non-empty bounded set of rate matrices that has separately specified rows, with corresponding lower transition rate operator $\lrate$. Then for all $f\in\gamblesX$ and $\epsilon\in\realspos$, there exists a $P\in\mprocesses_{\rateset}$ such that
@@ -1107,7 +1112,9 @@ Consider any $t,s\in\realsnonneg$ such that $t<s$, and let $\rateset$ be an arbi
 \end{equation*}
 \end{theorem}
 \begin{proof}
-Choose any $f\in\gamblesX$ and any $\epsilon\in\realspos$. Let $C\coloneqq (s-t)$.
+Choose any $f\in\gamblesX$ and any $\epsilon\in\realspos$. Let $C\coloneqq (s-t)$. 
+
+The proof works by selecting a rate matrix at each point in time, showing that there is a $P\in\mprocesses_\rateset$ that is characterized by this construction, and finally establishing that this $P$ satisfies the inequality of interest.
 
 By Lemma~\ref{lemma:rateset_has_arginf}, for all $\tau\in[t,s]$ there is some rate matrix $Q_\tau\in\rateset$ such that
 \begin{equation}\label{eq:lower_char_rate_matrix}
@@ -1135,7 +1142,7 @@ Let $Q_\tau^u\coloneqq Q_{t_0}$ for all $\tau\leq t_0$ and let $Q_\tau^u\coloneq
 
 {\bf ATTN:} *** $Q_\tau^u$ is left-continuous, so the statement below may need some work. ***
 
-Then, by Theorem~\ref{theorem:continuous_rate_matrix_has_process}, there is some $P\in\mathbb{P}_\mathcal{Q}^M$ that is characterized by $Q_\tau^u$, with corresponding transition matrix $T_t^s$. Furthermore,
+Then, by Theorem~\ref{theorem:continuous_rate_matrix_has_process}, there is some $P\in\mprocesses_\mathcal{Q}$ that is characterized by $Q_\tau^u$, with corresponding transition matrix $T_t^s$. It remains to show that $\norm{L_t^sf - T_t^sf}<\epsilon$. We have
 \begin{align*}
 \norm{L_t^sf - T_t^sf} &= \norm{L_{t_0}^{t_n}f - T_{t_0}^{t_n}f} \\
  &\leq \norm{L_{t_0}^{t_n}f - T_{t_0}^{t_{n-1}}L_{t_{n-1}}^{t_n}f} + \norm{T_{t_0}^{t_{n-1}}L_{t_{n-1}}^{t_n}f - T_{t_0}^{t_n}f} \\
@@ -1183,7 +1190,7 @@ so that by Equation~\eqref{eq:delta_required_for_tight_bound} and the fact that 
 \end{equation*}
 \end{proof}
 
-Together, Theorems~\ref{theorem:nonmarkov_single_var_lower_bounded} and~\ref{theorem:lower_markov_bound_is_tight} establish a strong connection between $L_t^s$ and lower expectations $\underline{\mathbb{E}}$. In particular, for functions defined on a single point in time, they turn out to be equivalent, as the result below establishes.
+Together, Theorems~\ref{theorem:nonmarkov_single_var_lower_bounded} and~\ref{theorem:lower_markov_bound_is_tight} establish a strong connection between $L_t^s$ and lower expectations $\underline{\mathbb{E}}$. In particular, for functions defined on a single point in time, they turn out to be equivalent, as shown by the result below.
 
 \begin{corollary}\label{cor:lower_operator_is_infimum}
 Consider any $t,s\in\realsnonneg$ such that $t<s$, and let $\rateset$ be an arbitrary non-empty bounded set of rate matrices that has separately specified rows, with corresponding lower transition rate operator $\lrate$. Then, for all $g\in\gambles(\states^{\{s\}})$ and $x\in\states$,
@@ -1230,7 +1237,7 @@ Together this implies, using Definition~\ref{def:lower_non_markov}, that
 %\end{equation*}
 %\end{definition}
 
-One somewhat unsurprising result is therefore that $L_t^s$ computes the lower expectation of functions $f\in\gamblesX$ with respect to sets of Markov processes $\mprocesses_\rateset$. The reason that this is to be expected is the previously established correspondence between $L_t^s$ and the solution of the differential equation introduced in {\bf DAMJANREF}, which was there shown to compute exactly this.
+One somewhat unsurprising result is therefore that $L_t^s$ computes the lower expectation of functions $f\in\gamblesX$ with respect to sets of Markov processes $\mprocesses_\rateset$. The reason that this is to be expected is the previously established correspondence between $L_t^s$ and the solution of the differential equation introduced in {\bf DAMJANREF}, which was there shown to compute exactly this quantity.
 
 A rather more surprising result, perhaps, is that this \emph{same} operator also computes lower expectations with respect to sets $\processes_\rateset$ of non-Markov processes.
 
@@ -1267,8 +1274,24 @@ A rather more surprising result, perhaps, is that this \emph{same} operator also
 % \end{equation*}
 % \end{definition}
 
+Having shown that the operator $L_t^s$ computes lower expectations for functions defined on a single point in time, we will now turn our attention to functions defined on multiple time points. Because we are considering \emph{conditional} expectations, where the conditioning is done with respect to states in a (non-)Markov chain's history, it makes sense to distinguish between two different classes of functions defined at multiple time points. 
 
-\subsection{*** functies met een tijdstip in de toekomst en de rest in het verleden ***}
+First, in Section~\ref{sec:function_single_future_multiple_past}, we will consider functions defined on a single time point in a chain's future, and multiple time points in the chain's history. Thus, we will consider functions $f\in\gambles(\states^{u\cup\{s\}})$, and lower expectations of the form
+\begin{equation*}
+\underline{\mathbb{E}}\left[f(X_{t_0},\ldots,X_{t_n},X_s)\,\vert\,X_{t_0},\ldots,X_{t_n}\right]\,.
+\end{equation*}
+
+In Section~\ref{sec:decomposition} we will generalize this to functions defined on multiple time points in a chain's future and history, considering functions $f\in\gambles(\states^{u\cup v})$ and lower expectations of the form
+\begin{equation*}
+\underline{\mathbb{E}}\left[f(X_{t_0},\ldots,X_{t_n},X_{s_0},\ldots,X_{s_m})\,\vert\,X_{t_0},\ldots,X_{t_n}\right]\,.
+\end{equation*}
+One of the main results of this paper is that we can use the operator $L_t^s$ to compute lower expectations of this last form, taken with respect to sets $\processes_\rateset$ of non-Markov chains.
+
+Finally, in Section~\ref{sec:tractability}, we will show that although $L_t^s$ provides us with a way to easily compute such lower expectations, doing so for general functions $f\in\gambles(\states^{u\cup v})$ is still computationally intractable. However, we then provide algorithms to tractably compute lower expectations for rather broad, and practically applicable, subclasses of $\gambles(\states^{u\cup v})$.
+
+\subsection{*** functies met een tijdstip in de toekomst en de rest in het verleden ***}\label{sec:function_single_future_multiple_past}
+
+notatie aanhalen voor restrictie zoals besproken in sectie~\ref{sec:multivar_notation}.
 
 *** deze moeten nog even netjes opgeschreven worden en wat uitleg ervoor dat dit triviaal gevolg is van eerdere sectie en eigenschappen van verwachtingswaarden ***
 
@@ -1363,7 +1386,7 @@ en
 %Because $P\in\mprocesses_\rateset$ and $\mprocesses_\rateset\subseteq\processes_\rateset$, we have $P\in\processes_\rateset$, which concludes the proof.
 %\end{proof}
 
-\subsection{Decompositie}
+\subsection{Decompositie}\label{sec:decomposition}
 
 *** tralala, werkt dit allemaal ook voor functies met meerdere tijdstippen in de toekomst? nee: ***
 
