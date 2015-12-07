@@ -240,7 +240,7 @@ Given any $u\in\mathcal{U}_{[t,s]}$, we define for all $i\in\{1,\ldots,n\}$ the 
 
 "an empirical transition matrix for non-homogeneous markov chains based on censored observations"
 
-\subsection{Functions, Operators, and Norms}
+\subsection{Functions, Operators, and Norms}\label{sec:func_oper_norm}
 Let $\gamblesX$ denote the set of all real-valued functions on $\states$. Because $\states$ is finite, we can also interpret any function $f\in\gamblesX$ as a vector in $\reals^m$. Hence, we will in the sequel use the terms `function' and `vector' interchangeably when referring to elements of $\gamblesX$.
 
 For any vector $f\in\gamblesX$, we let
@@ -328,7 +328,7 @@ Let the sets of functions $\gambles(\states^{u\cup\{s\}})$ and $\gambles(\states
 
 For any function $f\in\gambles(\states^{\{t_0\}}\times\cdots\times\states^{\{t_n\}})$, let the norm $\norm{f}$ be defined as
 \begin{equation*}
-\norm{f} \coloneqq \max\left\{ f(x_{t_0},\ldots,x_{t_n})\,:\,(x_{t_0},\ldots,x_{t_n})\in \states^{\{t_0\}}\times\cdots\times\states^{\{t_n\}}\right\}\,.
+\norm{f} \coloneqq \max\left\{ \abs{f(x_{t_0},\ldots,x_{t_n})}\,:\,(x_{t_0},\ldots,x_{t_n})\in \states^{\{t_0\}}\times\cdots\times\states^{\{t_n\}}\right\}\,.
 \end{equation*}
 
 For the sake of brevity, we will also write a joint state assignment as
@@ -338,7 +338,7 @@ For the sake of brevity, we will also write a joint state assignment as
 
 For a function $f\in\gambles(\states^{u\cup\{s\}})$, we will write $f(x_{t_0},\ldots,x_{t_n},X_s)$ for the restriction of $f$ to $\states^{\{s\}}$ specific to the joint state assignment $(x_{t_0},\ldots,x_{t_n})$. Thus, $f(x_{t_0},\ldots,x_{t_n},X_s)$ corresponds to a $g\in\gambles(\states^{\{s\}})$ such that $g(x_s) = f(x_{t_0},\ldots,x_{t_n},x_s)$ for all $x_s\in\states^{\{s\}}$.
 
-Finally, we will want to use operators as defined in Section~\ref{sec:func_op_norm_notation} for functions defined on (multiple) explicit time points. It is clear that an operator $A$ defined on $\gamblesX$ can be applied to any element of a set of functions $\gambles(\states^{\{s\}})$ that depend on the state at just a single point in time. It remains to determine how to cope with functions defined on multiple time points. 
+Finally, we will want to use operators as defined in Section~\ref{sec:func_oper_norm} for functions defined on (multiple) explicit time points. It is clear that an operator $A$ defined on $\gamblesX$ can be applied to any element of a set of functions $\gambles(\states^{\{s\}})$ that depend on the state at just a single point in time. It remains to determine how to cope with functions defined on multiple time points. 
 
 To avoid introducing overly complex notation, we will stipulate the following convention. If $f\in\gambles(\states^u)$ is a function defined on an ordered sequence $u$ of time points $t_0<t_1<\cdots<t_n$, and if $A$ is a non-negatively homogeneous operator from $\gamblesX$ to $\gamblesX$, we allow $A$ to be applied to $f$ by applying it to the restriction of $f$ to the state $\states^{\{t_n\}}$ at the \emph{latest} time point $t_n$ in $u$. Because such a restriction is dependent on the specific state assignment $(x_{t_0},\ldots,x_{t_{n-1}})$, the result is a function $[Af]\in\gambles(\states^{\{t_0,\ldots,t_{n-1}\}})$. In other words, we then have
 \begin{equation*}
