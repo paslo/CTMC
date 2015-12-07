@@ -217,13 +217,7 @@ Trivial consequence of Theorem~\ref{theo:coherentextendable}.
 \end{proof}
 
 
-\begin{definition}[Markov Property]\label{def:markov_property}
-We say that a stochastic process $P\in\processes$ satisfies the \emph{Markov property} when, for any time sequence $0\leq t_0<\dots<t_{n}<s$ and set of states $x_{t_0},\dots,x_{t_n},x_s\in\states$:
-\begin{equation*}
-P(X_s=x_s\vert X_{t_n}=x_{t_n})=P(X_s=x_s\vert X_{t_0}=x_{t_0}, \dots, X_{t_n}=x_{t_n}).
-\end{equation*}
-We denote the set of all stochastic processes that satisfy this Markov property by $\mprocesses$.
-\end{definition}
+
 
 
 
@@ -412,16 +406,18 @@ Consider any stochastic $m\times m$ matrix $A$, and any $\Delta\in\realspos$. Le
 This follows from a similar argument as the proof of Proposition~\ref{prop:stochastic_from_rate_matrix}; simply verify the properties from Definition~\ref{def:rate_matrix}.
 \end{proof}
 
-\begin{definition}[Transition Matrix]\label{def:trans_matrix}
-Consider any stochastic process $P\in\processes$ and any $t,s\in\realsnonneg$ such that $t<s$. Then, the \emph{transition matrix} $T_t^s$ \emph{corresponding to} $P$ is a stochastic $m\times m$ matrix that is defined by
+\begin{definition}[Transition matrix]\label{def:trans_matrix}
+Consider a stochastic process $P\in\processes$. Then, for any $0\leq t\leq s$, the \emph{transition matrix} $T_t^s$ is a stochastic $m\times m$ matrix that is defined by
 \begin{equation*}
 T_t^s(x_t, x_s) \coloneqq P(X_s=x_s\,\vert X_t=x_t)\quad\text{for all $x_s,x_t\in\states$}\,.
 \end{equation*}
+We denote this family of stochastic matrices by $\mathcal{T}_P$.%, and call it the \emph{system of transition matrices} that corresponds to $P$.
 \end{definition}
-Obviously, this transition matrix $T_t^s$ can also be regarded as a map from $\gamblesX$ to $\gamblesX$, defined for all $f\in\gamblesX$ by $T_t^s(f)\coloneqq T_t^sf$. Note that for all $x_t\in\states$ we have that
+
+Obviously, the transition matrix $T_t^s$ can also be regarded as a map from $\gamblesX$ to $\gamblesX$, defined for all $f\in\gamblesX$ by $T_t^s(f)\coloneqq T_t^sf$. Note that for all $x_t\in\states$, we have that
 \begin{align*}
-\left[T_t^sf\right](x_t) &= \sum_{x_s\in\states}f(x_s)P(X_s=x_s\,\vert\,X_t=x_t)\\
- &= \mathbb{E}_{X_s}\left[f(X_s)\,\vert\,X_t=x_t\right]\,.
+\left[T_t^sf\right](x_t) &= \sum_{x_s\in\states}f(x_s)P(X_s=x_s\,\vert\,X_t=x_t)
+= \mathbb{E}_{X_s}\left[f(X_s)\,\vert\,X_t=x_t\right]\,.
 \end{align*}
 
 %\begin{proposition}\label{prop:transitionmatrixhasprocess}
@@ -435,16 +431,36 @@ Obviously, this transition matrix $T_t^s$ can also be regarded as a map from $\g
 %{\bf ATTN:} Not sure how to give an in-depth argument for this, but I don't see how it could be false.
 %\end{proof}
 
-\begin{lemma}\label{lemma:transitionmatrixfactorises}
-Consider any $P\in\mprocesses$. Then
+Besides that each of the transition matrices $T_t^s$, $0\leq t\leq s$, is a stochastic matrix, the family of transition matrices $\mathcal{T}_P$ also satisfies some other properties. Whenever this is the case, we will call such a family of stochastic matrices a coherent system of transition matrices.
+
+\begin{definition}
+A \emph{coherent transition matrix system} $\mathcal{T}$ is a family of stochastic matrices $T_t^s$, defined for all $0\leq t\leq s$, such that
 \begin{equation*}
-T_t^s=\prod_{k=1}^n T_{t_{k-1}}^{t_k} \coloneqq T_{t_0}^{t_1}T_{t_1}^{t_2}\cdots T_{t_{n-1}}^{t_n}
+T_t^s=T_t^r T_r^s
+\text{~~for all $0\leq t\leq r\leq s$}
 \end{equation*}
-for every sequence $0\leq t=t_0<t_1<t_2,\dots,t_{n}=s$.
-\end{lemma}
+and $T_t^t=I$ for all $t\geq0$.
+\end{definition}
+
+\begin{proposition}
+Consider a stochastic process $P\in\processes$ and let $\mathcal{T}_P$ be the corresponding family of transition matrices. Then $\mathcal{T}_P$ is a coherent transition matrix system.
+\end{proposition}
 \begin{proof}
-This property is well known and therefore stated without proof. {\bf TODO:} Ref.
+*** fairly easy to prove ***
 \end{proof}
+
+% \begin{lemma}\label{lemma:transitionmatrixfactorises}
+% Consider any $P\in\processes$. Then
+% \begin{equation*}
+% T_t^s=\prod_{k=1}^n T_{t_{k-1}}^{t_k} \coloneqq T_{t_0}^{t_1}T_{t_1}^{t_2}\cdots T_{t_{n-1}}^{t_n}
+% \end{equation*}
+% for every sequence $0\leq t=t_0<t_1<t_2,\dots,t_{n}=s$.
+% \end{lemma}
+% \begin{proof}
+% This property is well known and therefore stated without proof. {\bf TODO:} Ref.
+% \end{proof}
+
+
 
 %\begin{proposition}\label{prop:transitionmatrix_factorized_has_process}
 %Consider any $t,s\in\realsnonneg$ such that $t<s$, any sequence of time points $u\in\mathcal{U}_{[t,s]}$, and any sequence of stochastic matrices $A_1,\ldots,A_n$. Then, there is at least one stochastic process $P\in\mprocesses$ such that, for all $i\in\{1,\ldots,n\}$, $P$ has corresponding transition matrix $T_{t_{i-1}}^{t_i}$ on the interval $[t_{i-1},t_i]$, and
@@ -509,12 +525,41 @@ This property is well known and therefore stated without proof. {\bf TODO:} Ref.
 %This is immediate from Lemma~\ref{lemma:exponential_matrix_has_process}.
 %\end{proof}
 
-\subsection{Precise Continuous-Time Markov Chains}
+\subsection{Markov Processes}
 
-\subsubsection{*** homogeneous version ***}
-TODO
+\begin{definition}[Markov proces]\label{def:markov_property}
+A stochastic process $P\in\processes$ satisfies the \emph{Markov property} if, for any time sequence $0\leq t_0<\dots<t_{n}<s$ and any set of states $x_{t_0},\dots,x_{t_n},x_s\in\states$:
+\begin{equation*}
+P(X_s=x_s\vert X_{t_n}=x_{t_n})=P(X_s=x_s\vert X_{t_0}=x_{t_0}, \dots, X_{t_n}=x_{t_n}).
+\end{equation*}
+A stochastic process that satisfies this property is called a \emph{Markov process}. We denote the set of all Markov processes by $\mprocesses$.
+\end{definition}
 
-\subsubsection{*** non-homogeneous version ***}
+An important property of these Markov processes is that they are completely characterised by their transition matrices.
+
+\begin{proposition}
+Let $\mathcal{T}$ be a coherent transition matrix system. Then there is a unique Markov process $P\in\processes$ such that $\mathcal{T}_P=\mathcal{T}$.
+\end{proposition}
+\begin{proof}
+*** Not trivial; I have a coherence-based proof that I'll add here someday ***
+\end{proof}
+
+
+
+\subsubsection{Homogeneous Markov processes}
+
+\begin{definition}[Homogeneous Markov process]\label{def:markov_property}
+A Markov process $P\in\mprocesses$ is called \emph{homogeneous} if its transition matrices $T_t^s$ do not depend on the absolute value of $t$ and $s$, but only on the time-difference $s-t$:
+\begin{equation*}
+T_t^s=T_{t+\Delta}^{s+\Delta}
+\text{~~for all $0\leq t\leq s$ and $\Delta\geq0$.}
+\end{equation*}
+\end{definition}
+
+
+
+\subsubsection{Non-homogeneous Markov processes}
+
 
 \begin{definition}[Markov Process]\label{def:markov_process}
 A stochastic process $P\in\mprocesses$ is said to be a \emph{continuous-time Markov process} if the transition matrix corresponding to $P$ satisfies
