@@ -196,6 +196,14 @@ Consider any stochastic $m\times m$ matrix $A$, and any $\Delta\in\realspos$. Le
 This follows from a similar argument as the proof of Proposition~\ref{prop:stochastic_from_rate_matrix}; simply verify the properties from Definition~\ref{def:rate_matrix}.
 \end{proof}
 
+***
+
+Obviously, a transition matrix $T_t^s$ can also be regarded as a map from $\gamblesX$ to $\gamblesX$, defined for all $f\in\gamblesX$ by $T_t^s(f)\coloneqq T_t^sf$. Note that for all $x_t\in\states$, we have that
+\begin{align*}
+\left[T_t^sf\right](x_t) &= \sum_{x_s\in\states}f(x_s)P(X_s=x_s\,\vert\,X_t=x_t)
+= \mathbb{E}_{X_s}\left[f(X_s)\,\vert\,X_t=x_t\right]\,.
+\end{align*}
+
 \subsection{Functions, Operators, and Norms}\label{sec:func_oper_norm}
 Let $\gamblesX$ denote the set of all real-valued functions on $\states$. Because $\states$ is finite, we can also interpret any function $f\in\gamblesX$ as a vector in $\reals^m$. Hence, we will in the sequel use the terms `function' and `vector' interchangeably when referring to elements of $\gamblesX$.
 
@@ -301,9 +309,18 @@ To avoid introducing overly complex notation, we will stipulate the following co
 \left[Af\right](x_{t_0},\ldots,x_{t_{n-1}}) \equiv \left[A f(x_{t_0},\ldots,x_{t_{n-1}},X_{t_n})\right](x_{t_{n-1}})\,.
 \end{equation*}
 
-\subsection{Outer limits}
+% \subsection{Outer derivatives}
 
-*** introduce some definitions and properties here ***
+% \begin{definition}[Continuity]
+% A time-dependent stochastic matrix $A_t$ is said to be continuous in $t^*$ if each of its components is, or equivalently, if
+% \begin{equation*}
+% \lim_{t\to t^*}\norm{A_{t^*}-A_t}=0.
+% \end{equation*}
+% \end{definition}
+
+% \begin{definition}
+% Let $A_t$ be a time-dependent stochastic matrix. The right outer derivative of $A_t$ in $t_*$ is then 
+% \end{definition}
 
 
 \section{Continuous-Time Stochastic Processes}
@@ -404,15 +421,13 @@ Trivial consequence of Theorem~\ref{theo:coherentextendable}.
 *** explain that stochastic process can behave in rather extreme ways. For example, the transition probabilities can jump instantaneously. In order to avoid this behavior, we restrict our attention to a subclass of stochastic processes, which we call well-behaved. ***
 
 \begin{definition}[Well-behaved stochastic process]
-A stochastic process $P\in\processes$ is said to be well-behaved if, for any time sequence $0\leq t_0<\dots<t_{n}$ and any set of states $x_{0},\dots,x_{n},x,y\in\states$:
+A stochastic process $P\in\processes$ is said to be well-behaved if, for any time sequence $0\leq t_0<\dots<t_{n}<t$ and any set of states $x_{0},\dots,x_{n},x,y\in\states$:
 \begin{equation*}
-\lim_{s\to t^{+}}P(X_s=y\vert X_t=x, X_{t_0}=x_{0}, \dots, X_{t_n}=x_{n})=\delta_{xy}
-\text{~~for all $t>t_n$}
+\limsup_{\Delta\to 0^{+}}\frac{1}{\Delta}\norm{P(X_{t+\Delta}=y\vert X_t=x, X_{t_0}=x_{0}, \dots, X_{t_n}=x_{n})-\delta_{xy}}<+\infty
 \end{equation*}
 and
 \begin{equation*}
-\lim_{t\to s^{-}}P(X_s=y\vert X_t=x, X_{t_0}=x_{0}, \dots, X_{t_n}=x_{n})=\delta_{xy}
-\text{~~for all $s>t_n$}
+\limsup_{\Delta\to 0^{+}}\frac{1}{\Delta}\norm{P(X_{t}=y\vert X_{t-\Delta}=x, X_{t_0}=x_{0}, \dots, X_{t_n}=x_{n})-\delta_{xy}}<+\infty
 \end{equation*}
 The set of all well-behaved Markov processes is denoted by $\wprocesses$.
 \end{definition}
@@ -421,29 +436,57 @@ The set of all well-behaved Markov processes is denoted by $\wprocesses$.
 
 *** prove that this implies (and even is equivalent to, I think) that the outer limit exists and is bounded. ***
 
-\begin{definition}[Transition matrix]\label{def:trans_matrix}
-Consider a stochastic process $P\in\processes$. Then, for any $0\leq t\leq s$, the \emph{transition matrix} $T_t^s$ is a $m\times m$ matrix that is defined by
 \begin{equation*}
-T_t^s(x_t, x_s) \coloneqq P(X_s=x_s\,\vert X_t=x_t)\quad\text{for all $x_s,x_t\in\states$}\,.
+T^s_{t,\,x_u}(x,y)
+\coloneqq
+P(X_s=y\vert X_t=x, X_{t_0}=x_{0}, \dots, X_{t_n}=x_{n})
 \end{equation*}
-We denote this family of matrices by $\mathcal{T}_P$.%, and call it the \emph{system of transition matrices} that corresponds to $P$.
-\end{definition}
 
-\begin{proposition}\label{prop:stochasticprocess:simpleproperties}
-Let $P\in\processes$ be a stochastic process. Then for any $0\leq t\leq s$, $T_t^s$ is stochastic and $T_t^t=I$. If $P$ is well-behaved, then also
-\begin{equation}\label{eq:wellbehavedtransitionmatrix}
-\lim_{s\to t^{+}}T_t^s=\lim_{t\to s^{-}}T_t^s=I.
-\end{equation}
-\end{proposition}
-\begin{proof}
-*** TRIVIAL ***
-\end{proof}
 
-Obviously, a transition matrix $T_t^s$ can also be regarded as a map from $\gamblesX$ to $\gamblesX$, defined for all $f\in\gamblesX$ by $T_t^s(f)\coloneqq T_t^sf$. Note that for all $x_t\in\states$, we have that
-\begin{align*}
-\left[T_t^sf\right](x_t) &= \sum_{x_s\in\states}f(x_s)P(X_s=x_s\,\vert\,X_t=x_t)
-= \mathbb{E}_{X_s}\left[f(X_s)\,\vert\,X_t=x_t\right]\,.
-\end{align*}
+\begin{equation*}
+\frac{\partial_+}{\partial s}{T_{t,\,x_u}^s}\Bigr\vert_{s=t}
+\coloneqq
+\lim_{s\to t^{+}}
+\frac{
+T^s_{t,\,x_u}-T^t_{t,\,x_u}
+}{s-t}
+=
+\lim_{s\to t^{+}}
+\frac{
+T^s_{t,\,x_u}-I
+}{s-t}
+\end{equation*}
+
+\begin{equation*}
+\frac{\partial_{-}}{\partial t}{T_{t,\,x_u}^s}\Bigr\vert_{t=s}
+\coloneqq
+\lim_{t\to s^{-}}
+\frac{
+T^s_{t,\,x_u}-T^s_{s,\,x_u}
+}{s-t}
+=
+\lim_{t\to s^{-}}
+\frac{
+T^s_{t,\,x_u}-I
+}{s-t}
+\end{equation*}
+
+If these partial derivatives exist, then because of Proposition~\ref{prop:rate_from_stochastic_matrix}, they are guaranteed to belong to $\mathcal{R}$.
+
+Therefore, instead, we will consider outer derivatives.
+
+\begin{equation*}
+\frac{\overline{\partial_{+}}}{\partial s}{T^s_{t,\,x_u}}
+\Bigr\vert_{s=t}
+\coloneqq
+???
+\end{equation*}
+
+
+
+
+
+
 
 %In order to re-use the lower transition operator $L_t^s$ from Definition~\ref{def:low_trans}, we will finally have to introduce some conventions. Note that $L_t^s$ is a map from $\gamblesX$ to $\gamblesX$, so it is straightforward to apply to functions $g\in\gambles(\states^{\{s\}})$. This is because these functions only depend on a single variable. However, $L_t^s$ is not yet properly defined for, e.g., functions $f\in\gambles(\states^{u\cup\{s\}})$. To this end, let first 
 %\begin{equation*}
@@ -550,14 +593,38 @@ Obviously, a transition matrix $T_t^s$ can also be regarded as a map from $\gamb
 %\end{proof}
 
 \begin{definition}[Markov chain, Markov property]\label{def:markov_property}
-A stochastic process $P\in\processes$ satisfies the \emph{Markov property} if, for any time sequence $0\leq t_0<\dots<t_{n}<t<s$ and any set of states $x_{t_0},\dots,x_{t_n},x_t,x_s\in\states$:
+A stochastic process $P\in\processes$ satisfies the \emph{Markov property} if, for any time sequence $0\leq t_0<\dots<t_{n}<t<s$ and any set of states $x_{0},\dots,x_{n},x,y\in\states$:
 \begin{equation*}
-P(X_s=x_s\vert X_{t_n}=x_{t})=P(X_s=x_s\vert X_{t_0}=x_{t_0}, \dots, X_{t_n}=x_{t_n}, X_t=x_t).
+P(X_s=y\vert X_{t}=x)=P(X_s=y\vert X_t=x, X_{t_0}=x_{0}, \dots, X_{t_n}=x_{n}).
 \end{equation*}
 A stochastic process that satisfies this property is called a \emph{Markov chain}. We denote the set of all Markov chains by $\mprocesses$ and use $\wmprocesses$ to refer to the subset that only contains the well-behaved Markov chains.
 \end{definition}
 
 \subsection{Transition matrix systems}
+
+***
+
+\begin{definition}[Transition matrix]\label{def:trans_matrix}
+Consider a stochastic process $P\in\processes$. Then, for any $0\leq t\leq s$, the \emph{transition matrix} $T_t^s$ is a $m\times m$ matrix that is defined by
+\begin{equation*}
+T_t^s(x_t, x_s) \coloneqq P(X_s=x_s\,\vert X_t=x_t)\quad\text{for all $x_s,x_t\in\states$}\,.
+\end{equation*}
+We denote this family of matrices by $\mathcal{T}_P$.%, and call it the \emph{system of transition matrices} that corresponds to $P$.
+\end{definition}
+
+\begin{proposition}\label{prop:stochasticprocess:simpleproperties}
+Let $P\in\processes$ be a stochastic process. Then for any $0\leq t\leq s$, $T_t^s$ is stochastic and $T_t^t=I$ and, if $P$ is well-behaved, then also
+\begin{equation}\label{eq:wellbehavedtransitionmatrix}
+\lim_{\Delta\to 0^{+}}\frac{1}{\Delta}\norm{T_t^{t+\Delta}-I}<+\infty
+\text{~~~~and~~~~}
+\lim_{\Delta\to 0^{+}}\frac{1}{\Delta}\norm{T_{t-\Delta}^t-I}<+\infty.
+\end{equation}
+\end{proposition}
+\begin{proof}
+*** TRIVIAL ***
+\end{proof}
+
+***
 
 We know from Proposition~\ref{prop:stochasticprocess:simpleproperties} that the transition matrices of a stochastic process---and therefore also, in particular, of a Markov chain---satisfy a number of simple properties. For the specific case of a Markov chain $P\in\mprocesses$, the family of transition matrices $\mathcal{T}_P$ also satisfies and additional property---see Equation~\eqref{eq:transmatrixproduct}. Whenever this is the case, we will call such a family of stochastic matrices a transition matrix system.
 
@@ -617,7 +684,7 @@ For any $Q\in\mathcal{R}$, $\mathcal{T}_Q$ is a well-behaved transition matrix s
 \end{proof}
 
 \begin{corollary}
- Consider any rate matrix $Q\in\mathcal{R}$ and let $p$ be an arbitrary mass function on $\states$. Then there is a unique Markov chain $P\in\mprocesses$ such that $\mathcal{T}_P=\mathcal{T}_Q$ and $P(X_0)=p(X_0)$ and, furthermore, this unique Markoch chain is well-behaved and homogeneous.
+ Consider any rate matrix $Q\in\mathcal{R}$ and let $p$ be an arbitrary mass function on $\states$. Then there is a unique Markov chain $P\in\mprocesses$ such that $\mathcal{T}_P=\mathcal{T}_Q$ and $P(X_0)=p(X_0)$ and, furthermore, this unique Markov chain is well-behaved and homogeneous.
 \end{corollary}
 \begin{proof}
 Since we know from Proposition~\ref{prop:systemQ} that $\mathcal{T}_Q$ is a well-behaved transition matrix system, it follows from Theorem~\ref{theo:uniqueMarkovchain} that there is a unique Markov chain $P\in\mprocesses$ such that $\mathcal{T}_P=\mathcal{T}_Q$ and $P(X_0)=p(X_0)$, and that this Markov chain is furthermore well-behaved. Since it---trivially---follows from Definition~\ref{def:systemfromQ} that $\mathcal{T}_Q$ satisfies Equation~\eqref{eq:homogeneousMarkov}, Definition~\ref{def:homogeneousMarkov} implies that $P$ is homogeneous.
