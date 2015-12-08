@@ -432,9 +432,6 @@ and
 The set of all well-behaved Markov processes is denoted by $\wprocesses$.
 \end{definition}
 
-*** introduce (history-dependent) transition matrices and explain that we require them to be continous ***
-
-*** prove that this implies (and even is equivalent to, I think) that the outer limit exists and is bounded. ***
 
 \begin{equation*}
 T^s_{t,\,x_u}(x,y)
@@ -444,40 +441,45 @@ P(X_s=y\vert X_t=x, X_{t_0}=x_{0}, \dots, X_{t_n}=x_{n})
 
 
 \begin{equation*}
-\frac{\partial_+}{\partial s}{T_{t,\,x_u}^s}\Bigr\vert_{s=t}
+\partial_{+}{T_{t,\,x_u}^t}
 \coloneqq
-\lim_{s\to t^{+}}
-\frac{
-T^s_{t,\,x_u}-T^t_{t,\,x_u}
-}{s-t}
+\lim_{\Delta\to 0^{+}}
+\frac{1}{\Delta}
+(T^{t+\Delta}_{t,\,x_u}-T^t_{t,\,x_u})
 =
-\lim_{s\to t^{+}}
-\frac{
-T^s_{t,\,x_u}-I
-}{s-t}
+\lim_{\Delta\to 0^{+}}
+\frac{1}{\Delta}
+(T^{t+\Delta}_{t,\,x_u}-I)
 \end{equation*}
 
 \begin{equation*}
-\frac{\partial_{-}}{\partial t}{T_{t,\,x_u}^s}\Bigr\vert_{t=s}
+\partial_{-}{T_{t,\,x_u}^t}
 \coloneqq
-\lim_{t\to s^{-}}
-\frac{
-T^s_{t,\,x_u}-T^s_{s,\,x_u}
-}{s-t}
+\lim_{\Delta\to 0^{+}}
+\frac{1}{\Delta}
+(T^{t}_{t-\Delta,\,x_u}-T^t_{t,\,x_u})
 =
-\lim_{t\to s^{-}}
-\frac{
-T^s_{t,\,x_u}-I
-}{s-t}
+\lim_{\Delta\to 0^{+}}
+\frac{1}{\Delta}
+(T^{t}_{t-\Delta,\,x_u}-I)
 \end{equation*}
 
 If these partial derivatives exist, then because of Proposition~\ref{prop:rate_from_stochastic_matrix}, they are guaranteed to belong to $\mathcal{R}$.
 
-Therefore, instead, we will consider outer derivatives.
+
+
+More generally, instead, we can consider outer derivatives.
 
 \begin{equation*}
-\frac{\overline{\partial_{+}}}{\partial s}{T^s_{t,\,x_u}}
-\Bigr\vert_{s=t}
+\overline{\partial}_{+}
+{T^t_{t,\,x_u}}
+\coloneqq
+???
+\end{equation*}
+
+\begin{equation*}
+\overline{\partial}_{-}
+{T^t_{t,\,x_u}}
 \coloneqq
 ???
 \end{equation*}
