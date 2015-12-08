@@ -142,6 +142,59 @@ Consider some finite \emph{state space} $\states=\{1,\dots,m\}$.
 
 *** introduce state space, notation for naturals, reals, ... ***
 
+\subsection{Stochastic matrices and rate matrices}
+\begin{definition}[Rate Matrix]\label{def:rate_matrix}
+A real-valued $m\times m$ matrix $Q$ is said to be a \emph{rate matrix} if
+
+\vspace{5pt}
+\begin{enumerate}[label=R\arabic*:]
+\item
+$\sum_{y\in\states}Q(x,y)=0$ for all $x\in\states$;
+\item
+$Q(x,y)\geq0$ for all $x,y\in\states$ such that $x\neq y$.
+\end{enumerate}
+\vspace{5pt}
+\noindent
+We use $\mathcal{R}$ to denote the set of all rate matrices. 
+\end{definition}
+
+Clearly, $\mathcal{R}$ is closed under finite sums and multiplication with non-negative scalars. 
+
+\begin{definition}[Stochastic Matrix]\label{def:stoch_matrix}
+A real-valued $m\times m$ matrix $A$ is said to be \emph{stochastic} if
+\vspace{5pt}
+\begin{enumerate}[label=S\arabic*:]
+\item
+$\sum_{y\in\states}A(x,y)=1$ for all $x\in\states$;
+\item
+$A(x,y)\geq0$ for all $x,y\in\states$.
+\end{enumerate}
+\vspace{5pt}
+\noindent
+\end{definition}
+
+\begin{proposition}\label{prop:stochastic_from_rate_matrix}
+Consider any $m\times m$ rate matrix $Q\in\mathcal{R}$, and any $0\leq \Delta \leq \nicefrac{1}{\norm{Q}}$. Let $I$ denote the $m\times m$ identity matrix. Then, the matrix $[I+\Delta Q]$ is stochastic.
+\end{proposition}
+\begin{proof}
+Let $A=[I+\Delta Q]$. We will verify the properties from Definition~\ref{def:stoch_matrix}.
+
+We start with property S1. Consider any $x\in\states$. Then
+\begin{equation*}
+\sum_{y\in\states} A(x,y) = \sum_{y\in\states} [I + \Delta Q](x,y) = \sum_{y\in\states}I(x,y) + \Delta \sum_{y\in\states}Q(x,y) = 1\,,
+\end{equation*}
+where we used property R1 from Definition~\ref{def:rate_matrix}.
+
+For property S2, note that $0\leq \Delta \leq \nicefrac{1}{\norm{Q}}$. Whence, for all $x\in\states$, we have $-1\leq \Delta Q(x,x) \leq 0$, so that $[I+\Delta Q](x,x) \geq 0$. Furthermore, for all $x,y\in\states$ s.t. $x\neq y$, we have $0\leq \Delta Q(x,y) \leq 1$, so that $[I+\Delta Q](x,y)\geq 0$.
+\end{proof}
+
+\begin{proposition}\label{prop:rate_from_stochastic_matrix}
+Consider any stochastic $m\times m$ matrix $A$, and any $\Delta\in\realspos$. Let $I$ denote the $m\times m$ identity matrix. Then, $[\nicefrac{1}{\Delta}\cdot(A-I)]$ is a rate matrix.
+\end{proposition}
+\begin{proof}
+This follows from a similar argument as the proof of Proposition~\ref{prop:stochastic_from_rate_matrix}; simply verify the properties from Definition~\ref{def:rate_matrix}.
+\end{proof}
+
 \subsection{Functions, Operators, and Norms}\label{sec:func_oper_norm}
 Let $\gamblesX$ denote the set of all real-valued functions on $\states$. Because $\states$ is finite, we can also interpret any function $f\in\gamblesX$ as a vector in $\reals^m$. Hence, we will in the sequel use the terms `function' and `vector' interchangeably when referring to elements of $\gamblesX$.
 
@@ -367,75 +420,6 @@ The set of all well-behaved Markov processes is denoted by $\wprocesses$.
 
 *** prove that this implies (and even is equivalent to, I think) that the outer limit exists and is bounded. ***
 
-
-
-%In order to re-use the lower transition operator $L_t^s$ from Definition~\ref{def:low_trans}, we will finally have to introduce some conventions. Note that $L_t^s$ is a map from $\gamblesX$ to $\gamblesX$, so it is straightforward to apply to functions $g\in\gambles(\states^{\{s\}})$. This is because these functions only depend on a single variable. However, $L_t^s$ is not yet properly defined for, e.g., functions $f\in\gambles(\states^{u\cup\{s\}})$. To this end, let first 
-%\begin{equation*}
-%f(x_{t_0},\ldots,x_{t_n},X_{s})\in\gambles(\states^{\{s\}})
-%\end{equation*}
-%denote the restriction of any $f\in\gambles(\states^{u\cup\{s\}})$ to $\gambles(\states^{\{s\}})$, for all $(x_{t_0},\ldots,x_{t_n})\in\states^u$. Similarly, for all $(x_{t_0},\ldots,x_{t_{n-1}})\in\states^{\{t_0,\ldots,t_{n-1}\}}$, let
-%\begin{equation*} f(x_{t_0},\ldots,x_{t_{n-1}},X_{t_n},X_s)\in\gambles(\states^{\{t_n,s\}})\,,
-%\end{equation*}
-%and so forth.
-
-\section{Continuous-Time Markov Chains}
-
-*** tralala ***
-
-\subsection{Rate Matrices, Stochasticity, and Transition Matrices}
-
-\begin{definition}[Rate Matrix]\label{def:rate_matrix}
-A real-valued $m\times m$ matrix $Q$ is said to be a \emph{rate matrix} if
-
-\vspace{5pt}
-\begin{enumerate}[label=R\arabic*:]
-\item
-$\sum_{y\in\states}Q(x,y)=0$ for all $x\in\states$;
-\item
-$Q(x,y)\geq0$ for all $x,y\in\states$ such that $x\neq y$.
-\end{enumerate}
-\vspace{5pt}
-\noindent
-We use $\mathcal{R}$ to denote the set of all rate matrices. 
-\end{definition}
-
-Clearly, $\mathcal{R}$ is closed under finite sums and multiplication with non-negative scalars. 
-
-\begin{definition}[Stochastic Matrix]\label{def:stoch_matrix}
-A real-valued $m\times m$ matrix $A$ is said to be \emph{stochastic} if
-\vspace{5pt}
-\begin{enumerate}[label=S\arabic*:]
-\item
-$\sum_{y\in\states}A(x,y)=1$ for all $x\in\states$;
-\item
-$A(x,y)\geq0$ for all $x,y\in\states$.
-\end{enumerate}
-\vspace{5pt}
-\noindent
-\end{definition}
-
-\begin{proposition}\label{prop:stochastic_from_rate_matrix}
-Consider any $m\times m$ rate matrix $Q\in\mathcal{R}$, and any $0\leq \Delta \leq \nicefrac{1}{\norm{Q}}$. Let $I$ denote the $m\times m$ identity matrix. Then, the matrix $[I+\Delta Q]$ is stochastic.
-\end{proposition}
-\begin{proof}
-Let $A=[I+\Delta Q]$. We will verify the properties from Definition~\ref{def:stoch_matrix}.
-
-We start with property S1. Consider any $x\in\states$. Then
-\begin{equation*}
-\sum_{y\in\states} A(x,y) = \sum_{y\in\states} [I + \Delta Q](x,y) = \sum_{y\in\states}I(x,y) + \Delta \sum_{y\in\states}Q(x,y) = 1\,,
-\end{equation*}
-where we used property R1 from Definition~\ref{def:rate_matrix}.
-
-For property S2, note that $0\leq \Delta \leq \nicefrac{1}{\norm{Q}}$. Whence, for all $x\in\states$, we have $-1\leq \Delta Q(x,x) \leq 0$, so that $[I+\Delta Q](x,x) \geq 0$. Furthermore, for all $x,y\in\states$ s.t. $x\neq y$, we have $0\leq \Delta Q(x,y) \leq 1$, so that $[I+\Delta Q](x,y)\geq 0$.
-\end{proof}
-
-\begin{proposition}\label{prop:rate_from_stochastic_matrix}
-Consider any stochastic $m\times m$ matrix $A$, and any $\Delta\in\realspos$. Let $I$ denote the $m\times m$ identity matrix. Then, $[\nicefrac{1}{\Delta}\cdot(A-I)]$ is a rate matrix.
-\end{proposition}
-\begin{proof}
-This follows from a similar argument as the proof of Proposition~\ref{prop:stochastic_from_rate_matrix}; simply verify the properties from Definition~\ref{def:rate_matrix}.
-\end{proof}
-
 \begin{definition}[Transition matrix]\label{def:trans_matrix}
 Consider a stochastic process $P\in\processes$. Then, for any $0\leq t\leq s$, the \emph{transition matrix} $T_t^s$ is a $m\times m$ matrix that is defined by
 \begin{equation*}
@@ -459,6 +443,21 @@ Obviously, a transition matrix $T_t^s$ can also be regarded as a map from $\gamb
 \left[T_t^sf\right](x_t) &= \sum_{x_s\in\states}f(x_s)P(X_s=x_s\,\vert\,X_t=x_t)
 = \mathbb{E}_{X_s}\left[f(X_s)\,\vert\,X_t=x_t\right]\,.
 \end{align*}
+
+%In order to re-use the lower transition operator $L_t^s$ from Definition~\ref{def:low_trans}, we will finally have to introduce some conventions. Note that $L_t^s$ is a map from $\gamblesX$ to $\gamblesX$, so it is straightforward to apply to functions $g\in\gambles(\states^{\{s\}})$. This is because these functions only depend on a single variable. However, $L_t^s$ is not yet properly defined for, e.g., functions $f\in\gambles(\states^{u\cup\{s\}})$. To this end, let first 
+%\begin{equation*}
+%f(x_{t_0},\ldots,x_{t_n},X_{s})\in\gambles(\states^{\{s\}})
+%\end{equation*}
+%denote the restriction of any $f\in\gambles(\states^{u\cup\{s\}})$ to $\gambles(\states^{\{s\}})$, for all $(x_{t_0},\ldots,x_{t_n})\in\states^u$. Similarly, for all $(x_{t_0},\ldots,x_{t_{n-1}})\in\states^{\{t_0,\ldots,t_{n-1}\}}$, let
+%\begin{equation*} f(x_{t_0},\ldots,x_{t_{n-1}},X_{t_n},X_s)\in\gambles(\states^{\{t_n,s\}})\,,
+%\end{equation*}
+%and so forth.
+
+\section{Continuous-Time Markov Chains}
+
+*** tralala ***
+
+
 
 %\begin{proposition}\label{prop:transitionmatrixhasprocess}
 %Consider any $t,s\in\realsnonneg$ such that $t<s$, and any stochastic $m\times m$ matrix $A$. Then, there is at least one stochastic process $P\in\mprocesses$ that satisfies the Markov property, and that has a corresponding transition matrix $T_t^s$ such that
@@ -549,8 +548,6 @@ Obviously, a transition matrix $T_t^s$ can also be regarded as a map from $\gamb
 %This is immediate from Lemma~\ref{lemma:exponential_matrix_has_process}.
 %\end{proof}
 
-\subsection{Markov chains}
-
 \begin{definition}[Markov chain, Markov property]\label{def:markov_property}
 A stochastic process $P\in\processes$ satisfies the \emph{Markov property} if, for any time sequence $0\leq t_0<\dots<t_{n}<t<s$ and any set of states $x_{t_0},\dots,x_{t_n},x_t,x_s\in\states$:
 \begin{equation*}
@@ -559,7 +556,7 @@ P(X_s=x_s\vert X_{t_n}=x_{t})=P(X_s=x_s\vert X_{t_0}=x_{t_0}, \dots, X_{t_n}=x_{
 A stochastic process that satisfies this property is called a \emph{Markov chain}. We denote the set of all Markov chains by $\mprocesses$ and use $\wmprocesses$ to refer to the subset that only contains the well-behaved Markov chains.
 \end{definition}
 
-\subsubsection{Transition matrix systems}
+\subsection{Transition matrix systems}
 
 We know from Proposition~\ref{prop:stochasticprocess:simpleproperties} that the transition matrices of a stochastic process---and therefore also, in particular, of a Markov chain---satisfy a number of simple properties. For the specific case of a Markov chain $P\in\mprocesses$, the family of transition matrices $\mathcal{T}_P$ also satisfies and additional property---see Equation~\eqref{eq:transmatrixproduct}. Whenever this is the case, we will call such a family of stochastic matrices a transition matrix system.
 
@@ -581,8 +578,8 @@ Consider a Markov chain $P\in\mprocesses$ and let $\mathcal{T}_P$ be the corresp
 
 At this point, we already know that every (well-behaved) Markov chain has a corresponding (well-behaved) transition matrix system. Our next result establishes that the converse is true as well: every (well-behaved) transition matrix system has a corresponding (well-behaved) Markov chain, and for a given initial distribution, this Markov chain is even unique.
 
-\begin{theorem}
- Let $p$ be an arbitrary probability mass function on $\states$ and let $\mathcal{T}$ be a transition matrix system. Then there is a unique Markov chain $P\in\mprocesses$ such that $\mathcal{T}_P=\mathcal{T}$ and $P(X_0)=p(X_0)$ and, if $\mathcal{T}$ is well-behaved, then $P$ is also well-behaved.
+\begin{theorem}\label{theo:uniqueMarkovchain}
+ Let $p$ be an arbitrary mass function on $\states$ and let $\mathcal{T}$ be a transition matrix system. Then there is a unique Markov chain $P\in\mprocesses$ such that $\mathcal{T}_P=\mathcal{T}$ and $P(X_0)=p(X_0)$ and, if $\mathcal{T}$ is well-behaved, then $P$ is also well-behaved.
 \end{theorem}
 \begin{proof}
 *** Not trivial; I have a coherence-based proof that I'll add here someday ***
@@ -591,36 +588,57 @@ At this point, we already know that every (well-behaved) Markov chain has a corr
 Hence, Markov chains---and well-behaved Markov chains in particular---are completely characterised by their transition matrices and their initial distribution. 
 We now focus on a number of special cases.
 
-\subsubsection{Homogeneous Markov chains}
+\subsection{Homogeneous Markov chains}
 
-\begin{definition}[Homogeneous Markov chain]\label{def:markov_property}
+\begin{definition}[Homogeneous Markov chain]\label{def:homogeneousMarkov}
 A Markov chain $P\in\mprocesses$ is called \emph{homogeneous} if its transition matrices $T_t^s$ do not depend on the absolute value of $t$ and $s$, but only on the time-difference $s-t$:
-\begin{equation*}
+\begin{equation}\label{eq:homogeneousMarkov}
 T_t^s=T_{t+\Delta}^{s+\Delta}
 \text{~~for all $0\leq t\leq s$ and $\Delta\geq0$.}
-\end{equation*}
+\end{equation}
 We denote the set of all homogeneous Markov chains by $\hmprocesses$ and use $\whmprocesses$ to refer to the subset that consists of the well-behaved homogeneous Markov chains.
 \end{definition}
 
-As our next result shows, the transition matrix system of a well-behaved homogeneous Markov chain can be uniquely characterised by a single transition rate matrix.
 
-\begin{theorem}
-For any well-behaved homogeneous Markov chain $P\in\whmprocesses$, there is a unique transition rate matrix $Q\in\mathcal{R}$ such that
+\begin{definition}\label{def:systemfromQ}For any rate matrix $Q\in\mathcal{R}$, we use $\mathcal{T}_Q$ to denote the family of stochastic matrices that is defined by
 \begin{equation*}
 T_t^s=e^{Q(s-t)}
 \text{~~for all $0\leq t\leq s$.}
 \end{equation*}
+\end{definition}
+
+\begin{proposition}
+\label{prop:systemQ}
+For any $Q\in\mathcal{R}$, $\mathcal{T}_Q$ is a well-behaved transition matrix system.
+\end{proposition}
+\begin{proof}
+*** trivial ***
+\end{proof}
+
+\begin{corollary}
+ Consider any rate matrix $Q\in\mathcal{R}$ and let $p$ be an arbitrary mass function on $\states$. Then there is a unique Markov chain $P\in\mprocesses$ such that $\mathcal{T}_P=\mathcal{T}_Q$ and $P(X_0)=p(X_0)$ and, furthermore, this unique Markoch chain is well-behaved and homogeneous.
+\end{corollary}
+\begin{proof}
+Since we know from Proposition~\ref{prop:systemQ} that $\mathcal{T}_Q$ is a well-behaved transition matrix system, it follows from Theorem~\ref{theo:uniqueMarkovchain} that there is a unique Markov chain $P\in\mprocesses$ such that $\mathcal{T}_P=\mathcal{T}_Q$ and $P(X_0)=p(X_0)$, and that this Markov chain is furthermore well-behaved. Since it---trivially---follows from Definition~\ref{def:systemfromQ} that $\mathcal{T}_Q$ satisfies Equation~\eqref{eq:homogeneousMarkov}, Definition~\ref{def:homogeneousMarkov} implies that $P$ is homogeneous.
+\end{proof}
+
+
+
+%As our next result shows, the converse is true as well: every well-behaved transition matrix system of a well-behaved homogeneous Markov chain can be uniquely characterised by a single transition rate matrix.
+
+\begin{theorem}
+For any well-behaved homogeneous Markov chain $P\in\whmprocesses$, there is a unique rate matrix $Q\in\mathcal{R}$ such that $\mathcal{T}_P=\mathcal{T}_Q$.
 \end{theorem}
 \begin{proof}
 *** Not trivial; I have a fairly complex proof that uses outer limits. If you can think of an easier one, be my guest... :-) ***
 \end{proof}
 
+Hence, well-behaved homogenous Markov chains are completely characterised by their initial distribution and a rate matrix $Q\in\mathcal{R}$.
 
 
+\subsection{Non-homogeneous Markov chains}
 
-
-\subsubsection{Non-homogeneous Markov chains}
-
+*** I would explicitely discuss the special cases of continous $Q_t$ and piecewice constant $Q_t$ here, as examples, and refer to some other papers for more general cases, since we don't need them.
 
 % \begin{definition}[Markov Process]\label{def:markov_process}
 % A stochastic process $P\in\mprocesses$ is said to be a \emph{continuous-time Markov process} if the transition matrix corresponding to $P$ satisfies
@@ -637,6 +655,16 @@ T_t^s=e^{Q(s-t)}
 % \end{definition}
 
 \begin{theorem}\label{theorem:continuous_rate_matrix_has_process}
+For any continuous map $Q_t$ from $\reals_{\geq0}$ to $\mathcal{R}$, there is a unique transition matrix system $\mathcal{T}$ such that
+\begin{equation*}
+test
+\end{equation*}
+\end{theorem}
+\begin{proof}
+*** I guess its best to provide a reference here, although I think it should also be possible to prove this ourselves. ***
+\end{proof}
+
+\begin{theorem}\label{theorem:continuous_rate_matrix_has_process}
 Consider any right-continuous function $Q_t$ that gives for each time point $t\in\realsnonneg$ a rate matrix $Q_t\in\mathcal{R}$, where by right-continuity we mean that for all $t\in\realsnonneg$,
 \begin{equation*}
 \lim_{s\downarrow t} Q_s = Q_t\,.
@@ -646,6 +674,8 @@ Then, there exists a stochastic process $P\in\mprocesses$ such that $Q_t$ charac
 \begin{proof}
 {\bf TODO.}
 \end{proof}
+
+"Exact methods for the transient analysis of nonhomogeneous continuous time Markov chains"
 
 
 "an empirical transition matrix for non-homogeneous markov chains based on censored observations"
