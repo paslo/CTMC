@@ -12,6 +12,7 @@
 \usepackage{enumitem}
 \usepackage{tikz}
 \usepackage{nicefrac}
+\usepackage{bm}
 %\usepackage{pdfsync}
 %\usepackage{authblk}
 
@@ -758,62 +759,72 @@ Therefore, we will instead provide an alternative characterization of these lowe
 
 \subsection{Lower Transition (Rate) Operators}
 
-\begin{definition}[Lower Transition Rate Operator]\label{def:coh_low_trans_rate}
-We will call a map $\lrate$ from $\gamblesX$ to $\gamblesX$ a lower transition rate operator if, for all $f,g\in\gamblesX$, $\lambda\geq0$ and $\mu\in\reals$:
+It is clear from Section {\bf SEC REF CTMC} that there is a strong connection between rate matrices and transition matrices corresponding to Markov chains. We here generalize these two concepts to \emph{lower transition rate operators} and \emph{lower transition operators}, respectively.
 
-\vspace{5pt}
+\begin{definition}[Lower Transition Rate Operator]\label{def:coh_low_trans_rate}
+We will call a map $\lrate$ from $\gamblesX$ to $\gamblesX$ a \emph{lower transition rate operator} if, for all $f,g\in\gamblesX$, all $\lambda\in\realsnonneg$, all constant functions $\mu\in\gamblesX$, and all $x\in\states$:
+
+%\vspace{5pt}
 \begin{enumerate}[label=LR\arabic*:,ref=LR\arabic*]
 \item\label{LR:constantzero}
-$\lrate(\mu)=0$;
+$\lrate(\mu)(x)=0$;
 \item\label{LR:subadditive}
-$\lrate(f+g)\geq\lrate(f)+\lrate(g)$;
+$\lrate(f+g)(x)\geq\lrate(f)(x)+\lrate(g)(x)$;
 \item\label{LR:homo}
-$\lrate(\lambda f)=\lambda\lrate(f)$;
+$\lrate(\lambda f)(x)=\lambda\lrate(f)(x)$;
 \item\label{LR:nondiagpos}
-$\lrate(\ind{y})(x)\geq0$ for all $x,y\in\states$ such that $x\neq y$.
+$\lrate(\ind{y})(x)\geq0$ for all $y\in\states$ such that $x\neq y$.
 \end{enumerate}
 \vspace{5pt}
 \end{definition}
 
 
 \begin{definition}[Lower Transition Operator]\label{def:coh_low_trans}
-We will call a map $\lt$ from $\gamblesX$ to $\gamblesX$ a lower transition operator if, for all $f,g\in\gamblesX$ and $\lambda\geq0$:
+We will call a map $\lt$ from $\gamblesX$ to $\gamblesX$ a \emph{lower transition operator} if, for all $f,g\in\gamblesX$, all $\lambda\in\realsnonneg$, and all $x\in\states$:
 
-\vspace{5pt}
+%\vspace{5pt}
 \begin{enumerate}[label=C\arabic*:]
 \item
-$\lt f\geq\min f$
+$\lt(f)(x)\geq\min\left\{f(y)\,\vert\,y\in\states\right\}$
 \item
-$\lt(f+g)\geq\lt(f)+\lt(g)$;
+$\lt(f+g)(x)\geq\lt(f)(x)+\lt(g)(x)$;
 \item
-$\lt(\lambda f)=\lambda\lt(f)$.
+$\lt(\lambda f)(x)=\lambda\lt(f)(x)$.
 \end{enumerate}
 \vspace{5pt}
 \end{definition}
 
-\begin{lemma}\label{lemma:completemetricspace}
-The set of all lower transition operators is a complete metric space.
-\end{lemma}
-\begin{proof}
-Since a coherent lower transition operator is just a finite vector of coherent lower previsions, this result should follow fairly easily for the (known) fact that the set of all coherent lower previsions (on a given fixed space) is a complete metric space.
-\end{proof}
+\noindent We start by giving some useful properties of the norm of these operators.
 
 \begin{lemma}\label{lem:normlratefinite}
-Let $\lrate$ be a lower transition rate operator. Then $0\leq\norm{\lrate}<+\infty$.
+For any lower transition rate operator $\lrate$, we have that $0\leq\norm{\lrate}<+\infty$.
 \end{lemma}
 \begin{proof}
-*** TO BE COMPLETED ***
+*** {\bf TODO } ***
 \end{proof}
 
-We now first establish the connection between coherent lower transition rate operators and coherent lower transition operators. We will assume that we are given some coherent lower transition rate operator $\lrate$.
-
-\begin{lemma}\label{lemma:normQsmallenough}
-If $0\leq\Delta\norm{\lrate}\leq1$, then $(I+\Delta\lrate)$ is a lower transition operator.
+\begin{lemma}\label{lemma:normofcoherenttrans}
+For any lower transition operator $\lt$, we have that $0\leq \norm{\lt}\leq 1$.
 \end{lemma}
 \begin{proof}
-Just check each of the three defining properties. C2 and C3 are trivial. C1 requires a bit more work.
+*** {\bf TODO } *** This can be shown to follow from coherence.
 \end{proof}
 
+\begin{lemma}\label{lemma:differencenormofcoherenttransrate}
+Consider any two non-negatively homogeneous operators $A$, $B$ from $\gamblesX$ to $\gamblesX$, and let $\lrate$ be an arbitrary lower transition rate operator. Then, it holds that $\norm{\lrate A-\lrate B}\leq 2\norm{\lrate}\norm{A-B}$.
+\end{lemma}
+\begin{proof}
+*** {\bf TODO } *** This can be shown to follow from the definition of the norm and the properties of $\lrate$.
+\end{proof}
+
+\begin{lemma}\label{lemma:differencenormofcoherenttrans}
+Consider any two non-negatively homogeneous operators $A$, $B$ from $\gamblesX$ to $\gamblesX$, and let $\lt$ be an arbitrary lower transition operator. Then, it holds that $\norm{\lt A-\lt B}\leq \norm{A-B}$.
+\end{lemma}
+\begin{proof}
+*** {\bf TODO } *** This can be shown to follow from coherence.
+\end{proof}
+
+We next have two results about the set of all lower transition operators. As the first result shows, this set is closed under composition.
 \begin{lemma}\label{lemma:compositioncoherence}
 If $\lt_1,\lt_2,\dots,\lt_n$ are lower transition operators, then  $\lt_1\lt_2\cdots\lt_n$ is also a lower transition operator.
 \end{lemma}
@@ -821,10 +832,31 @@ If $\lt_1,\lt_2,\dots,\lt_n$ are lower transition operators, then  $\lt_1\lt_2\c
 Simply check each of the properties.
 \end{proof}
 
+\noindent Furthermore, this set is a complete metric space.
+
+\begin{lemma}\label{lemma:completemetricspace}
+The set of all lower transition operators is a complete metric space.
+\end{lemma}
+\begin{proof}
+Since a coherent lower transition operator is just a finite vector of coherent lower previsions, this result should follow fairly easily for the (known) fact that the set of all coherent lower previsions (on a given fixed space) is a complete metric space.
+
+*** {\bf TODO} ***
+\end{proof}
+
+We conclude this section by establishing that there is a correspondence between lower transition rate operators and lower transition operators that is analogous to the one found in Section {\bf SEC REF CTMC}. 
+
+\begin{lemma}\label{lemma:normQsmallenough}
+Consider any lower transition rate operator $\lrate$, and any $0\leq\Delta\leq\nicefrac{1}{\norm{\lrate}}$. Then, $(I+\Delta\lrate)$ is a lower transition operator.
+\end{lemma}
+\begin{proof}
+Just check each of the three defining properties. C2 and C3 are trivial. C1 requires a bit more work. *** {\bf TODO?} ***
+\end{proof}
+
+\noindent We therefore have the following result.
 \begin{lemma}\label{lemma:productiscoherent}
-Consider any sequence $0<\Delta_i\leq\nicefrac{1}{\norm{\lrate}}$, $i=1,\dots,n$. Then
+Consider any $t,s\in\realsnonneg$ such that $t<s$, any lower transition rate operator $\lrate$, and any sequence $u\in\mathcal{U}_{[t,s]}$ of time points such that $\sigma(u)\leq\nicefrac{1}{\norm{\lrate}}$. Then
 \begin{equation*}
-\prod_{k=i}^n(I+\Delta_i\lrate)
+\prod_{k=1}^n(I+\Delta_i\lrate)
 \end{equation*}
 is a lower transition operator.
 \end{lemma}
@@ -854,28 +886,6 @@ For any $u\in\mathcal{U}_{[t,s]}$, we then define the operator
 so that for any sequence $u_1,u_2,\ldots,u_n,\ldots$, we can obtain a corresponding sequence $\Phi_{u_1},\Phi_{u_2},\ldots,\Phi_{u_n},\ldots$ of operators. Using the previously established bounds, Corollary~\ref{corol:limitexistsandiscoherent} establishes that if we choose $u_1,u_2,\ldots,u_n,\ldots$ such that $\lim_{n\rightarrow\infty}\sigma(u_n)=0$, the corresponding sequence $\Phi_{u_1},\Phi_{u_2},\ldots,\Phi_{u_n},\ldots$ converges, and that its limit point is a coherent lower transition operator. Theorem~\ref{theo:convergencelowerbound} finally establishes that this limit is furthermore unique. Thus, we show that the limit in Equation~\eqref{eq:lowerbound} exists, and that $L_t^s$ is a coherent lower transition operator. 
 
 We begin with some bounds on norms.
-
-\begin{lemma}\label{lemma:normofcoherenttrans}
-For any coherent lower transition operator $\lt$, we have that $\norm{\lt}\leq 1$.
-\end{lemma}
-\begin{proof}
-This can be shown to follow from coherence.
-\end{proof}
-
-\begin{lemma}\label{lemma:differencenormofcoherenttrans}
-For any coherent lower transition operator $\lt$ and any two non-negatively homogeneous operators $A$, $B$, we have that $\norm{\lt A-\lt B}\leq \norm{A-B}$.
-\end{lemma}
-\begin{proof}
-This can be shown to follow from coherence.
-\end{proof}
-
-\begin{lemma}\label{lemma:differencenormofcoherenttransrate}
-Consider any two non-negatively homogeneous operators $A$, $B$. It then holds that $\norm{\lrate A-\lrate B}\leq 2\norm{\lrate}\norm{A-B}$.
-\end{lemma}
-\begin{proof}
-This can be shown to follow from the definition of the norm and the properties of $\lrate$.
-\end{proof}
-
 
 \begin{lemma}\label{lemma:justtheindicator}
 Consider any sequence $0<\Delta_i\leq\nicefrac{1}{\norm{\lrate}}$, $i=1,\dots,n$, and let $\Delta\coloneqq\sum_{i=1}^n\Delta_i$. Then
