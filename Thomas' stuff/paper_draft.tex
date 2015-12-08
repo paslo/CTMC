@@ -549,7 +549,7 @@ Obviously, a transition matrix $T_t^s$ can also be regarded as a map from $\gamb
 %This is immediate from Lemma~\ref{lemma:exponential_matrix_has_process}.
 %\end{proof}
 
-\subsection{Precise Markov chains}
+\subsection{Markov chains}
 
 \begin{definition}[Markov chain, Markov property]\label{def:markov_property}
 A stochastic process $P\in\processes$ satisfies the \emph{Markov property} if, for any time sequence $0\leq t_0<\dots<t_{n}<t<s$ and any set of states $x_{t_0},\dots,x_{t_n},x_t,x_s\in\states$:
@@ -559,8 +559,9 @@ P(X_s=x_s\vert X_{t_n}=x_{t})=P(X_s=x_s\vert X_{t_0}=x_{t_0}, \dots, X_{t_n}=x_{
 A stochastic process that satisfies this property is called a \emph{Markov chain}. We denote the set of all Markov chains by $\mprocesses$ and use $\wmprocesses$ to refer to the subset that only contains the well-behaved Markov chains.
 \end{definition}
 
+\subsubsection{Transition matrix systems}
 
-We already know from Proposition~\ref{prop:stochasticprocess:simpleproperties} that the transition matrices of a stochastic process---and therefore also, in particular, of a Markov chain---satisfy a number of simple properties. For the specific case of a Markov chain $P\in\mprocesses$, the family of transition matrices $\mathcal{T}_P$ also satisfies and additional property---see Equation~\eqref{eq:transmatrixproduct}. Whenever this is the case, we will call such a family of stochastic matrices a transition matrix system.
+We know from Proposition~\ref{prop:stochasticprocess:simpleproperties} that the transition matrices of a stochastic process---and therefore also, in particular, of a Markov chain---satisfy a number of simple properties. For the specific case of a Markov chain $P\in\mprocesses$, the family of transition matrices $\mathcal{T}_P$ also satisfies and additional property---see Equation~\eqref{eq:transmatrixproduct}. Whenever this is the case, we will call such a family of stochastic matrices a transition matrix system.
 
 \begin{definition}[Transition matrix system]
 A \emph{transition matrix system} $\mathcal{T}$ is a family of stochastic matrices $T_t^s$, defined for all $0\leq t\leq s$, such that
@@ -621,19 +622,19 @@ T_t^s=e^{Q(s-t)}
 \subsubsection{Non-homogeneous Markov chains}
 
 
-\begin{definition}[Markov Process]\label{def:markov_process}
-A stochastic process $P\in\mprocesses$ is said to be a \emph{continuous-time Markov process} if the transition matrix corresponding to $P$ satisfies
-\begin{equation*}
-(\forall \epsilon\in\realspos)(\exists \delta\in\realspos)(\forall \Delta\in(0,\delta))(\forall t\in\realsnonneg)(\exists Q\in\mathcal{R}) \norm{\frac{T_t^{t+\Delta} - I}{\Delta} - Q} < \epsilon\,.
-\end{equation*}
-\end{definition}
+% \begin{definition}[Markov Process]\label{def:markov_process}
+% A stochastic process $P\in\mprocesses$ is said to be a \emph{continuous-time Markov process} if the transition matrix corresponding to $P$ satisfies
+% \begin{equation*}
+% (\forall \epsilon\in\realspos)(\exists \delta\in\realspos)(\forall \Delta\in(0,\delta))(\forall t\in\realsnonneg)(\exists Q\in\mathcal{R}) \norm{\frac{T_t^{t+\Delta} - I}{\Delta} - Q} < \epsilon\,.
+% \end{equation*}
+% \end{definition}
 
-\begin{definition}[Characterizing Rate Matrix]\label{def:markov_process_char_matrix}
-Consider any continuous-time Markov process $P$, and let $Q_t$ be a function that gives for each time point $t\in\realsnonneg$ a rate matrix $Q_t\in\mathcal{R}$. We say that $Q_t$ \emph{characterizes} $P$ if it satisfies
-\begin{equation*}
-(\forall \epsilon\in\realspos)(\exists \delta\in\realspos)(\forall \Delta\in(0,\delta))(\forall t\in\realsnonneg)\norm{\frac{T_t^{t+\Delta} - I}{\Delta} - Q_t} < \epsilon\,.
-\end{equation*}
-\end{definition}
+% \begin{definition}[Characterizing Rate Matrix]\label{def:markov_process_char_matrix}
+% Consider any continuous-time Markov process $P$, and let $Q_t$ be a function that gives for each time point $t\in\realsnonneg$ a rate matrix $Q_t\in\mathcal{R}$. We say that $Q_t$ \emph{characterizes} $P$ if it satisfies
+% \begin{equation*}
+% (\forall \epsilon\in\realspos)(\exists \delta\in\realspos)(\forall \Delta\in(0,\delta))(\forall t\in\realsnonneg)\norm{\frac{T_t^{t+\Delta} - I}{\Delta} - Q_t} < \epsilon\,.
+% \end{equation*}
+% \end{definition}
 
 \begin{theorem}\label{theorem:continuous_rate_matrix_has_process}
 Consider any right-continuous function $Q_t$ that gives for each time point $t\in\realsnonneg$ a rate matrix $Q_t\in\mathcal{R}$, where by right-continuity we mean that for all $t\in\realsnonneg$,
@@ -651,8 +652,8 @@ Then, there exists a stochastic process $P\in\mprocesses$ such that $Q_t$ charac
 
 
 
-\subsubsection{*** non-markov version (?) ***}
-TODO
+% \subsubsection{*** non-markov version (?) ***}
+% TODO
 
 %\subsection{*** Ik denk dat dat brol is ***}
 %
