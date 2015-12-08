@@ -51,8 +51,12 @@
 \newcommand{\processes}{\mathbb{P}}
 \newcommand{\mprocesses}{\processes^{\mathrm{M}}}
 
+\newcommand{\hmprocesses}{\processes^{\mathrm{HM}}}
+
 \newcommand{\wprocesses}{\processes^{\mathrm{W}}}
 \newcommand{\wmprocesses}{\processes^{\mathrm{WM}}}
+
+\newcommand{\whmprocesses}{\processes^{\mathrm{WHM}}}
 
 
 \newcommand{\lt}{\underline{T}}
@@ -441,7 +445,10 @@ We denote this family of matrices by $\mathcal{T}_P$.%, and call it the \emph{sy
 \end{definition}
 
 \begin{proposition}\label{prop:stochasticprocess:simpleproperties}
-Let $P\in\processes$ be a stochastic process. Then for any $0\leq t\leq s$, $T_t^s$ is stochastic and $T_t^t=I$.
+Let $P\in\processes$ be a stochastic process. Then for any $0\leq t\leq s$, $T_t^s$ is stochastic and $T_t^t=I$. If $P$ is well-behaved, then also
+\begin{equation}\label{eq:wellbehavedtransitionmatrix}
+\lim_{s\to t^{+}}T_t^s=\lim_{t\to s^{-}}T_t^s=I.
+\end{equation}
 \end{proposition}
 \begin{proof}
 *** TRIVIAL ***
@@ -553,34 +560,35 @@ A stochastic process that satisfies this property is called a \emph{Markov chain
 \end{definition}
 
 
-We already know from Proposition~\ref{prop:stochasticprocess:simpleproperties} that the transition matrices of a stochastic process---and therefore also, in particular, of a Markov chain---satisfy a number of simple properties. For the specific case of a Markov chain $P\in\mprocesses$, the family of transition matrices $\mathcal{T}_P$ also satisfies and additional property---see Equation~\eqref{eq:transmatrixproduct}. Whenever this is the case, we will call such a family of stochastic matrices a coherent system of transition matrices.
+We already know from Proposition~\ref{prop:stochasticprocess:simpleproperties} that the transition matrices of a stochastic process---and therefore also, in particular, of a Markov chain---satisfy a number of simple properties. For the specific case of a Markov chain $P\in\mprocesses$, the family of transition matrices $\mathcal{T}_P$ also satisfies and additional property---see Equation~\eqref{eq:transmatrixproduct}. Whenever this is the case, we will call such a family of stochastic matrices a transition matrix system.
 
-\begin{definition}[Coherent transition matrix system]
-A \emph{coherent transition matrix system} $\mathcal{T}$ is a family of stochastic matrices $T_t^s$, defined for all $0\leq t\leq s$, such that
+\begin{definition}[Transition matrix system]
+A \emph{transition matrix system} $\mathcal{T}$ is a family of stochastic matrices $T_t^s$, defined for all $0\leq t\leq s$, such that
 \begin{equation}\label{eq:transmatrixproduct}
 T_t^s=T_t^r T_r^s
 \text{~~for all $0\leq t\leq r\leq s$}
 \end{equation}
-and $T_t^t=I$ for all $t\geq0$.
+and $T_t^t=I$ for all $t\geq0$. A transition matrix system that also satisfies Equation~\eqref{eq:wellbehavedtransitionmatrix} is called a \emph{well-behaved transition matrix system}.
 \end{definition}
 
 \begin{proposition}
-Consider a Markov chain $P\in\mprocesses$ and let $\mathcal{T}_P$ be the corresponding family of transition matrices. Then $\mathcal{T}_P$ is a coherent transition matrix system.
+Consider a Markov chain $P\in\mprocesses$ and let $\mathcal{T}_P$ be the corresponding family of transition matrices. Then $\mathcal{T}_P$ is a transition matrix system and, if $P$ is well behaved, then $\mathcal{T}_P$ is also well-behaved.
 \end{proposition}
 \begin{proof}
 *** fairly easy to prove ***
 \end{proof}
 
-At this point, we already know that every Markov chain has a corresponding coherent transition matrix system. Our next result establishes that the converse is true as well: every coherent transition matrix system has a corresponding Markov chain, and for a given initial distribution, this Markov chain is even unique.
+At this point, we already know that every (well-behaved) Markov chain has a corresponding (well-behaved) transition matrix system. Our next result establishes that the converse is true as well: every (well-behaved) transition matrix system has a corresponding (well-behaved) Markov chain, and for a given initial distribution, this Markov chain is even unique.
 
-\begin{proposition}
- Let $p$ be an arbitrary probability mass function on $\states$ and let $\mathcal{T}$ be a coherent transition matrix system. Then there is a unique Markov chain $P\in\mprocesses$ such that $\mathcal{T}_P=\mathcal{T}$ and $P(X_0)=p(X_0)$.
-\end{proposition}
+\begin{theorem}
+ Let $p$ be an arbitrary probability mass function on $\states$ and let $\mathcal{T}$ be a transition matrix system. Then there is a unique Markov chain $P\in\mprocesses$ such that $\mathcal{T}_P=\mathcal{T}$ and $P(X_0)=p(X_0)$ and, if $\mathcal{T}$ is well-behaved, then $P$ is also well-behaved.
+\end{theorem}
 \begin{proof}
 *** Not trivial; I have a coherence-based proof that I'll add here someday ***
 \end{proof}
 
-The main conclusion is that Markov chains are completely characterised by their transition matrices and their initial distribution. We now focus on a number of special cases.
+Hence, Markov chains---and well-behaved Markov chains in particular---are completely characterised by their transition matrices and their initial distribution. 
+We now focus on a number of special cases.
 
 \subsubsection{Homogeneous Markov chains}
 
@@ -590,8 +598,21 @@ A Markov chain $P\in\mprocesses$ is called \emph{homogeneous} if its transition 
 T_t^s=T_{t+\Delta}^{s+\Delta}
 \text{~~for all $0\leq t\leq s$ and $\Delta\geq0$.}
 \end{equation*}
+We denote the set of all homogeneous Markov chains by $\hmprocesses$ and use $\whmprocesses$ to refer to the subset that consists of the well-behaved homogeneous Markov chains.
 \end{definition}
 
+As our next result shows, the transition matrix system of a well-behaved homogeneous Markov chain can be uniquely characterised by a single transition rate matrix.
+
+\begin{theorem}
+For any well-behaved homogeneous Markov chain $P\in\whmprocesses$, there is a unique transition rate matrix $Q\in\mathcal{R}$ such that
+\begin{equation*}
+T_t^s=e^{Q(s-t)}
+\text{~~for all $0\leq t\leq s$.}
+\end{equation*}
+\end{theorem}
+\begin{proof}
+*** Not trivial; I have a fairly complex proof that uses outer limits. If you can think of an easier one, be my guest... :-) ***
+\end{proof}
 
 
 
