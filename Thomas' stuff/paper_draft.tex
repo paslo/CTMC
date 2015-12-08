@@ -718,16 +718,14 @@ Consider any $t,s\in\realsnonneg$ such that $t<s$, any bounded set of rate matri
 This is immediate from Definitions \ref{def:lower_markov} and \ref{def:lower_non_markov}, and Proposition \ref{prop:markov_set_subset_of_nonmarkov_set}.
 \end{proof}
 
-\section{An important lower transition operator}
+\section{An Important Lower Transition Operator}
 \label{sec:lowertrans}
 
+Having introduced the notion of lower expectations with respect to sets of (non-)Markov processes, one might wonder how to compute these quantities, either numerically or for analytical purposes. 
 
+Obviously, one way to go about doing this is to work directly with the definitions. That is, explicitly generate the entire set $\mprocesses_\rateset$ (or $\processes_\rateset$) for a given $\rateset$, compute expectations of a function $f$ for each element of this set, and then find the infimum of these expectations. It should be clear that this approach is fairly unwieldy, not in the least because for arbitrary $\rateset$ the corresponding set of processes may be infinite.
 
-
-*** het doel van deze sectie is om $\lbound_t^s$ te defini\"eren, te bewijzen dat die aan de differentiaalvergelijkingen van Damjan voldoet, en uit te leggen dat deze operator `makkelijk' uit te rekenen is (via de methodes van Damjan of die van Stavros) ***
-
-*** the subsections I introduce here are not final, I'm just trying to organise things a bit ***
-
+Therefore, we will instead provide an alternative characterization of these lower expectations. In particular, we will in this section introduce a specific \emph{lower transition operator}, which is a map from $\gamblesX$ to $\gamblesX$ that generalizes the notion of a transition matrix. We will here focus on introducing the relevant concepts, and showing that the operator of interest is well-defined. We end this section by relating this operator to existing work from the literature. In Section~\ref{sec:connections} we will then establish the relation between this operator and lower expectations, and show that we can indeed use it to compute the quantities of interest.
 
 \subsection{Lower Transition (Rate) Operators}
 
@@ -1004,7 +1002,7 @@ and
 \end{proposition}
 \noindent The proof for the above proposition can be found in Appendix~\ref{sec:proof_appendix}.
 
-\section{Connections Between $L_t^s$ and Imprecise Continuous-Time Markov Chains}
+\section{Connections Between $L_t^s$ and Imprecise Continuous-Time Markov Chains}\label{sec:connections}
 
 One of the objectives of this paper is to establish a connection between the operator $\lbound_t^s$ that we have just introduced, and the different types of imprecise continous-time Markov chains that were discussed in Section~\ref{sec:iCTMC}. Since the former is derived from a lower transition rate operator $\lrate$ and the latter are derived from a non-empty bounded set of rate matrices $\rateset$, an obvious first step is to investigate the connection between lower transition rate operators and non-empty bounded sets of rate matrices.
 
@@ -1318,27 +1316,14 @@ and furthermore,
 \end{equation*}
 \end{corollary}
 \begin{proof}
-We start by proving the first statement. By Theorem~\ref{theorem:nonmarkov_single_var_lower_bounded} and Proposition~\ref{prop:lower_exp_markov_bounded_by_nonmarkov}, we have that for all $P\in\mprocesses_\rateset$ with expectation operator $\mathbb{E}$,
-\begin{equation*}
-\left[L_t^sg\right](x) \leq \mathbb{E}[g(X_s)\,\vert\,X_t=x]\,.
-\end{equation*}
-Furthermore, by Theorem~\ref{theorem:lower_markov_bound_is_tight}, we have that for all $\epsilon\in\realspos$ there is some $P\in\mprocesses_\rateset$ such that
-\begin{equation*}
-\norm{L_t^sg - T_t^sg} < \epsilon\,.
-\end{equation*}
-Together this implies, using Definition~\ref{def:lower_markov}, that
+We start by proving the first statement. By Theorem~\ref{theorem:nonmarkov_single_var_lower_bounded} and Proposition~\ref{prop:lower_exp_markov_bounded_by_nonmarkov}, we have that for all $P\in\mprocesses_\rateset$ it holds that $\left[L_t^sg\right](x) \leq \mathbb{E}[g(X_s)\,\vert\,X_t=x]$. Furthermore, by Theorem~\ref{theorem:lower_markov_bound_is_tight}, for all $\epsilon\in\realspos$ there is some $P\in\mprocesses_\rateset$ such that $\norm{L_t^sg - T_t^sg} < \epsilon$. Together this implies, using Definition~\ref{def:lower_markov}, that
 \begin{equation*}
 \left[L_t^sg\right](x) = \inf\left\{\left[T_t^sf\right](x)\,:\,P\in\mprocesses_\rateset\right\} = \underline{\mathbb{E}}^{\mathrm{M}}\left[g(X_s)\,\vert\,X_t=x\right]\,.
 \end{equation*}
 
-We now move on to the second statement. By Theorem~\ref{theorem:nonmarkov_single_var_lower_bounded} we have that for all $P\in\processes_\rateset$ with expectation operator $\mathbb{E}$,
-\begin{equation*}
-\left[L_t^sg\right](x) \leq \mathbb{E}[g(X_s)\,\vert\,X_t=x]\,.
-\end{equation*}
-Furthermore, using Theorem~\ref{theorem:lower_markov_bound_is_tight} and Proposition~\ref{prop:markov_set_subset_of_nonmarkov_set}, we have that for all $\epsilon\in\realsnonneg$ there is some $P\in\processes_\rateset$ such that
-\begin{equation*}
-\norm{L_t^sg - T_t^sg} < \epsilon\,.
-\end{equation*}
+We now move on to the second statement. By Theorem~\ref{theorem:nonmarkov_single_var_lower_bounded} we have that for all $P\in\processes_\rateset$ it holds that $\left[L_t^sg\right](x) \leq \mathbb{E}[g(X_s)\,\vert\,X_t=x]$.
+Furthermore, by Theorem~\ref{theorem:lower_markov_bound_is_tight} and Proposition~\ref{prop:markov_set_subset_of_nonmarkov_set}, for all $\epsilon\in\realsnonneg$ there is some $P\in\processes_\rateset$ such that
+$\norm{L_t^sg - T_t^sg} < \epsilon$.
 Together this implies, using Definition~\ref{def:lower_non_markov}, that
 \begin{equation*}
 \left[L_t^sg\right](x) = \inf\left\{\left[T_t^sf\right](x)\,:\,P\in\processes_\rateset\right\} = \underline{\mathbb{E}}\left[g(X_s)\,\vert\,X_t=x\right]\,.
@@ -1466,7 +1451,7 @@ and furthermore,
 \begin{proof}
 This is a direct consequence of Propositions \ref{prop:markov_set_subset_of_nonmarkov_set}, \ref{prop:lower_exp_markov_bounded_by_nonmarkov}, \ref{prop:multi_var_single_future_bounded}, and \ref{prop:multi_var_single_future_tight}. The proof is similar to that of Corollary~\ref{cor:lower_operator_is_infimum}.
 \end{proof}
-Thus, we see that the operator $L_t^s$ can also be used to compute lower expectations of functions $f\in\gambles(\states^{u\cup\{s\}})$, both with respect to sets of Markov processes and with respect to non-Markov processes. We will now turn to functions defined on multiple time points in a process' future, where we will find this correspondence to no longer hold.
+Thus, we see that the operator $L_t^s$ can also be used to compute lower expectations of functions $f\in\gambles(\states^{u\cup\{s\}})$, both with respect to sets of Markov processes and with respect to sets of non-Markov processes. We will now turn to functions defined on multiple time points in a process' future, where we will find this correspondence to no longer hold.
 
 %\begin{theorem}
 %Consider any $t,s\in\realsnonneg$ such that $t<s$, and let $\rateset$ be an arbitrary bounded set of rate matrices with corresponding lower transition rate operator $\lrate$. Then, for any $P\in\processes_\rateset$, any $u\in\mathcal{U}_{[0,t]}$, any $(x_{t_0},\ldots,x_{t_n})\in\states^u$, and any $f\in\gambles(\states^{u\cup\{s\}})$,
@@ -1555,7 +1540,7 @@ The proof is then finished by backward induction on $m$.
 
 Note that a direct implication of this, together with Proposition~\ref{prop:lower_exp_markov_bounded_by_nonmarkov}, is that $L_t^s$ can also be used to compute lower bounds on the expectation with respect to a set $\mprocesses_\rateset$ of Markov processes. However, this bound will then in general not be tight, and hence will not correspond to the lower expectation.
 
-To see why, observe that in the term $[L_{t_n}^{s_0}L_{s_0}^{s_1}\cdots L_{s_{m-1}}^{s_m}f](x_{t_0},\ldots,x_{t_n})$, the operators $L_{s_{i-1}}^{s_i}$ can take on different values depending on the choice of $(x_{t_0},\ldots,x_{t_n},x_{s_0},\ldots,x_{s_{i-1}})$. Hence, to approach these values of $L_{s_{i-1}}^{s_i}$ from within a set $\mprocesses$ of Markov processes, we have to be able to pick the approximating values such that they depend on the specific trajectory $(x_{t_0},\ldots,x_{t_n},x_{s_0},\ldots,x_{s_{i-1}})$---this is exactly what the Markov condition prevents us from doing. As the next result shows, we can however approach this quantity from within a set $\processes_\rateset$ of non-Markov processes.
+To see why, observe that in the term $[L_{t_n}^{s_0}L_{s_0}^{s_1}\cdots L_{s_{m-1}}^{s_m}f](x_{t_0},\ldots,x_{t_n})$, the operators $L_{s_{i-1}}^{s_i}$ can take on different values depending on the choice of $(x_{t_0},\ldots,x_{t_n},x_{s_0},\ldots,x_{s_{i-1}})$. Hence, to approach these values of $L_{s_{i-1}}^{s_i}$ from within a set $\mprocesses$ of Markov processes, we have to be able to pick the approximating values such that they depend on the specific trajectory $(x_{t_0},\ldots,x_{t_n},x_{s_0},\ldots,x_{s_{i-1}})$, and this is exactly what the Markov condition prevents us from doing. As the next result shows, we can however approach this quantity from within a set $\processes_\rateset$ of non-Markov processes.
 
 \begin{proposition}\label{prop:multivar_bound_tight}
 Consider any $t,s,s'\in\realsnonneg$ such that $t<s<s'$, and let $\rateset$ be an arbitrary non-empty bounded set of rate matrices that has separately specified rows, with corresponding lower transition rate operator $\lrate$. Then, for all $u\in\mathcal{U}_{[0,t]}$, all $v\in\mathcal{U}_{[s,s']}$, all $f\in\gambles(\states^{u\cup v})$, and all $\epsilon\in\realspos$, there is a $P\in\processes_\rateset$ such that
