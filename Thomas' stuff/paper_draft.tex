@@ -432,6 +432,30 @@ and
 The set of all well-behaved Markov processes is denoted by $\wprocesses$.
 \end{definition}
 
+***
+
+\begin{definition}[Transition matrix]\label{def:trans_matrix}
+Consider a stochastic process $P\in\processes$. Then, for any $0\leq t\leq s$, the \emph{transition matrix} $T_t^s$ is a $m\times m$ matrix that is defined by
+\begin{equation*}
+T_t^s(x_t, x_s) \coloneqq P(X_s=x_s\,\vert X_t=x_t)\quad\text{for all $x_s,x_t\in\states$}\,.
+\end{equation*}
+We denote this family of matrices by $\mathcal{T}_P$.%, and call it the \emph{system of transition matrices} that corresponds to $P$.
+\end{definition}
+
+\begin{proposition}\label{prop:stochasticprocess:simpleproperties}
+Let $P\in\processes$ be a stochastic process. Then for any $0\leq t\leq s$, $T_t^s$ is stochastic and $T_t^t=I$ and, if $P$ is well-behaved, then also
+\begin{equation}\label{eq:wellbehavedtransitionmatrix}
+\lim_{\Delta\to 0^{+}}\frac{1}{\Delta}\norm{T_t^{t+\Delta}-I}<+\infty
+\text{~~~~and~~~~}
+\lim_{\Delta\to 0^{+}}\frac{1}{\Delta}\norm{T_{t-\Delta}^t-I}<+\infty.
+\end{equation}
+\end{proposition}
+\begin{proof}
+*** trivial ***
+\end{proof}
+
+***
+
 
 \begin{equation*}
 T^s_{t,\,x_u}(x,y)
@@ -464,27 +488,83 @@ P(X_s=y\vert X_t=x, X_{t_0}=x_{0}, \dots, X_{t_n}=x_{n})
 (T^{t}_{t-\Delta,\,x_u}-I)
 \end{equation*}
 
-If these partial derivatives exist, then because of Proposition~\ref{prop:rate_from_stochastic_matrix}, they are guaranteed to belong to $\mathcal{R}$.
+If these partial derivatives exist, then because of Proposition~\ref{prop:rate_from_stochastic_matrix}, they are guaranteed to belong to $\mathcal{R}$. If they both exists and coincide, we write $\partial{T_{t,\,x_u}^t}$ to denote their common value.
 
 
 
-More generally, instead, we can consider outer derivatives.
+If these partial derivatives do not exist, then more generally, we can consider the following outer partial derivatives.
 
 \begin{equation*}
 \overline{\partial}_{+}
 {T^t_{t,\,x_u}}
 \coloneqq
-???
+\left\{
+Q\in\mathcal{R}
+\colon
+(\exists \Delta_i\to0^+,\,i\in\nats)
+~
+%\lim_{i\to+\infty}\Delta_i=0
+%\text{~~and~}
+\lim_{i\to+\infty}
+\frac{1}{\Delta_i}
+(T^{t+\Delta_i}_{t,\,x_u}-I)
+=Q
+\right\}
 \end{equation*}
 
 \begin{equation*}
 \overline{\partial}_{-}
 {T^t_{t,\,x_u}}
 \coloneqq
-???
+\left\{
+Q\in\mathcal{R}
+\colon
+(\exists \Delta_i\to0^+,\,i\in\nats)
+~
+%\lim_{i\to+\infty}\Delta_i=0
+%\text{~~and~}
+\lim_{i\to+\infty}
+\frac{1}{\Delta_i}
+(T^{t}_{t-\Delta_i,\,x_u}-I)
+=Q
+\right\}
+\end{equation*}
+
+and let
+
+\begin{equation*}
+\overline{\partial}
+{T^t_{t,\,x_u}}
+\coloneqq
+\overline{\partial}_{+}
+{T^t_{t,\,x_u}}
+\cup
+\overline{\partial}_{-}
+{T^t_{t,\,x_u}}
 \end{equation*}
 
 
+\begin{proposition}
+Let $P\in\wprocesses$ be a well-behaved stochastic process. Then $\overline{\partial}_{+}
+{T^t_{t,\,x_u}}$, $\overline{\partial}_{+}
+{T^t_{t,\,x_u}}$ and $\overline{\partial}
+{T^t_{t,\,x_u}}$ are non-empty, closed and bounded subsets of $\mathcal{R}$.
+\end{proposition}
+\begin{proof}
+*** I have this written down somewhere ***
+\end{proof}
+
+\begin{proposition}
+Let $P\in\wprocesses$ be a well-behaved stochastic process. If $\overline{\partial}_{+}
+{T^t_{t,\,x_u}}$ is a singleton, then $\partial_{+}
+{T^t_{t,\,x_u}}$ exists and is equal to the unique element of $\overline{\partial}_{+}
+{T^t_{t,\,x_u}}$. Analogous results hold for $\overline{\partial}_{+}
+{T^t_{t,\,x_u}}$ and $\overline{\partial}
+{T^t_{t,\,x_u}}$.
+\end{proposition}
+\begin{proof}
+*** I have this written down somewhere ***
+\end{proof}
 
 
 
@@ -604,30 +684,6 @@ A stochastic process that satisfies this property is called a \emph{Markov chain
 
 \subsection{Transition matrix systems}
 
-***
-
-\begin{definition}[Transition matrix]\label{def:trans_matrix}
-Consider a stochastic process $P\in\processes$. Then, for any $0\leq t\leq s$, the \emph{transition matrix} $T_t^s$ is a $m\times m$ matrix that is defined by
-\begin{equation*}
-T_t^s(x_t, x_s) \coloneqq P(X_s=x_s\,\vert X_t=x_t)\quad\text{for all $x_s,x_t\in\states$}\,.
-\end{equation*}
-We denote this family of matrices by $\mathcal{T}_P$.%, and call it the \emph{system of transition matrices} that corresponds to $P$.
-\end{definition}
-
-\begin{proposition}\label{prop:stochasticprocess:simpleproperties}
-Let $P\in\processes$ be a stochastic process. Then for any $0\leq t\leq s$, $T_t^s$ is stochastic and $T_t^t=I$ and, if $P$ is well-behaved, then also
-\begin{equation}\label{eq:wellbehavedtransitionmatrix}
-\lim_{\Delta\to 0^{+}}\frac{1}{\Delta}\norm{T_t^{t+\Delta}-I}<+\infty
-\text{~~~~and~~~~}
-\lim_{\Delta\to 0^{+}}\frac{1}{\Delta}\norm{T_{t-\Delta}^t-I}<+\infty.
-\end{equation}
-\end{proposition}
-\begin{proof}
-*** TRIVIAL ***
-\end{proof}
-
-***
-
 We know from Proposition~\ref{prop:stochasticprocess:simpleproperties} that the transition matrices of a stochastic process---and therefore also, in particular, of a Markov chain---satisfy a number of simple properties. For the specific case of a Markov chain $P\in\mprocesses$, the family of transition matrices $\mathcal{T}_P$ also satisfies and additional property---see Equation~\eqref{eq:transmatrixproduct}. Whenever this is the case, we will call such a family of stochastic matrices a transition matrix system.
 
 \begin{definition}[Transition matrix system]
@@ -703,7 +759,7 @@ For any well-behaved homogeneous Markov chain $P\in\whmprocesses$, there is a un
 *** Not trivial; I have a fairly complex proof that uses outer limits. If you can think of an easier one, be my guest... :-) ***
 \end{proof}
 
-Hence, well-behaved homogenous Markov chains are completely characterised by their initial distribution and a rate matrix $Q\in\mathcal{R}$.
+Hence, any well-behaved homogenous Markov chain $P\in\whmprocesses$ is completely characterised by its initial distribution and a rate matrix $Q\in\mathcal{R}$. We will denote this rate matrix by $Q_P$.
 
 
 \subsection{Non-homogeneous Markov chains}
@@ -820,9 +876,61 @@ A set of rate matrices $\rateset\subseteq\mathcal{R}$ is bounded if and only if
 
 \subsection{*** onder van homogene ***}
 
-uitleggen dat het dan NIET is
+
+*** uitleggen dat het dat NIET is ***
+
+\begin{align*}
+\whmprocesses_\rateset
+\coloneqq&
+\left\{
+P\in\whmprocesses
+\colon
+\overline{\partial}
+{T^t_{t,\,x_u}}\subseteq\rateset
+\right\}\\
+=&
+\left\{
+P\in\whmprocesses
+\colon
+\overline{\partial}
+{T^t_{t}}\subseteq\rateset
+\right\}\\
+=&
+\left\{
+P\in\whmprocesses
+\colon
+Q_P\in\rateset
+\right\}
+\end{align*}
+
+\begin{equation*}
+\underline{\mathbb{E}}_\rateset^\mathrm{WHM}[f(X_s)\,\vert\,X_t=x_t] \coloneqq \inf\left\{\mathbb{E}[f(X_s)\,\vert\,X_t=x_t]\,:\,P\in\whmprocesses_\rateset\right\}\,.
+\end{equation*}
+
 
 \subsection{*** onder van inhomogene Markov ***}
+
+\begin{align*}
+\wmprocesses_\rateset
+\coloneqq&
+\left\{
+P\in\wmprocesses
+\colon
+\overline{\partial}
+{T^t_{t,\,x_u}}\subseteq\rateset
+\right\}\\
+=&
+\left\{
+P\in\wmprocesses
+\colon
+\overline{\partial}
+{T^t_{t}}\subseteq\rateset
+\right\}
+\end{align*}
+
+\begin{equation*}
+\underline{\mathbb{E}}_\rateset^\mathrm{WM}[f(X_s)\,\vert\,X_t=x_t] \coloneqq \inf\left\{\mathbb{E}[f(X_s)\,\vert\,X_t=x_t]\,:\,P\in\wmprocesses_\rateset\right\}\,.
+\end{equation*}
 
 
 \begin{definition}[Set of Markov Processes]\label{def:markov_process_set_new}
@@ -845,6 +953,21 @@ For any bounded set of rate matrices $\rateset$, we define the set $\mprocesses_
 \end{definition}
 
 \subsection{*** onder van niet-Markov}
+
+\begin{equation*}
+\wprocesses_\rateset
+\coloneqq
+\left\{
+P\in\wprocesses
+\colon
+\overline{\partial}
+{T^t_{t,\,x_u}}\subseteq\rateset
+\right\}
+\end{equation*}
+
+\begin{equation*}
+\underline{\mathbb{E}}_\rateset^\mathrm{W}[f(X_s)\,\vert\,X_t=x_t] \coloneqq \inf\left\{\mathbb{E}[f(X_s)\,\vert\,X_t=x_t]\,:\,P\in\wprocesses_\rateset\right\}\,.
+\end{equation*}
 
 \begin{definition}[Set of Non-Markov Processes]\label{def:set_non_markov_process}
 For any bounded set of rate matrices $\rateset$, we consider the set $\processes_\rateset$ of all stochastic processes \emph{consistent} with $\rateset$. Formally, we let $\processes_\rateset$ be the set of all $P\in\processes$ such that
