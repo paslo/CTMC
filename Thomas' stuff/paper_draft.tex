@@ -1122,28 +1122,36 @@ is a lower transition operator.
 Trivial consequence of Lemma~\ref{lemma:normQsmallenough} and~\ref{lemma:compositioncoherence}.
 \end{proof}
 
-\subsection{*** The operator of interest ***}
+\subsection{The Operator of Interest}
 
-\begin{definition}[Lower Transition Operator]\label{def:low_trans}
+We will next introduce a specific lower transition operator on which we will focus for the remainder of this work. We will assume in this section that we are given some arbitrary lower transition rate operator $\lrate$, and then define the \emph{lower transition operator corresponding to $\lrate$}.
 
-Consider any $t,s\in\realsnonneg$ such that $t<s$ and let $\lrate$ be an arbitrary coherent lower transition rate operator . The corresponding \emph{lower transition operator} $\lbound_t^s$ is then a map from $\gamblesX$ to $\gamblesX$, defined by
+\begin{definition}[Corresponding Lower Transition Operator]\label{def:low_trans}
+Consider any $t,s\in\realsnonneg$ such that $t<s$ and let $\lrate$ be an arbitrary lower transition rate operator. The \emph{corresponding lower transition operator} $\lbound_t^s$ is then a map from $\gamblesX$ to $\gamblesX$, defined by
 \begin{equation}\label{eq:lowerbound}
-\lbound_t^s\coloneqq\lim_{\sigma(u)\to0}\prod_{k=1}^n(I+\Delta_k\lrate),
+\lbound_t^s\coloneqq\lim_{\sigma(u)\to0}\left\{ \prod_{k=1}^n(I+\Delta_k\lrate)\,\Big\vert\,u\in\mathcal{U}_{[t,s]}\right\},
 \end{equation}
-where the limit is taken with respect to the set $\mathcal{U}_{[t,s]}$ of all finite sequences of time points that partition the interval $[t,s]$.
+where the limit is taken with respect to the set $\mathcal{U}_{[t,s]}$ of all finite sequences $u$ of time points that partition the interval $[t,s]$.
 \end{definition}
 
-\noindent The remainder of this section establishes that the limit in Equation~\eqref{eq:lowerbound} exists, and that it is a coherent lower transition operator.
+\noindent The following result makes clear what exactly we mean by Equation~\eqref{eq:lowerbound}, and establishes that this limit exists and is well-defined.
 
-The proof basically works as follows. In Lemmas~\ref{lemma:normofcoherenttrans}-\ref{lemma:differencebetweennested}, we first establish bounds on the norm of the difference between various coherent lower transition operators.
-
-For any $u\in\mathcal{U}_{[t,s]}$, we then define the operator
+\begin{theorem}\label{theo:convergencelowerbound}
+For any $t,s\in\realsnonneg$ such that $t<s$ and any lower transition rate operator $\lrate$, there is a lower transition operator $\lbound_t^s$ such that 
+\begin{equation*}
+(\forall\epsilon>0)\,
+(\exists\delta>0)\,
+(\forall u\in\mathcal{U}_{[t,s]}\colon\sigma(u)<\delta)~\norm{\lbound_t^s - \prod_{k=1}^n(I+\Delta_k\lrate)}<\epsilon.
+\end{equation*}
+\end{theorem}
+\quad\newline\newline
+\noindent The remainder of this section serves to prove Theorem~\ref{theo:convergencelowerbound}. The proof basically works as follows. In Lemmas~\ref{lemma:justtheindicator}-\ref{lemma:differencebetweennested}, we first establish bounds on the norm of the difference between various lower transition operators. For any $u\in\mathcal{U}_{[t,s]}$, we then define the operator
 \begin{equation*}
 \Phi_u\coloneqq\prod_{k=1}^n(I+\Delta_k\lrate)\,,
 \end{equation*}
-so that for any sequence $u_1,u_2,\ldots,u_n,\ldots$, we can obtain a corresponding sequence $\Phi_{u_1},\Phi_{u_2},\ldots,\Phi_{u_n},\ldots$ of operators. Using the previously established bounds, Corollary~\ref{corol:limitexistsandiscoherent} establishes that if we choose $u_1,u_2,\ldots,u_n,\ldots$ such that $\lim_{n\rightarrow\infty}\sigma(u_n)=0$, the corresponding sequence $\Phi_{u_1},\Phi_{u_2},\ldots,\Phi_{u_n},\ldots$ converges, and that its limit point is a coherent lower transition operator. Theorem~\ref{theo:convergencelowerbound} finally establishes that this limit is furthermore unique. Thus, we show that the limit in Equation~\eqref{eq:lowerbound} exists, and that $L_t^s$ is a coherent lower transition operator. 
+so that for any sequence $u_1,u_2,\ldots,u_n,\ldots$, we can obtain a corresponding sequence $\Phi_{u_1},\Phi_{u_2},\ldots,\Phi_{u_n},\ldots$ of operators. Using the previously established bounds, Corollary~\ref{corol:limitexistsandiscoherent} shows that if we choose $u_1,u_2,\ldots,u_n,\ldots$ such that $\lim_{n\rightarrow\infty}\sigma(u_n)=0$, the corresponding sequence $\Phi_{u_1},\Phi_{u_2},\ldots,\Phi_{u_n},\ldots$ converges, and that its limit point is a lower transition operator. The proof of Theorem~\ref{theo:convergencelowerbound} finally establishes that this limit is furthermore unique, in that the limit point is independent of the choice of $u_1,u_2,\ldots,u_n,\ldots$. Thus, we show that the limit in Equation~\eqref{eq:lowerbound} exists, and that $L_t^s$ is a lower transition operator. 
 
-We begin with some bounds on norms.
+We begin with some bounds on norms. If they are not given here, the proofs of these results can be found in Appendix~\ref{sec:proof_appendix}.
 
 \begin{lemma}\label{lemma:justtheindicator}
 Consider any sequence $0<\Delta_i\leq\nicefrac{1}{\norm{\lrate}}$, $i=1,\dots,n$, and let $\Delta\coloneqq\sum_{i=1}^n\Delta_i$. Then
@@ -1151,9 +1159,6 @@ Consider any sequence $0<\Delta_i\leq\nicefrac{1}{\norm{\lrate}}$, $i=1,\dots,n$
 \norm{\prod_{i=1}^n(I+\Delta_i\lrate)-I}\leq\Delta\norm{\lrate}.
 \end{equation*}
 \end{lemma}
-\begin{proof}
-See Lemma~\ref{lemma:justtheindicator_appendix} in the appendix.
-\end{proof}
 
 \begin{lemma}\label{lemma:justthelinearpart}
 Consider any sequence $0<\Delta_i\leq\nicefrac{1}{\norm{\lrate}}$, $i=1,\dots,n$, and let $\Delta\coloneqq\sum_{i=1}^n\Delta_i$. Then
@@ -1161,9 +1166,6 @@ Consider any sequence $0<\Delta_i\leq\nicefrac{1}{\norm{\lrate}}$, $i=1,\dots,n$
 \norm{\prod_{i=1}^n(I+\Delta_i\lrate)-(I+\Delta\lrate)}\leq\Delta^2\norm{\lrate}^2.
 \end{equation*}
 \end{lemma}
-\begin{proof}
-See Lemma~\ref{lemma:justthelinearpart_appendix} in the appendix.
-\end{proof}
 
 \begin{lemma}\label{lemma:differencebetweennested}
 For any $k\in\{1,\dots,n\}$, consider a sequence of $\Delta_{k,i}>0$, $i=1,\dots,n_k$ and let $\Delta_k\coloneqq\sum_{i=1}^{n_k}\Delta_{n,k}$. Let $\Delta\coloneqq\sum_{k=1}^n\Delta_k$ and let $\alpha\coloneqq\max\{\Delta_k\colon k\in\{1,\dots,n\}\}$. If $\alpha\leq\nicefrac{1}{\norm{\lrate}}$, then
@@ -1175,10 +1177,8 @@ For any $k\in\{1,\dots,n\}$, consider a sequence of $\Delta_{k,i}>0$, $i=1,\dots
 \leq\alpha\Delta\norm{\lrate}^2.
 \end{equation*}
 \end{lemma}
-\begin{proof}
-See Lemma~\ref{lemma:differencebetweennested_appendix} in the appendix.
-\end{proof}
-
+\quad\newline\newline
+%\vspace{5pt}
 \noindent For any $u\in\mathcal{U}_{[t,s]}$, we now let
 \begin{equation*}
 \Phi_u\coloneqq\prod_{k=1}^n(I+\Delta_k\lrate)\,.
@@ -1219,7 +1219,7 @@ Hence, we find that
 \end{proof}
 
 \begin{corollary}\label{corol:cauchy}
-For every sequence $u_1,u_2,\dots,u_n,\dots$ in $\mathcal{U}_{[t,s]}$ such that $\lim_{n\to\infty}\sigma(u_n)=0$, the corresponding sequence $\Phi_{u_1},\Phi_{u_2},\dots,\Phi_{u_n},\dots$ is a \emph{cauchy sequence}, meaning that
+For every sequence $u_1,u_2,\dots,u_n,\dots$ in $\mathcal{U}_{[t,s]}$ such that $\lim_{n\to\infty}\sigma(u_n)=0$, the corresponding sequence $\Phi_{u_1},\Phi_{u_2},\dots,\Phi_{u_n},\dots$ is a \emph{Cauchy sequence}, meaning that
 \begin{equation*}
 (\forall \epsilon>0)(\exists N\in\nats)(\forall n,m\geq N)
 \norm{\Phi_{u_n}-\Phi_{u_m}}<\epsilon.
@@ -1230,22 +1230,16 @@ This follows almost directly from Proposition~\ref{prop:differencebetweenu}.
 \end{proof}
 
 \begin{corollary}\label{corol:limitexistsandiscoherent}
-For every sequence $u_1,u_2,\dots,u_n,\dots$ in $\mathcal{U}_{[t,s]}$ such that $\lim_{n\to\infty}\sigma(u_n)=0$, the corresponding sequence $\Phi_{u_1},\Phi_{u_2},\dots,\Phi_{u_n},\dots$ converges to a coherent lower transition operator.
+For every sequence $u_1,u_2,\dots,u_n,\dots$ in $\mathcal{U}_{[t,s]}$ such that $\lim_{n\to\infty}\sigma(u_n)=0$, the corresponding sequence $\Phi_{u_1},\Phi_{u_2},\dots,\Phi_{u_n},\dots$ converges to a lower transition operator.
 \end{corollary}
 \begin{proof}
-Since $\lim_{n\to\infty}\sigma(u_n)=0$, and because of Lemma~\ref{lemma:productiscoherent}, there is some index $i$ such that the sequence $\Phi_{u_i},\Phi_{u_{i+1}},\dots,\Phi_{u_n},\dots$ consists of coherent lower transition operators. Due to Corollary~\ref{corol:cauchy}, this sequence is cauchy and therefore, because of Lemma~\ref{lemma:completemetricspace}, this sequence has a limit that is also a coherent lower transition operator. Since the limit starting from $i$ and the limit starting from $1$ are identical (initial elements do not influence the limit), we find that the sequence $\Phi_{u_1},\Phi_{u_2},\dots,\Phi_{u_n},\dots$ has a limit, and that this limit is a coherent lower transition operator.
+Since $\lim_{n\to\infty}\sigma(u_n)=0$, and because of Lemma~\ref{lemma:productiscoherent}, there is some index $i$ such that the sequence $\Phi_{u_i},\Phi_{u_{i+1}},\dots,\Phi_{u_n},\dots$ consists of lower transition operators. Due to Corollary~\ref{corol:cauchy}, this sequence is Cauchy and therefore, because of Lemma~\ref{lemma:completemetricspace}, this sequence has a limit that is also a lower transition operator. Since the limit starting from $i$ and the limit starting from $1$ are identical (initial elements do not influence the limit), we find that the sequence $\Phi_{u_1},\Phi_{u_2},\dots,\Phi_{u_n},\dots$ has a limit, and that this limit is a lower transition operator.
 \end{proof}
 
-\begin{theorem}\label{theo:convergencelowerbound}
-For any $t,s\in\realsnonneg$ such that $t<s$ and any coherent lower transition rate operator $\lrate$, there is a coherent lower transition operator $\lbound_t^s$ such that 
-\begin{equation*}
-(\forall\epsilon>0)\,
-(\exists\delta>0)\,
-(\forall u\in\mathcal{U}_{[t,s]}\colon\sigma(u)<\delta)~\norm{\lbound_t^s - \prod_{k=1}^n(I+\Delta_k\lrate)}<\epsilon.
-\end{equation*}
-\end{theorem}
-\begin{proof}
-Consider any sequence $u_1,u_2,\dots,u_n,\dots$ in $\mathcal{U}_{[t,s]}$ such that $\lim_{n\to\infty}\sigma(u_n)=0$. Due to Corollary~\ref{corol:limitexistsandiscoherent}, the sequence $\Phi_{u_1},\Phi_{u_2},\dots,\Phi_{u_n},\dots$ converges to a coherent lower transition operator, which we denote by $\lbound_t^s$. 
+\noindent We now have all the pieces required to prove Theorem~\ref{theo:convergencelowerbound}.
+
+\begin{proof}[Proof of Theorem~\ref{theo:convergencelowerbound}]
+Start by considering any sequence $u_1,u_2,\dots,u_n,\dots$ in $\mathcal{U}_{[t,s]}$ such that $\lim_{n\to\infty}\sigma(u_n)=0$. Due to Corollary~\ref{corol:limitexistsandiscoherent}, the sequence $\Phi_{u_1},\Phi_{u_2},\dots,\Phi_{u_n},\dots$ converges to a lower transition operator, which we denote by $\lbound_t^s$. 
 
 Consider now any $\epsilon>0$ and let $\Delta\coloneqq s-t$ and
 \begin{equation*}
@@ -1269,7 +1263,7 @@ Therefore, since $\lim_{n\to\infty}\sigma(u_n)=0$, there is some $N^*\geq N$ suc
 <\frac{\epsilon}{2}+2\delta\Delta\norm{\lrate}^2\leq\epsilon,
 \end{equation*}
 where the strict inequality follows from Proposition~\ref{prop:differencebetweenu}.
-In summary, we have shown that there is some coherent lower transition operator $\lbound_t^s$ such that
+In summary, we have shown that there is lower transition operator $\lbound_t^s$ such that
 \begin{equation*}
 (\forall\epsilon>0)\,
 (\exists\delta>0)\,
@@ -2114,15 +2108,9 @@ As a trivial example, take $\mathcal{C}(\states^{u\cup v}) = \gambles(\states^{\
 
 \appendix
 
-\section{Proofs of Lemmas from Section~\ref{sec:lower_operator}}\label{sec:proof_appendix}
+\section{Proofs of Lemmas from Section~\ref{sec:lowertrans}}\label{sec:proof_appendix}
 
-\begin{lemma}\label{lemma:justtheindicator_appendix}
-Consider any sequence $0<\Delta_i\leq\nicefrac{1}{\norm{\lrate}}$, $i=1,\dots,n$, and let $\Delta\coloneqq\sum_{i=1}^n\Delta_i$. Then
-\begin{equation*}
-\norm{\prod_{i=1}^n(I+\Delta_i\lrate)-I}\leq\Delta\norm{\lrate}.
-\end{equation*}
-\end{lemma}
-\begin{proof}
+\begin{proof}[Proof of Lemma~\ref{lemma:justtheindicator}]
 \begin{align*}
 \norm{\prod_{i=1}^n(I+\Delta_i\lrate)-I}
 &=\norm{\prod_{i=1}^n(I+\Delta_i\lrate)-\prod_{i=1}^{n-1}(I+\Delta_i\lrate)+\prod_{i=1}^{n-1}(I+\Delta_i\lrate)-I}\\
@@ -2139,14 +2127,7 @@ where the last inequality follows from Lemma~\ref{lemma:differencenormofcoherent
 \end{align*}
 \end{proof}
 
-
-\begin{lemma}\label{lemma:justthelinearpart_appendix}
-Consider any sequence $0<\Delta_i\leq\nicefrac{1}{\norm{\lrate}}$, $i=1,\dots,n$, and let $\Delta\coloneqq\sum_{i=1}^n\Delta_i$. Then
-\begin{equation*}
-\norm{\prod_{i=1}^n(I+\Delta_i\lrate)-(I+\Delta\lrate)}\leq\Delta^2\norm{\lrate}^2.
-\end{equation*}
-\end{lemma}
-\begin{proof}
+\begin{proof}[Proof of Lemma~\ref{lemma:justthelinearpart}]
 \begin{align*}
 &\norm{\prod_{i=1}^n(I+\Delta_i\lrate)-(I+\Delta\lrate)}\\
 &=\norm{\prod_{i=2}^n(I+\Delta_i\lrate)+\Delta_1\lrate\left(\prod_{i=2}^n(I+\Delta_i\lrate)\right)-(I+\sum_{i=2}^n\Delta_i\lrate)-\Delta_1\lrate}\\
@@ -2176,17 +2157,7 @@ By continuing in this way (applying induction) we find that
 \end{align*}
 \end{proof}
 
-\begin{lemma}\label{lemma:differencebetweennested_appendix}
-For any $k\in\{1,\dots,n\}$, consider a sequence of $\Delta_{k,i}>0$, $i=1,\dots,n_k$ and let $\Delta_k\coloneqq\sum_{i=1}^{n_k}\Delta_{n,k}$. Let $\Delta\coloneqq\sum_{k=1}^n\Delta_k$ and let $\alpha\coloneqq\max\{\Delta_k\colon k\in\{1,\dots,n\}\}$. If $\alpha\leq\nicefrac{1}{\norm{\lrate}}$, then
-\begin{equation*}
-\norm{\prod_{k=1}^n\left(\prod_{i=1}^{n_k}(I+\Delta_{k,i}\lrate)\right)
--
-\prod_{k=1}^n(I+\Delta_k\lrate)
-}
-\leq\alpha\Delta\norm{\lrate}^2.
-\end{equation*}
-\end{lemma}
-\begin{proof}
+\begin{proof}[Proof of Lemma~\ref{lemma:differencebetweennested}]
 \begin{align*}
 &\norm{\prod_{k=1}^n\left(\prod_{i=1}^{n_k}(I+\Delta_{k,i}\lrate)\right)
 -
