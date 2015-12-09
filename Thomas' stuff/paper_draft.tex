@@ -421,6 +421,7 @@ Trivial consequence of Theorem~\ref{theo:coherentextendable}.
 *** explain that stochastic process can behave in rather extreme ways. For example, the transition probabilities can jump instantaneously. In order to avoid this behavior, we restrict our attention to a subclass of stochastic processes, which we call well-behaved. ***
 
 \begin{definition}[Well-behaved stochastic process]
+\label{def:well-behaved}
 A stochastic process $P\in\processes$ is said to be well-behaved if, for any time sequence $0\leq t_0<\dots<t_{n}<t$ and any set of states $x_{0},\dots,x_{n},x,y\in\states$:
 \begin{equation*}
 \limsup_{\Delta\to 0^{+}}\frac{1}{\Delta}\norm{P(X_{t+\Delta}=y\vert X_t=x, X_{t_0}=x_{0}, \dots, X_{t_n}=x_{n})-\delta_{xy}}<+\infty
@@ -543,12 +544,36 @@ and let
 
 \begin{proposition}
 For any $P\in\wprocesses$, $\overline{\partial}_{+}
-{T^t_{t,\,x_u}}$, $\overline{\partial}_{+}
+{T^t_{t,\,x_u}}$, $\overline{\partial}_{-}
 {T^t_{t,\,x_u}}$ and $\overline{\partial}
 {T^t_{t,\,x_u}}$ are non-empty, closed and bounded subsets of $\mathcal{R}$.
 \end{proposition}
 \begin{proof}
+We only give the proof for $\smash{\overline{\partial}_{-}
+{T^t_{t,\,x_u}}}$. The proof for $\smash{\overline{\partial}_{+}
+{T^t_{t,\,x_u}}}$ is completely analogous. The proof for $\smash{\overline{\partial}
+{T^t_{t,\,x_u}}}$ then follows trivially because a union of two non-empty, closed and bounded sets is always non-empty, closed and bounded itself.
+
+In order to prove that $\smash{\overline{\partial}_{+}
+{T^t_{t,\,x_u}}}$ is non-empty, we consider an arbitrary sequence $\Delta_k\to0^+$, $k\in\nats$. The corresponding sequence of matrices $Q_k$, $k\in\nats$, defined by
+\begin{equation*}
+Q_k\coloneqq\frac{1}{\Delta_i}
+(T^{t+\Delta_i}_{t,\,x_u}-I)
+\text{~~for all $k\in\nats$},
+\end{equation*}
+is then bounded because of Definition~\ref{def:well-behaved} and therefore, it follows from the Bolzano-Weierstrass theorem that it has a convergent subsequence $Q_{k_i}$, $i\in\nats$, of which we denote the limit by $Q^*$. Hence, we have found a sequence $\Delta_{k_i}\to0^+$, $i\in\nats$, such that $Q_{k_i}\to Q^*$.
+Since we know from Lemma~\ref{prop:rate_from_stochastic_matrix} that each of the matrices $Q_{k_i}$, $i\in\nats$, is a rate matrix, the limit $Q^*$ is also a rate matrix, which therefore clearly belongs to $\smash{\overline{\partial}_{+}
+{T^t_{t,\,x_u}}}$.
+
+Next, we prove that $\smash{\overline{\partial}_{+}
+{T^t_{t,\,x_u}}}$ is closed. 
+
 *** I have this written down somewhere ***
+
+
+
+*** The boundedness of $\smash{\overline{\partial}_{+}
+{T^t_{t,\,x_u}}}$ follows ***
 \end{proof}
 
 \begin{proposition}
@@ -1032,7 +1057,7 @@ T^{t_{i+1}}_{t_i,\,x_u}-(I+\Delta_{i+1}Q_i)
 \end{equation*}
 \end{lemma}
 \begin{proof}
-*** in progress ***
+*** I have this written down somewhere (although roughly) ***
 \end{proof}
 
 \section{An Important Lower Transition Operator}
