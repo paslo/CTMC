@@ -1082,24 +1082,61 @@ Consider any two non-negatively homogeneous operators $A$, $B$ from $\gamblesX$ 
 *** {\bf TODO } *** This can be shown to follow from coherence.
 \end{proof}
 
-We next have two results about the set of all lower transition operators. As the first result shows, this set is closed under composition.
+We next have two results about the set of all lower transition operators, which we denote by $\underline{\mathcal{T}}$. As the first result shows, this set is closed under composition.
 \begin{lemma}\label{lemma:compositioncoherence}
 If $\lt_1,\lt_2,\dots,\lt_n$ are lower transition operators, then  $\lt_1\lt_2\cdots\lt_n$ is also a lower transition operator.
 \end{lemma}
 \begin{proof}
 Simply check each of the properties.
+
+*** {\bf TODO} reword this? ***
 \end{proof}
 
-\noindent Furthermore, this set is a complete metric space.
+\noindent Furthermore, this set is a complete metric space under the norm $\norm{\cdot}$.
 
 \begin{lemma}\label{lemma:completemetricspace}
-The set of all lower transition operators is a complete metric space.
+The metric space $(\underline{\mathcal{T}},d)$ is complete under the metric $d$ induced by $\norm{\cdot}$.
 \end{lemma}
 \begin{proof}
-Since a coherent lower transition operator is just a finite vector of coherent lower previsions, this result should follow fairly easily for the (known) fact that the set of all coherent lower previsions (on a given fixed space) is a complete metric space.
+Define for all $\lt\in\underline{\mathcal{T}}$ and all $x\in\states$ the map $\lt_x:\gamblesX\rightarrow\reals$ as
+\begin{equation*}
+\lt_x(f) \coloneqq \lt(f)(x)\,,\quad\text{for all $f\in\gamblesX$,}
+\end{equation*}
+and let $\underline{\mathcal{T}}_x\coloneqq\left\{\lt_x\,:\,\lt\in\underline{\mathcal{T}}\right\}$ for all $x\in\states$. Then clearly, any $\lt\in\underline{\mathcal{T}}$ is a finite vector of elements $\lt_1\in\underline{\mathcal{T}}_1,\ldots,\lt_m\in\underline{\mathcal{T}}_m$, and $\underline{\mathcal{T}}=\underline{\mathcal{T}}_1\times\cdots\times \underline{\mathcal{T}}_m$.
 
-*** {\bf TODO} ***
+Furthermore, for all $x\in\states$ and all $\lt_x\in\underline{\mathcal{T}}_x$, because of Definition~\ref{def:coh_low_trans}, $\lt_x$ is a map from $\gamblesX$ to $\reals$ that is super-additive, positively homogeneous, and bounded below by the minimum operator. Hence, by definition~\cite[Definition~2.3.3]{Walley:1991vk}, $\lt_x$ is a coherent lower prevision on $\gamblesX$, and $\underline{\mathcal{T}}_x$ corresponds to the space of all coherent lower previsions on $\gamblesX$.
+
+Let now $\gambles_{\leq1}(\states)\coloneqq\left\{f\in\gamblesX\,:\,\forall x\in\states, 0\leq f(x)\leq 1\right\}$ be the set of non-negative functions $f\in\gamblesX$ with $\norm{f}\leq 1$. It was previously shown {\bf REF COMPLETE FACTOR} that the metric space $(\underline{\mathcal{T}}_x,d_x)$ is complete under the metric $d_x$, defined for all $\lt_x,\underline{S}_x\in\underline{\mathcal{T}}_x$ by
+\begin{equation*}
+d_x(\lt_x,\underline{S}_x) \coloneqq \sup\bigl\{ \abs{\lt_xf - \underline{S}_xf} \,:\,f\in\gambles_{\leq1}(\states) \bigr\}\,.
+\end{equation*}
+Now consider the metric $d_x^*$, which we define for all $\lt_x,\underline{S}_x\in\underline{\mathcal{T}}_x$ by
+\begin{equation*}
+d_x^*(\lt_x,\underline{S}_x) \coloneqq \sup\left\{ \abs{\lt_xf - \underline{S}_xf}\,:\, f\in\gamblesX, \norm{f}=1\right\}\,.
+\end{equation*}
+It is fairly easy to see that for all $\lt_x,\underline{S}_x\in\underline{\mathcal{T}}_x$, we have that
+\begin{equation*}
+d_x(\lt_x,\underline{S}_x) \leq d_x^*(\lt_x,\underline{S}_x) \leq 2d_x(\lt_x,\underline{S}_x)\,,
+\end{equation*}
+from which it follows {\bf REF} that $d_x$ and $d_x^*$ induce the same topology on $\underline{\mathcal{T}}_x$. Hence, because $(\underline{\mathcal{T}}_x, d_x)$ is complete, so is $(\underline{\mathcal{T}}_x,d_x^*)$.
+
+Now, because  {\bf REF COMPLETE PRODUCT} $\underline{\mathcal{T}}$ is a finite product of $\underline{\mathcal{T}}_1,\ldots,\underline{\mathcal{T}}_m$, the metric space $(\underline{\mathcal{T}},D)$ is complete under any metric $D$ that is \emph{conserving} {\bf REF CONSERVING} with respect to $d_1^*,\ldots,d_m^*$. For $D$ to be conserving, it suffices to show that for all $\lt,\underline{S}\in\underline{\mathcal{T}}$,
+\begin{equation*}
+D(\lt, \underline{S}) = \max_{x\in\states}\bigl\{d_x^*(\lt_x, \underline{S}_x)\bigr\}\,.
+\end{equation*}
+Now, consider the metric $d$ on $\underline{\mathcal{T}}$ that is induced by $\norm{\cdot}$. We have, for any $\lt,\underline{S}\in\underline{\mathcal{T}}$, 
+\begin{align*}
+d(\lt,\underline{S}) &= \norm{\lt - \underline{S}} \\
+ &= \sup\left\{ \norm{\lt f - \underline{S}f}\,:\,f\in\gamblesX, \norm{f}=1 \right\} \\
+ &= \sup\left\{ \max_{x\in\states}\{\abs{\lt(f)(x) - \underline{S}(f)(x)}\}\,:\,f\in\gamblesX, \norm{f}=1 \right\} \\
+ &= \sup\left\{ \max_{x\in\states}\{\abs{\lt_xf - \underline{S}_xf}\}\,:\,f\in\gamblesX, \norm{f}=1 \right\} \\
+ &=  \max_{x\in\states}\bigl\{\sup\left\{\abs{\lt_xf - \underline{S}_xf}\,:\,f\in\gamblesX, \norm{f}=1 \bigr\}\right\} \\
+ &=  \max_{x\in\states}\left\{d_x^*(\lt_x, \underline{S}_x)\right\}\,.
+\end{align*}
+Thus, $d$ is conserving with respect to $d_1^*,\ldots,d_m^*$, and hence $(\underline{\mathcal{T}},d)$ is complete.
 \end{proof}
+
+*** Metric Spaces, Michael O'Searcoid, Theorem 10.5.1 (complete under preserving), Definition 1.6.2 (preserving w.r.t factor metrics) ***
 
 We conclude this section by establishing that there is a correspondence between lower transition rate operators and lower transition operators that is analogous to the one found in Section {\bf SEC REF CTMC}. 
 
