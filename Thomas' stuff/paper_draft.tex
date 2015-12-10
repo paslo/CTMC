@@ -1032,7 +1032,8 @@ For any bounded set of rate matrices $\rateset$, we define the set $\mprocesses_
 
 \subsection{*** onder van niet-Markov}
 
-\begin{equation*}
+\begin{equation}
+\label{def:nonmarkovsetQ}
 \wprocesses_\rateset
 \coloneqq
 \left\{
@@ -1041,7 +1042,7 @@ P\in\wprocesses
 \overline{\partial}
 {T^t_{t,\,x_u}}\subseteq\rateset
 \right\}
-\end{equation*}
+\end{equation}
 
 \begin{equation*}
 \underline{\mathbb{E}}_\rateset^\mathrm{W}[f(X_s)\,\vert\,X_t=x_t] \coloneqq \inf\left\{\mathbb{E}[f(X_s)\,\vert\,X_t=x_t]\,:\,P\in\wprocesses_\rateset\right\}\,.
@@ -1098,7 +1099,16 @@ T^{t_{i+1}}_{t_i,\,x_u}-(I+\Delta_{i+1}Q_i)
 *** I have this written down somewhere (although roughly) ***
 Fix any $\epsilon>0$.
 
-Fix any $r\in[t,s]$. It then follows from Proposition~\ref{prop:outerderivativebehaveslikelimit} that there is some $\delta_r$
+Fix any $r\in[t,s]$. It then follows from Proposition~\ref{prop:outerderivativebehaveslikelimit} and Definition~\eqref{def:nonmarkovsetQ} that there is some $\delta_r>0$ such that, for all $0<\Delta<\delta_r$:
+\begin{equation*}
+(\exists Q\in\rateset)
+\norm{\frac{1}{\Delta}
+(T^{t+\Delta}_{t,\,x_u}-I)-Q}<\epsilon
+\text{~~and~~}
+(\exists Q\in\rateset)
+\norm{\frac{1}{\Delta}
+(T^{t}_{t-\Delta,\,x_u}-I)-Q}<\epsilon.
+\end{equation*}
 \end{proof}
 
 \section{An Important Lower Transition Operator}
