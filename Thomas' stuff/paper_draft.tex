@@ -988,6 +988,17 @@ Q_P\in\rateset
 
 \subsection{*** onder van inhomogene Markov ***}
 
+\begin{definition}[Set of Markov Processes]\label{def:markov_process_set_new}
+For any bounded set of rate matrices $\rateset$, we define the set $\wmprocesses_{\rateset}$ of all well-behaved continuous-time Markov processes \emph{consistent} with $\rateset$. Formally, we let $\wmprocesses_{\rateset}$ be the set of all $P\in\wmprocesses$ such that
+%\begin{align*}\label{eq:conditionforMarkov_new}
+%(\forall\epsilon\in\realspos)&\,
+%(\exists\delta\in\realspos)\,
+%(\forall t\in\realsnonneg)\,
+%(\forall\Delta\in(0,\delta))\,
+%(\exists Q\in\rateset)\,:\\
+% &\,(\forall f\in\gamblesX)(\forall x\in\states)~
+%\left\lvert\frac{\mathbb{E}_{X_{t+\Delta}}[f(X_{t+\Delta})\,\vert\,X_t=x]-f(x)}{\Delta}-\left[Qf\right](x)\right\rvert<\epsilon\cdot\norm{f}\,.
+%\end{align*}
 \begin{align*}
 \wmprocesses_\rateset
 \coloneqq&
@@ -1005,33 +1016,28 @@ P\in\wmprocesses
 {T^t_{t}}\subseteq\rateset
 \right\}
 \end{align*}
-
-\begin{equation*}
-\underline{\mathbb{E}}_\rateset^\mathrm{WM}[f(X_s)\,\vert\,X_t=x_t] \coloneqq \inf\left\{\mathbb{E}[f(X_s)\,\vert\,X_t=x_t]\,:\,P\in\wmprocesses_\rateset\right\}\,.
-\end{equation*}
-
-
-\begin{definition}[Set of Markov Processes]\label{def:markov_process_set_new}
-For any bounded set of rate matrices $\rateset$, we define the set $\mprocesses_{\rateset}$ of all continuous-time Markov processes \emph{consistent} with $\rateset$. Formally, we let $\mprocesses_{\rateset}$ be the set of all $P\in\mprocesses$ such that
-\begin{align*}\label{eq:conditionforMarkov_new}
-(\forall\epsilon\in\realspos)&\,
-(\exists\delta\in\realspos)\,
-(\forall t\in\realsnonneg)\,
-(\forall\Delta\in(0,\delta))\,
-(\exists Q\in\rateset)\,:\\
- &\,(\forall f\in\gamblesX)(\forall x\in\states)~
-\left\lvert\frac{\mathbb{E}_{X_{t+\Delta}}[f(X_{t+\Delta})\,\vert\,X_t=x]-f(x)}{\Delta}-\left[Qf\right](x)\right\rvert<\epsilon\cdot\norm{f}\,.
-\end{align*}
 \end{definition}
 
-\begin{definition}[Lower Expectation for Set of Markov Processes]\label{def:lower_markov} Consider any $t,s\in\realsnonneg$ such that $t<s$, any bounded set of rate matrices $\rateset$, and the set of corresponding continuous-time Markov processes $\mprocesses_\rateset$. Then, the \emph{lower expectation with respect to $\mprocesses_\rateset$} is defined for all $f\in\gamblesX$ and $x_t\in\states$, as
+\begin{definition}[Lower Expectation for Set of Markov Processes]\label{def:lower_markov} Consider any bounded set of rate matrices $\rateset$, and the set of corresponding well-behaved continuous-time Markov processes $\wmprocesses_\rateset$. Then, the \emph{lower expectation with respect to $\wmprocesses_\rateset$} is defined as
+%\begin{equation*}
+%\underline{\mathbb{E}}^\mathrm{M}[f(X_s)\,\vert\,X_t=x_t] \coloneqq \inf\left\{\mathbb{E}[f(X_s)\,\vert\,X_t=x_t]\,:\,P\in\mprocesses_\rateset\right\}\,.
+%\end{equation*}
 \begin{equation*}
-\underline{\mathbb{E}}^\mathrm{M}[f(X_s)\,\vert\,X_t=x_t] \coloneqq \inf\left\{\mathbb{E}[f(X_s)\,\vert\,X_t=x_t]\,:\,P\in\mprocesses_\rateset\right\}\,.
+\underline{\mathbb{E}}_\rateset^\mathrm{WM}[\cdot\,\vert\,\cdot] \coloneqq \inf\left\{\mathbb{E}[\cdot\,\vert\,\cdot]\,:\,P\in\wmprocesses_\rateset\right\}\,.
 \end{equation*}
 \end{definition}
 
 \subsection{*** onder van niet-Markov}
 
+\begin{definition}[Set of Non-Markov Processes]\label{def:set_non_markov_process}
+For any bounded set of rate matrices $\rateset$, we consider the set $\wprocesses_\rateset$ of all stochastic processes \emph{consistent} with $\rateset$. Formally, we let $\wprocesses_\rateset$ be the set of all $P\in\wprocesses$ such that
+%\begin{align*}
+%&(\forall\epsilon\in\realspos)\,(\exists\delta\in\realspos)\,: \\
+% &(\forall t\in\realsnonneg)\,(\forall\Delta\in(0,\delta))\,(\forall u\in\mathcal{U}_{[0,t]})\,(\forall(x_{t_0},\ldots,x_{t_{n-1}})\in\states^{\{t_0,\ldots,t_{n-1}\}})\,(\exists Q\in\rateset)\,: \\
+% &(\forall f\in\gambles(\states^{u\cup\{t+\Delta\}}))\,(\forall x_{t_n}\in\states^{\{t_n\}}): \\
+% &\abs{\frac{\mathbb{E}_{X_{t+\Delta}}[f(x_{t_0},\ldots,x_{t_n},X_{t+\Delta})\,\vert\,X_{t_0,\ldots,t_n}=x_{t_0,\ldots,t_n}] - f(x_{t_0},\ldots,x_{t_n},x_{t_n})}{\Delta} - \left[Q f(x_{t_0},\ldots,x_{t_{n}},X_{t+\Delta})\right](x_{t_n})} \\ 
+% &\quad\quad < \epsilon\cdot\norm{f}\,.
+%\end{align*}
 \begin{equation}
 \label{def:nonmarkovsetQ}
 \wprocesses_\rateset
@@ -1043,32 +1049,21 @@ P\in\wprocesses
 {T^t_{t,\,x_u}}\subseteq\rateset
 \right\}
 \end{equation}
-
-\begin{equation*}
-\underline{\mathbb{E}}_\rateset^\mathrm{W}[f(X_s)\,\vert\,X_t=x_t] \coloneqq \inf\left\{\mathbb{E}[f(X_s)\,\vert\,X_t=x_t]\,:\,P\in\wprocesses_\rateset\right\}\,.
-\end{equation*}
-
-\begin{definition}[Set of Non-Markov Processes]\label{def:set_non_markov_process}
-For any bounded set of rate matrices $\rateset$, we consider the set $\processes_\rateset$ of all stochastic processes \emph{consistent} with $\rateset$. Formally, we let $\processes_\rateset$ be the set of all $P\in\processes$ such that
-\begin{align*}
-&(\forall\epsilon\in\realspos)\,(\exists\delta\in\realspos)\,: \\
- &(\forall t\in\realsnonneg)\,(\forall\Delta\in(0,\delta))\,(\forall u\in\mathcal{U}_{[0,t]})\,(\forall(x_{t_0},\ldots,x_{t_{n-1}})\in\states^{\{t_0,\ldots,t_{n-1}\}})\,(\exists Q\in\rateset)\,: \\
- &(\forall f\in\gambles(\states^{u\cup\{t+\Delta\}}))\,(\forall x_{t_n}\in\states^{\{t_n\}}): \\
- &\abs{\frac{\mathbb{E}_{X_{t+\Delta}}[f(x_{t_0},\ldots,x_{t_n},X_{t+\Delta})\,\vert\,X_{t_0,\ldots,t_n}=x_{t_0,\ldots,t_n}] - f(x_{t_0},\ldots,x_{t_n},x_{t_n})}{\Delta} - \left[Q f(x_{t_0},\ldots,x_{t_{n}},X_{t+\Delta})\right](x_{t_n})} \\ 
- &\quad\quad < \epsilon\cdot\norm{f}\,.
-\end{align*}
 \end{definition}
 
-\begin{definition}[Lower Expectation for Set of Non-Markov Processes]\label{def:lower_non_markov} Consider any $t,s\in\realsnonneg$ such that $t<s$, any bounded set of rate matrices $\rateset$, and the set of corresponding continuous-time non-Markov processes $\processes_\rateset$. Then, the \emph{lower expectation with respect to $\processes_\rateset$} is defined for all $f\in\gamblesX$ and $x_t\in\states$, as
+\begin{definition}[Lower Expectation for Set of Non-Markov Processes]\label{def:lower_non_markov} Consider any bounded set of rate matrices $\rateset$, and the set of corresponding well-behaved continuous-time non-Markov processes $\wprocesses_\rateset$. Then, the \emph{lower expectation with respect to $\wprocesses_\rateset$} is defined as
+%\begin{equation*}
+%\underline{\mathbb{E}}[f(X_s)\,\vert\,X_t=x_t] \coloneqq \inf\left\{\mathbb{E}[f(X_s)\,\vert\,X_t=x_t]\,:\,P\in\processes_\rateset\right\}\,.
+%\end{equation*}
 \begin{equation*}
-\underline{\mathbb{E}}[f(X_s)\,\vert\,X_t=x_t] \coloneqq \inf\left\{\mathbb{E}[f(X_s)\,\vert\,X_t=x_t]\,:\,P\in\processes_\rateset\right\}\,.
+\underline{\mathbb{E}}_\rateset^\mathrm{W}[\cdot\,\vert\,\cdot] \coloneqq \inf\left\{\mathbb{E}[\cdot\,\vert\,\cdot]\,:\,P\in\wprocesses_\rateset\right\}\,.
 \end{equation*}
 \end{definition}
 
 \begin{proposition}\label{prop:markov_set_subset_of_nonmarkov_set}
-Consider any bounded set of rate matrices $\rateset$, and the corresponding sets $\mprocesses_\rateset$ and $\processes_\rateset$ of continuous-time Markov processes and non-Markov processes, respectively. Then,
+Consider any bounded set of rate matrices $\rateset$, and the corresponding sets $\wmprocesses_\rateset$ and $\wprocesses_\rateset$ of well-behaved continuous-time Markov processes and non-Markov processes, respectively. Then,
 \begin{equation*}
-\mprocesses_\rateset \subseteq \processes_\rateset\,.
+\wmprocesses_\rateset \subseteq \wprocesses_\rateset\,.
 \end{equation*}
 \end{proposition}
 \begin{proof}
@@ -1078,7 +1073,7 @@ This is immediate from Definitions \ref{def:markov_process_set_new} and \ref{def
 \begin{proposition}\label{prop:lower_exp_markov_bounded_by_nonmarkov}
 Consider any $t,s\in\realsnonneg$ such that $t<s$, any bounded set of rate matrices $\rateset$, any $f\in\gamblesX$, and any $x_t\in\states$. Then,
 \begin{equation*}
-\underline{\mathbb{E}}^\mathrm{M}[f(X_s)\,\vert\,X_t=x_t] \geq \underline{\mathbb{E}}[f(X_s)\,\vert\,X_t=x_t]\,.
+\underline{\mathbb{E}}_\rateset^\mathrm{WM}[f(X_s)\,\vert\,X_t=x_t] \geq \underline{\mathbb{E}}_\rateset^\mathrm{W}[f(X_s)\,\vert\,X_t=x_t]\,.
 \end{equation*}
 \end{proposition}
 \begin{proof}
@@ -1203,12 +1198,10 @@ Consider any two non-negatively homogeneous operators $A$, $B$ from $\gamblesX$ 
 
 We next have two results about the set of all lower transition operators, which we denote by $\underline{\mathcal{T}}$. As the first result shows, this set is closed under composition.
 \begin{lemma}\label{lemma:compositioncoherence}
-If $\lt_1,\lt_2,\dots,\lt_n$ are lower transition operators, then  $\lt_1\lt_2\cdots\lt_n$ is also a lower transition operator.
+For any $\lt,\underline{S}\in\underline{\mathcal{T}}$, we have that $\left(\lt\underline{S}\right)\in\underline{\mathcal{T}}$.
 \end{lemma}
 \begin{proof}
 Simply check each of the properties.
-
-*** {\bf TODO} reword this? ***
 \end{proof}
 
 \noindent Furthermore, this set is a complete metric space under our usual norm.
@@ -1268,7 +1261,7 @@ Just check each of the three defining properties. C2 and C3 are trivial. C1 requ
 \begin{lemma}\label{lemma:productiscoherent}
 Consider any $t,s\in\realsnonneg$ such that $t<s$, any lower transition rate operator $\lrate$, and any sequence $u\in\mathcal{U}_{[t,s]}$ of time points such that $\sigma(u)\leq\nicefrac{1}{\norm{\lrate}}$. Then
 \begin{equation*}
-\prod_{k=1}^n(I+\Delta_i\lrate)
+\prod_{k=1}^n(I+\Delta_i\lrate)\coloneqq (I+\Delta_1\lrate)(I+\Delta_2\lrate)\cdots (I+\Delta_n\lrate)
 \end{equation*}
 is a lower transition operator.
 \end{lemma}
