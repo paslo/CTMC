@@ -495,7 +495,8 @@ If these partial derivatives exist, then because of Proposition~\ref{prop:rate_f
 
 If these partial derivatives do not exist, then more generally, we can consider the following outer partial derivatives:
 
-\begin{equation*}
+\begin{equation}
+\label{eq:rightouterderivative}
 \overline{\partial}_{+}
 {T^t_{t,\,x_u}}
 \coloneqq
@@ -511,7 +512,7 @@ Q\in\mathcal{R}
 (T^{t+\Delta_i}_{t,\,x_u}-I)
 =Q
 \right\}
-\end{equation*}
+\end{equation}
 
 \begin{equation*}
 \overline{\partial}_{-}
@@ -546,34 +547,50 @@ and let
 For any $P\in\wprocesses$, $\overline{\partial}_{+}
 {T^t_{t,\,x_u}}$, $\overline{\partial}_{-}
 {T^t_{t,\,x_u}}$ and $\overline{\partial}
-{T^t_{t,\,x_u}}$ are non-empty, closed and bounded subsets of $\mathcal{R}$.
+{T^t_{t,\,x_u}}$ are bounded, non-empty and closed subsets of $\mathcal{R}$.
 \end{proposition}
 \begin{proof}
 We only give the proof for $\smash{\overline{\partial}_{-}
 {T^t_{t,\,x_u}}}$. The proof for $\smash{\overline{\partial}_{+}
 {T^t_{t,\,x_u}}}$ is completely analogous. The proof for $\smash{\overline{\partial}
-{T^t_{t,\,x_u}}}$ then follows trivially because a union of two non-empty, closed and bounded sets is always non-empty, closed and bounded itself.
+{T^t_{t,\,x_u}}}$ then follows trivially because a union of two bounded, non-empty and closed sets is always bounded, non-empty and closed itself.
+
+We start by establishing the boundedness of $\smash{\overline{\partial}_{+}
+{T^t_{t,\,x_u}}}$. Since $P$ is well-behaved, it follows from Definition~\ref{def:well-behaved} that there is some $B>0$ and $\epsilon>0$ such that
+\begin{equation}\label{eq:boundedbyB}
+(\forall 0<\Delta<\delta)
+~
+\norm{\frac{1}{\Delta}
+(T^{t+\Delta}_{t,\,x_u}-I)}\leq B.
+\end{equation}
+Consider now any $Q\in\smash{\overline{\partial}_{+}
+{T^t_{t,\,x_u}}}$. Because of Equation~\eqref{eq:rightouterderivative}, $Q$ is the limit of a sequence of matrices $Q_k$, $i\in\nats$, defined by
+\begin{equation}\label{eq:sequenceofQsinproof}
+Q_k\coloneqq\frac{1}{\Delta_k}
+(T^{t+\Delta_k}_{t,\,x_u}-I)
+\text{~~for all $k\in\nats$}.
+\end{equation}
+Because of Equation~\eqref{eq:boundedbyB}, the norms $\norm{Q_k}$ of these matrices are eventually (for large enough $k$) bounded above by $B$. Hence, it follows that $\norm{Q}\leq B$. Since this is true for any $Q\in\smash{\overline{\partial}_{+}
+{T^t_{t,\,x_u}}}$, we find that $\smash{\overline{\partial}_{+}
+{T^t_{t,\,x_u}}}$ is bounded.
+
 
 In order to prove that $\smash{\overline{\partial}_{+}
-{T^t_{t,\,x_u}}}$ is non-empty, we consider an arbitrary sequence $\Delta_k\to0^+$, $k\in\nats$. The corresponding sequence of matrices $Q_k$, $k\in\nats$, defined by
-\begin{equation*}
-Q_k\coloneqq\frac{1}{\Delta_i}
-(T^{t+\Delta_i}_{t,\,x_u}-I)
-\text{~~for all $k\in\nats$},
-\end{equation*}
-is then bounded because of Definition~\ref{def:well-behaved} and therefore, it follows from the Bolzano-Weierstrass theorem that it has a convergent subsequence $Q_{k_i}$, $i\in\nats$, of which we denote the limit by $Q^*$. Hence, we have found a sequence $\Delta_{k_i}\to0^+$, $i\in\nats$, such that $Q_{k_i}\to Q^*$.
+{T^t_{t,\,x_u}}}$ is non-empty, we consider any sequence $\Delta_k\to0^+$, $k\in\nats$. The corresponding sequence of matrices $Q_k$, $k\in\nats$, as defined by Equation~\eqref{eq:sequenceofQsinproof}, is then bounded because $P$ is well-behaved---see Definition~\ref{def:well-behaved}---and therefore, it follows from the Bolzano-Weierstrass theorem that it has a convergent subsequence $Q_{k_i}$, $i\in\nats$, of which we denote the limit by $Q^*$. Hence, we have found a sequence $\Delta_{k_i}\to0^+$, $i\in\nats$, such that $Q_{k_i}\to Q^*$.
 Since we know from Lemma~\ref{prop:rate_from_stochastic_matrix} that each of the matrices $Q_{k_i}$, $i\in\nats$, is a rate matrix, the limit $Q^*$ is also a rate matrix, which therefore clearly belongs to $\smash{\overline{\partial}_{+}
 {T^t_{t,\,x_u}}}$.
 
-Next, we prove that $\smash{\overline{\partial}_{+}
-{T^t_{t,\,x_u}}}$ is closed. 
-
-*** I have this written down somewhere ***
-
-
-
-*** The boundedness of $\smash{\overline{\partial}_{+}
-{T^t_{t,\,x_u}}}$ follows ***
+We end by showing that $\smash{\overline{\partial}_{+}
+{T^t_{t,\,x_u}}}$ is closed, or equivalently, that for any converging sequence $Q^*_k$, $k\in\nats$, of rate matrices in $\smash{\overline{\partial}_{+}
+{T^t_{t,\,x_u}}}$, the limit point $Q^*\coloneqq\lim_{k\to+\infty}Q^*_k$ is again an element of $\smash{\overline{\partial}_{+}
+{T^t_{t,\,x_u}}}$. Since the rate matrices $Q^*_k$ belong to the bounded set $\smash{\overline{\partial}_{+}
+{T^t_{t,\,x_u}}}$, their limit $Q^*$ is a (real-valued) rate matrix. For any $k\in\nats$, it now follows from Definition~\eqref{eq:rightouterderivative} that there is some $0<\Delta_k<\nicefrac{1}{k}$ such that $\norm{Q_k-Q^*_k}\leq\nicefrac{1}{k}$, with $Q_k$ defined as in Equation~\eqref{eq:sequenceofQsinproof}.
+Since
+\begin{equation*}
+0\leq\lim_{k\to+\infty}\norm{Q^*-Q_k}\leq\lim_{k\to+\infty}\norm{Q^*-Q^*_k}+\lim_{k\to+\infty}\norm{Q^*_k-Q_k}=0,
+\end{equation*}
+we find that the sequence $Q_k$, $k\in\nats$, converges to $Q^*$: $\lim_{k\to+\infty}Q_k=Q^*$. Hence, because $\lim_{k\to+\infty}\Delta_k=0$, we conclude that $Q^*\in\smash{\overline{\partial}_{+}
+{T^t_{t,\,x_u}}}$.
 \end{proof}
 
 \begin{proposition}
