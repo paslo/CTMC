@@ -252,7 +252,7 @@ $\norm{A}=0\asa A=0$
 $\norm{A+B}\leq\norm{A}+\norm{B}$
 \item
 $\norm{AB}\leq\norm{A}\norm{B}$
-\item
+\item\label{N:homogeneous}
 $\norm{\lambda A}=\abs{\lambda}\norm{A}$
 \item\label{N:normAf}
 $\norm{Af}\leq\norm{A}\norm{f}$
@@ -834,7 +834,75 @@ Since we know from Proposition~\ref{prop:systemQ} that $\mathcal{T}_Q$ is a well
 For any well-behaved homogeneous Markov chain $P\in\whmprocesses$, there is a unique rate matrix $Q\in\mathcal{R}$ such that $\mathcal{T}_P=\mathcal{T}_Q$.
 \end{theorem}
 \begin{proof}
+Because of Proposition~\ref{prop:boundednon-emptyandclosed}, we know that $\overline{\partial}_{+}
+{T^0_{0}}$ is a non-empty set of rate matrices. Let $Q$ be any of its elements.
+
+Because of Equation~\eqref{eq:rightouterderivative}, we know that there is some strictly positive sequence $(\Delta_i)_{i\in\nats}$ such that $\lim_{i\to+\infty}\Delta_i=0$ and
+\begin{equation*}
+\lim_{i\to+\infty}
+\frac{1}{\Delta_i}
+(T^{\Delta_i}_{0}-I)
+=Q.
+\end{equation*}
+
+
+
+Fix any $c\geq0$ and any $i\in\nats$. Let $n_{c,i}\coloneqq\lfloor\nicefrac{c}{\Delta_i}\rfloor$ and let $d_{c,i}\coloneqq c-n_{c,i}\Delta_i$. Then clearly, $0\leq d_{c,i}<\Delta_i$.
+
+\begin{equation*}
+T_0^c=\left(
+\prod_{j=1}^{n_{i,c}}
+T_{(j-1)\Delta_i}^{j\Delta_i}
+\right)
+T_{n_{c,i}\Delta_i}^c
+=\left(T_0^{\Delta_i}\right)^{n_{i,c}}
+T_0^{d_{c,i}}
+\end{equation*}
+
+\begin{equation*}
+e^{Qc}
+=
+e^{Q(n_{i,c}\Delta_i+d_{i,c})}
+=
+\left(
+e^{Q\Delta_i}
+\right)^{n_{i,c}}
+e^{Qd_{i,c}}
+\end{equation*}
+
+\begin{equation*}
+\norm{
+	e^{Qc}-T_0^c
+}
+\leq
+n_{i,c}\norm{T_0^{\Delta_i}-e^{Q\Delta_i}}
++\norm{T_0^{d_{c,i}}-e^{Qd_{i,c}}}
+\end{equation*}
+
+\begin{equation*}
+\norm{T_0^{\Delta_i}-e^{Q\Delta_i}}
+\leq
+\norm{T_0^{\Delta_i}-(I+\Delta_iQ)}
++
+\norm{(I+\Delta_iQ)-e^{Q\Delta_i}}
+\leq
+\end{equation*}
+
+
+We will now prove that $T_0^c=e^{Qc}$.
+
 *** Not trivial; I have a fairly complex proof that uses outer limits. If you can think of an easier one, be my guest... :-) ***
+\end{proof}
+
+\begin{lemma}\label{lemma:linearpartofexponential}
+Consider any $Q\in\mathcal{R}$ and any $\Delta>0$. Then
+\begin{equation*}
+\norm{e^{Q\Delta}-(I+\Delta Q)}\leq
+\Delta^2\norm{Q}^2.
+\end{equation*}
+\end{lemma}
+\begin{proof}
+*** this follows by combining Lemma~\ref{lemma:justthelinearpart} with the limit expression for the exponential ***
 \end{proof}
 
 Hence, any well-behaved homogenous Markov chain $P\in\whmprocesses$ is completely characterised by its initial distribution and a rate matrix $Q\in\mathcal{R}$. We will denote this rate matrix by $Q_P$.
@@ -1081,7 +1149,6 @@ This is immediate from Definitions \ref{def:lower_markov} and \ref{def:lower_non
 \end{proof}
 
 \begin{lemma}
-*** only to be touched by Jasper ***
 Consider any $P\in\wprocesses_\rateset$, any $0<t<s$ and any $x_u$. Then for all $\epsilon>0$ and $\delta>0$, there is some $v\in\mathcal{U}_{[t,s]}$ such that $\sigma(v)<\delta$ and, for all $i\in\{0,\dots,n-1\}$:
 \begin{equation*}
 (\exists Q\in\rateset)
@@ -1149,7 +1216,7 @@ Because of Equation~\eqref{eq:epsilonboundsforlemma}, and with $\Delta^*_k\colon
 (T^{r_{k+1}}_{q_k,\,x_u}-I)-Q}<\epsilon.
 \end{equation}
 
-For all $k\in\{1,\dots,m-1\}$, we now let $s_{2k}\coloneqq q_k$ and, for all $k\in\{1,\dots,m\}$, we let $s_{2k-1}\coloneqq r_k$. For the resulting sequence $s_1<s_2<\dots<s_{2m-2}<s_{2m-1}$, it then follows from Equation~\eqref{eq:epsilonboundsforqk} that, for all $i\in\{1,\dots,2m-2\}$:
+For all $k\in\{1,\dots,m-1\}$, we now let $s_{2k}\coloneqq q_k$ and, for all $k\in\{1,\dots,m\}$, we let $s_{2k-1}\coloneqq r_k$. For the resulting sequence $s_1<s_2<\dots<s_{2m-2}<s_{2m-1}$, it then follows from Equation~\eqref{eq:epsilonboundsforqk} and~\ref{N:homogeneous} that, for all $i\in\{1,\dots,2m-2\}$:
 \begin{equation*}
 (\exists Q\in\rateset)
 ~
@@ -1159,11 +1226,23 @@ T^{s_{i+1}}_{s_i,\,x_u}-(I+\Delta'_{i+1}Q)
 \end{equation*}
 with $\Delta'_{i+1}\coloneqq s_{i+1}-s_i<\delta$. 
 
-If $s_1\neq t$, we also define $s_0\coloneqq t$ and $\Delta_1\coloneqq s_1-s_0=r_1-t>0$. We then have that $t<s_1=r_1$ and, since $C^*$ is a minimal cover and because of Equation~\eqref{eq:orderingofbounds}, it also follows that $r_1-\delta_{r_1}<t$
+If $s_1\neq t$, we also define $s_0\coloneqq t$ and $\Delta'_1\coloneqq s_1-s_0=r_1-t>0$. Since $C^*$ is a minimal cover, and because of Equation~\eqref{eq:orderingofbounds}, it follows that $r_1-\delta_{r_1}<t<r_1$, which, because of Equation~\eqref{eq:epsilonboundsforlemma} and~\ref{N:homogeneous}, implies that
+\begin{equation*}
+(\exists Q\in\rateset)
+~
+\norm{
+T^{s_{1}}_{s_0,\,x_u}-(I+\Delta'_{1}Q)
+}<\Delta'_{1}\epsilon.
+\end{equation*}
 
-*** add argument with norm ***
-
-If $s_{2m-1}\neq s$, we also define $s_{2m}\coloneqq s$. *** add argument with norm ***
+If $s_{2m-1}\neq s$, we also define $s_{2m}\coloneqq s$ and $\Delta'_{2m}\coloneqq s_{2m}-s_{2m-1}=s-r_m>0$. Since $C^*$ is a minimal cover, and because of Equation~\eqref{eq:orderingofbounds}, it follows that $r_m<s<r_m+\delta_{r_m}$, which, because of Equation~\eqref{eq:epsilonboundsforlemma} and~\ref{N:homogeneous}, implies that
+\begin{equation*}
+(\exists Q\in\rateset)
+~
+\norm{
+T^{s_{2m}}_{s_{2m-1},\,x_u}-(I+\Delta'_{2m}Q)
+}<\Delta'_{2m}\epsilon.
+\end{equation*}
 
 We now consider four cases.
 If $s_1=t$ and $s_{2m-1}=s$, the result follows by letting $n\coloneqq 2m-2$ and defining $t_i\coloneqq s_{i+1}$ for all $i\in\{0,\dots,n\}$. 
