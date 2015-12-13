@@ -633,11 +633,12 @@ with $Q_k$ defined as in Equation~\eqref{eq:sequenceofQsinproof}. As we know fro
 {T^t_{t,\,x_u}}$, we find that $0=\norm{Q^*-Q^*}\geq\epsilon$. From this contradiction, it follows that there must be some $\delta_1>0$ such that Equation~\eqref{eq:outerderivativebehaveslikelimit1} holds for all $0<\Delta<\delta_1$. Similarly, using a completely analogous argument, we infer that there must be some $\delta_2>0$ such that Equation~\eqref{eq:outerderivativebehaveslikelimit2} holds for all $0<\Delta<\delta_1$. Now let $\delta\coloneqq\min\{\delta_1,\delta_2\}$.
 \end{proof}
 
-\begin{corollary}
-Consider any $P\in\wprocesses$. If $\smash{\overline{\partial}_{+}
-{T^t_{t,\,x_u}}}$ is a singleton, then $\smash{\partial_{+}
-{T^t_{t,\,x_u}}}$ exists and is equal to the unique element of $\smash{\overline{\partial}_{+}
-{T^t_{t,\,x_u}}}$. Analogous results hold for $\smash{\overline{\partial}_{-}
+\begin{corollary}\label{corol:outersingleton}
+Consider any $P\in\wprocesses$. Then $\smash{\overline{\partial}_{+}
+{T^t_{t,\,x_u}}}$ is a singleton if and only if $\smash{\partial_{+}
+{T^t_{t,\,x_u}}}$ exists and, in that case, $\smash{\overline{\partial}_{+}
+{T^t_{t,\,x_u}}}=\{\partial_{+}
+{T^t_{t,\,x_u}}\}$. Analogous results hold for $\smash{\overline{\partial}_{-}
 {T^t_{t,\,x_u}}}$ and $\smash{\partial_{-}
 {T^t_{t,\,x_u}}}$, and for $\smash{\overline{\partial}
 {T^t_{t,\,x_u}}}$ and $\smash{\partial
@@ -773,7 +774,7 @@ T_t^s=T_t^r T_r^s
 and $T_t^t=I$ for all $t\geq0$. A transition matrix system that also satisfies Equation~\eqref{eq:wellbehavedtransitionmatrix} is called a \emph{well-behaved transition matrix system}.
 \end{definition}
 
-\begin{proposition}
+\begin{proposition}\label{prop:Markovhassystem}
 Consider a Markov chain $P\in\mprocesses$ and let $\mathcal{T}_P$ be the corresponding family of transition matrices. Then $\mathcal{T}_P$ is a transition matrix system and, if $P$ is well behaved, then $\mathcal{T}_P$ is also well-behaved.
 \end{proposition}
 \begin{proof}
@@ -830,72 +831,134 @@ Since we know from Proposition~\ref{prop:systemQ} that $\mathcal{T}_Q$ is a well
 
 %As our next result shows, the converse is true as well: every well-behaved transition matrix system of a well-behaved homogeneous Markov chain can be uniquely characterised by a single transition rate matrix.
 
-\begin{theorem} *** only to be touched by Jasper ***
+\begin{theorem}\label{theo:homogeneoushasQ}
 For any well-behaved homogeneous Markov chain $P\in\whmprocesses$, there is a unique rate matrix $Q\in\mathcal{R}$ such that $\mathcal{T}_P=\mathcal{T}_Q$.
 \end{theorem}
 \begin{proof}
 Because of Proposition~\ref{prop:boundednon-emptyandclosed}, we know that $\overline{\partial}_{+}
-{T^0_{0}}$ is a non-empty set of rate matrices. Let $Q$ be any of its elements.
-
-Because of Equation~\eqref{eq:rightouterderivative}, we know that there is some strictly positive sequence $(\Delta_i)_{i\in\nats}$ such that $\lim_{i\to+\infty}\Delta_i=0$ and
-\begin{equation*}
-\lim_{i\to+\infty}
-\frac{1}{\Delta_i}
-(T^{\Delta_i}_{0}-I)
-=Q.
-\end{equation*}
+{T^0_{0}}$ is a non-empty bounded set of rate matrices, which implies that there is some real $B>0$ such that $\norm{Q'}\leq B$ for all $Q'\in\overline{\partial}_{+}
+{T^0_{0}}$. Let $Q$ be any of element of $\overline{\partial}_{+}
+{T^0_{0}}$.
 
 
-
-Fix any $c\geq0$ and any $i\in\nats$. Let $n_{c,i}\coloneqq\lfloor\nicefrac{c}{\Delta_i}\rfloor$ and let $d_{c,i}\coloneqq c-n_{c,i}\Delta_i$. Then clearly, $0\leq d_{c,i}<\Delta_i$.
-
+Fix any $c\geq0$, $\epsilon>0$ and $\delta>0$. 
+It then follows from Proposition~\ref{prop:outerderivativebehaveslikelimit} and~\ref{N:homogeneous} that there is some $\delta^*>0$ such that
+\begin{equation}
+\label{eq:homogeneoushasQ1}
+(\forall 0<\Delta^*<\delta^*)
+~
+(\exists Q^*\in\overline{\partial}_{+}
+{T^0_{0}})
+~
+\norm{T_0^{\Delta^*}-(I+\Delta^*Q^*)}<\Delta^*\epsilon.
+\end{equation}
+Furthermore, because of Equation~\eqref{eq:rightouterderivative} and~\ref{N:homogeneous}, there is some $0<\Delta<\min\{\delta,\delta^*\}$ such that
+\begin{equation}
+\label{eq:homogeneoushasQ2}
+\norm{T^{\Delta}_{0}-(I+\Delta Q)}<\Delta\epsilon.
+\end{equation}
+If we now define $n\coloneqq\lfloor\nicefrac{c}{\Delta}\rfloor$ and $d\coloneqq c-n\Delta$, then $n\Delta\leq c<(n+1)\Delta$ and therefore also $0\leq d<\Delta$. Because of Proposition~\ref{prop:Markovhassystem}, Equation~\eqref{eq:transmatrixproduct} and Definition~\ref{def:homogeneousMarkov}, we know that
 \begin{equation*}
 T_0^c=\left(
-\prod_{j=1}^{n_{i,c}}
-T_{(j-1)\Delta_i}^{j\Delta_i}
+\prod_{j=1}^{n}
+T_{(j-1)\Delta}^{j\Delta}
 \right)
-T_{n_{c,i}\Delta_i}^c
-=\left(T_0^{\Delta_i}\right)^{n_{i,c}}
-T_0^{d_{c,i}}
+T_{n\Delta}^c
+=\left(T_0^{\Delta}\right)^{n}
+T_0^{d}
 \end{equation*}
-
-\begin{equation*}
-e^{Qc}
+and therefore, it follows from *** SOME LEMMA WITH A GENERAL VERSION OF THE RECURSIVELY PROVEN NORM INEQUALITY WE USE A LOT IN THIS PAPER *** that
+\begin{equation}
+\label{eq:homogeneoushasQ3}
+\norm{
+	e^{Qc}-T_0^c
+}
 =
-e^{Q(n_{i,c}\Delta_i+d_{i,c})}
-=
+\norm{
+\left(T_0^{\Delta}\right)^{n}
+T_0^{d}
+-
 \left(
-e^{Q\Delta_i}
-\right)^{n_{i,c}}
-e^{Qd_{i,c}}
-\end{equation*}
-
+e^{Q\Delta}
+\right)^{n}
+e^{Qd}
+}
+\leq
+n\norm{T_0^{\Delta}-e^{Q\Delta}}
++\norm{T_0^{d}-e^{Qd}}.
+\end{equation}
+From Equation~\eqref{eq:homogeneoushasQ2} and Lemma~\ref{lemma:linearpartofexponential}, we infer that
+\begin{equation}
+\label{eq:homogeneoushasQ4}
+\norm{T_0^{\Delta}-e^{Q\Delta}}
+\leq
+\norm{T_0^{\Delta}-(I+\Delta Q)}
++
+\norm{(I+\Delta Q)-e^{Q\Delta}}
+\leq
+\Delta\epsilon
++
+\Delta^2\norm{Q}^2.
+\end{equation}
+Since $d<\Delta<\delta^*$, we infer from Equation~\eqref{eq:homogeneoushasQ1} that there is some $Q^*\in\overline{\partial}_{+}
+{T^0_{0}}$ such that $\norm{T_0^{d}-(I+d Q^*)}<d\epsilon$. Hence, also using Lemma~\ref{lemma:linearpartofexponential}, we find that
+\begin{align}
+\norm{T_0^{d}-e^{Qd}}
+&\leq
+\norm{T_0^{d}-(I+d Q^*)}
++
+\norm{(I+d Q^*)-(I+d Q)}
++
+\norm{(I+d Q)-e^{Qd}}\notag\\
+&\leq
+d\epsilon+d\norm{Q^*-Q}
++d^2\norm{Q}^2
+\leq
+d\epsilon+d\norm{Q^*}
++d\norm{Q}
++d^2\norm{Q}^2.\label{eq:homogeneoushasQ5}
+\end{align}
+By combining Equations~\eqref{eq:homogeneoushasQ3}, \eqref{eq:homogeneoushasQ4} and~\eqref{eq:homogeneoushasQ5}, it follows that
 \begin{equation*}
 \norm{
 	e^{Qc}-T_0^c
 }
 \leq
-n_{i,c}\norm{T_0^{\Delta_i}-e^{Q\Delta_i}}
-+\norm{T_0^{d_{c,i}}-e^{Qd_{i,c}}}
-\end{equation*}
-
-\begin{equation*}
-\norm{T_0^{\Delta_i}-e^{Q\Delta_i}}
-\leq
-\norm{T_0^{\Delta_i}-(I+\Delta_iQ)}
+n\Delta\epsilon
 +
-\norm{(I+\Delta_iQ)-e^{Q\Delta_i}}
-\leq
+n\Delta^2\norm{Q}^2
++
+d\epsilon
++d\norm{Q^*}
++d\norm{Q}
++d^2\norm{Q}^2.
 \end{equation*}
+Taking into account that $\norm{Q}\leq B$, $\norm{Q^*}\leq B$, $n\Delta\leq c$ and $d<\Delta<\delta$, this implies that
+\begin{equation*}
+\norm{
+	e^{Qc}-T_0^c
+}
+\leq
+c\epsilon
++
+c\delta B^2
++
+\delta\epsilon
++2\delta B
++\delta^2 B^2.
+\end{equation*}
+Since this is true for any $\epsilon>0$ and $\delta>0$, it follows that $\norm{e^{Qc}-T_0^c}\leq0$, which implies that $T_0^c=e^{Qc}$. Since this is true for all $c\geq0$, it follows from Definition~\ref{def:homogeneousMarkov} that
+\begin{equation}\label{eq:homogeneoushasQ6}
+T_t^s=T_0^{s-t}=e^{Q(s-t)}
+\text{~~for all $0\leq t\leq s$,}
+\end{equation}
+or equivalently, that $\mathcal{T}_P=\mathcal{T}_Q$.
 
-
-We will now prove that $T_0^c=e^{Qc}$.
-
-*** Not trivial; I have a fairly complex proof that uses outer limits. If you can think of an easier one, be my guest... :-) ***
+Finally, we prove that $Q$ is unique. Assume \emph{ex absurdo} that this is not the case, or equivalently, that there are rate matrices $Q_1$ and $Q_2$, with $Q_1\neq Q_2$, such that $\mathcal{T}_P=\mathcal{T}_{Q_1}$ and $\mathcal{T}_P=\mathcal{T}_{Q_2}$. It then follows from Definition~\ref{def:systemfromQ} that $\partial_{+}{T^0_{0}}=Q_1$ and $\partial_{+}{T^0_{0}}=Q_2$, which implies that $Q_1=Q_2$. From this contradiction, it follows $Q$ is indeed unique.
 \end{proof}
 
 \begin{lemma}\label{lemma:linearpartofexponential}
-Consider any $Q\in\mathcal{R}$ and any $\Delta>0$. Then
+Consider any $Q\in\mathcal{R}$ and any $\Delta\geq0$. Then
 \begin{equation*}
 \norm{e^{Q\Delta}-(I+\Delta Q)}\leq
 \Delta^2\norm{Q}^2.
