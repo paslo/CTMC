@@ -1592,25 +1592,42 @@ In summary, we have shown that there is lower transition operator $\lbound_t^s$ 
 \end{equation*}
 \end{proof}
 
-\subsection{Derivatives, Relation to previous work, computations}
+\subsection{Properties of the Operator of Interest}
 
-The derivative of $\lbound_t^s$ with respect to $t$ satisfies differential equations in the style of Damjan.
+\begin{definition}[Lower Transition Operator System]
+Let $\lrate$ be an arbitrary lower transition rate operator. Then, the \emph{lower transition operator system} corresponding to $\lrate$ is the family $\underline{\mathcal{T}}_{\lrate}$ of lower transition operators corresponding to $\lrate$, defined as
+\begin{equation*}
+\underline{\mathcal{T}}_{\lrate} \coloneqq \Bigl\{L_t^s\,\Big\vert\,\forall t,s\in\realsnonneg, t<s\Bigr\}\,.
+\end{equation*}
+\end{definition}
+
+\begin{proposition}
+Let $\lrate$ be an arbitrary lower transition rate operator, and let $\underline{\mathcal{T}}_{\lrate}$ be the corresponding lower transition operator system. Then, for all $t,s,r\in\realsnonneg$ such that $t< r<s$,
+\begin{equation*}
+L_t^s = L_t^rL_r^s\,.
+\end{equation*}
+Furthermore, for all $t\in\realsnonneg$, we have that $L_t^t=I$.
+\end{proposition}
+\begin{proof}
+*** trivial ***
+\end{proof}
+
+\begin{proposition}
+Let $\lrate$ be an arbitrary lower transition rate operator, and let $\underline{\mathcal{T}}_{\lrate}$ be the corresponding lower transition operator system. Then, for all $t,s\in\realsnonneg$ such that $t<s$, and all $\Delta\in\realsnonneg$, we have that
+\begin{equation*}
+L_{t+\Delta}^{s+\Delta} = L_t^s\,.
+\end{equation*}
+\end{proposition}
+\begin{proof}
+*** {\bf TODO} ***
+\end{proof}
 
 \begin{proposition}\label{prop:lower_transition_has_deriv}
-Consider any $t,s\in\realsnonneg$ such that $t<s$, let $\lrate$ be an arbitrary coherent lower transition rate operator and let $\lbound_t^s$ be the corresponding lower transition operator. Then $\frac{d}{dt}\lbound_t^s=-\lrate\lbound_t^s$ and $\frac{d}{ds}\lbound_t^s=\lbound_t^s\lrate$, meaning that
-\begin{equation}\label{eq:lower_deriv_backward}
-(\forall\epsilon>0)\,
-(\exists\delta>0)\,
-(\forall\Delta\,:\,0<\lvert\Delta\rvert <\delta)~
-\Big\lVert\frac{L_{t+\Delta}^s-L_t^s}{\Delta}+\lrate L_t^s\Big\rVert<\epsilon
-\end{equation}
-and
-\begin{equation}\label{eq:lower_deriv_forward}
-(\forall\epsilon>0)\,
-(\exists\delta>0)\,
-(\forall\Delta\,:\,0<\lvert\Delta\rvert<\delta)~
-\Big\lVert\frac{L_{t}^{s+\Delta}-L_t^s}{\Delta}-\lbound_t^s\lrate \Big\rVert<\epsilon.
-\end{equation}
+Let $\lrate$ be an arbitrary lower transition rate operator, and let $\underline{\mathcal{T}}_{\lrate}$ be the corresponding lower transition operator system. Then, for all $t,s\in\realsnonneg$ such that $t<s$, it holds that
+\begin{equation*}
+\frac{d}{dt}\lbound_t^s=-\lrate\lbound_t^s\,,\quad\text{and,}\quad\frac{d}{ds}\lbound_t^s=\lbound_t^s\lrate\,.
+\end{equation*}
+% Then $\frac{d}{dt}\lbound_t^s=-\lrate\lbound_t^s$ and $\frac{d}{ds}\lbound_t^s=\lbound_t^s\lrate$, meaning that
 \end{proposition}
 \noindent The proof for the above proposition can be found in Appendix~\ref{sec:proof_appendix}.
 
@@ -2003,6 +2020,12 @@ pomppom
 \end{proof}
 
 *** lalala sterker nog, zoals we in de volgende sectie gaan zien, kunnen we met $L_t^s$ dingen uitrekenen voor niet-Markov sets die niet kunnen voor Markov sets ***
+
+\section{Relation to Previous Work}\label{sec:prev_work}
+
+*** Taking $\lrate$ as lower envelope of $\rateset$, $L_t^s$ corresponds to solution of Damjan's differential equation ***
+
+*** Can therefore be computed relatively easily ***
 
 \section{Functions Defined on Multiple Time Points}\label{sec:funcs_multi_time_points}
 
@@ -2656,6 +2679,20 @@ By continuing in this way (applying induction), we find that
 \end{proof}
 
 \begin{proof}[Proof of Proposition~\ref{prop:lower_transition_has_deriv}]
+The proposition claims that $\frac{d}{dt}L_t^s=-\lrate L_t^s$ and $\frac{d}{ds}L_t^s=L_t^s\lrate$, meaning that
+\begin{equation}\label{eq:lower_deriv_backward}
+(\forall\epsilon>0)\,
+(\exists\delta>0)\,
+(\forall\Delta\,:\,0<\lvert\Delta\rvert <\delta)~
+\Big\lVert\frac{L_{t+\Delta}^s-L_t^s}{\Delta}+\lrate L_t^s\Big\rVert<\epsilon
+\end{equation}
+and
+\begin{equation}\label{eq:lower_deriv_forward}
+(\forall\epsilon>0)\,
+(\exists\delta>0)\,
+(\forall\Delta\,:\,0<\lvert\Delta\rvert<\delta)~
+\Big\lVert\frac{L_{t}^{s+\Delta}-L_t^s}{\Delta}-\lbound_t^s\lrate \Big\rVert<\epsilon.
+\end{equation}
 We start by proving Equation~\eqref{eq:lower_deriv_backward}. Choose any $\epsilon\in\realspos$, and let
 \begin{equation}\label{eq:derivative_max_delta}
 \delta \coloneqq \frac{\epsilon}{3\norm{\lrate}^2}.
