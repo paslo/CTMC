@@ -1446,8 +1446,8 @@ D(\lt, \underline{S}) = \max_{x\in\states}\bigl\{d_x^*(\lt_x, \underline{S}_x)\b
 Consider the metric $d$ on $\underline{\mathcal{T}}$ that is induced by $\norm{\cdot}$. We have, for any $\lt,\underline{S}\in\underline{\mathcal{T}}$, 
 \begin{align*}
 d(\lt,\underline{S}) &= \norm{\lt - \underline{S}} \\
- &= \sup\left\{ \norm{\lt f - \underline{S}f}\,:\,f\in\gamblesX, \norm{f}=1 \right\} \\
- &= \sup\left\{ \max_{x\in\states}\{\abs{\lt(f)(x) - \underline{S}(f)(x)}\}\,:\,f\in\gamblesX, \norm{f}=1 \right\} \\
+% &= \sup\left\{ \norm{\lt f - \underline{S}f}\,:\,f\in\gamblesX, \norm{f}=1 \right\} \\
+% &= \sup\left\{ \max_{x\in\states}\{\abs{\lt(f)(x) - \underline{S}(f)(x)}\}\,:\,f\in\gamblesX, \norm{f}=1 \right\} \\
  &= \sup\left\{ \max_{x\in\states}\{\abs{\lt_xf - \underline{S}_xf}\}\,:\,f\in\gamblesX, \norm{f}=1 \right\} \\
  &=  \max_{x\in\states}\bigl\{\sup\left\{\abs{\lt_xf - \underline{S}_xf}\,:\,f\in\gamblesX, \norm{f}=1 \bigr\}\right\} \\
  &=  \max_{x\in\states}\left\{d_x^*(\lt_x, \underline{S}_x)\right\}\,.
@@ -1478,12 +1478,16 @@ Trivial consequence of Lemma~\ref{lemma:normQsmallenough} and~\ref{lemma:composi
 
 \subsection{The Operator of Interest}
 
-We will next introduce a specific lower transition operator on which we will focus for the remainder of this work. We will assume in this section that we are given some arbitrary lower transition rate operator $\lrate$, and then define the \emph{lower transition operator corresponding to $\lrate$}.
+We will next introduce a specific lower transition operator on which we will focus for the remainder of this work. We will assume in this section that we are given some arbitrary lower transition rate operator $\lrate$, and define for any $u\in\mathcal{U}_{[t,s]}$ the operator
+\begin{equation*}
+\Phi_u\coloneqq\prod_{k=1}^n(I+\Delta_k\lrate)\,.
+\end{equation*}
+The \emph{lower transition operator corresponding to $\lrate$} is then defined as follows.
 
 \begin{definition}[Corresponding Lower Transition Operator]\label{def:low_trans}
-Consider any $t,s\in\realsnonneg$ such that $t<s$ and let $\lrate$ be an arbitrary lower transition rate operator. The \emph{corresponding lower transition operator} $\lbound_t^s$ is then a map from $\gamblesX$ to $\gamblesX$, defined by
+Consider any $t,s\in\realsnonneg$ such that $t<s$ and let $\lrate$ be an arbitrary lower transition rate operator. The \emph{corresponding lower transition operator} $\lbound_t^s$ is a map from $\gamblesX$ to $\gamblesX$, defined by
 \begin{equation}\label{eq:lowerbound}
-\lbound_t^s\coloneqq\lim_{\sigma(u)\to0}\left\{ \prod_{k=1}^n(I+\Delta_k\lrate)\,\Big\vert\,u\in\mathcal{U}_{[t,s]}\right\},
+\lbound_t^s\coloneqq\lim_{\sigma(u)\to0}\left\{ \Phi_u\,\Big\vert\,u\in\mathcal{U}_{[t,s]}\right\},
 \end{equation}
 where the limit is taken with respect to the set $\mathcal{U}_{[t,s]}$ of all finite sequences $u$ of time points that partition the interval $[t,s]$.
 \end{definition}
@@ -1495,48 +1499,11 @@ For any $t,s\in\realsnonneg$ such that $t<s$ and any lower transition rate opera
 \begin{equation*}
 (\forall\epsilon>0)\,
 (\exists\delta>0)\,
-(\forall u\in\mathcal{U}_{[t,s]}\colon\sigma(u)<\delta)~\norm{\lbound_t^s - \prod_{k=1}^n(I+\Delta_k\lrate)}<\epsilon.
+(\forall u\in\mathcal{U}_{[t,s]}\colon\sigma(u)<\delta)~\norm{\lbound_t^s - \Phi_u}<\epsilon.
 \end{equation*}
 \end{theorem}
 \quad\newline\newline
-\noindent The remainder of this section serves to prove Theorem~\ref{theo:convergencelowerbound}. The proof basically works as follows. In Lemmas~\ref{lemma:justtheindicator}-\ref{lemma:differencebetweennested}, we first establish bounds on the norm of the difference between various lower transition operators. For any $u\in\mathcal{U}_{[t,s]}$, we then define the operator
-\begin{equation*}
-\Phi_u\coloneqq\prod_{k=1}^n(I+\Delta_k\lrate)\,,
-\end{equation*}
-so that for any sequence $u_1,u_2,\ldots,u_n,\ldots$, we can obtain a corresponding sequence $\Phi_{u_1},\Phi_{u_2},\ldots,\Phi_{u_n},\ldots$ of operators. Using the previously established bounds, Corollary~\ref{corol:limitexistsandiscoherent} shows that if we choose $u_1,u_2,\ldots,u_n,\ldots$ such that $\lim_{n\rightarrow\infty}\sigma(u_n)=0$, the corresponding sequence $\Phi_{u_1},\Phi_{u_2},\ldots,\Phi_{u_n},\ldots$ converges, and that its limit point is a lower transition operator. The proof of Theorem~\ref{theo:convergencelowerbound} finally establishes that this limit is furthermore unique, in that the limit point is independent of the choice of $u_1,u_2,\ldots,u_n,\ldots$. Thus, we show that the limit in Equation~\eqref{eq:lowerbound} exists, and that $L_t^s$ is a lower transition operator. 
-
-We begin with some bounds on norms. If they are not given here, the proofs of these results can be found in Appendix~\ref{sec:proof_appendix}.
-
-\begin{lemma}\label{lemma:justtheindicator}
-Consider any sequence $0<\Delta_i\leq\nicefrac{1}{\norm{\lrate}}$, $i=1,\dots,n$, and let $\Delta\coloneqq\sum_{i=1}^n\Delta_i$. Then
-\begin{equation*}
-\norm{\prod_{i=1}^n(I+\Delta_i\lrate)-I}\leq\Delta\norm{\lrate}.
-\end{equation*}
-\end{lemma}
-
-\begin{lemma}\label{lemma:justthelinearpart}
-Consider any sequence $0<\Delta_i\leq\nicefrac{1}{\norm{\lrate}}$, $i=1,\dots,n$, and let $\Delta\coloneqq\sum_{i=1}^n\Delta_i$. Then
-\begin{equation*}
-\norm{\prod_{i=1}^n(I+\Delta_i\lrate)-(I+\Delta\lrate)}\leq\Delta^2\norm{\lrate}^2.
-\end{equation*}
-\end{lemma}
-
-\begin{lemma}\label{lemma:differencebetweennested}
-For any $k\in\{1,\dots,n\}$, consider a sequence of $\Delta_{k,i}>0$, $i=1,\dots,n_k$ and let $\Delta_k\coloneqq\sum_{i=1}^{n_k}\Delta_{n,k}$. Let $\Delta\coloneqq\sum_{k=1}^n\Delta_k$ and let $\alpha\coloneqq\max\{\Delta_k\colon k\in\{1,\dots,n\}\}$. If $\alpha\leq\nicefrac{1}{\norm{\lrate}}$, then
-\begin{equation*}
-\norm{\prod_{k=1}^n\left(\prod_{i=1}^{n_k}(I+\Delta_{k,i}\lrate)\right)
--
-\prod_{k=1}^n(I+\Delta_k\lrate)
-}
-\leq\alpha\Delta\norm{\lrate}^2.
-\end{equation*}
-\end{lemma}
-\quad\newline\newline
-%\vspace{5pt}
-\noindent For any $u\in\mathcal{U}_{[t,s]}$, we now let
-\begin{equation*}
-\Phi_u\coloneqq\prod_{k=1}^n(I+\Delta_k\lrate)\,.
-\end{equation*}
+\noindent The remainder of this section serves to prove Theorem~\ref{theo:convergencelowerbound}. Some technically required lemmas can be found in Appendix~\ref{sec:proof_appendix}. We start with a bound on the distance between two operators $\Phi_u$ and $\Phi_{u*}$.
 
 \begin{proposition}\label{prop:differencebetweenu}
 Consider any $t,s\in\realsnonneg$ such that $t<s$, and any $u,u^*\in\mathcal{U}_{[t,s]}$ such that $\sigma(u)<\alpha$ and $\sigma(u^*)<\alpha$, with $0<\alpha\leq\nicefrac{1}{\norm{\lrate}}$. Let $\Delta\coloneqq s-t$. Then,
@@ -1590,7 +1557,7 @@ For every sequence $u_1,u_2,\dots,u_n,\dots$ in $\mathcal{U}_{[t,s]}$ such that 
 Since $\lim_{n\to\infty}\sigma(u_n)=0$, and because of Lemma~\ref{lemma:productiscoherent}, there is some index $i$ such that the sequence $\Phi_{u_i},\Phi_{u_{i+1}},\dots,\Phi_{u_n},\dots$ consists of lower transition operators. Due to Corollary~\ref{corol:cauchy}, this sequence is Cauchy and therefore, because of Lemma~\ref{lemma:completemetricspace}, this sequence has a limit that is also a lower transition operator. Since the limit starting from $i$ and the limit starting from $1$ are identical (initial elements do not influence the limit), we find that the sequence $\Phi_{u_1},\Phi_{u_2},\dots,\Phi_{u_n},\dots$ has a limit, and that this limit is a lower transition operator.
 \end{proof}
 
-\noindent We now have all the pieces required to prove Theorem~\ref{theo:convergencelowerbound}.
+\noindent The proof of Theorem~\ref{theo:convergencelowerbound} now follows.
 
 \begin{proof}[Proof of Theorem~\ref{theo:convergencelowerbound}]
 Start by considering any sequence $u_1,u_2,\dots,u_n,\dots$ in $\mathcal{U}_{[t,s]}$ such that $\lim_{n\to\infty}\sigma(u_n)=0$. Due to Corollary~\ref{corol:limitexistsandiscoherent}, the sequence $\Phi_{u_1},\Phi_{u_2},\dots,\Phi_{u_n},\dots$ converges to a lower transition operator, which we denote by $\lbound_t^s$. 
@@ -1737,8 +1704,6 @@ Let $\rateset$ be an arbitrary non-empty bounded set of rate matrices that has s
 \end{lemma}
 \begin{proof}
 This is immediate from the definition of the lower envelope of $\rateset$, as given by Equation~\eqref{eq:correspondinglowertrans}, and the fact that $\rateset$ has separately specified rows.
-
-{\bf ATTN:} *** werkt dit eigenlijk ook als $\rateset$ geen separately specified rows heeft? Equation~\eqref{eq:correspondinglowertrans} is een beetje ambigu over of hij component-wise is of globaal, maar geen idee wat globaal zou betekenen. Als component-wise (zoals we eerder hadden), lijkt me dat we s.s.r. sowieso nodig hebben voor deze eigenschap (en dus ook voor benaderbaarheid van $L_t^s$)? ***
 \end{proof}
 
 
@@ -1987,6 +1952,55 @@ One somewhat unsurprising result is therefore that $L_t^s$ computes the lower ex
 A rather more surprising result, perhaps, is that this \emph{same} operator also computes lower expectations with respect to sets $\processes_\rateset$ of non-Markov processes.
 
 *** misschien nog iets over dat de precieze non-Markov dingen normaal als ``moeilijk'' gezien worden? ***
+
+*** is het mogelijk om zoiets te laten zien? ***
+
+\begin{theorem}
+Let $\lrate$ be an arbitrary lower transition rate operator, with $\rateset_{\lrate}$ its set of dominating rate matrices. Then, for all $t,s\in\realsnonneg$ such that $t<s$, all $f\in\gamblesX$, and all $x\in\states$,
+\begin{equation*}
+\left[L_t^sf\right](x) = \inf\left\{\mathbb{E}[f(X_s)\,\vert\,X_t=x]\,:\,P\in\wprocesses_{\rateset_{\lrate}}\right\}\,,
+\end{equation*}
+and furthermore, there does not exist a $\processes^+\subseteq\processes$ with $\processes^+\setminus\wprocesses_{\rateset_{\lrate}}\neq\emptyset$ such that for all $t,s\in\realsnonneg$ such that $t<s$, all $f\in\gamblesX$, and all $x\in\states$,
+\begin{equation*}
+\left[L_t^sf\right](x) = \inf\left\{\mathbb{E}[f(X_s)\,\vert\,X_t=x]\,:\,P\in\processes^+\right\}\,.
+\end{equation*}
+\end{theorem}
+\begin{proof}
+*** Geen idee, is dit zo? even kijken... ***
+
+First statement is trivial.
+
+For the second statement, assume that it is not true. Then, there must be some $\processes^+\subseteq\processes$ such that for some $P\in\processes^+$, $P\notin\wprocesses_{\rateset_{\lrate}}$, and at least, for all $t,s\in\realsnonneg$ such that $t<s$, all $f\in\gamblesX$ and all $x\in\states$,
+\begin{equation*}
+\left[L_t^sf\right](x) \leq \mathbb{E}[f(X_s)\,\vert\,X_t=x]\,.
+\end{equation*}
+Because $P\notin\wprocesses_{\rateset_{\lrate}}$, we know that $\smash{\overline{\partial}}T_{t,x_u}^t\nsubseteq\rateset_{\lrate}$.
+
+*** focus on $\smash{\overline{\partial}}_+T_{t,x_u}^t$ for now ***
+
+This implies that either $\smash{\overline{\partial}}_+T_{t,x_u}^t=\emptyset$, or, there is some $Q\in\smash{\overline{\partial}}_+T_{t,x_u}^t$ such that $Q\notin\rateset_{\lrate}$, meaning that there exists a sequence $\{\Delta_i\}_{i\in\nats}\to0$ such that
+\begin{equation*}
+Q\coloneqq \lim_{i\rightarrow+\infty}\frac{1}{\Delta_i}(T_{t,x_u}^{t+\Delta_i}-I) \notin \rateset_{\lrate}\,.
+\end{equation*}
+*** in case we need it: also no convergent subsequence with limit in that set ***
+Hence, for all $\epsilon>0$ and all $\delta>0$, there must be some $0<\Delta<\delta$, such that
+\begin{equation*}
+\norm{T_{t,x_u}^{t+\Delta} - (I+\Delta Q)} < \epsilon\,.
+\end{equation*}
+Hence also
+\begin{equation*}
+\norm{T_{t,x_u}^{t+\Delta}f - (I+\Delta Q)f} < \epsilon\norm{f}\,.
+\end{equation*}
+Lala
+\begin{equation*}
+\norm{T_{t,x_u}^{t+\Delta}f - L_t^{t+\Delta}f} + \norm{L_t^{t+\Delta}f - (I+\Delta Q)f} < \epsilon\norm{f}\,.
+\end{equation*}
+pomppom
+\begin{align*}
+\norm{T_{t,x_u}^{t+\Delta}f - L_t^{t+\Delta}f} + \norm{(I+\Delta\lrate)f - (I+\Delta Q)f} + \norm{\Phi_u - (I+\Delta\lrate)} &< \epsilon\norm{f} \\
+\norm{T_{t,x_u}^{t+\Delta}f - L_t^{t+\Delta}f} + \Delta\norm{\lrate f -  Qf} + \norm{\Phi_u - (I+\Delta\lrate)} &< \epsilon\norm{f} \\
+\end{align*}
+\end{proof}
 
 *** lalala sterker nog, zoals we in de volgende sectie gaan zien, kunnen we met $L_t^s$ dingen uitrekenen voor niet-Markov sets die niet kunnen voor Markov sets ***
 
@@ -2464,7 +2478,13 @@ As a trivial example, take $\mathcal{C}(\states^{u\cup v}) = \gambles(\states^{\
 
 \section{Proofs of Lemmas from Section~\ref{sec:lowertrans}}\label{sec:proof_appendix}
 
-\begin{proof}[Proof of Lemma~\ref{lemma:justtheindicator}]
+\begin{lemma}\label{lemma:justtheindicator}
+Consider any sequence $0<\Delta_i\leq\nicefrac{1}{\norm{\lrate}}$, $i=1,\dots,n$, and let $\Delta\coloneqq\sum_{i=1}^n\Delta_i$. Then
+\begin{equation*}
+\norm{\prod_{i=1}^n(I+\Delta_i\lrate)-I}\leq\Delta\norm{\lrate}.
+\end{equation*}
+\end{lemma}
+\begin{proof}
 \begin{align*}
 \norm{\prod_{i=1}^n(I+\Delta_i\lrate)-I}
 &=\norm{\prod_{i=1}^n(I+\Delta_i\lrate)-\prod_{i=1}^{n-1}(I+\Delta_i\lrate)+\prod_{i=1}^{n-1}(I+\Delta_i\lrate)-I}\\
@@ -2481,7 +2501,13 @@ where the last inequality follows from Lemma~\ref{lemma:differencenormofcoherent
 \end{align*}
 \end{proof}
 
-\begin{proof}[Proof of Lemma~\ref{lemma:justthelinearpart}]
+\begin{lemma}\label{lemma:justthelinearpart}
+Consider any sequence $0<\Delta_i\leq\nicefrac{1}{\norm{\lrate}}$, $i=1,\dots,n$, and let $\Delta\coloneqq\sum_{i=1}^n\Delta_i$. Then
+\begin{equation*}
+\norm{\prod_{i=1}^n(I+\Delta_i\lrate)-(I+\Delta\lrate)}\leq\Delta^2\norm{\lrate}^2.
+\end{equation*}
+\end{lemma}
+\begin{proof}
 \begin{align*}
 &\norm{\prod_{i=1}^n(I+\Delta_i\lrate)-(I+\Delta\lrate)}\\
 &=\norm{\prod_{i=2}^n(I+\Delta_i\lrate)+\Delta_1\lrate\left(\prod_{i=2}^n(I+\Delta_i\lrate)\right)-(I+\sum_{i=2}^n\Delta_i\lrate)-\Delta_1\lrate}\\
@@ -2511,7 +2537,17 @@ By continuing in this way (applying induction) we find that
 \end{align*}
 \end{proof}
 
-\begin{proof}[Proof of Lemma~\ref{lemma:differencebetweennested}]
+\begin{lemma}\label{lemma:differencebetweennested}
+For any $k\in\{1,\dots,n\}$, consider a sequence of $\Delta_{k,i}>0$, $i=1,\dots,n_k$ and let $\Delta_k\coloneqq\sum_{i=1}^{n_k}\Delta_{n,k}$. Let $\Delta\coloneqq\sum_{k=1}^n\Delta_k$ and let $\alpha\coloneqq\max\{\Delta_k\colon k\in\{1,\dots,n\}\}$. If $\alpha\leq\nicefrac{1}{\norm{\lrate}}$, then
+\begin{equation*}
+\norm{\prod_{k=1}^n\left(\prod_{i=1}^{n_k}(I+\Delta_{k,i}\lrate)\right)
+-
+\prod_{k=1}^n(I+\Delta_k\lrate)
+}
+\leq\alpha\Delta\norm{\lrate}^2.
+\end{equation*}
+\end{lemma}
+\begin{proof}
 \begin{align*}
 &\norm{\prod_{k=1}^n\left(\prod_{i=1}^{n_k}(I+\Delta_{k,i}\lrate)\right)
 -
