@@ -1987,36 +1987,22 @@ and furthermore, there does not exist a $\processes^+\subseteq\processes$ with $
 
 First statement is trivial.
 
-For the second statement, assume that it is not true. Then, there must be some $\processes^+\subseteq\processes$ such that for some $P\in\processes^+$, $P\notin\wprocesses_{\rateset_{\lrate}}$, and at least, for all $t,s\in\realsnonneg$ such that $t<s$, all $f\in\gamblesX$ and all $x\in\states$,
-\begin{equation*}
-\left[L_t^sf\right](x) \leq \mathbb{E}[f(X_s)\,\vert\,X_t=x]\,.
-\end{equation*}
-Because $P\notin\wprocesses_{\rateset_{\lrate}}$, we know that $\smash{\overline{\partial}}T_{t,x_u}^t\nsubseteq\rateset_{\lrate}$.
+For the second statement, take any $P\in\processes$ such that $P\notin\wprocesses_{\rateset_{\lrate}}$. Then, $\smash{\overline{\partial}}T_{t,x_u}^{t}\nsubseteq\rateset_{\lrate}$, and hence either $\smash{\overline{\partial}}T_{t,x_u}^{t}=\emptyset$, or, there is some $Q\in\smash{\overline{\partial}}T_{t,x_u}^{t}$ such that $Q\notin\rateset_{\lrate}$. Assume the latter case for now, and assume that $Q\in\smash{\overline{\partial}}_+T_{t,x_u}^{t}$. Because $Q\notin\rateset_{\lrate}$, by Equation~\eqref{eq:dominatingratematrices} there must be some $f\in\gamblesX$ and some $x\in\states$ such that $\left[Qf\right](x)<\left[\lrate f\right](x)$. Furthermore, because $Q\in\smash{\overline{\partial}}_+T_{t,x_u}^{t}$, there is some $\{\Delta_i\}_{i\in\nats}\to0$ such that $\lim_{i\to+\infty}\nicefrac{1}{\Delta_i}(T_{t,x_u}^t - I)=Q$.
 
-*** focus on $\smash{\overline{\partial}}_+T_{t,x_u}^t$ for now ***
-
-This implies that either $\smash{\overline{\partial}}_+T_{t,x_u}^t=\emptyset$, or, there is some $Q\in\smash{\overline{\partial}}_+T_{t,x_u}^t$ such that $Q\notin\rateset_{\lrate}$, meaning that there exists a sequence $\{\Delta_i\}_{i\in\nats}\to0$ such that
+Now, assume \emph{ex absurdo} that the statement is false. Then, we must have that for all $\Delta>0$,
 \begin{equation*}
-Q\coloneqq \lim_{i\rightarrow+\infty}\frac{1}{\Delta_i}(T_{t,x_u}^{t+\Delta_i}-I) \notin \rateset_{\lrate}\,.
+\left[L_t^{t+\Delta}f\right](x) \leq \left[T_{t,x_u}^{t+\Delta}f\right](x)\,,
 \end{equation*}
-*** in case we need it: also no convergent subsequence with limit in that set ***
-Hence, for all $\epsilon>0$ and all $\delta>0$, there must be some $0<\Delta<\delta$, such that
+or equivalently, that
 \begin{equation*}
-\norm{T_{t,x_u}^{t+\Delta} - (I+\Delta Q)} < \epsilon\,.
+0 \leq \left[\frac{1}{\Delta}\left(T_{t,x_u}^{t+\Delta} - I\right)f\right](x) - \left[\frac{1}{\Delta}\left(L_t^{t+\Delta} - I\right)f\right](x)\,.
 \end{equation*}
-Hence also
-\begin{equation*}
-\norm{T_{t,x_u}^{t+\Delta}f - (I+\Delta Q)f} < \epsilon\norm{f}\,.
-\end{equation*}
-Lala
-\begin{equation*}
-\norm{T_{t,x_u}^{t+\Delta}f - L_t^{t+\Delta}f} + \norm{L_t^{t+\Delta}f - (I+\Delta Q)f} < \epsilon\norm{f}\,.
-\end{equation*}
-pomppom
+Consider the earlier sequence $\{\Delta_i\}_{i\in\nats}$. Because this inequality holds for each $\Delta_i$ in the sequence, we must have that
 \begin{align*}
-\norm{T_{t,x_u}^{t+\Delta}f - L_t^{t+\Delta}f} + \norm{(I+\Delta\lrate)f - (I+\Delta Q)f} + \norm{\Phi_u - (I+\Delta\lrate)} &< \epsilon\norm{f} \\
-\norm{T_{t,x_u}^{t+\Delta}f - L_t^{t+\Delta}f} + \Delta\norm{\lrate f -  Qf} + \norm{\Phi_u - (I+\Delta\lrate)} &< \epsilon\norm{f} \\
+0 &\leq \lim_{i\to+\infty}\left[\frac{1}{\Delta_i}\left(T_{t,x_u}^{t+\Delta_i} - I\right)f\right](x) - \lim_{i\to+\infty}\left[\frac{1}{\Delta}\left(L_t^{t+\Delta} - I\right)f\right](x) \\
+ &= \left[Qf\right](x) - \left[\lrate f\right](x)\,,
 \end{align*}
+the required contradiction.
 \end{proof}
 
 *** lalala sterker nog, zoals we in de volgende sectie gaan zien, kunnen we met $L_t^s$ dingen uitrekenen voor niet-Markov sets die niet kunnen voor Markov sets ***
