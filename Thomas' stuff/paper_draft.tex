@@ -788,19 +788,6 @@ At this point, we already know that every (well-behaved) Markov chain has a corr
 \end{theorem}
 \begin{proof}
 *** Not trivial; I have a coherence-based proof that I'll add here someday ***
-
-Let $\tilde{P}$ be defined by $\tilde{P}(X_0=y)\coloneqq p(y)$ and
-\begin{equation*}
-\tilde{P}(X_s=y\vert X_t=x, X_{t_0}=x_{0}, \dots, X_{t_n}=x_{n})\coloneqq T_t^s(x,y).
-\end{equation*}
-
-We now first prove that $\tilde{P}$ is coherent (*** I still need to write this part ***).
-
-Therefore, and because of Theorem~\ref{theo:coherentextendable}, $\tilde{P}$ can be extended to a full conditional probability $\tilde{P}^*$. If we now let $P$ be the restriction of $\tilde{P}^*$ to $\mathcal{C}^\mathrm{SP}$, then clearly, $P$ is a stochastic process that extends $\tilde{P}$, which implies that $P$ is a Markov chain such that $\mathcal{T}_P=\mathcal{T}$ and $P(X_0)=p(X_0)$. 
-
-The uniqueness of $P$ now follows because every conditional probability in its domain can be obtained by multiplying and adding probabilties in the domain of $\tilde{P}$.
-
-The last part (about the well-behavedness) follows trivially from the Markov property.
 \end{proof}
 
 Hence, Markov chains---and well-behaved Markov chains in particular---are completely characterised by their transition matrices and their initial distribution. 
@@ -2056,10 +2043,10 @@ By the definition of the norm, we have that $\abs{\nicefrac{1}{\Delta}\left[(L_{
 \abs{\frac{1}{\Delta}\left[(T_{t}^{t+\Delta} - I)\ind{y}\right](y)} \leq \norm{\nicefrac{1}{\Delta}(L_{t}^{t+\Delta} - I)}\,.
 \end{equation*}
 
-Now, by Proposition~\ref{prop:lower_transition_has_deriv}, we have that $\lim_{\Delta\to0^+}\nicefrac{1}{\Delta}(L_{t}^{t+\Delta} - I) = \lrate$, and hence it follows that $\lim_{\Delta\to0^+}\norm{\nicefrac{1}{\Delta}(L_{t}^{t+\Delta} - I)} = \norm{\lrate}$. By Proposition~\ref{lem:normlratefinite}, there is therefore some $B\in\realsnonneg$ such that $\lim_{\Delta\to0^+}\norm{\nicefrac{1}{\Delta}(L_{t}^{t+\Delta} - I)} < B$. Taking limits on both sides of our earlier inequality, we therefore find that
+Now, by Proposition~\ref{prop:lower_transition_has_deriv}, we have that $\lim_{\Delta\to0^+}\nicefrac{1}{\Delta}(L_{t}^{t+\Delta} - I) = \lrate$, and hence it follows that $\lim_{\Delta\to0^+}\norm{\nicefrac{1}{\Delta}(L_{t}^{t+\Delta} - I)} = \norm{\lrate}$. By Proposition~\ref{lem:normlratefinite}, we furthermore know that $\norm{\lrate}<+\infty$. Taking limits on both sides of our earlier inequality, we therefore find that
 \begin{align*}
 \limsup_{\Delta\to0^+}\abs{\frac{1}{\Delta}\left[(T_{t}^{t+\Delta} - I)\ind{y}\right](y)} &\leq \limsup_{\Delta\to0^+}\norm{\nicefrac{1}{\Delta}(L_{t}^{t+\Delta} - I)} \\
-\limsup_{\Delta\to0^+}\abs{\frac{1}{\Delta}\left[(T_{t}^{t+\Delta} - I)\ind{y}\right](y)} &\leq \norm{\lrate} < B\,,
+\limsup_{\Delta\to0^+}\abs{\frac{1}{\Delta}\left[(T_{t}^{t+\Delta} - I)\ind{y}\right](y)} &\leq \norm{\lrate} < +\infty\,,
 \end{align*}
 which, by Equation~\eqref{eq:nonwellbehaved_limit_diagonal}, is a contradiction.
 
