@@ -1996,7 +1996,7 @@ Furthermore, for all $P\in\processes$ such that $P\notin\wprocesses_{\rateset_{\
 \end{equation*}
 \end{theorem}
 \begin{proof}
-By Propositions~\ref{prop:dominating_nonempty_bounded} and \ref{prop:dominatingproperties}, the set $\rateset_{\lrate}$ is non-empty, bounded, and has separately specified rows. The first statement therefore follows directly from Corollary~\ref{cor:lower_operator_is_infimum}.
+By Propositions~\ref{prop:dominating_nonempty_bounded} and \ref{prop:dominatingproperties}, the set $\rateset_{\lrate}$ is non-empty, bounded, has separately specified rows, and by definition has $\lrate$ as its corresponding lower transition rate operator. The first statement therefore follows directly from Corollary~\ref{cor:lower_operator_is_infimum}.
 
 For the second statement, take any $P\in\processes$ such that $P\notin\wprocesses_{\rateset_{\lrate}}$. Clearly, we must have that either $P\in\wprocesses$ or $P\notin\wprocesses$. We will start by assuming the former, and show that the statement then follows.
 
@@ -2023,7 +2023,47 @@ By Proposition~\ref{prop:lower_transition_is_homogeneous}, we have that $L_{t-\D
 \end{align*}
 we again find a contradiction. Therefore, if $P\in\wprocesses$, the statement follows.
 
-Now, assume that instead $P\notin\wprocesses$. *** ik heb deze al op papier staan, werk hem nu uit... ***
+Now, suppose that instead $P\notin\wprocesses$. Assume \emph{ex absurdo} that the statement is false. Because $P\notin\wprocesses$, by Definition~\ref{def:well-behaved} there must be some $t\in\realsnonneg$ and some $x,y\in\states$ such that either 
+\begin{equation*}
+\limsup_{\Delta\to0^+}\frac{1}{\Delta}\abs{P(X_{t+\Delta}=y\,\vert\,X_t=x)-\delta_{xy}}\nless+\infty\,,
+\end{equation*}
+or,
+\begin{equation*}
+\limsup_{\Delta\to0^+}\frac{1}{\Delta}\abs{P(X_{t}=y\,\vert\,X_{t-\Delta}=x)-\delta_{xy}}\nless+\infty\,.
+\end{equation*}
+Start by assuming that its the former. Clearly, we have for all $\Delta\in\realspos$ that $\left[T_t^{t+\Delta}\ind{y}\right](x)=P(X_{t+\Delta}=y\,\vert\,X_t=x)$, and furthermore, that $\left[I\ind{y}\right](x)=\delta_{xy}$. Hence, we have that
+\begin{equation*}
+\left[(T_t^{t+\Delta}-I)\ind{y}\right](x) = P(X_{t+\Delta}=y\,\vert\,X_t=x) - \delta_{xy}\,.
+\end{equation*}
+By Proposition~\ref{prop:rate_from_stochastic_matrix}, we have that $\nicefrac{1}{\Delta}(T_t^{t+\Delta}-I)$ is a transition rate matrix, and hence by Definition~\ref{def:rate_matrix} we must have that $\left[(T_t^{t+\Delta}-I)\ind{y}\right](y)\leq 0$, and $\abs{\left[(T_t^{t+\Delta}-I)\ind{y}\right](x)}\leq\abs{\left[(T_t^{t+\Delta}-I)\ind{y}\right](y)}$. It therefore follows that also
+\begin{equation}\label{eq:nonwellbehaved_limit_diagonal}
+\limsup_{\Delta\to0^+}\frac{1}{\Delta}\abs{\left[(T_t^{t+\Delta}-I)\ind{y}\right](y)} \nless +\infty\,.
+\end{equation}
+Similarly, by Proposition {\bf ADD-THIS}, we have that $\nicefrac{1}{\Delta}(L_t^{t+\Delta}-I)$ is a lower transition rate operator, and hence by Definition~\ref{def:coh_low_trans_rate}, we must have that $\left[\nicefrac{1}{\Delta}(L_t^{t+\Delta}-I)\ind{y}\right](y)\leq 0$. 
+
+*** That last claim kinda still needs a lemma somewhere ***
+
+Because we assumed that the statement is false, it must hold for all $\Delta\in\realspos$ that
+\begin{equation*}
+\frac{1}{\Delta}\left[(L_{t}^{t+\Delta} - I)\ind{y}\right](y) \leq \frac{1}{\Delta}\left[(T_{t}^{t+\Delta} - I)\ind{y}\right](y)\,.
+\end{equation*}
+From our earlier observations, we know that both sides of this inequality are negative. Hence, we must have that
+\begin{equation*}
+\abs{\frac{1}{\Delta}\left[(T_{t}^{t+\Delta} - I)\ind{y}\right](y)} \leq \abs{\frac{1}{\Delta}\left[(L_{t}^{t+\Delta} - I)\ind{y}\right](y)}\,.
+\end{equation*}
+By the definition of the norm, we have that $\abs{\nicefrac{1}{\Delta}\left[(L_{t}^{t+\Delta} - I)\ind{y}\right](y)}\leq\norm{\nicefrac{1}{\Delta}(L_{t}^{t+\Delta} - I)\ind{y}}$, and because $\ind{y}\in\gamblesX$ and $\norm{\ind{y}}=1$, we have $\norm{\nicefrac{1}{\Delta}(L_{t}^{t+\Delta} - I)\ind{y}}\leq \norm{\nicefrac{1}{\Delta}(L_{t}^{t+\Delta} - I)}$. Hence, we must have that
+\begin{equation*}
+\abs{\frac{1}{\Delta}\left[(T_{t}^{t+\Delta} - I)\ind{y}\right](y)} \leq \norm{\nicefrac{1}{\Delta}(L_{t}^{t+\Delta} - I)}\,.
+\end{equation*}
+
+Now, by Proposition~\ref{prop:lower_transition_has_deriv}, we have that $\lim_{\Delta\to0^+}\nicefrac{1}{\Delta}(L_{t}^{t+\Delta} - I) = \lrate$, and hence it follows that $\lim_{\Delta\to0^+}\norm{\nicefrac{1}{\Delta}(L_{t}^{t+\Delta} - I)} = \norm{\lrate}$. By Proposition~\ref{lem:normlratefinite}, there is therefore some $B\in\realsnonneg$ such that $\lim_{\Delta\to0^+}\norm{\nicefrac{1}{\Delta}(L_{t}^{t+\Delta} - I)} < B$. Taking limits on both sides of our earlier inequality, we therefore find that
+\begin{align*}
+\limsup_{\Delta\to0^+}\abs{\frac{1}{\Delta}\left[(T_{t}^{t+\Delta} - I)\ind{y}\right](y)} &\leq \limsup_{\Delta\to0^+}\norm{\nicefrac{1}{\Delta}(L_{t}^{t+\Delta} - I)} \\
+\limsup_{\Delta\to0^+}\abs{\frac{1}{\Delta}\left[(T_{t}^{t+\Delta} - I)\ind{y}\right](y)} &\leq \norm{\lrate} < B\,,
+\end{align*}
+which, by Equation~\eqref{eq:nonwellbehaved_limit_diagonal}, is a contradiction.
+
+*** need to add proof for left-sided. works with a similar argument ***
 \end{proof}
 
 *** lalala sterker nog, zoals we in de volgende sectie gaan zien, kunnen we met $L_t^s$ dingen uitrekenen voor niet-Markov sets die niet kunnen voor Markov sets ***
