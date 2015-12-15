@@ -1612,7 +1612,7 @@ Furthermore, for all $t\in\realsnonneg$, we have that $L_t^t=I$.
 *** trivial ***
 \end{proof}
 
-\begin{proposition}
+\begin{proposition}\label{prop:lower_transition_is_homogeneous}
 Let $\lrate$ be an arbitrary lower transition rate operator, and let $\underline{\mathcal{T}}_{\lrate}$ be the corresponding lower transition operator system. Then, for all $t,s\in\realsnonneg$ such that $t<s$, and all $\Delta\in\realsnonneg$, we have that
 \begin{equation*}
 L_{t+\Delta}^{s+\Delta} = L_t^s\,.
@@ -1635,7 +1635,7 @@ Let $\lrate$ be an arbitrary lower transition rate operator, and let $\underline
 
 One of the objectives of this paper is to establish a connection between the operator $\lbound_t^s$ that we have just introduced, and the different types of imprecise continous-time Markov chains that were discussed in Section~\ref{sec:iCTMC}. Since the former is derived from a lower transition rate operator $\lrate$ and the latter are derived from a non-empty bounded set of rate matrices $\rateset$, an obvious first step is to investigate the connection between lower transition rate operators and non-empty bounded sets of rate matrices.
 
-\subsection{Connections Between $\lrate$ and Sets of Rate Matrices $\rateset$}
+\subsection{Connections Between $\lrate$ and Sets of Rate Matrices $\rateset$}\label{sec:connections_rate}
 
 % $\rateset$ and $\lrate$. 
 %In order to do that, we start by discussing some properties of sets of rate matrices.
@@ -1676,7 +1676,7 @@ Qf\geq\lrate f\text{ for all $f\in\gamblesX$}
 \end{equation}
 As our next result shows, this set $\rateset_{\lrate}$ is non-empty and bounded, and has $\lrate$ as its lower envelope. Even stronger, the infimum in Equation~\eqref{eq:correspondinglowertrans} is reached---can be replaced by a minimum.
 
-\begin{proposition}
+\begin{proposition}\label{prop:dominating_nonempty_bounded}
 Consider a lower transition rate operator $\lrate$ and let $\rateset_{\lrate}$ be the corresponding set of dominating rate matrices, as defined by Equation~\eqref{eq:dominatingratematrices}. Then $\rateset_{\lrate}$ is non-empty and bounded and, for all $f\in\gamblesX$, there is some $Q\in\rateset_{\lrate}$ such that $\lrate f=Qf$.
 \end{proposition}
 \begin{proof}
@@ -1970,39 +1970,47 @@ A rather more surprising result, perhaps, is that this \emph{same} operator also
 
 *** misschien nog iets over dat de precieze non-Markov dingen normaal als ``moeilijk'' gezien worden? ***
 
-*** is het mogelijk om zoiets te laten zien? ***
+Recall from Section~\ref{sec:connections_rate} that for a given lower transition rate operator $\lrate$, its set of dominating rate matrices $\rateset_{\lrate}$ is---by definition---the largest set of rate matrices which has $\lrate$ as its lower envelope. Our next result shows that the set $\wprocesses_{\rateset_{\lrate}}$ of well-behaved stochastic processes consistent with $\rateset_{\lrate}$ is the largest set of stochastic processes which has $L_t^s$ as its lower envelope.
 
 \begin{theorem}
 Let $\lrate$ be an arbitrary lower transition rate operator, with $\rateset_{\lrate}$ its set of dominating rate matrices. Then, for all $t,s\in\realsnonneg$ such that $t<s$, all $f\in\gamblesX$, and all $x\in\states$,
 \begin{equation*}
-\left[L_t^sf\right](x) = \inf\left\{\mathbb{E}[f(X_s)\,\vert\,X_t=x]\,:\,P\in\wprocesses_{\rateset_{\lrate}}\right\}\,,
+\left[L_t^sf\right](x) = \inf\left\{\mathbb{E}[f(X_s)\,\vert\,X_t=x]\,:\,P\in\wprocesses_{\rateset_{\lrate}}\right\}\,.
 \end{equation*}
-and furthermore, there does not exist a $\processes^+\subseteq\processes$ with $\processes^+\setminus\wprocesses_{\rateset_{\lrate}}\neq\emptyset$ such that for all $t,s\in\realsnonneg$ such that $t<s$, all $f\in\gamblesX$, and all $x\in\states$,
+Furthermore, for all $P\in\processes$ such that $P\notin\wprocesses_{\rateset_{\lrate}}$, there is some $f\in\gamblesX$, and some $t,s\in\realsnonneg$ with $t<s$, such that for some $x\in\states$,
 \begin{equation*}
-\left[L_t^sf\right](x) = \inf\left\{\mathbb{E}[f(X_s)\,\vert\,X_t=x]\,:\,P\in\processes^+\right\}\,.
+\mathbb{E}\left[f(X_s)\,\vert\,X_t=x\right] < \left[L_t^sf\right](x)\,.
 \end{equation*}
 \end{theorem}
 \begin{proof}
-*** Geen idee, is dit zo? even kijken... ***
+By Propositions~\ref{prop:dominating_nonempty_bounded} and \ref{prop:dominatingproperties}, the set $\rateset_{\lrate}$ is non-empty, bounded, and has separately specified rows. The first statement therefore follows directly from Corollary~\ref{cor:lower_operator_is_infimum}.
 
-First statement is trivial.
+For the second statement, take any $P\in\processes$ such that $P\notin\wprocesses_{\rateset_{\lrate}}$. Clearly, we must have that either $P\in\wprocesses$ or $P\notin\wprocesses$. We will start by assuming the former, and show that the statement then follows.
 
-For the second statement, take any $P\in\processes$ such that $P\notin\wprocesses_{\rateset_{\lrate}}$. Then, $\smash{\overline{\partial}}T_{t,x_u}^{t}\nsubseteq\rateset_{\lrate}$, and hence either $\smash{\overline{\partial}}T_{t,x_u}^{t}=\emptyset$, or, there is some $Q\in\smash{\overline{\partial}}T_{t,x_u}^{t}$ such that $Q\notin\rateset_{\lrate}$. Assume the latter case for now, and assume that $Q\in\smash{\overline{\partial}}_+T_{t,x_u}^{t}$. Because $Q\notin\rateset_{\lrate}$, by Equation~\eqref{eq:dominatingratematrices} there must be some $f\in\gamblesX$ and some $x\in\states$ such that $\left[Qf\right](x)<\left[\lrate f\right](x)$. Furthermore, because $Q\in\smash{\overline{\partial}}_+T_{t,x_u}^{t}$, there is some $\{\Delta_i\}_{i\in\nats}\to0$ such that $\lim_{i\to+\infty}\nicefrac{1}{\Delta_i}(T_{t,x_u}^t - I)=Q$.
+Because $P\notin\wprocesses_{\rateset_{\lrate}}$, by Definition~\ref{def:set_non_markov_process}, there must be some $t\in\realsnonneg$ such that $\smash{\overline{\partial}}T_{t,x_u}^{t}\nsubseteq\rateset_{\lrate}$. Furthermore, by Proposition~\ref{prop:boundednon-emptyandclosed}, we have that $\smash{\overline{\partial}}T_{t,x_u}^{t}\neq\emptyset$. Hence, there must be some rate matrix $Q\in\smash{\overline{\partial}}T_{t,x_u}^{t}$ such that $Q\notin\rateset_{\lrate}$, which by Equation~\eqref{eq:dominatingratematrices} implies that there is some $f\in\gamblesX$ and some $x\in\states$ such that $\left[Qf\right](x)<\left[\lrate f\right](x)$.
 
-Now, assume \emph{ex absurdo} that the statement is false. Then, we must have that for all $\Delta>0$,
-\begin{equation*}
-\left[L_t^{t+\Delta}f\right](x) \leq \left[T_{t,x_u}^{t+\Delta}f\right](x)\,,
-\end{equation*}
+Now, assume \emph{ex absurdo} that the statement is false. Because $Q\in\smash{\overline{\partial}}T_{t,x_u}^{t}$, we must have that either $Q\in\smash{\overline{\partial}}_+T_{t,x_u}^{t}$ or $Q\in\smash{\overline{\partial}}_-T_{t,x_u}^{t}$. Assume its the former. Then, by Equation~\ref{eq:rightouterderivative}, there is some $\{\Delta_i\}_{i\in\nats}\to0^+$ such that $\lim_{i\to+\infty}\nicefrac{1}{\Delta_i}(T_{t,x_u}^{t+\Delta_i}-I)=Q$. Because we assumed that the claim is false, we must have that for all $\Delta\in\realspos$, it holds that $\left[L_t^{t+\Delta}f\right](x) \leq \left[T_{t,x_u}^{t+\Delta}f\right](x)$,
 or equivalently, that
 \begin{equation*}
-0 \leq \left[\frac{1}{\Delta}\left(T_{t,x_u}^{t+\Delta} - I\right)f\right](x) - \left[\frac{1}{\Delta}\left(L_t^{t+\Delta} - I\right)f\right](x)\,.
+\frac{1}{\Delta}\left[(L_t^{t+\Delta} - I)f\right](x) \leq \frac{1}{\Delta}\left[(T_{t,x_u}^{t+\Delta} - I)f\right](x)\,.
 \end{equation*}
-Consider the earlier sequence $\{\Delta_i\}_{i\in\nats}$. Because this inequality holds for each $\Delta_i$ in the sequence, we must have that
+Taking limits on both sides with respect to $\{\Delta_i\}_{i\in\nats}$, we find that
 \begin{align*}
-0 &\leq \lim_{i\to+\infty}\left[\frac{1}{\Delta_i}\left(T_{t,x_u}^{t+\Delta_i} - I\right)f\right](x) - \lim_{i\to+\infty}\left[\frac{1}{\Delta}\left(L_t^{t+\Delta} - I\right)f\right](x) \\
- &= \left[Qf\right](x) - \left[\lrate f\right](x)\,,
+\lim_{i\to+\infty}\frac{1}{\Delta_i}\left[(L_t^{t+\Delta_i} - I)f\right](x) &\leq \lim_{i\to+\infty}\frac{1}{\Delta_i}\left[(T_{t,x_u}^{t+\Delta_i} - I)f\right](x) \\
+\left[\lrate f\right](x) &\leq \left[Qf\right](x)\,,
 \end{align*}
-the required contradiction.
+where the left-hand limit follows from Proposition~\ref{prop:lower_transition_has_deriv}. This contradicts the earlier observation that $\left[Qf\right](x)<\left[\lrate f\right](x)$. Hence, if the statement is indeed false, we must instead have that $Q\in\smash{\overline{\partial}}_-T_{t,x_u}^{t}$. In that case, there is some other $\{\Delta_i\}_{i\in\nats}\to0^+$, such that $\lim_{i\to+\infty}\nicefrac{1}{\Delta_i}(T_{t-\Delta_i,x_u}^{t}-I)=Q$, and similarly, we should have for all $\Delta\in\realspos$ that
+\begin{equation*}
+\frac{1}{\Delta}\left[(L_{t-\Delta}^{t} - I)f\right](x) \leq \frac{1}{\Delta}\left[(T_{t-\Delta,x_u}^{t} - I)f\right](x)\,.
+\end{equation*}
+By Proposition~\ref{prop:lower_transition_is_homogeneous}, we have that $L_{t-\Delta}^{t}=L_{t}^{t+\Delta}$, and so after taking limits on both sides,
+\begin{align*}
+\lim_{i\to+\infty}\frac{1}{\Delta_i}\left[(L_t^{t+\Delta_i} - I)f\right](x) &\leq \lim_{i\to+\infty}\frac{1}{\Delta_i}\left[(T_{t-\Delta_i,x_u}^{t} - I)f\right](x) \\
+\left[\lrate f\right](x) &\leq \left[Qf\right](x)\,,
+\end{align*}
+we again find a contradiction. Therefore, if $P\in\wprocesses$, the statement follows.
+
+Now, assume that instead $P\notin\wprocesses$. *** ik heb deze al op papier staan, werk hem nu uit... ***
 \end{proof}
 
 *** lalala sterker nog, zoals we in de volgende sectie gaan zien, kunnen we met $L_t^s$ dingen uitrekenen voor niet-Markov sets die niet kunnen voor Markov sets ***
