@@ -143,9 +143,15 @@ Consider some finite \emph{state space} $\states=\{1,\dots,m\}$.
 
 *** introduce state space, notation for naturals, reals, ... ***
 
-\subsection{Stochastic matrices and rate matrices}
-\begin{definition}[Rate Matrix]\label{def:rate_matrix}
-A real-valued $m\times m$ matrix $Q$ is said to be a \emph{rate matrix} if
+Throughout this work, we will make extensive use of the notion of sequences of time points. For any $t,s\in\realsnonneg$ such that $t<s$, let $u$ denote any finite sequence of time points $t_0,t_1,\ldots,t_n$ such that $t=t_0 < t_1 <\ldots < t_n = s$. We use $\mathcal{U}_{[t,s]}$ to denote the set of all such sequences. 
+Given any $u\in\mathcal{U}_{[t,s]}$, we define for all $i\in\{1,\ldots,n\}$ the terms $\Delta_i\coloneqq t_i-t_{i-1}$.  Finally, define a function $\sigma(u)$, as
+\begin{equation*}
+\sigma(u) \coloneqq \max\bigl\{\Delta_i\,:\,i\in\{1,\ldots,n\}\bigr\}\,.
+\end{equation*}
+
+\subsection{Transition (Rate) Matrices}\label{sec:trans_rate_matrices}
+\begin{definition}[Transition Rate Matrix]\label{def:rate_matrix}
+A real-valued $m\times m$ matrix $Q$ is said to be a \emph{transition rate matrix}, or sometimes simply \emph{rate matrix}, if
 
 \vspace{5pt}
 \begin{enumerate}[label=R\arabic*:]
@@ -156,13 +162,13 @@ $Q(x,y)\geq0$ for all $x,y\in\states$ such that $x\neq y$.
 \end{enumerate}
 \vspace{5pt}
 \noindent
-We use $\mathcal{R}$ to denote the set of all rate matrices. 
+We use $\mathcal{R}$ to denote the set of all transition rate matrices. 
 \end{definition}
 
 Clearly, $\mathcal{R}$ is closed under finite sums and multiplication with non-negative scalars. 
 
-\begin{definition}[Stochastic Matrix]\label{def:stoch_matrix}
-A real-valued $m\times m$ matrix $A$ is said to be \emph{stochastic} if
+\begin{definition}[Transition Matrix]\label{def:stoch_matrix}
+A real-valued $m\times m$ matrix $A$ is said to be a \emph{transition matrix} if
 \vspace{5pt}
 \begin{enumerate}[label=S\arabic*:]
 \item
@@ -175,7 +181,7 @@ $A(x,y)\geq0$ for all $x,y\in\states$.
 \end{definition}
 
 \begin{proposition}\label{prop:stochastic_from_rate_matrix}
-Consider any $m\times m$ rate matrix $Q\in\mathcal{R}$, and any $0\leq \Delta \leq \nicefrac{1}{\norm{Q}}$. Let $I$ denote the $m\times m$ identity matrix. Then, the matrix $[I+\Delta Q]$ is stochastic.
+Consider any $m\times m$ rate matrix $Q\in\mathcal{R}$, and any $0\leq \Delta \leq \nicefrac{1}{\norm{Q}}$. Let $I$ denote the $m\times m$ identity matrix. Then, the matrix $[I+\Delta Q]$ is a transition matrix.
 \end{proposition}
 \begin{proof}
 Let $A=[I+\Delta Q]$. We will verify the properties from Definition~\ref{def:stoch_matrix}.
@@ -190,7 +196,7 @@ For property S2, note that $0\leq \Delta \leq \nicefrac{1}{\norm{Q}}$. Whence, f
 \end{proof}
 
 \begin{proposition}\label{prop:rate_from_stochastic_matrix}
-Consider any stochastic $m\times m$ matrix $A$, and any $\Delta\in\realspos$. Let $I$ denote the $m\times m$ identity matrix. Then, $[\nicefrac{1}{\Delta}\cdot(A-I)]$ is a rate matrix.
+Consider any $m\times m$ transition matrix $A$, and any $\Delta\in\realspos$. Let $I$ denote the $m\times m$ identity matrix. Then, $[\nicefrac{1}{\Delta}\cdot(A-I)]$ is a transition rate matrix.
 \end{proposition}
 \begin{proof}
 This follows from a similar argument as the proof of Proposition~\ref{prop:stochastic_from_rate_matrix}; simply verify the properties from Definition~\ref{def:rate_matrix}.
@@ -1055,29 +1061,6 @@ Then, there exists a stochastic process $P\in\mprocesses$ such that $Q_t$ charac
 
 %\section{The Lower Transition Operator}\label{sec:lower_operator}
 
-\subsection{Stuff that needs to find a place}
-
-
-
-
-*** Throughout this work, we will make extensive use of the notion of sequences of time points. For any $t,s\in\realsnonneg$ such that $t<s$, let $u$ denote any finite sequence of time points $t_0,t_1,\ldots,t_n$ such that $t=t_0 < t_1 <\ldots < t_n = s$. We use $\mathcal{U}_{[t,s]}$ to denote the set of all such sequences. 
-Given any $u\in\mathcal{U}_{[t,s]}$, we define for all $i\in\{1,\ldots,n\}$ the terms $\Delta_i\coloneqq t_i-t_{i-1}$.  Finally, define a function $\sigma(u)$, as
-\begin{equation*}
-\sigma(u) \coloneqq \max\bigl\{\Delta_i\,:\,i\in\{1,\ldots,n\}\bigr\}\,.
-\end{equation*}
-***
-
-*** deze moeten we ergens kwijt, ik heb hem maar even hier neergezet. beetje onhandig alleen aangezien we boundedness van $\rateset$ hier nog niet gedefinieerd hebben ***
-
-\begin{lemma}\label{lemma:bound_precise_linear_approx}
-Let $Q_\tau$ be any piecewise-constant function that gives for each time point $\tau\in\realsnonneg$ a rate matrix in some non-empty bounded set of rate matrices $\rateset$. By Theorem~\ref{theorem:continuous_rate_matrix_has_process}, there is then some Markov process $P\in\mprocesses_\rateset$ that is characterized by $Q_\tau$. Consider any $t\in\realsnonneg$ and any $\Delta\in\realsnonneg$ such that $Q_\tau$ is constant on the interval $[t,t+\Delta]$. Then, the transition matrix $T_t^{t+\Delta}$ corresponding to $P$ satisfies
-\begin{equation*}
-\norm{\left[I + \Delta Q_t\right] - T_t^{t+\Delta}} \leq \Delta^2\norm{\rateset}^2\,.
-\end{equation*}
-\end{lemma}
-\begin{proof}
-{\bf TODO}
-\end{proof}
 
 \section{Imprecise Continuous-Time Markov chains}
 \label{sec:iCTMC}
@@ -1096,7 +1079,9 @@ A set of rate matrices $\rateset\subseteq\mathcal{R}$ is bounded if and only if
 *** moet dit nog invullen ***
 \end{proof}
 
-\subsection{*** onder van homogene ***}
+\subsection{Types of Imprecise Continuous-Time Markov Chains}
+
+\subsubsection{*** onder van homogene ***}
 
 
 *** uitleggen dat het dat NIET is ***
@@ -1130,7 +1115,7 @@ Q_P\in\rateset
 \end{equation*}
 
 
-\subsection{*** onder van inhomogene Markov ***}
+\subsubsection{*** onder van inhomogene Markov ***}
 
 \begin{definition}[Set of Markov Processes]\label{def:markov_process_set_new}
 For any bounded set of rate matrices $\rateset$, we define the set $\wmprocesses_{\rateset}$ of all well-behaved continuous-time Markov processes \emph{consistent} with $\rateset$. Formally, we let $\wmprocesses_{\rateset}$ be the set of all $P\in\wmprocesses$ such that
@@ -1171,7 +1156,7 @@ P\in\wmprocesses
 \end{equation*}
 \end{definition}
 
-\subsection{*** onder van niet-Markov}
+\subsubsection{*** onder van niet-Markov}
 
 \begin{definition}[Set of Non-Markov Processes]\label{def:set_non_markov_process}
 For any bounded set of rate matrices $\rateset$, we consider the set $\wprocesses_\rateset$ of all stochastic processes \emph{consistent} with $\rateset$. Formally, we let $\wprocesses_\rateset$ be the set of all $P\in\wprocesses$ such that
@@ -1203,6 +1188,8 @@ P\in\wprocesses
 \underline{\mathbb{E}}_\rateset^\mathrm{W}[\cdot\,\vert\,\cdot] \coloneqq \inf\left\{\mathbb{E}[\cdot\,\vert\,\cdot]\,:\,P\in\wprocesses_\rateset\right\}\,.
 \end{equation*}
 \end{definition}
+
+\subsection{Properties of Imprecise Continuous-Time Markov Chains}
 
 \begin{proposition}\label{prop:markov_set_subset_of_nonmarkov_set}
 Consider any bounded set of rate matrices $\rateset$, and the corresponding sets $\wmprocesses_\rateset$ and $\wprocesses_\rateset$ of well-behaved continuous-time Markov processes and non-Markov processes, respectively. Then,
@@ -1345,13 +1332,13 @@ Fix a finite sequence of time points $u$ and some $t>0$. Then for any choice of 
 
 Having introduced the notion of lower expectations with respect to sets of (non-)Markov processes, one might wonder how to compute these quantities, either numerically or for analytical purposes. 
 
-Obviously, one way to go about doing this is to work directly with the definitions. That is, explicitly generate the entire set $\mprocesses_\rateset$ (or $\processes_\rateset$) for a given $\rateset$, compute expectations of a function $f$ for each element of this set, and then find the infimum of these expectations. It should be clear that this approach is fairly unwieldy, not in the least because for arbitrary $\rateset$ the corresponding set of processes may be infinite.
+Obviously, one way to go about doing this is to work directly with the definitions. That is, explicitly generate the entire set $\mprocesses_\rateset$ (or $\processes_\rateset$) for a given $\rateset$, compute expectations of a function $f$ for each element of this set, and then find the infimum of these expectations. It should be clear that this approach is fairly unwieldy, not in the least because for arbitrary $\rateset$ the corresponding set of processes may be infinite. Therefore, we will instead provide an alternative characterization of these lower expectations. 
 
-Therefore, we will instead provide an alternative characterization of these lower expectations. In particular, we will in this section introduce a specific \emph{lower transition operator}, which is a map from $\gamblesX$ to $\gamblesX$ that generalizes the notion of a transition matrix. We will here focus on introducing the relevant concepts, and showing that the operator of interest is well-defined. We end this section by relating this operator to existing work from the literature. In Sections~\ref{sec:connections} and~\ref{sec:funcs_multi_time_points} we will then establish the relation between this operator and lower expectations, and show that we can indeed use it to compute the quantities of interest.
+In particular, we will in this section introduce a specific \emph{lower transition operator}, which is a map from $\gamblesX$ to $\gamblesX$ that generalizes the notion of a transition matrix. We will here focus on introducing the relevant concepts, and showing that this operator of interest is well-defined. We end this section by establishing that this (family) of operators is in many ways intuitively comparable to the transition matrix system of a well-behaved homogeneous Markov chain. In Section~\ref{sec:connections} we will then establish the relation between this operator and lower expectations, and show that we can indeed use it to compute the quantities of interest. In Section~\ref{sec:prev_work} we will show how this operator is related to previous work from the literature.
 
 \subsection{Lower Transition (Rate) Operators}
 
-It is clear from Section {\bf SEC REF CTMC} that there is a strong connection between rate matrices and transition matrices corresponding to Markov chains. We here generalize these two concepts to \emph{lower transition rate operators} and \emph{lower transition operators}, respectively.
+It is clear from Section~\ref{sec:trans_rate_matrices} that there is a strong connection between transition rate matrices and transition matrices. We here generalize these two concepts to \emph{lower transition rate operators} and \emph{lower transition operators}, respectively.
 
 \begin{definition}[Lower Transition Rate Operator]\label{def:coh_low_trans_rate}
 We will call a map $\lrate$ from $\gamblesX$ to $\gamblesX$ a \emph{lower transition rate operator} if, for all $f,g\in\gamblesX$, all $\lambda\in\realsnonneg$, all constant functions $\mu\in\gamblesX$, and all $x\in\states$:
@@ -1383,6 +1370,8 @@ $\lt(f+g)(x)\geq\lt(f)(x)+\lt(g)(x)$;
 \item
 $\lt(\lambda f)(x)=\lambda\lt(f)(x)$.
 \end{enumerate}
+%\vspace{5pt}
+\noindent We use $\underline{\mathcal{T}}$ to denote the set of all lower transition operators.
 \vspace{5pt}
 \end{definition}
 
@@ -1402,21 +1391,23 @@ For any lower transition operator $\lt$, we have that $0\leq \norm{\lt}\leq 1$.
 *** {\bf TODO } *** This can be shown to follow from coherence.
 \end{proof}
 
-\begin{lemma}\label{lemma:differencenormofcoherenttransrate}
-Consider any two non-negatively homogeneous operators $A$, $B$ from $\gamblesX$ to $\gamblesX$, and let $\lrate$ be an arbitrary lower transition rate operator. Then, it holds that $\norm{\lrate A-\lrate B}\leq 2\norm{\lrate}\norm{A-B}$.
+We next establish that there is a correspondence between lower transition rate operators and lower transition operators that is analogous to the one found in Section~\ref{sec:trans_rate_matrices}.
+
+\begin{lemma}\label{lemma:normQsmallenough}
+Consider any lower transition rate operator $\lrate$, and any $0\leq\Delta\leq\nicefrac{1}{\norm{\lrate}}$. Then, $(I+\Delta\lrate)$ is a lower transition operator.
 \end{lemma}
 \begin{proof}
-*** {\bf TODO } *** This can be shown to follow from the definition of the norm and the properties of $\lrate$.
+Just check each of the three defining properties. C2 and C3 are trivial. C1 requires a bit more work. *** {\bf TODO?} ***
 \end{proof}
 
-\begin{lemma}\label{lemma:differencenormofcoherenttrans}
-Consider any two non-negatively homogeneous operators $A$, $B$ from $\gamblesX$ to $\gamblesX$, and let $\lt$ be an arbitrary lower transition operator. Then, it holds that $\norm{\lt A-\lt B}\leq \norm{A-B}$.
+\begin{lemma}\label{lemma:lower_trans_to_lower_rate}
+Consider any lower transition operator $\lt$, and any $\Delta\in\realspos$. Then, $\nicefrac{1}{\Delta}(\lt - I)$ is a lower transition rate operator.
 \end{lemma}
 \begin{proof}
-*** {\bf TODO } *** This can be shown to follow from coherence.
+Just check each of the three defining properties. *** {\bf TODO?} ***
 \end{proof}
 
-We next have two results about the set of all lower transition operators, which we denote by $\underline{\mathcal{T}}$. As the first result shows, this set is closed under composition.
+We next have two results about the set $\underline{\mathcal{T}}$ of all lower transition operators. As the first result shows, this set is closed under composition.
 \begin{lemma}\label{lemma:compositioncoherence}
 For any $\lt,\underline{S}\in\underline{\mathcal{T}}$, we have that $\left(\lt\underline{S}\right)\in\underline{\mathcal{T}}$.
 \end{lemma}
@@ -1468,16 +1459,7 @@ d(\lt,\underline{S}) &= \norm{\lt - \underline{S}} \\
 Thus, $d$ is conserving with respect to $d_1^*,\ldots,d_m^*$, and hence $(\underline{\mathcal{T}},d)$ is complete.
 \end{proof}
 
-We conclude this section by establishing that there is a correspondence between lower transition rate operators and lower transition operators that is analogous to the one found in Section {\bf SEC REF CTMC}. 
-
-\begin{lemma}\label{lemma:normQsmallenough}
-Consider any lower transition rate operator $\lrate$, and any $0\leq\Delta\leq\nicefrac{1}{\norm{\lrate}}$. Then, $(I+\Delta\lrate)$ is a lower transition operator.
-\end{lemma}
-\begin{proof}
-Just check each of the three defining properties. C2 and C3 are trivial. C1 requires a bit more work. *** {\bf TODO?} ***
-\end{proof}
-
-\noindent We therefore have the following result.
+\noindent We conclude this section with the following result.
 \begin{lemma}\label{lemma:productiscoherent}
 Consider any $t,s\in\realsnonneg$ such that $t<s$, any lower transition rate operator $\lrate$, and any sequence $u\in\mathcal{U}_{[t,s]}$ of time points such that $\sigma(u)\leq\nicefrac{1}{\norm{\lrate}}$. Then
 \begin{equation*}
@@ -1928,7 +1910,7 @@ By Equation~\eqref{eq:lower_char_rate_matrix}, we have $\norm{Q_{t_i}L_{t_i}^{t_
  &\leq \Delta^2\norm{\mathcal{Q}}^2\norm{f} + \norm{\left[I+\Delta Q_{t_i}^u\right] - T_{t_{i-1}}^{t_i}}\cdot\norm{f} + \frac{\Delta\epsilon}{2C} \\
  &\leq 2\Delta^2\norm{\mathcal{Q}}^2\norm{f} + \frac{\Delta\epsilon}{2C}\,,
 \end{align*}
-where the last step used Lemma~\ref{lemma:bound_precise_linear_approx}.
+where the last step used Lemma~\ref{lemma:linearpartofexponential}.
 
 Thus, using the fact that $n\Delta=C$, we find
 \begin{align*}
@@ -1977,20 +1959,20 @@ Together this implies, using Definition~\ref{def:lower_non_markov}, that
 %\end{equation*}
 %\end{definition}
 
+*** This needs some rewording ***
+
 One somewhat unsurprising result is therefore that $L_t^s$ computes the lower expectation of functions $f\in\gamblesX$ with respect to sets of Markov processes $\mprocesses_\rateset$. The reason that this is to be expected is the previously established correspondence between $L_t^s$ and the solution of the differential equation introduced in {\bf DAMJANREF}, which was there shown to compute exactly this quantity.
 
-A rather more surprising result, perhaps, is that this \emph{same} operator also computes lower expectations with respect to sets $\processes_\rateset$ of non-Markov processes.
+A rather more surprising result, perhaps, is that this \emph{same} operator also computes lower expectations with respect to sets $\processes_\rateset$ of non-Markov processes. Our next result strengthens this connection between $L_t^s$ and sets of non-Markov processes.
 
-*** misschien nog iets over dat de precieze non-Markov dingen normaal als ``moeilijk'' gezien worden? ***
-
-Recall from Section~\ref{sec:connections_rate} that for a given lower transition rate operator $\lrate$, its set of dominating rate matrices $\rateset_{\lrate}$ is---by definition---the largest set of rate matrices which has $\lrate$ as its lower envelope. Our next result shows that the set $\wprocesses_{\rateset_{\lrate}}$ of well-behaved stochastic processes consistent with $\rateset_{\lrate}$ is the largest set of stochastic processes which has $L_t^s$ as its lower envelope.
+Recall from Section~\ref{sec:connections_rate} that for a given lower transition rate operator $\lrate$, its set of dominating rate matrices $\rateset_{\lrate}$ is---by definition---the largest set of rate matrices which has $\lrate$ as its lower envelope. The following result shows that the set $\wprocesses_{\rateset_{\lrate}}$ of well-behaved stochastic processes consistent with $\rateset_{\lrate}$ is the largest set of stochastic processes which has $L_t^s$ as its lower envelope.
 
 \begin{theorem}
 Let $\lrate$ be an arbitrary lower transition rate operator, with $\rateset_{\lrate}$ its set of dominating rate matrices. Then, for all $t,s\in\realsnonneg$ such that $t<s$, all $f\in\gamblesX$, and all $x\in\states$,
 \begin{equation*}
 \left[L_t^sf\right](x) = \inf\left\{\mathbb{E}[f(X_s)\,\vert\,X_t=x]\,:\,P\in\wprocesses_{\rateset_{\lrate}}\right\}\,.
 \end{equation*}
-Furthermore, for all $P\in\processes$ such that $P\notin\wprocesses_{\rateset_{\lrate}}$, there is some $f\in\gamblesX$, and some $t,s\in\realsnonneg$ with $t<s$, such that for some $x\in\states$,
+Contrariwise, for all $P\in\processes$ such that $P\notin\wprocesses_{\rateset_{\lrate}}$, there is some $f\in\gamblesX$, and some $t,s\in\realsnonneg$ with $t<s$, such that for some $x\in\states$,
 \begin{equation*}
 \mathbb{E}\left[f(X_s)\,\vert\,X_t=x\right] < \left[L_t^sf\right](x)\,.
 \end{equation*}
@@ -2002,7 +1984,7 @@ For the second statement, take any $P\in\processes$ such that $P\notin\wprocesse
 
 Because $P\notin\wprocesses_{\rateset_{\lrate}}$, by Definition~\ref{def:set_non_markov_process}, there must be some $t\in\realsnonneg$ such that $\smash{\overline{\partial}}T_{t,x_u}^{t}\nsubseteq\rateset_{\lrate}$. Furthermore, by Proposition~\ref{prop:boundednon-emptyandclosed}, we have that $\smash{\overline{\partial}}T_{t,x_u}^{t}\neq\emptyset$. Hence, there must be some rate matrix $Q\in\smash{\overline{\partial}}T_{t,x_u}^{t}$ such that $Q\notin\rateset_{\lrate}$, which by Equation~\eqref{eq:dominatingratematrices} implies that there is some $f\in\gamblesX$ and some $x\in\states$ such that $\left[Qf\right](x)<\left[\lrate f\right](x)$.
 
-Now, assume \emph{ex absurdo} that the statement is false. Because $Q\in\smash{\overline{\partial}}T_{t,x_u}^{t}$, we must have that either $Q\in\smash{\overline{\partial}}_+T_{t,x_u}^{t}$ or $Q\in\smash{\overline{\partial}}_-T_{t,x_u}^{t}$. Assume its the former. Then, by Equation~\ref{eq:rightouterderivative}, there is some $\{\Delta_i\}_{i\in\nats}\to0^+$ such that $\lim_{i\to+\infty}\nicefrac{1}{\Delta_i}(T_{t,x_u}^{t+\Delta_i}-I)=Q$. Because we assumed that the claim is false, we must have that for all $\Delta\in\realspos$, it holds that $\left[L_t^{t+\Delta}f\right](x) \leq \left[T_{t,x_u}^{t+\Delta}f\right](x)$,
+Now, assume \emph{ex absurdo} that the statement is false. Because $Q\in\smash{\overline{\partial}}T_{t,x_u}^{t}$, we must have that either $Q\in\smash{\overline{\partial}}_+T_{t,x_u}^{t}$ or $Q\in\smash{\overline{\partial}}_-T_{t,x_u}^{t}$. Assume it is the former. Then, by Equation~\ref{eq:rightouterderivative}, there is some $\{\Delta_i\}_{i\in\nats}\to0^+$ such that $\lim_{i\to+\infty}\nicefrac{1}{\Delta_i}(T_{t,x_u}^{t+\Delta_i}-I)=Q$. Because we assumed that the claim is false, we must have that for all $\Delta\in\realspos$, it holds that $\left[L_t^{t+\Delta}f\right](x) \leq \left[T_{t,x_u}^{t+\Delta}f\right](x)$,
 or equivalently, that
 \begin{equation*}
 \frac{1}{\Delta}\left[(L_t^{t+\Delta} - I)f\right](x) \leq \frac{1}{\Delta}\left[(T_{t,x_u}^{t+\Delta} - I)f\right](x)\,.
@@ -2035,38 +2017,43 @@ Start by assuming that its the former. Clearly, we have for all $\Delta\in\reals
 \begin{equation*}
 \left[(T_t^{t+\Delta}-I)\ind{y}\right](x) = P(X_{t+\Delta}=y\,\vert\,X_t=x) - \delta_{xy}\,.
 \end{equation*}
-By Proposition~\ref{prop:rate_from_stochastic_matrix}, we have that $\nicefrac{1}{\Delta}(T_t^{t+\Delta}-I)$ is a transition rate matrix, and hence by Definition~\ref{def:rate_matrix} we must have that $\left[(T_t^{t+\Delta}-I)\ind{y}\right](y)\leq 0$, and $\abs{\left[(T_t^{t+\Delta}-I)\ind{y}\right](x)}\leq\abs{\left[(T_t^{t+\Delta}-I)\ind{y}\right](y)}$. It therefore follows that also
+By Proposition~\ref{prop:rate_from_stochastic_matrix}, we have that $\nicefrac{1}{\Delta}(T_t^{t+\Delta}-I)$ is a transition rate matrix, and hence by Definition~\ref{def:rate_matrix} we must have that $\nicefrac{1}{\Delta}\left[(T_t^{t+\Delta}-I)\ind{x}\right](x)\leq 0$, and $\nicefrac{1}{\Delta}\abs{\left[(T_t^{t+\Delta}-I)\ind{y}\right](x)}\leq\nicefrac{1}{\Delta}\abs{\left[(T_t^{t+\Delta}-I)\ind{x}\right](x)}$. It therefore follows that also
 \begin{equation}\label{eq:nonwellbehaved_limit_diagonal}
-\limsup_{\Delta\to0^+}\frac{1}{\Delta}\abs{\left[(T_t^{t+\Delta}-I)\ind{y}\right](y)} \nless +\infty\,.
+\limsup_{\Delta\to0^+}\frac{1}{\Delta}\abs{\left[(T_t^{t+\Delta}-I)\ind{x}\right](x)} \nless +\infty\,.
 \end{equation}
-Similarly, by Proposition {\bf ADD-THIS}, we have that $\nicefrac{1}{\Delta}(L_t^{t+\Delta}-I)$ is a lower transition rate operator, and hence by Definition~\ref{def:coh_low_trans_rate}, we must have that $\left[\nicefrac{1}{\Delta}(L_t^{t+\Delta}-I)\ind{y}\right](y)\leq 0$. 
+Similarly, by Lemma~\ref{lemma:lower_trans_to_lower_rate}, we have that $\nicefrac{1}{\Delta}(L_t^{t+\Delta}-I)$ is a lower transition rate operator, and hence by Definition~\ref{def:coh_low_trans_rate}, we must have that $\nicefrac{1}{\Delta}\left[(L_t^{t+\Delta}-I)\ind{x}\right](x)\leq 0$. 
 
-*** That last claim kinda still needs a lemma somewhere ***
-
-Because we assumed that the statement is false, it must hold for all $\Delta\in\realspos$ that
+Because we assumed that the statement is false, and because $\ind{x}\in\gamblesX$, it must hold for all $\Delta\in\realspos$ that $\left[L_{t}^{t+\Delta}\ind{x}\right](x)\leq\left[T_{t}^{t+\Delta}\ind{x}\right](x)$, or equivalently, that
 \begin{equation*}
-\frac{1}{\Delta}\left[(L_{t}^{t+\Delta} - I)\ind{y}\right](y) \leq \frac{1}{\Delta}\left[(T_{t}^{t+\Delta} - I)\ind{y}\right](y)\,.
+\frac{1}{\Delta}\left[(L_{t}^{t+\Delta} - I)\ind{x}\right](x) \leq \frac{1}{\Delta}\left[(T_{t}^{t+\Delta} - I)\ind{x}\right](x)\,.
 \end{equation*}
-From our earlier observations, we know that both sides of this inequality are negative. Hence, we must have that
+From our earlier observations, we know that both sides of this inequality are non-positive. Hence, we must have that
 \begin{equation*}
-\abs{\frac{1}{\Delta}\left[(T_{t}^{t+\Delta} - I)\ind{y}\right](y)} \leq \abs{\frac{1}{\Delta}\left[(L_{t}^{t+\Delta} - I)\ind{y}\right](y)}\,.
+\abs{\frac{1}{\Delta}\left[(T_{t}^{t+\Delta} - I)\ind{x}\right](x)} \leq \abs{\frac{1}{\Delta}\left[(L_{t}^{t+\Delta} - I)\ind{x}\right](x)}\,.
 \end{equation*}
-By the definition of the norm, we have that $\abs{\nicefrac{1}{\Delta}\left[(L_{t}^{t+\Delta} - I)\ind{y}\right](y)}\leq\norm{\nicefrac{1}{\Delta}(L_{t}^{t+\Delta} - I)\ind{y}}$, and because $\ind{y}\in\gamblesX$ and $\norm{\ind{y}}=1$, we have $\norm{\nicefrac{1}{\Delta}(L_{t}^{t+\Delta} - I)\ind{y}}\leq \norm{\nicefrac{1}{\Delta}(L_{t}^{t+\Delta} - I)}$. Hence, we must have that
+By the definition of the norm, we have that $\abs{\nicefrac{1}{\Delta}\left[(L_{t}^{t+\Delta} - I)\ind{x}\right](x)}\leq\norm{\nicefrac{1}{\Delta}(L_{t}^{t+\Delta} - I)\ind{x}}$, and because $\ind{x}\in\gamblesX$ and $\norm{\ind{x}}=1$, we have $\norm{\nicefrac{1}{\Delta}(L_{t}^{t+\Delta} - I)\ind{x}}\leq \norm{\nicefrac{1}{\Delta}(L_{t}^{t+\Delta} - I)}$. Hence, we must have that
 \begin{equation*}
-\abs{\frac{1}{\Delta}\left[(T_{t}^{t+\Delta} - I)\ind{y}\right](y)} \leq \norm{\nicefrac{1}{\Delta}(L_{t}^{t+\Delta} - I)}\,.
+\abs{\frac{1}{\Delta}\left[(T_{t}^{t+\Delta} - I)\ind{x}\right](x)} \leq \norm{\frac{1}{\Delta}(L_{t}^{t+\Delta} - I)}\,.
 \end{equation*}
 
-Now, by Proposition~\ref{prop:lower_transition_has_deriv}, we have that $\lim_{\Delta\to0^+}\nicefrac{1}{\Delta}(L_{t}^{t+\Delta} - I) = \lrate$, and hence it follows that $\lim_{\Delta\to0^+}\norm{\nicefrac{1}{\Delta}(L_{t}^{t+\Delta} - I)} = \norm{\lrate}$. By Proposition~\ref{lem:normlratefinite}, we furthermore know that $\norm{\lrate}<+\infty$. Taking limits on both sides of our earlier inequality, we therefore find that
-\begin{align*}
-\limsup_{\Delta\to0^+}\abs{\frac{1}{\Delta}\left[(T_{t}^{t+\Delta} - I)\ind{y}\right](y)} &\leq \limsup_{\Delta\to0^+}\norm{\nicefrac{1}{\Delta}(L_{t}^{t+\Delta} - I)} \\
-\limsup_{\Delta\to0^+}\abs{\frac{1}{\Delta}\left[(T_{t}^{t+\Delta} - I)\ind{y}\right](y)} &\leq \norm{\lrate} < +\infty\,,
-\end{align*}
-which, by Equation~\eqref{eq:nonwellbehaved_limit_diagonal}, is a contradiction.
-
-*** need to add proof for left-sided. works with a similar argument ***
+Now, by Proposition~\ref{prop:lower_transition_has_deriv}, we have that $\lim_{\Delta\to0^+}\nicefrac{1}{\Delta}(L_{t}^{t+\Delta} - I) = \lrate$, and hence it follows that $\lim_{\Delta\to0^+}\norm{\nicefrac{1}{\Delta}(L_{t}^{t+\Delta} - I)} = \norm{\lrate}$. By Lemma~\ref{lem:normlratefinite}, we furthermore know that $\norm{\lrate}<+\infty$. Taking limits on both sides of our earlier inequality, we therefore find that
+\begin{equation*}
+\limsup_{\Delta\to0^+}\abs{\frac{1}{\Delta}\left[(T_{t}^{t+\Delta} - I)\ind{x}\right](x)} \leq \limsup_{\Delta\to0^+}\norm{\frac{1}{\Delta}(L_{t}^{t+\Delta} - I)} = \norm{\lrate} < +\infty\,,
+\end{equation*}
+which, by Equation~\eqref{eq:nonwellbehaved_limit_diagonal}, is a contradiction. Therefore, if the statement is indeed false, we must instead have that for some (other) $t\in\realsnonneg$ and some (other) $x,y\in\states$,
+\begin{equation}\label{eq:nonwellbehaved_limit_diagonal_left}
+\limsup_{\Delta\to0^+}\frac{1}{\Delta}\abs{P(X_{t}=y\,\vert\,X_{t-\Delta}=x)-\delta_{xy}}\nless+\infty\,.
+\end{equation}
+Using the same argument as before, we must then have for all $\Delta\in\realspos$ that
+\begin{equation*}
+\abs{\frac{1}{\Delta}\left[(T_{t-\Delta}^t - I)\ind{x}\right](x)} \leq \norm{\frac{1}{\Delta}(L_{t-\Delta}^t - I)}\,.
+\end{equation*}
+Because by Proposition~\ref{prop:lower_transition_is_homogeneous} we have that $L_{t-\Delta}^t=L_t^{t+\Delta}$, we again find after taking limits on both sides that
+\begin{equation*}
+\limsup_{\Delta\to0^+}\abs{\frac{1}{\Delta}\left[(T_{t-\Delta}^t - I)\ind{x}\right](x)} \leq \limsup_{\Delta\to0^+}\norm{\frac{1}{\Delta}(L_{t}^{t+\Delta} - I)} = \norm{\lrate} < +\infty\,,
+\end{equation*}
+a contradiction with Equation~\eqref{eq:nonwellbehaved_limit_diagonal_left}. Therefore, if $P\notin\wprocesses$, the statement follows.
 \end{proof}
-
-*** lalala sterker nog, zoals we in de volgende sectie gaan zien, kunnen we met $L_t^s$ dingen uitrekenen voor niet-Markov sets die niet kunnen voor Markov sets ***
 
 \section{Relation to Previous Work}\label{sec:prev_work}
 
@@ -2546,7 +2533,23 @@ As a trivial example, take $\mathcal{C}(\states^{u\cup v}) = \gambles(\states^{\
 
 \appendix
 
-\section{Proofs of Lemmas from Section~\ref{sec:lowertrans}}\label{sec:proof_appendix}
+\section{Some Useful Lemmas}
+
+\begin{lemma}\label{lemma:differencenormofcoherenttransrate}
+Consider any two non-negatively homogeneous operators $A$, $B$ from $\gamblesX$ to $\gamblesX$, and let $\lrate$ be an arbitrary lower transition rate operator. Then, it holds that $\norm{\lrate A-\lrate B}\leq 2\norm{\lrate}\norm{A-B}$.
+\end{lemma}
+\begin{proof}
+*** {\bf TODO } *** This can be shown to follow from the definition of the norm and the properties of $\lrate$.
+\end{proof}
+
+\begin{lemma}\label{lemma:differencenormofcoherenttrans}
+Consider any two non-negatively homogeneous operators $A$, $B$ from $\gamblesX$ to $\gamblesX$, and let $\lt$ be an arbitrary lower transition operator. Then, it holds that $\norm{\lt A-\lt B}\leq \norm{A-B}$.
+\end{lemma}
+\begin{proof}
+*** {\bf TODO } *** This can be shown to follow from coherence.
+\end{proof}
+
+\section{Proofs of Results from Section~\ref{sec:lowertrans}}\label{sec:proof_appendix}
 
 \begin{lemma}\label{lemma:justtheindicator}
 Consider any sequence $0<\Delta_i\leq\nicefrac{1}{\norm{\lrate}}$, $i=1,\dots,n$, and let $\Delta\coloneqq\sum_{i=1}^n\Delta_i$. Then
