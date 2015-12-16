@@ -1967,7 +1967,7 @@ A rather more surprising result, perhaps, is that this \emph{same} operator also
 
 Recall from Section~\ref{sec:connections_rate} that for a given lower transition rate operator $\lrate$, its set of dominating rate matrices $\rateset_{\lrate}$ is---by definition---the largest set of rate matrices which has $\lrate$ as its lower envelope. The following result shows that the set $\wprocesses_{\rateset_{\lrate}}$ of well-behaved stochastic processes consistent with $\rateset_{\lrate}$ is the largest set of stochastic processes which has $L_t^s$ as its lower envelope.
 
-\begin{theorem}
+\begin{theorem}\label{theo:dominating_rate_processes_max_set}
 Let $\lrate$ be an arbitrary lower transition rate operator, with $\rateset_{\lrate}$ its set of dominating rate matrices. Then, for all $t,s\in\realsnonneg$ such that $t<s$, all $f\in\gamblesX$, and all $x\in\states$,
 \begin{equation*}
 \left[L_t^sf\right](x) = \inf\left\{\mathbb{E}[f(X_s)\,\vert\,X_t=x]\,:\,P\in\wprocesses_{\rateset_{\lrate}}\right\}\,.
@@ -2057,9 +2057,24 @@ a contradiction with Equation~\eqref{eq:nonwellbehaved_limit_diagonal_left}. The
 
 \section{Relation to Previous Work}\label{sec:prev_work}
 
-*** Taking $\lrate$ as lower envelope of $\rateset$, $L_t^s$ corresponds to solution of Damjan's differential equation ***
+To the best of our knowledge, the concept of imprecise continuous-time Markov chains was first introduced in the literature by the work of {\v{S}}kulj~\cite{Skulj:2015cq}. There, the idea was used to define $\lrate$ as a lower envelope of a set of rate matrices $\rateset$ that has separately specified rows. It was shown that then, for a given $f\in\gamblesX$, the differential equation
+\begin{align}\label{eq:damjans_diff}
+\begin{split}
+\frac{d \underline{f}_{\,t}}{d t} &\coloneqq \lrate\,\underline{f}_{\,t}\,,\quad
+\underline{f}_{\,0} \coloneqq f\,,
+\end{split}
+\end{align}
+has a unique solution, and that this solution satisfies
+\begin{equation}\label{eq:damjans_lower}
+\underline{f}_{\,s} = \underline{\mathbb{E}}_{\rateset}^{\mathrm{WM}}[f(X_s)\,\vert\,X_0]\,.
+\end{equation}
+Our work extends these results in several ways. First, as shown by Proposition~\ref{prop:lower_transition_has_deriv}, the differential equation~\eqref{eq:damjans_diff} has a uniform solution, i.e. one that is independent of $f$, and this solution is given by the operator $L_0^s$ corresponding to $\lrate$. Second, Corollary~\ref{cor:lower_operator_is_infimum} confirms Equation~\eqref{eq:damjans_lower}, but furthermore shows that the solution $\underline{f}_{\,s}$ also corresponds to the lower expectation with respect to a set of non-Markov processes.
 
-*** Can therefore be computed relatively easily ***
+Our present work furthermore adds to the literature in several ways. In~\cite{Skulj:2015cq}, the results were cast purely in terms of lower envelopes of expectation functionals; but side-stepping the question of which sets of processes these envelopes correspond to. In contrast, our work in Section~\ref{sec:iCTMC} makes explicit the sets of processes that we are dealing with, and Theorem~\ref{theo:dominating_rate_processes_max_set} exactly characterizes the largest set of processes for which our lower transition operator---and indeed the differential equation~\eqref{eq:damjans_diff}---computes a lower envelope.
+
+This earlier work also contains several results that are of significance to us. In particular, {\v{S}}kulj~\cite{Skulj:2015cq} discusses several practical techniques to numerically compute, or approximate to arbitrary precision, the quantity $\underline{f}_{\,s}$ for a given $f\in\gamblesX$. Hence, because of the correspondence between $\underline{f}_{\,s}$ and $L_0^sf$, these results can be applied when numerically working with our lower transition operator.
+
+Finally, previous work only focused on functions $f\in\gamblesX$ defined at a single point in time. We will now turn to functions defined on multiple time points, where we will find that it is crucial to be aware of the set of processes with respect to which one is taking lower envelopes.
 
 \section{Functions Defined on Multiple Time Points}\label{sec:funcs_multi_time_points}
 
