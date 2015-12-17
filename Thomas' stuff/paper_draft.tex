@@ -149,67 +149,6 @@ Given any $u\in\mathcal{U}_{[t,s]}$, we define for all $i\in\{1,\ldots,n\}$ the 
 \sigma(u) \coloneqq \max\bigl\{\Delta_i\,:\,i\in\{1,\ldots,n\}\bigr\}\,.
 \end{equation*}
 
-\subsection{Transition (Rate) Matrices}\label{sec:trans_rate_matrices}
-\begin{definition}[Transition Rate Matrix]\label{def:rate_matrix}
-A real-valued $m\times m$ matrix $Q$ is said to be a \emph{transition rate matrix}, or sometimes simply \emph{rate matrix}, if
-
-\vspace{5pt}
-\begin{enumerate}[label=R\arabic*:]
-\item
-$\sum_{y\in\states}Q(x,y)=0$ for all $x\in\states$;
-\item
-$Q(x,y)\geq0$ for all $x,y\in\states$ such that $x\neq y$.
-\end{enumerate}
-\vspace{5pt}
-\noindent
-We use $\mathcal{R}$ to denote the set of all transition rate matrices. 
-\end{definition}
-
-Clearly, $\mathcal{R}$ is closed under finite sums and multiplication with non-negative scalars. 
-
-\begin{definition}[Transition Matrix]\label{def:stoch_matrix}
-A real-valued $m\times m$ matrix $A$ is said to be a \emph{transition matrix} if
-\vspace{5pt}
-\begin{enumerate}[label=S\arabic*:]
-\item
-$\sum_{y\in\states}A(x,y)=1$ for all $x\in\states$;
-\item
-$A(x,y)\geq0$ for all $x,y\in\states$.
-\end{enumerate}
-\vspace{5pt}
-\noindent
-\end{definition}
-
-\begin{proposition}\label{prop:stochastic_from_rate_matrix}
-Consider any $m\times m$ rate matrix $Q\in\mathcal{R}$, and any $0\leq \Delta \leq \nicefrac{1}{\norm{Q}}$. Let $I$ denote the $m\times m$ identity matrix. Then, the matrix $[I+\Delta Q]$ is a transition matrix.
-\end{proposition}
-\begin{proof}
-Let $A=[I+\Delta Q]$. We will verify the properties from Definition~\ref{def:stoch_matrix}.
-
-We start with property S1. Consider any $x\in\states$. Then
-\begin{equation*}
-\sum_{y\in\states} A(x,y) = \sum_{y\in\states} [I + \Delta Q](x,y) = \sum_{y\in\states}I(x,y) + \Delta \sum_{y\in\states}Q(x,y) = 1\,,
-\end{equation*}
-where we used property R1 from Definition~\ref{def:rate_matrix}.
-
-For property S2, note that $0\leq \Delta \leq \nicefrac{1}{\norm{Q}}$. Whence, for all $x\in\states$, we have $-1\leq \Delta Q(x,x) \leq 0$, so that $[I+\Delta Q](x,x) \geq 0$. Furthermore, for all $x,y\in\states$ s.t. $x\neq y$, we have $0\leq \Delta Q(x,y) \leq 1$, so that $[I+\Delta Q](x,y)\geq 0$.
-\end{proof}
-
-\begin{proposition}\label{prop:rate_from_stochastic_matrix}
-Consider any $m\times m$ transition matrix $A$, and any $\Delta\in\realspos$. Let $I$ denote the $m\times m$ identity matrix. Then, $[\nicefrac{1}{\Delta}\cdot(A-I)]$ is a transition rate matrix.
-\end{proposition}
-\begin{proof}
-This follows from a similar argument as the proof of Proposition~\ref{prop:stochastic_from_rate_matrix}; simply verify the properties from Definition~\ref{def:rate_matrix}.
-\end{proof}
-
-***
-
-Obviously, a transition matrix $T_t^s$ can also be regarded as a map from $\gamblesX$ to $\gamblesX$, defined for all $f\in\gamblesX$ by $T_t^s(f)\coloneqq T_t^sf$. Note that for all $x_t\in\states$, we have that
-\begin{align*}
-\left[T_t^sf\right](x_t) &= \sum_{x_s\in\states}f(x_s)P(X_s=x_s\,\vert\,X_t=x_t)
-= \mathbb{E}_{X_s}\left[f(X_s)\,\vert\,X_t=x_t\right]\,.
-\end{align*}
-
 \subsection{Functions, Operators, and Norms}\label{sec:func_oper_norm}
 Let $\gamblesX$ denote the set of all real-valued functions on $\states$. Because $\states$ is finite, we can also interpret any function $f\in\gamblesX$ as a vector in $\reals^m$. Hence, we will in the sequel use the terms `function' and `vector' interchangeably when referring to elements of $\gamblesX$.
 
@@ -230,6 +169,12 @@ If $A$ is an $m\times m$ matrix, we have that
 \norm{A}
 =
 \max\left\{\sum_{y\in\states}\abs{A(x,y)}\colon x\in\states\right\}.
+\end{equation*}
+\noindent
+For any set $\mathcal{A}$ of square matrices, we define
+
+\begin{equation*}
+\norm{\mathcal{A}}\coloneqq\sup\{\norm{A}\colon A\in\mathcal{A}\}.
 \end{equation*}
 
 \noindent
@@ -262,18 +207,9 @@ $\norm{AB}\leq\norm{A}\norm{B}$
 $\norm{\lambda A}=\abs{\lambda}\norm{A}$
 \item\label{N:normAf}
 $\norm{Af}\leq\norm{A}\norm{f}$
-\item
-$\norm{A}=1$ if $A$ is a stochastic matrix.
 \end{enumerate}
 \vspace{5pt}
 \end{proposition}
-
-\noindent
-Finally, for any set $\mathcal{A}$ of square matrices, we define
-
-\begin{equation*}
-\norm{\mathcal{A}}\coloneqq\sup\{\norm{A}\colon A\in\mathcal{A}\}.
-\end{equation*}
 
 \subsubsection{wat notatie voor meerdere variabelen}\label{sec:multivar_notation}
 
@@ -328,6 +264,82 @@ To avoid introducing overly complex notation, we will stipulate the following co
 % Let $A_t$ be a time-dependent stochastic matrix. The right outer derivative of $A_t$ in $t_*$ is then 
 % \end{definition}
 
+\subsection{Transition (Rate) Matrices}\label{sec:trans_rate_matrices}
+\begin{definition}[Transition Rate Matrix]\label{def:rate_matrix}
+A real-valued $m\times m$ matrix $Q$ is said to be a \emph{transition rate matrix}, or sometimes simply \emph{rate matrix}, if
+
+\vspace{5pt}
+\begin{enumerate}[label=R\arabic*:]
+\item
+$\sum_{y\in\states}Q(x,y)=0$ for all $x\in\states$;
+\item
+$Q(x,y)\geq0$ for all $x,y\in\states$ such that $x\neq y$.
+\end{enumerate}
+\vspace{5pt}
+\noindent
+We use $\mathcal{R}$ to denote the set of all transition rate matrices. 
+\end{definition}
+
+\noindent Clearly, $\mathcal{R}$ is closed under finite sums and multiplication with non-negative scalars. 
+
+\begin{definition}[Transition Matrix]\label{def:stoch_matrix}
+A real-valued $m\times m$ matrix $T$ is said to be a \emph{transition matrix} if
+\vspace{5pt}
+\begin{enumerate}[label=S\arabic*:,ref=N\arabic*]
+\item
+$\sum_{y\in\states}T(x,y)=1$ for all $x\in\states$;\label{def:trans_matrix_is_stochastic}
+\item
+$T(x,y)\geq0$ for all $x,y\in\states$.
+\end{enumerate}
+\vspace{5pt}
+\noindent
+\end{definition}
+
+\noindent We start by showing some properties of the norm of these matrices.
+
+\begin{proposition}
+Let $Q$ be an arbitrary transition rate matrix. Then, $0\leq\norm{Q}<+\infty$.
+\end{proposition}
+\begin{proof}
+Trivial consequence of the fact that $Q$ is a real-valued matrix.
+\end{proof}
+
+\begin{proposition}
+Let $T$ be an arbitrary transition matrix. Then, $\norm{T}=1$.
+\end{proposition}
+\begin{proof}
+This follows directly from Definition~\ref{def:stoch_matrix}.
+\end{proof}
+
+\begin{proposition}\label{prop:stochastic_from_rate_matrix}
+Consider any $m\times m$ rate matrix $Q\in\mathcal{R}$, and any $0\leq \Delta \leq \nicefrac{1}{\norm{Q}}$. Let $I$ denote the $m\times m$ identity matrix. Then, the matrix $[I+\Delta Q]$ is a transition matrix.
+\end{proposition}
+\begin{proof}
+Let $T=[I+\Delta Q]$. We will verify the properties from Definition~\ref{def:stoch_matrix}.
+
+We start with property S1. Consider any $x\in\states$. Then
+\begin{equation*}
+\sum_{y\in\states} T(x,y) = \sum_{y\in\states} [I + \Delta Q](x,y) = \sum_{y\in\states}I(x,y) + \Delta \sum_{y\in\states}Q(x,y) = 1\,,
+\end{equation*}
+where we used property R1 from Definition~\ref{def:rate_matrix}.
+
+For property S2, note that $0\leq \Delta \leq \nicefrac{1}{\norm{Q}}$. Hence, for all $x\in\states$, we have $-1\leq \Delta Q(x,x) \leq 0$, so that $[I+\Delta Q](x,x) \geq 0$. Furthermore, for all $x,y\in\states$ s.t. $x\neq y$, we have $0\leq \Delta Q(x,y) \leq 1$, so that $[I+\Delta Q](x,y)\geq 0$.
+\end{proof}
+
+\begin{proposition}\label{prop:rate_from_stochastic_matrix}
+Consider any $m\times m$ transition matrix $T$, and any $\Delta\in\realspos$. Let $I$ denote the $m\times m$ identity matrix. Then, $[\nicefrac{1}{\Delta}\cdot(T-I)]$ is a transition rate matrix.
+\end{proposition}
+\begin{proof}
+This follows from a similar argument as the proof of Proposition~\ref{prop:stochastic_from_rate_matrix}; simply verify the properties from Definition~\ref{def:rate_matrix}.
+\end{proof}
+
+***
+
+Obviously, a transition matrix $T_t^s$ can also be regarded as a map from $\gamblesX$ to $\gamblesX$, defined for all $f\in\gamblesX$ by $T_t^s(f)\coloneqq T_t^sf$. Note that for all $x_t\in\states$, we have that
+\begin{align*}
+\left[T_t^sf\right](x_t) &= \sum_{x_s\in\states}f(x_s)P(X_s=x_s\,\vert\,X_t=x_t)
+= \mathbb{E}_{X_s}\left[f(X_s)\,\vert\,X_t=x_t\right]\,.
+\end{align*}
 
 \section{Continuous-Time Stochastic Processes}
 
@@ -436,21 +448,32 @@ and
 \begin{equation*}
 \limsup_{\Delta\to 0^{+}}\frac{1}{\Delta}\abs{P(X_{t}=y\vert X_{t-\Delta}=x, X_{t_0}=x_{0}, \dots, X_{t_n}=x_{n})-\delta_{xy}}<+\infty
 \end{equation*}
-The set of all well-behaved Markov processes is denoted by $\wprocesses$.
+The set of all well-behaved stochastic processes is denoted by $\wprocesses$.
 \end{definition}
 
 ***
 
-\begin{definition}[Transition matrix]\label{def:trans_matrix}
-Consider a stochastic process $P\in\processes$. Then, for any $0\leq t\leq s$, the \emph{transition matrix} $T_t^s$ is a $m\times m$ matrix that is defined by
+\begin{definition}[Corresponding Transition Matrix]\label{def:trans_matrix}
+Consider any stochastic process $P\in\processes$. Then, for any $0\leq t\leq s$, the \emph{corresponding transition matrix} $T_t^s$ is a $m\times m$ matrix that is defined by
 \begin{equation*}
 T_t^s(x_t, x_s) \coloneqq P(X_s=x_s\,\vert X_t=x_t)\quad\text{for all $x_s,x_t\in\states$}\,.
 \end{equation*}
 We denote this family of matrices by $\mathcal{T}_P$.%, and call it the \emph{system of transition matrices} that corresponds to $P$.
 \end{definition}
 
+***
+\begin{equation*}
+T^s_{t,\,x_u}(x,y)
+\coloneqq
+P(X_s=y\vert X_t=x, X_{t_0}=x_{0}, \dots, X_{t_n}=x_{n})
+\end{equation*}
+
+***
+show that $T_{t,x_u}^s$ is also a transition matrix (and possibly well-behaved) by including this case in proposition below.
+***
+
 \begin{proposition}\label{prop:stochasticprocess:simpleproperties}
-Let $P\in\processes$ be a stochastic process. Then for any $0\leq t\leq s$, $T_t^s$ is stochastic and $T_t^t=I$ and, if $P$ is well-behaved, then also
+Let $P\in\processes$ be a stochastic process. Then for any $0\leq t\leq s$, $T_t^s$ is a transition matrix and $T_t^t=I$ and, if $P$ is well-behaved, then also
 \begin{equation}\label{eq:wellbehavedtransitionmatrix}
 \lim_{\Delta\to 0^{+}}\frac{1}{\Delta}\norm{T_t^{t+\Delta}-I}<+\infty
 \text{~~~~and~~~~}
@@ -462,14 +485,6 @@ Let $P\in\processes$ be a stochastic process. Then for any $0\leq t\leq s$, $T_t
 \end{proof}
 
 ***
-
-
-\begin{equation*}
-T^s_{t,\,x_u}(x,y)
-\coloneqq
-P(X_s=y\vert X_t=x, X_{t_0}=x_{0}, \dots, X_{t_n}=x_{n})
-\end{equation*}
-
 
 \begin{equation*}
 \partial_{+}{T_{t,\,x_u}^t}
@@ -759,7 +774,7 @@ This follows trivially from Proposition~\ref{prop:outerderivativebehaveslikelimi
 %This is immediate from Lemma~\ref{lemma:exponential_matrix_has_process}.
 %\end{proof}
 
-\begin{definition}[Markov chain, Markov property]\label{def:markov_property}
+\begin{definition}[Markov Property, Markov Chain]\label{def:markov_property}
 A stochastic process $P\in\processes$ satisfies the \emph{Markov property} if, for any time sequence $0\leq t_0<\dots<t_{n}<t<s$ and any set of states $x_{0},\dots,x_{n},x,y\in\states$:
 \begin{equation*}
 P(X_s=y\vert X_{t}=x)=P(X_s=y\vert X_t=x, X_{t_0}=x_{0}, \dots, X_{t_n}=x_{n}).
@@ -767,12 +782,12 @@ P(X_s=y\vert X_{t}=x)=P(X_s=y\vert X_t=x, X_{t_0}=x_{0}, \dots, X_{t_n}=x_{n}).
 A stochastic process that satisfies this property is called a \emph{Markov chain}. We denote the set of all Markov chains by $\mprocesses$ and use $\wmprocesses$ to refer to the subset that only contains the well-behaved Markov chains.
 \end{definition}
 
-\subsection{Transition matrix systems}
+\subsection{Transition Matrix Systems}
 
-We know from Proposition~\ref{prop:stochasticprocess:simpleproperties} that the transition matrices of a stochastic process---and therefore also, in particular, of a Markov chain---satisfy a number of simple properties. For the specific case of a Markov chain $P\in\mprocesses$, the family of transition matrices $\mathcal{T}_P$ also satisfies and additional property---see Equation~\eqref{eq:transmatrixproduct}. Whenever this is the case, we will call such a family of stochastic matrices a transition matrix system.
+We know from Proposition~\ref{prop:stochasticprocess:simpleproperties} that the transition matrices of a stochastic process---and therefore also, in particular, of a Markov chain---satisfy a number of simple properties. For the specific case of a Markov chain $P\in\mprocesses$, the family of transition matrices $\mathcal{T}_P$ also satisfies an additional property---see Equation~\eqref{eq:transmatrixproduct} below. Whenever this is the case, we will call such a family of transition matrices a transition matrix system.
 
 \begin{definition}[Transition matrix system]
-A \emph{transition matrix system} $\mathcal{T}$ is a family of stochastic matrices $T_t^s$, defined for all $0\leq t\leq s$, such that
+A \emph{transition matrix system} $\mathcal{T}$ is a family of transition matrices $T_t^s$, defined for all $0\leq t\leq s$, such that
 \begin{equation}\label{eq:transmatrixproduct}
 T_t^s=T_t^r T_r^s
 \text{~~for all $0\leq t\leq r\leq s$}
@@ -1081,11 +1096,13 @@ A set of rate matrices $\rateset\subseteq\mathcal{R}$ is bounded if and only if
 
 \subsection{Types of Imprecise Continuous-Time Markov Chains}
 
-\subsubsection{*** onder van homogene ***}
+*** lalala we behandelen verschillende gevallen ***
 
+\subsubsection{Imprecise Homogeneous Markov Chains}
 
-*** uitleggen dat het dat NIET is ***
-
+*** uitleggen dat het dat NIET is, meer opgenomen voor compleetheid ***
+\begin{definition}[Set of Homogeneous Markov Processes]\label{def:homogen_markov_process_set_new}
+For any bounded set of rate matrices $\rateset$, we define the set $\whmprocesses_{\rateset}$ of all well-behaved homogeneous continuous-time Markov processes \emph{consistent} with $\rateset$. Formally, we let $\whmprocesses_{\rateset}$ be the set of all $P\in\whmprocesses$ such that
 \begin{align*}
 \whmprocesses_\rateset
 \coloneqq&
@@ -1109,13 +1126,16 @@ P\in\whmprocesses
 Q_P\in\rateset
 \right\}
 \end{align*}
+\end{definition}
 
+\begin{definition}[Lower Expectation for Set of Homogeneous Markov Processes]\label{def:lower_homogen_markov} Consider any bounded set of rate matrices $\rateset$, and the set of corresponding well-behaved homogeneous continuous-time Markov processes $\whmprocesses_\rateset$. Then, the \emph{lower expectation with respect to $\whmprocesses_\rateset$} is defined as
 \begin{equation*}
-\underline{\mathbb{E}}_\rateset^\mathrm{WHM}[f(X_s)\,\vert\,X_t=x_t] \coloneqq \inf\left\{\mathbb{E}[f(X_s)\,\vert\,X_t=x_t]\,:\,P\in\whmprocesses_\rateset\right\}\,.
+\underline{\mathbb{E}}_\rateset^\mathrm{WHM}[\cdot\,\vert\,\cdot] \coloneqq \inf\left\{\mathbb{E}[\cdot\,\vert\,\cdot]\,:\,P\in\whmprocesses_\rateset\right\}\,.
 \end{equation*}
+\end{definition}
 
 
-\subsubsection{*** onder van inhomogene Markov ***}
+\subsubsection{Imprecise Markov Chains}
 
 \begin{definition}[Set of Markov Processes]\label{def:markov_process_set_new}
 For any bounded set of rate matrices $\rateset$, we define the set $\wmprocesses_{\rateset}$ of all well-behaved continuous-time Markov processes \emph{consistent} with $\rateset$. Formally, we let $\wmprocesses_{\rateset}$ be the set of all $P\in\wmprocesses$ such that
@@ -1156,7 +1176,7 @@ P\in\wmprocesses
 \end{equation*}
 \end{definition}
 
-\subsubsection{*** onder van niet-Markov}
+\subsubsection{Imprecise Non-Markov Chains}
 
 \begin{definition}[Set of Non-Markov Processes]\label{def:set_non_markov_process}
 For any bounded set of rate matrices $\rateset$, we consider the set $\wprocesses_\rateset$ of all stochastic processes \emph{consistent} with $\rateset$. Formally, we let $\wprocesses_\rateset$ be the set of all $P\in\wprocesses$ such that
@@ -1192,23 +1212,25 @@ P\in\wprocesses
 \subsection{Properties of Imprecise Continuous-Time Markov Chains}
 
 \begin{proposition}\label{prop:markov_set_subset_of_nonmarkov_set}
-Consider any bounded set of rate matrices $\rateset$, and the corresponding sets $\wmprocesses_\rateset$ and $\wprocesses_\rateset$ of well-behaved continuous-time Markov processes and non-Markov processes, respectively. Then,
+Consider any bounded set of rate matrices $\rateset$, and the corresponding sets $\whmprocesses_\rateset$, $\wmprocesses_\rateset$, and $\wprocesses_\rateset$ of well-behaved homogeneous continuous-time Markov processes, well-behaved continuous-time Markov processes, and well-behaved continuous-time non-Markov processes, respectively. Then,
 \begin{equation*}
-\wmprocesses_\rateset \subseteq \wprocesses_\rateset\,.
+\whmprocesses_\rateset \subseteq \wmprocesses_\rateset \subseteq \wprocesses_\rateset\,.
 \end{equation*}
 \end{proposition}
 \begin{proof}
-This is immediate from Definitions \ref{def:markov_process_set_new} and \ref{def:set_non_markov_process}.
+This is immediate from Definitions \ref{def:homogen_markov_process_set_new}, \ref{def:markov_process_set_new}, and \ref{def:set_non_markov_process}.
 \end{proof}
 
 \begin{proposition}\label{prop:lower_exp_markov_bounded_by_nonmarkov}
-Consider any $t,s\in\realsnonneg$ such that $t<s$, any bounded set of rate matrices $\rateset$, any $f\in\gamblesX$, and any $x_t\in\states$. Then,
+Consider any bounded set of rate matrices $\rateset$, and the corresponding sets $\whmprocesses_\rateset$, $\wmprocesses_\rateset$, and $\wprocesses_\rateset$ of well-behaved homogeneous continuous-time Markov processes, well-behaved continuous-time Markov processes, and well-behaved continuous-time non-Markov processes, respectively. Then,
 \begin{equation*}
-\underline{\mathbb{E}}_\rateset^\mathrm{WM}[f(X_s)\,\vert\,X_t=x_t] \geq \underline{\mathbb{E}}_\rateset^\mathrm{W}[f(X_s)\,\vert\,X_t=x_t]\,.
+\underline{\mathbb{E}}_\rateset^\mathrm{W}[\cdot\,\vert\,\cdot] \leq
+\underline{\mathbb{E}}_\rateset^\mathrm{WM}[\cdot\,\vert\,\cdot] \leq
+\underline{\mathbb{E}}_\rateset^\mathrm{WHM}[\cdot\,\vert\,\cdot]\,.
 \end{equation*}
 \end{proposition}
 \begin{proof}
-This is immediate from Definitions \ref{def:lower_markov} and \ref{def:lower_non_markov}, and Proposition \ref{prop:markov_set_subset_of_nonmarkov_set}.
+This is immediate from Proposition \ref{prop:markov_set_subset_of_nonmarkov_set} and Definitions \ref{def:lower_homogen_markov}, \ref{def:lower_markov}, and \ref{def:lower_non_markov}.
 \end{proof}
 
 \begin{lemma}
@@ -1742,7 +1764,7 @@ Consider any non-empty, bounded, closed and convex set of rate matrices $\ratese
 *** TO BE COMPLETED ***
 \end{proof}
 
-We conclude from all of this that non-empty bounded sets of rate matrices are more informative than lower transition rate matrices. Different non-empty bounded sets of rate matrices $\rateset$ may have the same lower transition rate operator $\lrate$ and therefore, in general, knowledge of $\lrate$ does not suffice to reconstruct $\rateset$; we can only reconstruct an outer approximation $\rateset_{\lrate}$, which is guaranteed to include $\rateset$. This changes if, besides non-empty and bounded, $\rateset$ is also closed and convex and has separately specified rows. In that case, $\lrate$ serves as an alternative representation for $\rateset$ because, since $\rateset=\rateset_{\lrate}$, we can use $\lrate$ to reconstruct $\rateset$. In other words: there is a one-to-one correspondence between lower transition rate operators and non-empty, bounded, closed and convex sets of rate matrices that have separately specified rows.
+We conclude from all of this that non-empty bounded sets of rate matrices are more informative than lower transition rate operators. Different non-empty bounded sets of rate matrices $\rateset$ may have the same lower transition rate operator $\lrate$ and therefore, in general, knowledge of $\lrate$ does not suffice to reconstruct $\rateset$; we can only reconstruct an outer approximation $\rateset_{\lrate}$, which is guaranteed to include $\rateset$. This changes if, besides non-empty and bounded, $\rateset$ is also closed and convex and has separately specified rows. In that case, $\lrate$ serves as an alternative representation for $\rateset$ because, since $\rateset=\rateset_{\lrate}$, we can use $\lrate$ to reconstruct $\rateset$. In other words: there is a one-to-one correspondence between lower transition rate operators and non-empty, bounded, closed and convex sets of rate matrices that have separately specified rows.
 
 %\section{Imprecise Continuous-Time Markov Chains}\label{sec:imp_markov}
 
@@ -2068,11 +2090,11 @@ has a unique solution, and that this solution satisfies
 \begin{equation}\label{eq:damjans_lower}
 \underline{f}_{\,s} = \underline{\mathbb{E}}_{\rateset}^{\mathrm{WM}}[f(X_s)\,\vert\,X_0]\,.
 \end{equation}
-Our work extends these results in several ways. First, as shown by Proposition~\ref{prop:lower_transition_has_deriv}, the differential equation~\eqref{eq:damjans_diff} has a uniform solution, i.e. one that is independent of $f$, and this solution is given by the operator $L_0^s$ corresponding to $\lrate$. Second, Corollary~\ref{cor:lower_operator_is_infimum} confirms Equation~\eqref{eq:damjans_lower}, but furthermore shows that the solution $\underline{f}_{\,s}$ also corresponds to the lower expectation with respect to a set of non-Markov processes.
+Our work extends these results in several ways. First, as shown by Proposition~\ref{prop:lower_transition_has_deriv}, the differential equation~\eqref{eq:damjans_diff} has a uniform solution, i.e. one that is independent of $f$, and this solution is given\footnote{There are some notational discrepancies between this previous work and our work here. To see this correspondence, take from Proposition~\ref{prop:lower_transition_has_deriv} the quantity $\nicefrac{\partial}{\partial t}L_t^s=-\lrate L_t^s$, with boundary condition $L_s^s=I$, and ``integrate'' backward from $s$ to $0$. This fixes the directional inconsistency of the derivatives, and yields the proper correspondence to differential equation~\eqref{eq:damjans_diff}.} by the operator $L_0^s$ corresponding to $\lrate$. Second, Corollary~\ref{cor:lower_operator_is_infimum} confirms Equation~\eqref{eq:damjans_lower}, but furthermore shows that the solution $\underline{f}_{\,s}$ also corresponds to the lower expectation with respect to a set of non-Markov processes.
 
-Our present work furthermore adds to the literature in several ways. In~\cite{Skulj:2015cq}, the results were cast purely in terms of lower envelopes of expectation functionals; but side-stepping the question of which sets of processes these envelopes correspond to. In contrast, our work in Section~\ref{sec:iCTMC} makes explicit the sets of processes that we are dealing with, and Theorem~\ref{theo:dominating_rate_processes_max_set} exactly characterizes the largest set of processes for which our lower transition operator---and indeed the differential equation~\eqref{eq:damjans_diff}---computes a lower envelope.
+Our present work furthermore adds to the literature in several ways. In~\cite{Skulj:2015cq}, the arguments were cast purely in terms of lower envelopes of expectation functionals; but side-stepped the question of which sets of processes these envelopes correspond to. In contrast, our work in Section~\ref{sec:iCTMC} makes explicit the sets of processes that we are dealing with, and Theorem~\ref{theo:dominating_rate_processes_max_set} exactly characterizes the largest set of processes for which our lower transition operator---and indeed the differential equation~\eqref{eq:damjans_diff}---computes a lower envelope.
 
-This earlier work also contains several results that are of significance to us. In particular, {\v{S}}kulj~\cite{Skulj:2015cq} discusses several practical techniques to numerically compute, or approximate to arbitrary precision, the quantity $\underline{f}_{\,s}$ for a given $f\in\gamblesX$. Hence, because of the correspondence between $\underline{f}_{\,s}$ and $L_0^sf$, these results can be applied when numerically working with our lower transition operator.
+This earlier work also contains several results that are of significance to us. In particular, {\v{S}}kulj discusses several practical techniques to numerically compute, or approximate to arbitrary precision, the quantity $\underline{f}_{\,s}$ for a given $f\in\gamblesX$. Hence, because of the correspondence between $\underline{f}_{\,s}$ and $L_0^sf$, these results can be applied when numerically working with our lower transition operator.
 
 Finally, previous work only focused on functions $f\in\gamblesX$ defined at a single point in time. We will now turn to functions defined on multiple time points, where we will find that it is crucial to be aware of the set of processes with respect to which one is taking lower envelopes.
 
