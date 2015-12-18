@@ -85,7 +85,7 @@
 
 \newcommand{\exampleend}{\hfill$\Diamond$}
 
-\title{Imprecise Continuous-Time Markov chains}
+\title{Imprecise Continuous-Time Markov Chains}
 
 %\author[1]{Thomas E. Krak\thanks{t.e.krak@uu.nl}}
 %\author[2]{Jasper de Bock\thanks{jasper.debock@ugent.be}}
@@ -302,11 +302,9 @@ Consider any transition rate matrix $Q\in\mathcal{R}$, and any $\Delta\in\realsn
 Consider any transition matrix $T$, and any $\Delta\in\realspos$. Then, the matrix $\nicefrac{1}{\Delta}(T-I)$ is a transition rate matrix.
 \end{proposition}
 
-\section{Continuous-Time Stochastic Processes}\label{sec:stochastic_processes}
-
-We will in this section formalize the notion of continuous-time stochastic processes. This is done in the framework of full conditional probabilities, which we describe in Section~\ref{sec:cond_prob}. This framework is then used in Section~\ref{sec:finite_add_stoch_proc} to define stochastic processes, and Section~\ref{sec:well_behaved} describes a specific class of stochastic processes, which we call well-behaved, on which we will largely focus throughout this work. Finally, Section~\ref{sec:dynamics} provides some tools with which we can describe the dynamics of stochastic processes.
-
 \subsection{Full conditional probabilities}\label{sec:cond_prob}
+
+*** intro
 
 A cadlag function $\omega$ from $\realsnonneg$ to $\states$ is called a \emph{path}, where cadlag means that it is right continuous for all $t\in\realsnonneg$ and that the left limit exists for all $t\in\realspos$. Let $\paths$ be the set of all paths. For any path $\path\in\paths$ and any time point $t\in\realsnonneg$, the value of $\path$ in $t$ is denoted by $\path(t)$.
 A subset $E$ of $\paths$ is called an \emph{event}. The set of all events is denoted by $\power$ and we let $\nonemptypower\coloneqq\power\setminus\{\emptyset\}$. 
@@ -353,9 +351,13 @@ Let $P$ be a real-valued map from $\power\times\nonemptypower$ to $\reals$. Then
 Trivial consequence of Theorem~\ref{theo:coherentextendable}.
 \end{proof}
 
+\section{Continuous-Time Stochastic Processes}\label{sec:stochastic_processes}
+
+We will in this section formalize the notion of continuous-time stochastic processes. This is done in the framework of full conditional probabilities that we described in Section~\ref{sec:cond_prob}. This framework is used in Section~\ref{sec:finite_add_stoch_proc} to define stochastic processes, and Section~\ref{sec:well_behaved} describes a specific class of stochastic processes, which we call well-behaved, and on which we will largely focus throughout this work. Finally, Section~\ref{sec:dynamics} provides some tools with which we can describe the dynamics of stochastic processes.
+
 \subsection{Finitely additive stochastic processes}\label{sec:finite_add_stoch_proc}
 
-We will next use the notion of full conditional probabilities to define continuous-time stochastic processes. These stochastic processes will be defined on a specific subset of the set $\mathcal{P}(\Omega)$ of all events, as follows.
+We will use the notion of full conditional probabilities to define continuous-time stochastic processes. These stochastic processes will be defined on a specific subset of the set $\power\times\nonemptypower$ of all (conditional) events, as follows.
 For any $t\in\realsnonneg$ and $x\in\states$, we define the elementary event
 \begin{equation*}
 (X_t=x)\coloneqq\{\path\in\paths\colon\path(t)=x\}.
@@ -399,9 +401,9 @@ Trivial consequence of Theorem~\ref{theo:coherentextendable}.
 
 *** explain that stochastic process can behave in rather extreme ways. For example, the transition probabilities can jump instantaneously. In order to avoid this behavior, we restrict our attention to a subclass of stochastic processes, which we call well-behaved. ***
 
-\begin{definition}[Well-behaved stochastic process]
+\begin{definition}[Well-Behaved Stochastic Process]
 \label{def:well-behaved}
-A stochastic process $P\in\processes$ is said to be well-behaved if, for any time sequence $0\leq t_0<\dots<t_{n}<t$ and any set of states $x_{0},\dots,x_{n},x,y\in\states$:
+A stochastic process $P\in\processes$ is said to be \emph{well-behaved} if, for any time sequence $0\leq t_0<\dots<t_{n}<t$ and any set of states $x_{0},\dots,x_{n},x,y\in\states$:
 \begin{equation*}
 \limsup_{\Delta\to 0^{+}}\frac{1}{\Delta}\abs{P(X_{t+\Delta}=y\vert X_t=x, X_{t_0}=x_{0}, \dots, X_{t_n}=x_{n})-\delta_{xy}}<+\infty
 \end{equation*}
@@ -411,6 +413,8 @@ and
 \end{equation*}
 The set of all well-behaved stochastic processes is denoted by $\wprocesses$.
 \end{definition}
+
+*** beetje intuitie
 
 \begin{exmp}
 *** voorbeeld van wat we dus niet toestaan (wortels bijvoorbeeld)
@@ -623,7 +627,7 @@ This follows trivially from Proposition~\ref{prop:outerderivativebehaveslikelimi
 
 \section{Continuous-Time Markov Chains}\label{sec:cont_time_markov_chains}
 
-*** tralala ***
+Having introduced continuous-time stochastic processes in Section~\ref{sec:stochastic_processes}, we will in this section focus on a specific class of such processes: the \emph{continuous-time Markov chains}.
 
 \begin{definition}[Markov Property, Markov Chain]\label{def:markov_property}
 A stochastic process $P\in\processes$ satisfies the \emph{Markov property} if, for any time sequence $0\leq t_0<\dots<t_{n}<t<s$ and any set of states $x_{0},\dots,x_{n},x,y\in\states$:
