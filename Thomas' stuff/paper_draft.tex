@@ -145,21 +145,17 @@ Lorem ipsum.
 
 \section{Preliminaries}\label{sec:prelim}
 
-Consider some finite \emph{state space} $\states=\{1,\dots,m\}$.
+*** notation for naturals, reals, ...
 
-*** notation for naturals, reals, ... notation and conventions for matrices ***
+Consider some finite \emph{state space} $\states=\{1,\dots,m\}$. Let $\gamblesX$ denote the set of all real-valued functions on $\states$. Because $\states$ is finite, we can also interpret any function $f\in\gamblesX$ as a vector in $\reals^m$. Hence, we will in the sequel use the terms `function' and `vector' interchangeably when referring to elements of $\gamblesX$.
 
-Throughout this work, we will make extensive use of the notion of sequences of time points. For any $t,s\in\realsnonneg$ such that $t<s$, let $u$ denote any finite sequence of time points $t_0,t_1,\ldots,t_n$ such that $t=t_0 < t_1 <\ldots < t_n = s$. We use $\mathcal{U}_{[t,s]}$ to denote the set of all such sequences. 
-Given any $u\in\mathcal{U}_{[t,s]}$, we define for all $i\in\{1,\ldots,n\}$ the terms $\Delta_i\coloneqq t_i-t_{i-1}$.  Finally, define a function $\sigma(u)$, as
-\begin{equation*}
-\sigma(u) \coloneqq \max\bigl\{\Delta_i\,:\,i\in\{1,\ldots,n\}\bigr\}\,.
-\end{equation*}
+*** notation and conventions for matrices (always square, always $m\times m$, indexed by $A(x,y)$, row-major)
 
-*** nog wat notatie nodig voor arbitraire (eindige) reeks tijdpunten $<t$, die 0 wel mogen, maar niet hoeven te bevatten.
+*** notation for infinite sequences $\{a_i\}_{i\in\nats}$, possibly with limit statement in the form $\{a_i\}_{i\in\nats}\to c$, or sometimes as $\{a_i\}_{i\in\nats}\to c^+$, $\{a_i\}_{i\in\nats}\to c^-$ if approaches from above/below.
 
-\subsection{Functions, Operators, and Norms}\label{sec:func_oper_norm}
-Let $\gamblesX$ denote the set of all real-valued functions on $\states$. Because $\states$ is finite, we can also interpret any function $f\in\gamblesX$ as a vector in $\reals^m$. Hence, we will in the sequel use the terms `function' and `vector' interchangeably when referring to elements of $\gamblesX$.
+Throughout this work, we will make extensive use of finite sequences of time points. For any such sequence $u\coloneqq t_0,t_1,\ldots,t_n$, with $n\in\nats$ and $t_i\in\realsnonneg$, $i\in\{0,\ldots,n\}$, we will write $u<t$ if $\max\left\{t_i:i\in\{0,\ldots,n\}\right\}<t$ for some $t\in\realsnonneg$. As a special case, for any $t,s\in\realsnonneg$ such that $t<s$, we consider ordered sequences $u$ that partition the interval $[t,s]$, and include the end-points of this interval. Thus, we then have that $u$ is such that $t=t_0 < t_1 <\ldots < t_n = s$, and we will use $\mathcal{U}_{[t,s]}$ to denote the set of all such sequences. Furthermore, given any $u\in\mathcal{U}_{[t,s]}$, we define for all $i\in\{1,\ldots,n\}$ the terms $\Delta_i\coloneqq (t_i-t_{i-1})$ that denote the distance between consecutive time points in $u$, and use $\sigma(u) \coloneqq \max\bigl\{\Delta_i\,:\,i\in\{1,\ldots,n\}\bigr\}$ to denote the maximum such distance.
 
+\subsection{Operators and Norms}\label{sec:func_oper_norm}
 For any vector $f\in\gamblesX$, we let
 \begin{equation*}
 \norm{f}\coloneqq\norm{f}_{\infty}\coloneqq\max\{\abs {f(x)}\colon x\in\states\}
@@ -253,8 +249,11 @@ To avoid introducing overly complex notation, we will stipulate the following co
 \end{equation*}
 
 \subsection{Transition (Rate) Matrices}\label{sec:trans_rate_matrices}
+
+*** some intro text
+
 \begin{definition}[Transition Rate Matrix]\label{def:rate_matrix}
-A real-valued $m\times m$ matrix $Q$ is said to be a \emph{transition rate matrix}, or sometimes simply \emph{rate matrix}, if
+A real-valued matrix $Q$ is said to be a \emph{transition rate matrix}, or sometimes simply \emph{rate matrix}, if
 
 \vspace{5pt}
 \begin{enumerate}[label=R\arabic*:]
@@ -271,7 +270,7 @@ We use $\mathcal{R}$ to denote the set of all transition rate matrices.
 \noindent Clearly, $\mathcal{R}$ is closed under finite sums and multiplication with non-negative scalars. 
 
 \begin{definition}[Transition Matrix]\label{def:stoch_matrix}
-A real-valued $m\times m$ matrix $T$ is said to be a \emph{transition matrix} if
+A real-valued matrix $T$ is said to be a \emph{transition matrix} if
 \vspace{5pt}
 \begin{enumerate}[label=S\arabic*:,ref=N\arabic*]
 \item
@@ -286,7 +285,7 @@ $T(x,y)\geq0$ for all $x,y\in\states$.
 \noindent We start by establishing some properties of the norm of these matrices. Both propositions follow trivially from the definitions.
 
 \begin{proposition}
-Let $Q$ be an arbitrary transition rate matrix. Then, $0\leq\norm{Q}<+\infty$.
+Let $Q$ be an arbitrary transition rate matrix. Then, $\norm{Q}<+\infty$.
 \end{proposition}
 
 \begin{proposition}
@@ -417,63 +416,67 @@ The set of all well-behaved stochastic processes is denoted by $\wprocesses$.
 \exampleend
 \end{exmp}
 
-*** tralala, we kunnen eigenschappen van stochastische processen uitdrukken met transitie matrices
+Rather than work with the individual probabilities of a stochastic process, it will be convenient to jointly consider probabilities that are related by the same conditioning event. To this end, we will next introduce the notion of transition matrices corresponding to a given stochastic process.
 
 \begin{definition}[Corresponding Transition Matrix]\label{def:trans_matrix}
-Consider any stochastic process $P\in\processes$. Then, for any $0\leq t\leq s$, the \emph{corresponding transition matrix} $T_t^s$ is a $m\times m$ matrix that is defined by
+Consider any stochastic process $P\in\processes$. Then, for any $t,s\in\realsnonneg$ such that $t\leq s$, the \emph{corresponding transition matrix} $T_t^s$ is a matrix that is defined by
 \begin{equation*}
 T_t^s(x_t, x_s) \coloneqq P(X_s=x_s\,\vert X_t=x_t)\quad\text{for all $x_s,x_t\in\states$}\,.
 \end{equation*}
 We denote this family of matrices by $\mathcal{T}_P$.%, and call it the \emph{system of transition matrices} that corresponds to $P$.
 \end{definition}
 
-*** generalisatie:
+Because we will also want to work with conditioning events that contain more than a single time point, we furthermore introduce the following generalization.
 
 \begin{definition}[History-Dependent Corresponding Transition Matrix]
-*** tralala, dit heeft een generalisatie, waarbij we voor elke geschiedenis $x_u$ die zich afspeelt \emph{voor} tijdstip $t$, een aparte transitie matrix $T_{t,x_u}^s$ van $t$ naar $s$ pakken:
+Consider any $P\in\processes$. Then, for any $t,s\in\realsnonneg$ such that $t\leq s$, any sequence of time points $u<t$, and any state assignment $x_u\in\states^u$, the \emph{history-dependent} corresponding transition matrix $T_{t,x_u}^s$ is a matrix that is defined by
 \begin{equation*}
-T^s_{t,\,x_u}(x,y)
+T^s_{t,\,x_u}(x_t,x_s)
 \coloneqq
-P(X_s=y\vert X_t=x, X_{t_0}=x_{0}, \dots, X_{t_n}=x_{n})
+P(X_s=x_s\vert X_t=x_t, X_{t_0}=x_{0}, \dots, X_{t_n}=x_{n})\quad\text{for all $x_s,x_t\in\states$}\,.
 \end{equation*}
+For notational convenience, we will allow $u$ to be empty, in which case we will simply have that $T_{t,x_u}^s=T_t^s$.
 \end{definition}
 
+The following proposition establishes some simple properties of these (history-dependent) corresponding transition matrices.
+
 \begin{proposition}\label{prop:stochasticprocess:simpleproperties}
-Let $P\in\processes$ be a stochastic process. Then for any $0\leq t\leq s$, $T_t^s$ is a transition matrix and $T_t^t=I$ and, if $P$ is well-behaved, then also
+Let $P\in\processes$ be a stochastic process. Then for any $t,s\in\realsnonneg$ such that $t\leq s$, $T_t^s$ is a transition matrix and $T_t^t=I$ and, if $P$ is well-behaved, then also
 \begin{equation}\label{eq:wellbehavedtransitionmatrix}
 \lim_{\Delta\to 0^{+}}\frac{1}{\Delta}\norm{T_t^{t+\Delta}-I}<+\infty
 \text{~~~~and~~~~}
 \lim_{\Delta\to 0^{+}}\frac{1}{\Delta}\norm{T_{t-\Delta}^t-I}<+\infty.
 \end{equation}
 
-*** show that $T_{t,x_u}^s$ is also a transition matrix (and possibly well-behaved) by including this case in proposition below.
+Similarly, for any $t,s\in\realsnonneg$ such that $t\leq s$, any sequence of time points $u<t$, and any state assignment $x_u\in\states^u$, $T_{t,x_u}^s$ is a transition matrix and $T_{t,x_u}^t=I$ and, if $P$ is well-behaved, then also
+\begin{equation}\label{eq:wellbehavedhistorictransitionmatrix}
+\lim_{\Delta\to 0^{+}}\frac{1}{\Delta}\norm{T_{t,x_u}^{t+\Delta}-I}<+\infty
+\text{~~~~and~~~~}
+\lim_{\Delta\to 0^{+}}\frac{1}{\Delta}\norm{T_{t-\Delta,x_u}^t-I}<+\infty.
+\end{equation}
 \end{proposition}
 \begin{proof}
 *** trivial ***
 \end{proof}
 
-*** laat zien dat we met die transitie matrices verwachtingswaarden kunnen uitrekenen:
-
-\begin{proposition}
-*** nog even goed verwoorden
-
-Note that for all $x_t\in\states$, we have that
+\begin{remark*}
+Because for any $P\in\processes$ a corresponding transition matrix $T_t^s$ is a map from $\gamblesX$ to $\gamblesX$, it is an operator that can be applied to any $f\in\gamblesX$. Note that for all $x_t\in\states$, we have that
 \begin{align*}
 \left[T_t^sf\right](x_t) &= \sum_{x_s\in\states}f(x_s)P(X_s=x_s\,\vert\,X_t=x_t)
 = \mathbb{E}\left[f(X_s)\,\vert\,X_t=x_t\right]\,,
 \end{align*}
-where the expectation is taken with respect to $P$.
+where the expectation is taken with respect to $P$. Similarly, for any history-dependent transition matrix $T_{t,x_u}^s$, we have that
+\begin{equation*}
+\left[T_{t,x_u}^sf\right](x_t) = \mathbb{E}\left[f(X_s)\,\vert\,X_t=x_t, X_{t_0}=x_{t_0},\ldots,X_{t_n}=x_{t_n}\right]\,.
+\end{equation*}
+\end{remark*}
 
-*** ook doen voor $T_{t,x_u}^s$
-\end{proposition}
-\begin{proof}
-*** trivial ***
-\end{proof}
+Because a stochastic process is defined on a continuous time line, and because its corresponding transition matrices $T_{t,x_u}^s$ only describe the behavior of this process on a fixed point in time, we will furthermore require some tools to capture the dynamics of a given process. That is, we will be interested in how these transition matrices change over time.
 
-*** hoe kunnen we eigenschappen van die transitie matrices beschrijven? met afgeleides:
+One seemingly obvious way to describe these dynamics is to use the derivatives of a process' corresponding transition matrices. Unfortunately, for general stochastic processes, these derivatives do not necessarily exist. In fact, also the slightly weaker directional derivatives---which we define below---are not guaranteed to exist. Worse still, they are not even guaranteed to exist for well-behaved processes.
 
-\begin{definition}[Directional Partial Derivatives]
-*** tralala, we kunnen eigenschappen van transitie matrices van een gegeven process uitdrukken aan de hand van (directionele en partieele) afgeleides:
+\begin{definition}[Directional Partial Derivatives]\label{def:direc_partial_deriv}
+For any stochastic process $P\in\processes$, any $t\in\realsnonneg$, any sequence of time points $u<t$, and any state assignment $x_u\in\states^u$, the \emph{right-} and \emph{left-sided partial derivatives} of $T_{t,x_u}^t$ are defined, respectively, as
 \begin{equation*}
 \partial_{+}{T_{t,\,x_u}^t}
 \coloneqq
@@ -497,22 +500,35 @@ where the expectation is taken with respect to $P$.
 \frac{1}{\Delta}
 (T^{t}_{t-\Delta,\,x_u}-I)
 \end{equation*}
+\noindent If these partial derivatives exist, then because of Proposition~\ref{prop:rate_from_stochastic_matrix}, they are guaranteed to belong to the set of rate matrices  $\mathcal{R}$. If they both exists and coincide, we write $\partial{T_{t,\,x_u}^t}$ to denote their common value.
 \end{definition}
-\vspace{5pt}
-\noindent If these partial derivatives exist, then because of Proposition~\ref{prop:rate_from_stochastic_matrix}, they are guaranteed to belong to $\mathcal{R}$. If they both exists and coincide, we write $\partial{T_{t,\,x_u}^t}$ to denote their common value.
 
-If these partial derivatives do not exist, then more generally, we can consider the following outer partial derivatives:
+\begin{exmp}
+Suppose that a well-behaved stochastic process $P\in\wprocesses$ is such that, at some time $t\in\realsnonneg$ and for some history $x_u\in\states^u$, $u<t$, the corresponding transition matrix $T_{t,x_u}^{t+\Delta}$ satisfies, for all $\Delta\in\realspos$,
+\begin{equation*}
+\frac{1}{\Delta}(T_{t,x_u}^{t+\Delta} - I) = \left\{\begin{array}{cl}
+Q_1 & \quad \text{if $\Delta\in\mathbb{Q}$, and} \\
+Q_2 & \quad \text{otherwise,}
+\end{array}\right.
+\end{equation*}
+for some rate matrices $Q_1,Q_2\in\mathcal{R}$ with $Q_1\neq Q_2$. Clearly, the norm of this quantity is bounded for all $\Delta\in\realspos$, and hence this does not pose a problem for the well-behavedness of $P$. On the other hand, $\partial_{+}{T_{t,\,x_u}^t}$ clearly does not exist.
+\exampleend
+\end{exmp}
+
+Because these directional partial derivatives do not necessarily exist, it will be more convenient to instead work with \emph{outer partial derivatives} {\bf (REF)}. Intuitively, these can be seen as a kind of set-valued derivatives, containing all accumulation points of the difference equations in Definition~\ref{def:direc_partial_deriv}, obtained as $\Delta\to0^+$.
 
 \begin{definition}[Outer Partial Derivatives]
-\begin{equation}
+For any stochastic process $P\in\processes$, any $t\in\realsnonneg$, any sequence of time points $u<t$, and any state assignment $x_u\in\states^u$, the \emph{right-} and \emph{left-sided} \emph{outer partial derivatives} of $T_{t,x_u}^t$ are defined, respectively, as
+\begin{align}
 \label{eq:rightouterderivative}
+\begin{split}
 \overline{\partial}_{+}
 {T^t_{t,\,x_u}}
-\coloneqq
+&\coloneqq
 \left\{
 Q\in\mathcal{R}
 \colon
-(\exists \Delta_i\to0^+,\,i\in\nats)
+\left(\exists \,\{\Delta_i\}_{i\in\nats}\to0^+\,:\,
 ~
 %\lim_{i\to+\infty}\Delta_i=0
 %\text{~~and~}
@@ -520,17 +536,15 @@ Q\in\mathcal{R}
 \frac{1}{\Delta_i}
 (T^{t+\Delta_i}_{t,\,x_u}-I)
 =Q
-\right\}
-\end{equation}
-
-\begin{equation*}
+\right)
+\right\}\\
 \overline{\partial}_{-}
 {T^t_{t,\,x_u}}
-\coloneqq
+&\coloneqq
 \left\{
 Q\in\mathcal{R}
 \colon
-(\exists \Delta_i\to0^+,\,i\in\nats)
+\left(\exists\, \{\Delta_i\}_{i\in\nats}\to0^+\,:\,
 ~
 %\lim_{i\to+\infty}\Delta_i=0
 %\text{~~and~}
@@ -538,9 +552,11 @@ Q\in\mathcal{R}
 \frac{1}{\Delta_i}
 (T^{t}_{t-\Delta_i,\,x_u}-I)
 =Q
+\right)
 \right\}
-\end{equation*}
-and let
+\end{split}
+\end{align}
+Furthermore, the \emph{outer partial derivative} of $T_{t,x_u}^t$ is defined as
 \begin{equation*}
 \overline{\partial}
 {T^t_{t,\,x_u}}
@@ -553,19 +569,19 @@ and let
 \end{equation*}
 \end{definition}
 
-*** deze generalisatie bestaat wel altijd (tenminste voor well-behaved processen):
+The next result shows that, at least for well-behaved processes $P\in\wprocesses$, these outer partial derivatives always exist; in particular, that they are non-empty and bounded.
 
 \begin{proposition}\label{prop:boundednon-emptyandclosed}
 For any $P\in\wprocesses$, $\overline{\partial}_{+}
 {T^t_{t,\,x_u}}$, $\overline{\partial}_{-}
 {T^t_{t,\,x_u}}$ and $\overline{\partial}
-{T^t_{t,\,x_u}}$ are bounded, non-empty and closed subsets of $\mathcal{R}$.
+{T^t_{t,\,x_u}}$ are non-empty, bounded and closed subsets of $\mathcal{R}$.
 \end{proposition}
 
-*** tralala, de inhoud van deze outer partial derivs zijn intuitief te beschouwen als limieten:
+\noindent Furthermore, these right- and left-sided outer partial derivatives are clearly related to the directional partial derivatives. The next statement makes this explicit for well-behaved stochastic processes, using an $\epsilon-\delta$ expression for the limits in Definition~\ref{def:direc_partial_deriv}.
 
 \begin{proposition}\label{prop:outerderivativebehaveslikelimit}
-For all $\epsilon>0$, there is some $\delta>0$ such that, for all $0<\Delta<\delta$:
+Consider any well-behaved stochastic process $P\in\wprocesses$. Then, for any $t\in\realsnonneg$, any sequence of time points $u<t$, any state assignment $x_u\in\states^u$, and any $\epsilon>0$, there is some $\delta>0$ such that, for all $0<\Delta<\delta$:
 \begin{equation}
 \label{eq:outerderivativebehaveslikelimit1}
 (\exists Q\in\overline{\partial}_{+}
@@ -583,7 +599,7 @@ and
 \end{equation}
 \end{proposition}
 
-*** tralala, als de directionele partiele afgeleides bestaan, komen ze overeen met de generalisatie:
+We conclude this section by establishing that, for well-behaved processes, the outer partial derivatives are a proper generalization of the directional partial derivatives. In particular, if the latter exist, their values correspond exactly to the elements of the former.
 
 \begin{corollary}\label{corol:outersingleton}
 Consider any $P\in\wprocesses$. Then $\smash{\overline{\partial}_{+}
@@ -990,11 +1006,11 @@ Trivial consequence of Propositions~\ref{lemma:normQsmallenough} and~\ref{lemma:
 
 \subsection{The Operator of Interest}
 
-We will next introduce a specific lower transition operator on which we will focus for the remainder of this work. We will assume in this section that we are given some arbitrary lower transition rate operator $\lrate$, and define for any $u\in\mathcal{U}_{[t,s]}$ the operator
+We will in this section introduce a specific lower transition operator on which we will focus for the remainder of this work. We will assume here that we are given some arbitrary lower transition rate operator $\lrate$, and define for any $u\in\mathcal{U}_{[t,s]}$ the auxiliary operator
 \begin{equation*}
 \Phi_u\coloneqq\prod_{k=1}^n(I+\Delta_k\lrate)\,.
 \end{equation*}
-Before defining this operator of interest, we first give some preliminary results. We start with a bound on the distance between two operators $\Phi_u$ and $\Phi_{u*}$.
+Before defining the operator of interest, we first give some preliminary results to provide intuition on how this operator will be constructed. We start with a bound on the distance between two operators $\Phi_u$ and $\Phi_{u*}$.
 
 \begin{proposition}\label{prop:differencebetweenu}
 Consider any $t,s\in\realsnonneg$ such that $t<s$, and any $u,u^*\in\mathcal{U}_{[t,s]}$ such that $\sigma(u)<\alpha$ and $\sigma(u^*)<\alpha$, with $0<\alpha\leq\nicefrac{1}{\norm{\lrate}}$. Let $\Delta\coloneqq s-t$. Then,
@@ -1004,10 +1020,10 @@ Consider any $t,s\in\realsnonneg$ such that $t<s$, and any $u,u^*\in\mathcal{U}_
 \end{proposition}
 
 \begin{corollary}\label{corol:cauchy}
-For every sequence $u_1,u_2,\dots,u_n,\dots$ in $\mathcal{U}_{[t,s]}$ such that $\lim_{n\to\infty}\sigma(u_n)=0$, the corresponding sequence $\Phi_{u_1},\Phi_{u_2},\dots,\Phi_{u_n},\dots$ is a \emph{Cauchy sequence}, meaning that
+For every sequence $\{u_i\}_{i\in\nats}$ in $\mathcal{U}_{[t,s]}$ such that $\lim_{i\to\infty}\sigma(u_i)=0$, the corresponding sequence $\{\Phi_{u_i}\}_{i\in\nats}$ is a \emph{Cauchy sequence}, meaning that
 \begin{equation*}
-(\forall \epsilon>0)(\exists N\in\nats)(\forall n,m\geq N)
-\norm{\Phi_{u_n}-\Phi_{u_m}}<\epsilon.
+(\forall \epsilon>0)(\exists n\in\nats)(\forall i,j\geq n)
+\norm{\Phi_{u_i}-\Phi_{u_j}}<\epsilon.
 \end{equation*}
 \end{corollary}
 \begin{proof}
@@ -1017,7 +1033,7 @@ This follows almost directly from Proposition~\ref{prop:differencebetweenu}.
 \noindent Due to Proposition~\ref{lemma:completemetricspace}, we therefore have the following result.
 
 \begin{corollary}\label{corol:limitexistsandiscoherent}
-For every sequence $u_1,u_2,\dots,u_n,\dots$ in $\mathcal{U}_{[t,s]}$ such that $\lim_{n\to\infty}\sigma(u_n)=0$, the corresponding sequence $\Phi_{u_1},\Phi_{u_2},\dots,\Phi_{u_n},\dots$ converges to a lower transition operator.
+For every sequence $\{u_i\}_{i\in\nats}$ in $\mathcal{U}_{[t,s]}$ such that $\lim_{i\to\infty}\sigma(u_i)=0$, the corresponding sequence $\{\Phi_{u_i}\}_{i\in\nats}$ converges to a lower transition operator.
 \end{corollary}
 
 \noindent We are now ready to define the \emph{lower transition operator corresponding to $\lrate$}.
@@ -1224,9 +1240,9 @@ Recall from Section~\ref{sec:connections_rate} that for a given lower transition
 \begin{theorem}\label{theo:dominating_rate_processes_max_set}
 Let $\lrate$ be an arbitrary lower transition rate operator, with $\rateset_{\lrate}$ its set of dominating rate matrices. Then, for all $t,s\in\realsnonneg$ such that $t<s$, all $f\in\gamblesX$, and all $x\in\states$,
 \begin{equation*}
-\left[L_t^sf\right](x) = \inf\left\{\mathbb{E}[f(X_s)\,\vert\,X_t=x]\,:\,P\in\wprocesses_{\rateset_{\lrate}}\right\}\,.
+\left[L_t^sf\right](x) = \inf\left\{\mathbb{E}[f(X_s)\,\vert\,X_t=x]\,:\,P\in\wprocesses_{\rateset_{\lrate}}\right\}\,,
 \end{equation*}
-Contrariwise, for all $P\in\processes$ such that $P\notin\wprocesses_{\rateset_{\lrate}}$, there is some $f\in\gamblesX$, and some $t,s\in\realsnonneg$ with $t<s$, such that for some $x\in\states$,
+and, contrariwise, for all $P\in\processes$ such that $P\notin\wprocesses_{\rateset_{\lrate}}$, there is some $f\in\gamblesX$, and some $t,s\in\realsnonneg$ with $t<s$, such that for some $x\in\states$,
 \begin{equation*}
 \mathbb{E}\left[f(X_s)\,\vert\,X_t=x\right] < \left[L_t^sf\right](x)\,.
 \end{equation*}
