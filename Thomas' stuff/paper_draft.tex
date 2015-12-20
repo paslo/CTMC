@@ -145,15 +145,15 @@ Lorem ipsum.
 
 \section{Preliminaries}\label{sec:prelim}
 
-*** notation for naturals, reals, ...
+We will denote the reals as $\reals$, the non-negative reals as $\realsnonneg$, and the positive reals as $\realspos$. The natural numbers will be written as $\nats$, and we will denote $\nats_0\coloneqq\nats\cup\{0\}$. The rationals will be denoted by $\mathbb{Q}$.
 
-Consider some finite \emph{state space} $\states=\{1,\dots,m\}$. Let $\gamblesX$ denote the set of all real-valued functions on $\states$. Because $\states$ is finite, we can also interpret any function $f\in\gamblesX$ as a vector in $\reals^m$. Hence, we will in the sequel use the terms `function' and `vector' interchangeably when referring to elements of $\gamblesX$.
+Throughout this work, we will consider some fixed finite \emph{state space} $\states=\{1,\dots,m\}$. Let $\gamblesX$ denote the set of all real-valued functions on $\states$. Because $\states$ is finite, we can also interpret any function $f\in\gamblesX$ as a vector in $\reals^m$. Hence, we will in the sequel use the terms `function' and `vector' interchangeably when referring to elements of $\gamblesX$.
 
-*** notation and conventions for matrices (always square, always $m\times m$, indexed by $A(x,y)$, row-major)
+An important type of map from $\gamblesX$ to $\gamblesX$ will be matrices. Because the domain and range of these maps is always fixed, we will simply refer to them as `matrices', with which we then always mean `square, $m\times m$, real-valued matrices'. If $A$ is a matrix, we will index its elements as $A(x,y)$ for all $x,y\in\states$, where the indexing is understood to be row-major. Furthermore, $A(x,\cdot)$ will denote the $x$-th row of $A$, and $A(\cdot,y)$ will denote its $y$-th column. The symbol $I$ will be reserved throughout to refer to the $m\times m$ identity matrix.
 
-*** notation for infinite sequences $\{a_i\}_{i\in\nats}$, possibly with limit statement in the form $\{a_i\}_{i\in\nats}\to c$, or sometimes as $\{a_i\}_{i\in\nats}\to c^+$, $\{a_i\}_{i\in\nats}\to c^-$ if approaches from above/below.
+Infinite sequences of quantities will be denoted $\{a_i\}_{i\in\nats}$, possibly with limit statements of the form $\{a_i\}_{i\in\nats}\to c$. If this sequence is in a space endowed with an ordering relation, we may write $\{a_i\}_{i\in\nats}\to c^+$ or $\{a_i\}_{i\in\nats}\to c^-$ if the limit is approached from above or below, respectively.
 
-Throughout this work, we will make extensive use of finite sequences of time points. For any such sequence $u\coloneqq t_0,t_1,\ldots,t_n$, with $n\in\nats$ and $t_i\in\realsnonneg$, $i\in\{0,\ldots,n\}$, we will write $u<t$ if $\max\left\{t_i:i\in\{0,\ldots,n\}\right\}<t$ for some $t\in\realsnonneg$. We will sometimes allow $u$ to be an empty sequence, to prevent having to constantly consider both cases separately. However, we will be explicit when doing so. As a special case, for any $t,s\in\realsnonneg$ such that $t<s$, we consider ordered sequences $u$ that partition the interval $[t,s]$, and include the end-points of this interval. Thus, we then have that $u$ is such that $t=t_0 < t_1 <\ldots < t_n = s$, and we will use $\mathcal{U}_{[t,s]}$ to denote the set of all such sequences. Furthermore, given any $u\in\mathcal{U}_{[t,s]}$, we define for all $i\in\{1,\ldots,n\}$ the terms $\Delta_i\coloneqq (t_i-t_{i-1})$ that denote the distance between consecutive time points in $u$, and use $\sigma(u) \coloneqq \max\bigl\{\Delta_i\,:\,i\in\{1,\ldots,n\}\bigr\}$ to denote the maximum such distance.
+Finally, we will make extensive use of finite sequences of time points. For any such sequence $u\coloneqq t_0,t_1,\ldots,t_n$, with $n\in\nats$ and $t_i\in\realsnonneg$, $i\in\{0,\ldots,n\}$, we will write $u<t$ if $\max\left\{t_i:i\in\{0,\ldots,n\}\right\}<t$ for some $t\in\realsnonneg$. We will sometimes allow $u$ to be an empty sequence, to prevent having to constantly consider several cases separately. However, we will be explicit when doing so. As a special case, for any $t,s\in\realsnonneg$ such that $t<s$, we consider ordered sequences $u$ that partition the interval $[t,s]$, and include the end-points of this interval. Thus, we then have that $u$ is such that $t=t_0 < t_1 <\ldots < t_n = s$, and we will use $\mathcal{U}_{[t,s]}$ to denote the set of all such sequences. Furthermore, given any $u\in\mathcal{U}_{[t,s]}$, we define for all $i\in\{1,\ldots,n\}$ the terms $\Delta_i\coloneqq (t_i-t_{i-1})$ that denote the distance between consecutive time points in $u$, and use $\sigma(u) \coloneqq \max\bigl\{\Delta_i\,:\,i\in\{1,\ldots,n\}\bigr\}$ to denote the maximum such distance.
 
 \subsection{Operators and Norms}\label{sec:func_oper_norm}
 For any vector $f\in\gamblesX$, we let
@@ -208,7 +208,7 @@ $\norm{Af}\leq\norm{A}\norm{f}$
 \end{multicols}
 \end{proposition}
 
-\subsubsection{wat notatie voor meerdere variabelen}\label{sec:multivar_notation}
+\subsection{wat notatie voor meerdere variabelen}\label{sec:multivar_notation}
 
 *** dit kan opzich wel korter denk ik, maar kunnen we bij oppoetsen straks nog wel even checken ***
 
@@ -292,6 +292,18 @@ Let $Q$ be an arbitrary transition rate matrix. Then, $\norm{Q}<+\infty$.
 Let $T$ be an arbitrary transition matrix. Then, $\norm{T}=1$.
 \end{proposition}
 
+Consider now any set $\rateset\subseteq\mathcal{R}$ of rate matrices. Then $\rateset$ is said to be \emph{non-empty} if $\rateset\neq\emptyset$ and $\rateset$ is said to be \emph{bounded} if $\norm{\rateset}<+\infty$. The following proposition provides a simple alternative characterisation of boundedness.
+
+\begin{proposition}\label{prop:alternativedefforbounded}
+A set of rate matrices $\rateset\subseteq\mathcal{R}$ is bounded if and only if
+\begin{equation*}
+\inf\left\{Q(x,x)\colon Q\in\rateset\right\}>-\infty\text{~~for all $x\in\states$.}
+\end{equation*}
+\end{proposition}
+\begin{proof}
+*** {\bf TODO}
+\end{proof}
+
 *** tralala, rate matrices and transition matrices zijn sterk gelinkt.  intuitief geven rate matrices aan hoe snel een transitie kans veranderd, in termen van $\Delta$.
 
 \begin{proposition}\label{prop:stochastic_from_rate_matrix}
@@ -302,11 +314,11 @@ Consider any transition rate matrix $Q\in\mathcal{R}$, and any $\Delta\in\realsn
 Consider any transition matrix $T$, and any $\Delta\in\realspos$. Then, the matrix $\nicefrac{1}{\Delta}(T-I)$ is a transition rate matrix.
 \end{proposition}
 
-\subsection{Full conditional probabilities}\label{sec:cond_prob}
+\subsection{Toward Stochastic Processes}\label{sec:cond_prob}
 
-*** intro
+We will in Section~\ref{sec:stochastic_processes} define continuous-time stochastic processes using the framework of full conditional probabilities, which we describe here. Such a stochastic process is a construct that moves through the state space $\states$ over a continuous time line $\realsnonneg$. A specific realization or instance of this behavior will be called a path or a trajectory, and the stochasticity is quantified using a probability measure on a set of events, which describe specific (combinations of) states in which the process can be at certain time points. These ideas are formalized as follows.
 
-A cadlag function $\omega$ from $\realsnonneg$ to $\states$ is called a \emph{path}, where cadlag means that it is right continuous for all $t\in\realsnonneg$ and that the left limit exists for all $t\in\realspos$. Let $\paths$ be the set of all paths. For any path $\path\in\paths$ and any time point $t\in\realsnonneg$, the value of $\path$ in $t$ is denoted by $\path(t)$.
+A \emph{path} $\omega$ is a cadlag function from $\realsnonneg$ to $\states$, where cadlag means that it is right continuous for all $t\in\realsnonneg$ and that the left limit exists for all $t\in\realspos$. Let $\paths$ be the set of all paths. For any path $\path\in\paths$ and any time point $t\in\realsnonneg$, the value of $\path$ in $t$ is denoted by $\path(t)$.
 A subset $E$ of $\paths$ is called an \emph{event}. The set of all events is denoted by $\power$ and we let $\nonemptypower\coloneqq\power\setminus\{\emptyset\}$. 
 
 \begin{definition}[Full conditional probability]\label{def:cond_prob}
@@ -329,8 +341,10 @@ $P(A\vert C)=P(A\vert D)P(D\vert C)$ if $A\subseteq D\subseteq C$.
 For any $A\in\power$ and $C\in\nonemptypower$, we call $P(A\vert C)$ the probability of $A$ conditional on $C$. Also, for any $A\in\power$, we use the shorthand notation $P(A)\coloneqq P(A\vert\paths)$ and then call $P(A)$ the probability of $A$.
 \end{definition}
 
+The following notion of coherent conditional probabilities will be useful whenever we want to check if a given map $P$ from a set of events to $\reals$ is a well-defined conditional probability measure.
+
 \begin{definition}[Coherent conditional probability]\label{def:coherence}
-Let $P$ be a real-valued map from $\mathcal{C}\subseteq\power\times\nonemptypower$ to $\reals$. Then $P$ is said to be a coherent conditional probability if, for all $n\in\mathbb{N}$ and every choice of $(A_i,C_i)\in\mathcal{C}$ and $\lambda_i\in\reals$, $i\in\{1,\dots,n\}$,
+Let $P$ be a real-valued map from $\mathcal{C}\subseteq\power\times\nonemptypower$ to $\reals$. Then $P$ is said to be a \emph{coherent conditional probability} if, for all $n\in\mathbb{N}$ and every choice of $(A_i,C_i)\in\mathcal{C}$ and $\lambda_i\in\reals$, $i\in\{1,\dots,n\}$,
 \begin{equation*}
 \sup\left\{\sum_{i=1}^n\lambda_i\ind{C_i}(\omega)\bigl(P(A_i\vert C_i)-\ind{A_i}(\omega)\bigr)~\Bigg\vert~\omega\in C_0\right\}\geq0,
 \end{equation*}
@@ -353,11 +367,11 @@ Trivial consequence of Theorem~\ref{theo:coherentextendable}.
 
 \section{Continuous-Time Stochastic Processes}\label{sec:stochastic_processes}
 
-We will in this section formalize the notion of continuous-time stochastic processes. This is done in the framework of full conditional probabilities that we described in Section~\ref{sec:cond_prob}. This framework is used in Section~\ref{sec:finite_add_stoch_proc} to define stochastic processes, and Section~\ref{sec:well_behaved} describes a specific class of stochastic processes, which we call well-behaved, and on which we will largely focus throughout this work. Finally, Section~\ref{sec:dynamics} provides some tools with which we can describe the dynamics of stochastic processes.
+We will now formalize the notion of continuous-time stochastic processes. As mentioned, this will be done in the framework of full conditional probabilities, which we described in Section~\ref{sec:cond_prob}. Then, in Section~\ref{sec:well_behaved}, we describe a specific class of stochastic processes, which we call well-behaved, and on which we will largely focus throughout this work. Finally, Section~\ref{sec:dynamics} provides some tools with which we can describe the dynamics of stochastic processes.
 
-\subsection{Finitely additive stochastic processes}\label{sec:finite_add_stoch_proc}
+We will restrict our definition of continuous-time stochastic processes to \emph{finitely additive} stochastic processes, meaning that the events on which they are defined contain at most a finite---but arbitrary---number of time points. This simplifies considerably the subsequent analysis, and we will see shortly that, when required, the extension to $\sigma$-additive processes can always be made. 
 
-We will use the notion of full conditional probabilities to define continuous-time stochastic processes. These stochastic processes will be defined on a specific subset of the set $\power\times\nonemptypower$ of all (conditional) events, as follows.
+These finitely additive stochastic processes will be defined on a specific subset of the set $\power\times\nonemptypower$ of all (conditional) events, as follows.
 For any $t\in\realsnonneg$ and $x\in\states$, we define the elementary event
 \begin{equation*}
 (X_t=x)\coloneqq\{\path\in\paths\colon\path(t)=x\}.
@@ -375,13 +389,15 @@ Similarly, for any finite ordered sequence of time points $u=t_1,\ldots,t_n$ wit
 %We use $\events^{\mathrm{s}}$ to denote the set of all these events.
 Consider now any $t\in\realsnonneg$. We then let $\mathcal{A}_{>t}$ be the algebra that is generated by all the elementary events $(X_s=x)$, for all $s> t$ and $x\in\states$,\footnote{This is the smallest subset of $\power$ that contains all these elementary events and that is furthermore closed under complements, finite unions and hence also finite intersections.} and we let $\mathcal{F}_{\leq t}$ be the set of all events $\left(X_{t_1}=x_{t_1}, \dots, X_{t_n}=x_{t_n}\right)$, for all finite sequences $u\leq t$ and all $x_u\in\states^u$.%, and we define $\filter\coloneqq\mathcal{C}_{\leq t}\setminus\{\emptyset\}$.
 
+For a given $t\in\realsnonneg$, we will refer to $\mathcal{A}_{> t}$ as the set of possible future events, and to $\mathcal{F}_{\leq t}$ as the set of historic events, or possible histories.
+
 \begin{definition}[Stochastic Process]\label{def:stoch_process}
 A \emph{stochastic process} is the restriction of a full conditional probability to
 \begin{equation*}
 \mathcal{C}^\mathrm{SP}\coloneqq\big\{
 (A,C)
 \colon
-A\in\mathcal{A}_{> t},~C\in\filter,~t\in\realsnonneg\big\}\subset\power\times\nonemptypower.
+A\in\mathcal{A}_{> t},~C\in\mathcal{F}_{\leq t},~t\in\realsnonneg\big\}\subset\power\times\nonemptypower.
 \end{equation*}
 We denote the set of all such stochastic processes by $\processes$.
 \end{definition}
@@ -753,17 +769,6 @@ Consider any piecewise-constant function $Q_t$ that gives for each time point $t
 
 *** tralala, wat gaan we doen? impreciezie! wanneer gaan we dat doen? nu! jeej
 
-Consider any set $\rateset\subseteq\mathcal{R}$ of rate matrices. Then $\rateset$ is said to be \emph{non-empty} if $\rateset\neq\emptyset$ and $\rateset$ is said to be \emph{bounded} if $\norm{\rateset}<+\infty$. The following proposition provides a simple alternative characterisation of boundedness.
-
-\begin{proposition}\label{prop:alternativedefforbounded}
-A set of rate matrices $\rateset\subseteq\mathcal{R}$ is bounded if and only if
-\begin{equation*}
-\inf\left\{Q(x,x)\colon Q\in\rateset\right\}>-\infty\text{~~for all $x\in\states$.}
-\end{equation*}
-\end{proposition}
-\begin{proof}
-*** {\bf TODO}
-\end{proof}
 
 \subsection{Types of Imprecise Continuous-Time Markov Chains}
 
@@ -780,16 +785,18 @@ For any bounded set of rate matrices $\rateset$, we define the set $\whmprocesse
 \left\{
 P\in\whmprocesses
 \colon
+\left((\forall t\in\realsnonneg)(\forall u<t)(\forall x_u\in\states^u):~
 \overline{\partial}
 {T^t_{t,\,x_u}}\subseteq\rateset
-\right\}\\
+\right)\right\}\\
 =&
 \left\{
 P\in\whmprocesses
 \colon
+\left((\forall t\in\realsnonneg):~
 \overline{\partial}
 {T^t_{t}}\subseteq\rateset
-\right\}\\
+\right)\right\}\\
 =&
 \left\{
 P\in\whmprocesses
@@ -825,16 +832,18 @@ For any bounded set of rate matrices $\rateset$, we define the set $\wmprocesses
 \left\{
 P\in\wmprocesses
 \colon
+\left((\forall t\in\realsnonneg)(\forall u<t)(\forall x_u\in\states^u):~
 \overline{\partial}
 {T^t_{t,\,x_u}}\subseteq\rateset
-\right\}\\
+\right)\right\}\\
 =&
 \left\{
 P\in\wmprocesses
 \colon
+\left((\forall t\in\realsnonneg):~
 \overline{\partial}
 {T^t_{t}}\subseteq\rateset
-\right\}
+\right)\right\}
 \end{align*}
 \end{definition}
 
@@ -865,9 +874,10 @@ For any bounded set of rate matrices $\rateset$, we consider the set $\wprocesse
 \left\{
 P\in\wprocesses
 \colon
+\left((\forall t\in\realsnonneg)(\forall u<t)(\forall x_u\in\states^u):~
 \overline{\partial}
 {T^t_{t,\,x_u}}\subseteq\rateset
-\right\}
+\right)\right\}
 \end{equation}
 \end{definition}
 
