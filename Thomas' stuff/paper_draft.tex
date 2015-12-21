@@ -1232,9 +1232,9 @@ Having established a strong connection between the operator $\lrate$ and non-emp
 As the following result shows, the operator $L_t^s$ corresponding to a lower transition rate operator $\lrate$ computes a lower bound on the expectation of a function $f\in\gamblesX$, with respect to the set $\wprocesses_\rateset$ of well-behaved stochastic processes consistent with any set $\rateset$ of which $\lrate$ is the lower envelope.
 
 \begin{proposition}\label{theorem:nonmarkov_single_var_lower_bounded}
-Let $\rateset$ be an arbitrary non-empty bounded set of rate matrices with corresponding lower transition rate operator $\lrate$, and let $\underline{\mathcal{T}}_{\lrate}$ be the family of lower transition operators corresponding to $\lrate$. Then, for any $P\in\wprocesses_\rateset$, any $t,s\in\realsnonneg$ such that $t<s$, any $u\in\mathcal{U}_{<t}$, any $x_u\in\states^u$, any $x\in\states$, and any $f\in\gamblesX$,
+Let $\rateset$ be an arbitrary non-empty bounded set of rate matrices with corresponding lower transition rate operator $\lrate$, and let $\underline{\mathcal{T}}_{\lrate}$ be the family of lower transition operators corresponding to $\lrate$. Then, for any $P\in\wprocesses_\rateset$, any $s\in\realsnonneg$, any $u\in\mathcal{U}_{<s}$, any $x_u\in\states^u$, and any $f\in\gamblesX$,
 \begin{equation*}
-[L_t^s f](x) \leq \mathbb{E}[f(X_s)\,\vert\,X_{t}=x,X_{t_0}=x_{t_0},\ldots,X_{t_n}=x_{t_n}]\,.
+[L_{t_n}^s f](x_{t_n}) \leq \mathbb{E}[f(X_s)\,\vert\,X_{t_0}=x_{t_0},\ldots,X_{t_n}=x_{t_n}]\,.
 \end{equation*}
 \end{proposition}
 
@@ -1681,7 +1681,7 @@ Consider any $Q\in\mathcal{R}$ and any $\Delta\geq0$. Then
 
 \section{Proofs and Lemmas for Section~\ref{sec:iCTMC}}
 
-\begin{lemma}
+\begin{lemma}\label{lemma:bound_on_linear_approx_partition}
 Consider any $P\in\wprocesses_\rateset$, any $0<t<s$ and any $x_u$. Then for all $\epsilon>0$ and $\delta>0$, there is some $v\in\mathcal{U}_{[t,s]}$ such that $\sigma(v)<\delta$ and, for all $i\in\{0,\dots,n-1\}$:
 \begin{equation*}
 (\exists Q\in\rateset)
@@ -2195,81 +2195,151 @@ Let $\rateset$ be an arbitrary non-empty bounded set of rate matrices that has s
 This is immediate from the definition of the lower envelope of $\rateset$, as given by Equation~\eqref{eq:correspondinglowertrans}, and the fact that $\rateset$ has separately specified rows.
 \end{proof}
 
-\begin{proof}[Proof of Proposition~\ref{theorem:nonmarkov_single_var_lower_bounded}]
-Consider any $P\in\processes_\rateset$, any $t,s\in\realsnonneg$ such that $t<s$, any $u\in\mathcal{U}_{[0,t]}$, and any $g\in\gambles(\states^{\{s\}})$. We will show that for all $\epsilon\in\realspos$,
+\begin{proof}
+Consider any $P\in\wprocesses_\rateset$, any $s\in\realsnonneg$, any $u\in\mathcal{U}_{<s}$, any $x_u\in\states^u$, and any $f\in\gamblesX$. We will show that for all $\epsilon\in\realspos$, it holds that 
 \begin{equation*}
-[L_t^s g](x_{t_n}) < \mathbb{E}[g(X_s)\,\vert\,X_{t_0,\ldots,t_n}=x_{t_0,\ldots,t_n}] + \epsilon\,,
+[L_{t_n}^s f](x_{t_n}) < \mathbb{E}[f(X_s)\,\vert\,X_{t_0}=x_{t_0},\ldots,X_{t_n}=x_{t_n}] + \epsilon\,,
 \end{equation*}
-which then implies $[L_t^s g](x_{t_n}) \leq \mathbb{E}[g(X_s)\,\vert\,X_{t_0,\ldots,t_n}=x_{t_0,\ldots,t_n}]$. Start by choosing any $\epsilon\in\realspos$, and let $C\coloneqq (s-t)$.
+which then implies that $[L_{t_n}^s f](x_{t_n}) \leq \mathbb{E}[f(X_s)\,\vert\,X_{t_0}=x_{t_0},\ldots,X_{t_n}=x_{t_n}]$. Start by choosing any $\epsilon\in\realspos$, and let $C\coloneqq(s-t)$. 
 
-Because $P\in\processes_\rateset$, it follows from Definition~\ref{def:set_non_markov_process} that there is some $\delta\in\realspos$ such that
-\begin{align}\label{eq:nonmarkov_bound_proof_deriv_bounded}
-\begin{split}
- &(\forall \tau\in\realsnonneg)\,(\forall\Delta\in(0,\delta))\,(\forall v\in\mathcal{U}_{[0,\tau]})\,(\forall(x_{\tau_0},\ldots,x_{\tau_{m-1}})\in\states^{\{\tau_0,\ldots,\tau_{m-1}\}})\,(\exists Q\in\rateset)\,: \\
- &(\forall f\in\gambles(\states^{v\cup\{\tau+\Delta\}}))\,(\forall x_{\tau_m}\in\states^{\{\tau_m\}}): \\
- &\left\lvert \frac{\mathbb{E}[f(x_{\tau_0},\ldots,x_{\tau_m},X_{\tau+\Delta})\,\vert\,X_{\tau_0,\ldots,\tau_m}=x_{\tau_0,\ldots,\tau_m}] 
- - f(x_{\tau_0},\ldots,x_{\tau_m},x_{\tau_m})}{\Delta} \right. \\
- &\quad\quad\quad\quad\quad\quad - \left[Q f(x_{\tau_0},\ldots,x_{\tau_{m}},X_{\tau+\Delta})\right](x_{\tau_m})\biggr\rvert \quad < \quad\frac{\epsilon}{2C\norm{g}}\cdot\norm{f}\,.
-\end{split}
-\end{align}
-Furthermore, it follows from Theorem~\ref{theo:convergencelowerbound} that there is some $\delta'\in\realspos$ such that
-\begin{equation}\label{eq:nonmarkov_bound_proof_lbound_approx}
-(\forall v\in\mathcal{U}_{[t,s]}\,:\,\sigma(v)<\delta')\,(\forall x_t\in\states)\abs{\left[L_t^s g\right](x_t) - \left[\prod_{k=1}^n(I+\Delta_i\lrate)g\right](x_t)} < \frac{\epsilon}{2}\,.
+Now, by Theorem~\ref{theo:convergencelowerbound}, there is some $\delta'\in\realspos$ such that
+\begin{equation*}
+(\forall v\in\mathcal{U}_{[t_n,s]}\,:\,\sigma(v)<\delta') \norm{L_{t_n}^s - \Phi_v} < \frac{\epsilon}{2\norm{f}}\,,
+\end{equation*}
+which implies that for all $v\in\mathcal{U}_{[t_n,s]}$ with $\sigma(v)<\delta'$, and all $x\in\states$,
+\begin{equation}\label{eq:lowerbound_proof_linear_approx_lbound}
+\left[L_{t_n}^sf\right](x) - \frac{\epsilon}{2} < \left[\Phi_vf\right](x)\,.
+\end{equation}
+Let $\delta\coloneqq\min\{\delta',\nicefrac{1}{\norm{\lrate}}\}$. 
+Because $P\in\wprocesses_\rateset$, Lemma~\ref{lemma:bound_on_linear_approx_partition} implies that there is some $v\in\mathcal{U}_{[t_n,s]}$ such that $\sigma(v)<\delta$, with $v=\tau_0,\ldots,\tau_m$, and $\tau_0=t_n$, $\tau_m=s$, and, for all $i\in\{1,\ldots,m\}$,
+\begin{equation*}
+(\exists Q\in\rateset)\norm{T_{\tau_{i-1},x_u}^{\tau_{i}} - (I+\Delta_{i}Q)} < \frac{\Delta_{i}\epsilon}{2C\norm{f}}\,,
+\end{equation*}
+which implies that there exist rate matrices $Q_{1},\ldots,Q_{m}$ such that, for all functions $g\in\gamblesX$ with $\norm{g}\leq\norm{f}$ and all $i\in\{1,\ldots,m\}$,
+\begin{equation*}
+\norm{T_{\tau_{i-1},x_u}^{\tau_{i}}g - (I+\Delta_{i}Q_i)g} < \frac{\Delta_{i}\epsilon}{2C}\,.
+\end{equation*}
+This in turn implies that for all $g\in\gamblesX$ with $\norm{g}\leq\norm{f}$, all $i\in\{1,\ldots,m\}$, and all $x\in\states$,
+\begin{equation*}
+\left[(I+\Delta_{i}Q_{i})g\right](x) - \frac{\Delta_{i}\epsilon}{2C} < \left[T_{\tau_{i-1},x_u}^{\tau_{i}}g\right](x)\,.
+\end{equation*}
+Because for all $i\in\{1,\ldots,m\}$ it holds that $Q_i\in\rateset$, by Equation~\eqref{eq:correspondinglowertrans} we find that for all $g\in\gamblesX$ with $\norm{g}\leq\norm{f}$ and all $x\in\states$,
+\begin{equation}\label{eq:lowerbound_proof_linear_approx_lrate}
+\left[(I+\Delta_{i}\lrate)g\right](x) - \frac{\Delta_{i}\epsilon}{2C} < \left[T_{\tau_{i-1},x_u}^{\tau_{i}}g\right](x)\,.
 \end{equation}
 
-Let $\delta^*\coloneqq\min\{\delta,\delta'\}$, and choose any $n>\nicefrac{C}{\delta^*}$. Then, for $\Delta\coloneqq\nicefrac{C}{n}$, we have $\Delta<\delta$ and $\Delta<\delta'$.
-
-Equation \eqref{eq:nonmarkov_bound_proof_deriv_bounded} now implies that for all $\tau\in\realspos$, all $v\in\mathcal{U}_{[0,\tau]}$ such that $v=\tau_0,\ldots,\tau_m$, and all $(x_{\tau_0},\ldots,x_{\tau_{m-1}})\in\states^{\{\tau_0,\ldots,\tau_{m-1}\}}$, there is some $Q^v_{x_{\tau_0},\ldots,x_{\tau_{m-1}}}\in\rateset$ such that, for all $f\in\gambles(\states^{v\cup\{\tau+\Delta\}})$ and all $x_{\tau_m}\in\states^{\{\tau_m\}}$,
-\begin{align}\label{eq:nonmarkov_bound_proof_deriv_inequal}
-\begin{split}
- &\left[(I + \Delta Q^v_{x_{\tau_0},\ldots,x_{\tau_{m-1}}})f(x_{\tau_0},\ldots,x_{\tau_m},X_{\tau+\Delta})\right](x_{\tau_m}) - \frac{\Delta\epsilon\norm{f}}{2C\norm{g}} \\
- &\quad< \mathbb{E}[f(x_{\tau_0},\ldots,x_{\tau_m},X_{\tau+\Delta})\,\vert\,X_{\tau_0,\ldots,\tau_m}=x_{\tau_0,\ldots,\tau_m}]\,.
-\end{split}
-\end{align}
-Now, note that by the basic properties of probability,
+Now, observe that because $\tau_m=s$,
 \begin{align*}
-\mathbb{E}[g(X_s)\,\vert\,X_{t_0,\ldots,t_n}=x_{t_0,\ldots,t_n}] &= \mathbb{E}\bigl[\mathbb{E}[g(X_s)\,\vert\,X_{t_0,\ldots,t_n}=x_{t_0,\ldots,t_n},X_{s-\Delta}]\,\vert\,X_{t_0,\ldots,t_n}=x_{t_0,\ldots,t_n}\bigr]\,.
+\left[T_{\tau_{m-1},x_u}^{\tau_{m}}f\right](x) &= \mathbb{E}[f(X_{\tau_m})\,\vert\,X_{\tau_{m-1}}=x,X_{t_0}=x_{t_0},\ldots,X_{t_n}=x_{t_n}]\\
+ &= \mathbb{E}[f(X_{s})\,\vert\,X_{s-\Delta_m}=x,X_{t_0}=x_{t_0},\ldots,X_{t_n}=x_{t_n}]\,.
 \end{align*}
-By choosing $\tau=(s-\Delta)$, setting $v=t_0,\ldots,t_n,(s-\Delta)$, and noting that $g\in\gambles(\states^{\{s\}})=\gambles(\states^{\{\tau+\Delta\}})\subset\gambles(\states^{v\cup\{\tau+\Delta\}})$, we find from Equation \eqref{eq:nonmarkov_bound_proof_deriv_inequal} that for all $(x_{t_0},\ldots,x_{t_n})\in\states^{u}$ there is some $Q^v_{x_{t_0},\ldots,x_{t_n}}\in\rateset$ such that, for all $x_{s-\Delta}\in\states^{\{s-\Delta\}}$,
-\begin{equation*}
-\left[(I + \Delta Q^v_{x_{t_0},\ldots,x_{t_n}})g\right](x_{s-\Delta}) - \frac{\Delta\epsilon}{2C} < \mathbb{E}[g(X_s)\,\vert\,X_{t_0,\ldots,t_n}=x_{t_0,\ldots,t_n},X_{s-\Delta}=x_{s-\Delta}]\,.
-\end{equation*}
-Furthermore, we find using Equation~\eqref{eq:correspondinglowertrans} and the fact that $Q^v_{x_{t_0},\ldots,x_{t_n}}\in\rateset$, that
-\begin{equation*}
-\left[(I + \Delta \lrate)g\right](x_{s-\Delta}) - \frac{\Delta\epsilon}{2C} \leq \left[(I + \Delta Q^v_{x_{t_0},\ldots,x_{t_n}})g\right](x_{s-\Delta}) - \frac{\Delta\epsilon}{2C}\,.
-\end{equation*}
-Noting that an expectation takes a convex combination of values, we find by substitution that
+Furthermore, by the basic properties of expectation, we have that
 \begin{align*}
-\mathbb{E}[g(X_s)\,\vert\,X_{t_0,\ldots,t_n}=x_{t_0,\ldots,t_n}] &= \mathbb{E}\bigl[\mathbb{E}[g(X_s)\,\vert\,X_{t_0,\ldots,t_n}=x_{t_0,\ldots,t_n},X_{s-\Delta}]\,\vert\,X_{t_0,\ldots,t_n}=x_{t_0,\ldots,t_n}\bigr] \\
-&> \mathbb{E}\bigl[[(I+\Delta\lrate)g](X_{s-\Delta})\,\vert\,X_{t_0,\ldots,t_n}=x_{t_0,\ldots,t_n}\bigr] - \frac{\Delta\epsilon}{2C}\,.
+\mathbb{E}[&f(X_s)\,\vert\,X_{t_0}=x_{t_0},\ldots,X_{t_n}=x_{t_n}] \\
+ & = \mathbb{E}\bigl[\mathbb{E}[f(X_s)\,\vert\,X_{s-\Delta_m},X_{t_0}=x_{t_0},\ldots,X_{t_n}=x_{t_n}]\,\vert\,X_{t_0}=x_{t_0},\ldots,X_{t_n}=x_{t_n}\bigr]\,,
+\end{align*}
+and because this (outer) expectation computes a convex combination of values, we find by substitution of Equation~\eqref{eq:lowerbound_proof_linear_approx_lrate}, that
+\begin{align*}
+\mathbb{E}[&f(X_s)\,\vert\,X_{t_0}=x_{t_0},\ldots,X_{t_n}=x_{t_n}] \\
+& > \mathbb{E}\bigl[[(I+\Delta_m\lrate)f](X_{\tau_{m-1}})\,\vert\,X_{t_0}=x_{t_0},\ldots,X_{t_n}=x_{t_n}\bigr] - \frac{\Delta_{m}\epsilon}{2C}\,.
 \end{align*}
 
-Note also that
-\begin{equation*}
-[(I+\Delta\lrate)g](X_{s-\Delta})\in\gambles(\states^{\{s-\Delta\}})\subset\gambles(\states^{u\cup\{s-\Delta\}})\,.
-\end{equation*}
-Hence, we can repeat this argument, factoring the expectation at time points $(s-2\Delta),\ldots,(s-(n-1)\Delta)$, to obtain
+Because $\Delta_m\leq\sigma(v)<\delta\leq\nicefrac{1}{\norm{\lrate}}$, we find by Proposition~\ref{lemma:normQsmallenough} that $(I+\Delta_m\lrate)$ is a lower transition operator. Therefore, by Proposition~\ref{lemma:normofcoherenttrans}, we have that $\norm{(I+\Delta_m\lrate)f}\leq\norm{f}$. Hence, Equation~\eqref{eq:lowerbound_proof_linear_approx_lrate} applies, and we can use backward induction on $m$ to find
 \begin{align*}
-\mathbb{E}[g(X_s)\,\vert\,X_{t_0,\ldots,t_n}=x_{t_0,\ldots,t_n}] &> \left[(I+\Delta\lrate)^ng\right](x_{t_n}) - n\cdot\frac{\Delta\epsilon}{2C} \\
- &= \left[(I+\Delta\lrate)^ng\right](x_{t_n}) - \frac{\epsilon}{2}\,.
+\mathbb{E}[&f(X_s)\,\vert\,X_{t_0}=x_{t_0},\ldots,X_{t_n}=x_{t_n}] \\
+& > \mathbb{E}\bigl[[(I+\Delta_m\lrate)f](X_{\tau_{m-1}})\,\vert\,X_{t_0}=x_{t_0},\ldots,X_{t_n}=x_{t_n}\bigr] - \frac{\Delta_{m}\epsilon}{2C} \\
+ &> \mathbb{E}\bigl[[(I+\Delta_{m-1}\lrate)(I+\Delta_m\lrate)f](X_{\tau_{m-2}})\,\vert\,X_{t_0}=x_{t_0},\ldots,X_{t_n}=x_{t_n}\bigr] - \frac{\Delta_{m-1}\epsilon}{2C} - \frac{\Delta_{m}\epsilon}{2C} \\
+&\vdots \\
+& > \mathbb{E}\left[\left[\left(\prod_{i=2}^m(I+\Delta_i\lrate)\right)f\right](X_{\tau_{1}})\,\Bigg\vert\,X_{t_0}=x_{t_0},\ldots,X_{t_n}=x_{t_n}\right] - \sum_{i=2}^m\frac{\Delta_{i}\epsilon}{2C} \\
+& > \mathbb{E}\left[\left[\left(\prod_{i=1}^m(I+\Delta_i\lrate)\right)f\right](X_{\tau_{0}})\,\Bigg\vert\,X_{t_0}=x_{t_0},\ldots,X_{t_n}=x_{t_n}\right] - \sum_{i=1}^m\frac{\Delta_{i}\epsilon}{2C} \\
+& = \mathbb{E}\left[\left[\left(\prod_{i=1}^m(I+\Delta_i\lrate)\right)f\right](X_{t_n})\,\Bigg\vert\,X_{t_0}=x_{t_0},\ldots,X_{t_n}=x_{t_n}\right] - \sum_{i=1}^m\frac{\Delta_{i}\epsilon}{2C} \\
+& = \left[\left(\prod_{i=1}^m(I+\Delta_i\lrate)\right)f\right](x_{t_n}) - \sum_{i=1}^m\frac{\Delta_{i}\epsilon}{2C}\\
+& = \left[\Phi_v f\right](x_{t_n}) - \frac{\epsilon}{2}\,,
 \end{align*}
-
-It follows from Equation \eqref{eq:nonmarkov_bound_proof_lbound_approx} and the fact that $\Delta<\delta'$,
+where the second-to-last equality follows from the basic rules of expectation. Because $\sigma(v)<\delta\leq\delta'$, we now find from Equation~\eqref{eq:lowerbound_proof_linear_approx_lbound} that
 \begin{equation*}
-\left[L_t^s g\right](x_{t_n}) - \frac{\epsilon}{2} < \left[(I+\Delta\lrate)^n g\right](x_{t_n})\,,
+\mathbb{E}[f(X_s)\,\vert\,X_{t_0}=x_{t_0},\ldots,X_{t_n}=x_{t_n}] > \left[L_{t_n}^sf\right](x_{t_n}) - \epsilon\,.
 \end{equation*}
-so that by substitution,
-\begin{align*}
-\mathbb{E}[g(X_s)\,\vert\,X_{t_0,\ldots,t_n}=x_{t_0,\ldots,t_n}] &> \left[(I+\Delta\lrate)^ng\right](x_{t_n}) - \frac{\epsilon}{2} \\
- &> [L_t^s g](x_{t_n}) - \frac{\epsilon}{2} - \frac{\epsilon}{2} \\
- &= [L_t^s g](x_{t_n}) - \epsilon\,.
-\end{align*}
-Thus, we have found that
-\begin{equation*}
-[L_t^s g](x_{t_n}) < \mathbb{E}[g(X_s)\,\vert\,X_{t_0,\ldots,t_n}=x_{t_0,\ldots,t_n}] + \epsilon\,.
-\end{equation*}
-Because the $\epsilon\in\realspos$ was arbitrary, this concludes the proof.
+Because the $\epsilon\in\realspos$ was arbitrary, this completes the proof.
 \end{proof}
+
+%
+%**** {\bf the one below is deprecated}
+%\begin{proof}[Proof of Proposition~\ref{theorem:nonmarkov_single_var_lower_bounded}]
+%Consider any $P\in\processes_\rateset$, any $t,s\in\realsnonneg$ such that $t<s$, any $u\in\mathcal{U}_{[0,t]}$, and any $g\in\gambles(\states^{\{s\}})$. We will show that for all $\epsilon\in\realspos$,
+%\begin{equation*}
+%[L_t^s g](x_{t_n}) < \mathbb{E}[g(X_s)\,\vert\,X_{t_0,\ldots,t_n}=x_{t_0,\ldots,t_n}] + \epsilon\,,
+%\end{equation*}
+%which then implies $[L_t^s g](x_{t_n}) \leq \mathbb{E}[g(X_s)\,\vert\,X_{t_0,\ldots,t_n}=x_{t_0,\ldots,t_n}]$. Start by choosing any $\epsilon\in\realspos$, and let $C\coloneqq (s-t)$.
+%
+%Because $P\in\processes_\rateset$, it follows from Definition~\ref{def:set_non_markov_process} that there is some $\delta\in\realspos$ such that
+%\begin{align}\label{eq:nonmarkov_bound_proof_deriv_bounded}
+%\begin{split}
+% &(\forall \tau\in\realsnonneg)\,(\forall\Delta\in(0,\delta))\,(\forall v\in\mathcal{U}_{[0,\tau]})\,(\forall(x_{\tau_0},\ldots,x_{\tau_{m-1}})\in\states^{\{\tau_0,\ldots,\tau_{m-1}\}})\,(\exists Q\in\rateset)\,: \\
+% &(\forall f\in\gambles(\states^{v\cup\{\tau+\Delta\}}))\,(\forall x_{\tau_m}\in\states^{\{\tau_m\}}): \\
+% &\left\lvert \frac{\mathbb{E}[f(x_{\tau_0},\ldots,x_{\tau_m},X_{\tau+\Delta})\,\vert\,X_{\tau_0,\ldots,\tau_m}=x_{\tau_0,\ldots,\tau_m}] 
+% - f(x_{\tau_0},\ldots,x_{\tau_m},x_{\tau_m})}{\Delta} \right. \\
+% &\quad\quad\quad\quad\quad\quad - \left[Q f(x_{\tau_0},\ldots,x_{\tau_{m}},X_{\tau+\Delta})\right](x_{\tau_m})\biggr\rvert \quad < \quad\frac{\epsilon}{2C\norm{g}}\cdot\norm{f}\,.
+%\end{split}
+%\end{align}
+%Furthermore, it follows from Theorem~\ref{theo:convergencelowerbound} that there is some $\delta'\in\realspos$ such that
+%\begin{equation}\label{eq:nonmarkov_bound_proof_lbound_approx}
+%(\forall v\in\mathcal{U}_{[t,s]}\,:\,\sigma(v)<\delta')\,(\forall x_t\in\states)\abs{\left[L_t^s g\right](x_t) - \left[\prod_{k=1}^n(I+\Delta_i\lrate)g\right](x_t)} < \frac{\epsilon}{2}\,.
+%\end{equation}
+%
+%Let $\delta^*\coloneqq\min\{\delta,\delta'\}$, and choose any $n>\nicefrac{C}{\delta^*}$. Then, for $\Delta\coloneqq\nicefrac{C}{n}$, we have $\Delta<\delta$ and $\Delta<\delta'$.
+%
+%Equation \eqref{eq:nonmarkov_bound_proof_deriv_bounded} now implies that for all $\tau\in\realspos$, all $v\in\mathcal{U}_{[0,\tau]}$ such that $v=\tau_0,\ldots,\tau_m$, and all $(x_{\tau_0},\ldots,x_{\tau_{m-1}})\in\states^{\{\tau_0,\ldots,\tau_{m-1}\}}$, there is some $Q^v_{x_{\tau_0},\ldots,x_{\tau_{m-1}}}\in\rateset$ such that, for all $f\in\gambles(\states^{v\cup\{\tau+\Delta\}})$ and all $x_{\tau_m}\in\states^{\{\tau_m\}}$,
+%\begin{align}\label{eq:nonmarkov_bound_proof_deriv_inequal}
+%\begin{split}
+% &\left[(I + \Delta Q^v_{x_{\tau_0},\ldots,x_{\tau_{m-1}}})f(x_{\tau_0},\ldots,x_{\tau_m},X_{\tau+\Delta})\right](x_{\tau_m}) - \frac{\Delta\epsilon\norm{f}}{2C\norm{g}} \\
+% &\quad< \mathbb{E}[f(x_{\tau_0},\ldots,x_{\tau_m},X_{\tau+\Delta})\,\vert\,X_{\tau_0,\ldots,\tau_m}=x_{\tau_0,\ldots,\tau_m}]\,.
+%\end{split}
+%\end{align}
+%Now, note that by the basic properties of probability,
+%\begin{align*}
+%\mathbb{E}[g(X_s)\,\vert\,X_{t_0,\ldots,t_n}=x_{t_0,\ldots,t_n}] &= \mathbb{E}\bigl[\mathbb{E}[g(X_s)\,\vert\,X_{t_0,\ldots,t_n}=x_{t_0,\ldots,t_n},X_{s-\Delta}]\,\vert\,X_{t_0,\ldots,t_n}=x_{t_0,\ldots,t_n}\bigr]\,.
+%\end{align*}
+%By choosing $\tau=(s-\Delta)$, setting $v=t_0,\ldots,t_n,(s-\Delta)$, and noting that $g\in\gambles(\states^{\{s\}})=\gambles(\states^{\{\tau+\Delta\}})\subset\gambles(\states^{v\cup\{\tau+\Delta\}})$, we find from Equation \eqref{eq:nonmarkov_bound_proof_deriv_inequal} that for all $(x_{t_0},\ldots,x_{t_n})\in\states^{u}$ there is some $Q^v_{x_{t_0},\ldots,x_{t_n}}\in\rateset$ such that, for all $x_{s-\Delta}\in\states^{\{s-\Delta\}}$,
+%\begin{equation*}
+%\left[(I + \Delta Q^v_{x_{t_0},\ldots,x_{t_n}})g\right](x_{s-\Delta}) - \frac{\Delta\epsilon}{2C} < \mathbb{E}[g(X_s)\,\vert\,X_{t_0,\ldots,t_n}=x_{t_0,\ldots,t_n},X_{s-\Delta}=x_{s-\Delta}]\,.
+%\end{equation*}
+%Furthermore, we find using Equation~\eqref{eq:correspondinglowertrans} and the fact that $Q^v_{x_{t_0},\ldots,x_{t_n}}\in\rateset$, that
+%\begin{equation*}
+%\left[(I + \Delta \lrate)g\right](x_{s-\Delta}) - \frac{\Delta\epsilon}{2C} \leq \left[(I + \Delta Q^v_{x_{t_0},\ldots,x_{t_n}})g\right](x_{s-\Delta}) - \frac{\Delta\epsilon}{2C}\,.
+%\end{equation*}
+%Noting that an expectation takes a convex combination of values, we find by substitution that
+%\begin{align*}
+%\mathbb{E}[g(X_s)\,\vert\,X_{t_0,\ldots,t_n}=x_{t_0,\ldots,t_n}] &= \mathbb{E}\bigl[\mathbb{E}[g(X_s)\,\vert\,X_{t_0,\ldots,t_n}=x_{t_0,\ldots,t_n},X_{s-\Delta}]\,\vert\,X_{t_0,\ldots,t_n}=x_{t_0,\ldots,t_n}\bigr] \\
+%&> \mathbb{E}\bigl[[(I+\Delta\lrate)g](X_{s-\Delta})\,\vert\,X_{t_0,\ldots,t_n}=x_{t_0,\ldots,t_n}\bigr] - \frac{\Delta\epsilon}{2C}\,.
+%\end{align*}
+%
+%Note also that
+%\begin{equation*}
+%[(I+\Delta\lrate)g](X_{s-\Delta})\in\gambles(\states^{\{s-\Delta\}})\subset\gambles(\states^{u\cup\{s-\Delta\}})\,.
+%\end{equation*}
+%Hence, we can repeat this argument, factoring the expectation at time points $(s-2\Delta),\ldots,(s-(n-1)\Delta)$, to obtain
+%\begin{align*}
+%\mathbb{E}[g(X_s)\,\vert\,X_{t_0,\ldots,t_n}=x_{t_0,\ldots,t_n}] &> \left[(I+\Delta\lrate)^ng\right](x_{t_n}) - n\cdot\frac{\Delta\epsilon}{2C} \\
+% &= \left[(I+\Delta\lrate)^ng\right](x_{t_n}) - \frac{\epsilon}{2}\,.
+%\end{align*}
+%
+%It follows from Equation \eqref{eq:nonmarkov_bound_proof_lbound_approx} and the fact that $\Delta<\delta'$,
+%\begin{equation*}
+%\left[L_t^s g\right](x_{t_n}) - \frac{\epsilon}{2} < \left[(I+\Delta\lrate)^n g\right](x_{t_n})\,,
+%\end{equation*}
+%so that by substitution,
+%\begin{align*}
+%\mathbb{E}[g(X_s)\,\vert\,X_{t_0,\ldots,t_n}=x_{t_0,\ldots,t_n}] &> \left[(I+\Delta\lrate)^ng\right](x_{t_n}) - \frac{\epsilon}{2} \\
+% &> [L_t^s g](x_{t_n}) - \frac{\epsilon}{2} - \frac{\epsilon}{2} \\
+% &= [L_t^s g](x_{t_n}) - \epsilon\,.
+%\end{align*}
+%Thus, we have found that
+%\begin{equation*}
+%[L_t^s g](x_{t_n}) < \mathbb{E}[g(X_s)\,\vert\,X_{t_0,\ldots,t_n}=x_{t_0,\ldots,t_n}] + \epsilon\,.
+%\end{equation*}
+%Because the $\epsilon\in\realspos$ was arbitrary, this concludes the proof.
+%\end{proof}
 
 \begin{proof}[Proof of Proposition~\ref{theorem:lower_markov_bound_is_tight}]
 Choose any $f\in\gamblesX$ and any $\epsilon\in\realspos$. Let $C\coloneqq (s-t)$. 
