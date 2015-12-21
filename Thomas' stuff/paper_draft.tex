@@ -248,9 +248,60 @@ To avoid introducing overly complex notation, we will stipulate the following co
 \left[Af\right](x_{t_0},\ldots,x_{t_{n-1}}) \equiv \left[A f(x_{t_0},\ldots,x_{t_{n-1}},X_{t_n})\right](x_{t_{n-1}})\,.
 \end{equation*}
 
+\subsection{Toward Stochastic Processes}\label{sec:cond_prob}
+
+We will in Section~\ref{sec:stochastic_processes} define continuous-time stochastic processes using the framework of full conditional probabilities, which we describe here. Such a stochastic process is a construct that moves through the state space $\states$ over a continuous time line $\realsnonneg$. A specific realization or instance of this behavior will be called a path or a trajectory. The stochasticity of the process is quantified using a probability measure on a set of events, which describe specific (combinations of) states in which the process can be at certain time points. These ideas are formalized as follows.
+
+A \emph{path} $\omega$ is a cadlag function from $\realsnonneg$ to $\states$, where cadlag means that it is right continuous for all $t\in\realsnonneg$ and that the left limit exists for all $t\in\realspos$. Let $\paths$ be the set of all paths. For any path $\path\in\paths$ and any time point $t\in\realsnonneg$, the value of $\path$ in $t$ is denoted by $\path(t)$.
+A subset $E$ of $\paths$ is called an \emph{event}. The set of all events is denoted by $\power$ and we let $\nonemptypower\coloneqq\power\setminus\{\emptyset\}$. 
+
+\begin{definition}[Full conditional probability]\label{def:cond_prob}
+A full conditional probability $P$ is a real-valued map from $\power\times\nonemptypower$ to $\reals$ that satisfies the following axioms. For all $A,B\in\power$ and all \mbox{$C,D\in\nonemptypower$}:
+\vspace{5pt}
+
+\begin{enumerate}[label=F\arabic*:]
+\item
+$P(C\vert C)=1$;
+\item
+$0\leq P(A\vert C)\leq 1$;
+\item
+$P(A\cup B\vert C)=P(A\vert C)+P(B\vert C)$ if $A\cap B=\emptyset$;
+\item
+$P(A\vert C)=P(A\vert D)P(D\vert C)$ if $A\subseteq D\subseteq C$.
+\end{enumerate}
+\vspace{5pt}
+
+\noindent
+For any $A\in\power$ and $C\in\nonemptypower$, we call $P(A\vert C)$ the probability of $A$ conditional on $C$. Also, for any $A\in\power$, we use the shorthand notation $P(A)\coloneqq P(A\vert\paths)$ and then call $P(A)$ the probability of $A$.
+\end{definition}
+
+The following notion of coherent conditional probabilities will be useful whenever we want to check if a given map $P$ from a set of events to $\reals$ is a well-defined conditional probability measure.
+
+\begin{definition}[Coherent conditional probability]\label{def:coherence}
+Let $P$ be a real-valued map from $\mathcal{C}\subseteq\power\times\nonemptypower$ to $\reals$. Then $P$ is said to be a \emph{coherent conditional probability} if, for all $n\in\mathbb{N}$ and every choice of $(A_i,C_i)\in\mathcal{C}$ and $\lambda_i\in\reals$, $i\in\{1,\dots,n\}$,
+\begin{equation*}
+\sup\left\{\sum_{i=1}^n\lambda_i\ind{C_i}(\omega)\bigl(P(A_i\vert C_i)-\ind{A_i}(\omega)\bigr)~\Bigg\vert~\omega\in C_0\right\}\geq0,
+\end{equation*}
+with $C_0\coloneqq\cup_{i=1}^nC_i$.
+\end{definition}
+
+\begin{theorem}\label{theo:coherentextendable}
+Let $P$ be a real-valued map from $\mathcal{C}\subseteq\power\times\nonemptypower$ to $\reals$. Then $P$ is a coherent conditional probability if and only if it can be extended to a full conditional probability.
+\end{theorem}
+\begin{proof}
+*** REFERENCE ***
+\end{proof}
+
+\begin{corollary}
+Let $P$ be a real-valued map from $\power\times\nonemptypower$ to $\reals$. Then $P$ is a coherent conditional probability if and only if it is a full conditional probability.
+\end{corollary}
+\begin{proof}
+Trivial consequence of Theorem~\ref{theo:coherentextendable}.
+\end{proof}
+
 \subsection{Transition (Rate) Matrices}\label{sec:trans_rate_matrices}
 
-*** some intro text
+*** some intro text, explain why these are useful, and how they are related to stochastic processes
 
 \begin{definition}[Transition Rate Matrix]\label{def:rate_matrix}
 A real-valued matrix $Q$ is said to be a \emph{transition rate matrix}, or sometimes simply \emph{rate matrix}, if
@@ -314,60 +365,9 @@ Consider any transition rate matrix $Q\in\mathcal{R}$, and any $\Delta\in\realsn
 Consider any transition matrix $T$, and any $\Delta\in\realspos$. Then, the matrix $\nicefrac{1}{\Delta}(T-I)$ is a transition rate matrix.
 \end{proposition}
 
-\subsection{Toward Stochastic Processes}\label{sec:cond_prob}
-
-We will in Section~\ref{sec:stochastic_processes} define continuous-time stochastic processes using the framework of full conditional probabilities, which we describe here. Such a stochastic process is a construct that moves through the state space $\states$ over a continuous time line $\realsnonneg$. A specific realization or instance of this behavior will be called a path or a trajectory, and the stochasticity is quantified using a probability measure on a set of events, which describe specific (combinations of) states in which the process can be at certain time points. These ideas are formalized as follows.
-
-A \emph{path} $\omega$ is a cadlag function from $\realsnonneg$ to $\states$, where cadlag means that it is right continuous for all $t\in\realsnonneg$ and that the left limit exists for all $t\in\realspos$. Let $\paths$ be the set of all paths. For any path $\path\in\paths$ and any time point $t\in\realsnonneg$, the value of $\path$ in $t$ is denoted by $\path(t)$.
-A subset $E$ of $\paths$ is called an \emph{event}. The set of all events is denoted by $\power$ and we let $\nonemptypower\coloneqq\power\setminus\{\emptyset\}$. 
-
-\begin{definition}[Full conditional probability]\label{def:cond_prob}
-A full conditional probability $P$ is a real-valued map from $\power\times\nonemptypower$ to $\reals$ that satisfies the following axioms. For all $A,B\in\power$ and all \mbox{$C,D\in\nonemptypower$}:
-\vspace{5pt}
-
-\begin{enumerate}[label=F\arabic*:]
-\item
-$P(C\vert C)=1$;
-\item
-$0\leq P(A\vert C)\leq 1$;
-\item
-$P(A\cup B\vert C)=P(A\vert C)+P(B\vert C)$ if $A\cap B=\emptyset$;
-\item
-$P(A\vert C)=P(A\vert D)P(D\vert C)$ if $A\subseteq D\subseteq C$.
-\end{enumerate}
-\vspace{5pt}
-
-\noindent
-For any $A\in\power$ and $C\in\nonemptypower$, we call $P(A\vert C)$ the probability of $A$ conditional on $C$. Also, for any $A\in\power$, we use the shorthand notation $P(A)\coloneqq P(A\vert\paths)$ and then call $P(A)$ the probability of $A$.
-\end{definition}
-
-The following notion of coherent conditional probabilities will be useful whenever we want to check if a given map $P$ from a set of events to $\reals$ is a well-defined conditional probability measure.
-
-\begin{definition}[Coherent conditional probability]\label{def:coherence}
-Let $P$ be a real-valued map from $\mathcal{C}\subseteq\power\times\nonemptypower$ to $\reals$. Then $P$ is said to be a \emph{coherent conditional probability} if, for all $n\in\mathbb{N}$ and every choice of $(A_i,C_i)\in\mathcal{C}$ and $\lambda_i\in\reals$, $i\in\{1,\dots,n\}$,
-\begin{equation*}
-\sup\left\{\sum_{i=1}^n\lambda_i\ind{C_i}(\omega)\bigl(P(A_i\vert C_i)-\ind{A_i}(\omega)\bigr)~\Bigg\vert~\omega\in C_0\right\}\geq0,
-\end{equation*}
-with $C_0\coloneqq\cup_{i=1}^nC_i$.
-\end{definition}
-
-\begin{theorem}\label{theo:coherentextendable}
-Let $P$ be a real-valued map from $\mathcal{C}\subseteq\power\times\nonemptypower$ to $\reals$. Then $P$ is a coherent conditional probability if and only if it can be extended to a full conditional probability.
-\end{theorem}
-\begin{proof}
-*** REFERENCE ***
-\end{proof}
-
-\begin{corollary}
-Let $P$ be a real-valued map from $\power\times\nonemptypower$ to $\reals$. Then $P$ is a coherent conditional probability if and only if it is a full conditional probability.
-\end{corollary}
-\begin{proof}
-Trivial consequence of Theorem~\ref{theo:coherentextendable}.
-\end{proof}
-
 \section{Continuous-Time Stochastic Processes}\label{sec:stochastic_processes}
 
-We will now formalize the notion of continuous-time stochastic processes. As mentioned, this will be done in the framework of full conditional probabilities, which we described in Section~\ref{sec:cond_prob}. Then, in Section~\ref{sec:well_behaved}, we describe a specific class of stochastic processes, which we call well-behaved, and on which we will largely focus throughout this work. Finally, Section~\ref{sec:dynamics} provides some tools with which we can describe the dynamics of stochastic processes.
+We will now formalize the notion of continuous-time stochastic processes. Next, in Section~\ref{sec:well_behaved}, we describe a specific subclass of stochastic processes, which we call well-behaved, and on which we will largely focus throughout this work. Finally, Section~\ref{sec:dynamics} provides some tools with which we can describe the dynamics of stochastic processes.
 
 We will restrict our definition of continuous-time stochastic processes to \emph{finitely additive} stochastic processes, meaning that the events on which they are defined contain at most a finite---but arbitrary---number of time points. This simplifies considerably the subsequent analysis, and we will see shortly that, when required, the extension to $\sigma$-additive processes can always be made. 
 
@@ -430,10 +430,22 @@ and
 The set of all well-behaved stochastic processes is denoted by $\wprocesses$.
 \end{definition}
 
-*** beetje intuitie
+This definition of well-behavedness is related to continuity and differentiability, but stronger than the former and weaker than the latter. Example~\ref{exmp:well-behaved} below, and Example~\ref{exmp:well-behaved-no-deriv} in Section~\ref{sec:dynamics}, provide some intuition on this.
 
-\begin{exmp}
-*** voorbeeld van wat we dus niet toestaan (wortels bijvoorbeeld)
+\begin{exmp}\label{exmp:well-behaved}
+Suppose that a stochastic process $P\in\processes$ is such that, at some time $t\in\realsnonneg$ and for some history $x_u\in\states^u$, $u<t$, for some $x\in\states$ it satisfies for all $\Delta\in[0,1]$,
+\begin{equation*}
+P(X_{t+\Delta}=x\,\vert\,X_{t}=x,X_{t_0}=x_{t_0},\ldots,X_{t_n}=x_{t_n}) = 1-\sqrt{\Delta}\,.
+\end{equation*}
+This apparently makes sense, at least in that this probability takes values in the range $[0,1]$, and in that it holds that
+\begin{equation*}
+P(X_{t}=x\,\vert\,X_{t}=x,X_{t_0}=x_{t_0},\ldots,X_{t_n}=x_{t_n}) = 1\,.
+\end{equation*}
+Furthermore, this probability is continuous in $\Delta$. However, we clearly have that
+\begin{equation*}
+\frac{1}{\Delta}\abs{P(X_{t+\Delta}=x\,\vert\,X_{t}=x,X_{t_0}=x_{t_0},\ldots,X_{t_n}=x_{t_n}) - \delta_{xx}} \to +\infty\,,\quad\text{as $\Delta\to0^+$,}
+\end{equation*}
+and hence $P$ is not well-behaved.
 \exampleend
 \end{exmp}
 
@@ -528,7 +540,7 @@ For any stochastic process $P\in\processes$, any $t\in\realsnonneg$, any sequenc
 \noindent If these partial derivatives exist, then because of Proposition~\ref{prop:rate_from_stochastic_matrix}, they are guaranteed to belong to the set of rate matrices  $\mathcal{R}$. If they both exist and coincide, we write $\partial{T_{t,\,x_u}^t}$ to denote their common value.
 \end{definition}
 
-\begin{exmp}
+\begin{exmp}\label{exmp:well-behaved-no-deriv}
 Suppose that a well-behaved stochastic process $P\in\wprocesses$ is such that, at some time $t\in\realsnonneg$ and for some history $x_u\in\states^u$, $u<t$, the corresponding transition matrix $T_{t,x_u}^{t+\Delta}$ satisfies, for all $\Delta\in\realspos$,
 \begin{equation*}
 \frac{1}{\Delta}(T_{t,x_u}^{t+\Delta} - I) = \left\{\begin{array}{cl}
