@@ -13,6 +13,7 @@
 \usepackage{tikz}
 \usepackage{nicefrac}
 \usepackage{bm}
+%\usepackage{hyperref}
 %\usepackage{pdfsync}
 %\usepackage{authblk}
 
@@ -40,7 +41,7 @@
 \newcommand{\states}{\mathcal{X}}
 
 \newcommand{\paths}{\Omega}
-\newcommand{\path}{\omega}
+%\newcommand{\path}{\omega}
 
 \newcommand{\power}{\mathcal{P}(\paths)}
 \newcommand{\nonemptypower}{\power_{\emptyset}}
@@ -252,7 +253,7 @@ To avoid introducing overly complex notation, we will stipulate the following co
 
 We will in Section~\ref{sec:stochastic_processes} define continuous-time stochastic processes using the framework of full conditional probabilities, which we describe here. Such a stochastic process is a construct that moves through the state space $\states$ over a continuous time line $\realsnonneg$. A specific realization or instance of this behavior will be called a path or a trajectory. The stochasticity of the process is quantified using a probability measure on a set of events, which describe specific (combinations of) states in which the process can be at certain time points. These ideas are formalized as follows.
 
-A \emph{path} $\omega$ is a cadlag function from $\realsnonneg$ to $\states$, where cadlag means that it is right continuous for all $t\in\realsnonneg$ and that the left limit exists for all $t\in\realspos$. Let $\paths$ be the set of all paths. For any path $\path\in\paths$ and any time point $t\in\realsnonneg$, the value of $\path$ in $t$ is denoted by $\path(t)$.
+A \emph{path} $\omega$ is a cadlag function from $\realsnonneg$ to $\states$, where cadlag means that it is right continuous for all $t\in\realsnonneg$ and that the left limit exists for all $t\in\realspos$. Let $\paths$ be the set of all paths. For any path $\omega\in\paths$ and any time point $t\in\realsnonneg$, the value of $\omega$ in $t$ is denoted by $\omega(t)$.
 A subset $E$ of $\paths$ is called an \emph{event}. The set of all events is denoted by $\power$ and we let $\nonemptypower\coloneqq\power\setminus\{\emptyset\}$. 
 
 \begin{definition}[Full conditional probability]\label{def:cond_prob}
@@ -374,16 +375,16 @@ We will restrict our definition of continuous-time stochastic processes to \emph
 These finitely additive stochastic processes will be defined on a specific subset of the set $\power\times\nonemptypower$ of all (conditional) events, as follows.
 For any $t\in\realsnonneg$ and $x\in\states$, we define the elementary event
 \begin{equation*}
-(X_t=x)\coloneqq\{\path\in\paths\colon\path(t)=x\}.
+(X_t=x)\coloneqq\{\omega\in\paths\colon\omega(t)=x\}.
 \end{equation*}
 %We use $\events^{\mathrm{f}}$ to denote the set of all these elementary events. 
 Similarly, for any finite ordered sequence of time points $u=t_1,\ldots,t_n$ with $t_i\in\realsnonneg,i\in\{1,\ldots,n\}$, and any state assignment $x_u\in\states^u$, we define the event
 \begin{align*}
 \left(X_{t_1}=x_{t_1}, \dots, X_{t_n}=x_{t_n}\right)
-\coloneqq%&
+\coloneqq&
 %\bigcap_{i\in\{0,\dots,n\}}(X_{t_i}=x_{t_i})\\
 %=&
-\left\{\path\in\paths\colon(\forall i\in\{1,\dots,n\}\,:~\path(t_i)=x_{t_i})\right\}.%,
+\left\{\omega\in\paths\colon(\forall i\in\{1,\dots,n\}\,:~\omega(t_i)=x_{t_i})\right\}.%,
 \end{align*}
 %which we will sometimes also denote by $(X_{t_i}=x_{t_i}, i\in\{0,\dots,n\})$.
 %We use $\events^{\mathrm{s}}$ to denote the set of all these events.
@@ -1197,10 +1198,6 @@ where, for every $x\in\states$, $\rateset_x\coloneqq\{Q(x,\cdot)\colon Q\in\rate
 \begin{proposition}\label{prop:dominatingproperties}
 Consider a lower transition rate operator $\lrate$ and let $\rateset_{\lrate}$ be the corresponding set of dominating rate matrices, as defined by Equation~\eqref{eq:dominatingratematrices}. Then $\rateset_{\lrate}$ is closed and convex, and has separately specified rows.
 \end{proposition}
-\begin{proof}
-*** TO BE COMPLETED ***
-\end{proof}
-
 
 \begin{exmp}
 *** TO BE COMPLETED ***
@@ -2185,6 +2182,14 @@ We end this proof by showing that $\rateset_{\lrate}$ is bounded. Consider any $
 Since $x\in\states$ is arbitary, Proposition~\ref{prop:alternativedefforbounded} now guarantees that $\rateset_{\lrate}$ is bounded. 
 \end{proof}
 
+\begin{proof}[Proof of Proposition~\ref{prop:dominatingproperties}]
+We start by showing that $\rateset_{\lrate}$ is closed, or equivalently, that for any converging sequence $\{Q_i\}_{i\in\nats}$ in $\rateset_{\lrate}$, the limit $Q\coloneqq\lim_{i\to+\infty}Q_i$ is again an element of $\rateset_{\lrate}$. Because $\{Q_i\}_{i\in\nats}$ is in the bounded set $\rateset_{\lrate}$ of rate matrices, we know that the limit $Q$ is again a rate matrix. Now, assume \emph{ex absurdo} that $Q\notin\rateset_{\lrate}$. Then, by Equation~\ref{eq:dominatingratematrices}, there is some $f\in\gamblesX$ and some $x\in\states$ such that $\left[Qf\right](x) < \left[\lrate f\right](x)$. This means that there is some $\epsilon\in\realspos$ such that also $\left[Qf\right](x) + \epsilon < \left[\lrate f\right](x)$. Because $\lim_{i\to+\infty}Q_i=Q$, we must eventually have that, for large enough $i$, it holds that $\left[Q_if\right](x) < \left[Qf\right](x) + \epsilon$. This implies that also $\left[Q_if\right](x) < \left[\lrate f\right](x)$, which, because $Q_i\in\rateset_{\lrate}$, is a contradiction. Therefore, $Q\in\rateset_{\lrate}$, and because the converging sequence $\{Q_i\}_{i\in\nats}$ was arbitrary, this proves that $\rateset_{\lrate}$ is closed.
+
+We now show that $\rateset_{\lrate}$ is convex, meaning that for any rate matrices $Q_1,Q_2\in\rateset_{\lrate}$, and any $\lambda\in[0,1]$, the matrix $Q_\lambda\coloneqq\lambda Q_1 + (1-\lambda)Q_2$ also satisfies $Q_\lambda\in\rateset_{\lrate}$. It is easily verified from Definition~\ref{def:rate_matrix} that $Q_\lambda$ is a rate matrix. Now, assume \emph{ex absurdo} that $Q_\lambda\notin\rateset_{\lrate}$. Then, by Equation~\ref{eq:dominatingratematrices}, there is some $f\in\gamblesX$ and some $x\in\states$ such that $\left[Q_\lambda f\right](x) < \left[\lrate f\right](x)$. This implies that $\left(\lambda\left[Q_1 f\right](x)+(1-\lambda)\left[Q_2 f\right](x)\right) < \left[\lrate f\right](x)$, which because $Q_1,Q_2\in\rateset_{\lrate}$, is a contradiction. Therefore, $Q_\lambda\in\rateset_{\lrate}$.
+
+We finally show that $\rateset_{\lrate}$ has separately specified rows. For all $x\in\states$, let $\rateset_x\coloneqq\{Q(x,\cdot)\,:\,Q\in\rateset_{\lrate}\}$. Now, let $Q$ be any matrix such that, for all $x\in\states$, $Q(x,\cdot)\in\rateset_x$. It is easily verified from Definition~\ref{def:rate_matrix} that $Q$ is a rate matrix. Now, assume \emph{ex absurdo} that $Q\notin\rateset_{\lrate}$. Then, by Equation~\ref{eq:dominatingratematrices}, there is some $f\in\gamblesX$ and some $x\in\states$ such that $\left[Qf\right](x) < \left[\lrate f\right](x)$. Because $Q(x,\cdot)\in\rateset_x$, this implies that there is some $Q'\in\rateset_{\lrate}$ such that also $\left[Q'f\right](x) < \left[\lrate f\right](x)$, a contradiction. Therefore, $Q\in\rateset_{\lrate}$.
+\end{proof}
+
 \begin{lemma}\label{lemma:rateset_has_arginf}
 Let $\rateset$ be an arbitrary non-empty bounded set of rate matrices that has separately specified rows, with corresponding lower transition rate operator $\lrate$. Then for all $f\in\gamblesX$ and $\epsilon\in\realspos$, there exists a $Q\in\rateset$ such that
 \begin{equation*}
@@ -2228,7 +2233,7 @@ Because $Q_0\in\rateset$, using Equation~\eqref{eq:correspondinglowertrans}, we 
 \left[(I+\Delta_0 \lrate)g\right](x) - \frac{\Delta_0\epsilon}{2C} < \left[T_{t_n,x_w}^{t_n+\Delta_0}g\right](x)\,.
 \end{equation}
 
-Let $\delta^*\coloneqq\min\{\delta',\nicefrac{1}{\norm{\lrate}}\}$. 
+Let $\delta^*\coloneqq\min\{\delta,\nicefrac{1}{\norm{\lrate}}\}$. 
 Because $P\in\wprocesses_\rateset$, Lemma~\ref{lemma:bound_on_linear_approx_partition} implies that there is some $v\in\mathcal{U}_{[t_n+\Delta_0,s]}$ such that $\sigma(v)<\delta^*$, with $v=\tau_0,\ldots,\tau_m$, and $\tau_0=t_n+\Delta_0$, $\tau_m=s$, and, for all $i\in\{1,\ldots,m\}$,
 \begin{equation*}
 (\exists Q\in\rateset)\norm{T_{\tau_{i-1},x_u}^{\tau_{i}} - (I+\Delta_{i}Q)} < \frac{\Delta_{i}\epsilon}{2C\norm{f}}\,,
