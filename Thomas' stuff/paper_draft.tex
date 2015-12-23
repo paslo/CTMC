@@ -2516,7 +2516,7 @@ By Propositions~\ref{prop:dominating_nonempty_bounded} and \ref{prop:dominatingp
 
 For the second statement, take any $P\in\processes$ such that $P\notin\wprocesses_{\rateset_{\lrate}}$. Clearly, we must have that either $P\in\wprocesses$ or $P\notin\wprocesses$. We will start by assuming the former, and show that the statement then follows.
 
-Because $P\notin\wprocesses_{\rateset_{\lrate}}$, by Definition~\ref{def:set_non_markov_process}, there must be some $t\in\realsnonneg$ such that $\smash{\overline{\partial}}T_{t,x_u}^{t}\nsubseteq\rateset_{\lrate}$. Furthermore, by Proposition~\ref{prop:boundednon-emptyandclosed}, we have that $\smash{\overline{\partial}}T_{t,x_u}^{t}\neq\emptyset$. Hence, there must be some rate matrix $Q\in\smash{\overline{\partial}}T_{t,x_u}^{t}$ such that $Q\notin\rateset_{\lrate}$, which by Equation~\eqref{eq:dominatingratematrices} implies that there is some $f\in\gamblesX$ and some $x\in\states$ such that $\left[Qf\right](x)<\left[\lrate f\right](x)$.
+Because $P\notin\wprocesses_{\rateset_{\lrate}}$, by Definition~\ref{def:set_non_markov_process}, there must be some $t\in\realsnonneg$, some $u\in\mathcal{U}_{<t}$, and some $x_u\in\states^u$, such that $\smash{\overline{\partial}}T_{t,x_u}^{t}\nsubseteq\rateset_{\lrate}$. Furthermore, by Proposition~\ref{prop:boundednon-emptyandclosed}, we have that $\smash{\overline{\partial}}T_{t,x_u}^{t}\neq\emptyset$. Hence, there must be some rate matrix $Q\in\smash{\overline{\partial}}T_{t,x_u}^{t}$ such that $Q\notin\rateset_{\lrate}$, which by Equation~\eqref{eq:dominatingratematrices} implies that there is some $f\in\gamblesX$ and some $x\in\states$ such that $\left[Qf\right](x)<\left[\lrate f\right](x)$.
 
 Now, assume \emph{ex absurdo} that the statement is false. Because $Q\in\smash{\overline{\partial}}T_{t,x_u}^{t}$, we must have that either $Q\in\smash{\overline{\partial}}_+T_{t,x_u}^{t}$ or $Q\in\smash{\overline{\partial}}_-T_{t,x_u}^{t}$. Assume it is the former. Then, by Equation~\ref{eq:rightouterderivative}, there is some $\{\Delta_i\}_{i\in\nats}\to0^+$ such that $\lim_{i\to+\infty}\nicefrac{1}{\Delta_i}(T_{t,x_u}^{t+\Delta_i}-I)=Q$. Because we assumed that the claim is false, we must have that for all $\Delta\in\realspos$, it holds that $\left[L_t^{t+\Delta}f\right](x) \leq \left[T_{t,x_u}^{t+\Delta}f\right](x)$,
 or equivalently, that
@@ -2539,52 +2539,52 @@ By Proposition~\ref{prop:lower_transition_is_homogeneous}, we have that $L_{t-\D
 \end{align*}
 we again find a contradiction. Therefore, if $P\in\wprocesses$, the statement follows.
 
-Now, suppose that instead $P\notin\wprocesses$. Assume \emph{ex absurdo} that the statement is false. Because $P\notin\wprocesses$, by Definition~\ref{def:well-behaved} there must be some $t\in\realsnonneg$ and some $x,y\in\states$ such that either 
+Now, suppose that instead $P\notin\wprocesses$. Assume \emph{ex absurdo} that the statement is false. Because $P\notin\wprocesses$, by Definition~\ref{def:well-behaved} there must be some $t\in\realsnonneg$, some $u\in\mathcal{U}_{<t}$, some $x_u\in\states^u$, and some $x,y\in\states$, such that either 
 \begin{equation*}
-\limsup_{\Delta\to0^+}\frac{1}{\Delta}\abs{P(X_{t+\Delta}=y\,\vert\,X_t=x)-\delta_{xy}}\nless+\infty\,,
+\limsup_{\Delta\to0^+}\frac{1}{\Delta}\abs{P(X_{t+\Delta}=y\,\vert\,X_t=x,X_{t_0}=x_{t_0},\ldots,X_{t_n}=x_{t_n})-\delta_{xy}}\nless+\infty\,,
 \end{equation*}
 or,
 \begin{equation*}
-\limsup_{\Delta\to0^+}\frac{1}{\Delta}\abs{P(X_{t}=y\,\vert\,X_{t-\Delta}=x)-\delta_{xy}}\nless+\infty\,.
+\limsup_{\Delta\to0^+}\frac{1}{\Delta}\abs{P(X_{t}=y\,\vert\,X_{t-\Delta}=x,X_{t_0}=x_{t_0},\ldots,X_{t_n}=x_{t_n})-\delta_{xy}}\nless+\infty\,.
 \end{equation*}
-Start by assuming that its the former. Clearly, we have for all $\Delta\in\realspos$ that $\left[T_t^{t+\Delta}\ind{y}\right](x)=P(X_{t+\Delta}=y\,\vert\,X_t=x)$, and furthermore, that $\left[I\ind{y}\right](x)=\delta_{xy}$. Hence, we have that
+Start by assuming that it is the former. Clearly, we have for all $\Delta\in\realspos$ that $\left[T_{t,x_u}^{t+\Delta}\ind{y}\right](x)=P(X_{t+\Delta}=y\,\vert\,X_t=x,X_{t_0}=x_{t_0},\ldots,X_{t_n}=x_{t_n})$, and furthermore, that $\left[I\ind{y}\right](x)=\delta_{xy}$. Hence, we have that
 \begin{equation*}
-\left[(T_t^{t+\Delta}-I)\ind{y}\right](x) = P(X_{t+\Delta}=y\,\vert\,X_t=x) - \delta_{xy}\,.
+\left[(T_{t,x_u}^{t+\Delta}-I)\ind{y}\right](x) = P(X_{t+\Delta}=y\,\vert\,X_t=x,X_{t_0}=x_{t_0},\ldots,X_{t_n}=x_{t_n}) - \delta_{xy}\,.
 \end{equation*}
-By Proposition~\ref{prop:rate_from_stochastic_matrix}, we have that $\nicefrac{1}{\Delta}(T_t^{t+\Delta}-I)$ is a transition rate matrix, and hence by Definition~\ref{def:rate_matrix} we must have that $\nicefrac{1}{\Delta}\left[(T_t^{t+\Delta}-I)\ind{x}\right](x)\leq 0$, and $\nicefrac{1}{\Delta}\abs{\left[(T_t^{t+\Delta}-I)\ind{y}\right](x)}\leq\nicefrac{1}{\Delta}\abs{\left[(T_t^{t+\Delta}-I)\ind{x}\right](x)}$. It therefore follows that also
+By Proposition~\ref{prop:rate_from_stochastic_matrix}, we have that $\nicefrac{1}{\Delta}(T_{t,x_u}^{t+\Delta}-I)$ is a transition rate matrix, and hence by Definition~\ref{def:rate_matrix} we must have that $\nicefrac{1}{\Delta}\left[(T_{t,x_u}^{t+\Delta}-I)\ind{x}\right](x)\leq 0$, and $\nicefrac{1}{\Delta}\abs{\left[(T_{t,x_u}^{t+\Delta}-I)\ind{y}\right](x)}\leq\nicefrac{1}{\Delta}\abs{\left[(T_{t,x_u}^{t+\Delta}-I)\ind{x}\right](x)}$. It therefore follows that also
 \begin{equation}\label{eq:nonwellbehaved_limit_diagonal}
-\limsup_{\Delta\to0^+}\frac{1}{\Delta}\abs{\left[(T_t^{t+\Delta}-I)\ind{x}\right](x)} \nless +\infty\,.
+\limsup_{\Delta\to0^+}\frac{1}{\Delta}\abs{\left[(T_{t,x_u}^{t+\Delta}-I)\ind{x}\right](x)} \nless +\infty\,.
 \end{equation}
 Similarly, by Lemma~\ref{lemma:lower_trans_to_lower_rate}, we have that $\nicefrac{1}{\Delta}(L_t^{t+\Delta}-I)$ is a lower transition rate operator, and hence by Definition~\ref{def:coh_low_trans_rate}, we must have that $\nicefrac{1}{\Delta}\left[(L_t^{t+\Delta}-I)\ind{x}\right](x)\leq 0$. 
 
-Because we assumed that the statement is false, and because $\ind{x}\in\gamblesX$, it must hold for all $\Delta\in\realspos$ that $\left[L_{t}^{t+\Delta}\ind{x}\right](x)\leq\left[T_{t}^{t+\Delta}\ind{x}\right](x)$, or equivalently, that
+Because we assumed that the statement is false, and because $\ind{x}\in\gamblesX$, it must hold for all $\Delta\in\realspos$ that $\left[L_{t}^{t+\Delta}\ind{x}\right](x)\leq\left[T_{t,x_u}^{t+\Delta}\ind{x}\right](x)$, or equivalently, that
 \begin{equation*}
-\frac{1}{\Delta}\left[(L_{t}^{t+\Delta} - I)\ind{x}\right](x) \leq \frac{1}{\Delta}\left[(T_{t}^{t+\Delta} - I)\ind{x}\right](x)\,.
+\frac{1}{\Delta}\left[(L_{t}^{t+\Delta} - I)\ind{x}\right](x) \leq \frac{1}{\Delta}\left[(T_{t,x_u}^{t+\Delta} - I)\ind{x}\right](x)\,.
 \end{equation*}
 From our earlier observations, we know that both sides of this inequality are non-positive. Hence, we must have that
 \begin{equation*}
-\abs{\frac{1}{\Delta}\left[(T_{t}^{t+\Delta} - I)\ind{x}\right](x)} \leq \abs{\frac{1}{\Delta}\left[(L_{t}^{t+\Delta} - I)\ind{x}\right](x)}\,.
+\abs{\frac{1}{\Delta}\left[(T_{t,x_u}^{t+\Delta} - I)\ind{x}\right](x)} \leq \abs{\frac{1}{\Delta}\left[(L_{t}^{t+\Delta} - I)\ind{x}\right](x)}\,.
 \end{equation*}
 By the definition of the norm, we have that $\abs{\nicefrac{1}{\Delta}\left[(L_{t}^{t+\Delta} - I)\ind{x}\right](x)}\leq\norm{\nicefrac{1}{\Delta}(L_{t}^{t+\Delta} - I)\ind{x}}$, and because $\ind{x}\in\gamblesX$ and $\norm{\ind{x}}=1$, we have $\norm{\nicefrac{1}{\Delta}(L_{t}^{t+\Delta} - I)\ind{x}}\leq \norm{\nicefrac{1}{\Delta}(L_{t}^{t+\Delta} - I)}$. Hence, we must have that
 \begin{equation*}
-\abs{\frac{1}{\Delta}\left[(T_{t}^{t+\Delta} - I)\ind{x}\right](x)} \leq \norm{\frac{1}{\Delta}(L_{t}^{t+\Delta} - I)}\,.
+\abs{\frac{1}{\Delta}\left[(T_{t,x_u}^{t+\Delta} - I)\ind{x}\right](x)} \leq \norm{\frac{1}{\Delta}(L_{t}^{t+\Delta} - I)}\,.
 \end{equation*}
 
 Now, by Proposition~\ref{prop:lower_transition_has_deriv}, we have that $\lim_{\Delta\to0^+}\nicefrac{1}{\Delta}(L_{t}^{t+\Delta} - I) = \lrate$, and hence it follows that $\lim_{\Delta\to0^+}\norm{\nicefrac{1}{\Delta}(L_{t}^{t+\Delta} - I)} = \norm{\lrate}$. By Lemma~\ref{lem:normlratefinite}, we furthermore know that $\norm{\lrate}<+\infty$. Taking limits on both sides of our earlier inequality, we therefore find that
 \begin{equation*}
-\limsup_{\Delta\to0^+}\abs{\frac{1}{\Delta}\left[(T_{t}^{t+\Delta} - I)\ind{x}\right](x)} \leq \limsup_{\Delta\to0^+}\norm{\frac{1}{\Delta}(L_{t}^{t+\Delta} - I)} = \norm{\lrate} < +\infty\,,
+\limsup_{\Delta\to0^+}\abs{\frac{1}{\Delta}\left[(T_{t,x_u}^{t+\Delta} - I)\ind{x}\right](x)} \leq \limsup_{\Delta\to0^+}\norm{\frac{1}{\Delta}(L_{t}^{t+\Delta} - I)} = \norm{\lrate} < +\infty\,,
 \end{equation*}
-which, by Equation~\eqref{eq:nonwellbehaved_limit_diagonal}, is a contradiction. Therefore, if the statement is indeed false, we must instead have that for some (other) $t\in\realsnonneg$ and some (other) $x,y\in\states$,
+which, by Equation~\eqref{eq:nonwellbehaved_limit_diagonal}, is a contradiction. Therefore, if the statement is indeed false, we must instead have that for some (other) $t\in\realsnonneg$, some (other) $u\in\mathcal{U}_{<t}$, some (other) $x_\in\states^u$, and some (other) $x,y\in\states$,
 \begin{equation}\label{eq:nonwellbehaved_limit_diagonal_left}
-\limsup_{\Delta\to0^+}\frac{1}{\Delta}\abs{P(X_{t}=y\,\vert\,X_{t-\Delta}=x)-\delta_{xy}}\nless+\infty\,.
+\limsup_{\Delta\to0^+}\frac{1}{\Delta}\abs{P(X_{t}=y\,\vert\,X_{t-\Delta}=x,X_{t_0}=x_{t_0},\ldots,X_{t_n}=x_{t_n})-\delta_{xy}}\nless+\infty\,.
 \end{equation}
 Using the same argument as before, we must then have for all $\Delta\in\realspos$ that
 \begin{equation*}
-\abs{\frac{1}{\Delta}\left[(T_{t-\Delta}^t - I)\ind{x}\right](x)} \leq \norm{\frac{1}{\Delta}(L_{t-\Delta}^t - I)}\,.
+\abs{\frac{1}{\Delta}\left[(T_{t-\Delta,x_u}^t - I)\ind{x}\right](x)} \leq \norm{\frac{1}{\Delta}(L_{t-\Delta}^t - I)}\,.
 \end{equation*}
 Because by Proposition~\ref{prop:lower_transition_is_homogeneous} we have that $L_{t-\Delta}^t=L_t^{t+\Delta}$, we again find after taking limits on both sides that
 \begin{equation*}
-\limsup_{\Delta\to0^+}\abs{\frac{1}{\Delta}\left[(T_{t-\Delta}^t - I)\ind{x}\right](x)} \leq \limsup_{\Delta\to0^+}\norm{\frac{1}{\Delta}(L_{t}^{t+\Delta} - I)} = \norm{\lrate} < +\infty\,,
+\limsup_{\Delta\to0^+}\abs{\frac{1}{\Delta}\left[(T_{t-\Delta,x_u}^t - I)\ind{x}\right](x)} \leq \limsup_{\Delta\to0^+}\norm{\frac{1}{\Delta}(L_{t}^{t+\Delta} - I)} = \norm{\lrate} < +\infty\,,
 \end{equation*}
 a contradiction with Equation~\eqref{eq:nonwellbehaved_limit_diagonal_left}. Therefore, if $P\notin\wprocesses$, the statement follows.
 \end{proof}
