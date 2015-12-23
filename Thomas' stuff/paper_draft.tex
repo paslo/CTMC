@@ -782,6 +782,39 @@ Consider any piecewise-constant function $Q_t$ that gives for each time point $t
 
 *** tralala, wat gaan we doen? impreciezie! wanneer gaan we dat doen? nu! jeej
 
+\begin{definition}[Characterizing Set of Rate Matrices]
+Consider any set $\mathcal{P}\subset\processes$ of stochastic processes. Then, a set of rate matrices $\rateset\subset\mathcal{R}$ is called the set of rate matrices that \emph{characterize} $\mathcal{P}$, if
+\begin{equation*}
+\rateset = \bigcup_{P\in\mathcal{P}}\,\bigcup_{t\in\realsnonneg}\,\bigcup_{u\in\mathcal{U}_{<t}}\,\bigcup_{x_u\in\states^u}\smash{\overline{\partial}}T_{t,x_u}^t\,.
+\end{equation*}
+For any $\mathcal{P}\subset\processes$, we will write $\rateset_{\mathcal{P}}$ for the set of rate matrices that characterize $\mathcal{P}$.
+\end{definition}
+
+\begin{definition}[Consistent Set of Rate Matrices]
+Consider any set of rate matrices $\rateset$, and any stochastic process $P\in\processes$. Then $P$ is said to be \emph{consistent} with $\rateset$, if
+\begin{equation*}
+(\forall t\in\realsnonneg)(\forall u\in\mathcal{U}_{<t})(\forall x_u\in\states^u)\,:\, \smash{\overline{\partial}}T_{t,x_u}^t \subseteq \rateset\,.
+\end{equation*}
+If $P$ is consistent with $\rateset$, we will write $P\sim\rateset$.
+\end{definition}
+
+\begin{proposition}
+Consider any set $\mathcal{P}\subset\processes$ of stochastic processes. Then, for all $P\in\mathcal{P}$, it holds that $P\sim\rateset_{\mathcal{P}}$.
+\end{proposition}
+\begin{proof}
+*** {\bf TODO}, but trivial
+\end{proof}
+
+\begin{proposition}
+Consider any set of rate matrices $\rateset\subset\mathcal{R}$. Let $\mathbb{P}_\rateset$ be the set of all stochastic processes consistent with $\rateset$, i.e., let
+\begin{equation*}
+\mathbb{P}_\rateset \coloneqq \left\{P\in\processes\,:\,P\sim\rateset\right\}\,.
+\end{equation*}
+Then, $\rateset$ characterizes $\mathbb{P}_\rateset$.
+\end{proposition}
+\begin{proof}
+*** {\bf TODO}, but trivial
+\end{proof}
 
 \subsection{Types of Imprecise Continuous-Time Markov Chains}
 
@@ -1205,14 +1238,11 @@ Consider a lower transition rate operator $\lrate$ and let $\rateset_{\lrate}$ b
 \end{exmp}
 
 \noindent
-These additional properties characterise $\rateset_{\lrate}$ completely, in the sense that no other set satisfies them.
+These additional properties characterize $\rateset_{\lrate}$ completely, in the sense that no other set satisfies them.
 
-\begin{proposition}
+\begin{proposition}\label{prop:dominating_unique_characterization}
 Consider any non-empty, bounded, closed and convex set of rate matrices $\rateset\subseteq\mathcal{R}$ with separately specified rows that has $\lrate$ as its lower envelope. Then $\rateset=\rateset_{\lrate}$.
 \end{proposition}
-\begin{proof}
-*** TO BE COMPLETED ***
-\end{proof}
 
 We conclude from all of this that non-empty bounded sets of rate matrices are more informative than lower transition rate operators. Different non-empty bounded sets of rate matrices $\rateset$ may have the same lower transition rate operator $\lrate$ and therefore, in general, knowledge of $\lrate$ does not suffice to reconstruct $\rateset$; we can only reconstruct an outer approximation $\rateset_{\lrate}$, which is guaranteed to include $\rateset$. This changes if, besides non-empty and bounded, $\rateset$ is also closed and convex and has separately specified rows. In that case, $\lrate$ serves as an alternative representation for $\rateset$ because, since $\rateset=\rateset_{\lrate}$, we can use $\lrate$ to reconstruct $\rateset$. In other words: there is a one-to-one correspondence between lower transition rate operators and non-empty, bounded, closed and convex sets of rate matrices that have separately specified rows.
 
@@ -2169,11 +2199,11 @@ Fix any $f\in\gamblesX$. Choose $\Delta>0$ small enough such that $0\leq\Delta\n
 \lt_xg\coloneqq(\lt g)(x)
 \text{~~for all $g\in\gamblesX$.}
 \end{equation*}
-Since $\lt$ is a lower transition operator, it follows that $\lt_x\colon \gamblesX\to\reals$ is subadditive, positively homogeneous and bounded below by the minimum operator. Hence, by definition~\cite[Definition~2.3.3]{Walley:1991vk}, $\lt_x$ is a coherent lower prevision on $\gamblesX$. Because of \cite[Theorem~3.3.3(b)]{Walley:1991vk}, this implies the existence of an expectation operator $E_x$ on $\gamblesX$---Reference~\cite{Walley:1991vk} calls this a linear prevision on $\gamblesX$---such that $E_xg\geq\lt_xg$ for all $g\in\gamblesX$ and $E_xf=\lt_xf$. Let $P_x$ be the unique probability mass function that corresponds to $E_x$. For all $x,y\in\states$, we now let $T(x,y)\coloneqq P_x(y)\coloneqq E_x(\ind{x})$. Then $T$ is clearly a stochastic matrix. Furthermore, for every $x\in\states$ and $g\in\gamblesX$, we have that $(Tg)(x)=E_xg$. Hence, it follows that $Tg\geq\lt g$ for all $g\in\gamblesX$ and that $Tf=\lt f$. Now let $Q\coloneqq\nicefrac{1}{\Delta}(T-I)$, which, because of Proposition~\ref{prop:rate_from_stochastic_matrix}, is a rate matrix. Since $Tf=\lt f$, it then follows that
+Since $\lt$ is a lower transition operator, it follows that $\lt_x\colon \gamblesX\to\reals$ is super-additive, positively homogeneous and bounded below by the minimum operator. Hence, by definition~\cite[Definition~2.3.3]{Walley:1991vk}, $\lt_x$ is a coherent lower prevision on $\gamblesX$. Because of \cite[Theorem~3.3.3(b)]{Walley:1991vk}, this implies the existence of an expectation operator $E_x$ on $\gamblesX$---Reference~\cite{Walley:1991vk} calls this a linear prevision on $\gamblesX$---such that $E_xg\geq\lt_xg$ for all $g\in\gamblesX$ and $E_xf=\lt_xf$. Let $P_x$ be the unique probability mass function that corresponds to $E_x$. For all $x,y\in\states$, we now let $T(x,y)\coloneqq P_x(y)\coloneqq E_x(\ind{x})$. Then $T$ is clearly a stochastic matrix. Furthermore, for every $x\in\states$ and $g\in\gamblesX$, we have that $(Tg)(x)=E_xg$. Hence, it follows that $Tg\geq\lt g$ for all $g\in\gamblesX$ and that $Tf=\lt f$. Now let $Q\coloneqq\nicefrac{1}{\Delta}(T-I)$, which, because of Proposition~\ref{prop:rate_from_stochastic_matrix}, is a rate matrix. Since $Tf=\lt f$, it then follows that
 \begin{equation*}
 Qf=\frac{1}{\Delta}(Tf-f)\geq\frac{1}{\Delta}{\lt f-f}=\lrate f.
 \end{equation*}
-Similarly, since $Tg\geq\lt g$ for all $g\in\gamblesX$, it follows that $Qg\geq\lrate g$, or equivalently, since $Q$ is a rate matrix, that $Q\in\rateset_{\lrate}$. Since $f$ was arbitrary, this proofs that, for all $f\in\gamblesX$, there is some $Q\in\rateset_{\lrate}$ such that $Qf=\lrate f$. Since $\gamblesX$ is non-empty, this clearly implies that $\rateset_{\lrate}$ is non-empty.
+Similarly, since $Tg\geq\lt g$ for all $g\in\gamblesX$, it follows that $Qg\geq\lrate g$, or equivalently, since $Q$ is a rate matrix, that $Q\in\rateset_{\lrate}$. Since $f$ was arbitrary, this proves that, for all $f\in\gamblesX$, there is some $Q\in\rateset_{\lrate}$ such that $Qf=\lrate f$. Since $\gamblesX$ is non-empty, this clearly implies that $\rateset_{\lrate}$ is non-empty.
 
 We end this proof by showing that $\rateset_{\lrate}$ is bounded. Consider any $x\in\states$. Then for all $Q\in\rateset_{\lrate}$, we have that $Q(x,x)=(Q\ind{x})(x)\geq(\lrate\ind{x})(x)$, which implies that
 \begin{equation*}
@@ -2183,11 +2213,25 @@ Since $x\in\states$ is arbitary, Proposition~\ref{prop:alternativedefforbounded}
 \end{proof}
 
 \begin{proof}[Proof of Proposition~\ref{prop:dominatingproperties}]
-We start by showing that $\rateset_{\lrate}$ is closed, or equivalently, that for any converging sequence $\{Q_i\}_{i\in\nats}$ in $\rateset_{\lrate}$, the limit $Q\coloneqq\lim_{i\to+\infty}Q_i$ is again an element of $\rateset_{\lrate}$. Because $\{Q_i\}_{i\in\nats}$ is in the bounded set $\rateset_{\lrate}$ of rate matrices, we know that the limit $Q$ is again a rate matrix. Now, assume \emph{ex absurdo} that $Q\notin\rateset_{\lrate}$. Then, by Equation~\ref{eq:dominatingratematrices}, there is some $f\in\gamblesX$ and some $x\in\states$ such that $\left[Qf\right](x) < \left[\lrate f\right](x)$. This means that there is some $\epsilon\in\realspos$ such that also $\left[Qf\right](x) + \epsilon < \left[\lrate f\right](x)$. Because $\lim_{i\to+\infty}Q_i=Q$, we must eventually have that, for large enough $i$, it holds that $\left[Q_if\right](x) < \left[Qf\right](x) + \epsilon$. This implies that also $\left[Q_if\right](x) < \left[\lrate f\right](x)$, which, because $Q_i\in\rateset_{\lrate}$, is a contradiction. Therefore, $Q\in\rateset_{\lrate}$, and because the converging sequence $\{Q_i\}_{i\in\nats}$ was arbitrary, this proves that $\rateset_{\lrate}$ is closed.
+We start by showing that $\rateset_{\lrate}$ is closed, or equivalently, that for any converging sequence $\{Q_i\}_{i\in\nats}$ in $\rateset_{\lrate}$, the limit $Q\coloneqq\lim_{i\to+\infty}Q_i$ is again an element of $\rateset_{\lrate}$. Because $\{Q_i\}_{i\in\nats}$ is in the bounded set $\rateset_{\lrate}$ of rate matrices, we know that the limit $Q$ is again a rate matrix. Now, assume \emph{ex absurdo} that $Q\notin\rateset_{\lrate}$. Then, by Equation~\eqref{eq:dominatingratematrices}, there is some $f\in\gamblesX$ and some $x\in\states$ such that $\left[Qf\right](x) < \left[\lrate f\right](x)$. This means that there is some $\epsilon\in\realspos$ such that also $\left[Qf\right](x) + \epsilon < \left[\lrate f\right](x)$. Because $\lim_{i\to+\infty}Q_i=Q$, we must eventually have that, for large enough $i$, it holds that $\left[Q_if\right](x) < \left[Qf\right](x) + \epsilon$. This implies that also $\left[Q_if\right](x) < \left[\lrate f\right](x)$, which, because $Q_i\in\rateset_{\lrate}$, is a contradiction. Therefore, $Q\in\rateset_{\lrate}$, and because the converging sequence $\{Q_i\}_{i\in\nats}$ was arbitrary, this proves that $\rateset_{\lrate}$ is closed.
 
-We now show that $\rateset_{\lrate}$ is convex, meaning that for any rate matrices $Q_1,Q_2\in\rateset_{\lrate}$, and any $\lambda\in[0,1]$, the matrix $Q_\lambda\coloneqq\lambda Q_1 + (1-\lambda)Q_2$ also satisfies $Q_\lambda\in\rateset_{\lrate}$. It is easily verified from Definition~\ref{def:rate_matrix} that $Q_\lambda$ is a rate matrix. Now, assume \emph{ex absurdo} that $Q_\lambda\notin\rateset_{\lrate}$. Then, by Equation~\ref{eq:dominatingratematrices}, there is some $f\in\gamblesX$ and some $x\in\states$ such that $\left[Q_\lambda f\right](x) < \left[\lrate f\right](x)$. This implies that $\left(\lambda\left[Q_1 f\right](x)+(1-\lambda)\left[Q_2 f\right](x)\right) < \left[\lrate f\right](x)$, which because $Q_1,Q_2\in\rateset_{\lrate}$, is a contradiction. Therefore, $Q_\lambda\in\rateset_{\lrate}$.
+We now show that $\rateset_{\lrate}$ is convex, meaning that for any rate matrices $Q_1,Q_2\in\rateset_{\lrate}$, and any $\lambda\in[0,1]$, the matrix $Q_\lambda\coloneqq\lambda Q_1 + (1-\lambda)Q_2$ also satisfies $Q_\lambda\in\rateset_{\lrate}$. It is easily verified from Definition~\ref{def:rate_matrix} that $Q_\lambda$ is a rate matrix. Now, assume \emph{ex absurdo} that $Q_\lambda\notin\rateset_{\lrate}$. Then, by Equation~\eqref{eq:dominatingratematrices}, there is some $f\in\gamblesX$ and some $x\in\states$ such that $\left[Q_\lambda f\right](x) < \left[\lrate f\right](x)$. This implies that $\left(\lambda\left[Q_1 f\right](x)+(1-\lambda)\left[Q_2 f\right](x)\right) < \left[\lrate f\right](x)$, which because $Q_1,Q_2\in\rateset_{\lrate}$, is a contradiction. Therefore, $Q_\lambda\in\rateset_{\lrate}$.
 
-We finally show that $\rateset_{\lrate}$ has separately specified rows. For all $x\in\states$, let $\rateset_x\coloneqq\{Q(x,\cdot)\,:\,Q\in\rateset_{\lrate}\}$. Now, let $Q$ be any matrix such that, for all $x\in\states$, $Q(x,\cdot)\in\rateset_x$. It is easily verified from Definition~\ref{def:rate_matrix} that $Q$ is a rate matrix. Now, assume \emph{ex absurdo} that $Q\notin\rateset_{\lrate}$. Then, by Equation~\ref{eq:dominatingratematrices}, there is some $f\in\gamblesX$ and some $x\in\states$ such that $\left[Qf\right](x) < \left[\lrate f\right](x)$. Because $Q(x,\cdot)\in\rateset_x$, this implies that there is some $Q'\in\rateset_{\lrate}$ such that also $\left[Q'f\right](x) < \left[\lrate f\right](x)$, a contradiction. Therefore, $Q\in\rateset_{\lrate}$.
+We finally show that $\rateset_{\lrate}$ has separately specified rows. For all $x\in\states$, let $\rateset_x\coloneqq\{Q(x,\cdot)\,:\,Q\in\rateset_{\lrate}\}$. Now, let $Q$ be any matrix such that, for all $x\in\states$, $Q(x,\cdot)\in\rateset_x$. It is easily verified from Definition~\ref{def:rate_matrix} that $Q$ is a rate matrix. Now, assume \emph{ex absurdo} that $Q\notin\rateset_{\lrate}$. Then, by Equation~\eqref{eq:dominatingratematrices}, there is some $f\in\gamblesX$ and some $x\in\states$ such that $\left[Qf\right](x) < \left[\lrate f\right](x)$. Because $Q(x,\cdot)\in\rateset_x$, this implies that there is some $Q'\in\rateset_{\lrate}$ such that also $\left[Q'f\right](x) < \left[\lrate f\right](x)$, a contradiction. Therefore, $Q\in\rateset_{\lrate}$.
+\end{proof}
+
+\begin{proof}[Proof of Proposition~\ref{prop:dominating_unique_characterization}]
+Let $\rateset$ be any non-empty, bounded, closed and convex set of rate matrices with separately specified rows, with corresponding lower transition rate operator $\lrate$. Assume \emph{ex absurdo} that $\rateset\neq\rateset_{\lrate}$.
+
+Then, we must have that either $\rateset\subset\rateset_{\lrate}$, or, because $\rateset$ is non-empty, there must be some $Q\in\rateset$ such that $Q\notin\rateset_{\lrate}$. In the latter case, because $\rateset$ has $\lrate$ as its lower envelope, we immediately find a contradiction with Equation~\eqref{eq:dominatingratematrices}. Hence, if indeed $\rateset\neq\rateset_{\lrate}$, we must instead have that $\rateset\subset\rateset_{\lrate}$. Therefore, and because $\rateset_{\lrate}$ is non-empty, there must be some $Q\in\rateset_{\lrate}$ such that $Q\notin\rateset$.
+
+Because $\rateset$ has separately specified rows, there must therefore be some $x\in\states$ such that $Q(x,\cdot)\notin\rateset_x$, where $\rateset_x\coloneqq\{Q'(x,\cdot)\,:\,Q'\in\rateset\}$. Because $\rateset$ is non-empty, bounded, closed and convex, it follows that $\rateset_x$ is also non-empty, bounded, closed, and convex. 
+
+Note also that we can interpret $\rateset_x\subset\reals^m$ as a subset of the vector space $\reals^m$, where $m$ is the size of $\states$. Let $\overline{\rateset}_x$ denote the complement of $\rateset_x$ in $\reals^m$. Because $\rateset_x$ is closed, it follows that $\overline{\rateset}_x$ is open. Because $Q(x,\cdot)\notin\rateset_x$, and because $Q(x,\cdot)\in\reals^m$, it follows that $Q(x,\cdot)\in\overline{\rateset}_x$. Because $\overline{\rateset}_x$ is open, there must therefore be some $\epsilon\in\realspos$ such that the open ball $\mathcal{B}(Q(x,\cdot),\epsilon)$ satisfies $\mathcal{B}(Q(x,\cdot),\epsilon)\subset\overline{\rateset}_x$. We therefore have that $\mathcal{B}(Q(x,\cdot),\epsilon)\cap\rateset_x=\emptyset$. In summary, $\mathcal{B}(Q(x,\cdot),\epsilon)$ and $\rateset_x$ are non-empty, convex, and disjoint subsets of $\reals^m$, and furthermore, $\rateset_x$ is closed, and $\mathcal{B}(Q(x,\cdot),\epsilon)$ is open.
+
+Therefore, by the hyperplane separation theorem\footnote{That is, by one of them.} ({\bf REF}), there must be some $f\in\gamblesX$ and some $c\in\reals$, such that, because $Q(x,\cdot)\in \mathcal{B}(Q(x,\cdot),\epsilon)$, it holds that $Q(x,\cdot)f = [Qf](x) < c$, and, for all $Q'(x,\cdot)\in\rateset_x$, that $Q'(x,\cdot)f = [Q'f](x) \geq c$.
+
+This clearly implies that, for all $Q'\in\rateset$, it holds that $[Qf](x) < [Q'f](x)$. In turn, this implies the existence of some $\epsilon'\in\realspos$ for which $[Qf](x) + \epsilon' < [Q'f](x)$, for all $Q'\in\rateset$. Because $\lrate$ is the lower envelope of $\rateset$, by Equation~\eqref{eq:correspondinglowertrans}, we therefore find that $[Qf](x) < [\lrate f](x)$. Hence, we have found a $f\in\gamblesX$ and a $x\in\states$, such that for some $Q\in\rateset_{\lrate}$, it holds that $[Qf](x) < [\lrate f](x)$. By Equation~\eqref{eq:dominatingratematrices}, this is a contradiction, and hence $\rateset=\rateset_{\lrate}$.
 \end{proof}
 
 \begin{lemma}\label{lemma:rateset_has_arginf}
