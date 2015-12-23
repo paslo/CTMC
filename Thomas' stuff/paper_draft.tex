@@ -2221,7 +2221,7 @@ We finally show that $\rateset_{\lrate}$ has separately specified rows. For all 
 \end{proof}
 
 \begin{lemma}\label{lemma:rows_nonempty_bounded_closed_convex}
-Let $\rateset$ be any non-empty, bounded, closed and convex set of rate matrices that has separately specified rows. For all $x\in\states$, let $\rateset_x\coloneqq\{Q(x,\cdot)\,:\,Q\in\rateset\}$. Then, for all $x\in\states$, it holds that $\rateset_x$ is non-empty, bounded, closed, and convex.
+Let $\rateset$ be any non-empty, bounded, closed and convex set of rate matrices that has separately specified rows. Then, for all $x\in\states$, the set $\rateset_x\coloneqq\{Q(x,\cdot)\,:\,Q\in\rateset\}$ is non-empty, bounded, closed, and convex.
 \end{lemma}
 \begin{proof}
 Take any $x\in\states$. Non-emptiness, boundedness, and convexity of $\rateset_x$ follows trivially from the fact that $\rateset$ is non-empty, bounded, and convex. It remains to show that $\rateset_x$ is closed, or, equivalently, that for any converging sequence $\{Q_i(x,\cdot)\}_{i\in\nats}$ in $\rateset_x$, the limit $Q^*(x,\cdot)\coloneqq\lim_{i\to+\infty}Q_i(x,\cdot)$ also satisfies $Q^*(x,\cdot)\in\rateset_x$.
@@ -2244,25 +2244,11 @@ Because $\rateset$ has separately specified rows, there must therefore be some $
 
 that $\rateset_x$ is also non-empty, bounded, closed, and convex. 
 
-Note also that we can interpret $\rateset_x\subset\reals^m$ as a subset of the vector space $\reals^m$, where $m$ is the size of $\states$. 
+Note that we can interpret $\rateset_x\subset\reals^m$ as a subset of the vector space $\reals^m$, where $m$ is the size of $\states$. Furthermore, because $\rateset_x$ is closed and bounded, we have that $\rateset_x$ is compact. Because $Q(x\cdot)\notin\rateset_x$, the (non-empty, closed) singleton set $\{Q(x,\cdot)\}$ is clearly disjoint from $\rateset_x$.
 
-*** the whole complement and ball argument below is not needed, the separating hyperplane theorem can be applied directly 
+Therefore, by the hyperplane separation theorem\footnote{That is, by one of them.} ({\bf REF}), there must be some $f\in\gamblesX$ and some $c_1,c_2\in\reals$, with $c_1<c_2$, such that $Q(x,\cdot)f = [Qf](x) \leq c_1$, and such that, for all $Q'(x,\cdot)\in\rateset_x$, $Q'(x,\cdot)f = [Q'f](x) \geq c_2$.
 
-{\bf well, I used it to get the strict inequality. I guess the other way is compactness of $\rateset_x$ and using the singleton $\{Q(x,\cdot)\}$ as the other (non-empty, convex, closed) set, but I need \emph{some} mechanism to enforce enough distance between the two sets..  }
-***
-
- Let $\rateset_x^c$ denote the complement of $\rateset_x$ in $\reals^m$. Because $\rateset_x$ is closed, it follows that $\rateset^c_x$ is open. Because $Q(x,\cdot)\notin\rateset_x$, and because $Q(x,\cdot)\in\reals^m$, it follows that $Q(x,\cdot)\in\rateset^c_x$. Because $\rateset^c_x$ is open, there must therefore be some $\epsilon\in\realspos$ such that the open ball $\mathcal{B}(Q(x,\cdot),\epsilon)$ satisfies $\mathcal{B}(Q(x,\cdot),\epsilon)\subset\rateset^c_x$. We therefore have that $\mathcal{B}(Q(x,\cdot),\epsilon)\cap\rateset_x=\emptyset$. In summary, $\mathcal{B}(Q(x,\cdot),\epsilon)$ and $\rateset_x$ are non-empty, convex, and disjoint subsets of $\reals^m$, and furthermore, $\rateset_x$ is closed, and $\mathcal{B}(Q(x,\cdot),\epsilon)$ is open.
-
-Therefore, by the hyperplane separation theorem\footnote{That is, by one of them.} ({\bf REF}), there must be some $f\in\gamblesX$ and some $c\in\reals$, such that, because $Q(x,\cdot)\in \mathcal{B}(Q(x,\cdot),\epsilon)$, it holds that $Q(x,\cdot)f = [Qf](x) < c$, and, for all $Q'(x,\cdot)\in\rateset_x$, that $Q'(x,\cdot)f = [Q'f](x) \geq c$.
-
-This clearly implies that, for all $Q'\in\rateset$, it holds that $[Qf](x) < [Q'f](x)$. In turn, this implies 
-
-*** its not implied in this way (but true though) 
-
-{\bf how does $a<b$ not imply the existence of an $\epsilon\in\realspos$ for which $a+\epsilon < b$? or do you mean a `global' on that works for all $Q'$? }
-***
-
- the existence of some $\epsilon'\in\realspos$ for which $[Qf](x) + \epsilon' < [Q'f](x)$, for all $Q'\in\rateset$. Because $\lrate$ is the lower envelope of $\rateset$, by Equation~\eqref{eq:correspondinglowertrans}, we therefore find that $[Qf](x) < [\lrate f](x)$. Hence, we have found a $f\in\gamblesX$ and a $x\in\states$, such that for some $Q\in\rateset_{\lrate}$, it holds that $[Qf](x) < [\lrate f](x)$. By Equation~\eqref{eq:dominatingratematrices}, this is a contradiction, and hence $\rateset=\rateset_{\lrate}$.
+This clearly implies that, for all $Q'\in\rateset$, it holds that $[Qf](x) \leq c_1 < c_2 \leq [Q'f](x)$. In turn, this implies the existence of some $\epsilon\in\realspos$ for which $[Qf](x) + \epsilon < [Q'f](x)$, for all $Q'\in\rateset$. Because $\lrate$ is the lower envelope of $\rateset$, by Equation~\eqref{eq:correspondinglowertrans}, we therefore find that $[Qf](x) < [\lrate f](x)$. Hence, we have found a $f\in\gamblesX$ and a $x\in\states$, such that for some $Q\in\rateset_{\lrate}$, it holds that $[Qf](x) < [\lrate f](x)$. By Equation~\eqref{eq:dominatingratematrices}, this is a contradiction, and hence $\rateset=\rateset_{\lrate}$.
 \end{proof}
 
 \begin{lemma}\label{lemma:rateset_has_arginf}
