@@ -1580,29 +1580,30 @@ Algorithm~\ref{alg:compute_singlestate_prod} correctly computes the lower expect
 \end{proof}
 
 \begin{algorithm}[H]
-  \caption{Numerically compute lower expectation of $f\in\gambles_\times(\states^{u\cup v}).$ {\bf ATTN:} I know it's a bit verbose, and can be made a lot shorter. Not sure if that would improve the clarity though. Can also be written recursively, which considerably simplifies the proof of correctness.
+  \caption{Numerically compute lower expectation of $f\in\gambles_\times(\states^{u\cup v}).$ 
     \label{alg:compute_singlestate_prod}}
   \begin{algorithmic}[1]
     \Require{A non-empty, bounded set of rate matrices $\rateset$ with separately specified rows, a state assignment $x_u\in\states^u$, and a function $f\in\gambles_\times(\states^{u\cup v})$.}
     \Ensure{$\hat{\underline{\mathbb{E}}}_\rateset^\mathrm{W}[f(x_{t_0},\ldots,x_{t_n},X_{s_0},\ldots,X_{s_m})\,\vert\,X_{t_0}=x_{t_0},\ldots,X_{t_n}=x_{t_n}]$.}
     \Statex
     \Function{ComputeSFSProduct}{$\rateset, x_u, f$}
-		\For{$i\in\{0,\ldots,m\}$}\Comment{Run through all time points}
-		\State $g_i\gets f(X_{t_0},\ldots,X_{t_n},1,\ldots,X_{s_i},\ldots,1)$ \Comment{$g_i$ is restriction of $f$ to $\gambles(\states^{u\cup\{s_i\}})$}% for state assignment $X_{s_j}=1$, for all $j\in\{0,\ldots,m\}\setminus\{i\}$}
-		\State $\hat{\underline{g}}_{\,i}\gets [L_{s_{i-1}}^{s_i}g_i](x_u)$\Comment{Precompute lower expectation of $g_i$}
-		\State $\hat{\overline{g}}_{\,i}\gets -[L_{s_{i-1}}^{s_i}-g_i](x_u)$\Comment{Precompute upper expectation of $g_i$}
-		\EndFor
+%		\For{$i\in\{0,\ldots,m\}$}\Comment{Run through all time points}
+% for state assignment $X_{s_j}=1$, for all $j\in\{0,\ldots,m\}\setminus\{i\}$}
+%		\State $\hat{\underline{g}}_{\,i}\gets [L_{s_{i-1}}^{s_i}g_i](x_u)$\Comment{Precompute lower expectation of $g_i$}
+	%	\State $\hat{\overline{g}}_{\,i}\gets -[L_{s_{i-1}}^{s_i}-g_i](x_u)$\Comment{Precompute upper expectation of $g_i$}
+%		\EndFor
       \State $\hat{\underline{f}}\gets 1$\Comment{Partial solution starts with empty product}
 		\State $z \gets \text{``low"}$\Comment{Flag indicating lower or upper expectation}
 		\For{$i=m\to 0$}\Comment{Run through time points, from latest to earliest}
-		\State $\hat{g}_i\gets 0$\Comment{Decide whether to use lower or upper}
-		\If{$z=\text{``low"}$}
-			\State $\hat{g}_i\gets \hat{\underline{g}}_i$
+		\State $g_i\gets f(X_{t_0},\ldots,X_{t_n},1,\ldots,X_{s_i},\ldots,1)$ \Comment{$g_i$ is restriction of $f$ to $\gambles(\states^{u\cup\{s_i\}})$}
+		\State $\hat{g}_i\gets 0$\Comment{Buffer for expectation}
+		\If{$z=\text{``low"}$}\Comment{Check whether to compute lower or upper}
+			\State $\hat{g}_i\gets [L_{s_{i-1}}^{s_i}g_i](x_u)$\Comment{Compute lower expectation}
 		\ElsIf{$z=\text{``up"}$}
-			\State $\hat{g}_i\gets \hat{\overline{g}}_i$
+			\State $\hat{g}_i\gets -[L_{s_{i-1}}^{s_i}(-g_i)](x_u)$\Comment{Compute upper expectation}
 		\EndIf
 		\State $\hat{\underline{f}}\gets\hat{\underline{f}}\cdot\hat{g}_i$\Comment{Multiply with partial solution}
-		\If{$\hat{g}_i<0$}\Comment{If current was negative, we should switch}
+		\If{$\hat{g}_i<0$}\Comment{If expectation was negative, we should switch}
 			\If{$z=\text{``low"}$}
 				\State $z\gets \text{``up"}$
 			\ElsIf{$z=\text{``up"}$}
