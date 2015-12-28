@@ -13,6 +13,9 @@
 \usepackage{tikz}
 \usepackage{nicefrac}
 \usepackage{bm}
+\usepackage{algorithm}
+\usepackage{algorithmicx}
+\usepackage{algpseudocode}
 %\usepackage{hyperref}
 %\usepackage{pdfsync}
 %\usepackage{authblk}
@@ -28,6 +31,9 @@
 \newtheorem{definition}{Definition}
 \newtheorem{remark}{Remark}
 \newtheorem*{remark*}{Remark}
+
+\algrenewcommand\algorithmicrequire{\textbf{Input:}}
+\algrenewcommand\algorithmicensure{\textbf{Output:}}
 
 % - macros
 
@@ -1443,19 +1449,92 @@ Consider any $t,s,s'\in\realsnonneg$ such that $t<s<s'$, and let $\rateset$ be a
 
 *** We gaan nu laten zien hoe dingen berekenbaar zijn door compositie van onder-transitie operatoren ***
 
-*** Neem aan dat we een methode hebben om voor gegeven $f\in\gamblesX$, de term $\hat{f}_t^s :\approx L_t^sf$ numeriek uit te rekenen, of te benaderen tot arbitraire precisie. Bijvoorbeeld, gebruik de methode van Damjan. Noteer de complexiteit van deze methode als $\mathcal{O}(c)$.
+*** Neem aan dat we een methode hebben om voor gegeven $f\in\gamblesX$, de term $\hat{f}_t^s :\approx L_t^sf$ numeriek uit te rekenen, of te benaderen tot arbitraire precisie. Bijvoorbeeld, gebruik de methode van Damjan. Noteer de complexiteit van deze methode als $O(c)$.
 
 \begin{exmp}
 *** Voorbeeld dat uitrekenen voor arbitraire $f\in\gambles(\states^{u\cup v})$ exponentieel moeilijk is. \exampleend
 \end{exmp}
 
-*** Introductie subclasse van $f\in\gambles(\states^{u\cup v})$: sommen van een-variabele functies
+\begin{remark*}
+*** Merk op dat uitrekenen voor arbitraire $f\in\gambles(\states^{u\cup \{s\}})$ ook exponentieel moeilijk is, maar alleen als je dat voor alle $x_u$ wil doen. In dat geval is de functie sowieso problematisch, maar dat heeft niks met verwachtingswaardes te maken. We nemen dus aan dat ofwel $n$ klein genoeg is dat dit niet vervelend is, of dat we het maar voor een of enkele waarden $x_n$ willen doen. In het bijzonder is het geen probleem als we vanuit tijdstip 0 vertrekken, dwz, de initiele state. \exampleend
+\end{remark*}
 
-*** Introductie subclasse van $f\in\gambles(\states^{u\cup v})$: producten van een-variabele functies
+*** er zijn subklasses van functies waarvoor het uitrekenen lineair is in $m$
 
-*** methode 1: uitrekenen van som-klasse
+\begin{definition}[Single-Future-State Sum Functions]
+Consider any $u\coloneqq t_0,\ldots,t_n$ and any $v\coloneqq s_0,\ldots,s_m$. A function $f\in\gambles(\states^{u\cup v})$ is called a \emph{single-future-state sum function} if there exist functions $g_0,\ldots,g_m$ such that $g_i\in\gambles(\states^{u\cup\{s_i\}})$, $i\in\{0,\ldots,m\}$, and such that, for all $x_u\in\states^u$ and all $x_v\in\states^v$,
+\begin{equation*}
+f(x_{t_0},\ldots,x_{t_n},x_{s_0},\ldots,x_{s_m}) = \sum_{i=0}^m g_i(x_{t_0},\ldots,x_{t_n},x_{s_i})\,.
+\end{equation*}
+We use $\gambles_+(\states^{u\cup v})\subset\gambles(\states^{u\cup v})$ to denote the set of all single-future-state sum functions on $\states^{u\cup v}$.
+\end{definition}
 
-*** laten zien dat methode inderdaad correct antwoord geeft (misschien als methode om $\hat{f}_t^s$ uit te rekenen een benadering is, de fout van de methode afschatten?)
+\begin{definition}[Single-Future-State Product Functions]
+Consider any $u\coloneqq t_0,\ldots,t_n$ and any $v\coloneqq s_0,\ldots,s_m$. A function $f\in\gambles(\states^{u\cup v})$ is called a \emph{single-future-state product function} if there exist functions $g_0,\ldots,g_m$ such that $g_i\in\gambles(\states^{u\cup\{s_i\}})$, $i\in\{0,\ldots,m\}$, and such that, for all $x_u\in\states^u$ and all $x_v\in\states^v$,
+\begin{equation*}
+f(x_{t_0},\ldots,x_{t_n},x_{s_0},\ldots,x_{s_m}) = \prod_{i=0}^m g_i(x_{t_0},\ldots,x_{t_n},x_{s_i})\,.
+\end{equation*}
+We use $\gambles_\times(\states^{u\cup v})\subset\gambles(\states^{u\cup v})$ to denote the set of all single-future-state product functions on $\states^{u\cup v}$.
+\end{definition}
+
+*** opmerking dat ze misschien vrij specifiek lijken, maar dat veel praktisch gebruikte dingen daar wel inzitten; veel utility/loss-functies zijn lineair, de GBR zit daarin, misschien nog wat andere voorbeelden (referenties zijn wel boeiend hier)
+
+\begin{algorithm}[H]
+  \caption{Numerically compute lower expectation of $f\in\gambles_+(\states^{u\cup v}).$
+    \label{alg:compute_singlestate_sum}}
+  \begin{algorithmic}[1]
+    \Require{Non-empty, bounded set of rate matrices $\rateset$ with separately specified rows, state assignment $x_u\in\states^u$, and $m$ functions $g_i\in\gambles(\states^{u\cup\{s_i\}})$.}
+    \Ensure{$\hat{\underline{\mathbb{E}}}_\rateset^\mathrm{W}[f(x_{t_0},\ldots,x_{t_n},X_{s_0},\ldots,X_{s_m})\,\vert\,X_{t_0}=x_{t_0},\ldots,X_{t_n}=x_{t_n}]$, where $f=\sum_{i=0}^m g_i$.}
+    \Statex
+    \Function{ComputeSFSSum}{$\rateset, x_u, g_0,\ldots,g_m$}
+      \State $\hat{f}\gets 0$
+		\For{$i\in\{0,\ldots,m\}$}
+		\State $\hat{g}_i\gets [L_{s_{i-1}}^{s_i}g_i](x_u)$
+		\State $\hat{f}\gets\hat{f} + \hat{g}_i$
+		\EndFor
+      \State \Return{$\hat{f}$}
+    \EndFunction
+  \end{algorithmic}
+\end{algorithm}
+
+
+
+\begin{lemma}
+*** proper setup
+
+Consider any $f\in\gambles_+(\states^{u\cup v})$ such that $f=\sum_{i=0}^m g_i$, and let $f'\coloneqq \sum_{i=0}^{m-1} g_i$. Then,
+\begin{align*}
+ &\quad \underline{\mathbb{E}}_\rateset^\mathrm{W}[f(x_{t_0},\ldots,x_{t_n},X_{s_0},\ldots,X_{s_m})\,\vert\,X_{t_0}=x_{t_0},\ldots,X_{t_n}=x_{t_n}] \\
+ &= \left[L_{t_n}^{s_0}L_{s_0}^{s_1}\cdots L_{s_{m-1}}^{s_m}f\right](x_{t_0},\ldots,x_{t_n}) \\
+ &= \left[L_{t_n}^{s_0}L_{s_0}^{s_1}\cdots L_{s_{m-2}}^{s_{m-1}}f' \right](x_{t_0},\ldots,x_{t_n}) + \left[L_{s_{m-1}}^{s_m}g_m\right](x_{t_0},\ldots,x_{t_n})\,.
+\end{align*}
+\end{lemma}
+\begin{proof}
+*** {\bf TODO}, but trivial.
+\end{proof}
+
+\begin{proposition}
+*** proper setup
+
+Consider any $f\in\gambles_+(\states^{u\cup v})$ such that $f=\sum_{i=0}^m g_i$. For notational convenience, let $s_{(-1)}\coloneqq t_n$. Then,
+\begin{align*}
+ &\quad \underline{\mathbb{E}}_\rateset^\mathrm{W}[f(x_{t_0},\ldots,x_{t_n},X_{s_0},\ldots,X_{s_m})\,\vert\,X_{t_0}=x_{t_0},\ldots,X_{t_n}=x_{t_n}] \\
+ &= \left[L_{t_n}^{s_0}L_{s_0}^{s_1}\cdots L_{s_{m-1}}^{s_m}f\right](x_{t_0},\ldots,x_{t_n}) \\
+ &= \sum_{i=0}^m \left[L_{s_{i-1}}^{s_i}g_i\right](x_{t_0},\ldots,x_{t_n}) \\
+ &\approx \sum_{i=0}^m \hat{g}_i(x_{t_0},\ldots,x_{t_n})\,,
+\end{align*}
+where $\hat{g}_i:\!\approx L_{s_{i-1}}^{s_i}g_i$ is the numerical result of computing $L_{s_{i-1}}^{s_i}g_i$.
+\end{proposition}
+\begin{proof}
+Trivial consequence of Lemma~{\bf REF} and backward induction on $m$.
+\end{proof}
+
+\begin{corollary}
+Algorithm~\ref{alg:compute_singlestate_sum} correctly computes the lower expectation of any single-future-state sum function $f\in\gambles_+(\states^{u\cup v})$ with respect to the set $\wprocesses_\rateset$, in time complexity $O(mc)$. If the numerical method to compute $L_{s_{i-1}}^{s_i}g_i$ is an approximation with error at most $\epsilon$, then the output of Algorithm~\ref{alg:compute_singlestate_sum} is an approximation of this lower expectation with error at most $m\cdot\epsilon$.
+\end{corollary}
+\begin{proof}
+*** Correctness and complexity are trivial. Approximation error needs to be properly defined first (do this).
+\end{proof}
 
 *** methode 2: uitrekenen van product-klasse
 
