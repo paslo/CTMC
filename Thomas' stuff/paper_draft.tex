@@ -1483,20 +1483,20 @@ We use $\gambles_\times(\states^{u\cup v})\subset\gambles(\states^{u\cup v})$ to
   \caption{Numerically compute lower expectation of $f\in\gambles_+(\states^{u\cup v}).$
     \label{alg:compute_singlestate_sum}}
   \begin{algorithmic}[1]
-    \Require{Non-empty, bounded set of rate matrices $\rateset$ with separately specified rows, state assignment $x_u\in\states^u$, and $m$ functions $g_i\in\gambles(\states^{u\cup\{s_i\}})$.}
-    \Ensure{$\hat{\underline{\mathbb{E}}}_\rateset^\mathrm{W}[f(x_{t_0},\ldots,x_{t_n},X_{s_0},\ldots,X_{s_m})\,\vert\,X_{t_0}=x_{t_0},\ldots,X_{t_n}=x_{t_n}]$, where $f=\sum_{i=0}^m g_i$.}
+    \Require{A non-empty, bounded set of rate matrices $\rateset$ with separately specified rows, a state assignment $x_u\in\states^u$, and a function $f\in\gambles_+(\states^{u\cup v})$.}
+    \Ensure{$\hat{\underline{\mathbb{E}}}_\rateset^\mathrm{W}[f(x_{t_0},\ldots,x_{t_n},X_{s_0},\ldots,X_{s_m})\,\vert\,X_{t_0}=x_{t_0},\ldots,X_{t_n}=x_{t_n}]$.}
     \Statex
-    \Function{ComputeSFSSum}{$\rateset, x_u, g_0,\ldots,g_m$}
-      \State $\hat{f}\gets 0$
-		\For{$i\in\{0,\ldots,m\}$}
-		\State $\hat{g}_i\gets [L_{s_{i-1}}^{s_i}g_i](x_u)$
-		\State $\hat{f}\gets\hat{f} + \hat{g}_i$
+    \Function{ComputeSFSSum}{$\rateset, x_u, f$}
+      \State $\hat{\underline{f}}\gets 0$\Comment{Partial solution starts with empty sum}
+		\For{$i\in\{0,\ldots,m\}$}\Comment{Run through all time points}
+		\State $g_i\gets f(X_{t_0},\ldots,X_{t_n},1,\ldots,X_{s_i},\ldots,1)$ \Comment{$g_i$ is restriction of $f$ to $\gambles(\states^{u\cup\{s_i\}})$}% for state assignment $X_{s_j}=1$, for all $j\in\{0,\ldots,m\}\setminus\{i\}$}
+		\State $\hat{\underline{g}}_{\,i}\gets [L_{s_{i-1}}^{s_i}g_i](x_u)$\Comment{Compute lower expectation of $g_i$}
+		\State $\hat{\underline{f}}\gets\hat{\underline{f}} + \hat{\underline{g}}_{\,i}$\Comment{Add to partial solution}
 		\EndFor
-      \State \Return{$\hat{f}$}
+      \State \Return{$\hat{\underline{f}}$}\Comment{Return lower expectation}
     \EndFunction
   \end{algorithmic}
 \end{algorithm}
-
 
 
 \begin{lemma}
@@ -1521,9 +1521,9 @@ Consider any $f\in\gambles_+(\states^{u\cup v})$ such that $f=\sum_{i=0}^m g_i$.
  &\quad \underline{\mathbb{E}}_\rateset^\mathrm{W}[f(x_{t_0},\ldots,x_{t_n},X_{s_0},\ldots,X_{s_m})\,\vert\,X_{t_0}=x_{t_0},\ldots,X_{t_n}=x_{t_n}] \\
  &= \left[L_{t_n}^{s_0}L_{s_0}^{s_1}\cdots L_{s_{m-1}}^{s_m}f\right](x_{t_0},\ldots,x_{t_n}) \\
  &= \sum_{i=0}^m \left[L_{s_{i-1}}^{s_i}g_i\right](x_{t_0},\ldots,x_{t_n}) \\
- &\approx \sum_{i=0}^m \hat{g}_i(x_{t_0},\ldots,x_{t_n})\,,
+ &\approx \sum_{i=0}^m \hat{\underline{g}}_{\,i}(x_{t_0},\ldots,x_{t_n})\,,
 \end{align*}
-where $\hat{g}_i:\!\approx L_{s_{i-1}}^{s_i}g_i$ is the numerical result of computing $L_{s_{i-1}}^{s_i}g_i$.
+where $\hat{\underline{g}}_{\,i}:\!\approx L_{s_{i-1}}^{s_i}g_i$ is the numerical result of computing $L_{s_{i-1}}^{s_i}g_i$.
 \end{proposition}
 \begin{proof}
 Trivial consequence of Lemma~{\bf REF} and backward induction on $m$.
@@ -1536,9 +1536,75 @@ Algorithm~\ref{alg:compute_singlestate_sum} correctly computes the lower expecta
 *** Correctness and complexity are trivial. Approximation error needs to be properly defined first (do this).
 \end{proof}
 
-*** methode 2: uitrekenen van product-klasse
+*** we now move on to single-future-state product functions. we use the following (backward) induction step
 
-*** laten zien dat methode inderdaad correct antwoord geeft (misschien als methode om $\hat{f}_t^s$ uit te rekenen een benadering is, de fout van de methode afschatten?)
+\begin{lemma}\label{lem:single_future_state_product_factorizes}
+*** proper setup
+
+Consider any $f\in\gambles_\times(\states^{u\cup v})$ such that $f=\prod_{i=0}^m g_i$, and let $f'\coloneqq \prod_{i=0}^{m-1} g_i$. Then, if $[L_{s_{m-1}}^{s_m}g_m](x_{t_0},\ldots,x_{t_n})\geq 0$,
+\begin{align*}
+&\quad \underline{\mathbb{E}}_\rateset^\mathrm{W}[f(x_{t_0},\ldots,x_{t_n},X_{s_0},\ldots,X_{s_m})\,\vert\,X_{t_0}=x_{t_0},\ldots,X_{t_n}=x_{t_n}] \\
+ &= [L_{s_{m-1}}^{s_m}g_m](x_{t_0},\ldots,x_{t_n})\cdot\underline{\mathbb{E}}_\rateset^\mathrm{W}\left[ f'(x_{t_0},\ldots,t_n,X_{s_0},\ldots,X_{s_{m-1}})\,\Big\vert\,X_{t_0}=x_{t_0},\ldots,X_{t_n}=x_{t_n}\right]\,,
+\end{align*}
+and, if $[L_{s_{m-1}}^{s_m}g_m](x_{t_0},\ldots,x_{t_n})<0$, 
+\begin{align*}
+&\quad \underline{\mathbb{E}}_\rateset^\mathrm{W}[f(x_{t_0},\ldots,x_{t_n},X_{s_0},\ldots,X_{s_m})\,\vert\,X_{t_0}=x_{t_0},\ldots,X_{t_n}=x_{t_n}] \\
+ &= -[L_{s_{m-1}}^{s_m}g_m](x_{t_0},\ldots,x_{t_n})\cdot\underline{\mathbb{E}}_\rateset^\mathrm{W}\left[ -f'(x_{t_0},\ldots,t_n,X_{s_0},\ldots,X_{s_{m-1}})\,\Big\vert\,X_{t_0}=x_{t_0},\ldots,X_{t_n}=x_{t_n}\right] \\
+ &= [L_{s_{m-1}}^{s_m}g_m](x_{t_0},\ldots,x_{t_n})\cdot\overline{\mathbb{E}}_\rateset^\mathrm{W}\left[f'(x_{t_0},\ldots,t_n,X_{s_0},\ldots,X_{s_{m-1}})\,\Big\vert\,X_{t_0}=x_{t_0},\ldots,X_{t_n}=x_{t_n}\right] \,,
+\end{align*}
+where $\overline{\mathbb{E}}_\rateset^\mathrm{W}$ is the upper expectation with respect to $\wprocesses_\rateset$, as defined by {\bf REF}.
+\end{lemma}
+
+\begin{proposition}
+*** {\bf TODO:} proper proof of induction for product case
+\end{proposition}
+\begin{proof}
+*** todo
+\end{proof}
+
+\begin{corollary}
+Algorithm~\ref{alg:compute_singlestate_prod} correctly computes the lower expectation of any single-future-state product function $f\in\gambles_\times(\states^{u\cup v})$ with respect to the set $\wprocesses_\rateset$, in time complexity $O(mc)$. If the numerical method to compute $L_{s_{i-1}}^{s_i}g_i$ is an approximation with error at most $\epsilon$, then the output of Algorithm~\ref{alg:compute_singlestate_prod} is an approximation of this lower expectation with error at most {\bf TODO}.
+\end{corollary}
+\begin{proof}
+*** Complexity is trivial. Correctness is also trivial (once we have the proposition for induction). Approximation error needs to be properly defined first (do this), and we need to figure out what it is.
+\end{proof}
+
+\begin{algorithm}[H]
+  \caption{Numerically compute lower expectation of $f\in\gambles_\times(\states^{u\cup v}).$ {\bf ATTN:} I know it's a bit verbose, and can be made a lot shorter. Not sure if that would improve the clarity though.
+    \label{alg:compute_singlestate_prod}}
+  \begin{algorithmic}[1]
+    \Require{A non-empty, bounded set of rate matrices $\rateset$ with separately specified rows, a state assignment $x_u\in\states^u$, and a function $f\in\gambles_\times(\states^{u\cup v})$.}
+    \Ensure{$\hat{\underline{\mathbb{E}}}_\rateset^\mathrm{W}[f(x_{t_0},\ldots,x_{t_n},X_{s_0},\ldots,X_{s_m})\,\vert\,X_{t_0}=x_{t_0},\ldots,X_{t_n}=x_{t_n}]$.}
+    \Statex
+    \Function{ComputeSFSProduct}{$\rateset, x_u, f$}
+		\For{$i\in\{0,\ldots,m\}$}\Comment{Run through all time points}
+		\State $g_i\gets f(X_{t_0},\ldots,X_{t_n},1,\ldots,X_{s_i},\ldots,1)$ \Comment{$g_i$ is restriction of $f$ to $\gambles(\states^{u\cup\{s_i\}})$}% for state assignment $X_{s_j}=1$, for all $j\in\{0,\ldots,m\}\setminus\{i\}$}
+		\State $\hat{\underline{g}}_{\,i}\gets [L_{s_{i-1}}^{s_i}g_i](x_u)$\Comment{Precompute lower expectation of $g_i$}
+		\State $\hat{\overline{g}}_{\,i}\gets -[L_{s_{i-1}}^{s_i}-g_i](x_u)$\Comment{Precompute upper expectation of $g_i$}
+		\EndFor
+      \State $\hat{\underline{f}}\gets 1$\Comment{Partial solution starts with empty product}
+		\State $z \gets \text{``low"}$\Comment{Flag indicating lower or upper expectation}
+		\For{$i=m\to 0$}\Comment{Run through time points, from latest to earliest}
+		\State $\hat{g}_i\gets 0$\Comment{Decide whether to use lower or upper}
+		\If{$z=\text{``low"}$}
+			\State $\hat{g}_i\gets \hat{\underline{g}}_i$
+		\ElsIf{$z=\text{``up"}$}
+			\State $\hat{g}_i\gets \hat{\overline{g}}_i$
+		\EndIf
+		\State $\hat{\underline{f}}\gets\hat{\underline{f}}\cdot\hat{g}_i$\Comment{Multiply with partial solution}
+		\If{$\hat{g}_i<0$}\Comment{If current was negative, we should switch}
+			\If{$z=\text{``low"}$}
+				\State $z\gets \text{``up"}$
+			\ElsIf{$z=\text{``up"}$}
+				\State $z\gets \text{``low"}$
+			\EndIf
+		\EndIf
+		\EndFor
+      \State \Return{$\hat{\underline{f}}$}\Comment{Return lower expectation}
+    \EndFunction
+  \end{algorithmic}
+\end{algorithm}
+
 
 \section{Conclusions \& Future Work}\label{sec:conclusions}
 
@@ -2723,6 +2789,23 @@ The proof is then finished by backward induction on $m$.
 
 \begin{proof}[Proof of Corollary~\ref{cor:inf_works_for_multivar}]
 This is a direct consequence of Propositions~\ref{prop:multivar_bounded} and \ref{prop:multivar_bound_tight}.
+\end{proof}
+
+\begin{proof}[Proof of Lemma~\ref{lem:single_future_state_product_factorizes}]
+In the first case, where $[L_{s_{m-1}}^{s_m}g_m](x_{t_0},\ldots,x_{t_n})$ is positive, the equality follows from Corollary~\ref{cor:inf_works_for_multivar} and positive homogeneity of $\underline{\mathbb{E}}$.
+
+{\bf ATTN} the below can be done a lot simpler, just use $-1\cdot-1=1$
+
+In the second case, where $[L_{s_{m-1}}^{s_m}g_m](x_{t_0},\ldots,x_{t_n})$ is negative, we have the following derivation.
+\begin{align*}
+&\quad \underline{\mathbb{E}}_\rateset^\mathrm{W}[f(x_{t_0},\ldots,x_{t_n},X_{s_0},\ldots,X_{s_m})\,\vert\,X_{t_0}=x_{t_0},\ldots,X_{t_n}=x_{t_n}] \\
+ &= \underline{\mathbb{E}}_\rateset^\mathrm{W}\left[[L_{s_{m-1}}^{s_m}g_m](x_{t_0},\ldots,x_{t_n})\cdot f'(x_{t_0},\ldots,t_n,X_{s_0},\ldots,X_{s_{m-1}})\,\Big\vert\,X_{t_0}=x_{t_0},\ldots,X_{t_n}=x_{t_n}\right] \\
+ &= -\overline{\mathbb{E}}_\rateset^\mathrm{W}\left[-[L_{s_{m-1}}^{s_m}g_m](x_{t_0},\ldots,x_{t_n})\cdot f'(x_{t_0},\ldots,t_n,X_{s_0},\ldots,X_{s_{m-1}})\,\Big\vert\,X_{t_0}=x_{t_0},\ldots,X_{t_n}=x_{t_n}\right] \\
+ &= -\left(-[L_{s_{m-1}}^{s_m}g_m](x_{t_0},\ldots,x_{t_n})\right)\cdot\overline{\mathbb{E}}_\rateset^\mathrm{W}\left[ f'(x_{t_0},\ldots,t_n,X_{s_0},\ldots,X_{s_{m-1}})\,\Big\vert\,X_{t_0}=x_{t_0},\ldots,X_{t_n}=x_{t_n}\right] \\
+ &= [L_{s_{m-1}}^{s_m}g_m](x_{t_0},\ldots,x_{t_n})\cdot\overline{\mathbb{E}}_\rateset^\mathrm{W}\left[ f'(x_{t_0},\ldots,t_n,X_{s_0},\ldots,X_{s_{m-1}})\,\Big\vert\,X_{t_0}=x_{t_0},\ldots,X_{t_n}=x_{t_n}\right] \\
+ &= -[L_{s_{m-1}}^{s_m}g_m](x_{t_0},\ldots,x_{t_n})\cdot\underline{\mathbb{E}}_\rateset^\mathrm{W}\left[ -f'(x_{t_0},\ldots,t_n,X_{s_0},\ldots,X_{s_{m-1}})\,\Big\vert\,X_{t_0}=x_{t_0},\ldots,X_{t_n}=x_{t_n}\right] \,,
+\end{align*}
+The first equality follows from Corollary~\ref{cor:inf_works_for_multivar}. The second equality follows from the conjugacy relation $\underline{\mathbb{E}}[\cdot\,\vert\,\cdot]=-\overline{\mathbb{E}}[-\cdot\,\vert\,\cdot]$. The third equality follows from positive homogeneity of $\overline{\mathbb{E}}$ and the fact that $[L_{s_{m-1}}^{s_m}g_m](x_{t_0},\ldots,x_{t_n})$ is negative. The fourth equality simply cancels out the negative multipliers. The final equality again follows from the conjugacy between $\overline{\mathbb{E}}$ and $\underline{\mathbb{E}}$.
 \end{proof}
 
 \end{document}
