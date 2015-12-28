@@ -251,10 +251,9 @@ To avoid introducing overly complex notation, we will stipulate the following co
 
 \subsection{Toward Stochastic Processes}\label{sec:cond_prob}
 
-We will in Section~\ref{sec:stochastic_processes} define continuous-time stochastic processes using the framework of full conditional probabilities, which we describe here. Such a stochastic process is a construct that moves through the state space $\states$ over a continuous time line $\realsnonneg$. A specific realization or instance of this behavior will be called a path or a trajectory. The stochasticity of the process is quantified using a probability measure on a set of events, which describe specific (combinations of) states in which the process can be at certain time points. These ideas are formalized as follows.
+We will in Section~\ref{sec:stochastic_processes} define continuous-time stochastic processes using the framework of full conditional probabilities, which we describe here. 
 
-A \emph{path} $\omega$ is a cadlag function from $\realsnonneg$ to $\states$, where cadlag means that it is right continuous for all $t\in\realsnonneg$ and that the left limit exists for all $t\in\realspos$. Let $\paths$ be the set of all paths. For any path $\omega\in\paths$ and any time point $t\in\realsnonneg$, the value of $\omega$ in $t$ is denoted by $\omega(t)$.
-A subset $E$ of $\paths$ is called an \emph{event}. The set of all events is denoted by $\power$ and we let $\nonemptypower\coloneqq\power\setminus\{\emptyset\}$. 
+Consider some arbitrary random experiment, with some (possibly infinite) \emph{possibility space} $\Omega$. An element $\omega\in\Omega$ of this set is then interpreted as one possible outcome of the random experiment. In order to describe multiple possible outcomes simultaneously, we use the notion of \emph{events}. Such an event $E$ is a subset of $\Omega$. We use $\power$ to denote the set of all events, and let $\nonemptypower\coloneqq\power\setminus\{\emptyset\}$. A full conditional probability measure $P$ is then a map from the set $\power\times\nonemptypower$ of all (conditional) events to $\reals$ that quantifies the uncertainty of the outcomes of the random experiment, as follows.
 
 \begin{definition}[Full conditional probability]\label{def:cond_prob}
 A full conditional probability $P$ is a real-valued map from $\power\times\nonemptypower$ to $\reals$ that satisfies the following axioms. For all $A,B\in\power$ and all \mbox{$C,D\in\nonemptypower$}:
@@ -368,11 +367,14 @@ Consider any transition matrix $T$, and any $\Delta\in\realspos$. Then, the matr
 
 \section{Continuous-Time Stochastic Processes}\label{sec:stochastic_processes}
 
-We will now formalize the notion of continuous-time stochastic processes. Next, in Section~\ref{sec:well_behaved}, we describe a specific subclass of stochastic processes, which we call well-behaved, and on which we will largely focus throughout this work. Finally, Section~\ref{sec:dynamics} provides some tools with which we can describe the dynamics of stochastic processes.
+We will in this section start by formalizing the notion of continuous-time stochastic processes. Next, in Section~\ref{sec:well_behaved}, we describe a specific subclass of stochastic processes, which we call well-behaved, and on which we will largely focus throughout this work. Finally, Section~\ref{sec:dynamics} provides some tools with which we can describe the dynamics of stochastic processes.
 
-We will restrict our definition of continuous-time stochastic processes to \emph{finitely additive} stochastic processes, meaning that the events on which they are defined contain at most a finite---but arbitrary---number of time points. This simplifies considerably the subsequent analysis, and we will see shortly that, when required, the extension to $\sigma$-additive processes can always be made. 
+We start by defining continuous-time stochastic processes. Such a stochastic process is a construct that moves through the state space $\states$ over a continuous time line $\realsnonneg$. A specific realization or instance of this behavior will be called a path or a trajectory. The stochasticity of the process is quantified using a full conditional probability measure on a set of events, which describe specific (combinations of) states in which the process can be at certain time points. These ideas are formalized as follows.
 
-These finitely additive stochastic processes will be defined on a specific subset of the set $\power\times\nonemptypower$ of all (conditional) events, as follows.
+A \emph{path} $\omega$ is a cadlag function from $\realsnonneg$ to $\states$, where cadlag means that it is right continuous for all $t\in\realsnonneg$ and that the left limit exists for all $t\in\realspos$. Let $\paths$ be the set of all paths. For any path $\omega\in\paths$ and any time point $t\in\realsnonneg$, the value of $\omega$ in $t$ is denoted by $\omega(t)$. The set $\Omega$ will form the possibility space for a full conditional probability measure. Hence, an \emph{event} is a subset $E$ of $\paths$. We again denote the set of all events by $\power$ and we let $\nonemptypower\coloneqq\power\setminus\{\emptyset\}$. 
+
+A stochastic process will be defined below as the restriction of a full conditional probability measure to a specific subset of the set $\power\times\nonemptypower$ of all (conditional) events, as follows.
+
 For any $t\in\realsnonneg$ and $x\in\states$, we define the elementary event
 \begin{equation*}
 (X_t=x)\coloneqq\{\omega\in\paths\colon\omega(t)=x\}.
@@ -409,6 +411,8 @@ Let $P$ be a real-valued map from $\mathcal{C}^\mathrm{SP}$ to $\reals$. Then $P
 \begin{proof}
 Trivial consequence of Theorem~\ref{theo:coherentextendable}.
 \end{proof}
+
+Because Definition~\ref{def:cond_prob} only covered finitely additive full conditional probability measures, this also restricts our definition of stochastic processes to finitely additive stochastic processes. The advantage is that this simplifies considerably the subsequent analysis, and, as shown below, the extension to a $\sigma$-additive stochastic process can always be made when this is required.
 
 *** explain that $\sigma$-additivity is not required ***
 
