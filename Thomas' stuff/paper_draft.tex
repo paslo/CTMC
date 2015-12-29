@@ -255,7 +255,7 @@ To avoid introducing overly complex notation, we will stipulate the following co
 \left[Af\right](x_{t_0},\ldots,x_{t_{n-1}}) \equiv \left[A f(x_{t_0},\ldots,x_{t_{n-1}},X_{t_n})\right](x_{t_{n-1}})\,.
 \end{equation*}
 
-\subsection{Toward Stochastic Processes}\label{sec:cond_prob}
+\subsection{Full Conditional Probabilities}\label{sec:cond_prob}
 
 We will in Section~\ref{sec:stochastic_processes} define continuous-time stochastic processes using the framework of full conditional probabilities, which we describe here. 
 
@@ -265,15 +265,15 @@ Consider some arbitrary random experiment, with some (possibly infinite) \emph{p
 A full conditional probability $P$ is a real-valued map from $\power\times\nonemptypower$ to $\reals$ that satisfies the following axioms. For all $A,B\in\power$ and all \mbox{$C,D\in\nonemptypower$}:
 \vspace{5pt}
 
-\begin{enumerate}[label=F\arabic*:]
+\begin{enumerate}[label=F\arabic*:,ref=F\arabic*]
 \item
-$P(C\vert C)=1$;
+$P(C\vert C)=1$;\label{def:coh_prob_1}
 \item
-$0\leq P(A\vert C)\leq 1$;
+$0\leq P(A\vert C)\leq 1$;\label{def:coh_prob_2}
 \item
-$P(A\cup B\vert C)=P(A\vert C)+P(B\vert C)$ if $A\cap B=\emptyset$;
+$P(A\cup B\vert C)=P(A\vert C)+P(B\vert C)$ if $A\cap B=\emptyset$;\label{def:coh_prob_3}
 \item
-$P(A\vert C)=P(A\vert D)P(D\vert C)$ if $A\subseteq D\subseteq C$.
+$P(A\vert C)=P(A\vert D)P(D\vert C)$ if $A\subseteq D\subseteq C$.\label{def:coh_prob_4}
 \end{enumerate}
 \vspace{5pt}
 
@@ -294,9 +294,6 @@ with $C_0\coloneqq\cup_{i=1}^nC_i$.
 \begin{theorem}\label{theo:coherentextendable}
 Let $P$ be a real-valued map from $\mathcal{C}\subseteq\power\times\nonemptypower$ to $\reals$. Then $P$ is a coherent conditional probability if and only if it can be extended to a full conditional probability.
 \end{theorem}
-\begin{proof}
-*** REFERENCE ***
-\end{proof}
 
 \begin{corollary}
 Let $P$ be a real-valued map from $\power\times\nonemptypower$ to $\reals$. Then $P$ is a coherent conditional probability if and only if it is a full conditional probability.
@@ -1451,6 +1448,8 @@ Consider any $t,s,s'\in\realsnonneg$ such that $t<s<s'$, and let $\rateset$ be a
 
 *** Neem aan dat we een methode hebben om voor gegeven $f\in\gamblesX$, de term $\hat{f}_t^s :\approx L_t^sf$ numeriek uit te rekenen, of te benaderen tot arbitraire precisie. Bijvoorbeeld, gebruik de methode van Damjan. Noteer de complexiteit van deze methode als $O(c)$.
 
+*** {\bf TODO:} algoritme dat werkt voor arbitraire $f\in\gambles(\states^{u\cup v})$. is dan wel exponentieel, maar de andere algoritmes gebruiken de (de)compositie eigenschappen niet. (misschien trouwens wel, maar dan alleen in bewijs van correctheid. moet dat ff checken). zo niet, dan is de vorige paragraaf eigenlijk een beetje overbodig (als we zeggen dat exponentieel=niet praktisch bruikbaar)...
+
 \begin{exmp}
 *** Voorbeeld dat uitrekenen voor arbitraire $f\in\gambles(\states^{u\cup v})$ exponentieel moeilijk is. \exampleend
 \end{exmp}
@@ -1641,6 +1640,21 @@ Algorithm~\ref{alg:compute_singlestate_prod} correctly computes the lower expect
 
 \begin{proof}[Proof of Proposition~\ref{prop:norm_properties}]
 *** Most are obvious, as that's what it means to be a ``norm''. Others follow trivially from the definitions. Properties~\ref{N:normAB} and \ref{N:normAf} probably require a proof.
+\end{proof}
+
+\begin{proof}[Proof of Theorem~\ref{theo:coherentextendable}]
+We start by proving the ``if" direction; if $P$ can be extended to a full conditional probability, it is a coherent conditional probability on $\mathcal{C}\subseteq\power\times\nonemptypower$. Let $P$ be a map from $\mathcal{C}\subseteq\power\times\nonemptypower$ to $\reals$ such that it has an extension $P^*$ on $\power\times\nonemptypower$ that is a full conditional probability. 
+
+Because events are subsets of $\Omega$, we have that the set $\power$ of all events is the power set of $\Omega$. Hence, $\power$ is an algebra of events. Therefore~\cite{berti1991coherent}, and because $P^*$ satisfies~\ref{def:coh_prob_1}-\ref{def:coh_prob_4}, $P^*$ is a coherent conditional probability on $\power\times\nonemptypower$. Hence {(\bf LEMMA?)}, $P^*$ is coherent on the subset $\mathcal{C}\subseteq\power\times\nonemptypower$. Note that because $P^*$ is an extension of $P$, $P$ and $P^*$ take the same values on $\mathcal{C}$. Therefore, and because $P^*$ is coherent on $\mathcal{C}$, $P$ is also coherent on $\mathcal{C}$. Hence, $P$ is a coherent conditional probability.
+
+We now prove the other direction; if $P$ is coherent on $\mathcal{C}\subseteq\power\times\nonemptypower$, it can be extended to a full conditional probability.
+Let $P$ be a coherent conditional probability on $\mathcal{C}\subseteq\power\times\nonemptypower$. Then, there exists~\cite{berti2002coherent} an extension $P^*$ of $P$ to the set $\power\times\nonemptypower$, such that $P^*$ is a coherent conditional probability.
+
+Recall that $\power$ is an algebra of events. Therefore~\cite{berti1991coherent}, and because $P^*$ is coherent on $\power\times\nonemptypower$, $P^*$ satisfies~\ref{def:coh_prob_1}-\ref{def:coh_prob_4}. Hence, $P^*$ is an extension of $P$ that is a full conditional probability.
+
+*** {\bf some notes:} F1-F4 are not claimed exactly, but are implied by \cite{berti1991coherent}. not sure if we need to show that this holds
+
+furthermore, coherent extendability of $P:\mathcal{C}\to\reals$ to $P^*:\power\times\nonemptypower\to\reals$ is claimed but not proved in \cite{berti2002coherent} (and also, in fact, only to an even larger set. coherence on all conditional events then follows because thats a subset). maybe use one of the references therein, and/or show that it actually works. the latter needs the same lemma that Im too lazy to add right now.
 \end{proof}
 
 \begin{proof}[Proof of Proposition~\ref{prop:stochastic_from_rate_matrix}]
@@ -2398,7 +2412,7 @@ Then, we must have that either $\rateset\subset\rateset_{\lrate}$, or, because $
 
 Because $\rateset$ has separately specified rows, there must therefore be some $x\in\states$ such that $Q(x,\cdot)\notin\rateset_x$, where $\rateset_x\coloneqq\{Q'(x,\cdot)\,:\,Q'\in\rateset\}$. Because $\rateset$ is non-empty, bounded, closed, convex, and has separately specified rows, it follows from Lemma~\ref{lemma:rows_nonempty_bounded_closed_convex} that $\rateset_x$ is non-empty, bounded, closed, and convex. 
 
-Note that we can interpret $\rateset_x\subset\reals^m$ as a subset of the vector space $\reals^m$, where $m$ is the size of $\states$. Furthermore, because $\rateset_x$ is closed and bounded, we have that $\rateset_x$ is compact. Because $Q(x\cdot)\notin\rateset_x$, the (non-empty, closed, convex) singleton set $\{Q(x,\cdot)\}$ is clearly disjoint from $\rateset_x$.
+Note that we can interpret $\rateset_x\subset\reals^m$ as a subset of the vector space $\reals^m$, where $m$ is the size of $\states$. Furthermore, because $\rateset_x$ is closed and bounded, we have that $\rateset_x$ is compact. Because $Q(x,\cdot)\notin\rateset_x$, the (non-empty, closed, convex) singleton set $\{Q(x,\cdot)\}$ is clearly disjoint from $\rateset_x$.
 
 Therefore, by the hyperplane separation theorem\footnote{That is, by one of them.} ({\bf REF}), there must be some $f\in\gamblesX$ and some $c_1,c_2\in\reals$, with $c_1<c_2$, such that $Q(x,\cdot)f = [Qf](x) \leq c_1$, and such that, for all $Q'(x,\cdot)\in\rateset_x$, $Q'(x,\cdot)f = [Q'f](x) \geq c_2$.
 
