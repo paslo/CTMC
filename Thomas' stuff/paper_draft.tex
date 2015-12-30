@@ -1642,6 +1642,69 @@ Algorithm~\ref{alg:compute_singlestate_prod} correctly computes the lower expect
 *** Most are obvious, as that's what it means to be a ``norm''. Others follow trivially from the definitions. Properties~\ref{N:normAB} and \ref{N:normAf} probably require a proof.
 \end{proof}
 
+\begin{lemma}
+Let $P$ be any map from $\power\times\nonemptypower$ to $\reals$. Then, $P$ is a full conditional probability if and only if it satisfies
+\begin{enumerate}[label=P\arabic*:,ref=P\arabic*]
+\item $P(\cdot\,\vert\,C)$ is a non-negative, (finitely-)additive function on $\power$, for all $C\in\nonemptypower$;\label{lem:alt_axiom_prob_1}
+\item $P(A\,\vert\,C)=1$ for all $A\in\power$ and $C\in\nonemptypower$ such that $C\subseteq A$;\label{lem:alt_axiom_prob_2}
+\item $P(A\cap D\,\vert\,C)=P(A\,\vert\,D\cap C)P(D\,\vert\,C)$ for all $A\in\power$ and $C,D\cap C\in\nonemptypower$.\label{lem:alt_axiom_prob_3}
+\end{enumerate}
+Note that because $\power$ and $\nonemptypower$ both contain subsets of $\Omega$, the subset and intersection relations in~\ref{lem:alt_axiom_prob_2} and~\ref{lem:alt_axiom_prob_3} are properly defined.
+\end{lemma}
+\begin{proof}
+We start by proving the ``if" direction; if $P$ satisfies~\ref{lem:alt_axiom_prob_1}-\ref{lem:alt_axiom_prob_3}, it is a full conditional probability, i.e., it then satisfies~\ref{def:coh_prob_1}-\ref{def:coh_prob_4}.
+
+Property~\ref{def:coh_prob_1} is immediate from~\ref{lem:alt_axiom_prob_2}. Properties~\ref{def:coh_prob_2} and~\ref{def:coh_prob_3} are together equivalent {\bf (make explicit)} to~\ref{lem:alt_axiom_prob_1}. For property~\ref{def:coh_prob_4}, take any $A\in\power$ and any $C,D\in\nonemptypower$ such that $A\subseteq D\subseteq C$. Then clearly, $A\cap D=A$ and $D\cap C=D$. Hence, it also holds that $D\cap C\in\nonemptypower$. Therefore, by property~\ref{lem:alt_axiom_prob_3}, we have that $P(A\,\vert\,C)=P(A\cap D\,\vert\,C)=P(A\,\vert\,D\cap C)P(D\,\vert\,C)=P(A\,\vert\,D)P(D\,\vert\,C)$, which confirms~\ref{def:coh_prob_4}.
+
+We now prove the other direction; if $P$ satisfies~\ref{def:coh_prob_1}-\ref{def:coh_prob_4}, it also satisfies~\ref{lem:alt_axiom_prob_1}-\ref{lem:alt_axiom_prob_3}.
+
+Property~\ref{lem:alt_axiom_prob_1} is equivalent to properties~\ref{def:coh_prob_2} and~\ref{def:coh_prob_3} {\bf (make explicit)}. For property~\ref{lem:alt_axiom_prob_2}, take any $A\in\power$ and any $C\in\nonemptypower$ such that $C\subseteq A$. Let $B\coloneqq A\setminus C$. Then clearly, $B\in\power$, $B\cup C=A$, and $B\cap C=\emptyset$. Hence, we have $P(A\,\vert\,C)=P(B\cup C\,\vert\,C)$, and by~\ref{def:coh_prob_3}, we have $P(B\cup C\,\vert\,C)=P(B\,\vert\,C)+P(C\,\vert\,C)$. Using properties~\ref{def:coh_prob_1} and~\ref{def:coh_prob_2}, it then follows that $P(B\,\vert\,C)=0$, and furthermore, $P(A\,\vert\,C)=P(B\cup C\,\vert\,C)=1$, confirming~\ref{lem:alt_axiom_prob_2}. 
+
+For property~\ref{lem:alt_axiom_prob_3}, we first show that $P(A\cap C\,\vert\,C) = P(A\,\vert\,C)$ for all $A\in\power$ and all $C\in\nonemptypower$. To show this, take any $A\in\power$, any $C\in\nonemptypower$, and let $B\coloneqq A\setminus(A\cap C)$. Then clearly, $A=B\cup(A\cap C)$ and $B\cap (A\cap C)=\emptyset$. Hence, by~\ref{def:coh_prob_3}, we have
+\begin{align*}
+P(A\,\vert\,C) = P(B\cup(A\cap C)\,\vert\,C)= P(B\,\vert\,C) + P(A\cap C\,\vert\,C).
+\end{align*}
+It remains to show that $P(B\vert\,C)=0$. Note that because $B=A\setminus(A\cap C)$, it follows that $B\cap C=\emptyset$. Therefore, by~\ref{def:coh_prob_3},
+\begin{align*}
+P(B\cup C\,\vert\,C)=P(B\,\vert\,C) + P(C\,\vert\,C) \\
+P(B\cup C\,\vert\,C)=P(B\,\vert\,C) + 1\,,
+\end{align*}
+using~\ref{def:coh_prob_1}. Since $0\leq P(B\,\vert\,C)$ and $P(B\cup C\,\vert\,C)\leq 1$ by~\ref{def:coh_prob_2}, it follows that $P(B\,\vert\,C)=0$. Hence,
+\begin{align*}
+P(A\,\vert\,C) = P(B\cup(A\cap C)\,\vert\,C)= P(B\,\vert\,C) + P(A\cap C\,\vert\,C) = P(A\cap C\,\vert\,C)\,.
+\end{align*}
+
+Now, to prove property~\ref{lem:alt_axiom_prob_3}, take any $A\in\power$ and any $C,D\cap C\in\nonemptypower$. Let $E\coloneqq A\cap D\cap C$, and let $G\coloneqq D\cap C$. Then clearly, $E\subseteq G\subseteq C$. Hence, by~\ref{def:coh_prob_4},
+\begin{align*}
+P(E\,\vert\,C) &= P(E\,\vert\,G)P(G\,\vert\,C) \\
+P(A\cap D\cap C\,\vert\,C) &= P(A\cap D\cap C\,\vert\,D\cap C)P(D\cap C\,\vert\,C)\,.
+\end{align*}
+Using the previously established property, we have that $P(A\cap D\cap C\,\vert\,C)=P(A\cap D\,\vert\,C)$, $P(A\cap D\cap C\,\vert\,D\cap C)=P(A\,\vert\,D\cap C)$, and $P(D\cap C\,\vert\,C)=P(D\,\vert\,C)$. Hence, we find
+\begin{align*}
+P(A\cap D\cap C\,\vert\,C) &= P(A\cap D\cap C\,\vert\,D\cap C)P(D\cap C\,\vert\,C) \\
+P(A\cap D\,\vert\,C) &= P(A\,\vert\,D\cap C)P(D\,\vert\,C)\,,
+\end{align*}
+which proves~\ref{lem:alt_axiom_prob_3}.
+\end{proof}
+
+\begin{definition}
+*** coherent on set
+\end{definition}
+
+\begin{corollary}
+*** if map from subset of conditional events to R is coherent on this subset, it is a coherent conditional probability
+\end{corollary}
+\begin{proof}
+(duh)
+\end{proof}
+
+\begin{lemma}
+if map is coherent on set, then it is also coherent on any subset
+\end{lemma}
+\begin{proof}
+todo
+\end{proof}
+
 \begin{proof}[Proof of Theorem~\ref{theo:coherentextendable}]
 We start by proving the ``if" direction; if $P$ can be extended to a full conditional probability, it is a coherent conditional probability on $\mathcal{C}\subseteq\power\times\nonemptypower$. Let $P$ be a map from $\mathcal{C}\subseteq\power\times\nonemptypower$ to $\reals$ such that it has an extension $P^*$ on $\power\times\nonemptypower$ that is a full conditional probability. 
 
