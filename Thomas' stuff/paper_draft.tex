@@ -1642,9 +1642,6 @@ Algorithm~\ref{alg:compute_singlestate_prod} correctly computes the lower expect
 *** Most are obvious, as that's what it means to be a ``norm''. Others follow trivially from the definitions. Properties~\ref{N:normAB} and \ref{N:normAf} probably require a proof.
 \end{proof}
 
-*** Not sure how I feel about this lemma. It's rather obvious that it's true, but still takes a ton of room to prove properly. If you have a shorter version, feel free to add it.
-
-*** THIS ALREADY SHORTENS IT QUITE A BIT: Additivity implies that $P(A\vert C)+P(A^c\vert C)=P(\Omega\vert C)=1$, where the last equality follows from P2. Combined with non-negativity, this implies that $P(A\vert C)\leq 1$. ***
 \begin{lemma}\label{lemma:alt_axiom_prob}
 Let $P$ be any map from $\power\times\nonemptypower$ to $\reals$. Then, $P$ is a full conditional probability if and only if it satisfies
 \begin{enumerate}[label=P\arabic*:,ref=P\arabic*]
@@ -1657,30 +1654,7 @@ Note that because $\power$ and $\nonemptypower$ both contain subsets of $\Omega$
 \begin{proof}
 We start by proving the ``if" direction; if $P$ satisfies~\ref{lem:alt_axiom_prob_1}-\ref{lem:alt_axiom_prob_3}, it is a full conditional probability, i.e., it then satisfies~\ref{def:coh_prob_1}-\ref{def:coh_prob_4}.
 
-Property~\ref{def:coh_prob_1} is immediate from~\ref{lem:alt_axiom_prob_2}. Furthermore, property~\ref{def:coh_prob_3} is the formal definition of (finite-)additivity from~\ref{lem:alt_axiom_prob_1}. The non-negativity in~\ref{def:coh_prob_2} follows from the non-negativity in~\ref{lem:alt_axiom_prob_1}. To fully prove~\ref{def:coh_prob_2}, it remains to show that for all $A\in\power$ and all $C\in\nonemptypower$, it holds that $P(A\,\vert\,C)\leq 1$. To this end, we first show that if $A\cap C=\emptyset$, then $P(A\,\vert\,C)=0$. To see this, let $B\coloneqq A\cup C$. Then, by~\ref{def:coh_prob_3} (which we have already proved), it holds that
-\begin{align*}
-P(B\,\vert\,C) = P(A\cup C\,\vert\,C) = P(A\,\vert\,C)+P(C\,\vert\,C)\,.
-\end{align*}
-Note that $C\subseteq B$, and, trivially, $C\subseteq C$. Hence, by~\ref{lem:alt_axiom_prob_2}, we find
-\begin{align*}
-P(B\,\vert\,C) &= P(A\cup C\,\vert\,C) = P(A\,\vert\,C)+P(C\,\vert\,C) \\
-1 &= P(A\,\vert\,C) + 1\,,
-\end{align*}
-from which it follows that $P(A\,\vert\,C)=0$, if $A\cap C=\emptyset$. Now, to show that $P(A\,\vert\,C)\leq 1$, take any $A\in\power$ and any $C\in\nonemptypower$. Assume \emph{ex absurdo} that $P(A\,\vert\,C)>1$. Then, clearly, $A\cap C\neq\emptyset$, because otherwise $P(A\,\vert\,C)=0$. Let $B\coloneqq A\setminus (A\cap C)$. Then, $B\cup(A\cap C)=A$ and $B\cap(A\cap C)=\emptyset$, and hence also $B\cap C=\emptyset$. Therefore $P(B\,\vert\,C)=0$, and furthermore,
-\begin{align*}
-P(A\,\vert\,C) &= P(B\cup(A\cap C)\,\vert\,C) \\
- &= P(B\,\vert\,C) + P(A\cap C\,\vert\,C) \\
- &= P(A\cap C\,\vert\,C)\,.
-\end{align*}
-Hence, because $P(A\,\vert\,C)>1$, we also have that $P(A\cap C\,\vert\,C)>1$. Let now $D\coloneqq A\cup C$, and let $G\coloneqq D\setminus(A\cap C)$. Then, $G\cup(A\cap C)=D$, and $G\cap(A\cap C)=\emptyset$. Hence,
-\begin{align*}
-P(D\,\vert\,C) &= P(G\cup(A\cap C)\,\vert\,C) = P(G\,\vert\,C) + P(A\cap C\,\vert\,C)\,,
-\end{align*}
-using~\ref{def:coh_prob_3}. Because $P(G\,\vert\,C)$ is non-negative, and because $P(A\cap C\,\vert\,C)>1$, it follows that $P(G\,\vert\,C)+P(A\cap C\,\vert\,C)>1$. Furthermore, because $D=A\cup C$, we clearly have that $C\subseteq D$. Hence, by~\ref{lem:alt_axiom_prob_2}, we have that $P(D\,\vert\,C)=1$. Thus, we find
-\begin{align*}
-1 = P(D\,\vert\,C) = P(G\,\vert\,C) + P(A\cap C\,\vert\,C) > 1\,,
-\end{align*}
-a contradiction. Hence, $P(A\,\vert\,C)\leq 1$, which finishes the proof of~\ref{def:coh_prob_2}.
+Property~\ref{def:coh_prob_1} is immediate from~\ref{lem:alt_axiom_prob_2}. Furthermore, property~\ref{def:coh_prob_3} is the formal definition of (finite-)additivity from~\ref{lem:alt_axiom_prob_1}. The non-negativity in~\ref{def:coh_prob_2} follows from the non-negativity in~\ref{lem:alt_axiom_prob_1}. To fully prove~\ref{def:coh_prob_2}, it remains to show that for all $A\in\power$ and all $C\in\nonemptypower$, it holds that $P(A\,\vert\,C)\leq 1$. Note that $A\cap A^c=\emptyset$, where $A^c$ denotes the complement of $A$ in $\Omega$. Hence, by~\ref{def:coh_prob_3}, we have $P(A\,\vert\,B)+P(A^c\,\vert\,B)=P(A\cup A^c\,\vert\,B)=P(\Omega\,\vert\,B)=1$, where the last equality follows from~\ref{lem:alt_axiom_prob_2}, since $B\subseteq \Omega$. Hence, by non-negativity of $P(A\,\vert\,B)$ and $P(A^c\,\vert\,B)$, we find that $P(A\,\vert\,B)\leq 1$.
 
 For property~\ref{def:coh_prob_4}, take any $A\in\power$ and any $C,D\in\nonemptypower$ such that $A\subseteq D\subseteq C$. Then clearly, $A\cap D=A$ and $D\cap C=D$. Hence, it also holds that $D\cap C\in\nonemptypower$. Therefore, by property~\ref{lem:alt_axiom_prob_3}, we have that $P(A\,\vert\,C)=P(A\cap D\,\vert\,C)=P(A\,\vert\,D\cap C)P(D\,\vert\,C)=P(A\,\vert\,D)P(D\,\vert\,C)$, which confirms~\ref{def:coh_prob_4}.
 
