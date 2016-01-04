@@ -724,16 +724,42 @@ Consider a Markov chain $P\in\mprocesses$ and let $\mathcal{T}_P$ be the corresp
 
 At this point, we already know that every (well-behaved) Markov chain has a corresponding (well-behaved) transition matrix system. Our next result establishes that the converse is true as well: every (well-behaved) transition matrix system has a corresponding (well-behaved) Markov chain, and for a given initial distribution, this Markov chain is even unique.
 
-\begin{theorem}\label{theo:uniqueMarkovchain}*** only to be touched by Jasper *** 
- Let $p$ be an arbitrary mass function on $\states$ and let $\mathcal{T}$ be a transition matrix system. Then there is a unique Markov chain $P\in\mprocesses$ such that $\mathcal{T}_P=\mathcal{T}$ and $P(X_0)=p(X_0)$ and, if $\mathcal{T}$ is well-behaved, then $P$ is also well-behaved.
+\begin{theorem}\label{theo:uniqueMarkovchain}
+ Let $p$ be an arbitrary mass function on $\states$ and let $\mathcal{T}$ be a transition matrix system. Then there is a unique Markov chain $P\in\mprocesses$ such that $\mathcal{T}_P=\mathcal{T}$ and, for all $y\in\states$, $P(X_0=y)=p(y)$. Furthermore, if $\mathcal{T}$ is well-behaved, then $P$ is also well-behaved.
 \end{theorem}
 \begin{proof}
-Let $\tilde{P}$ be defined by $\tilde{P}(X_0=y)\coloneqq p(y)$ and
+Let
+\begin{multline*}
+\mathcal{C}\coloneqq\{
+(X_s=y,X_u=x_u)
+\colon 
+u\in\mathcal{U}_\emptyset,~s>u,~x_u\in\states^u,~y\in\states
+\}\\
+\cup
+\{
+(X_0=y,X_\emptyset=x_\emptyset)\colon y\in\states
+\}
+\end{multline*}
+and consider a real-valued function $\tilde{P}$ on $\mathcal{C}$ that is defined by 
 \begin{equation*}
-\tilde{P}(X_s=y\vert X_t=x, X_{t_0}=x_{0}, \dots, X_{t_n}=x_{n})\coloneqq T_t^s(x,y).
+\tilde{P}(X_s=y\vert X_u=x_u)
+=
+\tilde{P}(X_s=y\vert X_{t_0}=x_{0}, \dots, X_{t_n}=x_{n})
+\coloneqq
+\begin{cases}
+p(y)&\text{~if $u=\emptyset$}\\
+T_{t_n}^s(x_n,y)&\text{~otherwise}
+\end{cases}
 \end{equation*}
+for all $(X_s=y,X_u=x_u)\in\mathcal{C}$.
 
-We now first prove that $\tilde{P}$ is coherent (*** I still need to write this part ***).
+
+We first prove that $\tilde{P}$ is a coherent conditional probability on $\mathcal{C}$. So consider any $k\in\nats$ and, for all $i\in\{1,\dots,k\}$, choose $(A_i,C_i)=(X_{s_i}=y_i,X_{u_i}=x_{u_i})\in\mathcal{C}$ and $\lambda_i\in\reals$. 
+Since every sequence $u_i$ is finite, there is some finite set $w=\{s_0,s_1,\dots,s_m\}\subset\reals_{\geq0}$ of time points, with $m\in\nats$, such that $0=s_0<s_1<\dots<s_m$ and, for all $i\in\{1,\dots,k\}$, $u_i\subseteq w$ and $s_i\in w$.
+Let $P_w$ be the restriction of $\tilde{P}$ to $\mathcal{C}_w$, with $\mathcal{C}_w$ defined as in Lemma~\ref{lemma:simplechaincoherence}. Then since $P_w$ clearly satisfies the conditions of Lemma~\ref{lemma:simplechaincoherence}, it follows that $P_w$ is a coherent conditional probability. Because of Theorem~\ref{theo:coherentextendable}, this implies that $P_w$ is the restriction to $\mathcal{C}_w$ of some full conditional probability $\tilde{P}_w$.
+
+
+ (*** I still need to write this part ***).
 
 Therefore, and because of Theorem~\ref{theo:coherentextendable}, $\tilde{P}$ can be extended to a full conditional probability $\tilde{P}^*$. If we now let $P$ be the restriction of $\tilde{P}^*$ to $\mathcal{C}^\mathrm{SP}$, then clearly, $P$ is a stochastic process that extends $\tilde{P}$, which implies that $P$ is a Markov chain such that $\mathcal{T}_P=\mathcal{T}$ and $P(X_0)=p(X_0)$. 
 
@@ -743,6 +769,32 @@ The last part (about the well-behavedness) follows trivially from the Markov pro
 
 *** this proof is not finished yet... working on it... ***
 \end{proof}
+
+\begin{lemma}\label{lemma:simplechaincoherence}
+Let $w=\{s_0,s_1,\dots,s_m\}\subset\reals_{\geq0}$ be a finite set of time points, with $m\in\nats_0$, such that $s_0<s_1<\dots<s_m$.
+Let $P_w$ be a real-valued function on
+\begin{equation*}
+\mathcal{C}_w\coloneqq
+\left\{
+(X_{s_j}=y,X_u=x_u)
+\colon 
+j\in\{0,\dots,m\},~
+u=\{s_0,\dots,s_{j-1}\},~
+y\in\states,~
+x_u\in\states^u
+\right\}
+\end{equation*}
+such that, for any $j\in\{0,\dots,m\}$, $u=\{s_0,\dots,s_{j-1}\}$ and $x_u\in\states^u$, $P_w(\cdot\,\vert X_u=x_u)$ is a probability mass function on $\states$. Then $P_w$ is a coherent conditional probability on $\mathcal{C}_w$.
+\end{lemma}
+\begin{proof}
+*** still have to do this ***
+
+\begin{equation*}
+\sup\left\{\sum_{i=1}^n\lambda_i\ind{C_i}(\omega)\bigl(P(A_i\vert C_i)-\ind{A_i}(\omega)\bigr)~\Bigg\vert~\omega\in C_0\right\}\geq0,
+\end{equation*}
+with $C_0\coloneqq\cup_{i=1}^nC_i$.
+\end{proof}
+
 
 Hence, Markov chains---and well-behaved Markov chains in particular---are completely characterised by their transition matrices and their initial distribution. 
 We now focus on a number of special cases.
