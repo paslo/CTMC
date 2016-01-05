@@ -893,67 +893,7 @@ test
 "an empirical transition matrix for non-homogeneous markov chains based on censored observations"
 \end{proof}
 
-*** deze moet nog even goed opgeschreven worden:
-
-\begin{lemma}\label{lemma:nonhomogen_trans_mat_system}
-Let $Q_t$ be a left-continuous, piecewise-constant function that gives for each time point $t\in\realsnonneg$ a rate matrix $Q_t\in\mathcal{R}$, such that $Q_t$ takes different values on at most a finite number of intervals. Specifically, let $Q_t$ be such that there exists some ordered $u\in\mathcal{U}$ with $u=t_0,\ldots,t_n$ and rate matrices $\tilde{Q}_1,\ldots,\tilde{Q}_n\in\mathcal{R}$ such that, for all $t\in\realsnonneg$,
-\begin{equation*}
-Q_t = \tilde{Q}_i\,,\quad\text{if $t\in(t_{i-1},t_{i}]$, for all $i\in\{1,\ldots,n\}$}\,,
-\end{equation*}
-and $Q_t=\tilde{Q}_1$ if $t\leq t_0$, and $Q_t=\tilde{Q}_n$ if $t>t_n$. For notational convenience, let $t_{-1}\coloneqq-1$, $t_{n+1}\coloneqq +\infty$, $\tilde{Q}_0\coloneqq \tilde{Q}_1$, and $\tilde{Q}_{n+1}\coloneqq \tilde{Q}_n$. Then, for all $t\in\realsnonneg$, it holds that
-\begin{equation*}
-Q_t = \tilde{Q}_i\,,\quad\text{if $t\in(t_{i-1},t_i]$, for all $i\in\{0,\ldots,n+1\}$.}
-\end{equation*}
-
-Consider now a family $\mathcal{T}_{Q_t}$ of matrices $T_t^s$, defined recursively for all $t,s\in\realsnonneg$ with $t\leq s$, such that
-\begin{equation*}
-T_t^s \coloneqq \left\{\begin{array}{ll}
-e^{Q_s(s-t)} & \text{if $\bigl(\exists i\in\{0,\ldots,n+1\}\,:\,t,s\in[t_{i-1},t_i]\bigr)$, and} \\
-T_t^{t_{i-1}}T_{t_{i-1}}^s & \text{where $i\in\{1,\ldots,n+1\}$ is such that $s\in(t_{i-1},t_i]$, otherwise.}
-\end{array}\right.
-\end{equation*}
-Then, $\mathcal{T}_{Q_t}$ is a well-behaved transition matrix system.
-\end{lemma}
-\begin{proof}
-For any $T_t^s\in\mathcal{T}_{Q_t}$, it is clear that $T_t^s$ is a transition matrix if $t$ and $s$ coincide on some interval $[t_{i-1},t_i]$, with $i\in\{0,\ldots,n+1\}$, because then $T_t^s=e^{Q_s(s-t)}$. If they do not coincide, say $t\in[t_{i-1},t_i]$ and $s\in[t_{j-1},t_j]$ for some $i,j\in\{0,\ldots,n+1\}$ with $i<j$, by recursion, we find that
-\begin{equation*}
-T_t^s = T_t^{t_i}T_{t_i}^{t_{i+1}}\cdots T_{t_{j-2}}^{t_{j-1}}T_{t_{j-1}}^s\,.
-\end{equation*}
-Note that on the right-hand side of this equality, for each factor $T_a^b$, the time points $a$ and $b$ coincide on some interval, and hence each $T_a^b$ is a transition matrix. Hence, the right-hand side of this equality is a composition of transition matrices, and hence $T_t^s$ is a transition matrix. Therefore, $\mathcal{T}_{Q_t}$ is clearly a family of transition matrices.
-
-Furthermore, it is clear that for any $T_t^t\in\mathcal{T}_{Q_t}$, it holds that $T_t^t=I$, because $t$ and $t$ trivially coincide on some interval, so that we find $T_t^t=e^{Q_t\cdot 0}=I$. Hence, for $\mathcal{T}_{Q_t}$ to be a transition matrix system, it remains to show that all $T_t^s\in\mathcal{T}_{Q_t}$ satisfy Equation~\eqref{eq:transmatrixproduct}.
-
-If $t$ and $s$ coincide on some interval, Equation~\eqref{eq:transmatrixproduct} trivially holds for $T_t^s$. If they do not coincide, a similar factorization as found above yields the same result. Hence, $\mathcal{T}_{Q_t}$ is a transition matrix system. 
-
-It remains to show that $\mathcal{T}_{Q_t}$ is well-behaved, i.e., that it also satisfies Equation~\eqref{eq:wellbehavedtransitionmatrix}.
-Note that in the first limit expression of~\eqref{eq:wellbehavedtransitionmatrix}, for small enough $\Delta$, the time points $t$ and $t+\Delta$ coincide on some interval. On this interval, it holds that there is some $Q\in\rateset$ such that $Q_{t+\Delta}=Q$ for all $\Delta>0$ such that $t$ and $t+\Delta$ coincide. Hence, we find that
-\begin{equation*}
-\lim_{\Delta\to0^+}\frac{1}{\Delta}\norm{T_t^{t+\Delta}-I} = \lim_{\Delta\to0^+}\frac{1}{\Delta}\norm{e^{Q_{t+\Delta}\cdot\Delta}-I} = \lim_{\Delta\to0^+}\frac{1}{\Delta}\norm{e^{Q\cdot\Delta}-I} = \norm{Q} < +\infty\,,
-\end{equation*}
-where the last equality used the well-known derivative of the matrix exponential. Similarly, for the second limit expression of~\eqref{eq:wellbehavedtransitionmatrix}, for small enough $\Delta$, it holds that $t-\Delta$ and $t$ coincide on some interval. Hence
-\begin{equation*}
-\lim_{\Delta\to0^+}\frac{1}{\Delta}\norm{T_{t-\Delta}^{t}-I} = \lim_{\Delta\to0^+}\frac{1}{\Delta}\norm{e^{Q_t\cdot \Delta}-I}=\norm{Q_t}<+\infty\,.
-\end{equation*}
-Therefore, $\mathcal{T}_{Q_t}$ is well-behaved.
-\end{proof}
-
-\begin{theorem}\label{theorem:continuous_rate_matrix_has_process}
-Consider any left-continuous, piecewise-constant function $Q_t$ that gives for each time point $t\in\realsnonneg$ a rate matrix $Q_t\in\mathcal{R}$. Then, there exists a well-behaved continuous-time Markov chain $P\in\wmprocesses$ such that $\mathcal{T}_P=\mathcal{T}_{Q_t}$, where $\mathcal{T}_{Q_t}$ is defined as in Lemma~\ref{lemma:nonhomogen_trans_mat_system}.
-\end{theorem}
-\begin{proof}
-By Lemma~\ref{lemma:nonhomogen_trans_mat_system}, $\mathcal{T}_{Q_t}$ is a well-behaved transition matrix system. Therefore, by Theorem~{\bf REF}, there exists a well-behaved continuous-time Markov chain $P\in\wmprocesses$ such that $\mathcal{T}_P=\mathcal{T}_{Q_t}$.
-\end{proof}
-
-\begin{lemma}
-Let $P\in\wmprocesses$ be such that there exists a left-continuous, piecewise-constant function $Q_t$ such that $\mathcal{T}_P=\mathcal{T}_{Q_t}$, where $\mathcal{T}_{Q_t}$ is defined as in Lemma~\ref{lemma:nonhomogen_trans_mat_system}. Then, for any set of rate matrices $\rateset$ for which it holds that $Q_t\in\rateset$ for all $t\in\realsnonneg$, it holds that $P\in\wmprocesses_\rateset$.
-\end{lemma}
-\begin{proof}
-Note that, by the definition of $\mathcal{T}_{Q_t}$, it holds for all $t\in\realsnonneg$ that $\partial_+T_t^t$ and $\partial_-T_t^t$ exist, and that they satisfy $\partial_+T_t^t,\partial_-T_t^t\in\rateset$. Therefore, and because $P$ is well-behaved, by Corollary~\ref{corol:outersingleton} we have that $\smash{\overline{\partial}}_+T_t^t=\{\partial_+T_t^t\}$ and $\smash{\overline{\partial}}_-T_t^t=\{\partial_-T_t^t\}$. Hence, we find that
-\begin{equation*}
-\smash{\overline{\partial}}T_t^t = \smash{\overline{\partial}}_+T_t^t\cup \smash{\overline{\partial}}_-T_t^t = \{\partial_+T_t^t, \partial_-T_t^t\}\,,
-\end{equation*}
-from which it follows that, for all $t\in\realsnonneg$, it holds that $\smash{\overline{\partial}}T_t^t\subseteq\rateset$. Therefore, by Definition~\ref{def:markov_process_set_new}, we find that $P\in\wmprocesses_\rateset$.
-\end{proof}
+**** Other kinds of continuous-time non-homogeneous Markov chains also exist. For example, Proposition~\ref{prop:continuous_rate_matrix_has_process} in the appendix describes the existence of a $P\in\wmprocesses$ corresponding to a piecewise-continuous function $Q_t$.
 
 \section{Imprecise Continuous-Time Markov chains}
 \label{sec:iCTMC}
@@ -2128,6 +2068,66 @@ T_t^s=T_0^{s-t}=e^{Q(s-t)}
 or equivalently, that $\mathcal{T}_P=\mathcal{T}_Q$.
 
 Finally, we prove that $Q$ is unique. Assume \emph{ex absurdo} that this is not the case, or equivalently, that there are rate matrices $Q_1$ and $Q_2$, with $Q_1\neq Q_2$, such that $\mathcal{T}_P=\mathcal{T}_{Q_1}$ and $\mathcal{T}_P=\mathcal{T}_{Q_2}$. It then follows from Definition~\ref{def:systemfromQ} that $\partial_{+}{T^0_{0}}=Q_1$ and $\partial_{+}{T^0_{0}}=Q_2$, which implies that $Q_1=Q_2$. From this contradiction, it follows $Q$ is indeed unique.
+\end{proof}
+
+\begin{lemma}\label{lemma:nonhomogen_trans_mat_system}
+Let $Q_t$ be a left-continuous, piecewise-constant function that gives for each time point $t\in\realsnonneg$ a rate matrix $Q_t\in\mathcal{R}$, such that $Q_t$ takes different values on at most a finite number of intervals. Specifically, let $Q_t$ be such that there exists some ordered $u\in\mathcal{U}$ with $u=t_0,\ldots,t_n$ and rate matrices $\tilde{Q}_1,\ldots,\tilde{Q}_n\in\mathcal{R}$ such that, for all $t\in\realsnonneg$,
+\begin{equation*}
+Q_t = \tilde{Q}_i\,,\quad\text{if $t\in(t_{i-1},t_{i}]$, for all $i\in\{1,\ldots,n\}$}\,,
+\end{equation*}
+and $Q_t=\tilde{Q}_1$ if $t\leq t_0$, and $Q_t=\tilde{Q}_n$ if $t>t_n$. For notational convenience, let $t_{-1}\coloneqq-1$, $t_{n+1}\coloneqq +\infty$, $\tilde{Q}_0\coloneqq \tilde{Q}_1$, and $\tilde{Q}_{n+1}\coloneqq \tilde{Q}_n$. Then, for all $t\in\realsnonneg$, it holds that
+\begin{equation*}
+Q_t = \tilde{Q}_i\,,\quad\text{if $t\in(t_{i-1},t_i]$, for all $i\in\{0,\ldots,n+1\}$.}
+\end{equation*}
+
+Consider now a family $\mathcal{T}_{Q_t}$ of matrices $T_t^s$, defined recursively for all $t,s\in\realsnonneg$ with $t\leq s$, such that
+\begin{equation*}
+T_t^s \coloneqq \left\{\begin{array}{ll}
+e^{Q_s(s-t)} & \text{if $\bigl(\exists i\in\{0,\ldots,n+1\}\,:\,t,s\in[t_{i-1},t_i]\bigr)$, and} \\
+T_t^{t_{i-1}}T_{t_{i-1}}^s & \text{where $i\in\{1,\ldots,n+1\}$ is such that $s\in(t_{i-1},t_i]$, otherwise.}
+\end{array}\right.
+\end{equation*}
+Then, $\mathcal{T}_{Q_t}$ is a well-behaved transition matrix system.
+\end{lemma}
+\begin{proof}
+For any $T_t^s\in\mathcal{T}_{Q_t}$, it is clear that $T_t^s$ is a transition matrix if $t$ and $s$ coincide on some interval $[t_{i-1},t_i]$, with $i\in\{0,\ldots,n+1\}$, because then $T_t^s=e^{Q_s(s-t)}$. If they do not coincide, say $t\in[t_{i-1},t_i]$ and $s\in[t_{j-1},t_j]$ for some $i,j\in\{0,\ldots,n+1\}$ with $i<j$, by recursion, we find that
+\begin{equation*}
+T_t^s = T_t^{t_i}T_{t_i}^{t_{i+1}}\cdots T_{t_{j-2}}^{t_{j-1}}T_{t_{j-1}}^s\,.
+\end{equation*}
+Note that on the right-hand side of this equality, for each factor $T_a^b$, the time points $a$ and $b$ coincide on some interval, and hence each $T_a^b$ is a transition matrix. Hence, the right-hand side of this equality is a composition of transition matrices, and hence $T_t^s$ is a transition matrix. Therefore, $\mathcal{T}_{Q_t}$ is clearly a family of transition matrices.
+
+Furthermore, it is clear that for any $T_t^t\in\mathcal{T}_{Q_t}$, it holds that $T_t^t=I$, because $t$ and $t$ trivially coincide on some interval, so that we find $T_t^t=e^{Q_t\cdot 0}=I$. Hence, for $\mathcal{T}_{Q_t}$ to be a transition matrix system, it remains to show that all $T_t^s\in\mathcal{T}_{Q_t}$ satisfy Equation~\eqref{eq:transmatrixproduct}.
+
+If $t$ and $s$ coincide on some interval, Equation~\eqref{eq:transmatrixproduct} trivially holds for $T_t^s$. If they do not coincide, a similar factorization as found above yields the same result. Hence, $\mathcal{T}_{Q_t}$ is a transition matrix system. 
+
+It remains to show that $\mathcal{T}_{Q_t}$ is well-behaved, i.e., that it also satisfies Equation~\eqref{eq:wellbehavedtransitionmatrix}.
+Note that in the first limit expression of~\eqref{eq:wellbehavedtransitionmatrix}, for small enough $\Delta$, the time points $t$ and $t+\Delta$ coincide on some interval. On this interval, it holds that there is some $Q\in\rateset$ such that $Q_{t+\Delta}=Q$ for all $\Delta>0$ such that $t$ and $t+\Delta$ coincide. Hence, we find that
+\begin{equation*}
+\lim_{\Delta\to0^+}\frac{1}{\Delta}\norm{T_t^{t+\Delta}-I} = \lim_{\Delta\to0^+}\frac{1}{\Delta}\norm{e^{Q_{t+\Delta}\cdot\Delta}-I} = \lim_{\Delta\to0^+}\frac{1}{\Delta}\norm{e^{Q\cdot\Delta}-I} = \norm{Q} < +\infty\,,
+\end{equation*}
+where the last equality used the well-known derivative of the matrix exponential. Similarly, for the second limit expression of~\eqref{eq:wellbehavedtransitionmatrix}, for small enough $\Delta$, it holds that $t-\Delta$ and $t$ coincide on some interval. Hence
+\begin{equation*}
+\lim_{\Delta\to0^+}\frac{1}{\Delta}\norm{T_{t-\Delta}^{t}-I} = \lim_{\Delta\to0^+}\frac{1}{\Delta}\norm{e^{Q_t\cdot \Delta}-I}=\norm{Q_t}<+\infty\,.
+\end{equation*}
+Therefore, $\mathcal{T}_{Q_t}$ is well-behaved.
+\end{proof}
+
+\begin{proposition}\label{prop:continuous_rate_matrix_has_process}
+Consider any left-continuous, piecewise-constant function $Q_t$ that gives for each time point $t\in\realsnonneg$ a rate matrix $Q_t\in\mathcal{R}$. Then, there exists a well-behaved continuous-time Markov chain $P\in\wmprocesses$ such that $\mathcal{T}_P=\mathcal{T}_{Q_t}$, where $\mathcal{T}_{Q_t}$ is defined as in Lemma~\ref{lemma:nonhomogen_trans_mat_system}.
+\end{proposition}
+\begin{proof}
+By Lemma~\ref{lemma:nonhomogen_trans_mat_system}, $\mathcal{T}_{Q_t}$ is a well-behaved transition matrix system. Therefore, by Theorem~{\bf REF}, there exists a well-behaved continuous-time Markov chain $P\in\wmprocesses$ such that $\mathcal{T}_P=\mathcal{T}_{Q_t}$.
+\end{proof}
+
+\begin{lemma}
+Let $P\in\wmprocesses$ be such that there exists a left-continuous, piecewise-constant function $Q_t$ such that $\mathcal{T}_P=\mathcal{T}_{Q_t}$, where $\mathcal{T}_{Q_t}$ is defined as in Lemma~\ref{lemma:nonhomogen_trans_mat_system}. Then, for any set of rate matrices $\rateset$ for which it holds that $Q_t\in\rateset$ for all $t\in\realsnonneg$, it holds that $P\in\wmprocesses_\rateset$.
+\end{lemma}
+\begin{proof}
+Note that, by the definition of $\mathcal{T}_{Q_t}$, it holds for all $t\in\realsnonneg$ that $\partial_+T_t^t$ and $\partial_-T_t^t$ exist, and that they satisfy $\partial_+T_t^t,\partial_-T_t^t\in\rateset$. Therefore, and because $P$ is well-behaved, by Corollary~\ref{corol:outersingleton} we have that $\smash{\overline{\partial}}_+T_t^t=\{\partial_+T_t^t\}$ and $\smash{\overline{\partial}}_-T_t^t=\{\partial_-T_t^t\}$. Hence, we find that
+\begin{equation*}
+\smash{\overline{\partial}}T_t^t = \smash{\overline{\partial}}_+T_t^t\cup \smash{\overline{\partial}}_-T_t^t = \{\partial_+T_t^t, \partial_-T_t^t\}\,,
+\end{equation*}
+from which it follows that, for all $t\in\realsnonneg$, it holds that $\smash{\overline{\partial}}T_t^t\subseteq\rateset$. Therefore, by Definition~\ref{def:markov_process_set_new}, we find that $P\in\wmprocesses_\rateset$.
 \end{proof}
 
 \begin{lemma}\label{lemma:linearpartofexponential}
