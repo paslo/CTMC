@@ -503,13 +503,13 @@ We denote this family of matrices by $\mathcal{T}_P$.%, and call it the \emph{sy
 Because we will also want to work with conditioning events that contain more than a single time point, we furthermore introduce the following generalization.
 
 \begin{definition}[History-Dependent Corresponding Transition Matrix]
-Consider any $P\in\processes$. Then, for any $t,s\in\realsnonneg$ such that $t\leq s$, any sequence of time points $u<t$, and any state assignment $x_u\in\states^u$, the corresponding \emph{history-dependent} transition matrix $T_{t,x_u}^s$ is a matrix that is defined by
+Let $P\in\processes$ be any stochastic process. Then, for any $t,s\in\realsnonneg$ such that $t\leq s$, any sequence of time points $u<t$, and any state assignment $x_u\in\states^u$, the corresponding \emph{history-dependent} transition matrix $T_{t,\,x_u}^s$ is a matrix that is defined by
 \begin{equation*}
 T^s_{t,\,x_u}(x_t,x_s)
 \coloneqq
 P(X_s=x_s\vert X_t=x_t, X_{t_0}=x_{0}, \dots, X_{t_n}=x_{n})\quad\text{for all $x_s,x_t\in\states$}\,.
 \end{equation*}
-For notational convenience, we will allow $u$ to be empty, in which case we will simply have that $T_{t,x_u}^s=T_t^s$.
+For notational convenience, we will allow $u$ to be empty, in which case we will simply have that $T_{t,\,x_u}^s=T_t^s$.
 \end{definition}
 
 The following proposition establishes some simple properties of these corresponding (history-dependent) transition matrices.
@@ -522,12 +522,13 @@ Let $P\in\processes$ be a stochastic process.  %Then for any $t,s\in\realsnonneg
 %\lim_{\Delta\to 0^{+}}\frac{1}{\Delta}\norm{T_{t-\Delta}^t-I}<+\infty.
 %\end{equation}
 %Similarly, 
-Then, for any $t,s\in\realsnonneg$ such that $t\leq s$, any sequence of time points $u<t$, and any state assignment $x_u\in\states^u$, the corresponding (history dependent) transition matrix $T_{t,x_u}^s$ is---as its name suggests---a transition matrix, and $T_{t,x_u}^t=I$. Furthermore, if $P$ is well-behaved, then also
+Then, for any $t,s\in\realsnonneg$ such that $t\leq s$, any sequence of time points $u<t$, and any state assignment $x_u\in\states^u$, the corresponding (history dependent) transition matrix $T_{t,\,x_u}^s$ is---as its name suggests---a transition matrix, and $T_{t,\,x_u}^t=I$. Furthermore, $P$ is well-behaved if and only if
 \begin{equation}\label{eq:wellbehavedtransitionmatrix}%\label{eq:wellbehavedhistorictransitionmatrix}
 \lim_{\Delta\to 0^{+}}\frac{1}{\Delta}\norm{T_{t,x_u}^{t+\Delta}-I}<+\infty
 \text{~~~~and~~~~}
 \lim_{\Delta\to 0^{+}}\frac{1}{\Delta}\norm{T_{t-\Delta,x_u}^t-I}<+\infty.
 \end{equation}
+for all $u\in\mathcal{U}$, $x_u\in\states^u$ and $t\in\reals_{\geq0}$ such that $t>u$.
 \end{proposition}
 \begin{proof}
 Trivial consequence of Definitions~\ref{def:stoch_matrix}, \ref{def:cond_prob}, and \ref{def:well-behaved}.
@@ -714,11 +715,17 @@ A \emph{transition matrix system} $\mathcal{T}$ is a family of transition matric
 T_t^s=T_t^r T_r^s
 \text{~~for all $0\leq t\leq r\leq s$}
 \end{equation}
-and $T_t^t=I$ for all $t\geq0$. A transition matrix system that also satisfies Equation~\eqref{eq:wellbehavedtransitionmatrix} is called a \emph{well-behaved transition matrix system}.
+and $T_t^t=I$ for all $t\geq0$. A transition matrix system  $\mathcal{T}$ is called \emph{well-behaved} if 
+\begin{equation}\label{eq:wellbehavedtransitionmatrixsystem}%\label{eq:wellbehavedhistorictransitionmatrix}
+\lim_{\Delta\to 0^{+}}\frac{1}{\Delta}\norm{T_{t}^{t+\Delta}-I}<+\infty
+\text{~~~~and~~~~}
+\lim_{\Delta\to 0^{+}}\frac{1}{\Delta}\norm{T_{t-\Delta}^t-I}<+\infty.
+\end{equation}
+for all $t\in\reals_{\geq0}$.
 \end{definition}
 
 \begin{proposition}\label{prop:Markovhassystem}
-Consider a Markov chain $P\in\mprocesses$ and let $\mathcal{T}_P$ be the corresponding family of transition matrices. Then $\mathcal{T}_P$ is a transition matrix system and, if $P$ is well behaved, then $\mathcal{T}_P$ is also well-behaved.
+Consider a Markov chain $P\in\mprocesses$ and let $\mathcal{T}_P$ be the corresponding family of transition matrices. Then $\mathcal{T}_P$ is a transition matrix system. Furthermore, $\mathcal{T}_P$ is well-behaved if and only if $P$ is well-behaved.
 \end{proposition}
 \begin{proof}
 *** fairly easy to prove ***
@@ -779,7 +786,7 @@ By comparing Equations~\eqref{eq:theo:uniqueMarkovchain:coh1} and~\eqref{eq:theo
 % \end{equation*}
 
 
-Therefore, and because of Theorem~\ref{theo:coherentextendable}, $\tilde{P}$ can be extended to a full conditional probability $\tilde{P}^*$. If we now let $P$ be the restriction of $\tilde{P}^*$ to $\mathcal{C}^\mathrm{SP}$, then clearly, $P$ is a stochastic process that extends $\tilde{P}$, which implies that $P$ is a Markov chain such that $\mathcal{T}_P=\mathcal{T}$ and, for all $y\in\states$, $P(X_0=y)=p(y)$. Lemma~\ref{lemma:samepandTissameP} implies that this Markov chain is unique. If $\mathcal{T}$ is well-behaved, then since $\mathcal{T}_P=\mathcal{T}$, it follows from Lemma~\ref{lemma:PwbiffTwb} that $P$ is well-behaved.
+Therefore, and because of Theorem~\ref{theo:coherentextendable}, $\tilde{P}$ can be extended to a full conditional probability $\tilde{P}^*$. If we now let $P$ be the restriction of $\tilde{P}^*$ to $\mathcal{C}^\mathrm{SP}$, then clearly, $P$ is a stochastic process that extends $\tilde{P}$, which implies that $P$ is a Markov chain such that $\mathcal{T}_P=\mathcal{T}$ and, for all $y\in\states$, $P(X_0=y)=p(y)$. Lemma~\ref{lemma:samepandTissameP} implies that this Markov chain is unique. If $\mathcal{T}$ is well-behaved, then since $\mathcal{T}_P=\mathcal{T}$, it follows from Proposition~\ref{prop:Markovhassystem} that $P$ is well-behaved.
 \end{proof}
 
 \begin{lemma}\label{lemma:simplechaincoherence}
@@ -836,13 +843,6 @@ So fix any $i\in\{1,\dots,k\}$. Since $u_i\subseteq w$, $s_i\in w$ and $s_i>u_i$
 
 \begin{lemma}\label{lemma:samepandTissameP}
 Consider two markov chains $P_1,P_2\in\mprocesses$ such that $\mathcal{T}_{P_1}=\mathcal{T}_{P_2}$ and, for all $y\in\states$, $P_1(X_0=y)=P_2(X_0=y)$. Then $P_1=P_2$.
-\end{lemma}
-\begin{proof}
-***
-\end{proof}
-
-\begin{lemma}\label{lemma:PwbiffTwb}
-Consider any Markov chain $P\in\mprocesses$. Then $P$ is well-behaved if and only if $\mathcal{T}_P$ is well-behaved.
 \end{lemma}
 \begin{proof}
 ***
