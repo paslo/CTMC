@@ -295,7 +295,7 @@ with $C_0\coloneqq\cup_{i=1}^nC_i$.
 Let $P$ be a real-valued map from $\mathcal{C}\subseteq\power\times\nonemptypower$ to $\reals$. Then $P$ is a coherent conditional probability if and only if it can be extended to a full conditional probability.
 \end{theorem}
 
-\begin{corollary}
+\begin{corollary}\label{corol:fullcoherent}
 Let $P$ be a real-valued map from $\power\times\nonemptypower$ to $\reals$. Then $P$ is a coherent conditional probability if and only if it is a full conditional probability.
 \end{corollary}
 \begin{proof}
@@ -754,10 +754,26 @@ T_{t_n}^s(x_n,y)&\text{~otherwise}
 for all $(X_s=y,X_u=x_u)\in\mathcal{C}$.
 
 
-We first prove that $\tilde{P}$ is a coherent conditional probability on $\mathcal{C}$. So consider any $k\in\nats$ and, for all $i\in\{1,\dots,k\}$, choose $(A_i,C_i)=(X_{s_i}=y_i,X_{u_i}=x_{u_i})\in\mathcal{C}$ and $\lambda_i\in\reals$. 
-Since every sequence $u_i$ is finite, there is some finite set $w=\{s_0,s_1,\dots,s_m\}\subset\reals_{\geq0}$ of time points, with $m\in\nats$, such that $0=s_0<s_1<\dots<s_m$ and, for all $i\in\{1,\dots,k\}$, $u_i\subseteq w$ and $s_i\in w$.
-Let $P_w$ be the restriction of $\tilde{P}$ to $\mathcal{C}_w$, with $\mathcal{C}_w$ defined as in Lemma~\ref{lemma:simplechaincoherence}. Then since $P_w$ clearly satisfies the conditions of Lemma~\ref{lemma:simplechaincoherence}, it follows that $P_w$ is a coherent conditional probability. Because of Theorem~\ref{theo:coherentextendable}, this implies that $P_w$ is the restriction to $\mathcal{C}_w$ of some full conditional probability $\tilde{P}_w$.
+We first prove that $\tilde{P}$ is a coherent conditional probability on $\mathcal{C}$. So consider any $k\in\nats$ and, for all $i\in\{1,\dots,k\}$, choose $(A_i,C_i)=(X_{s_i}=y_i,X_{u_i}=x_{u_i})\in\mathcal{C}$ and $\lambda_i\in\reals$. We need to show that
+\begin{equation}\label{eq:theo:uniqueMarkovchain:coh1}
+\sup\left\{\sum_{i=1}^m\lambda_i\ind{C_i}(\omega)\bigl(\tilde{P}(A_i\vert C_i)-\ind{A_i}(\omega)\bigr)~\Bigg\vert~\omega\in C_0\right\}\geq0,
+\end{equation}
+with $C_0\coloneqq\cup_{i=1}^mC_i$.
+Since every sequence $u_i$ is finite, there is some finite set $w=\{w_0,w_1,\dots,w_m\}\subset\reals_{\geq0}$ of time points, with $m\in\nats$, such that $0=w_0<w_1<\dots<w_m$ and, for all $i\in\{1,\dots,k\}$, $u_i\subseteq w$ and $s_i\in w$.
+Let $P_w$ be the restriction of $\tilde{P}$ to $\mathcal{C}_w$, with $\mathcal{C}_w$ defined as in Lemma~\ref{lemma:simplechaincoherence}. Then since $P_w$ clearly satisfies the conditions of Lemma~\ref{lemma:simplechaincoherence}, it follows that $P_w$ is a coherent conditional probability. Because of Theorem~\ref{theo:coherentextendable}, this implies that $P_w$ is the restriction to $\mathcal{C}_w$ of some full conditional probability $\tilde{P}_w$ that, because of Corollary~\ref{corol:fullcoherent}, is coherent. Hence, we find that
+\begin{equation}\label{eq:theo:uniqueMarkovchain:coh2}
+\sup\left\{\sum_{i=1}^m\lambda_i\ind{C_i}(\omega)\bigl(\tilde{P}_w(A_i\vert C_i)-\ind{A_i}(\omega)\bigr)~\Bigg\vert~\omega\in C_0\right\}\geq0.
+\end{equation}
+By comparing Equations~\eqref{eq:theo:uniqueMarkovchain:coh1} and~\eqref{eq:theo:uniqueMarkovchain:coh2}, it follows that in order to prove that $\tilde{P}$ is coherent, it suffices to show that, for all $i\in\{1,\dots,k\}$, $\tilde{P}_w(A_i\vert C_i)=\tilde{P}(A_i\vert C_i)$.
 
+So fix any $i\in\{1,\dots,k\}$. Since $u_i\subseteq w$, $s_i\in w$ and $s_i>u_i$, there is some $j\in\{0,\dots,m\}$ such that $s_i=w_j$ and $u_i\subseteq\{w_0,\dots,w_{j-1}\}$. Let $u_i^\mathrm{c}\coloneqq\{w_0,\dots,w_{j-1}\}\setminus u_i$.
+
+\begin{align*}
+\tilde{P}_w(A_i\vert C_i)
+=\tilde{P}_w(X_{s_i}\vert X_{u_i}=x_{u_i})
+=\tilde{P}(A_i\vert C_i)
+\end{align*}
+As discussed above, this implies that $\tilde{P}$ is coherent.
 
  (*** I still need to write this part ***).
 
@@ -771,20 +787,20 @@ The last part (about the well-behavedness) follows trivially from the Markov pro
 \end{proof}
 
 \begin{lemma}\label{lemma:simplechaincoherence}
-Let $w=\{s_0,s_1,\dots,s_m\}\subset\reals_{\geq0}$ be a finite set of time points, with $m\in\nats_0$, such that $s_0<s_1<\dots<s_m$.
+Let $w=\{w_0,w_1,\dots,w_m\}\subset\reals_{\geq0}$ be a finite set of time points, with $m\in\nats_0$, such that $w_0<w_1<\dots<w_m$.
 Let $P_w$ be a real-valued function on
 \begin{equation*}
 \mathcal{C}_w\coloneqq
 \left\{
-(X_{s_j}=y,X_u=x_u)
+(X_{w_j}=y,X_u=x_u)
 \colon 
 j\in\{0,\dots,m\},~
-u=\{s_0,\dots,s_{j-1}\},~
+u=\{w_0,\dots,w_{j-1}\},~
 y\in\states,~
 x_u\in\states^u
 \right\}
 \end{equation*}
-such that, for any $j\in\{0,\dots,m\}$, $u=\{s_0,\dots,s_{j-1}\}$ and $x_u\in\states^u$, $P_w(\cdot\,\vert X_u=x_u)$ is a probability mass function on $\states$. Then $P_w$ is a coherent conditional probability on $\mathcal{C}_w$.
+such that, for any $j\in\{0,\dots,m\}$, $u=\{w_0,\dots,w_{j-1}\}$ and $x_u\in\states^u$, $P_w(\cdot\,\vert X_u=x_u)$ is a probability mass function on $\states$. Then $P_w$ is a coherent conditional probability on $\mathcal{C}_w$.
 \end{lemma}
 \begin{proof}
 *** still have to do this ***
