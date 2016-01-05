@@ -764,28 +764,20 @@ Let $P_w$ be the restriction of $\tilde{P}$ to $\mathcal{C}_w$, with $\mathcal{C
 \begin{equation}\label{eq:theo:uniqueMarkovchain:coh2}
 \sup\left\{\sum_{i=1}^m\lambda_i\ind{C_i}(\omega)\bigl(\tilde{P}_w(A_i\vert C_i)-\ind{A_i}(\omega)\bigr)~\Bigg\vert~\omega\in C_0\right\}\geq0.
 \end{equation}
-By comparing Equations~\eqref{eq:theo:uniqueMarkovchain:coh1} and~\eqref{eq:theo:uniqueMarkovchain:coh2}, it follows that in order to prove that $\tilde{P}$ is coherent, it suffices to show that, for all $i\in\{1,\dots,k\}$, $\tilde{P}_w(A_i\vert C_i)=\tilde{P}(A_i\vert C_i)$.
+By comparing Equations~\eqref{eq:theo:uniqueMarkovchain:coh1} and~\eqref{eq:theo:uniqueMarkovchain:coh2}, it follows that in order to prove that $\tilde{P}$ is coherent, it suffices to show that, for all $i\in\{1,\dots,k\}$, $\tilde{P}_w(A_i\vert C_i)=\tilde{P}(A_i\vert C_i)$. So fix any $i\in\{1,\dots,k\}$. If $u_i=\emptyset$, then $s_i=0=w_0$ and therefore $(A_i,C_i)\in\mathcal{C}_w$, which implies that $\tilde{P}_w(A_i\vert C_i)=P_w(A_i\vert C_i)=\tilde{P}(A_i\vert C_i)$. If $u_i\neq\emptyset$, then since $u_i\subseteq w$, $s_i\in w$ and $s_i>u_i$, it follows from Lemma~\ref{lemma:simplechainextend} that $\tilde{P}_w(A_i\vert C_i)=\tilde{P}(A_i\vert C_i)$. Hence, $\tilde{P}$ is coherent.
 
-So fix any $i\in\{1,\dots,k\}$. Since $u_i\subseteq w$, $s_i\in w$ and $s_i>u_i$, there must be some $j\in\{0,\dots,m\}$ such that $s_i=w_j$ and $u_i\subseteq\{w_0,\dots,w_{j-1}\}$. Let $u_i^\mathrm{c}\coloneqq\{w_0,\dots,w_{j-1}\}\setminus u_i$.
+% \begin{equation*}
+% \tilde{P}_w(A_i\vert C_i)
+% =\tilde{P}_w(X_{s_i}=y_i\vert X_{u_i}=x_{u_i})
+% =\tilde{P}_w(X_{s_i}=y_i\vert X_{t_0}=x_{0}, \dots, X_{t_n}=x_{n})
+% =T_{t_n}^s(x_n,y)
+% =
+% =P_w(A_i\vert C_i)
+% =\tilde{P}(A_i\vert C_i)
+% \end{equation*}
 
-\begin{align*}
-\tilde{P}_w(A_i\vert C_i)
-=\tilde{P}_w(X_{s_i}=y_i\vert X_{u_i}=x_{u_i})
-=...
-=\tilde{P}(X_{s_i}=y_i\vert X_{u_i}=x_{u_i})
-=\tilde{P}(A_i\vert C_i)
-\end{align*}
-As discussed above, this implies that $\tilde{P}$ is coherent.
 
- (*** I still need to write this part ***).
-
-Therefore, and because of Theorem~\ref{theo:coherentextendable}, $\tilde{P}$ can be extended to a full conditional probability $\tilde{P}^*$. If we now let $P$ be the restriction of $\tilde{P}^*$ to $\mathcal{C}^\mathrm{SP}$, then clearly, $P$ is a stochastic process that extends $\tilde{P}$, which implies that $P$ is a Markov chain such that $\mathcal{T}_P=\mathcal{T}$ and $P(X_0)=p(X_0)$. 
-
-The uniqueness of $P$ now follows because every conditional probability in its domain can be obtained by multiplying and adding probabilities in the domain of $\tilde{P}$.
-
-The last part (about the well-behavedness) follows trivially from the Markov property.
-
-*** this proof is not finished yet... working on it... ***
+Therefore, and because of Theorem~\ref{theo:coherentextendable}, $\tilde{P}$ can be extended to a full conditional probability $\tilde{P}^*$. If we now let $P$ be the restriction of $\tilde{P}^*$ to $\mathcal{C}^\mathrm{SP}$, then clearly, $P$ is a stochastic process that extends $\tilde{P}$, which implies that $P$ is a Markov chain such that $\mathcal{T}_P=\mathcal{T}$ and, for all $y\in\states$, $P(X_0=y)=p(y)$. Lemma~\ref{lemma:samepandTissameP} implies that this Markov chain is unique. If $\mathcal{T}$ is well-behaved, then since $\mathcal{T}_P=\mathcal{T}$, it follows from Lemma~\ref{lemma:PwbiffTwb} that $P$ is well-behaved.
 \end{proof}
 
 \begin{lemma}\label{lemma:simplechaincoherence}
@@ -829,6 +821,29 @@ Then for any $s\in w$ and $u\subseteq w$ such that $s>u$ and $u\neq\emptyset$, a
 \begin{proof}
 *** still have to do this ***
 
+So fix any $i\in\{1,\dots,k\}$. Since $u_i\subseteq w$, $s_i\in w$ and $s_i>u_i$, there must be some $j\in\{0,\dots,m\}$ such that $s_i=w_j$ and $u_i\subseteq\{w_0,\dots,w_{j-1}\}$. Let $u_i^\mathrm{c}\coloneqq\{w_0,\dots,w_{j-1}\}\setminus u_i$.
+
+\begin{align*}
+\tilde{P}_w(A_i\vert C_i)
+=\tilde{P}_w(X_{s_i}=y_i\vert X_{u_i}=x_{u_i})
+=...
+=\tilde{P}(X_{s_i}=y_i\vert X_{u_i}=x_{u_i})
+=\tilde{P}(A_i\vert C_i)
+\end{align*}
+\end{proof}
+
+\begin{lemma}\label{lemma:samepandTissameP}
+Consider two markov chains $P_1,P_2\in\mprocesses$ such that $\mathcal{T}_{P_1}=\mathcal{T}_{P_2}$ and, for all $y\in\states$, $P_1(X_0=y)=P_2(X_0=y)$. Then $P_1=P_2$.
+\end{lemma}
+\begin{proof}
+***
+\end{proof}
+
+\begin{lemma}\label{lemma:PwbiffTwb}
+Consider any Markov chain $P\in\mprocesses$. Then $P$ is well-behaved if and only if $\mathcal{T}_P$ is well-behaved.
+\end{lemma}
+\begin{proof}
+***
 \end{proof}
 
 
