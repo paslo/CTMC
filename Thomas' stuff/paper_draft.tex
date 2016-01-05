@@ -285,7 +285,20 @@ $P(A\vert C)=P(A\vert D)P(D\vert C)$ if $A\subseteq D\subseteq C$.\label{def:coh
 
 \noindent
 For any $A\in\power$ and $C\in\nonemptypower$, we call $P(A\vert C)$ the probability of $A$ conditional on $C$. Also, for any $A\in\power$, we use the shorthand notation $P(A)\coloneqq P(A\vert\paths)$ and then call $P(A)$ the probability of $A$.
+The following additional properties can easily be shown to follow from \ref{def:coh_prob_1}--\ref{def:coh_prob_4}. For all $A\in\power$ and all $C,D\in\nonemptypower$:
+\vspace{5pt}
+
+\begin{enumerate}[label=F\arabic*:,ref=F\arabic*]
+ \setcounter{enumi}{4}
+\item
+$P(\Omega\vert C)=1$;\label{def:coh_prob_5}
+\item
+$P(A\cap D\vert C)=P(A\vert D\cap C)P(D\vert C)$ if $D\cap C\neq\emptyset$.\label{def:coh_prob_6}
+\end{enumerate}
+\vspace{5pt}
+
 \end{definition}
+
 
 The following notion of coherent conditional probabilities will be useful whenever we want to check if a given map $P$ from a set of events to $\reals$ is a well-defined conditional probability measure.
 
@@ -834,7 +847,7 @@ Since $\emptyset\neq u\subseteq w$, $s\in w$ and $s>u$, it follows that there is
 
 We provide a proof by induction. If $s=w_1$, then $u=\{w_0\}$, and therefore, the result follows trivially from the assumptions in this lemma. Assume now that the result is true for $s=w_j$, with $1\leq j<m$. We will prove that this implies that it is also true for $s=w_{j+1}$. We consider two cases: $\max u=w_j$ and $\max u<w_j$.
 
-If $\max u=w_j$, then with $v\coloneqq\{w_0,\dots,w_j\}\setminus u$, we find that
+If $\max u=w_j$, then with $v\coloneqq\{w_0,\dots,w_j\}\setminus u$:
 \begin{align*}
 \tilde{P}_w(X_{w_{j+1}}=y\vert X_u=x_u)
 &=\sum_{z_{v}\in\states^{v}}\tilde{P}_w(X_{w_{j+1}}=y, X_{v}=z_{v}\vert X_u=x_u)\\
@@ -851,9 +864,9 @@ T_{\max u}^{w_{j+1}}(x_{\max u},y)
 &\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad~~~
 =T_{\max u}^{w_{j+1}}(x_{\max u},y),
 \end{align*}
-where the first equality follows from~\ref{def:coh_prob_3}, the second equality follows from \ref{def:coh_prob_4}, the third equality follows from the assumptions in this lemma and the fact that $\max u=w_j$, and the fifth equality follows from \ref{def:coh_prob_1} and~\ref{def:coh_prob_3}. *** need to check this and maybe adapt the F's such that this is true ***
+where the first equality follows from~\ref{def:coh_prob_3}, the second equality follows from \ref{def:coh_prob_6}, the third equality follows from the assumptions in this lemma and the fact that $\max u=w_j$, and the last equality follows from \ref{def:coh_prob_3} and~\ref{def:coh_prob_5}.
 
-If $\max u<w_j$, then with $v\coloneqq\{w_0,\dots,w_{j-1}\}\setminus u$, we find that
+If $\max u<w_j$, then with $v\coloneqq\{w_0,\dots,w_{j-1}\}\setminus u$:
 \begin{align*}
 &\tilde{P}_w(X_{w_{j+1}}=y\vert X_u=x_u)\\[1,5mm]
 &=\sum_{z_{w_j}\in\states}
@@ -862,7 +875,7 @@ If $\max u<w_j$, then with $v\coloneqq\{w_0,\dots,w_{j-1}\}\setminus u$, we find
 &=\sum_{z_{w_j}\in\states}
 \sum_{z_{v}\in\states^{v}}
 \tilde{P}_w(X_{w_{j+1}}=y\vert X_u=x_u, X_{w_j}=z_{w_j}, X_v=z_v)\\[-4mm]
-&\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad
+&\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad~\,
 \tilde{P}_w(X_v=z_v\vert X_u=x_u, X_{w_j}=z_{w_j})
 \tilde{P}_w(X_{w_j}=z_{w_j}\vert X_u=x_u)\\[4mm]
 &=\sum_{z_{w_j}\in\states}
@@ -886,7 +899,7 @@ T_{w_j}^{w_{j+1}}(z_{w_j},y)
 T_{\max u}^{w_{j}}(x_{\max u},z_{w_j})
 =T_{\max u}^{w_{j+1}}(x_{\max u},y),
 \end{align*}
-*** need to check this and maybe adapt the F's such that this is true ***
+where the first equality follows from~\ref{def:coh_prob_3}, the second equality follows from \ref{def:coh_prob_6}, the third equality follows from the assumptions in this lemma, the fourth equality follows from the induction hypothesis, the sixth equality follows from \ref{def:coh_prob_3} and~\ref{def:coh_prob_5}, and the last equality follows from Equation~\eqref{eq:transmatrixproduct}.
 \end{proof}
 
 \begin{lemma}\label{lemma:samepandTissameP}
