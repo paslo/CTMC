@@ -2134,7 +2134,7 @@ Consider any left-continuous, piecewise-constant function $Q_t$ that gives for e
 By Lemma~\ref{lemma:nonhomogen_trans_mat_system}, $\mathcal{T}_{Q_t}$ is a well-behaved transition matrix system. Therefore, by Theorem~{\bf REF}, there exists a well-behaved continuous-time Markov chain $P\in\wmprocesses$ such that $\mathcal{T}_P=\mathcal{T}_{Q_t}$.
 \end{proof}
 
-\begin{lemma}
+\begin{lemma}\label{lemma:nonhomogeneous_in_process_set}
 Let $P\in\wmprocesses$ be such that there exists a left-continuous, piecewise-constant function $Q_t$ such that $\mathcal{T}_P=\mathcal{T}_{Q_t}$, where $\mathcal{T}_{Q_t}$ is defined as in Lemma~\ref{lemma:nonhomogen_trans_mat_system}. Then, for any set of rate matrices $\rateset$ for which it holds that $Q_t\in\rateset$ for all $t\in\realsnonneg$, it holds that $P\in\wmprocesses_\rateset$.
 \end{lemma}
 \begin{proof}
@@ -2907,9 +2907,9 @@ Q_\tau^u \coloneqq Q_{t_k},\quad\text{for all $\tau\in (t_{k-1},t_k]$}\,.
 \end{equation}
 Let $Q_\tau^u\coloneqq Q_{t_0}$ for all $\tau\leq t_0$ and let $Q_\tau^u\coloneqq Q_{t_n}$ for all $\tau>t_n$.
 
-{\bf ATTN:} *** $Q_\tau^u$ is left-continuous, so the statement below may need some work. ***
+Then, $Q_\tau^u$ is a left-continuous, piecewise-constant function that gives for each time point $\tau\in\realsnonneg$ a rate matrix $Q_\tau^u\in\rateset\subset\mathcal{R}$, such that the value of $Q_\tau^u$ differs on a finite number of intervals. Therefore, by Proposition~\ref{prop:continuous_rate_matrix_has_process}, there is some $P\in\wmprocesses$ such that $\mathcal{T}_P=\mathcal{T}_{Q_\tau^u}$, where $\mathcal{T}_{Q_\tau^u}$ is defined as in Lemma~\ref{lemma:nonhomogen_trans_mat_system}. Furthermore, because $Q_\tau^u$ takes values in $\rateset$, by Lemma~\ref{lemma:nonhomogeneous_in_process_set}, $P$ furthermore satisfies $P\in\wmprocesses_\rateset$. It remains to show that, for this $P$, it holds that $\norm{L_t^sf - T_t^sf}<\epsilon$. 
 
-Then, by Theorem~\ref{theorem:continuous_rate_matrix_has_process}, there is some $P\in\mprocesses_\mathcal{Q}$ that is characterized by $Q_\tau^u$, with corresponding transition matrix $T_t^s$. It remains to show that $\norm{L_t^sf - T_t^sf}<\epsilon$. We have
+We start by factorizing the interval $[t,s]$ according to $u$, as follows.
 \begin{align*}
 \norm{L_t^sf - T_t^sf} &= \norm{L_{t_0}^{t_n}f - T_{t_0}^{t_n}f} \\
  &\leq \norm{L_{t_0}^{t_n}f - T_{t_0}^{t_{n-1}}L_{t_{n-1}}^{t_n}f} + \norm{T_{t_0}^{t_{n-1}}L_{t_{n-1}}^{t_n}f - T_{t_0}^{t_n}f} \\
@@ -2940,9 +2940,10 @@ By Equation~\eqref{eq:lower_char_rate_matrix}, we have $\norm{Q_{t_i}L_{t_i}^{t_
  &= \Delta^2\norm{\mathcal{Q}}^2\norm{f} + \norm{\left[I+\Delta Q_{t_i}^u\right]L_{t_i}^{t_n}f - T_{t_{i-1}}^{t_i}\left[L_{t_i}^{t_n}f\right]} + \Delta\norm{\lrate L_{t_i}^{t_n}f - Q_{t_i}L_{t_i}^{t_n}f} \\
  &\leq \Delta^2\norm{\mathcal{Q}}^2\norm{f} + \norm{\left[I+\Delta Q_{t_i}^u\right]L_{t_i}^{t_n}f - T_{t_{i-1}}^{t_i}\left[L_{t_i}^{t_n}f\right]} + \frac{\Delta\epsilon}{2C} \\
  &\leq \Delta^2\norm{\mathcal{Q}}^2\norm{f} + \norm{\left[I+\Delta Q_{t_i}^u\right] - T_{t_{i-1}}^{t_i}}\cdot\norm{f} + \frac{\Delta\epsilon}{2C} \\
+ &= \Delta^2\norm{\mathcal{Q}}^2\norm{f} + \norm{\left[I+\Delta Q_{t_i}\right] - e^{Q_{t_i}\cdot(t_i-t_{i-1})}}\cdot\norm{f} + \frac{\Delta\epsilon}{2C} \\
  &\leq 2\Delta^2\norm{\mathcal{Q}}^2\norm{f} + \frac{\Delta\epsilon}{2C}\,,
 \end{align*}
-where the last step used Lemma~\ref{lemma:linearpartofexponential}.
+where we used the definition of $T_{t_{i-1}}^{t_i}$ from Lemma~\ref{lemma:nonhomogen_trans_mat_system}, and where the last step used Lemma~\ref{lemma:linearpartofexponential}.
 
 Thus, using the fact that $n\Delta=C$, we find
 \begin{align*}
