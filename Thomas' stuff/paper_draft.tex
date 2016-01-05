@@ -884,9 +884,17 @@ Q_t = Q_i\,,\quad\text{if $t\in(t_{i-1},t_{i}]$, for all $i\in\{1,\ldots,n\}$}\,
 \end{equation*}
 and $Q_t=Q_1$ if $t\leq t_0$, and $Q_t=Q_n$ if $t>t_n$.
 
-Consider a family of matrices $\mathcal{T}_{Q_t}$, defined such that
+Consider a family $\mathcal{T}_{Q_t}$ of matrices $T_t^s$, defined recursively for all $t,s\in\realsnonneg$ with $t\leq s$, such that
 
-*** {\bf TODO}
+**** {\bf TODO} clean up definition for boundary cases ($t\leq t_0$, or $t>t_n$)
+
+\begin{equation*}
+T_t^s \coloneqq \left\{\begin{array}{ll}
+e^{Q_i(s-t)} & \text{if $\bigl(\exists i\in\{1,\ldots,n\}\,:\,t,s\in[t_{i-1},t_i]\bigr)$, and} \\
+T_t^{t_{i-1}}T_{t_{i-1}}^s & \text{where $i\in\{1,\ldots,n\}$ is such that $s\in(t_{i-1},t_i]$, otherwise.}
+\end{array}\right.
+\end{equation*}
+**** {\bf ATTN:} somewhat ugly because we pick the wrong matrix at boundary points. shouldn't matter for the result though, but feels nasty.
 
 Then, $\mathcal{T}_{Q_t}$ is a well-behaved transition matrix system.
 \end{lemma}
