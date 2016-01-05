@@ -819,32 +819,74 @@ with $C_0\coloneqq\cup_{i=1}^nC_i$.
 \end{proof}
 
 \begin{lemma}\label{lemma:simplechainextend}
-Let $w=\{w_0,w_1,\dots,w_m\}\subset\reals_{\geq0}$ be a finite set of time points, with $m\in\nats_0$, such that $w_0<w_1<\dots<w_m$. Consider a transition matrix system $\mathcal{T}$ and let $\tilde{P}_w$ be any full conditional probability such that for all $j\in\{1,\dots,m\}$ and any choice of $x_{w_{\ell}}\in\states$, $\ell\in\{0,\dots,j\}$:
+Let $w=\{w_0,w_1,\dots,w_m\}\subset\reals_{\geq0}$ be a finite set of time points, with $m\in\nats_0$, such that $w_0<w_1<\dots<w_m$. Let $\mathcal{T}$ be a transition matrix system and let $\tilde{P}_w$ be any full conditional probability such that for all $j\in\{1,\dots,m\}$ and $x_{w_{\ell}}\in\states$, $\ell\in\{0,\dots,j\}$:
 \begin{equation*}
 \tilde{P}_w(X_{w_j}=x_{w_j}\vert X_{w_0}=x_{w_0},\dots,X_{w_{j-1}}=x_{w_{j-1}})=T_{w_{j-1}}^{w_j}(x_{w_{j-1}},x_{w_j}).
 \end{equation*}
 Then for any $s\in w$ and $u\subseteq w$ such that $s>u$ and $u\neq\emptyset$, any $y\in\states$ and any $x_u\in\states^u$, we have that
 \begin{equation*}
 \tilde{P}_w(X_s=y\vert X_u=x_u)
-=
-\tilde{P}_w(X_s=y\vert X_{t_0}=x_{0}, \dots, X_{t_n}=x_{n})
-=T_{t_n}^s(x_n,y).
+=T_{\max u}^s(x_{\max u},y).
 \end{equation*}
 \end{lemma}
 \begin{proof}
-Since $\emptyset\neq u\subseteq w$, $s\in w$ and $s>u$, there are $j^*,j\in\{0,\dots,m\}$ such that $s=w_j$ and $u\subseteq\{w_0,\dots,w_{j-1}\}$. Let $u_i^\mathrm{c}\coloneqq\{w_0,\dots,w_{j-1}\}\setminus u_i$.
+Since $\emptyset\neq u\subseteq w$, $s\in w$ and $s>u$, it follows that there is some $j\in\{1,\dots,m\}$ such that $s=w_j$ and $u\subseteq\{w_0,\dots,w_{j-1}\}$.
 
+We provide a proof by induction. If $s=w_1$, then $u=\{w_0\}$, and therefore, the result follows trivially from the assumptions in this lemma. Assume now that the result is true for $s=w_j$, with $1\leq j<m$. We will prove that this implies that it is also true for $s=w_{j+1}$. We consider two cases: $\max u=w_j$ and $\max u<w_j$.
 
-
+If $\max u=w_j$, then with $v\coloneqq\{w_0,\dots,w_j\}\setminus u$, we find that
 \begin{align*}
-\tilde{P}_w(X_s=y\vert X_u=x_u)
-&=\tilde{P}_w(X_{s_i}=y_i\vert X_{u_i}=x_{u_i})
-=...\\
-&=\tilde{P}(X_{s_i}=y_i\vert X_{u_i}=x_{u_i})
-=\tilde{P}(A_i\vert C_i)\\
-&=\tilde{P}_w(X_s=y\vert X_{t_0}=x_{0}, \dots, X_{t_n}=x_{n})
-=T_{t_n}^s(x_n,y)
+\tilde{P}_w(X_{w_{j+1}}=y\vert X_u=x_u)
+&=\sum_{z_{v}\in\states^{v}}\tilde{P}_w(X_{w_{j+1}}=y, X_{v}=z_{v}\vert X_u=x_u)\\
+&=\sum_{z_{v}\in\states^{v}}
+\tilde{P}_w(X_{w_{j+1}}=y\vert X_u=x_u, X_{v}=z_{v})
+\tilde{P}_w(X_{v}=z_{v}\vert X_u=x_u)\\
+&=\sum_{z_{v}\in\states^{v}}
+T_{\max u}^{w_{j+1}}(x_{\max u},y)
+\tilde{P}_w(X_{v}=z_{v}\vert X_u=x_u)\\[-1mm]
+&\quad\quad\quad\quad\quad\quad
+=T_{\max u}^{w_{j+1}}(x_{\max u},y)
+\sum_{z_{v}\in\states^{v}}
+\tilde{P}_w(X_{v}=z_{v}\vert X_u=x_u)\\[-1mm]
+&\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad~~~
+=T_{\max u}^{w_{j+1}}(x_{\max u},y),
 \end{align*}
+where the first equality follows from~\ref{def:coh_prob_3}, the second equality follows from \ref{def:coh_prob_4}, the third equality follows from the assumptions in this lemma and the fact that $\max u=w_j$, and the fifth equality follows from \ref{def:coh_prob_1} and~\ref{def:coh_prob_3}. *** need to check this and maybe adapt the F's such that this is true ***
+
+If $\max u<w_j$, then with $v\coloneqq\{w_0,\dots,w_{j-1}\}\setminus u$, we find that
+\begin{align*}
+&\tilde{P}_w(X_{w_{j+1}}=y\vert X_u=x_u)\\[1,5mm]
+&=\sum_{z_{w_j}\in\states}
+\sum_{z_{v}\in\states^{v}}
+\tilde{P}_w(X_{w_{j+1}}=y, X_{w_j}=z_{w_j}, X_v=z_v\vert X_u=x_u)\\
+&=\sum_{z_{w_j}\in\states}
+\sum_{z_{v}\in\states^{v}}
+\tilde{P}_w(X_{w_{j+1}}=y\vert X_u=x_u, X_{w_j}=z_{w_j}, X_v=z_v)\\[-4mm]
+&\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad
+\tilde{P}_w(X_v=z_v\vert X_u=x_u, X_{w_j}=z_{w_j})
+\tilde{P}_w(X_{w_j}=z_{w_j}\vert X_u=x_u)\\[4mm]
+&=\sum_{z_{w_j}\in\states}
+\sum_{z_{v}\in\states^{v}}
+T_{w_j}^{w_{j+1}}(z_{w_j},y)
+\tilde{P}_w(X_v=z_v\vert X_u=x_u, X_{w_j}=z_{w_j})
+\tilde{P}_w(X_{w_j}=z_{w_j}\vert X_u=x_u)\\
+&=\sum_{z_{w_j}\in\states}
+\sum_{z_{v}\in\states^{v}}
+T_{w_j}^{w_{j+1}}(z_{w_j},y)
+\tilde{P}_w(X_v=z_v\vert X_u=x_u, X_{w_j}=z_{w_j})
+T_{\max u}^{w_{j}}(x_{\max u},z_{w_j})\\
+&=\sum_{z_{w_j}\in\states}
+T_{w_j}^{w_{j+1}}(z_{w_j},y)
+T_{\max u}^{w_{j}}(x_{\max u},z_{w_j})
+\sum_{z_{v}\in\states^{v}}
+\tilde{P}_w(X_v=z_v\vert X_u=x_u, X_{w_j}=z_{w_j})
+\\
+&=\sum_{z_{w_j}\in\states}
+T_{w_j}^{w_{j+1}}(z_{w_j},y)
+T_{\max u}^{w_{j}}(x_{\max u},z_{w_j})
+=T_{\max u}^{w_{j+1}}(x_{\max u},y),
+\end{align*}
+*** need to check this and maybe adapt the F's such that this is true ***
 \end{proof}
 
 \begin{lemma}\label{lemma:samepandTissameP}
