@@ -1546,27 +1546,27 @@ We now consider functions $f\in\gambles(\states^{u\cup v})$, where $u=t_0,\ldots
 
 An obvious question is therefore what the operator $L_t^s$ computes for functions of this form, as it clearly cannot compute both $\underline{\mathbb{E}}^{\mathrm{WM}}_{\,\rateset}$ and $\underline{\mathbb{E}}^\mathrm{W}_{\,\rateset}$. As we will see below, it turns out that we can use $L_t^s$ to compute the lower expectation of such functions with respect to sets of non-Markov processes. We start by showing that, using a composition of these operators, we can compute a lower bound with respect to a set $\wprocesses_\rateset$.
 \begin{proposition}\label{prop:multivar_bounded}
-Consider any $t,s,s'\in\realsnonneg$ such that $t<s<s'$, and let $\rateset$ be an arbitrary non-empty bounded set of rate matrices with corresponding lower transition rate operator $\lrate$. Then, for all $P\in\processes_\rateset$, all $u\in\mathcal{U}_{[0,t]}$ and $(x_{t_0},\ldots,x_{t_n})\in\states^u$, all $v\in\mathcal{U}_{[s,s']}$, and all $f\in\gambles(\states^{u\cup v})$,
+Let $\rateset$ be an arbitrary non-empty bounded set of rate matrices with corresponding lower transition rate operator $\lrate$, and let $\underline{\mathcal{T}}_{\lrate}$ be the family of lower transition operators corresponding to $\lrate$. Then, for any $P\in\wprocesses_\rateset$, any $s,s'\in\realsnonneg$ such that $s<s'$, any $u\in\mathcal{U}_{<s}$ and $x_u\in\states^u$, any $v\in\mathcal{U}_{[s,s']}$, and any $f\in\gambles(\states^{u\cup v})$,
 \begin{equation*}
 \left[L_{t_n}^{s_0}L_{s_0}^{s_1}\cdots L_{s_{m-1}}^{s_m}f\right](x_{t_0},\ldots,x_{t_n}) \leq \mathbb{E}[f(x_{t_0},\ldots,x_{t_n},X_{s_0},\ldots,X_{s_m})\,\vert\,X_{t_0,\ldots,t_n}=x_{t_0,\ldots,t_n}]\,.
 \end{equation*}
 \end{proposition}
 
-Note that a direct implication of this, together with Proposition~\ref{prop:lower_exp_markov_bounded_by_nonmarkov}, is that $L_t^s$ can also be used to compute lower bounds on the expectation with respect to a set $\mprocesses_\rateset$ of Markov processes. However, this bound will then in general not be tight, and hence will not correspond to the lower expectation.
+Note that a direct implication of this, together with Proposition~\ref{prop:lower_exp_markov_bounded_by_nonmarkov}, is that $L_t^s$ can also be used to compute lower bounds on the expectation with respect to a set $\wmprocesses_\rateset$ of Markov processes. However, this bound will then in general not be tight, and hence will not correspond to the lower expectation.
 
-To see why, observe that in the term $[L_{t_n}^{s_0}L_{s_0}^{s_1}\cdots L_{s_{m-1}}^{s_m}f](x_{t_0},\ldots,x_{t_n})$, the operators $L_{s_{i-1}}^{s_i}$ can take on different values depending on the choice of $(x_{t_0},\ldots,x_{t_n},x_{s_0},\ldots,x_{s_{i-1}})$. Hence, to approach these values of $L_{s_{i-1}}^{s_i}$ from within a set $\mprocesses$ of Markov processes, we have to be able to pick the approximating values such that they depend on the specific trajectory $(x_{t_0},\ldots,x_{t_n},x_{s_0},\ldots,x_{s_{i-1}})$, and this is exactly what the Markov condition prevents us from doing. As the next result shows, we can however approach this quantity from within a set $\processes_\rateset$ of non-Markov processes.
+To see why, observe that in the term $[L_{t_n}^{s_0}L_{s_0}^{s_1}\cdots L_{s_{m-1}}^{s_m}f](x_{t_0},\ldots,x_{t_n})$, the operators $L_{s_{i-1}}^{s_i}$ can take on different values depending on the choice of $(x_{t_0},\ldots,x_{t_n},x_{s_0},\ldots,x_{s_{i-1}})$. Hence, to approach these values of $L_{s_{i-1}}^{s_i}$ from within a set $\wmprocesses$ of Markov processes, we have to be able to pick the approximating values such that they depend on the specific trajectory $(x_{t_0},\ldots,x_{t_n},x_{s_0},\ldots,x_{s_{i-1}})$, and this is exactly what the Markov condition prevents us from doing. As the next result shows, we can however approach this quantity from within a set $\wprocesses_\rateset$ of non-Markov processes.
 
 \begin{proposition}\label{prop:multivar_bound_tight}
-Consider any $t,s,s'\in\realsnonneg$ such that $t<s<s'$, and let $\rateset$ be an arbitrary non-empty bounded set of rate matrices that has separately specified rows, with corresponding lower transition rate operator $\lrate$. Then, for all $u\in\mathcal{U}_{[0,t]}$, all $v\in\mathcal{U}_{[s,s']}$, all $f\in\gambles(\states^{u\cup v})$, and all $\epsilon\in\realspos$, there is a $P\in\processes_\rateset$ such that
+Let $\rateset$ be an arbitrary non-empty bounded set of rate matrices that has separately specified rows, with corresponding lower transition rate operator $\lrate$, and let $\underline{\mathcal{T}}_{\lrate}$ be the family of lower transition operators corresponding to $\lrate$. Then, for all $s,s'\in\realsnonneg$ such that $s<s'$, all $u\in\mathcal{U}_{<s}$, all $v\in\mathcal{U}_{[s,s']}$, all $f\in\gambles(\states^{u\cup v})$, and all $\epsilon\in\realspos$, there is a $P\in\wprocesses_\rateset$ such that
 \begin{equation*}
 \norm{L_{t_n}^{s_0}L_{s_0}^{s_1}\cdots L_{s_{m-1}}^{s_m}f - \mathbb{E}[f(X_{t_0},\ldots,X_{t_n},X_{s_0},\ldots,X_{s_m})\,\vert\,X_{t_0,\ldots,t_n}]} < \epsilon\,.
 \end{equation*}
 \end{proposition}
 
 \begin{corollary}\label{cor:inf_works_for_multivar}
-Consider any $t,s,s'\in\realsnonneg$ such that $t<s<s'$, and let $\rateset$ be an arbitrary non-empty bounded set of rate matrices that has separately specified rows, with corresponding lower transition rate operator $\lrate$. Then, for all $u\in\mathcal{U}_{[0,t]}$ and $(x_{t_0},\ldots,x_{t_n})\in\states^u$, all $v\in\mathcal{U}_{[s,s']}$, and all $f\in\gambles(\states^{u\cup v})$,
+Let $\rateset$ be an arbitrary non-empty bounded set of rate matrices that has separately specified rows, with corresponding lower transition rate operator $\lrate$, and let $\underline{\mathcal{T}}_{\lrate}$ be the family of lower transition operators corresponding to $\lrate$. Then, for all $s,s'\in\realsnonneg$ such that $s<s'$, all $u\in\mathcal{U}_{<s}$ and $x_u\in\states^u$, all $v\in\mathcal{U}_{[s,s']}$, and all $f\in\gambles(\states^{u\cup v})$,
 \begin{equation*}
-\left[L_{t_n}^{s_0}L_{s_0}^{s_1}\cdots L_{s_{m-1}}^{s_m}f\right](x_{t_0},\ldots,x_{t_n}) = \underline{\mathbb{E}}[f(x_{t_0},\ldots,x_{t_n},X_{s_0},\ldots,X_{s_m})\,\vert\,X_{t_0,\ldots,t_n}=x_{t_0,\ldots,t_n}]\,.
+\left[L_{t_n}^{s_0}L_{s_0}^{s_1}\cdots L_{s_{m-1}}^{s_m}f\right](x_{t_0},\ldots,x_{t_n}) = \underline{\mathbb{E}}^{\mathrm{W}}_{\,\rateset}[f(x_{t_0},\ldots,x_{t_n},X_{s_0},\ldots,X_{s_m})\,\vert\,X_{t_0,\ldots,t_n}=x_{t_0,\ldots,t_n}]\,.
 \end{equation*}
 \end{corollary}
 
