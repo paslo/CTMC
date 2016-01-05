@@ -877,7 +877,7 @@ test
 
 *** deze moet nog even goed opgeschreven worden:
 
-\begin{lemma}
+\begin{lemma}\label{lemma:nonhomogen_trans_mat_system}
 Let $Q_t$ be a left-continuous, piecewise-constant function that gives for each time point $t\in\realsnonneg$ a rate matrix $Q_t\in\mathcal{R}$, such that $Q_t$ takes different values on at most a finite number of intervals. Specifically, let $Q_t$ be such that there exists some ordered $u\in\mathcal{U}$ with $u=t_0,\ldots,t_n$ and rate matrices $\tilde{Q}_1,\ldots,\tilde{Q}_n\in\mathcal{R}$ such that, for all $t\in\realsnonneg$,
 \begin{equation*}
 Q_t = \tilde{Q}_i\,,\quad\text{if $t\in(t_{i-1},t_{i}]$, for all $i\in\{1,\ldots,n\}$}\,,
@@ -920,17 +920,21 @@ Therefore, $\mathcal{T}_{Q_t}$ is well-behaved.
 \end{proof}
 
 \begin{theorem}\label{theorem:continuous_rate_matrix_has_process}
-Consider any left-continuous, piecewise-constant function $Q_t$ that gives for each time point $t\in\realsnonneg$ a rate matrix $Q_t\in\mathcal{R}$. Then, there exists a well-behaved continuous-time Markov chain $P\in\wmprocesses$ such that $\mathcal{T}_P=\mathcal{T}_{Q_t}$, where $\mathcal{T}_{Q_t}$ is defined as in Lemma~{\bf REF}.
+Consider any left-continuous, piecewise-constant function $Q_t$ that gives for each time point $t\in\realsnonneg$ a rate matrix $Q_t\in\mathcal{R}$. Then, there exists a well-behaved continuous-time Markov chain $P\in\wmprocesses$ such that $\mathcal{T}_P=\mathcal{T}_{Q_t}$, where $\mathcal{T}_{Q_t}$ is defined as in Lemma~\ref{lemma:nonhomogen_trans_mat_system}.
 \end{theorem}
 \begin{proof}
-{\bf TODO}, but trivial once we have the above lemma
+By Lemma~\ref{lemma:nonhomogen_trans_mat_system}, $\mathcal{T}_{Q_t}$ is a well-behaved transition matrix system. Therefore, by Theorem~{\bf REF}, there exists a well-behaved continuous-time Markov chain $P\in\wmprocesses$ such that $\mathcal{T}_P=\mathcal{T}_{Q_t}$.
 \end{proof}
 
 \begin{lemma}
-Let $P\in\wmprocesses$ be such that there exists a left-continuous, piecewise-constant function $Q_t$ such that $\mathcal{T}_P=\mathcal{T}_{Q_t}$, where $\mathcal{T}_{Q_t}$ is defined as in Lemma~{\bf REF}. Then, for any set of rate matrices $\rateset$ for which it holds that $Q_t\in\rateset$ for all $t\in\realsnonneg$, it holds that $P\in\wmprocesses_\rateset$.
+Let $P\in\wmprocesses$ be such that there exists a left-continuous, piecewise-constant function $Q_t$ such that $\mathcal{T}_P=\mathcal{T}_{Q_t}$, where $\mathcal{T}_{Q_t}$ is defined as in Lemma~\ref{lemma:nonhomogen_trans_mat_system}. Then, for any set of rate matrices $\rateset$ for which it holds that $Q_t\in\rateset$ for all $t\in\realsnonneg$, it holds that $P\in\wmprocesses_\rateset$.
 \end{lemma}
 \begin{proof}
-*** {\bf TODO}. Also, this lemma needs to be moved down, since $\wmprocesses_\rateset$ isnt defined here yet.
+Note that, by the definition of $\mathcal{T}_{Q_t}$, it holds for all $t\in\realsnonneg$ that $\partial_+T_t^t$ and $\partial_-T_t^t$ exist, and that they satisfy $\partial_+T_t^t,\partial_-T_t^t\in\rateset$. Therefore, and because $P$ is well-behaved, by Corollary~\ref{corol:outersingleton} we have that $\smash{\overline{\partial}}_+T_t^t=\{\partial_+T_t^t\}$ and $\smash{\overline{\partial}}_-T_t^t=\{\partial_-T_t^t\}$. Hence, we find that
+\begin{equation*}
+\smash{\overline{\partial}}T_t^t = \smash{\overline{\partial}}_+T_t^t\cup \smash{\overline{\partial}}_-T_t^t = \{\partial_+T_t^t, \partial_-T_t^t\}\,,
+\end{equation*}
+from which it follows that, for all $t\in\realsnonneg$, it holds that $\smash{\overline{\partial}}T_t^t\subseteq\rateset$. Therefore, by Definition~\ref{def:markov_process_set_new}, we find that $P\in\wmprocesses_\rateset$.
 \end{proof}
 
 \section{Imprecise Continuous-Time Markov chains}
