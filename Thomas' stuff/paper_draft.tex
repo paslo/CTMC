@@ -984,23 +984,17 @@ Hence, any well-behaved homogenous Markov chain $P\in\whmprocesses$ is completel
 
 \subsection{Non-homogeneous Markov chains}
 
-*** I would explicitely discuss the special cases of continous $Q_t$ and piecewice constant $Q_t$ here, as examples, and refer to some other papers for more general cases, since we don't need them.
+In contrast to homogeneous Markov chains, a Markov chain for which Equation~\eqref{eq:homogeneousMarkov} does not hold is called---rather obviously---\emph{non-homogeneous}. While we know from Theorem~\ref{theo:homogeneoushasQ} that homogeneous Markov chains can be characterized (up to an initial distribution) by a fixed rate matrix $Q\in\mathcal{R}$, this does not hold for non-homogeneous Markov chains. 
 
-\begin{theorem}%\label{theorem:continuous_rate_matrix_has_process}
-For any continuous map $Q_t$ from $\reals_{\geq0}$ to $\mathcal{R}$, there is a unique transition matrix system $\mathcal{T}$ such that
-\begin{equation*}
-test
-\end{equation*}
-\end{theorem}
-\begin{proof}
-*** I guess its best to provide a reference here, although I think it should also be possible to prove this ourselves. ***
+Instead, such systems are typically described by a function $Q_t$ that gives for each time point $t\in\realsnonneg$ a rate matrix $Q_t\in\mathcal{R}$. For any such function $Q_t$, the existence and uniqueness of a corresponding non-homogeneous Markov chain then depend on the specific properties of $Q_t$. Rather than attempt to treat these different cases here, we instead refer to some work from the literature. 
 
-"Exact methods for the transient analysis of nonhomogeneous continuous time Markov chains"
+For example, (piecewise-)continuity of $Q_t$ in terms of $t$ may be assumed {\bf REF}. Similarly, \cite{aalen1978empirical} assumes that $Q_t$ is left-continuous and has bounded right-hand limits. In~\cite{rindos1995exact}, a right-continuous and piecewise-constant $Q_t$ is used, meaning that $Q_t$ takes different values on various (half-open) intervals of $\realsnonneg$, but fixed values within those intervals.
 
-"an empirical transition matrix for non-homogeneous markov chains based on censored observations"
-\end{proof}
+The case of a left-continuous and piecewise-constant $Q_t$ is used in our present work, and we have therefore chosen to include it here for completeness. The formal construction of such a $Q_t$, and specifically that of a corresponding transition matrix system $\mathcal{T}_{Q_t}$, is somewhat convoluted. We have therefore moved its construction to Lemma~\ref{lemma:nonhomogen_trans_mat_system} in the appendix. Intuitively, the result below can be understood as describing the existence of a non-homogeneous Markov chain that is constructed by piecing together various homogeneous Markov chains on fixed intervals.
 
-**** Other kinds of continuous-time non-homogeneous Markov chains also exist. For example, Proposition~\ref{prop:continuous_rate_matrix_has_process} in the appendix describes the existence of a $P\in\wmprocesses$ corresponding to a piecewise-continuous function $Q_t$.
+\begin{proposition}\label{prop:continuous_rate_matrix_has_process}
+Consider any left-continuous, piecewise-constant function $Q_t$ that gives for each time point $t\in\realsnonneg$ a rate matrix $Q_t\in\mathcal{R}$. Then, there exists a well-behaved continuous-time Markov chain $P\in\wmprocesses$ such that $\mathcal{T}_P=\mathcal{T}_{Q_t}$, where $\mathcal{T}_{Q_t}$ is defined as in Lemma~\ref{lemma:nonhomogen_trans_mat_system}.
+\end{proposition}
 
 \section{Imprecise Continuous-Time Markov chains}
 \label{sec:iCTMC}
@@ -2219,10 +2213,7 @@ where the last equality used the well-known derivative of the matrix exponential
 Therefore, $\mathcal{T}_{Q_t}$ is well-behaved.
 \end{proof}
 
-\begin{proposition}\label{prop:continuous_rate_matrix_has_process}
-Consider any left-continuous, piecewise-constant function $Q_t$ that gives for each time point $t\in\realsnonneg$ a rate matrix $Q_t\in\mathcal{R}$. Then, there exists a well-behaved continuous-time Markov chain $P\in\wmprocesses$ such that $\mathcal{T}_P=\mathcal{T}_{Q_t}$, where $\mathcal{T}_{Q_t}$ is defined as in Lemma~\ref{lemma:nonhomogen_trans_mat_system}.
-\end{proposition}
-\begin{proof}
+\begin{proof}[Proof of Proposition~\ref{prop:continuous_rate_matrix_has_process}]
 By Lemma~\ref{lemma:nonhomogen_trans_mat_system}, $\mathcal{T}_{Q_t}$ is a well-behaved transition matrix system. Therefore, by Theorem~{\bf REF}, there exists a well-behaved continuous-time Markov chain $P\in\wmprocesses$ such that $\mathcal{T}_P=\mathcal{T}_{Q_t}$.
 \end{proof}
 
