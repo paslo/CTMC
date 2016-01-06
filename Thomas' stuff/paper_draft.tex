@@ -1443,8 +1443,18 @@ For any non-empty bounded set $\rateset\subseteq\mathcal{R}$ of rate matrices, t
 Inspired by this result, we will also refer to the lower envelope of $\rateset$ as the \emph{lower transition rate operator that corresponds to $\rateset$}. %As we have just seen, every non-empty bounded set $\rateset\subseteq\mathcal{R}$ of rate matrices has such a corresponding lower transition rate operator $\lrate$. 
 However, this correspondence is not one-to-one. As the following example establishes, different non-empty bounded sets of rate matrices may have the same corresponding lower transition rate operator.
 
-\begin{exmp}
-*** TO BE COMPLETED ***
+\begin{exmp}\label{example:different_sets_same_lower_rate}
+For the sake of simplicity, we will assume that the state space $\states$ has only two elements, so that we can work with $2\times 2$ matrices. Consider two rate matrices $A,B\in\mathcal{R}$ defined as
+\begin{equation*}
+A\coloneqq\left[\begin{array}{rr}-1 & 1 \\2 & -2\end{array}\right]\,,\quad\text{and}\quad
+B\coloneqq\left[\begin{array}{rr}-3 & 3 \\1 & -1\end{array}\right]\,.
+\end{equation*}
+Define a third rate matrix $C\coloneqq \nicefrac{1}{2}(A+B)$. We will now construct two different non-empty bounded sets of rate matrices; let $\rateset^1\coloneqq\{A,B\}$, and let $\rateset^2\coloneqq\{A,B,C\}$. Then, clearly, $\rateset^1\neq\rateset^2$. 
+Let now, respectively, $\lrate_1$ and $\lrate_2$ be the lower transition rate operators corresponding to $\rateset^1$ and $\rateset^2$, as defined by Equation~\eqref{eq:correspondinglowertrans}. We will show that $\lrate_1=\lrate_2$.
+
+Consider any $f\in\gamblesX$. It is easily verified that if $f(1)\leq f(2)$, it holds that $[Af](1)\leq[Bf](1)$ and $[Af](2)\leq[Bf](2)$. Hence, if $f(1)\leq f(2)$, we have $Af\leq Bf$. Contrariwise, if $f(2)\leq f(1)$, we have $[Bf](1)\leq [Af](1)$ and $[Bf](2)\leq[Af](2)$, and hence also $Bf\leq Af$. Note also that by the construction of $C$, it holds that if $Af\leq Bf$, we have $Af\leq Cf$, and if $Bf\leq Af$, we have $Bf\leq Cf$.
+
+Now, because clearly either $f(1)\leq f(2)$ or $f(2)\leq f(1)$, it follows from Equation~\eqref{eq:correspondinglowertrans} and the inequalities above that either $\lrate_1f=Af$, if $Af\leq Bf$, or $\lrate_1f=Bf$, if $Bf\leq Af$. Furthermore, as noted, if $Af\leq Bf$ then also $Af\leq Cf$, and if $Bf\leq Af$ then $Bf\leq Cf$. Therefore, we find that also either $\lrate_2f=Af$, or $\lrate_2f=Bf$. Hence, $\lrate_1f=\lrate_2f$, and because the $f\in\gamblesX$ was arbitrary, we have that $\lrate_1=\lrate_2$.
 \exampleend
 \end{exmp}
 
@@ -1466,7 +1476,7 @@ Consider a lower transition rate operator $\lrate$ and let $\rateset_{\lrate}$ b
 
 \noindent
 Because of this result, and since---as discussed above---every non-empty bounded set of rate matrices that has $\lrate$ as its lower envelope is a subset of $\rateset_{\lrate}$, it follows that $\rateset_{\lrate}$ is the largest non-empty bounded set of rate matrices that has $\lrate$ as its lower envelope.
-Furthermore, as we will show in Proposition~\ref{prop:dominatingproperties} below, this set $\rateset_{\lrate}$ is also closed and convex, and has \emph{separately specified rows}.
+Furthermore, as we will show in Proposition~\ref{prop:dominatingproperties} below, this set $\rateset_{\lrate}$ is also closed and convex, and has \emph{separately specified rows}. We say that a set of rate matrices has separately specified rows if it is closed under taking arbitrary combinations of rows from its elements.
 
 \begin{definition}
 A set of rate matrices $\rateset\subseteq\mathcal{R}$ has separately specified rows if
@@ -1478,16 +1488,10 @@ Q\in\mathcal{R}
 \end{equation*}
 where, for every $x\in\states$, $\rateset_x\coloneqq\{Q(x,\cdot)\colon Q\in\rateset\}$ is some set of rows from which the $x$-th row of the rate matrices in $\rateset$ are taken.
 \end{definition}
-\noindent Thus, a set of rate matrices has separately specified rows if it is closed under taking arbitrary combinations of rows from its elements. 
 
 \begin{proposition}\label{prop:dominatingproperties}
 Consider a lower transition rate operator $\lrate$ and let $\rateset_{\lrate}$ be the corresponding set of dominating rate matrices, as defined by Equation~\eqref{eq:dominatingratematrices}. Then $\rateset_{\lrate}$ is closed and convex, and has separately specified rows.
 \end{proposition}
-
-\begin{exmp}
-*** TO BE COMPLETED ***
-\exampleend
-\end{exmp}
 
 \noindent
 These additional properties characterize $\rateset_{\lrate}$ completely, in the sense that no other set satisfies them.
@@ -1495,6 +1499,25 @@ These additional properties characterize $\rateset_{\lrate}$ completely, in the 
 \begin{proposition}\label{prop:dominating_unique_characterization}
 Consider any non-empty, bounded, closed and convex set of rate matrices $\rateset\subseteq\mathcal{R}$ with separately specified rows that has $\lrate$ as its lower envelope. Then $\rateset=\rateset_{\lrate}$.
 \end{proposition}
+
+\begin{exmp}
+Let $\rateset^1$ and $\rateset^2$ be constructed as in Example~\ref{example:different_sets_same_lower_rate}, and let $\lrate\coloneqq\lrate_1=\lrate_2$ be their common lower transition rate operator. We will construct the set $\rateset_{\lrate}$ of rate matrices that dominate $\lrate$. Note that this construction is specific to the example, and will not work in general.
+
+Recall from Example~\ref{example:different_sets_same_lower_rate} that for all $f\in\gamblesX$, it holds that either $\lrate f=Af$, or $\lrate f=Bf$. Using a similar argument as we used there for the rate matrix $C$, it is clear that any convex combination $Q_\lambda\coloneqq \lambda A+(1-\lambda)B$, with $\lambda\in[0,1]$, is a rate matrix that dominates $\lrate$. Furthermore, because we there found that $[Af](1)\leq [Bf](1)$ if and only if $[Af](2)\leq[Bf](2)$, any matrix constructed by combining rows from $A$ and $B$ will dominate $\lrate$. For example, let $D$ be a rate matrix such that $D(1,\cdot)\coloneqq A(1,\cdot)$ and $D(2,\cdot)\coloneqq B(2,\cdot)$. Then, if $Af\leq Bf$, it also holds that $Af\leq Df$. Similarly, if $Bf\leq Af$, then also $Bf\leq Df$. A similar argument shows that the same is true for any matrix constructed by combining rows from different convex combinations of $A$ and $B$.
+
+From these ideas, we first construct two sets of rows. For all $x\in\states$, let
+\begin{equation*}
+\rateset_x \coloneqq \left\{\lambda A(x,\cdot)+(1-\lambda)B(x,\cdot)\,:\,\lambda\in[0,1]\right\}\,.
+\end{equation*}
+Let now $\rateset \coloneqq \{Q\in\mathcal{R}\,:\,(\forall x\in\states)\, Q(x,\cdot)\in\rateset_x\}$. Then, for all $Q\in\rateset$, $Q$ is such that
+\begin{equation*}
+Q=\left[\begin{array}{rr}-a & a \\ b& -b\end{array}\right]\,,\quad\text{where $a\in[1,3]$ and $b\in[1,2]$.}
+\end{equation*}
+The converse also holds; for all $a\in[1,3]$ and $b\in[1,2]$, there is a $Q\in\rateset$ that takes the above form. From this, it is clear that for all $Q\in\rateset$, it holds that $\lrate f\leq Qf$, for all $f\in\gamblesX$. Furthermore, $\rateset^1\subset\rateset$ and $\rateset^2\subset\rateset$. Hence, $\rateset$ has $\lrate$ as its corresponding lower transition rate operator. 
+
+It remains to determine that $\rateset=\rateset_{\lrate}$. One way to verify this is to consider any $Q'\notin\rateset$, and show that there is then some $f\in\gamblesX$ and some $x\in\states$ such that $[Q'f](x)<[\lrate f](x)$. We leave this method as an exercise for the reader, and note instead the following. $\rateset$ is clearly non-empty, bounded, closed, convex, has separately specified rows, and has $\lrate$ as its lower transition rate operator. Therefore, by Proposition~\ref{prop:dominating_unique_characterization}, we find that indeed $\rateset=\rateset_{\lrate}$.
+\exampleend
+\end{exmp}
 
 We conclude from all of this that non-empty bounded sets of rate matrices are more informative than lower transition rate operators. Different non-empty bounded sets of rate matrices $\rateset$ may have the same lower transition rate operator $\lrate$ and therefore, in general, knowledge of $\lrate$ does not suffice to reconstruct $\rateset$; we can only reconstruct an outer approximation $\rateset_{\lrate}$, which is guaranteed to include $\rateset$. This changes if, besides non-empty and bounded, $\rateset$ is also closed and convex and has separately specified rows. In that case, $\lrate$ serves as an alternative representation for $\rateset$ because, since $\rateset=\rateset_{\lrate}$, we can use $\lrate$ to reconstruct $\rateset$. In other words: there is a one-to-one correspondence between lower transition rate operators and non-empty, bounded, closed and convex sets of rate matrices that have separately specified rows.
 
