@@ -910,32 +910,55 @@ where the first equality follows from~\ref{def:coh_prob_3}, the second equality 
 Consider two Markov chains $P_1,P_2\in\mprocesses$ such that $\mathcal{T}_{P_1}=\mathcal{T}_{P_2}$ and, for all $y\in\states$, $P_1(X_0=y)=P_2(X_0=y)$. Then $P_1=P_2$.
 \end{lemma}
 \begin{proof}
-Let $\mathcal{T}\coloneqq\mathcal{T}_{P_1}=\mathcal{T}_{P_2}$ be the common transition matrix system of $P_1$ and $P_2$ and let $p$ be their common initial probability mass function, as defined by $p(y)\coloneqq P_1(X_0=y)=P_2(X_0=y)$ for all $y\in\states$. Let $\tilde{P}$ be a real-valued function on $\mathcal{C}$, with $\mathcal{C}$ and $\tilde{P}$ defined as in the proof of Theorem~\ref{theo:uniqueMarkovchain}. It then follows from Equation~\eqref{def:markov_property} that the restriction of $P_1$ and $P_2$ to $\mathcal{C}$ is equal to $\tilde{P}$. Furthermore, for any $t\geq0$ and $y\in\states$
-
-*** not finished yet ***
+Let $\mathcal{T}\coloneqq\mathcal{T}_{P_1}=\mathcal{T}_{P_2}$ be the common transition matrix system of $P_1$ and $P_2$ and let $p$ be their common initial probability mass function, as defined by $p(y)\coloneqq P_1(X_0=y)=P_2(X_0=y)$ for all $y\in\states$. Let $\tilde{P}$ be a real-valued function on $\mathcal{C}$, with $\mathcal{C}$ and $\tilde{P}$ defined as in the proof of Theorem~\ref{theo:uniqueMarkovchain}. It then follows from Equation~\eqref{def:markov_property} that the restriction of $P_1$ and $P_2$ to $\mathcal{C}$ is equal to $\tilde{P}$. Furthermore, for any $s>0$, $y\in\states$ and $j\in\{1,2\}$, we find that
+\begin{align*}
+P_j(X_s=y)
+=\sum_{x\in\states}P_j(X_s=y, X_0=x)
+&=\sum_{x\in\states}P_j(X_s=y\vert X_0=x)P_j(X_0=x)\\
+&=\sum_{x\in\states}\tilde{P}(X_s=y\vert X_0=x)\tilde{P}(X_0=x).
+\end{align*}
+Hence, the restrictions of $P_1$ and $P_2$ to
+\begin{align*}
+\mathcal{C}^*
+\coloneqq&\mathcal{C}\cup
+\{
+(X_s=y,X_\emptyset=x_\emptyset)
+\colon 
+s\in\reals_{>0},~y\in\states
+\}\\
+=&\{
+(X_s=y,X_u=x_u)
+\colon 
+u\in\mathcal{U},~s\in\reals_{\geq0},~s>u,~x_u\in\states^u,~y\in\states
+\}
+\end{align*}
+are identical. We denote this common restriction by $\tilde{P}^*$.
 
 Consider now any $(A,X_u=x_u)\in\mathcal{C}^\mathrm{SP}$. Then since $A\in\mathcal{A}_u$, there is some finite set of time points $v=\{v_1,v_2,\dots,v_n\}\subseteq\reals_{\geq0}$, with $n\in\nats_\emptyset$, such that $\max u<v_1<v_2<\dots<v_n$, and some set $S\subseteq\states^{u\cup v}$ such that $A=\cup_{z_{u\cup v}\in S}(X_{u\cup v}=z_{u\cup v})$. 
 Let $S_v\coloneqq\{s_v\in\states^v\colon (x_u,z_v)\in S\}$.
-We then find that
+For any $j\in\{1,2\}$, we then find that
 \begin{align*}
-P_1(A\vert X_u=x_u)
+P_j(A\vert X_u=x_u)
 &=\sum_{z_{u\cup v}\in S}
-P_1(X_{u\cup v}=z_{u\cup v}\vert X_u=x_u)\\
+P_j(X_{u\cup v}=z_{u\cup v}\vert X_u=x_u)\\
 %&=\sum_{z_{v}\in S_v}
 %P_1(X_{u}=x_{u}, X_v=z_v\vert X_u=x_u)\\
 %&=\sum_{z_{v}\in S_v}
 %P_1(X_v=z_v\vert X_u=x_u)\\
 &=\sum_{z_{v}\in S_v}
-P_1(X_{v_1}=z_{v_1}, X_{v_2}=z_{v_2}, \dots, X_{v_n}=z_{v_n}\vert X_u=x_u)\\[-1mm]
+P_j(X_{v_1}=z_{v_1}, X_{v_2}=z_{v_2}, \dots, X_{v_n}=z_{v_n}\vert X_u=x_u)\\[-1mm]
 &=\sum_{z_{v}\in S_v}
 \,\,
 \prod_{i=1}^n
 \,\,
-P_1(X_{v_i}=z_{v_i}\vert X_u=x_u, X_{v_1}=z_{v_1}, \dots, X_{v_{i-1}}=z_{v_{i-1}}).\\
+P_j(X_{v_i}=z_{v_i}\vert X_u=x_u, X_{v_1}=z_{v_1}, \dots, X_{v_{i-1}}=z_{v_{i-1}})\\
+&=\sum_{z_{v}\in S_v}
+\,\,
+\prod_{i=1}^n
+\,\,
+\tilde{P}^*(X_{v_i}=z_{v_i}\vert X_u=x_u, X_{v_1}=z_{v_1}, \dots, X_{v_{i-1}}=z_{v_{i-1}}),
 \end{align*}
-If $u\neq\emptyset$
-
-*** not finished yet ***
+which implies that $P_1(A\vert X_u=x_u)=P_2(A\vert X_u=x_u)$. Since this is the case for any $(A,X_u=x_u)\in\mathcal{C}^\mathrm{SP}$, it follows that $P_1=P_2$.
 \end{proof}
 
 
