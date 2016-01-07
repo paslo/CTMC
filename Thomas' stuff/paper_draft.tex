@@ -1072,9 +1072,26 @@ We denote the set of all homogeneous Markov chains by $\hmprocesses$ and use $\w
 \begin{definition}\label{def:systemfromQ}For any rate matrix $Q\in\mathcal{R}$, we use $\mathcal{T}_Q$ to denote the family of stochastic matrices that is defined by
 \begin{equation*}
 T_t^s=e^{Q(s-t)}
-\text{~~for all $0\leq t\leq s$.}
+\text{~~for all $t,s\in\realsnonneg$ such that $t\leq s$.}
 \end{equation*}
-*** nog even uitleggen wat die matrix exponential inhoudt
+Here, the right-hand side denotes the \emph{matrix exponential} of $Q(s-t)$. There are various ways in which this matrix exponential can be expressed. For example, it is well known~{\bf REF} that it is the solution to the differential equation
+\begin{equation*}
+\frac{\partial }{\partial s}e^{Q(s-t)}\coloneqq Qe^{Q(s-t)}\,,\quad e^{Q\cdot (t-t)} \coloneqq I\,.
+\end{equation*}
+From this we find that its Taylor-series~{\bf REF?} expansion yields the representation:
+\begin{equation*}
+e^{Q(s-t)} \coloneqq \sum_{i=0}^{\infty}\frac{1}{i!}Q^i(s-t)^i\,,
+\end{equation*}
+where $Q^i$ denotes the $i$-th matrix power of $Q$.
+%Yet another representation is the Peano-Baker series~{\bf REF}, the solution of which is also known as a Picard matrix~{\bf REF} in this context, obtained by recursive integration of the differential equation:
+%\begin{align*}
+%e^{Q(s-t)} &\coloneqq I + \int_t^s Qe^{Q(\tau_1-t)}\mathrm{d}\tau_1 \\
+% &= I + \int_t^s Q\mathrm{d}\tau_1 + \int_t^s Q\int_t^sQ\mathrm{d}\tau_2\mathrm{d}\tau_1 + \cdots + \int_t^s Q\int_t^s\cdots \int_t^s Q\mathrm{d}\tau_n\cdots\mathrm{d}\tau_2\mathrm{d}\tau_1 + \cdots
+%\end{align*}
+A related representation that we will find useful is given~{\bf ref/proof?} by the following $\epsilon-\delta$ limit expression:
+\begin{equation}\label{eq:matrix_exp_limit}
+(\forall\epsilon\in\realspos)(\exists\delta\in\realspos)(\forall u\in\mathcal{U}_{[t,s]}\,:\,\sigma(u)<\delta)\,\norm{e^{Q(s-t)} - \prod_{i=1}^n(I+\Delta_iQ)} < \epsilon\,.
+\end{equation}
 \end{definition}
 
 \begin{proposition}
@@ -2406,7 +2423,22 @@ Consider any $Q\in\mathcal{R}$ and any $\Delta\geq0$. Then
 \end{equation*}
 \end{lemma}
 \begin{proof}
-*** this follows by combining Lemma~\ref{lemma:justthelinearpart} with the limit expression for the exponential ***
+To avoid trivialities, we assume that $\Delta\neq 0$ and $\norm{Q}\neq 0$. 
+
+Recall the $\epsilon-\delta$ limit expression for the matrix exponential, given by Equation~\eqref{eq:matrix_exp_limit}. Now, consider any $\epsilon\in\realspos$, and let $\delta^*\coloneqq\min\{\nicefrac{1}{\norm{Q}},\delta\}$, where $\delta$ satisfies Equation~\eqref{eq:matrix_exp_limit}. Take any $u\in\mathcal{U}_{[0,\Delta]}$ such that $\sigma(u)<\delta^*$. Then, clearly,
+\begin{align*}
+\norm{e^{Q\Delta}-(I+\Delta Q)} &\leq \norm{e^{Q\Delta} - \prod_{i=1}^n(I+\Delta_iQ)} + \norm{\prod_{i=1}^n(I+\Delta_iQ) - (I+\Delta Q)} \\
+ &< \norm{\prod_{i=1}^n(I+\Delta_iQ) - (I+\Delta Q)} + \epsilon\,.
+\end{align*}
+Furthermore, because $Q$ is a rate matrix, it is easily verified that $Q$ satisfies~\ref{LR:constantzero}--\ref{LR:nondiagpos}. Hence, $Q$ is also a lower transition rate operator. Therefore, and because $\sigma(u)<\delta^*\leq\nicefrac{1}{\norm{Q}}$, it follows from Lemma~\ref{lemma:justthelinearpart} that
+\begin{equation*}
+\norm{\prod_{i=1}^n(I+\Delta_iQ) - (I+\Delta Q)} \leq \Delta^2\norm{Q}^2\,.
+\end{equation*}
+Hence, we find
+\begin{equation*}
+\norm{e^{Q\Delta}-(I+\Delta Q)} < \Delta^2\norm{Q}^2 + \epsilon\,.
+\end{equation*}
+Because this holds for any $\epsilon\in\realspos$, the statement in the lemma  follows.
 \end{proof}
 
 \section{Proofs and Lemmas for Section~\ref{sec:iCTMC}}
