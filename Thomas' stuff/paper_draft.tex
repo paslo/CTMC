@@ -828,7 +828,7 @@ y\in\states,~
 x_u\in\states^u
 \right\}
 \end{equation*}
-such that, for any $j\in\{0,\dots,m\}$, $u=\{w_0,\dots,w_{j-1}\}$ and $x_u\in\states^u$, $P_w(X_j=\cdot\,\vert X_u=x_u)$ is a probability mass function on $\states$. Then $P_w$ is a coherent conditional probability on $\mathcal{C}_w$.
+such that, for any $j\in\{0,\dots,m\}$, $u=\{w_0,\dots,w_{j-1}\}$ and $x_u\in\states^u$, $P_w(X_{w_j}=\cdot\,\vert X_u=x_u)$ is a probability mass function on $\states$. Then $P_w$ is a coherent conditional probability on $\mathcal{C}_w$.
 \end{lemma}
 \begin{proof}
 We provide a proof by induction. Assume that this statement is true for any $m<k$, with $k\in\nats_\emptyset$. We will show that this implies that it is also true for $m=k$.
@@ -871,6 +871,59 @@ If $S^*=\emptyset$, then
 where the inequality follows from Equation~\eqref{eq:lemma:simplechaincoherence:supremumreached}. Hence, since $\omega^*\in C_0$, Equation~\eqref{eq:lemma:simplechaincoherence:TB} holds.
 
 *** still have to finish this ***
+
+\begin{align*}
+&\sup\left\{\sum_{i=1}^n\lambda_i\ind{C_i}(\omega)\bigl(P_w(A_i\vert C_i)-\ind{A_i}(\omega)\bigr)~\Bigg\vert~\omega\in C^*\right\}\\
+&=
+\sup\left\{
+\sum_{i\in S\cup S^*}\lambda_i\ind{C_i}(\omega)\bigl(P_w(A_i\vert C_i)-\ind{A_i}(\omega)\bigr)
+~\Bigg\vert~\omega\in C^*\right\}\\
+&\geq
+\sup\left\{
+\sum_{i\in S^*}\lambda_i\ind{C_i}(\omega)\bigl(P_w(A_i\vert C_i)-\ind{A_i}(\omega)\bigr)
+~\Bigg\vert~\omega\in C^*\right\}\\
+&=
+\sup\left\{
+\sum_{i\in S^*}\lambda_i\bigl(P_w(A_i\vert C^*)-\ind{A_i}(\omega)\bigr)
+~\Bigg\vert~\omega\in C^*\right\}\\
+&=
+\sum_{i\in S^*}\lambda_iP_w(A_i\vert C^*)
+-
+\inf\left\{
+\sum_{i\in S^*}\lambda_i\ind{A_i}(\omega)
+~\Bigg\vert~\omega\in C^*\right\}\\
+&=
+\sum_{i\in S^*}\lambda_iP_w(A_i\vert C^*)
+-
+\min_{x\in\states}\lambda_x\\
+&=
+\sum_{i\in S^*}\lambda_i p(z_{m,i})
+-
+\min_{x\in\states}\lambda_x\\
+&=
+\sum_{x\in \states^*}\lambda_{i_x} p(z_{m,i_x})
+-
+\min_{x\in\states}\lambda_x\\
+&=
+\sum_{x\in \states^*}\lambda_{x} p(x)
+-
+\min_{x\in\states}\lambda_x
+\end{align*}
+
+By the assumptions of this lemma, there is some probability mass function $p$ on $\states$ such that, for all $y\in\states$, $P_w(X_{w_m}=y\vert C^*)=p(y)$.
+
+Since $(A_i,C_i)\neq(A_{i'},C_{i'})$ for $i\neq i'$, it follows that for any $x\in\states^*$, there is only one $i_x\in S^*$ such that $z_{m,i_x}=x$. Let $\lambda_x\coloneqq\lambda_{i_x}$.
+
+For all $x\in\states\setminus\states^*$, let $\lambda_x\coloneqq 0$. Now let $\lambda^*\coloneqq\min_{x\in\states}\lambda_x$. Then
+\begin{equation*}
+\sum_{x\in\states^*}\lambda_x p(x)
+=
+\sum_{x\in\states}\lambda_x p(x)
+\geq
+\min_{x\in\states}\lambda_x
+\end{equation*}
+
+If $\states^*=\states$, then 
 
 \end{proof}
 
