@@ -834,12 +834,12 @@ such that, for any $j\in\{0,\dots,m\}$, $u=\{w_0,\dots,w_{j-1}\}$ and $x_u\in\st
 We provide a proof by induction. Assume that this statement is true for any $m<k$, with $k\in\nats_\emptyset$. We will show that this implies that it is also true for $m=k$.
 
 Consider any $n\in\nats$ and, for all $i\in\{1,\dots,n\}$, choose $(A_i,C_i)\in\mathcal{C}_w$ and $\lambda_i\in\reals$. We need to show that
-\begin{equation*}%\label{eq:lemma:simplechaincoherence:TB}
+\begin{equation}\label{eq:lemma:simplechaincoherence:TB}
 \sup\left\{\sum_{i=1}^n\lambda_i\ind{C_i}(\omega)\bigl(P_w(A_i\vert C_i)-\ind{A_i}(\omega)\bigr)~\Bigg\vert~\omega\in C_0\right\}\geq0,
-\end{equation*}
-with $C_0\coloneqq\cup_{i=1}^nC_i$. Clearly, without loss of generality, we may assume that for any $i_1,i_2\in\{1,\dots,n\}$ such that $i_1\neq i_2$, $(A_{i_1},C_{i_1})\neq(A_{i_2},C_{i_2})$.
+\end{equation}
+with $C_0\coloneqq\cup_{i=1}^nC_i$. %Clearly, without loss of generality, we may assume that for any $i_1,i_2\in\{1,\dots,n\}$ such that $i_1\neq i_2$, $(A_{i_1},C_{i_1})\neq(A_{i_2},C_{i_2})$.
 
-For any $i\in\{1,\dots,n\}$, since $(A_i,C_i)\in\mathcal{C}_w$, there are $j_i\in\{0,\dots,m\}$ and, for all $\ell\in\{0,\dots,j_i\}$, $z_{\ell,i}\in\states$ such that
+For any $i\in\{1,\dots,n\}$, since $(A_i,C_i)\in\mathcal{C}_w$, there is some $j_i\in\{0,\dots,m\}$ and, for all $\ell\in\{0,\dots,j_i\}$, some $z_{\ell,i}\in\states$ such that
 \begin{equation*}
 A_i=(X_{w_{j_i}}=z_{j_i,i})
 \text{~~and~~}
@@ -857,55 +857,37 @@ If $S=\emptyset$, then let $\omega^*$ be any element of $C_0$. Equation~\eqref{e
 
 
 Let $C^*\coloneqq\cap_{1\leq \ell<m}(X_{w_\ell}=\omega^*(w_\ell))$ and $S^*\coloneqq\{i\in\{1,\dots,n\}\colon C_i=C^*\}$. Then by the assumptions of this lemma, there is some probability mass function $p$ on $\states$ such that, for all $x\in\states$, $P_w(X_{w_m}=x\vert C^*)=p(x)$. 
-Define $\states^*\coloneqq\{x\in\states\colon (\exists i\in S^*)\,z_{m,i}=x\}$. Then clearly, for any $x\in\states^*$, there is some $i\in S^*$ such that $z_{m,i}=x$. Furthermore, since $(A_{i_1},C_{i_1})\neq(A_{i_2},C_{i_2})$ for all $i_1,i_2\in\{1,\dots,n\}$ such that $i_1\neq i_2$, this $i$ is unique. We will denote it by $i_x$ and let $\lambda_x\coloneqq\lambda_{i_x}$. For all $x\in\states\setminus\states^*$, we let $\lambda_x\coloneqq 0$. Since $p$ is a probability mass function, it then follows that
+For all $x\in\states$, let $\lambda_x\coloneqq\sum_{\{i\in S^*\colon z_{m,i}=x\}}\lambda_i$.
+Since $p$ is a probability mass function, it then follows that
 \begin{equation*}
-\sum_{x\in\states^*}\lambda_x p(x)
+\sum_{i\in S^*}\lambda_i P_w(A_i\vert C^*)
 =
-\sum_{x\in\states}\lambda_x p(x)
+\sum_{x\in\states}
+\lambda_x p(x)
 \geq
 \sum_{x\in\states} \left(\min_{y\in\states}\lambda_y\right) p(x)
 =
 \left(\min_{y\in\states}\lambda_y\right)\sum_{x\in\states}p(x)
 =\min_{y\in\states}\lambda_y.
 \end{equation*}
-Let $y^*$ be any element of $\states$ such that $\min_{y\in\states}\lambda_y=\lambda_{y^*}$ (since $\states$ is finite, this is always possible) and let $\omega^{**}$ be any path in $\Omega$ such that $\omega^{**}\in C^*$ and $\omega^{**}(w_m)=y^*$.
+Now let $y^*$ be any element of $\states$ such that $\min_{y\in\states}\lambda_y=\lambda_{y^*}$ (since $\states$ is finite, this is always possible) and let $\omega^{**}$ be any path in $\Omega$ such that $\omega^{**}\in C^*$ and $\omega^{**}(w_m)=y^*$. Then
+\begin{equation*}
+\sum_{i\in S^*}\lambda_i(\omega^*)\bigl(P_w(A_i\vert C_i)-\ind{A_i}(\omega^{**})\bigr)
+\geq
+\min_{y\in\states}\lambda_y
+-\sum_{i\in S^*}\lambda_i\ind{A_i}(\omega^{**})
+=\lambda_{y^*}-\lambda_{y^*}=0.
+\end{equation*}
 
-Let $S^{**}\coloneqq\{i\in\{1,\dots,n\}\setminus(S\cup S^*)$. Since $\omega^{**}\in C^*$, we find that $\ind{C_i}(w^{**})=\ind{C_i}(w^{*})$ and $\ind{A_i}(w^{**})=\ind{A_i}(w^{*})$ for all $i\in S$, that $\ind{C_i}(w^{**})=1$ for all $i\in S^{*}$, and that $\ind{C_i}(w^{**})=0$ for all $i\in S^{**}$. Hence, it follows from Equation~\eqref{eq:lemma:simplechaincoherence:supremumreached} that
+Let $S^{**}\coloneqq\{1,\dots,n\}\setminus(S\cup S^*)$. Since $\omega^{**}\in C^*$, we find that $\ind{C_i}(w^{**})=\ind{C_i}(w^{*})$ and $\ind{A_i}(w^{**})=\ind{A_i}(w^{*})$ for all $i\in S$, that $\ind{C_i}(w^{**})=1$ for all $i\in S^{*}$, and that $\ind{C_i}(w^{**})=0$ for all $i\in S^{**}$. Hence, it follows from Equation~\eqref{eq:lemma:simplechaincoherence:supremumreached} that
 \begin{equation*}
 \sum_{i=1}^n\lambda_i\ind{C_i}(\omega^{**})\bigl(P_w(A_i\vert C_i)-\ind{A_i}(\omega^{**})\bigr)
 \geq
 \sum_{i\in S^*}\lambda_i\bigl(P_w(A_i\vert C^*)-\ind{A_i}(\omega^{**})\bigr).
 \end{equation*}
+By combining this inequality with the previous one, we find that in order to show that Equation~\eqref{eq:lemma:simplechaincoherence:TB} holds, it suffices to prove that $\omega^{**}\in C_0$. 
 
-*** still have to finish this ***
-
-
-\begin{align*}
-\sum_{i\in S^*}\lambda_iP_w(A_i\vert C^*)
--
-\inf\left\{
-\sum_{i\in S^*}\lambda_i\ind{A_i}(\omega)
-~\Bigg\vert~\omega\in C^*\right\}
-&=
-\sum_{i\in S^*}\lambda_iP_w(A_i\vert C^*)
--
-\min_{x\in\states}\lambda_x\\
-&=
-\sum_{i\in S^*}\lambda_i p(z_{m,i})
--
-\min_{x\in\states}\lambda_x\\
-&=
-\sum_{x\in \states^*}\lambda_{i_x} p(z_{m,i_x})
--
-\min_{x\in\states}\lambda_x\\
-&=
-\sum_{x\in \states^*}\lambda_{x} p(x)
--
-\min_{x\in\states}\lambda_x
-\end{align*}
-
-
-
+In order to prove this, it suffices to notice that the question of whether or not a path $\omega\in\Omega$ belongs to $C_0$, only depends on the values $\omega(t)$ of $\omega$ at time points $t\in\{w_0,\dots,w_{m-1}\}$. Indeed, since we infer from $\omega^{**}\in C^*$ that the value of $\omega^*$ and $\omega^{**}$ at these time point is the same, and because $\omega^*\in C_0$, this implies that $\omega^{**}\in C_0$.
 \end{proof}
 
 \begin{lemma}\label{lemma:simplechainextend}
