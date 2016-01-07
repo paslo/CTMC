@@ -834,10 +834,10 @@ such that, for any $j\in\{0,\dots,m\}$, $u=\{w_0,\dots,w_{j-1}\}$ and $x_u\in\st
 We provide a proof by induction. Assume that this statement is true for any $m<k$, with $k\in\nats_\emptyset$. We will show that this implies that it is also true for $m=k$.
 
 Consider any $n\in\nats$ and, for all $i\in\{1,\dots,n\}$, choose $(A_i,C_i)\in\mathcal{C}_w$ and $\lambda_i\in\reals$. We need to show that
-\begin{equation}\label{eq:lemma:simplechaincoherence:TB}
+\begin{equation*}%\label{eq:lemma:simplechaincoherence:TB}
 \sup\left\{\sum_{i=1}^n\lambda_i\ind{C_i}(\omega)\bigl(P_w(A_i\vert C_i)-\ind{A_i}(\omega)\bigr)~\Bigg\vert~\omega\in C_0\right\}\geq0,
-\end{equation}
-with $C_0\coloneqq\cup_{i=1}^nC_i$. Clearly, without loss of generality, we may assume that for any $i,i'\in\{1,\dots,n\}$ such that $i\neq i'$, $(A_i,C_i)\neq(A_{i'},C_{i'})$.
+\end{equation*}
+with $C_0\coloneqq\cup_{i=1}^nC_i$. Clearly, without loss of generality, we may assume that for any $i_1,i_2\in\{1,\dots,n\}$ such that $i_1\neq i_2$, $(A_{i_1},C_{i_1})\neq(A_{i_2},C_{i_2})$.
 
 For any $i\in\{1,\dots,n\}$, since $(A_i,C_i)\in\mathcal{C}_w$, there are $j_i\in\{0,\dots,m\}$ and, for all $\ell\in\{0,\dots,j_i\}$, $z_{\ell,i}\in\states$ such that
 \begin{equation*}
@@ -855,22 +855,25 @@ with $C_0^*\coloneqq\cup_{i\in S}C_i$. Since, for all $i\in S$, $\ind{A_i}(\omeg
 \end{equation}
 If $S=\emptyset$, then let $\omega^*$ be any element of $C_0$. Equation~\eqref{eq:lemma:simplechaincoherence:supremumreached} is then trivially satisfied. Hence, in all cases, we have found some $\omega^*\in C_0$ that satisfies Equation~\eqref{eq:lemma:simplechaincoherence:supremumreached}.
 
-We now let $C^*\coloneqq\cap_{1\leq \ell<m}(X_{w_\ell}=\omega(w_\ell))$ and $S^*\coloneqq\{i\in\{1,\dots,n\}\colon C_i=C^*\}$.
 
-$\states^*\coloneqq\{x\in\states\colon (\exists i\in S^*) z_{m,i}=x\}$
+If we now let $C^*\coloneqq\cap_{1\leq \ell<m}(X_{w_\ell}=\omega(w_\ell))$, then by the assumptions of this lemma, there is some probability mass function $p$ on $\states$ such that, for all $x\in\states$, $P_w(X_{w_m}=x\vert C^*)=p(x)$. Define $S^*\coloneqq\{i\in\{1,\dots,n\}\colon C_i=C^*\}$ and $\states^*\coloneqq\{x\in\states\colon (\exists i\in S^*) z_{m,i}=x\}$. Then clearly, for any $x\in\states^*$, there is some $i\in S^*$ such that $z_{m,i}=x$. Furthermore, since $(A_{i_1},C_{i_1})\neq(A_{i_2},C_{i_2})$ for all $i_1,i_2\in\{1,\dots,n\}$ such that $i_1\neq i_2$, this $i$ is unique. We will denote it by $i_x$ and let $\lambda_x\coloneqq\lambda_{i_x}$. For all $x\in\states\setminus\states^*$, we let $\lambda_x\coloneqq 0$. Since $p$ is a probability mass function, it then follows that
+\begin{equation*}
+\sum_{x\in\states^*}\lambda_x p(x)
+=
+\sum_{x\in\states}\lambda_x p(x)
+\geq
+\sum_{x\in\states} \left(\min_{y\in\states}\lambda_y\right) p(x)
+=
+\left(\min_{y\in\states}\lambda_y\right)\sum_{x\in\states}p(x)
+=\min_{y\in\states}\lambda_y.
+\end{equation*}
 
 
+*** still have to finish this ***
 
  and $S^{**}\coloneqq\{i\in\{1,\dots,n\}\setminus(S\cup S^*)$, then for all $i\in S^{**}$ and $\omega\in C^*$
 
-If $S^*=\emptyset$, then
-\begin{equation*}%\label{eq:lemma:simplechaincoherence:supremumreached}
-\sum_{i=1}^n\lambda_i\ind{C_i}(\omega^*)\bigl(P_w(A_i\vert C_i)-\ind{A_i}(\omega^*)\bigr)
-=\sum_{i\in S}\lambda_i\ind{C_i}(\omega^*)\bigl(P_w(A_i\vert C_i)-\ind{A_i}(\omega^*)\bigr)\geq0,
-\end{equation*}
-where the inequality follows from Equation~\eqref{eq:lemma:simplechaincoherence:supremumreached}. Hence, since $\omega^*\in C_0$, Equation~\eqref{eq:lemma:simplechaincoherence:TB} holds.
 
-*** still have to finish this ***
 
 \begin{align*}
 &\sup\left\{\sum_{i=1}^n\lambda_i\ind{C_i}(\omega)\bigl(P_w(A_i\vert C_i)-\ind{A_i}(\omega)\bigr)~\Bigg\vert~\omega\in C^*\right\}\\
@@ -910,20 +913,7 @@ where the inequality follows from Equation~\eqref{eq:lemma:simplechaincoherence:
 \min_{x\in\states}\lambda_x
 \end{align*}
 
-By the assumptions of this lemma, there is some probability mass function $p$ on $\states$ such that, for all $y\in\states$, $P_w(X_{w_m}=y\vert C^*)=p(y)$.
 
-Since $(A_i,C_i)\neq(A_{i'},C_{i'})$ for $i\neq i'$, it follows that for any $x\in\states^*$, there is only one $i_x\in S^*$ such that $z_{m,i_x}=x$. Let $\lambda_x\coloneqq\lambda_{i_x}$.
-
-For all $x\in\states\setminus\states^*$, let $\lambda_x\coloneqq 0$. Now let $\lambda^*\coloneqq\min_{x\in\states}\lambda_x$. Then
-\begin{equation*}
-\sum_{x\in\states^*}\lambda_x p(x)
-=
-\sum_{x\in\states}\lambda_x p(x)
-\geq
-\min_{x\in\states}\lambda_x
-\end{equation*}
-
-If $\states^*=\states$, then 
 
 \end{proof}
 
