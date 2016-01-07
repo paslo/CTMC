@@ -1613,6 +1613,36 @@ and, contrariwise, for all $P\in\processes$ such that $P\notin\wprocesses_{\rate
 \end{equation*}
 \end{theorem}
 
+Similar to our results from Section~\ref{sec:connections_rate}, we conclude from this that sets of stochastic processes are more informative than their corresponding lower expectations. In general, different sets $\wprocesses_\rateset$ of stochastic processes can have their lower expectations computed by the same lower transition operator $L_t^s$, and hence they necessarily have the same lower expectation. 
+
+Therefore, even if $L_t^s$ computes the lower expectation with respect to $\wprocesses_\rateset$, knowledge of $L_t^s$ does not in general suffice to reconstruct $\wprocesses_\rateset$. We can, however, construct an outer approximation which is guaranteed to contain $\wprocesses_\rateset$, as follows. From Proposition~\ref{prop:lower_transition_has_deriv}, we can find the lower transition rate operator $\lrate$ that characterizes $L_t^s$, using $\lim_{\Delta\to0^+}\nicefrac{1}{\Delta}(L_t^{t+\Delta}-I)=\lrate$. Using this operator $\lrate$, we can construct the set $\rateset_{\lrate}$ of rate matrices that dominate $\lrate$. Finally, we can construct the set $\wprocesses_{\rateset_{\lrate}}$. Because $L_t^s$ computes the lower expectation with respect to $\wprocesses_\rateset$, Theorem~\ref{theo:dominating_rate_processes_max_set} now guarantees that $\wprocesses_\rateset\subseteq\wprocesses_{\rateset_{\lrate}}$.
+
+This changes if the set $\wprocesses_\rateset$ is not only well-behaved, includes non-Markov processes, and is such that $\rateset$ is non-empty and bounded with separately specified rows, but furthermore is such that $\rateset$ is closed and convex. In that case, $L_t^s$ serves as an alternative characterization of $\wprocesses_\rateset$, because then, by Proposition~\ref{prop:dominating_unique_characterization}, it holds that $\wprocesses_\rateset=\wprocesses_{\rateset_{\lrate}}$.
+
+**** ergens voelt het wel nice om die karakterisatie in termen van de set $\wprocesses_\rateset$ zelf te doen, in plaats van in termen van $\rateset$. een resultaat zoals hieronder staat (in commentaar, in de latex file) zou daarvoor kunnen helpen.
+
+%**** misschien nog zoiets toevoegen ergens? voor elke $\mathcal{P}\subset\processes$, (misschien rekening houden met $t,s,x_u$ om geldig te laten zijn),
+%\begin{equation*}
+%\mathcal{T}_{\mathcal{P}} \coloneqq \left\{T_{t,\,x_u}^s\,:\,P\in\mathcal{P}\right\}
+%\end{equation*}
+%
+%dan, voor $\mathcal{T}_{\wprocesses_\rateset}$:
+%\begin{align*}
+%\rateset\neq \emptyset &\Leftrightarrow \mathcal{T}_{\wprocesses_\rateset}\neq\emptyset \\
+%\rateset~\text{is closed} &\Leftrightarrow \mathcal{T}_{\wprocesses_\rateset}~\text{is closed} \\
+%\rateset~\text{is convex} &\Leftrightarrow \mathcal{T}_{\wprocesses_\rateset}~\text{is convex} \\
+%\rateset~\text{has s.s.r.} &\Leftrightarrow \mathcal{T}_{\wprocesses_\rateset}~\text{has s.s.r.}
+%\end{align*}
+%
+%vervolgens laten zien dat als voor $\mathcal{P}\subset\wprocesses$ de set $\mathcal{T}_{\mathcal{P}}$ al die eigenschappen heeft, dat dan $\mathcal{P}=\wprocesses_{\rateset}$, waarbij $\rateset$ al die eigenschappen heeft en verder ook bounded is.
+%
+%dan als voor $\mathcal{P}\subset\wprocesses$ de set $\mathcal{T}_{\mathcal{P}}$ al die eigenschappen heeft, zijn $\mathcal{P}$, $L_t^s$ (en $\lrate$) allemaal even sterk, in de zin dat
+%\begin{align*}
+%\mathcal{P}&=\wprocesses_{\rateset} \Rightarrow \rateset \Rightarrow \lrate \Rightarrow \underline{\mathcal{T}}_{\lrate} \Rightarrow L_t^s \\
+%L_t^s &\Rightarrow \lim_{\Delta\to0^+}\frac{1}{\Delta}(L_t^{t+\Delta} - I)=\lrate \Rightarrow \rateset_{\lrate}=\rateset \Rightarrow \wprocesses_{\rateset} = \mathcal{P} \\
+%\lrate &\Rightarrow \underline{\mathcal{T}}_{\lrate} \Rightarrow L_t^s,\quad\text{and,}\quad \lrate\Rightarrow \rateset_{\lrate} \Rightarrow \wprocesses_{\rateset_{\lrate}} = \mathcal{P}
+%\end{align*}
+
 \section{Relation to Previous Work}\label{sec:prev_work}
 
 To the best of our knowledge, the concept of imprecise continuous-time Markov chains was first introduced in the literature by the work of {\v{S}}kulj~\cite{Skulj:2015cq}. There, the idea was used to define $\lrate$ as a lower envelope of a set of rate matrices $\rateset$ that has separately specified rows. It was shown that then, for a given $f\in\gamblesX$, the differential equation
