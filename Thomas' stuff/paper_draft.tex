@@ -839,15 +839,21 @@ Consider any $n\in\nats$ and, for all $i\in\{1,\dots,n\}$, choose $(A_i,C_i)\in\
 \end{equation*}
 with $C_0\coloneqq\cup_{i=1}^nC_i$. Clearly, without loss of generality, we may assume that for any $i,i'\in\{1,\dots,n\}$ such that $i\neq i'$, $(A_i,C_i)\neq(A_{i'},C_{i'})$.
 
-
 For any $i\in\{1,\dots,n\}$, since $(A_i,C_i)\in\mathcal{C}_w$, there are $j_i\in\{0,\dots,m\}$ and, for all $\ell\in\{0,\dots,j_i\}$, $z_{\ell,i}\in\states$ such that
 \begin{equation*}
 A_i=(X_{w_{j_i}}=z_{w_{j_i}})
 \text{~~and~~}
 C_i=(X_{w_{0}}=z_{w_{0}}, \dots, X_{w_{j_i-1}}=z_{w_{j_i-1}}).
 \end{equation*}
-Let $S=\left\{i\in\{1,\dots,n\}\colon j_i<m\right\}$.
-
+Let $S=\left\{i\in\{1,\dots,n\}\colon j_i<m\right\}$. If $S\neq\emptyset$, then by the induction hypothesis, we know that
+\begin{equation*}
+\sup\left\{\sum_{i\in S}\lambda_i\ind{C_i}(\omega)\bigl(P_w(A_i\vert C_i)-\ind{A_i}(\omega)\bigr)~\Bigg\vert~\omega\in C_0^*\right\}\geq0,
+\end{equation*}
+with $C_0^*\coloneqq\cup_{i\in S}C_i$. Since, for all $i\in S$, $\ind{A_i}(\omega)$ and $\ind{C_i}(\omega)$ only depend on the value of $\omega$ in the finite set of time points $w$, the expression in this supremum can take only a finite number of values, and therefore, it is in fact a maximum. Hence, it follows that there is some $\omega^*\in C_0^*$ such that
+\begin{equation}\label{eq:lemma:simplechaincoherence:supremumreached}
+\sum_{i\in S}\lambda_i\ind{C_i}(\omega^*)\bigl(P_w(A_i\vert C_i)-\ind{A_i}(\omega^*)\bigr)\geq0.
+\end{equation}
+If $S=\emptyset$, then let $\omega^*$ be any element of $C_0$. Equation~\eqref{eq:lemma:simplechaincoherence:supremumreached} is then trivially satisfied. Hence, in all cases, we have found some $\omega^*\in C_0$ that satisfies Equation~\eqref{eq:lemma:simplechaincoherence:supremumreached}.
 
 
 *** still have to finish this ***
