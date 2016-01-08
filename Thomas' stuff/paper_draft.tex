@@ -752,9 +752,6 @@ for all $t\in\reals_{\geq0}$.
 \begin{proposition}\label{prop:Markovhassystem}
 Consider a Markov chain $P\in\mprocesses$ and let $\mathcal{T}_P$ be the corresponding family of transition matrices. Then $\mathcal{T}_P$ is a transition matrix system. Furthermore, $\mathcal{T}_P$ is well-behaved if and only if $P$ is well-behaved.
 \end{proposition}
-\begin{proof}
-*** fairly easy to prove ***
-\end{proof}
 
 At this point, we already know that every (well-behaved) Markov chain has a corresponding (well-behaved) transition matrix system. Our next result establishes that the converse is true as well: every (well-behaved) transition matrix system has a corresponding (well-behaved) Markov chain, and for a given initial distribution, this Markov chain is even unique.
 
@@ -1938,6 +1935,29 @@ with $Q_k$ defined as in Equation~\eqref{eq:sequenceofQsinproof}. As we know fro
 \end{proof}
 
 \section{Proofs and Lemmas for Section~\ref{sec:cont_time_markov_chains}}
+
+\begin{proof}[Proof of Proposition~\ref{prop:Markovhassystem}]
+Consider any Markov chain $P\in\mprocesses$, with $\mathcal{T}_P$ its corresponding family of transition matrices. Then, for any $t,r,s\in\realsnonneg$ such that $t\leq r\leq s$, it follows from Definition~\ref{def:markov_property} that for all $x_t,x_r,x_s\in\states$,
+\begin{equation*}
+P(X_s=x_s\,\vert\,X_r=x_r,X_t=x_t) = P(X_s=x_s\,\vert\,X_r=x_r)\,.
+\end{equation*}
+Furthermore, because $P$ is a stochastic process, it follows from~\ref{def:coh_prob_6} that
+\begin{align*}
+P(X_s=x_s,X_r=x_r\,\vert\,X_t=x_t) &= P(X_s=x_s\,\vert\,X_r=x_r,X_t=x_t)P(X_r=x_r\,\vert\,X_t=x_t) \\
+ &= P(X_s=x_s\,\vert\,X_r=x_r)P(X_r=x_r\,\vert\,X_t=x_t)\,,
+\end{align*}
+where the second equality used the Markov property. From~\ref{def:coh_prob_3}, it then follows that
+\begin{equation*}
+P(X_s=x_s\,\vert\,X_t=x_t) = \sum_{y\in\states} P(X_s=x_s,X_r=y\,\vert\,X_t=x_t)\,.
+\end{equation*}
+From the definition of $\mathcal{T}_P$ in Definition~\ref{def:trans_matrix}, it now follows that
+\begin{equation*}
+T_t^s = T_t^rT_r^s\,.
+\end{equation*}
+Furthermore, because $P$ is a stochastic process, it follows from Proposition~\ref{prop:stochasticprocess:simpleproperties} that $T_t^t=I$. Therefore, and because the $t,r,s\in\realsnonneg$ were arbitrary, $\mathcal{T}_P$ is a transition matrix system.
+
+The fact that $\mathcal{T}_P$ is well-behaved if and only if $P$ is well-behaved follows immediately from Definition~\ref{def:trans_matrix} and Proposition~\ref{prop:stochasticprocess:simpleproperties}.
+\end{proof}
 
 \begin{proof}[Proof of Theorem~\ref{theo:uniqueMarkovchain}]
 Let
