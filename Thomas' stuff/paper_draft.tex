@@ -1185,32 +1185,27 @@ For any $t,s\in\realsnonneg$ such that $t<s$ and any lower transition rate opera
 \begin{definition}[Lower Transition Operator System]
 Let $\lrate$ be an arbitrary lower transition rate operator. Then, the \emph{lower transition operator system} corresponding to $\lrate$ is the family $\underline{\mathcal{T}}_{\lrate}$ of lower transition operators corresponding to $\lrate$, defined as
 \begin{equation*}
-\underline{\mathcal{T}}_{\lrate} \coloneqq \Bigl\{L_t^s\,\Big\vert\,\forall t,s\in\realsnonneg, t<s\Bigr\}\,.
+\underline{\mathcal{T}}_{\lrate} \coloneqq \Bigl\{L_t^s\,\Big\vert\,\forall t,s\in\realsnonneg, t\leq s\Bigr\}\,,
 \end{equation*}
+where for all $t,s\in\realsnonneg$ with $t\leq s$, $L_t^s$ is defined as in Definition~\ref{def:low_trans}.
 \end{definition}
 
 *** tralala, kijk, het lijkt qua eigenschappen op een homogene markov keten
 
-\begin{proposition}
-Let $\lrate$ be an arbitrary lower transition rate operator, and let $\underline{\mathcal{T}}_{\lrate}$ be the corresponding lower transition operator system. Then, for all $t,s,r\in\realsnonneg$ such that $t< r<s$,
+\begin{proposition}\label{prop:lower_trans_system_is_system}
+Let $\lrate$ be an arbitrary lower transition rate operator, and let $\underline{\mathcal{T}}_{\lrate}$ be the corresponding lower transition operator system. Then, for all $t,r,s\in\realsnonneg$ such that $t\leq r\leq s$,
 \begin{equation*}
 L_t^s = L_t^rL_r^s\,.
 \end{equation*}
 Furthermore, for all $t\in\realsnonneg$, we have that $L_t^t=I$.
 \end{proposition}
-\begin{proof}
-*** trivial ***
-\end{proof}
 
 \begin{proposition}\label{prop:lower_transition_is_homogeneous}
-Let $\lrate$ be an arbitrary lower transition rate operator, and let $\underline{\mathcal{T}}_{\lrate}$ be the corresponding lower transition operator system. Then, for all $t,s\in\realsnonneg$ such that $t<s$, and all $\Delta\in\realsnonneg$, we have that
+Let $\lrate$ be an arbitrary lower transition rate operator, and let $\underline{\mathcal{T}}_{\lrate}$ be the corresponding lower transition operator system. Then, for all $t,s\in\realsnonneg$ such that $t\leq s$, and all $\Delta\in\realsnonneg$, we have that
 \begin{equation*}
 L_t^s = L_{t+\Delta}^{s+\Delta}\,.
 \end{equation*}
 \end{proposition}
-\begin{proof}
-*** {\bf TODO}
-\end{proof}
 
 *** kijk, differentiaalvergelijking die lijkt op die van matrix exponential:
 
@@ -2830,6 +2825,40 @@ In summary, we have shown that there is lower transition operator $\lbound_t^s$ 
 (\forall\epsilon>0)\,
 (\exists\delta>0)\,
 (\forall u\in\mathcal{U}_{[t,s]}\colon\sigma(u)<\delta)~\norm{\lbound_t^s - \Phi_u}<\epsilon\,.
+\end{equation*}
+\end{proof}
+
+\begin{proof}[Proof of Proposition~\ref{prop:lower_transition_is_homogeneous}]
+Consider any $t,s\in\realsnonneg$ such that $t\leq s$, any $\Delta\in\realsnonneg$, and any sequence $\{u_i\}_{i\in\nats}$ in $\mathcal{U}_{[t,s]}$ such that $\lim_{i\to\infty}\sigma(u)=0$. Then, by Theorem~\ref{theo:convergencelowerbound}, $\lim_{i\to\infty}\Phi_{u_i}=L_t^s$.
+
+For any $u_i$ in $\{u_i\}_{i\in\nats}$ such that $u_i=t_0,\ldots,t_n$, define the sequence $u_i^*=(t_0+\Delta),(t_1+\Delta),\ldots,(t_n+\Delta)$. Then, for all $i\in\nats$, we have that $u_i^*\in\mathcal{U}_{[t+\Delta,s+\Delta]}$. Furthermore, because $\lim_{i\to\infty}\sigma(u_i)=0$, we have $\lim_{i\to\infty}\sigma(u_i^*)=0$. Therefore, and by Theorem~\ref{theo:convergencelowerbound},  it holds that $\lim_{i\to\infty}\Phi_{u_i^*}=L_{t+\Delta}^{s+\Delta}$.
+
+Consider now any $u_i=t_0,\ldots,t_n$, $i\in\nats$, with differences $\Delta_1,\ldots,\Delta_n$. Then, the corresponding sequence $u_i^*$ has differences $\Delta^*_j=(t_j+\Delta)-(t_{j-1}+\Delta)=\Delta_j$, for all $j\in\{1,\ldots,n\}$. Therefore, and by the definition of $\Phi_{u_i}$ and $\Phi_{u_i^*}$, we have that $\Phi_{u_i}=\Phi_{u_i^*}$. Hence, and because the $i\in\nats$ was arbitrary, we find that $\{\Phi_{u_i}\}_{i\in\nats}=\{\Phi_{u_i^*}\}_{i\in\nats}$. Because these sequences are identical, they have the same limit, and therefore
+\begin{equation*}
+L_t^s=\lim_{i\to\infty}\Phi_{u_i}=\lim_{i\to\infty}\Phi_{u_i^*}=L_{t+\Delta}^{s+\Delta}\,.
+\end{equation*}
+\end{proof}
+
+\begin{proof}[Proof of Proposition~\ref{prop:lower_trans_system_is_system}]
+We start by showing that for all $t\in\realsnonneg$, it holds that $L_t^t=I$. To this end, consider any $t\in\realsnonneg$. Then, the set $\mathcal{U}_{[t,t]}$ of sequences of time points that partition the interval $[t,t]$ only contains degenerate sequences. That is, for all $u\in\mathcal{U}_{[t,t]}$, it holds that $t_0=t_1=\cdots=t_n=t$. Therefore, the corresponding differences $\Delta_1,\ldots,\Delta_n$ satisfy $\Delta_j=0$ for all $j\in\{1,\ldots,n\}$. Hence, $\lim_{i\to\infty}\sigma(u_i)=0$ trivially holds for any sequence $\{u_i\}_{i\in\nats}$ in $\mathcal{U}_{[t,t]}$. Consider now any such sequence $\{u_i\}_{i\in\nats}$ in $\mathcal{U}_{[t,t]}$. Then, for all $i\in\nats$, we have
+\begin{equation*}
+\Phi_{u_i} = \prod_{k=1}^n(I+\Delta_k\lrate) = \prod_{k=1}^n I = I\,.
+\end{equation*}
+Hence, $\lim_{i\to\infty}\Phi_{u_i}=I$, and by Theorem~\ref{theo:convergencelowerbound}, it now follows that $L_t^t=\lim_{i\to\infty}\Phi_{u_i}=I$.
+
+We next show that for all $t,r,s,\in\realsnonneg$ such that $t\leq r\leq s$, it holds that $L_t^s=L_t^rL_r^s$. To this end, consider any $\{u_i\}_{i\in\nats}$ in $\mathcal{U}_{[t,r]}$ and any $\{v_i\}_{i\in\nats}$ in $\mathcal{U}_{[r,s]}$, such that $\lim_{i\to\infty}\sigma(u_i)=0$ and $\lim_{i\to\infty}\sigma(v_i)=0$. Then, by Theorem~\ref{theo:convergencelowerbound}, $\lim_{i\to\infty}\Phi_{u_i}=L_t^r$ and $\lim_{i\to\infty}\Phi_{v_i}=L_r^s$. Denote $u_i=t_0^i,\ldots,t_{n_i}^i$, and $v_i=s_0^i,\ldots,s_{m_i}^i$. Let the differences be denoted as $\Delta_1^{u_i},\ldots,\Delta_{n_i}^{u_i}$ and $\Delta_1^{v_i},\ldots,\Delta_{m_i}^{v_i}$ for $u_i$ and $v_i$, respectively.
+
+For all $i\in\nats$, let now $w_i\in\mathcal{U}_{[t,s]}$ be such that $w_i=u_i\cup v_i$. Then, clearly, $w_i=t_0^i,\ldots,t_{n_i}^i,s_0^i,\ldots,s_{m_i}^i$, and because $t_{n_i}^i=r=s_0^i$, it holds that $\sigma(w_i)=\max\{\sigma(u_i),\sigma(v_i)\}$. Therefore, we find that $\lim_{i\to\infty}\sigma(w_i)=0$. Consider now the corresponding sequence $\{\Phi_{w_i}\}_{i\in\nats}$. For all $i\in\nats$, this satisfies
+\begin{equation*}
+\Phi_{w_i} = \prod_{k=1}^{n_i}(I+\Delta_{k}^{u_i}\lrate)\prod_{k=1}^{m_i}(I+\Delta_{k}^{v_i}\lrate) = \Phi_{u_i}\Phi_{v_i}\,.
+\end{equation*}
+Furthermore, we have that
+\begin{equation*}
+\lim_{i\to\infty}\Phi_{w_i} = \lim_{i\to\infty}\{\Phi_{u_i}\Phi_{v_i}\} = \lim_{i\to\infty}\{\Phi_{u_i}\}\lim_{i\to\infty}\{\Phi_{v_i}\}\,.
+\end{equation*}
+Due to Theorem~\ref{theo:convergencelowerbound}, this now implies that
+\begin{equation*}
+L_t^s = \lim_{i\to\infty}\Phi_{w_i} = \lim_{i\to\infty}\{\Phi_{u_i}\}\lim_{i\to\infty}\{\Phi_{v_i}\} = L_t^rL_r^s\,.
 \end{equation*}
 \end{proof}
 
