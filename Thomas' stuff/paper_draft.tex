@@ -836,89 +836,118 @@ Consider any left-continuous, piecewise-constant function $Q_t$ that gives for e
 \section{Imprecise Continuous-Time Markov chains}
 \label{sec:iCTMC}
 
-*** tralala, wat gaan we doen? impreciezie! wanneer gaan we dat doen? nu! jeej
+**** stukje algemene intro imprecise probability
 
-\begin{definition}[Characterizing Set of Rate Matrices]
-Consider any set $\mathcal{P}\subset\processes$ of stochastic processes. Then, a set of rate matrices $\rateset\subset\mathcal{R}$ is called the set of rate matrices that \emph{characterize} $\mathcal{P}$, if
+*** stukje intro lower expectations
+
+\begin{definition}[Lower Expectation]\label{def:lower_exp}
+Consider any set of stochastic processes $\mathcal{P}\subseteq\processes$. Then, the \emph{lower expectation with respect to $\mathcal{P}$} is defined as
 \begin{equation*}
-\rateset = \bigcup_{P\in\mathcal{P}}\,\bigcup_{t\in\realsnonneg}\,\bigcup_{u\in\mathcal{U}_{<t}}\,\bigcup_{x_u\in\states^u}\smash{\overline{\partial}}T_{t,x_u}^t\,.
+\underline{\mathbb{E}}[\cdot\,\vert\,\cdot] \coloneqq \inf\left\{\mathbb{E}[\cdot\,\vert\,\cdot]\,:\,P\in\mathcal{P}\right\}\,.
 \end{equation*}
-For any $\mathcal{P}\subset\processes$, we will write $\rateset_{\mathcal{P}}$ for the set of rate matrices that characterize $\mathcal{P}$.
 \end{definition}
 
-\begin{definition}[Consistent Set of Rate Matrices]
-Consider any set of rate matrices $\rateset$, and any stochastic process $P\in\processes$. Then $P$ is said to be \emph{consistent} with $\rateset$, if
+**** gezien dat lower expectations gelinkt zijn aan verzamelingen $\mathcal{P}$, is er een voor de hand liggende manier om zon verzameling te beschrijven?
+
+**** we weten uit voorgaande secties dat het gedrag van stochastische processen beschrijfbaar is met hun outer partial derivatives, wat verzamelingen van rate matrices zijn. We kunnen dit ook omdraaien, door te vragen of een process beschrijfbaar is met een gegeven verzameling rate matrices $\rateset$. Omdat zo'n verzameling niet direct gekoppeld is aan tijdpunten, is dat echter ondergedetermineert; we kunnen wel vragen of een process $P$ \emph{consistent} is met $\rateset$:
+
+\begin{definition}[Consistent Process]
+Consider any non-empty bounded set of rate matrices $\rateset$, and any stochastic process $P\in\processes$. Then $P$ is said to be \emph{consistent} with $\rateset$, if
 \begin{equation*}
 (\forall t\in\realsnonneg)(\forall u\in\mathcal{U}_{<t})(\forall x_u\in\states^u)\,:\, \smash{\overline{\partial}}T_{t,x_u}^t \subseteq \rateset\,.
 \end{equation*}
 If $P$ is consistent with $\rateset$, we will write $P\sim\rateset$.
 \end{definition}
 
-\begin{proposition}
-Consider any set $\mathcal{P}\subset\processes$ of stochastic processes. Then, for all $P\in\mathcal{P}$, it holds that $P\sim\rateset_{\mathcal{P}}$.
-\end{proposition}
-\begin{proof}
-*** {\bf TODO}, but trivial
-\end{proof}
+*** dit leidt dan voor een gegeven $\rateset$ naar het idee om naar de verzameling van alle $P\in\processes$ te kijken die consistent zijn met $\rateset$. Voor notationeel gemak en generiekheid kijken we echter liever naar de subset van een gegeven $\mathcal{P}\subseteq\processes$ die consistent is met $\rateset$:
 
-\begin{proposition}
-Consider any set of rate matrices $\rateset\subset\mathcal{R}$. Let $\mathbb{P}_\rateset$ be the set of all stochastic processes consistent with $\rateset$, i.e., let
+\begin{definition}[Consistent Subset of Processes]\label{def:consistent_process_set}
+Consider any non-empty bounded set of rate matrices $\rateset$, and any set of stochastic processes $\mathcal{P}\subseteq\processes$. Then, the \emph{subset of $\mathcal{P}$ consistent with} $\rateset$ is denoted $\mathcal{P}_\rateset$, and defined as
 \begin{equation*}
-\mathbb{P}_\rateset \coloneqq \left\{P\in\processes\,:\,P\sim\rateset\right\}\,.
+\mathcal{P}_{\rateset} \coloneqq \left\{P\in\mathcal{P}\,:\,P\sim\rateset\right\}\,.
 \end{equation*}
-Then, $\rateset$ characterizes $\mathbb{P}_\rateset$.
-\end{proposition}
-\begin{proof}
-*** {\bf TODO}, but trivial
-\end{proof}
+\end{definition}
 
 \subsection{Types of Imprecise Continuous-Time Markov Chains}
 
-*** lalala we behandelen verschillende gevallen ***
+*** lalala we behandelen verschillende specifieke gevallen ***
 
-\subsubsection{Imprecise Homogeneous Markov Chains}
+\begin{definition}\label{def:process_sets}
+For any non-empty bounded set of rate matrices $\rateset$,
+\begin{itemize}
+\item $\whmprocesses_\rateset\subset\whmprocesses$ is the set of all well-behaved homogeneous Markov chains consistent with $\rateset$;
+\item $\wmprocesses_\rateset\subset\wmprocesses$ is the set of all well-behaved Markov chains consistent with $\rateset$;
+\item $\wprocesses_\rateset\subset\wprocesses$ is the set of all well-behaved stochastic processes consistent with $\rateset$.
+\end{itemize}
+We will denote the lower expectation with respect to $\whmprocesses_\rateset$ as $\underline{\mathbb{E}}_\rateset^{\mathrm{WHM}}$, with respect to $\wmprocesses_\rateset$ as $\underline{\mathbb{E}}_\rateset^{\mathrm{WM}}$, and with respect to $\wprocesses_\rateset$ as $\underline{\mathbb{E}}_\rateset^{\mathrm{W}}$.
+\end{definition}
 
-*** uitleggen dat we hier NIET op focussen, en dat dit ironisch genoeg het moeilijkste geval is; wel opgenomen voor compleetheid ***
-\begin{definition}[Set of Homogeneous Markov Processes]\label{def:homogen_markov_process_set_new}
-For any bounded set of rate matrices $\rateset$, we define the set $\whmprocesses_{\rateset}$ of all well-behaved homogeneous continuous-time Markov processes \emph{consistent} with $\rateset$. Formally, we let $\whmprocesses_{\rateset}$ be the set of all $P\in\whmprocesses$ such that
+\begin{proposition}\label{prop:process_sets_simplify}
+For any non-empty bounded set of rate matrices $\rateset$, it holds that
 \begin{align*}
-\whmprocesses_\rateset
-\coloneqq&
-\left\{
-P\in\whmprocesses
-\colon
-\left((\forall t\in\realsnonneg)(\forall u<t)(\forall x_u\in\states^u):~
-\overline{\partial}
-{T^t_{t,\,x_u}}\subseteq\rateset
-\right)\right\}\\
-=&
-\left\{
-P\in\whmprocesses
-\colon
-\left((\forall t\in\realsnonneg):~
+\whmprocesses_\rateset &= \left\{P\in\whmprocesses\,:\,P\sim\rateset\right\} \\
+ &= \left\{P\in\whmprocesses\,:\,\left((\forall t\in\realsnonneg):~
 \overline{\partial}
 {T^t_{t}}\subseteq\rateset
-\right)\right\}\\
-=&
-\left\{
-P\in\whmprocesses
-\colon
-Q_P\in\rateset
-\right\}
+\right) \right\} \\
+ &= \left\{P\in\whmprocesses\,:\,Q_P\in\rateset\right\}\,.
 \end{align*}
-\end{definition}
+Furthermore, it holds that
+\begin{align*}
+\wmprocesses_\rateset &= \left\{P\in\wmprocesses\,:\,P\sim\rateset\right\} \\
+ &= \left\{P\in\wmprocesses\,:\,\left((\forall t\in\realsnonneg):~
+\overline{\partial}
+{T^t_{t}}\subseteq\rateset
+\right) \right\}\,.
+\end{align*}
+\end{proposition}
+\begin{proof}
+*** {\bf TODO}, but trivial.
+\end{proof}
 
-\begin{definition}[Lower Expectation for Set of Homogeneous Markov Processes]\label{def:lower_homogen_markov} Consider any bounded set of rate matrices $\rateset$, and the set of corresponding well-behaved homogeneous continuous-time Markov processes $\whmprocesses_\rateset$. Then, the \emph{lower expectation with respect to $\whmprocesses_\rateset$} is defined as
-\begin{equation*}
-\underline{\mathbb{E}}_\rateset^\mathrm{WHM}[\cdot\,\vert\,\cdot] \coloneqq \inf\left\{\mathbb{E}[\cdot\,\vert\,\cdot]\,:\,P\in\whmprocesses_\rateset\right\}\,.
-\end{equation*}
-\end{definition}
-
-
-\subsubsection{Imprecise Markov Chains}
-
-\begin{definition}[Set of Markov Processes]\label{def:markov_process_set_new}
-For any bounded set of rate matrices $\rateset$, we define the set $\wmprocesses_{\rateset}$ of all well-behaved continuous-time Markov processes \emph{consistent} with $\rateset$. Formally, we let $\wmprocesses_{\rateset}$ be the set of all $P\in\wmprocesses$ such that
+%\subsubsection{Imprecise Homogeneous Markov Chains}
+%
+%*** uitleggen dat we hier NIET op focussen, en dat dit ironisch genoeg het moeilijkste geval is; wel opgenomen voor compleetheid ***
+%\begin{definition}[Set of Homogeneous Markov Processes]\label{def:homogen_markov_process_set_new}
+%For any bounded set of rate matrices $\rateset$, we define the set $\whmprocesses_{\rateset}$ of all well-behaved homogeneous continuous-time Markov processes \emph{consistent} with $\rateset$. Formally, we let $\whmprocesses_{\rateset}$ be the set of all $P\in\whmprocesses$ such that
+%\begin{align*}
+%\whmprocesses_\rateset
+%\coloneqq&
+%\left\{
+%P\in\whmprocesses
+%\colon
+%\left((\forall t\in\realsnonneg)(\forall u<t)(\forall x_u\in\states^u):~
+%\overline{\partial}
+%{T^t_{t,\,x_u}}\subseteq\rateset
+%\right)\right\}\\
+%=&
+%\left\{
+%P\in\whmprocesses
+%\colon
+%\left((\forall t\in\realsnonneg):~
+%\overline{\partial}
+%{T^t_{t}}\subseteq\rateset
+%\right)\right\}\\
+%=&
+%\left\{
+%P\in\whmprocesses
+%\colon
+%Q_P\in\rateset
+%\right\}
+%\end{align*}
+%\end{definition}
+%
+%\begin{definition}[Lower Expectation for Set of Homogeneous Markov Processes]\label{def:lower_homogen_markov} Consider any bounded set of rate matrices $\rateset$, and the set of corresponding well-behaved homogeneous continuous-time Markov processes $\whmprocesses_\rateset$. Then, the \emph{lower expectation with respect to $\whmprocesses_\rateset$} is defined as
+%\begin{equation*}
+%\underline{\mathbb{E}}_\rateset^\mathrm{WHM}[\cdot\,\vert\,\cdot] \coloneqq \inf\left\{\mathbb{E}[\cdot\,\vert\,\cdot]\,:\,P\in\whmprocesses_\rateset\right\}\,.
+%\end{equation*}
+%\end{definition}
+%
+%
+%\subsubsection{Imprecise Markov Chains}
+%
+%\begin{definition}[Set of Markov Processes]\label{def:markov_process_set_new}
+%For any bounded set of rate matrices $\rateset$, we define the set $\wmprocesses_{\rateset}$ of all well-behaved continuous-time Markov processes \emph{consistent} with $\rateset$. Formally, we let $\wmprocesses_{\rateset}$ be the set of all $P\in\wmprocesses$ such that
 %\begin{align*}\label{eq:conditionforMarkov_new}
 %(\forall\epsilon\in\realspos)&\,
 %(\exists\delta\in\realspos)\,
@@ -928,40 +957,40 @@ For any bounded set of rate matrices $\rateset$, we define the set $\wmprocesses
 % &\,(\forall f\in\gamblesX)(\forall x\in\states)~
 %\left\lvert\frac{\mathbb{E}_{X_{t+\Delta}}[f(X_{t+\Delta})\,\vert\,X_t=x]-f(x)}{\Delta}-\left[Qf\right](x)\right\rvert<\epsilon\cdot\norm{f}\,.
 %\end{align*}
-\begin{align*}
-\wmprocesses_\rateset
-\coloneqq&
-\left\{
-P\in\wmprocesses
-\colon
-\left((\forall t\in\realsnonneg)(\forall u<t)(\forall x_u\in\states^u):~
-\overline{\partial}
-{T^t_{t,\,x_u}}\subseteq\rateset
-\right)\right\}\\
-=&
-\left\{
-P\in\wmprocesses
-\colon
-\left((\forall t\in\realsnonneg):~
-\overline{\partial}
-{T^t_{t}}\subseteq\rateset
-\right)\right\}
-\end{align*}
-\end{definition}
-
-\begin{definition}[Lower Expectation for Set of Markov Processes]\label{def:lower_markov} Consider any bounded set of rate matrices $\rateset$, and the set of corresponding well-behaved continuous-time Markov processes $\wmprocesses_\rateset$. Then, the \emph{lower expectation with respect to $\wmprocesses_\rateset$} is defined as
+%\begin{align*}
+%\wmprocesses_\rateset
+%\coloneqq&
+%\left\{
+%P\in\wmprocesses
+%\colon
+%\left((\forall t\in\realsnonneg)(\forall u<t)(\forall x_u\in\states^u):~
+%\overline{\partial}
+%{T^t_{t,\,x_u}}\subseteq\rateset
+%\right)\right\}\\
+%=&
+%\left\{
+%P\in\wmprocesses
+%\colon
+%\left((\forall t\in\realsnonneg):~
+%\overline{\partial}
+%{T^t_{t}}\subseteq\rateset
+%\right)\right\}
+%\end{align*}
+%\end{definition}
+%
+%\begin{definition}[Lower Expectation for Set of Markov Processes]\label{def:lower_markov} Consider any bounded set of rate matrices $\rateset$, and the set of corresponding well-behaved continuous-time Markov processes $\wmprocesses_\rateset$. Then, the \emph{lower expectation with respect to $\wmprocesses_\rateset$} is defined as
 %\begin{equation*}
 %\underline{\mathbb{E}}^\mathrm{M}[f(X_s)\,\vert\,X_t=x_t] \coloneqq \inf\left\{\mathbb{E}[f(X_s)\,\vert\,X_t=x_t]\,:\,P\in\mprocesses_\rateset\right\}\,.
 %\end{equation*}
-\begin{equation*}
-\underline{\mathbb{E}}_\rateset^\mathrm{WM}[\cdot\,\vert\,\cdot] \coloneqq \inf\left\{\mathbb{E}[\cdot\,\vert\,\cdot]\,:\,P\in\wmprocesses_\rateset\right\}\,.
-\end{equation*}
-\end{definition}
-
-\subsubsection{Imprecise Non-Markov Chains}
-
-\begin{definition}[Set of Non-Markov Processes]\label{def:set_non_markov_process}
-For any bounded set of rate matrices $\rateset$, we consider the set $\wprocesses_\rateset$ of all stochastic processes \emph{consistent} with $\rateset$. Formally, we let $\wprocesses_\rateset$ be the set of all $P\in\wprocesses$ such that
+%\begin{equation*}
+%\underline{\mathbb{E}}_\rateset^\mathrm{WM}[\cdot\,\vert\,\cdot] \coloneqq \inf\left\{\mathbb{E}[\cdot\,\vert\,\cdot]\,:\,P\in\wmprocesses_\rateset\right\}\,.
+%\end{equation*}
+%\end{definition}
+%
+%\subsubsection{Imprecise Non-Markov Chains}
+%
+%\begin{definition}[Set of Non-Markov Processes]\label{def:set_non_markov_process}
+%For any bounded set of rate matrices $\rateset$, we consider the set $\wprocesses_\rateset$ of all stochastic processes \emph{consistent} with $\rateset$. Formally, we let $\wprocesses_\rateset$ be the set of all $P\in\wprocesses$ such that
 %\begin{align*}
 %&(\forall\epsilon\in\realspos)\,(\exists\delta\in\realspos)\,: \\
 % &(\forall t\in\realsnonneg)\,(\forall\Delta\in(0,\delta))\,(\forall u\in\mathcal{U}_{[0,t]})\,(\forall(x_{t_0},\ldots,x_{t_{n-1}})\in\states^{\{t_0,\ldots,t_{n-1}\}})\,(\exists Q\in\rateset)\,: \\
@@ -969,32 +998,30 @@ For any bounded set of rate matrices $\rateset$, we consider the set $\wprocesse
 % &\abs{\frac{\mathbb{E}_{X_{t+\Delta}}[f(x_{t_0},\ldots,x_{t_n},X_{t+\Delta})\,\vert\,X_{t_0,\ldots,t_n}=x_{t_0,\ldots,t_n}] - f(x_{t_0},\ldots,x_{t_n},x_{t_n})}{\Delta} - \left[Q f(x_{t_0},\ldots,x_{t_{n}},X_{t+\Delta})\right](x_{t_n})} \\ 
 % &\quad\quad < \epsilon\cdot\norm{f}\,.
 %\end{align*}
-\begin{equation}
-\label{def:nonmarkovsetQ}
-\wprocesses_\rateset
-\coloneqq
-\left\{
-P\in\wprocesses
-\colon
-\left((\forall t\in\realsnonneg)(\forall u<t)(\forall x_u\in\states^u):~
-\overline{\partial}
-{T^t_{t,\,x_u}}\subseteq\rateset
-\right)\right\}
-\end{equation}
-\end{definition}
-
-\begin{definition}[Lower Expectation for Set of Non-Markov Processes]\label{def:lower_non_markov} Consider any bounded set of rate matrices $\rateset$, and the set of corresponding well-behaved continuous-time non-Markov processes $\wprocesses_\rateset$. Then, the \emph{lower expectation with respect to $\wprocesses_\rateset$} is defined as
+%\begin{equation}
+%\label{def:nonmarkovsetQ}
+%\wprocesses_\rateset
+%\coloneqq
+%\left\{
+%P\in\wprocesses
+%\colon
+%\left((\forall t\in\realsnonneg)(\forall u<t)(\forall x_u\in\states^u):~
+%\overline{\partial}
+%{T^t_{t,\,x_u}}\subseteq\rateset
+%\right)\right\}
+%\end{equation}
+%\end{definition}
+%
+%\begin{definition}[Lower Expectation for Set of Non-Markov Processes]\label{def:lower_non_markov} Consider any bounded set of rate matrices $\rateset$, and the set of corresponding well-behaved continuous-time non-Markov processes $\wprocesses_\rateset$. Then, the \emph{lower expectation with respect to $\wprocesses_\rateset$} is defined as
 %\begin{equation*}
 %\underline{\mathbb{E}}[f(X_s)\,\vert\,X_t=x_t] \coloneqq \inf\left\{\mathbb{E}[f(X_s)\,\vert\,X_t=x_t]\,:\,P\in\processes_\rateset\right\}\,.
 %\end{equation*}
-\begin{equation*}
-\underline{\mathbb{E}}_\rateset^\mathrm{W}[\cdot\,\vert\,\cdot] \coloneqq \inf\left\{\mathbb{E}[\cdot\,\vert\,\cdot]\,:\,P\in\wprocesses_\rateset\right\}\,.
-\end{equation*}
-\end{definition}
+%\begin{equation*}
+%\underline{\mathbb{E}}_\rateset^\mathrm{W}[\cdot\,\vert\,\cdot] \coloneqq \inf\left\{\mathbb{E}[\cdot\,\vert\,\cdot]\,:\,P\in\wprocesses_\rateset\right\}\,.
+%\end{equation*}
+%\end{definition}
 
-\subsection{Properties of Imprecise Continuous-Time Markov Chains}
-
-*** some notes about upper expectations, and that it suffices to just consider the lower ***
+%\subsection{Properties of Imprecise Continuous-Time Markov Chains}
 
 \begin{proposition}\label{prop:markov_set_subset_of_nonmarkov_set}
 Consider any bounded set of rate matrices $\rateset$, and the corresponding sets $\whmprocesses_\rateset$, $\wmprocesses_\rateset$, and $\wprocesses_\rateset$ of well-behaved homogeneous continuous-time Markov processes, well-behaved continuous-time Markov processes, and well-behaved continuous-time non-Markov processes, respectively. Then,
@@ -1003,7 +1030,7 @@ Consider any bounded set of rate matrices $\rateset$, and the corresponding sets
 \end{equation*}
 \end{proposition}
 \begin{proof}
-This is immediate from Definitions \ref{def:homogen_markov_process_set_new}, \ref{def:markov_process_set_new}, and \ref{def:set_non_markov_process}.
+This is immediate from Definition~\ref{def:process_sets} and Proposition~\ref{prop:process_sets_simplify}.
 \end{proof}
 
 \begin{proposition}\label{prop:lower_exp_markov_bounded_by_nonmarkov}
@@ -1015,8 +1042,14 @@ Consider any bounded set of rate matrices $\rateset$, and the corresponding sets
 \end{equation*}
 \end{proposition}
 \begin{proof}
-This is immediate from Proposition \ref{prop:markov_set_subset_of_nonmarkov_set} and Definitions \ref{def:lower_homogen_markov}, \ref{def:lower_markov}, and \ref{def:lower_non_markov}.
+This is immediate from Definition~\ref{def:lower_exp} and Proposition \ref{prop:markov_set_subset_of_nonmarkov_set}.
 \end{proof}
+
+\subsection{Stuff that needs to find a place}
+
+*** some notes about upper expectations, and that it suffices to just consider the lower ***
+
+*** onderstaande breekt het verhaal wel een beetje. Misschien uiteindelijk in zijn geheel naar appendix?
 
 \begin{theorem}
 Consider a non-empty convex set of rate matrices $\rateset\subseteq\mathcal{R}$.
