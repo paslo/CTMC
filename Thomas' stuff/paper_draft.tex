@@ -1055,21 +1055,59 @@ This is immediate from Definition~\ref{def:lower_exp} and Proposition \ref{prop:
 
 *** onderstaande breekt het verhaal wel een beetje. Misschien uiteindelijk in zijn geheel naar appendix?
 
-\begin{theorem}
+\begin{theorem}\label{theo:aanelkaarplakken}
 Consider a non-empty convex set of rate matrices $\rateset\subseteq\mathcal{R}$.
 Fix a finite sequence of time points $u$. Choose any $P_\emptyset\in\wprocesses_\rateset$ and, for all $x_u\in\states^u$, choose some $P_{x_u}\in\wprocesses_\rateset$. Then there is a stochastic process $P\in\wprocesses_\rateset$ such that
-\begin{equation*}
+\begin{equation}\label{eq:theo:aanelkaarplakken:equalsfirst}
 P(X_u=x_u)=P_{\emptyset}(X_u=x_u)
 \text{~for all $x_u\in\states^u$}
+\end{equation}
+and
+\begin{equation}\label{eq:theo:aanelkaarplakken:equalssecond}
+P(A\vert X_u=x_u)=P_{x_u}(A\vert X_u=x_u)
+\text{~for all $x_u\in\states^u$ and $A\in\mathcal{A}_u$.}
+\end{equation}
+\end{theorem}
+\begin{proof}
+Let $\mathcal{C}\coloneqq\mathcal{C}_\emptyset\cup(\bigcup_{x_u\in\states^u}\mathcal{C}_{x_u})$, with
+\begin{equation*}
+\mathcal{C}_\emptyset\coloneqq
+\{(A,X_v=x_v)\colon *** \}
 \end{equation*}
 and
 \begin{equation*}
-P(A\vert X_u=x_u)=P_{x_u}(A\vert X_u=x_u)
-\text{~for all $x_u\in\states^u$ and $A\in\mathcal{A}_u$.}
+\mathcal{C}_{x_u}\coloneqq\{
+(A,X_u=x_u)
+\colon A\in\mathcal{A}_u
+\}
+\text{ for all $x_u\in\states^u$}
 \end{equation*}
-\end{theorem}
-\begin{proof}
-*** heb dit ergens staan ***
+and consider a real-valued function $\tilde{P}$ on $\mathcal{C}$ that is defined by 
+\begin{equation*}
+\tilde{P}(A\vert B)
+\coloneqq
+\begin{cases}
+P_\emptyset(A\vert B)&\text{~if $(A,B)\in\mathcal{C}_\emptyset$}\\
+P_{x_u}(A\vert B)&\text{~if $(A,B)\in\mathcal{C}_{x_u}$}
+\end{cases}
+\text{~~~for all $(A,B)\in\mathcal{C}$.}
+\end{equation*}
+
+
+We first prove that $\tilde{P}$ is a coherent conditional probability on $\mathcal{C}$. So consider any $n\in\nats$ and, for all $i\in\{1,\dots,n\}$, choose $(A_i,C_i)\in\mathcal{C}$ and $\lambda_i\in\reals$. We need to show that
+\begin{equation}\label{eq:theo:aanelkaarplakken:coh}
+\sup\left\{\sum_{i=1}^n\lambda_i\ind{C_i}(\omega)\bigl(\tilde{P}(A_i\vert C_i)-\ind{A_i}(\omega)\bigr)~\Bigg\vert~\omega\in C_0\right\}\geq0,
+\end{equation}
+with $C_0\coloneqq\cup_{i=1}^nC_i$.
+
+*** need to add stuff here ***
+
+Hence, $\tilde{P}$ is coherent.
+
+
+Therefore, and because of Theorem~\ref{theo:coherentextendable}, $\tilde{P}$ can be extended to a full conditional probability $\tilde{P}^*$. If we now let $P$ be the restriction of $\tilde{P}^*$ to $\mathcal{C}^\mathrm{SP}$, then $P$ is a stochastic process that extends $\tilde{P}$, which implies that $P$ satisfies Equations~\eqref{eq:theo:aanelkaarplakken:equalsfirst} and~\eqref{eq:theo:aanelkaarplakken:equalssecond}. In the remainder of this proof, we will show that $P\in\wprocesses_\rateset$.
+
+*** still need to finish this ***
 \end{proof}
 
 \section{An Important Lower Transition Operator}
