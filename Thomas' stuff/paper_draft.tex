@@ -451,7 +451,7 @@ u\in\mathcal{U},~x_u\in\states^u,~A\in\mathcal{A}_u\big\}\subset\power\times\non
 We denote the set of all such stochastic processes by $\processes$.
 \end{definition}
 
-\begin{corollary}
+\begin{corollary}\label{corol:processiffcoherent}
 Let $P$ be a real-valued map from $\mathcal{C}^\mathrm{SP}$ to $\reals$. Then $P$ is a stochastic process if and only if it is a coherent conditional probability.
 \end{corollary}
 \begin{proof}
@@ -1077,28 +1077,39 @@ Let $\mathcal{C}\coloneqq\mathcal{C}_\emptyset\cup(\bigcup_{x_u\in\states^u}\mat
 and
 \begin{equation*}
 \mathcal{C}_{x_u}\coloneqq\{
-(A,X_u=x_u)
-\colon A\in\mathcal{A}_u
+(A,X_v=x_v)
+\colon
+u\subseteq v\in\mathcal{U},\,
+x_{v\setminus u}\in\states^{v\setminus u},\,
+ A\in\mathcal{A}_{u\cup(v\setminus[0,\max u])}
 \}
-\text{ for all $x_u\in\states^u$}
 \end{equation*}
-and consider a real-valued function $\tilde{P}$ on $\mathcal{C}$ that is defined by 
-\begin{equation*}
-\tilde{P}(A\vert B)
+for all $x_u\in\states^u$, and consider a real-valued function $\tilde{P}$ on $\mathcal{C}$ that is defined by 
+\begin{equation}\label{eq:theo:aanelkaarplakken:defPtilde}
+\tilde{P}(A\vert X_v=x_v)
 \coloneqq
 \begin{cases}
-P_\emptyset(A\vert B)&\text{~if $(A,B)\in\mathcal{C}_\emptyset$}\\
-P_{x_u}(A\vert B)&\text{~if $(A,B)\in\mathcal{C}_{x_u}$}
+P_\emptyset(A\vert X_v=x_v)&\text{~if $(A,X_v=x_v)\in\mathcal{C}_\emptyset$}\\
+P_{x_u}(A\vert 
+X_{u\cup(v\setminus[0,\max u])}=x_{u\cup(v\setminus[0,\max u])})&\text{~if $(A,X_v=x_v)\in\mathcal{C}_{x_u}$}
 \end{cases}
-\text{~~~for all $(A,B)\in\mathcal{C}$.}
-\end{equation*}
-
+\end{equation}
+for all $(A,X_v=x_v)\in\mathcal{C}$.
 
 We first prove that $\tilde{P}$ is a coherent conditional probability on $\mathcal{C}$. So consider any $n\in\nats$ and, for all $i\in\{1,\dots,n\}$, choose $(A_i,C_i)\in\mathcal{C}$ and $\lambda_i\in\reals$. We need to show that
 \begin{equation}\label{eq:theo:aanelkaarplakken:coh}
 \sup\left\{\sum_{i=1}^n\lambda_i\ind{C_i}(\omega)\bigl(\tilde{P}(A_i\vert C_i)-\ind{A_i}(\omega)\bigr)~\Bigg\vert~\omega\in C_0\right\}\geq0,
 \end{equation}
 with $C_0\coloneqq\cup_{i=1}^nC_i$.
+
+Let $S_\emptyset\coloneqq\left\{i\in\{1,\dots,n\}\colon(A_i,C_i)\in\mathcal{C}_\emptyset\right\}$. Since $P_\emptyset$ is a stochastic process, it follows from Corollary~\ref{corol:processiffcoherent} and Equation~\eqref{eq:theo:aanelkaarplakken:defPtilde} that 
+\begin{equation}\label{eq:theo:aanelkaarplakken:cohfirstpart}
+\sup\left\{\sum_{i\in S_\emptyset}\lambda_i\ind{C_i}(\omega)\bigl(\tilde{P}(A_i\vert C_i)-\ind{A_i}(\omega)\bigr)~\Bigg\vert~\omega\in C_\emptyset\right\}\geq0,
+\end{equation}
+with $C_\emptyset\coloneqq\cup_{i\in S_\emptyset}C_i$. Since $S_\emptyset$ is finite and because, for every $i\in S_\emptyset$, $\ind{A_i}$ and $\ind{C_i}$ can only take two values---$0$ or $1$---it follows that this supremum is taken over a finite set of real numbers, which implies that it is actually a maximum. Therefore, there is some $\omega^*\in C_\emptyset$ such that
+\begin{equation}\label{eq:theo:aanelkaarplakken:geqfirstpart}
+\sum_{i\in S_\emptyset}\lambda_i\ind{C_i}(\omega^*)\bigl(\tilde{P}(A_i\vert C_i)-\ind{A_i}(\omega^*)\bigr)\geq0.
+\end{equation}
 
 *** need to add stuff here ***
 
