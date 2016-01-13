@@ -1108,6 +1108,36 @@ Hence, $\tilde{P}$ is coherent.
 Therefore, and because of Theorem~\ref{theo:coherentextendable}, $\tilde{P}$ can be extended to a full conditional probability $\tilde{P}^*$. If we now let $P$ be the restriction of $\tilde{P}^*$ to $\mathcal{C}^\mathrm{SP}$, then $P$ is a stochastic process that extends $\tilde{P}$, which implies that $P$ satisfies Equations~\eqref{eq:theo:aanelkaarplakken:equalsfirst} and~\eqref{eq:theo:aanelkaarplakken:equalssecond}. In the remainder of this proof, we will show that $P\in\wprocesses_\rateset$.
 
 *** still need to finish this ***
+
+Consider any $v\in\mathcal{U}$ and $t\in\reals_{\geq0}$ such that $v<t$ and $u<t$. Then for all $x_v\in\states^v$ and $y\in\states$, we have that
+\begin{align*}
+P(X_t=y\vert X_v=x_v)
+%&=P(X_t=y\vert X_{v\setminus u}=x_{v\setminus u}, X_{v\cap u}=x_{v\cap u})\\
+&=
+\sum_{x_{u\setminus v}\in\states^{u\setminus v}}
+P(X_t=y,
+X_{u\setminus v}=x_{u\setminus v}
+\vert X_v=x_v)\\
+%\vert X_{v\setminus u}=x_{v\setminus u}, X_{v\cap u}=x_{v\cap u})
+&=
+\sum_{x_{u\setminus v}\in\states^{u\setminus v}}
+P(X_t=y\vert
+X_{u\setminus v}=x_{u\setminus v}, X_v=x_v)
+P(X_{u\setminus v}=x_{u\setminus v}
+\vert X_v=x_v)\\
+&=
+\sum_{x_{u\setminus v}\in\states^{u\setminus v}}
+P(X_t=y\vert
+X_{u}=x_{u}, X_{v\setminus u}=x_{v\setminus u})
+P(X_{u\setminus v}=x_{u\setminus v}
+\vert X_v=x_v)\\
+&=
+\sum_{x_{u\setminus v}\in\states^{u\setminus v}}
+P_{x_u}(X_t=y\vert
+X_{u}=x_{u}, X_{v\setminus u}=x_{v\setminus u})
+P(X_{u\setminus v}=x_{u\setminus v}
+\vert X_v=x_v)
+\end{align*} 
 \end{proof}
 
 \section{An Important Lower Transition Operator}
