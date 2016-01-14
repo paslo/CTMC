@@ -1308,7 +1308,7 @@ The metric space $(\underline{\mathcal{T}},d)$ is complete under the metric $d$ 
 \begin{proposition}\label{lemma:productiscoherent}
 Consider any $t,s\in\realsnonneg$ such that $t<s$, any lower transition rate operator $\lrate$, and any sequence $u\in\mathcal{U}_{[t,s]}$ of time points such that $\sigma(u)\leq\nicefrac{1}{\norm{\lrate}}$. Then
 \begin{equation*}
-\prod_{k=1}^n(I+\Delta_i\lrate)\coloneqq (I+\Delta_1\lrate)(I+\Delta_2\lrate)\cdots (I+\Delta_n\lrate)
+\prod_{k=1}^n(I+\Delta_k\lrate)\coloneqq (I+\Delta_1\lrate)(I+\Delta_2\lrate)\cdots (I+\Delta_n\lrate)
 \end{equation*}
 is a lower transition operator.
 \end{proposition}
@@ -1319,9 +1319,9 @@ Trivial consequence of Propositions~\ref{lemma:normQsmallenough} and~\ref{lemma:
 \subsection{The Operator of Interest}
 
 We will in this section introduce a specific lower transition operator on which we will focus for the remainder of this work. We will assume here that we are given some arbitrary lower transition rate operator $\lrate$, and define for any $u\in\mathcal{U}_{[t,s]}$ the auxiliary operator
-\begin{equation*}
+\begin{equation}\label{eq:aux_lower_trans}
 \Phi_u\coloneqq\prod_{k=1}^n(I+\Delta_k\lrate)\,.
-\end{equation*}
+\end{equation}
 Before defining the operator of interest, we first give some preliminary results to provide intuition on how this operator will be constructed. We start with a bound on the distance between two operators $\Phi_u$ and $\Phi_{u*}$.
 
 \begin{proposition}\label{prop:differencebetweenu}
@@ -1330,6 +1330,8 @@ Consider any $t,s\in\realsnonneg$ such that $t<s$, and any $u,u^*\in\mathcal{U}_
 \norm{\Phi_u-\Phi_{u^*}}\leq 2\alpha\Delta\norm{\lrate}^2
 \end{equation*}
 \end{proposition}
+
+Using this bound established by Proposition~\ref{prop:differencebetweenu}, we find that for any sequence $\{u_i\}_{i\in\nats}$ in $\mathcal{U}_{[t,s]}$ such that $\lim_{i\to\infty}\sigma(u_i)=0$, the corresponding sequence $\{\Phi_{u_i}\}_{i\in\nats}$ is convergent.
 
 \begin{corollary}\label{corol:cauchy}
 For every sequence $\{u_i\}_{i\in\nats}$ in $\mathcal{U}_{[t,s]}$ such that $\lim_{i\to\infty}\sigma(u_i)=0$, the corresponding sequence $\{\Phi_{u_i}\}_{i\in\nats}$ is a \emph{Cauchy sequence}, meaning that
@@ -1348,26 +1350,32 @@ This follows almost directly from Proposition~\ref{prop:differencebetweenu}.
 For every sequence $\{u_i\}_{i\in\nats}$ in $\mathcal{U}_{[t,s]}$ such that $\lim_{i\to\infty}\sigma(u_i)=0$, the corresponding sequence $\{\Phi_{u_i}\}_{i\in\nats}$ converges to a lower transition operator.
 \end{corollary}
 
-\noindent We are now ready to define the \emph{lower transition operator corresponding to $\lrate$}.
+Our next result establishes that this limit is also unique, i.e., that it is independent of the choice of $\{u_i\}_{i\in\nats}$.
+
+\begin{theorem}\label{theo:convergencelowerbound}
+For any $t,s\in\realsnonneg$ such that $t<s$ and any lower transition rate operator $\lrate$, there is a lower transition operator $\lt\in\underline{\mathcal{T}}$ such that 
+\begin{equation*}
+(\forall\epsilon>0)\,
+(\exists\delta>0)\,
+(\forall u\in\mathcal{U}_{[t,s]}\colon\sigma(u)<\delta)~\norm{\lt - \Phi_u}<\epsilon.
+\end{equation*}
+\end{theorem}
+
+Note that the $\epsilon-\delta$ expression in Theorem~\ref{theo:convergencelowerbound} is a kind of limit statement. Specifically, it is a limit of operators $\Phi_{u}$ corresponding to increasingly finer partitions $u$ of the interval $[t,s]$. In the sequel, whenever such a limit exists and equals some lower transition operator $\lt$, we will denote it as
+\begin{equation}\label{eq:net_limit_lower_trans}
+\lim_{\sigma(u)\to0}\left\{\Phi_u\,\big\vert\,u\in\mathcal{U}_{[t,s]}\right\} = \lt\,.
+\end{equation}
+Here, the notation is understood to indicate that the limit of these operators $\Phi_{u}$ is independent of the exact choice of $\{u_i\}_{i\in\nats}$ in $\mathcal{U}_{[t,s]}$, so long as $\lim_{i\to\infty}\sigma(u_i)=0$.
+
+We are now ready to define the \emph{lower transition operator corresponding to $\lrate$}, which is the operator in which we will be interested for the remainder of this work.
 
 \begin{definition}[Corresponding Lower Transition Operator]\label{def:low_trans}
 Consider any $t,s\in\realsnonneg$ such that $t<s$ and let $\lrate$ be an arbitrary lower transition rate operator. The \emph{corresponding lower transition operator} $\lbound_t^s$ is a map from $\gamblesX$ to $\gamblesX$, defined by
 \begin{equation}\label{eq:lowerbound}
-\lbound_t^s\coloneqq\lim_{\sigma(u)\to0}\left\{ \Phi_u\,\Big\vert\,u\in\mathcal{U}_{[t,s]}\right\},
+\lbound_t^s\coloneqq\lim_{\sigma(u)\to0}\left\{ \Phi_u\,\big\vert\,u\in\mathcal{U}_{[t,s]}\right\},
 \end{equation}
-where the limit is taken with respect to the set $\mathcal{U}_{[t,s]}$ of all finite sequences $u$ of time points that partition the interval $[t,s]$.
+where the limit is understood as in Equation~\eqref{eq:net_limit_lower_trans}.
 \end{definition}
-
-\noindent The next result makes clear what exactly we mean by Equation~\eqref{eq:lowerbound}, and establishes that this limit exists and is well-defined.
-
-\begin{theorem}\label{theo:convergencelowerbound}
-For any $t,s\in\realsnonneg$ such that $t<s$ and any lower transition rate operator $\lrate$, there is a lower transition operator $\lbound_t^s$ such that 
-\begin{equation*}
-(\forall\epsilon>0)\,
-(\exists\delta>0)\,
-(\forall u\in\mathcal{U}_{[t,s]}\colon\sigma(u)<\delta)~\norm{\lbound_t^s - \Phi_u}<\epsilon.
-\end{equation*}
-\end{theorem}
 
 \subsection{Properties of the Operator of Interest}
 
@@ -2989,35 +2997,35 @@ Since $\lim_{n\to\infty}\sigma(u_n)=0$, and because of Lemma~\ref{lemma:producti
 \end{proof}
 
 \begin{proof}[Proof of Theorem~\ref{theo:convergencelowerbound}]
-Start by considering any sequence $u_1,u_2,\dots,u_n,\dots$ in $\mathcal{U}_{[t,s]}$ such that $\lim_{n\to\infty}\sigma(u_n)=0$. Due to Corollary~\ref{corol:limitexistsandiscoherent}, the sequence $\Phi_{u_1},\Phi_{u_2},\dots,\Phi_{u_n},\dots$ converges to a lower transition operator, which we denote by $\lbound_t^s$. 
+Start by considering any sequence $\{u_i\}_{i\in\nats}$ in $\mathcal{U}_{[t,s]}$ such that $\lim_{i\to\infty}\sigma(u_i)=0$. Due to Corollary~\ref{corol:limitexistsandiscoherent}, the sequence $\{\Phi_{u_i}\}_{i\in\nats}$ converges to a lower transition operator, which we denote by $\lt$. 
 
 Consider now any $\epsilon>0$ and let $\Delta\coloneqq s-t$ and
 \begin{equation*}
 \delta\coloneqq\min\left\{\frac{\epsilon}{4\Delta\norm{\lrate}^2},\frac{1}{\norm{\lrate}}\right\}.
 \end{equation*}
 
-\noindent Since $\Phi_{u_1},\Phi_{u_2},\dots,\Phi_{u_n},\dots$ converges to $\lbound_t^s$, there is some $N\in\nats$ such that
+\noindent Since $\{\Phi_{u_i}\}_{i\in\nats}$ converges to $\lt$, there is some $N\in\nats$ such that
 \begin{equation*}
-(\forall n\geq N)~\norm{\lbound_t^s - \Phi_{u_n}}<\frac{\epsilon}{2}.
+(\forall n\geq N)~\norm{\lt - \Phi_{u_n}}<\frac{\epsilon}{2}.
 \end{equation*}
-Therefore, since $\lim_{n\to\infty}\sigma(u_n)=0$, there is some $N^*\geq N$ such that
+Therefore, since $\lim_{i\to\infty}\sigma(u_i)=0$, there is some $N^*\geq N$ such that
 \begin{equation*}
-\sigma(u_{N^*})<\delta\text{ and }\norm{\lbound_t^s - \Phi_{u_{N^*}}}<\frac{\epsilon}{2}
+\sigma(u_{N^*})<\delta\text{ and }\norm{\lt - \Phi_{u_{N^*}}}<\frac{\epsilon}{2}
 \end{equation*}
 
 \noindent Consider now any $u\in\mathcal{U}_{[t,s]}$ such that $\sigma(u)<\delta$. Then
 
 \begin{equation*}
-\norm{\lbound_t^s - \Phi_u}\leq\norm{\lbound_t^s-\Phi_{u_{N^*}}}
+\norm{\lt - \Phi_u}\leq\norm{\lt-\Phi_{u_{N^*}}}
 +\norm{\Phi_{u_{N^*}}-\Phi_u}
 <\frac{\epsilon}{2}+2\delta\Delta\norm{\lrate}^2\leq\epsilon,
 \end{equation*}
 where the strict inequality follows from Proposition~\ref{prop:differencebetweenu}.
-In summary, we have shown that there is lower transition operator $\lbound_t^s$ such that
+In summary, we have shown that there is lower transition operator $\lt$ such that
 \begin{equation*}
 (\forall\epsilon>0)\,
 (\exists\delta>0)\,
-(\forall u\in\mathcal{U}_{[t,s]}\colon\sigma(u)<\delta)~\norm{\lbound_t^s - \Phi_u}<\epsilon\,.
+(\forall u\in\mathcal{U}_{[t,s]}\colon\sigma(u)<\delta)~\norm{\lt - \Phi_u}<\epsilon\,.
 \end{equation*}
 \end{proof}
 
