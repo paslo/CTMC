@@ -762,7 +762,7 @@ At this point, we already know that every (well-behaved) Markov chain has a corr
 Hence, Markov chains---and well-behaved Markov chains in particular---are completely characterised by their transition matrices and their initial distribution. 
 We now focus on a number of special cases.
 
-\subsection{Homogeneous Markov chains}
+\subsection{Homogeneous Markov chains}\label{sec:homogen_markov_chain}
 
 \begin{definition}[Homogeneous Markov chain]\label{def:homogeneousMarkov}
 A Markov chain $P\in\mprocesses$ is called \emph{homogeneous} if its transition matrices $T_t^s$ do not depend on the absolute value of $t$ and $s$, but only on the time-difference $s-t$:
@@ -847,9 +847,12 @@ Consider any set of stochastic processes $\mathcal{P}\subseteq\processes$. Then,
 \end{equation*}
 \end{definition}
 
-**** gezien dat lower expectations gelinkt zijn aan verzamelingen $\mathcal{P}$, is er een voor de hand liggende manier om zon verzameling te beschrijven?
+Because such lower expectations are linked to a given set $\mathcal{P}\subseteq\processes$ of stochastic processes, we will next look at how we can describe such a set $\mathcal{P}$.
+Recall from Section~\ref{sec:dynamics} that for a given stochastic process $P\in\processes$, its behavior can be described using the outer partial derivatives $\smash{\overline{\partial}}T_{t,\,x_u}^t$ of its transition matrices $T_{t,\,x_u}^t$ at each time point $t\in\realsnonneg$ and for each history $x_u\in\states^u$. There, we found that---at least for well-behaved processes---these outer partial derivatives are non-empty bounded sets of rate matrices $\smash{\overline{\partial}}T_{t,\,x_u}^t\subset\mathcal{R}$.
 
-**** we weten uit voorgaande secties dat het gedrag van stochastische processen beschrijfbaar is met hun outer partial derivatives, wat verzamelingen van rate matrices zijn. We kunnen dit ook omdraaien, door te vragen of een process beschrijfbaar is met een gegeven verzameling rate matrices $\rateset$. Omdat zo'n verzameling niet direct gekoppeld is aan tijdpunten, is dat echter ondergedetermineert; we kunnen wel vragen of een process $P$ \emph{consistent} is met $\rateset$:
+Turning this around, we might ask if, for a given non-empty bounded set of rate matrices $\rateset\subset\mathcal{R}$, there is a stochastic process described by this set. Indeed, we found in Section~\ref{sec:homogen_markov_chain} that, for well-behaved homogeneous Markov chains, this is the case exactly when $\rateset=\{Q\}$ for some $Q\in\mathcal{R}$. However, for non-homogeneous or non-Markov processes, the answer to this question is less straightforward. In particular, because such a set $\rateset$ is not explicitly connected to any time point $t$ or history $x_u$, this question is actually under determined.
+
+Therefore, rather than asking if a process can be described by some set of rate matrices, we will now introduce the following weaker notion of \emph{consistency} of a stochastic process with a given set of rate matrices.
 
 \begin{definition}[Consistent Process]
 Consider any non-empty bounded set of rate matrices $\rateset$, and any stochastic process $P\in\processes$. Then $P$ is said to be \emph{consistent} with $\rateset$, if
@@ -858,6 +861,24 @@ Consider any non-empty bounded set of rate matrices $\rateset$, and any stochast
 \end{equation*}
 If $P$ is consistent with $\rateset$, we will write $P\sim\rateset$.
 \end{definition}
+
+Thus, when a process $P\in\processes$ is consistent with some $\rateset\subset\mathcal{R}$, we know that its behavior over time can always be described using the elements of $\rateset$. However, we do not know which of these elements $Q\in\rateset$ describe this behavior at any given time  $t\in\realsnonneg$ or for any given history $x_u\in\states^u$. Furthermore, consistency of a process with some set $\rateset$ only asserts ``consistency in behavior"; in particular, it does not tell us anything about the initial distribution of the process. It should therefore be clear that there will be multiple processes consistent with any non-empty bounded set $\rateset\subset\mathcal{R}$. 
+
+\begin{exmp}
+Suppose that $\rateset=\{Q\}$ for some $Q\in\mathcal{R}$. Then, there are an infinite number of stochastic processes consistent with $\rateset$. In particular, recall from Section~\ref{sec:homogen_markov_chain} that there exists a well-behaved homogeneous Markov chain that is characterized uniquely by the rate matrix $Q$, \emph{up to} its initial distribution $P(X_0)$. Therefore, for each choice of probability mass function $p$ on $\states$, there is a well-behaved homogeneous Markov chain $P$ that is consistent with $\rateset$, and for which $P(X_0=x)=p(x)$ for all $x\in\states$.
+\exampleend
+\end{exmp}
+
+**** some notes that this doesnt matter, since we're largely interested in \emph{conditional} lower expectations, with the conditioning done on the history. once this conditioning is taken into account, the under-parameterization w.r.t. the initial distribution cancels out.
+
+**** however, if $\rateset$ is not singleton, the collection of processes consistent with $\rateset$ becomes more interesting.
+
+\begin{exmp}
+Suppose that $\rateset=\{Q_1,Q_2\}$ for some $Q_1,Q_2\in\mathcal{R}$ with $Q_1\neq Q_2$. Then, clearly, all well-behaved homogeneous Markov chains described by either $Q_1$ or $Q_2$ are consistent with $\rateset$. Furthermore, there will also be different non-homogeneous Markov chains consistent with $\rateset$. In particular, not only can such processes differ in their initial distribution, there will be non-homogeneous Markov chains with the same initial distribution but which differ in the choice of $Q_1$ or $Q_2$ for any given time $t\in\realsnonneg$. 
+
+Furthermore, various non-homogeneous, non-Markov processes will be consistent with $\rateset$ as well. For example, for some $t\in\realsnonneg$ and some $x_u,y_u\in\states^u$ such that $x_u\neq y_u$, such a process may satisfy $\smash{\overline{\partial}}T_{t,x_u}^t=\{Q_1\}$ and $\smash{\overline{\partial}}T_{t,y_u}^t=\{Q_2\}$.
+\exampleend
+\end{exmp}
 
 *** dit leidt dan voor een gegeven $\rateset$ naar het idee om naar de verzameling van alle $P\in\processes$ te kijken die consistent zijn met $\rateset$. Voor notationeel gemak en generiekheid kijken we echter liever naar de subset van een gegeven $\mathcal{P}\subseteq\processes$ die consistent is met $\rateset$:
 
