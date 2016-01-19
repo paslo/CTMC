@@ -146,6 +146,11 @@ Lorem ipsum.
 
 *** motivatie: precieze discrete-tijd markov ketens, precieze continue-tijd markov ketens, bruikbaar (en gebruikt) in verschillende domeinen (voorbeelden)
 
+\begin{exmp}
+**** motivating toy example
+\exampleend
+\end{exmp}
+
 *** aanhalen eerder werk in imprecieze varianten: imprecieze discrete-tijd, imprecieze continue-tijd (werk damjan), toepassingen (werk damjan + matthias)
 
 *** doel dit paper: wat willen we doen en waarom, wat zijn onze hoofdresultaten
@@ -779,24 +784,7 @@ We denote the set of all homogeneous Markov chains by $\hmprocesses$ and use $\w
 T_t^s=e^{Q(s-t)}
 \text{~~for all $t,s\in\realsnonneg$ such that $t\leq s$.}
 \end{equation*}
-Here, the right-hand side denotes the \emph{matrix exponential} of $Q(s-t)$. There are various ways in which this matrix exponential can be expressed. For example, it is well known~{\bf REF} that it is the solution to the differential equation
-\begin{equation*}
-\frac{\partial }{\partial s}e^{Q(s-t)}\coloneqq Qe^{Q(s-t)}\,,\quad e^{Q\cdot (t-t)} \coloneqq I\,.
-\end{equation*}
-From this we find that its Taylor-series~{\bf REF?} expansion yields the representation:
-\begin{equation*}
-e^{Q(s-t)} \coloneqq \sum_{i=0}^{\infty}\frac{1}{i!}Q^i(s-t)^i\,,
-\end{equation*}
-where $Q^i$ denotes the $i$-th matrix power of $Q$.
-%Yet another representation is the Peano-Baker series~{\bf REF}, the solution of which is also known as a Picard matrix~{\bf REF} in this context, obtained by recursive integration of the differential equation:
-%\begin{align*}
-%e^{Q(s-t)} &\coloneqq I + \int_t^s Qe^{Q(\tau_1-t)}\mathrm{d}\tau_1 \\
-% &= I + \int_t^s Q\mathrm{d}\tau_1 + \int_t^s Q\int_t^sQ\mathrm{d}\tau_2\mathrm{d}\tau_1 + \cdots + \int_t^s Q\int_t^s\cdots \int_t^s Q\mathrm{d}\tau_n\cdots\mathrm{d}\tau_2\mathrm{d}\tau_1 + \cdots
-%\end{align*}
-A related representation that we will find useful is given~{\bf ref/proof?} by the following $\epsilon-\delta$ limit expression:
-\begin{equation}\label{eq:matrix_exp_limit}
-(\forall\epsilon\in\realspos)(\exists\delta\in\realspos)(\forall u\in\mathcal{U}_{[t,s]}\,:\,\sigma(u)<\delta)\,\norm{e^{Q(s-t)} - \prod_{i=1}^n(I+\Delta_iQ)} < \epsilon\,.
-\end{equation}
+Here, the right-hand side denotes the \emph{matrix exponential} of $Q(s-t)$ {\bf REF}. *** we verwijzen voor nu gewoon naar de literatuur, en komen later nog terug op wat details
 \end{definition}
 
 \begin{proposition}
@@ -1460,6 +1448,29 @@ Let $\lrate$ be an arbitrary lower transition rate operator, and let $\underline
 % Then $\frac{d}{dt}\lbound_t^s=-\lrate\lbound_t^s$ and $\frac{d}{ds}\lbound_t^s=\lbound_t^s\lrate$, meaning that
 \end{proposition}
 
+**** blabla kijk het lijkt inderdaad op matrix exponential
+
+There are various ways in which this matrix exponential can be expressed. For example, it is well known~{\bf REF} that it is the solution to the differential equation
+\begin{equation*}
+\frac{\partial }{\partial s}e^{Q(s-t)}\coloneqq Qe^{Q(s-t)}\,,\quad e^{Q\cdot (t-t)} \coloneqq I\,.
+\end{equation*}
+From this we find that its Taylor-series~{\bf REF?} expansion yields the representation:
+\begin{equation*}
+e^{Q(s-t)} \coloneqq \sum_{i=0}^{\infty}\frac{1}{i!}Q^i(s-t)^i\,,
+\end{equation*}
+where $Q^i$ denotes the $i$-th matrix power of $Q$.
+%Yet another representation is the Peano-Baker series~{\bf REF}, the solution of which is also known as a Picard matrix~{\bf REF} in this context, obtained by recursive integration of the differential equation:
+%\begin{align*}
+%e^{Q(s-t)} &\coloneqq I + \int_t^s Qe^{Q(\tau_1-t)}\mathrm{d}\tau_1 \\
+% &= I + \int_t^s Q\mathrm{d}\tau_1 + \int_t^s Q\int_t^sQ\mathrm{d}\tau_2\mathrm{d}\tau_1 + \cdots + \int_t^s Q\int_t^s\cdots \int_t^s Q\mathrm{d}\tau_n\cdots\mathrm{d}\tau_2\mathrm{d}\tau_1 + \cdots
+%\end{align*}
+A related representation that we will find useful is given~{\bf ref/proof?} by the following $\epsilon-\delta$ limit expression:
+\begin{equation}\label{eq:matrix_exp_limit}
+(\forall\epsilon\in\realspos)(\exists\delta\in\realspos)(\forall u\in\mathcal{U}_{[t,s]}\,:\,\sigma(u)<\delta)\,\norm{e^{Q(s-t)} - \prod_{i=1}^n(I+\Delta_iQ)} < \epsilon\,.
+\end{equation}
+
+**** beetje conclusie
+
 \section{Connections Between $L_t^s$ and Imprecise Continuous-Time Markov Chains}\label{sec:connections}
 
 One of the objectives of this paper is to establish a connection between the operator $\lbound_t^s$ that we have just introduced, and the different types of imprecise continous-time Markov chains that were discussed in Section~\ref{sec:iCTMC}. Since the former is derived from a lower transition rate operator $\lrate$ and the latter are derived from a non-empty bounded set of rate matrices $\rateset$, an obvious first step is to investigate the connection between lower transition rate operators and non-empty bounded sets of rate matrices.
@@ -1656,27 +1667,6 @@ This changes if the set $\wprocesses_\rateset$ is not only well-behaved, include
 %\lrate &\Rightarrow \underline{\mathcal{T}}_{\lrate} \Rightarrow L_t^s,\quad\text{and,}\quad \lrate\Rightarrow \rateset_{\lrate} \Rightarrow \wprocesses_{\rateset_{\lrate}} = \mathcal{P}
 %\end{align*}
 
-\section{Relation to Previous Work}\label{sec:prev_work}
-
-To the best of our knowledge, the concept of imprecise continuous-time Markov chains was first introduced in the literature by the work of {\v{S}}kulj~\cite{Skulj:2015cq}. There, the idea was used to define $\lrate$ as a lower envelope of a set of rate matrices $\rateset$ that has separately specified rows. It was shown that then, for a given $f\in\gamblesX$, the differential equation
-\begin{align}\label{eq:damjans_diff}
-\begin{split}
-\frac{d \underline{f}_{\,t}}{d t} &\coloneqq \lrate\,\underline{f}_{\,t}\,,\quad
-\underline{f}_{\,0} \coloneqq f\,,
-\end{split}
-\end{align}
-has a unique solution, and that this solution satisfies
-\begin{equation}\label{eq:damjans_lower}
-\underline{f}_{\,s} = \underline{\mathbb{E}}_{\rateset}^{\mathrm{WM}}[f(X_s)\,\vert\,X_0]\,.
-\end{equation}
-Our work extends these results in several ways. First, as shown by Proposition~\ref{prop:lower_transition_has_deriv}, the differential equation~\eqref{eq:damjans_diff} has a uniform solution, i.e. one that is independent of $f$, and this solution is given\footnote{There are some notational discrepancies between this previous work and our work here. To see this correspondence, take from Proposition~\ref{prop:lower_transition_has_deriv} the quantity $\nicefrac{\partial}{\partial t}L_t^s=-\lrate L_t^s$, with boundary condition $L_s^s=I$, and ``integrate'' backward from $s$ to $0$. This fixes the directional inconsistency of the derivatives, and yields the proper correspondence to differential equation~\eqref{eq:damjans_diff}.} by the operator $L_0^s$ corresponding to $\lrate$. Second, Corollary~\ref{cor:lower_operator_is_infimum} confirms Equation~\eqref{eq:damjans_lower}, but furthermore shows that the solution $\underline{f}_{\,s}$ also corresponds to the lower expectation with respect to a set of non-Markov processes.
-
-Our present work furthermore adds to the literature in several ways. In~\cite{Skulj:2015cq}, the arguments were cast purely in terms of lower envelopes of expectation functionals; but side-stepped the question of which sets of processes these envelopes correspond to. In contrast, our work in Section~\ref{sec:iCTMC} makes explicit the sets of processes that we are dealing with, and Theorem~\ref{theo:dominating_rate_processes_max_set} exactly characterizes the largest set of processes for which our lower transition operator---and indeed the differential equation~\eqref{eq:damjans_diff}---computes a lower envelope.
-
-This earlier work also contains several results that are of significance to us. In particular, {\v{S}}kulj discusses several practical techniques to numerically compute, or approximate to arbitrary precision, the quantity $\underline{f}_{\,s}$ for a given $f\in\gamblesX$. Hence, because of the correspondence between $\underline{f}_{\,s}$ and $L_0^sf$, these results can be applied when numerically working with our lower transition operator.
-
-Finally, previous work only focused on functions $f\in\gamblesX$ defined at a single point in time. We will now turn to functions defined on multiple time points, where we will find that it is crucial to be aware of the set of processes with respect to which one is taking lower envelopes.
-
 \section{Functions Defined on Multiple Time Points}\label{sec:funcs_multi_time_points}
 
 Having shown in Section~\ref{sec:single_var_lower_exp} that the operator $L_t^s$ computes lower expectations for functions $f\in\gamblesX$ defined on a single point in time, we will now turn our attention to functions defined on multiple time points. Because we are considering \emph{conditional} expectations, where the conditioning is done with respect to states in a (non-)Markov chain's history, it makes sense to distinguish between two different classes of functions defined at multiple time points. 
@@ -1786,177 +1776,41 @@ Let $\rateset$ be an arbitrary non-empty bounded set of rate matrices that has s
 \end{equation*}
 \end{corollary}
 
-\subsection{Algoritmes}\label{sec:tractability}
+\subsection{Computational Aspects}\label{sec:tractability}
 
-*** We gaan nu laten zien hoe dingen berekenbaar zijn door compositie van onder-transitie operatoren ***
+**** notes about computational aspects/tractability, observation that decomposition reduces the problem to discrete-time computations, reference earlier work containing algorithms to compute this
 
-*** Neem aan dat we een methode hebben om voor gegeven $f\in\gamblesX$, de term $\hat{f}_t^s :\approx L_t^sf$ numeriek uit te rekenen, of te benaderen tot arbitraire precisie. Bijvoorbeeld, gebruik de methode van Damjan. Noteer de complexiteit van deze methode als $O(c)$.
+**** computation can also be brute-forced if state space and number of time points allow for it.
+
+**** our proof in Section~\ref{sec:lowertrans} shows that we can numerically approximate to arbitrary precision using a fine enough partition of the intervals
 
 \begin{exmp}
-*** Voorbeeld dat uitrekenen voor arbitraire $f\in\gambles(\states^{u\cup v})$ exponentieel moeilijk is. \exampleend
+**** result for motivating toy example from introduction
+\exampleend
 \end{exmp}
 
-\begin{remark*}
-*** Merk op dat uitrekenen voor arbitraire $f\in\gambles(\states^{u\cup \{s\}})$ ook exponentieel moeilijk is, maar alleen als je dat voor alle $x_u$ wil doen. In dat geval is de functie sowieso problematisch, maar dat heeft niks met verwachtingswaardes te maken. We nemen dus aan dat ofwel $n$ klein genoeg is dat dit niet vervelend is, of dat we het maar voor een of enkele waarden $x_u$ willen doen. In het bijzonder is het geen probleem als we vanuit tijdstip 0 vertrekken, dwz, de initiele state. \exampleend
-\end{remark*}
+\section{Relation to Previous Work}\label{sec:prev_work}
 
-*** er zijn subklasses van functies waarvoor het uitrekenen lineair is in $m$
+To the best of our knowledge, the concept of imprecise continuous-time Markov chains was first introduced in the literature by the work of {\v{S}}kulj~\cite{Skulj:2015cq}. There, the idea was used to define $\lrate$ as a lower envelope of a set of rate matrices $\rateset$ that has separately specified rows. It was shown that then, for a given $f\in\gamblesX$, the differential equation
+\begin{align}\label{eq:damjans_diff}
+\begin{split}
+\frac{d \underline{f}_{\,t}}{d t} &\coloneqq \lrate\,\underline{f}_{\,t}\,,\quad
+\underline{f}_{\,0} \coloneqq f\,,
+\end{split}
+\end{align}
+has a unique solution, and that this solution satisfies
+\begin{equation}\label{eq:damjans_lower}
+\underline{f}_{\,s} = \underline{\mathbb{E}}_{\rateset}^{\mathrm{WM}}[f(X_s)\,\vert\,X_0]\,.
+\end{equation}
+Our work extends these results in several ways. First, as shown by Proposition~\ref{prop:lower_transition_has_deriv}, the differential equation~\eqref{eq:damjans_diff} has a uniform solution, i.e. one that is independent of $f$, and this solution is given\footnote{There are some notational discrepancies between this previous work and our work here. To see this correspondence, take from Proposition~\ref{prop:lower_transition_has_deriv} the quantity $\nicefrac{\partial}{\partial t}L_t^s=-\lrate L_t^s$, with boundary condition $L_s^s=I$, and ``integrate'' backward from $s$ to $0$. This fixes the directional inconsistency of the derivatives, and yields the proper correspondence to differential equation~\eqref{eq:damjans_diff}.} by the operator $L_0^s$ corresponding to $\lrate$. Second, Corollary~\ref{cor:lower_operator_is_infimum} confirms Equation~\eqref{eq:damjans_lower}, but furthermore shows that the solution $\underline{f}_{\,s}$ also corresponds to the lower expectation with respect to a set of non-Markov processes.
 
-\begin{definition}[Single-Future-State Sum Functions]
-Consider any $u\coloneqq t_0,\ldots,t_n$ and any $v\coloneqq s_0,\ldots,s_m$. A function $f\in\gambles(\states^{u\cup v})$ is called a \emph{single-future-state sum function} if there exist functions $g_0,\ldots,g_m$ such that $g_i\in\gambles(\states^{u\cup\{s_i\}})$, $i\in\{0,\ldots,m\}$, and such that, for all $x_u\in\states^u$ and all $x_v\in\states^v$,
-\begin{equation*}
-f(x_{t_0},\ldots,x_{t_n},x_{s_0},\ldots,x_{s_m}) = \sum_{i=0}^m g_i(x_{t_0},\ldots,x_{t_n},x_{s_i})\,.
-\end{equation*}
-We use $\gambles_+(\states^{u\cup v})\subset\gambles(\states^{u\cup v})$ to denote the set of all single-future-state sum functions on $\states^{u\cup v}$.
-\end{definition}
+Our present work furthermore adds to the literature in several ways. In~\cite{Skulj:2015cq}, the arguments were cast purely in terms of lower envelopes of expectation functionals; but side-stepped the question of which sets of processes these envelopes correspond to. In contrast, our work in Section~\ref{sec:iCTMC} makes explicit the sets of processes that we are dealing with, and Theorem~\ref{theo:dominating_rate_processes_max_set} exactly characterizes the largest set of processes for which our lower transition operator---and indeed the differential equation~\eqref{eq:damjans_diff}---computes a lower envelope.
 
-\begin{definition}[Single-Future-State Product Functions]
-Consider any $u\coloneqq t_0,\ldots,t_n$ and any $v\coloneqq s_0,\ldots,s_m$. A function $f\in\gambles(\states^{u\cup v})$ is called a \emph{single-future-state product function} if there exist functions $g_0,\ldots,g_m$ such that $g_i\in\gambles(\states^{u\cup\{s_i\}})$, $i\in\{0,\ldots,m\}$, and such that, for all $x_u\in\states^u$ and all $x_v\in\states^v$,
-\begin{equation*}
-f(x_{t_0},\ldots,x_{t_n},x_{s_0},\ldots,x_{s_m}) = \prod_{i=0}^m g_i(x_{t_0},\ldots,x_{t_n},x_{s_i})\,.
-\end{equation*}
-We use $\gambles_\times(\states^{u\cup v})\subset\gambles(\states^{u\cup v})$ to denote the set of all single-future-state product functions on $\states^{u\cup v}$.
-\end{definition}
+This earlier work also contains several results that are of significance to us. In particular, {\v{S}}kulj discusses several practical techniques to numerically compute, or approximate to arbitrary precision, the quantity $\underline{f}_{\,s}$ for a given $f\in\gamblesX$. Hence, because of the correspondence between $\underline{f}_{\,s}$ and $L_0^sf$, these results can be applied when numerically working with our lower transition operator.
 
-*** opmerking dat ze misschien vrij specifiek lijken, maar dat veel praktisch gebruikte dingen daar wel inzitten; veel utility/loss-functies zijn lineair, de GBR zit daarin, misschien nog wat andere voorbeelden (referenties zijn wel boeiend hier)
+*** onderstaande beetje herschrijven nog
 
-\begin{algorithm}[H]
-  \caption{Numerically compute lower expectation of $f\in\gambles_+(\states^{u\cup v}).$
-    \label{alg:compute_singlestate_sum}}
-  \begin{algorithmic}[1]
-    \Require{A non-empty, bounded set of rate matrices $\rateset$ with separately specified rows, a state assignment $x_u\in\states^u$, and a function $f\in\gambles_+(\states^{u\cup v})$.}
-    \Ensure{$\hat{\underline{\mathbb{E}}}_\rateset^\mathrm{W}[f(x_{t_0},\ldots,x_{t_n},X_{s_0},\ldots,X_{s_m})\,\vert\,X_{t_0}=x_{t_0},\ldots,X_{t_n}=x_{t_n}]$.}
-    \Statex
-    \Function{ComputeSFSSum}{$\rateset, x_u, f$}
-      \State $\hat{\underline{f}}\gets 0$\Comment{Partial solution starts with empty sum}
-		\For{$i\in\{0,\ldots,m\}$}\Comment{Run through all time points}
-		\State $g_i\gets f(X_{t_0},\ldots,X_{t_n},1,\ldots,X_{s_i},\ldots,1)$ \Comment{$g_i$ is restriction of $f$ to $\gambles(\states^{u\cup\{s_i\}})$}% for state assignment $X_{s_j}=1$, for all $j\in\{0,\ldots,m\}\setminus\{i\}$}
-		\State $\hat{\underline{g}}_{\,i}\gets [L_{s_{i-1}}^{s_i}g_i](x_u)$\Comment{Compute lower expectation of $g_i$}
-		\State $\hat{\underline{f}}\gets\hat{\underline{f}} + \hat{\underline{g}}_{\,i}$\Comment{Add to partial solution}
-		\EndFor
-      \State \Return{$\hat{\underline{f}}$}\Comment{Return lower expectation}
-    \EndFunction
-  \end{algorithmic}
-\end{algorithm}
-
-
-\begin{lemma}
-*** proper setup
-
-Consider any $f\in\gambles_+(\states^{u\cup v})$ such that $f=\sum_{i=0}^m g_i$, and let $f'\coloneqq \sum_{i=0}^{m-1} g_i$. Then,
-\begin{align*}
- &\quad \underline{\mathbb{E}}_\rateset^\mathrm{W}[f(x_{t_0},\ldots,x_{t_n},X_{s_0},\ldots,X_{s_m})\,\vert\,X_{t_0}=x_{t_0},\ldots,X_{t_n}=x_{t_n}] \\
- &= \left[L_{t_n}^{s_0}L_{s_0}^{s_1}\cdots L_{s_{m-1}}^{s_m}f\right](x_{t_0},\ldots,x_{t_n}) \\
- &= \left[L_{t_n}^{s_0}L_{s_0}^{s_1}\cdots L_{s_{m-2}}^{s_{m-1}}f' \right](x_{t_0},\ldots,x_{t_n}) + \left[L_{s_{m-1}}^{s_m}g_m\right](x_{t_0},\ldots,x_{t_n})\,.
-\end{align*}
-\end{lemma}
-\begin{proof}
-*** {\bf TODO}, but trivial.
-\end{proof}
-
-\begin{proposition}
-*** proper setup
-
-Consider any $f\in\gambles_+(\states^{u\cup v})$ such that $f=\sum_{i=0}^m g_i$. For notational convenience, let $s_{(-1)}\coloneqq t_n$. Then,
-\begin{align*}
- &\quad \underline{\mathbb{E}}_\rateset^\mathrm{W}[f(x_{t_0},\ldots,x_{t_n},X_{s_0},\ldots,X_{s_m})\,\vert\,X_{t_0}=x_{t_0},\ldots,X_{t_n}=x_{t_n}] \\
- &= \left[L_{t_n}^{s_0}L_{s_0}^{s_1}\cdots L_{s_{m-1}}^{s_m}f\right](x_{t_0},\ldots,x_{t_n}) \\
- &= \sum_{i=0}^m \left[L_{s_{i-1}}^{s_i}g_i\right](x_{t_0},\ldots,x_{t_n}) \\
- &\approx \sum_{i=0}^m \hat{\underline{g}}_{\,i}(x_{t_0},\ldots,x_{t_n})\,,
-\end{align*}
-where $\hat{\underline{g}}_{\,i}:\!\approx L_{s_{i-1}}^{s_i}g_i$ is the numerical result of computing $L_{s_{i-1}}^{s_i}g_i$.
-\end{proposition}
-\begin{proof}
-Trivial consequence of Lemma~{\bf REF} and backward induction on $m$.
-\end{proof}
-
-\begin{corollary}
-Algorithm~\ref{alg:compute_singlestate_sum} correctly computes the lower expectation of any single-future-state sum function $f\in\gambles_+(\states^{u\cup v})$ with respect to the set $\wprocesses_\rateset$, in time complexity $O(mc)$. If the numerical method to compute $L_{s_{i-1}}^{s_i}g_i$ is an approximation with error at most $\epsilon$, then the output of Algorithm~\ref{alg:compute_singlestate_sum} is an approximation of this lower expectation with error at most $m\cdot\epsilon$.
-\end{corollary}
-\begin{proof}
-*** Correctness and complexity are trivial. Approximation error needs to be properly defined first (do this).
-\end{proof}
-
-*** we now move on to single-future-state product functions. we use the following (backward) induction step
-%
-%\begin{lemma}\label{lem:single_future_state_product_factorizes}
-%*** proper setup
-%
-%Consider any $f\in\gambles_\times(\states^{u\cup v})$ such that $f=\prod_{i=0}^m g_i$, and let $f'\coloneqq \prod_{i=0}^{m-1} g_i$. Then, if $[L_{s_{m-1}}^{s_m}g_m](x_{t_0},\ldots,x_{t_n})\geq 0$,
-%\begin{align*}
-%&\quad \underline{\mathbb{E}}_\rateset^\mathrm{W}[f(x_{t_0},\ldots,x_{t_n},X_{s_0},\ldots,X_{s_m})\,\vert\,X_{t_0}=x_{t_0},\ldots,X_{t_n}=x_{t_n}] \\
-% &= [L_{s_{m-1}}^{s_m}g_m](x_{t_0},\ldots,x_{t_n})\cdot\underline{\mathbb{E}}_\rateset^\mathrm{W}\left[ f'(x_{t_0},\ldots,t_n,X_{s_0},\ldots,X_{s_{m-1}})\,\Big\vert\,X_{t_0}=x_{t_0},\ldots,X_{t_n}=x_{t_n}\right]\,,
-%\end{align*}
-%and, if $[L_{s_{m-1}}^{s_m}g_m](x_{t_0},\ldots,x_{t_n})<0$, 
-%\begin{align*}
-%&\quad \underline{\mathbb{E}}_\rateset^\mathrm{W}[f(x_{t_0},\ldots,x_{t_n},X_{s_0},\ldots,X_{s_m})\,\vert\,X_{t_0}=x_{t_0},\ldots,X_{t_n}=x_{t_n}] \\
-% &= -[L_{s_{m-1}}^{s_m}g_m](x_{t_0},\ldots,x_{t_n})\cdot\underline{\mathbb{E}}_\rateset^\mathrm{W}\left[ -f'(x_{t_0},\ldots,t_n,X_{s_0},\ldots,X_{s_{m-1}})\,\Big\vert\,X_{t_0}=x_{t_0},\ldots,X_{t_n}=x_{t_n}\right] \\
-% &= [L_{s_{m-1}}^{s_m}g_m](x_{t_0},\ldots,x_{t_n})\cdot\overline{\mathbb{E}}_\rateset^\mathrm{W}\left[f'(x_{t_0},\ldots,t_n,X_{s_0},\ldots,X_{s_{m-1}})\,\Big\vert\,X_{t_0}=x_{t_0},\ldots,X_{t_n}=x_{t_n}\right] \,,
-%\end{align*}
-%where $\overline{\mathbb{E}}_\rateset^\mathrm{W}$ is the upper expectation with respect to $\wprocesses_\rateset$, as defined by {\bf REF}. Similarly, if $[L_{s_{m-1}}^{s_m}g_m](x_{t_0},\ldots,x_{t_n})\geq 0$, then
-%\begin{align*}
-%&\quad \overline{\mathbb{E}}_\rateset^\mathrm{W}[f(x_{t_0},\ldots,x_{t_n},X_{s_0},\ldots,X_{s_m})\,\vert\,X_{t_0}=x_{t_0},\ldots,X_{t_n}=x_{t_n}] \\
-% &= [L_{s_{m-1}}^{s_m}g_m](x_{t_0},\ldots,x_{t_n})\cdot\overline{\mathbb{E}}_\rateset^\mathrm{W}\left[ f'(x_{t_0},\ldots,t_n,X_{s_0},\ldots,X_{s_{m-1}})\,\Big\vert\,X_{t_0}=x_{t_0},\ldots,X_{t_n}=x_{t_n}\right]\,,
-%\end{align*}
-%and, if $[L_{s_{m-1}}^{s_m}g_m](x_{t_0},\ldots,x_{t_n})<0$, 
-%\begin{align*}
-%&\quad \overline{\mathbb{E}}_\rateset^\mathrm{W}[f(x_{t_0},\ldots,x_{t_n},X_{s_0},\ldots,X_{s_m})\,\vert\,X_{t_0}=x_{t_0},\ldots,X_{t_n}=x_{t_n}] \\
-% &= -[L_{s_{m-1}}^{s_m}g_m](x_{t_0},\ldots,x_{t_n})\cdot\overline{\mathbb{E}}_\rateset^\mathrm{W}\left[ -f'(x_{t_0},\ldots,t_n,X_{s_0},\ldots,X_{s_{m-1}})\,\Big\vert\,X_{t_0}=x_{t_0},\ldots,X_{t_n}=x_{t_n}\right] \\
-% &= [L_{s_{m-1}}^{s_m}g_m](x_{t_0},\ldots,x_{t_n})\cdot\underline{\mathbb{E}}_\rateset^\mathrm{W}\left[f'(x_{t_0},\ldots,t_n,X_{s_0},\ldots,X_{s_{m-1}})\,\Big\vert\,X_{t_0}=x_{t_0},\ldots,X_{t_n}=x_{t_n}\right] \,.
-%\end{align*}
-%\end{lemma}
-%
-%\begin{proposition}
-%*** {\bf TODO:} proper proof of induction for product case
-%\end{proposition}
-%\begin{proof}
-%*** todo
-%\end{proof}
-%
-%\begin{corollary}
-%Algorithm~\ref{alg:compute_singlestate_prod} correctly computes the lower expectation of any single-future-state product function $f\in\gambles_\times(\states^{u\cup v})$ with respect to the set $\wprocesses_\rateset$, in time complexity $O(mc)$. If the numerical method to compute $L_{s_{i-1}}^{s_i}g_i$ is an approximation with error at most $\epsilon$, then the output of Algorithm~\ref{alg:compute_singlestate_prod} is an approximation of this lower expectation with error at most {\bf TODO}.
-%\end{corollary}
-%\begin{proof}
-%*** Complexity is trivial. Correctness is also trivial (once we have the proposition for induction). Approximation error needs to be properly defined first (do this), and we need to figure out what it is.
-%\end{proof}
-%
-%\begin{algorithm}[H]
-%  \caption{Numerically compute lower expectation of $f\in\gambles_\times(\states^{u\cup v}).$ 
-%    \label{alg:compute_singlestate_prod}}
-%  \begin{algorithmic}[1]
-%    \Require{A non-empty, bounded set of rate matrices $\rateset$ with separately specified rows, a state assignment $x_u\in\states^u$, and a function $f\in\gambles_\times(\states^{u\cup v})$.}
-%    \Ensure{$\hat{\underline{\mathbb{E}}}_\rateset^\mathrm{W}[f(x_{t_0},\ldots,x_{t_n},X_{s_0},\ldots,X_{s_m})\,\vert\,X_{t_0}=x_{t_0},\ldots,X_{t_n}=x_{t_n}]$.}
-%    \Statex
-%    \Function{ComputeSFSProduct}{$\rateset, x_u, f$}
-%		\For{$i\in\{0,\ldots,m\}$}\Comment{Run through all time points}
-% for state assignment $X_{s_j}=1$, for all $j\in\{0,\ldots,m\}\setminus\{i\}$}
-%		\State $\hat{\underline{g}}_{\,i}\gets [L_{s_{i-1}}^{s_i}g_i](x_u)$\Comment{Precompute lower expectation of $g_i$}
-%	%	\State $\hat{\overline{g}}_{\,i}\gets -[L_{s_{i-1}}^{s_i}-g_i](x_u)$\Comment{Precompute upper expectation of $g_i$}
-%		\EndFor
-%      \State $\hat{\underline{f}}\gets 1$\Comment{Partial solution starts with empty product}
-%		\State $z \gets \text{``low"}$\Comment{Flag indicating lower or upper expectation}
-%		\For{$i=m\to 0$}\Comment{Run through time points, from latest to earliest}
-%		\State $g_i\gets f(X_{t_0},\ldots,X_{t_n},1,\ldots,X_{s_i},\ldots,1)$ \Comment{$g_i$ is restriction of $f$ to $\gambles(\states^{u\cup\{s_i\}})$}
-%		\State $\hat{g}_i\gets 0$\Comment{Buffer for expectation}
-%		\If{$z=\text{``low"}$}\Comment{Check whether to compute lower or upper}
-%			\State $\hat{g}_i\gets [L_{s_{i-1}}^{s_i}g_i](x_u)$\Comment{Compute lower expectation}
-%		\ElsIf{$z=\text{``up"}$}
-%			\State $\hat{g}_i\gets -[L_{s_{i-1}}^{s_i}(-g_i)](x_u)$\Comment{Compute upper expectation}
-%		\EndIf
-%		\State $\hat{\underline{f}}\gets\hat{\underline{f}}\cdot\hat{g}_i$\Comment{Multiply with partial solution}
-%		\If{$\hat{g}_i<0$}\Comment{If expectation was negative, we should switch}
-%			\If{$z=\text{``low"}$}
-%				\State $z\gets \text{``up"}$
-%			\ElsIf{$z=\text{``up"}$}
-%				\State $z\gets \text{``low"}$
-%			\EndIf
-%		\EndIf
-%		\EndFor
-%      \State \Return{$\hat{\underline{f}}$}\Comment{Return lower expectation}
-%    \EndFunction
-%  \end{algorithmic}
-%\end{algorithm}
-
+Finally, previous work only focused on functions $f\in\gamblesX$ defined at a single point in time. We will now turn to functions defined on multiple time points, where we will find that it is crucial to be aware of the set of processes with respect to which one is taking lower envelopes.
 
 \section{Conclusions \& Future Work}\label{sec:conclusions}
 
