@@ -1116,7 +1116,7 @@ We will first show that $\mathcal{T}_*\coloneqq\lim_{i\to\infty}\mathcal{T}_i$ e
 \end{proof}
 
 \begin{lemma}
-Consider any non-empty, bounded and closed set of rate matrices $\rateset$, and any $t,s\in\realsnonneg$ such that $t\leq s$. Then, the metric space $(\mathcal{T}_\rateset^{[t,s]},d)$ is totally bounded under the metric $d$, defined as in Equation~\eqref{eq:trans_mat_system_metric}.
+Consider any non-empty, bounded and convex set of rate matrices $\rateset$, and any $t,s\in\realsnonneg$ such that $t\leq s$. Then, the metric space $(\mathcal{T}_\rateset^{[t,s]},d)$ is totally bounded under the metric $d$, defined as in Equation~\eqref{eq:trans_mat_system_metric}.
 \end{lemma}
 \begin{proof}
 We have to show that $(\mathcal{T}_\rateset^{[t,s]},d)$ is totally bounded, meaning that for all $\epsilon\in\realspos$, there exists a finite collection of open $\epsilon$-balls centered on elements of $\mathcal{T}_\rateset^{[t,s]}$, such that this collection covers $\mathcal{T}_\rateset^{[t,s]}$. 
@@ -1186,23 +1186,109 @@ It remains to show that $C_\epsilon$ generates an open $\epsilon$-cover of $\mat
 \end{proof}
 
 \begin{lemma}
-Consider any $t,s\in\realsnonneg$ such that $t\leq s$, any non-empty, bounded and convex set of rate matrices $\rateset$, and any $u\in\mathcal{U}_{[t,s]}$ with $u=t_0,\ldots,t_n$. For all $i\in\{1,\ldots,n\}$, choose some $Q_i\in\rateset$. Then, there exists a $Q\in\rateset$ such that
+Consider any non-empty, bounded and convex set of rate matrices $\rateset$, any $\Delta\in\realspos$ such that $\Delta<\nicefrac{1}{\norm{\rateset}}$, and any $u\in\mathcal{U}_{[0,\Delta]}$ with $u=t_0,\ldots,t_n$. For all $i\in\{1,\ldots,n\}$, choose some $Q_i\in\rateset$. Let
 \begin{equation*}
-\prod_{i=1}^n(I + \Delta_iQ_i) = \prod_{i=1}^n(I + \Delta_iQ)\,.
+Q \coloneqq \sum_{i=1}^n \frac{\Delta_i}{\Delta}Q_i\,.
+\end{equation*}
+Then, $Q\in\rateset$, and furthermore,
+\begin{equation*}
+\norm{\prod_{i=1}^n(I+\Delta_iQ_i) - (I+\Delta Q)} < \Delta^2\norm{\rateset}^2\,.
 \end{equation*}
 \end{lemma}
 \begin{proof}
-*** I have this written down somewhere (take $Q$ as the weighted average of the $Q_i$, using weights $\nicefrac{\Delta_i}{(s-t)}$).
+The claim that $Q\in\rateset$ follows trivially from the fact that $\rateset$ is convex.
+
+Now, consider the following product expansion:
+\begin{align*}
+\prod_{i=1}^n(I+\Delta_iQ_i) &= I + \sum_{i=1}^n\Delta_iQ_i + \sum_{i=1}^{n-1}\sum_{j=i+1}^n\Delta_i\Delta_jQ_iQ_j + \sum_{i=1}^{n-2}\sum_{j=i+1}^{n-1}\sum_{k=j+1}^n\Delta_i\Delta_j\Delta_kQ_iQ_jQ_k + \cdots \\
+% &= I + \sum_{i=1}^n\Delta_iQ_i + \sum_{k=1}^n\left[\sum_{i_1=1}^{n-k}\cdots\sum_{i_k=i_{k-1}+1}^n XXX \right]
+\end{align*}
+It follows that
+\begin{align*}
+ &\quad \norm{\prod_{i=1}^n(I+\Delta_iQ_i)} \\
+ &= \norm{I + \sum_{i=1}^n\Delta_iQ_i + \sum_{i=1}^{n-1}\sum_{j=i+1}^n\Delta_i\Delta_jQ_iQ_j + \sum_{i=1}^{n-2}\sum_{j=i+1}^{n-1}\sum_{k=j+1}^n\Delta_i\Delta_j\Delta_kQ_iQ_jQ_k + \cdots} \\
+ &\leq \norm{I} + \norm{\sum_{i=1}^n\Delta_iQ_i} + \norm{\sum_{i=1}^{n-1}\sum_{j=i+1}^n\Delta_i\Delta_jQ_iQ_j} + \norm{\sum_{i=1}^{n-2}\sum_{j=i+1}^{n-1}\sum_{k=j+1}^n\Delta_i\Delta_j\Delta_kQ_iQ_jQ_k} + \cdots \\
+ &\leq \norm{I} + \sum_{i=1}^n\Delta_i\norm{Q_i} + \sum_{i=1}^{n-1}\sum_{j=i+1}^n\Delta_i\Delta_j\norm{Q_iQ_j} + \sum_{i=1}^{n-2}\sum_{j=i+1}^{n-1}\sum_{k=j+1}^n\Delta_i\Delta_j\Delta_k\norm{Q_iQ_jQ_k} + \cdots \\
+ &\leq \norm{I} + \sum_{i=1}^n\Delta_i\norm{Q_i} + \sum_{i=1}^{n-1}\sum_{j=i+1}^n\Delta_i\Delta_j\norm{Q_i}\norm{Q_j} + \sum_{i=1}^{n-2}\sum_{j=i+1}^{n-1}\sum_{k=j+1}^n\Delta_i\Delta_j\Delta_k\norm{Q_i}\norm{Q_j}\norm{Q_k} + \cdots \\
+ &\leq 1 + \sum_{i=1}^n\Delta_i\norm{\rateset} + \sum_{i=1}^{n-1}\sum_{j=i+1}^n\Delta_i\Delta_j\norm{\rateset}^2 + \sum_{i=1}^{n-2}\sum_{j=i+1}^{n-1}\sum_{k=j+1}^n\Delta_i\Delta_j\Delta_k\norm{\rateset}^3 + \cdots \\
+ &= 1 + \Delta\norm{\rateset} + \sum_{i=1}^{n-1}\sum_{j=i+1}^n\Delta_i\Delta_j\norm{\rateset}^2 + \sum_{i=1}^{n-2}\sum_{j=i+1}^{n-1}\sum_{k=j+1}^n\Delta_i\Delta_j\Delta_k\norm{\rateset}^3 + \cdots
+\end{align*}
+Consider next the product expansion of the scalar product:
+\begin{align*}
+\prod_{i=1}^n(1+\Delta_i\norm{\rateset}) = 1 + \sum_{i=1}^n\Delta_i\norm{\rateset} + \sum_{i=1}^{n-1}\sum_{j=i+1}^n\Delta_i\Delta_j\norm{\rateset}^2 + \sum_{i=1}^{n-2}\sum_{j=i+1}^{n-1}\sum_{k=j+1}^n\Delta_i\Delta_j\Delta_k\norm{\rateset}^3 + \cdots
+\end{align*}
+Clearly, these have the same form. Hence, we find that
+\begin{equation*}
+\norm{\prod_{i=1}^n(I+\Delta_iQ_i)} \leq \prod_{i=1}^n(1+\Delta_i\norm{\rateset})\,.
+\end{equation*}
+
+We are now ready to start proving the inequality of interest. We start by expanding the product term:
+\begin{align*}
+ &\quad \norm{\prod_{i=1}^n(I+\Delta_iQ_i) - (I+\Delta Q)} \\
+ &= \norm{I + \sum_{i=1}^n\Delta_iQ_i + \sum_{i=1}^{n-1}\sum_{j=i+1}^n\Delta_i\Delta_jQ_iQ_j + \sum_{i=1}^{n-2}\sum_{j=i+1}^{n-1}\sum_{k=j+1}^n\Delta_i\Delta_j\Delta_kQ_iQ_jQ_k + \cdots - (I+\Delta Q)} \\
+ &\leq \norm{I + \sum_{i=1}^n\Delta_iQ_i - (I+\Delta Q)} + \norm{\sum_{i=1}^{n-1}\sum_{j=i+1}^n\Delta_i\Delta_jQ_iQ_j + \sum_{i=1}^{n-2}\sum_{j=i+1}^{n-1}\sum_{k=j+1}^n\Delta_i\Delta_j\Delta_kQ_iQ_jQ_k + \cdots} \\
+ &\leq \norm{I + \sum_{i=1}^n\Delta_iQ_i - (I+\Delta Q)} + \prod_{i=1}^n(1+\Delta_i\norm{\rateset}) - (1 + \Delta\norm{\rateset}) \\
+ &= \norm{\sum_{i=1}^n\Delta_iQ_i - \Delta Q} + \prod_{i=1}^n(1+\Delta_i\norm{\rateset}) - (1 + \Delta\norm{\rateset}) \\
+ &= \norm{\sum_{i=1}^n\Delta_iQ_i - \Delta \sum_{i=1}^n\frac{\Delta_i}{\Delta}Q_i} + \prod_{i=1}^n(1+\Delta_i\norm{\rateset}) - (1 + \Delta\norm{\rateset}) \\
+ &= \prod_{i=1}^n(1+\Delta_i\norm{\rateset}) - (1 + \Delta\norm{\rateset})\,.
+\end{align*}
+
+We next give an upper bound on the remaining product term. Consider the exponential function $e^x$. It is well known that this function has the series representation
+\begin{equation*}
+e^x = \sum_{i=0}^\infty\frac{x^n}{n!} = 1 + x + \frac{x^2}{2!} + \frac{x^3}{3!} + \cdots
+\end{equation*}
+Hence, it follows that $(1+x)<e^x$ for all $x\in\realspos$. Therefore in particular, we find that $(1+\Delta_i\norm{\rateset})<e^{\Delta_i\norm{\rateset}}$ for all $i\in\{1,\ldots,n\}$. Hence,
+\begin{align*}
+\norm{\prod_{i=1}^n(I+\Delta_iQ_i) - (I+\Delta Q)} &\leq \prod_{i=1}^n(1+\Delta_i\norm{\rateset}) - (1 + \Delta\norm{\rateset}) \\
+ &< e^{\Delta_1\norm{\rateset}}\prod_{i=2}^n(1+\Delta_i\norm{\rateset}) - (1 + \Delta\norm{\rateset}) \\
+ &\quad\vdots \\
+ &< \prod_{i=1}^n e^{\Delta_i\norm{\rateset}} - (1 + \Delta\norm{\rateset}) \\
+ &= e^{\sum_{i=1}^n\Delta_i\norm{\rateset}} - (1 + \Delta\norm{\rateset}) \\
+ &= e^{\Delta\norm{\rateset}} - (1 + \Delta\norm{\rateset})\,.
+\end{align*}
+We now use the following claim.
+\begin{claim}\label{claim:bound_on_exp}
+For all $x\in\realsnonneg$ with $x<1$, it holds that
+\begin{equation*}
+e^x - (1 + x) < x^2\,.
+\end{equation*}
+\end{claim}
+Hence, because $\Delta<\nicefrac{1}{\norm{\rateset}}$, we find that
+\begin{align*}
+\norm{\prod_{i=1}^n(I+\Delta_iQ_i) - (I+\Delta Q)} &< e^{\Delta\norm{\rateset}} - (1 + \Delta\norm{\rateset}) \\
+ &< \Delta^2\norm{\rateset}^2\,.
+\end{align*}
+\end{proof}
+
+\begin{proof}[Proof of Claim~\ref{claim:bound_on_exp}]
+The claim follows immediately from the fact that the inequality
+\begin{equation*}
+e^x - (1 + x) < x^2
+\end{equation*}
+holds for all $x\in(0,1.79328)$, up to some numerical error on the upper bound.
+
+Unfortunately, solving this problem involves finding the roots of a function with quadratic and exponential terms, which has no algebraic solution. However, the claim is easily verified using graphical methods, or checked with automated theorem provers like Mathematica~{\bf REF}.
+
+***** IF YOU HAVE ANY IDEA HOW TO SOLVE THIS NICELY, PLEASE LET ME KNOW :)
 \end{proof}
 
 \begin{lemma}
-Let $\rateset$ be any non-empty, bounded and convex set of rate matrices. Then, for all $P\in\wmprocesses_\rateset$, all $t,s\in\realsnonneg$ with $t\leq s$, all $\epsilon>0$, and all $\delta>0$, there is some $u\in\mathcal{U}_{[t,s]}$ with $\sigma(u)<\delta$, and some $Q\in\rateset$, such that
+Let $\rateset$ be any non-empty, bounded and convex set of rate matrices. Then, for all $P\in\wmprocesses_\rateset$, all $t\in\realsnonneg$, all $\Delta\in\realspos$, all $\epsilon\in\realspos$, and all $\delta\in\realspos$, there is some $u\in\mathcal{U}_{[t,t+\Delta]}$ with $\sigma(u)<\delta$, and some $Q\in\rateset$, such that
 \begin{equation*}
-\norm{T_{t}^s - \prod_{i=1}^n(I+\Delta_iQ)} < (s-t)\epsilon\,.
+\norm{T_{t}^{t+\Delta} - \prod_{i=1}^n(I+\Delta_iQ)} < \Delta\epsilon\,.
 \end{equation*}
 \end{lemma}
 \begin{proof}
 **** I have this written down somewhere
+\end{proof}
+
+\begin{lemma}
+Consider any non-empty bounded set of rate matrices $\rateset$, and any $t,s\in\realsnonneg$ such that $t\leq s$. Then, the metric space $(\mathcal{T}_\rateset^{[t,s]},d)$ is totally bounded under the metric $d$, defined as in Equation~\eqref{eq:trans_mat_system_metric}.
+\end{lemma}
+\begin{proof}
+Let $\widetilde{\rateset}$ denote the convex closure of $\rateset$. Then, clearly, $\widetilde{\rateset}$ is a non-empty, bounded, and convex set of rate matrices, and furthermore, $\mathcal{T}_\rateset^{[t,s]}\subseteq \mathcal{T}_{\widetilde{\rateset}}^{[t,s]}$.
+
+By Lemma~{\bf REF}, $\mathcal{T}_{\widetilde{\rateset}}^{[t,s]}$ is totally bounded. Therefore, and because any subset of a totally bounded set is itself totally bounded~{\bf CITE}, it follows that $\mathcal{T}_\rateset^{[t,s]}$ is totally bounded as well.
 \end{proof}
 
 \begin{theorem}
