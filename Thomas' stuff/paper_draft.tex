@@ -1233,11 +1233,11 @@ We are now ready to start proving the inequality of interest. We start by expand
  &= \prod_{i=1}^n(1+\Delta_i\norm{\rateset}) - (1 + \Delta\norm{\rateset})\,.
 \end{align*}
 
-We next give an upper bound on the remaining product term. Consider the exponential function $e^x$. It is well known that this function has the series representation
+We next give an upper bound on the remaining product term. Consider the exponential function $e^a$. It is well known that this function has the series representation
 \begin{equation*}
-e^x = \sum_{i=0}^\infty\frac{x^n}{n!} = 1 + x + \frac{x^2}{2!} + \frac{x^3}{3!} + \cdots
+e^a = \sum_{i=0}^\infty\frac{a^i}{i!} = 1 + a + \frac{a^2}{2!} + \frac{a^3}{3!} + \cdots
 \end{equation*}
-Hence, it follows that $(1+x)<e^x$ for all $x\in\realspos$. Therefore in particular, we find that $(1+\Delta_i\norm{\rateset})<e^{\Delta_i\norm{\rateset}}$ for all $i\in\{1,\ldots,n\}$. Hence,
+Hence, it follows that $(1+a)<e^a$ for all $a\in\realspos$. Therefore in particular, we find that $(1+\Delta_i\norm{\rateset})<e^{\Delta_i\norm{\rateset}}$ for all $i\in\{1,\ldots,n\}$. Hence,
 \begin{align*}
 \norm{\prod_{i=1}^n(I+\Delta_iQ_i) - (I+\Delta Q)} &\leq \prod_{i=1}^n(1+\Delta_i\norm{\rateset}) - (1 + \Delta\norm{\rateset}) \\
  &< e^{\Delta_1\norm{\rateset}}\prod_{i=2}^n(1+\Delta_i\norm{\rateset}) - (1 + \Delta\norm{\rateset}) \\
@@ -1248,10 +1248,7 @@ Hence, it follows that $(1+x)<e^x$ for all $x\in\realspos$. Therefore in particu
 \end{align*}
 We now use the following claim.
 \begin{claim}\label{claim:bound_on_exp}
-For all $x\in\realsnonneg$ with $x<1$, it holds that
-\begin{equation*}
-e^x - (1 + x) < x^2\,.
-\end{equation*}
+For all $a\in\realspos$ with $a<1$, it holds that $e^a - (1 + a) < a^2$.
 \end{claim}
 Hence, because $\Delta<\nicefrac{1}{\norm{\rateset}}$, we find that
 \begin{align*}
@@ -1263,9 +1260,9 @@ Hence, because $\Delta<\nicefrac{1}{\norm{\rateset}}$, we find that
 \begin{proof}[Proof of Claim~\ref{claim:bound_on_exp}]
 The claim follows immediately from the fact that the inequality
 \begin{equation*}
-e^x - (1 + x) < x^2
+e^a - (1 + a) < a^2
 \end{equation*}
-holds for all $x\in(0,1.79328)$, up to some numerical error on the upper bound.
+holds for all $a\in(0,1.79328)$, up to some numerical error on the upper bound.
 
 Unfortunately, solving this problem involves finding the roots of a function with quadratic and exponential terms, which has no algebraic solution. However, the claim is easily verified using graphical methods, or checked with automated theorem provers like Mathematica~{\bf REF}.
 
@@ -1273,13 +1270,50 @@ Unfortunately, solving this problem involves finding the roots of a function wit
 \end{proof}
 
 \begin{lemma}
-Let $\rateset$ be any non-empty, bounded and convex set of rate matrices. Then, for all $P\in\wmprocesses_\rateset$, all $t\in\realsnonneg$, all $\Delta\in\realspos$, all $\epsilon\in\realspos$, and all $\delta\in\realspos$, there is some $u\in\mathcal{U}_{[t,t+\Delta]}$ with $\sigma(u)<\delta$, and some $Q\in\rateset$, such that
+Let $\rateset$ be any non-empty, bounded and convex set of rate matrices, and choose any $\epsilon\in\realspos$. Then, there is some $\delta\in\realspos$ such that for all $P\in\wmprocesses_\rateset$, all $t\in\realsnonneg$, and all $\Delta\in\realspos$ such that $\Delta<\delta$,
 \begin{equation*}
-\norm{T_{t}^{t+\Delta} - \prod_{i=1}^n(I+\Delta_iQ)} < \Delta\epsilon\,.
+(\exists Q\in\rateset)\,\norm{T_{t}^{t+\Delta} - (I+\Delta Q)} < \Delta\epsilon\,.
 \end{equation*}
 \end{lemma}
 \begin{proof}
-**** I have this written down somewhere
+Fix any $\epsilon\in\realspos$, and let
+\begin{equation*}
+\delta \coloneqq \min\left\{\frac{\epsilon}{2\norm{\rateset}^2},\frac{1}{\norm{\rateset}}\right\}\,.
+\end{equation*}
+Choose any $P\in\wmprocesses_\rateset$, any $t\in\realsnonneg$, and any $\Delta<\delta$.
+
+Let $\epsilon'\coloneqq \nicefrac{\epsilon}{2}$. Then, by Lemma~{\bf REF}, there is some $u\in\mathcal{U}_{[t,t+\Delta]}$ with $u=t_0,\ldots,t_n$, such that, for all $i\in\{1,\ldots,n\}$,
+\begin{equation*}
+(\exists Q\in\rateset)\,\norm{T_{t_{i-1}}^{t_i} - (I+\Delta_iQ)} < \Delta_i\epsilon'.
+\end{equation*}
+This implies the existence of rate matrices $Q_1,\ldots,Q_n\in\rateset$, such that, for all $i\in\{1,\ldots,n\}$
+\begin{equation*}
+\norm{T_{t_{i-1}}^{t_i} - (I+\Delta_iQ_i)} < \Delta_i\epsilon'\,.
+\end{equation*}
+Therefore, and due to **** SOME LEMMA WITH A GENERAL VERSION OF THE RECURSIVELY PROVEN NORM INEQUALITY THAT WE USE A LOT IN THIS PAPER ***
+we find using the Markov property of $P$ that
+\begin{align*}
+\norm{T_t^{t+\Delta} - \prod_{i=1}^n(I+\Delta_iQ_i)} &= \norm{\prod_{i=1}^nT_{t_{i-1}}^{t_i} - \prod_{i=1}^n(I+\Delta_iQ_i)} \\
+ &< \sum_{i=1}^n\Delta_i\epsilon' \\
+ &= \Delta\epsilon'\,.
+\end{align*}
+Let now
+\begin{equation*}
+Q\coloneqq \sum_{i=1}^n \frac{\Delta_i}{\Delta} Q_i\,.
+\end{equation*}
+Then, by Lemma~{\bf REF}, we have that $Q\in\rateset$, and furthermore,
+\begin{equation*}
+\norm{\prod_{i=1}^n(I+\Delta_iQ_i) - (I+\Delta Q)} < \Delta^2\norm{\rateset}^2\,.
+\end{equation*}
+
+Putting this all together, we find that
+\begin{align*}
+\norm{T_t^{t+\Delta} - (I+\Delta Q)} &\leq \norm{T_t^{t+\Delta} - \prod_{i=1}^n(I+\Delta_iQ_i)} + \norm{\prod_{i=1}^n(I+\Delta_iQ_i) - (I+\Delta Q)} \\
+ &< \Delta\epsilon' + \Delta^2\norm{\rateset}^2 \\
+ &< \Delta\frac{\epsilon}{2} + \Delta\delta\norm{\rateset}^2 \\
+ &\leq \Delta\frac{\epsilon}{2} + \Delta\frac{\epsilon}{2\norm{\rateset}^2}\norm{\rateset}^2 \\
+ &= \Delta\epsilon\,.
+\end{align*}
 \end{proof}
 
 \begin{lemma}
