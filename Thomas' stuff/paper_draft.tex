@@ -1130,9 +1130,10 @@ with $N\in\nats$, such that
 (\forall \mathcal{T}\in\mathcal{T}_\rateset^{[t,s]})(\exists \mathcal{T}_i\in C_\epsilon)\,:\,d(\mathcal{T},\mathcal{T}_i) < \epsilon\,.
 \end{equation*}
 
-Fix any $\epsilon\in\realspos$, and define $C\coloneqq (s-t)$. We will start by constructing $C_\epsilon$.
-
-**** find $\epsilon'$.
+Fix any $\epsilon\in\realspos$, and define $C\coloneqq (s-t)$. We will start by constructing $C_\epsilon$. First, choose any $\epsilon'\in\realspos$ such that
+\begin{equation*}
+\epsilon' < \frac{\epsilon}{3C}\,.
+\end{equation*}
 
 Because $\rateset$ is closed and bounded, it is compact under the metric induced by our usual norm $\norm{\cdot}$. Therefore, $\rateset$ admits a finite cover of open balls with radius $\epsilon'$. In other words, there is some set
 \begin{equation*}
@@ -1146,11 +1147,11 @@ For each $Q_i\in\rateset_{\epsilon'}$, we let $\mathcal{T}_{Q_i}$ be the family 
 
 Now, due to Lemma~{\bf REF}, there is some $\delta\in\realspos$ such that, for all $P\in\wmprocesses_\rateset$, all $t\in\realsnonneg$, and all $\Delta\in\realspos$ with $\Delta<\delta$,
 \begin{equation}\label{eq:lemma_total_bounded_uniform_delta}
-(\exists Q\in\rateset)\,\norm{T_t^{t+\Delta} - (I+\Delta Q)} < \frac{\Delta\epsilon}{XX\cdot C}\,.
+(\exists Q\in\rateset)\,\norm{T_t^{t+\Delta} - (I+\Delta Q)} < \frac{\Delta\epsilon}{6C}\,.
 \end{equation}
 Consider this $\delta$. Let now
 \begin{equation*}
-\delta^* \coloneqq \min\left\{\frac{\epsilon}{\norm{\rateset}^2\cdot XX\cdot C}, \delta\right\}\,.
+\delta^* \coloneqq \min\left\{\frac{\epsilon}{6C\norm{\rateset}^2},\, \frac{\epsilon}{12\norm{\rateset}},\, \delta\right\}\,.
 \end{equation*}
 
 Choose now any $u\in\mathcal{U}_{[t,s]}$ with $\sigma(u)<\delta^*$, such that $u=t_0,\ldots,t_n$. Consider any $i\in\{1,\ldots,n\}$. We then let $\mathcal{T}_{Q_j}^{[t_{i-1},t_i]}\subset\mathcal{T}_{Q_j}$ be the set of all transition matrices in $\mathcal{T}_{Q_j}$ that are defined on the interval $[t_{i-1},t_i]$, for all $j\in\{1,\ldots,N'\}$.
@@ -1182,7 +1183,7 @@ Because $\mathcal{T}\in\mathcal{T}_\rateset^{[t,s]}$, it follows that there is s
 
 Consider any $i\in\{1,\ldots,n\}$, and the corresponding transition matrix $T_{t_{i-1}}^{t_i}\in\mathcal{T}$. Clearly, we have that $T_{t_{i-1}}^{t_i}=T_{t_{i-1}}^{(t_{i-1}+\Delta_i)}$. Therefore, and because $\Delta_i\leq\sigma(u)<\delta^*\leq\delta$, it follows from Equation~\eqref{eq:lemma_total_bounded_uniform_delta} that there is some $Q_i\in\rateset$ such that
 \begin{equation}\label{eq:lemma_total_bounded_full_interval_error_linear}
-\norm{T_{t_{i-1}}^{t_i} - (I+\Delta_i Q_i)} < \frac{\Delta_i\epsilon}{XX\cdot C}\,.
+\norm{T_{t_{i-1}}^{t_i} - (I+\Delta_i Q_i)} < \frac{\Delta_i\epsilon}{6C}\,.
 \end{equation}
 Consider this $Q_i$. Because $Q_i\in\rateset$, it follows that there is some $\widetilde{Q}_i\in\rateset_{\epsilon'}$ such that
 \begin{equation*}
@@ -1204,59 +1205,77 @@ To this end, consider first any $i\in\{1,\ldots,n\}$. Then, with $T_{t_{i-1}}^{t
 \begin{align*}
 \norm{T_{t_{i-1}}^{t_i} - S_{t_{i-1}}^{t_i}} &\leq \norm{T_{t_{i-1}}^{t_i} - (I+\Delta_iQ_i)} + \norm{(I+\Delta_iQ_i) - S_{t_{i-1}}^{t_i}} \\
  &\leq \norm{T_{t_{i-1}}^{t_i} - (I+\Delta_iQ_i)} + \norm{(I+\Delta_iQ_i) - (I+\Delta_i\widetilde{Q}_i)} + \norm{(I+\Delta_i\widetilde{Q}_i) - S_{t_{i-1}}^{t_i}} \\
- &< \frac{\Delta_i\epsilon}{XX\cdot C} + \Delta_i\epsilon' + \norm{(I+\Delta_i\widetilde{Q}_i) - S_{t_{i-1}}^{t_i}} \\
- &= \frac{\Delta_i\epsilon}{XX\cdot C} + \Delta_i\epsilon' + \norm{(I+\Delta_i\widetilde{Q}_i) - e^{\widetilde{Q}_i\cdot\Delta_i}} \\
- &\leq \frac{\Delta_i\epsilon}{XX\cdot C} + \Delta_i\epsilon' + \Delta_i^2\norm{\rateset}^2\,,
+ &< \frac{\Delta_i\epsilon}{6C} + \Delta_i\epsilon' + \norm{(I+\Delta_i\widetilde{Q}_i) - S_{t_{i-1}}^{t_i}} \\
+ &= \frac{\Delta_i\epsilon}{6C} + \Delta_i\epsilon' + \norm{(I+\Delta_i\widetilde{Q}_i) - e^{\widetilde{Q}_i\cdot\Delta_i}} \\
+ &\leq \frac{\Delta_i\epsilon}{6C} + \Delta_i\epsilon' + \Delta_i^2\norm{\rateset}^2\,,
 \end{align*}
-where the strict equality follows from the definition of $\mathcal{S}$, and the final inequality follows from Lemma~\ref{lemma:linearpartofexponential}. Furthermore, because $\Delta_i\leq\sigma(u)<\delta^*\leq\nicefrac{\epsilon}{(\norm{\rateset}^2XX\cdot C)}$, we have that
+where the strict equality follows from the definition of $\mathcal{S}$, and the final inequality follows from Lemma~\ref{lemma:linearpartofexponential}. Furthermore, because $\Delta_i\leq\sigma(u)<\delta^*\leq\nicefrac{\epsilon}{(6C\norm{\rateset}^2)}$, we have that
 \begin{equation}\label{eq:lemma_total_bounded_full_interval_error}
-\norm{T_{t_{i-1}}^{t_i} - S_{t_{i-1}}^{t_i}} < \frac{\Delta_i\epsilon}{XX\cdot C} + \Delta_i\epsilon' + \Delta_i^2\norm{\rateset}^2 < 2\cdot\frac{\Delta_i\epsilon}{XX\cdot C} + \Delta_i\epsilon'\,.
+\norm{T_{t_{i-1}}^{t_i} - S_{t_{i-1}}^{t_i}} < \frac{\Delta_i\epsilon}{6C} + \Delta_i\epsilon' + \Delta_i^2\norm{\rateset}^2 < 2\frac{\Delta_i\epsilon}{6C} + \Delta_i\epsilon' = \frac{\Delta_i\epsilon}{3C} + \Delta_i\epsilon'\,.
 \end{equation}
 
 Next, consider any $i\in\{1,\ldots,n\}$, and any $q\in[t_{i-1},t_i]$. Consider the transition matrices $T_q^{t_i}\in\mathcal{T}$ and $S_q^{t_i}\in\mathcal{S}$. Then, because $(t_i-q)\leq\Delta_i\leq\sigma(u)<\delta^*\leq\delta$, it follows from Equation~\ref{eq:lemma_total_bounded_uniform_delta} that there is some $Q\in\rateset$ such that
 \begin{align*}
-\norm{T_q^{t_i} - S_q^{t_i}} &< \frac{(t_i-q)\epsilon}{XX\cdot C} + \norm{(I+(t_i-q)Q) - S_q^{t_i}} \\
- &\leq \frac{(t_i-q)\epsilon}{XX\cdot C} + \norm{(I+(t_i-q)Q) - (I+(t_i-q)\widetilde{Q}_i)} + \norm{(I+(t_i-q)\widetilde{Q}_i) - S_q^{t_i}} \\
- &\leq \frac{(t_i-q)\epsilon}{XX\cdot C} + 2(t_i-q)\norm{\rateset} + \norm{(I+(t_i-q)\widetilde{Q}_i) - S_q^{t_i}} \\
- &= \frac{(t_i-q)\epsilon}{XX\cdot C} + 2(t_i-q)\norm{\rateset} + \norm{(I+(t_i-q)\widetilde{Q}_i) - e^{\widetilde{Q}_i\cdot(t_i-q)}} \\
- &\leq \frac{(t_i-q)\epsilon}{XX\cdot C} + 2(t_i-q)\norm{\rateset} + (t_i-q)^2\norm{\rateset}^2 \\
- &\leq \frac{\Delta_i\epsilon}{XX\cdot C} + 2(t_i-q)\norm{\rateset} + \Delta_i^2\norm{\rateset}^2 \\
- &\leq \frac{\Delta_i\epsilon}{XX\cdot C} + 2(t_i-q)\norm{\rateset} + \frac{\Delta_i\epsilon}{XX\cdot C}\,,
+\norm{T_q^{t_i} - S_q^{t_i}} &< \frac{(t_i-q)\epsilon}{6C} + \norm{(I+(t_i-q)Q) - S_q^{t_i}} \\
+ &\leq \frac{(t_i-q)\epsilon}{6C} + \norm{(I+(t_i-q)Q) - (I+(t_i-q)\widetilde{Q}_i)} + \norm{(I+(t_i-q)\widetilde{Q}_i) - S_q^{t_i}} \\
+ &\leq \frac{(t_i-q)\epsilon}{6C} + 2(t_i-q)\norm{\rateset} + \norm{(I+(t_i-q)\widetilde{Q}_i) - S_q^{t_i}} \\
+ &= \frac{(t_i-q)\epsilon}{6C} + 2(t_i-q)\norm{\rateset} + \norm{(I+(t_i-q)\widetilde{Q}_i) - e^{\widetilde{Q}_i\cdot(t_i-q)}} \\
+ &\leq \frac{(t_i-q)\epsilon}{6C} + 2(t_i-q)\norm{\rateset} + (t_i-q)^2\norm{\rateset}^2 \\
+ &\leq \frac{\Delta_i\epsilon}{6C} + 2(t_i-q)\norm{\rateset} + \Delta_i^2\norm{\rateset}^2 \\
+ &\leq \frac{\Delta_i\epsilon}{6C} + 2(t_i-q)\norm{\rateset} + \frac{\Delta_i\epsilon}{6C}\,,
 \end{align*}
-where the last inequality follows from the fact that $\Delta_i\leq\sigma(u)<\delta^*\leq\nicefrac{\epsilon}{(\norm{\rateset}^2XX\cdot C)}$. Hence, and because $(t_i-q)\leq\Delta_i$, we have
+where the last inequality follows from the fact that $\Delta_i\leq\sigma(u)<\delta^*\leq\nicefrac{\epsilon}{(6C\norm{\rateset}^2)}$. Hence, and because $(t_i-q)\leq\Delta_i\leq\sigma(u)<\delta^*\leq\nicefrac{\epsilon}{12\norm{\rateset}}$, we have
 \begin{equation}\label{eq:lemma_total_bounded_left_interval_error}
-\norm{T_q^{t_i} - S_q^{t_i}} < 2\cdot\frac{\Delta_i\epsilon}{XX\cdot C} + 2\Delta_i\norm{\rateset}\,.
+\norm{T_q^{t_i} - S_q^{t_i}} < \frac{\Delta_i\epsilon}{3C} + 2\Delta_i\norm{\rateset} < \frac{\Delta_i\epsilon}{3C} + \frac{\epsilon}{6}\,.
 \end{equation}
 
 Next, consider any $i\in\{1,\ldots,n\}$, and any $r\in[t_{i-1},t_i]$. Consider the transition matrices $T_{t_{i-1}}^r\in\mathcal{T}$ and $S_{t_{i-1}}^r\in\mathcal{S}$. Using a completely analogous argument as above, we find that
 \begin{equation}\label{eq:lemma_total_bounded_right_interval_error}
-\norm{T_{t_{i-1}}^r - S_{t_{i-1}}^r} < 2\cdot\frac{\Delta_i\epsilon}{XX\cdot C} + 2\Delta_i\norm{\rateset}\,.
+\norm{T_{t_{i-1}}^r - S_{t_{i-1}}^r} < \frac{\Delta_i\epsilon}{3C} + \frac{\epsilon}{6}\,.
 \end{equation}
 
 Finally, consider any $i\in\{1,\ldots,n\}$, and any $q,r\in[t_{i-1},t_i]$ with $q\leq r$. Consider the transition matrices $T_q^r\in\mathcal{T}$ and $S_q^r\in\mathcal{S}$. Again using the same argument, and the fact that $(r-q)\leq\Delta_i$, we have
 \begin{equation}\label{eq:lemma_total_bounded_middle_interval_error}
-\norm{T_q^r - S_q^r} < 2\cdot\frac{\Delta_i\epsilon}{XX\cdot C} + 2\Delta_i\norm{\rateset}\,.
+\norm{T_q^r - S_q^r} < \frac{\Delta_i\epsilon}{3C} + \frac{\epsilon}{6}\,.
 \end{equation}
+
+**** Deze laatste case pakt eigenlijk tegelijk links-rechts-midden. beter even versimpelen nog
 
 We are now ready to prove the general case. Consider any $q,r\in[t,s]$ such that $q\leq r$, and the transition matrices $T_q^r\in\mathcal{T}$ and $S_q^r\in\mathcal{S}$. We consider three different cases. If $q,r\in[t_{i-1},t_i]$ for some $i\in\{1,\ldots,n\}$, then it follows from Equation~\eqref{eq:lemma_total_bounded_middle_interval_error} that
 \begin{equation*}
-\norm{T_q^r - S_q^r} < 2\cdot\frac{\Delta_i\epsilon}{XX\cdot C} + 2\Delta_i\norm{\rateset} < \cdots < \epsilon TODO
+\norm{T_q^r - S_q^r} < \frac{\Delta_i\epsilon}{3C} + \frac{\epsilon}{6} < \frac{\epsilon}{3} + \frac{\epsilon}{6} < \epsilon\,.
 \end{equation*}
 
 For the second case, suppose that $q\in[t_{i-1},t_i]$ and $r\in[t_i,t_{i+1}]$ for some $i\in\{1,\ldots,n-1\}$. Then, because $T_q^r$ and $S_q^r$ satisfy Equation~\eqref{eq:transmatrixproduct}, it follows from Lemma~{\bf RECURSIVE} and Equations~\eqref{eq:lemma_total_bounded_left_interval_error} and~\eqref{eq:lemma_total_bounded_right_interval_error} that
 \begin{align*}
 \norm{T_q^r - S_q^r} &= \norm{T_q^{t_i}T_{t_i}^r - S_q^{t_i}S_{t_i}^r} \\
- &< \quad 2\cdot\frac{\Delta_i\epsilon}{XX\cdot C} + 2\cdot\frac{\Delta_{i+1}\epsilon}{XX\cdot C} + 2\Delta_i\norm{\rateset} + 2\Delta_{i+1}\norm{\rateset}
+ &< \frac{\Delta_i\epsilon}{3C} + \frac{\Delta_{i+1}\epsilon}{3C} + \frac{\epsilon}{6} + \frac{\epsilon}{6} \\
+ &= \frac{(\Delta_i+\Delta_{i+1})\epsilon}{3C} + \frac{\epsilon}{3} \\
+ &\leq \frac{\epsilon}{3} + \frac{\epsilon}{3}\\
+ &< \epsilon\,.
 \end{align*}
 
 In any other case, there must be some $i,j\in\{1,\ldots,n\}$ such that $i+1<j$, and for which $q\in[t_{i-1},t_i]$ and $r\in[t_{j-1},t_j]$. Therefore, and because $T_q^r$ and $S_q^r$ satisfy Equation~\eqref{eq:transmatrixproduct}, it follows from Lemma~{\bf RECURSIVE} and Equations~\ref{eq:lemma_total_bounded_full_interval_error}, \eqref{eq:lemma_total_bounded_left_interval_error} and~\eqref{eq:lemma_total_bounded_right_interval_error} that
 \begin{align*}
 \norm{T_q^r - S_q^r} &= \norm{T_q^{t_i}\left(\prod_{k=i+1}^{j-1}T_{t_{k-1}}^{t_k}\right)T_{t_{j-1}}^r - S_q^{t_i}\left(\prod_{k=i+1}^{j-1}S_{t_{k-1}}^{t_k}\right)S_{t_{j-1}}^r} \\
- &< \quad 2\cdot\frac{\Delta_i\epsilon}{XX\cdot C} + 2\Delta_i\norm{\rateset} \\
- &\quad + \sum_{k=i+1}^{j-1}2\cdot\frac{\Delta_k\epsilon}{XX\cdot C} + \Delta_k\epsilon' \\
- &\quad + 2\cdot\frac{\Delta_{j}\epsilon}{XX\cdot C} + 2\Delta_{j}\norm{\rateset} \\
- &= 2\cdot\sum_{k=i}^j \frac{\Delta_k\epsilon}{XX\cdot C} + 2\Delta_i\norm{\rateset} + 2\Delta_j\norm{\rateset} + \sum_{k=i+1}^{j-1}{\Delta_k\epsilon'}
+ &< \quad \frac{\Delta_i\epsilon}{3C} + \frac{\epsilon}{6} \\
+ &\quad + \sum_{k=i+1}^{j-1}\cdot\frac{\Delta_k\epsilon}{3C} + \Delta_k\epsilon' \\
+ &\quad + \frac{\Delta_{j}\epsilon}{3C} + \frac{\epsilon}{6} \\
+ &= \sum_{k=i}^j \frac{\Delta_k\epsilon}{3C} + \frac{\epsilon}{3} + \sum_{k=i+1}^{j-1}{\Delta_k\epsilon'} \\
+ &\leq \frac{\epsilon}{3} + \frac{\epsilon}{3} + C\cdot\epsilon' \\
+ &\leq \frac{\epsilon}{3} + \frac{\epsilon}{3} + \frac{\epsilon}{3} \\
+ &= \epsilon\,.
 \end{align*}
+
+In summary, we have shown that for all $q,r\in[t,s]$ with $q\leq r$, it holds that
+\begin{equation*}
+\norm{T_q^r - S_q^r} < \epsilon\,,
+\end{equation*}
+with $T_q^r\in\mathcal{T}$ and $S_q^r\in\mathcal{S}$. Because this holds for all $q$ and $r$, it follows that *** need to replace $\epsilon$ with some $\epsilon^*<\epsilon$ throughout to get it to be an open cover. do we need this? ***
+\begin{equation*}
+d(\mathcal{T},\mathcal{S}) = \sup\{\norm{T_q^r - S_q^r}\,:\,q,r\in[t,s], q\leq r\} \leq \epsilon\,.
+\end{equation*}
+Because this holds for any $\mathcal{T}\in\mathcal{T}_\rateset^{[t,s]}$, it follows that $C_\epsilon$ is a finite, open $\epsilon$-cover of $\mathcal{T}_\rateset^{[t,s]}$. Because the $\epsilon\in\realspos$ was arbitrary, we conclude that $\mathcal{T}_\rateset^{[t,s]}$ is totally bounded.
 \end{proof}
 
 \begin{proof}[Proof of Claim~\ref{claim:composition_restricted_trans_mat_sys_in_set}]
