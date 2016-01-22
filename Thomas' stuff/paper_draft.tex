@@ -1089,23 +1089,38 @@ This is immediate from Definition~\ref{def:lower_exp} and Proposition \ref{prop:
 
 Recall from Proposition~\ref{prop:Markovhassystem} that for all $P\in\wmprocesses$, there is a well-behaved transition matrix system $\mathcal{T}_P$ corresponding to this $P$. For any $t,s\in\realsnonneg$ such that $t\leq s$, let $\mathcal{T}_P^{[t,s]}$ be the restriction of $\mathcal{T}_P$ to the interval $[t,s]$. That is, $\mathcal{T}_P^{[t,s]}$ contains all transition matrices $T_q^r\in\mathcal{T}_P$ such that $q,r\in[t,s]$ with $q\leq r$.
 
-For any non-empty bounded set $\rateset\subset\mathcal{R}$ and any $t,s\in\realsnonneg$ such that $t\leq s$, let now
+Because these restricted transition matrix systems are only defined on some interval $[t,s]$, it will be useful to define a product operator between two such systems $\mathcal{T}^{[t,r]}$ and $\mathcal{T}^{[r,s]}$. To his end, let
 \begin{equation*}
-\mathcal{T}_\rateset^{[t,s]} \coloneqq \left\{\mathcal{T}_P^{[t,s]}\,:\,P\in\wmprocesses_\rateset\right\}\,.
+\mathcal{T}^{[t,r]} \otimes \mathcal{T}^{[r,s]} \coloneqq \mathcal{T}^{[t,r]} \cup \mathcal{T}^{[r,s]} \cup \left\{T_\tau^rT_r^{\tau'}\,\Big\vert\,T_{\tau}^r\in\mathcal{T}^{[t,r]},\,T_r^{\tau'}\in\mathcal{T}^{[r,s]},\,\forall\tau\in[t,r]\forall\tau'\in[r,s]\right\}\,.
 \end{equation*}
-We next endow this space $\mathcal{T}_\rateset^{[t,s]}$ with the following metric $d$,  defined for all $\mathcal{T},\mathcal{S}\in\mathcal{T}_\rateset^{[t,s]}$ as
+\begin{proposition}
+Consider any $t,r,s\in\realsnonneg$ such that $t\leq r\leq s$, and any two restricted transition matrix systems $\mathcal{T}^{[t,r]}$ and $\mathcal{T}^{[r,s]}$. Then,
+\begin{equation*}
+\mathcal{T}^{[t,s]} \coloneqq \mathcal{T}^{[t,r]}\otimes \mathcal{T}^{[r,s]}
+\end{equation*}
+is a restricted transition matrix system defined on $[t,s]$.
+\end{proposition}
+\begin{proof}
+*** TODO
+\end{proof}
+
+We will now look at spaces of such restricted transition matrix systems. To this end, for any non-empty bounded set of rate matrices $\rateset$ and any $t,s\in\realsnonneg$ such that $t\leq s$, let
+\begin{equation*}
+\mathbb{T}_\rateset^{[t,s]} \coloneqq \left\{\mathcal{T}_P^{[t,s]}\,:\,P\in\wmprocesses_\rateset\right\}\,.
+\end{equation*}
+We next endow this space $\mathbb{T}_\rateset^{[t,s]}$ with the following metric $d$,  defined for all $\mathcal{T}^{[t,s]},\mathcal{S}^{[t,s]}\in\mathbb{T}_\rateset^{[t,s]}$ as
 \begin{equation}\label{eq:trans_mat_system_metric}
-d(\mathcal{T},\mathcal{S}) \coloneqq \sup\left\{\norm{T_q^r - S_q^r}\,:\,q,r\in[t,s], q\leq r\right\}\,,
+d(\mathcal{T}^{[t,s]},\mathcal{S}^{[t,s]}) \coloneqq \sup\left\{\norm{T_q^r - S_q^r}\,:\,q,r\in[t,s], q\leq r\right\}\,,
 \end{equation}
-where, for all $q,r\in[t,s]$, it is understood that $T_q^r\in\mathcal{T}$ and $S_q^r\in\mathcal{S}$.
+where, for all $q,r\in[t,s]$, it is understood that $T_q^r\in\mathcal{T}^{[t,s]}$ and $S_q^r\in\mathcal{S}^{[t,s]}$.
 
 We have the following results.
 
 \begin{lemma}
-Consider any non-empty, bounded and closed set of rate matrices $\rateset$, and any $t,s\in\realsnonneg$ such that $t\leq s$. Then, the metric space $(\mathcal{T}_\rateset^{[t,s]},d)$ is complete under the metric $d$, defined as in Equation~\eqref{eq:trans_mat_system_metric}.
+Consider any non-empty, bounded and closed set of rate matrices $\rateset$, and any $t,s\in\realsnonneg$ such that $t\leq s$. Then, the metric space $(\mathbb{T}_\rateset^{[t,s]},d)$ is complete under the metric $d$, defined as in Equation~\eqref{eq:trans_mat_system_metric}.
 \end{lemma}
 \begin{proof}
-We need to show that for any Cauchy sequence $\left\{\mathcal{T}_i\right\}_{i\in\nats}$ in $\mathcal{T}_\rateset^{[t,s]}$, it holds that $\mathcal{T}_*\coloneqq\lim_{i\to\infty}\mathcal{T}_i$ exists and satisfies $\mathcal{T}_*\in\mathcal{T}_\rateset^{[t,s]}$. Therefore, consider any Cauchy sequence $\left\{\mathcal{T}_i\right\}_{i\in\nats}$ in  $\mathcal{T}_\rateset^{[t,s]}$, meaning that
+We need to show that for any Cauchy sequence $\left\{\mathcal{T}_i\right\}_{i\in\nats}$ in $\mathbb{T}_\rateset^{[t,s]}$, it holds that $\mathcal{T}_*\coloneqq\lim_{i\to\infty}\mathcal{T}_i$ exists and satisfies $\mathcal{T}_*\in\mathbb{T}_\rateset^{[t,s]}$. Therefore, consider any Cauchy sequence $\left\{\mathcal{T}_i\right\}_{i\in\nats}$ in  $\mathbb{T}_\rateset^{[t,s]}$, meaning that
 \begin{equation*}
 (\forall\epsilon\in\realspos)(\exists N\in\nats)(\forall i,j>N)\,:\,d(\mathcal{T}_i,\mathcal{T}_j) < \epsilon\,.
 \end{equation*}
@@ -1116,18 +1131,18 @@ We will first show that $\mathcal{T}_*\coloneqq\lim_{i\to\infty}\mathcal{T}_i$ e
 \end{proof}
 
 \begin{lemma}
-Consider any non-empty, bounded and convex set of rate matrices $\rateset$, and any $t,s\in\realsnonneg$ such that $t\leq s$. Then, the metric space $(\mathcal{T}_\rateset^{[t,s]},d)$ is totally bounded under the metric $d$, defined as in Equation~\eqref{eq:trans_mat_system_metric}.
+Consider any non-empty, bounded and convex set of rate matrices $\rateset$, and any $t,s\in\realsnonneg$ such that $t\leq s$. Then, the metric space $(\mathbb{T}_\rateset^{[t,s]},d)$ is totally bounded under the metric $d$, defined as in Equation~\eqref{eq:trans_mat_system_metric}.
 \end{lemma}
 \begin{proof}
-We have to show that $(\mathcal{T}_\rateset^{[t,s]},d)$ is totally bounded, meaning that for all $\epsilon\in\realspos$, there exists a finite collection of open $\epsilon$-balls centered on elements of $\mathcal{T}_\rateset^{[t,s]}$, such that this collection covers $\mathcal{T}_\rateset^{[t,s]}$. 
+We have to show that $(\mathbb{T}_\rateset^{[t,s]},d)$ is totally bounded, meaning that for all $\epsilon\in\realspos$, there exists a finite collection of open $\epsilon$-balls centered on elements of $\mathbb{T}_\rateset^{[t,s]}$, such that this collection covers $\mathbb{T}_\rateset^{[t,s]}$. 
 
 Equivalently, we need to show that for all $\epsilon\in\realspos$, there is some set
 \begin{equation*}
-\mathbb{C}_\epsilon\coloneqq \left\{\mathcal{T}_i\in\mathcal{T}_\rateset^{[t,s]}\,:\,i\in\{1,\ldots,N\}\right\}\,,
+\mathbb{C}_\epsilon\coloneqq \left\{\mathcal{T}_i\in\mathbb{T}_\rateset^{[t,s]}\,:\,i\in\{1,\ldots,N\}\right\}\,,
 \end{equation*}
 with $N\in\nats$, such that
 \begin{equation*}
-(\forall \mathcal{T}\in\mathcal{T}_\rateset^{[t,s]})(\exists \mathcal{S}\in \mathbb{C}_\epsilon)\,:\,d(\mathcal{T},\mathcal{S}) < \epsilon\,.
+(\forall \mathcal{T}\in\mathbb{T}_\rateset^{[t,s]})(\exists \mathcal{S}\in \mathbb{C}_\epsilon)\,:\,d(\mathcal{T},\mathcal{S}) < \epsilon\,.
 \end{equation*}
 
 Fix any $\epsilon\in\realspos$, and define $C\coloneqq (s-t)$. We will start by constructing $\mathbb{C}_\epsilon$. To ensure that the cover is open, choose first any $\epsilon^*<\epsilon$. Then, let
@@ -1166,18 +1181,18 @@ We now use the following claim, which is proved below.
 \begin{claim}\label{claim:composition_restricted_trans_mat_sys_in_set}
 For all $i\in\{1,\ldots,n\}$, choose some $\mathcal{T}_i^{[t_{i-1},t_i]}\in\mathbb{T}_i$. Then,
 \begin{equation*}
-\mathcal{T}_1^{[t_{0},t_1]} \otimes \mathcal{T}_2^{[t_{1},t_2]} \cdots \otimes \mathcal{T}_n^{[t_{n-1},t_n]} \in \mathcal{T}_\rateset^{[t,s]}\,.
+\mathcal{T}_1^{[t_{0},t_1]} \otimes \mathcal{T}_2^{[t_{1},t_2]} \cdots \otimes \mathcal{T}_n^{[t_{n-1},t_n]} \in \mathbb{T}_\rateset^{[t,s]}\,.
 \end{equation*}
 \end{claim}
 Because each $\mathbb{T}_i$ is finite, there are only finitely many ways in which the product in Claim~\ref{claim:composition_restricted_trans_mat_sys_in_set} can be constructed. Therefore, if we now let
 \begin{equation*}
 \mathbb{C}_\epsilon \coloneqq \left\{\mathcal{T}_1^{[t_{0},t_1]} \otimes \mathcal{T}_2^{[t_{1},t_2]} \cdots \otimes \mathcal{T}_n^{[t_{n-1},t_n]}\,:\,\left(\forall i\in\{1,\ldots,n\} \,:\,\mathcal{T}_i^{[t_{i-1},t_i]}\in\mathbb{T}_i\right) \right\}\,,
 \end{equation*}
-then $\mathbb{C}_\epsilon$ contains a finite number of elements, and, due to Claim~\ref{claim:composition_restricted_trans_mat_sys_in_set}, $\mathbb{C}_\epsilon\subset \mathcal{T}_\rateset^{[t,s]}$.
+then $\mathbb{C}_\epsilon$ contains a finite number of elements, and, due to Claim~\ref{claim:composition_restricted_trans_mat_sys_in_set}, $\mathbb{C}_\epsilon\subset \mathbb{T}_\rateset^{[t,s]}$.
 
-It remains to show that $\mathbb{C}_\epsilon$ generates an open $\epsilon$-cover of $\mathcal{T}_\rateset^{[t,s]}$. To this end, consider any $\mathcal{T}\in\mathcal{T}_\rateset^{[t,s]}$. We will show that there is some $\mathcal{S}\in \mathbb{C}_{\epsilon}$ such that $d(\mathcal{T},\mathcal{S})<\epsilon$. We start by constructing this $\mathcal{S}$.
+It remains to show that $\mathbb{C}_\epsilon$ generates an open $\epsilon$-cover of $\mathbb{T}_\rateset^{[t,s]}$. To this end, consider any $\mathcal{T}\in\mathbb{T}_\rateset^{[t,s]}$. We will show that there is some $\mathcal{S}\in \mathbb{C}_{\epsilon}$ such that $d(\mathcal{T},\mathcal{S})<\epsilon$. We start by constructing this $\mathcal{S}$.
 
-Because $\mathcal{T}\in\mathcal{T}_\rateset^{[t,s]}$, it follows that there is some corresponding $P\in\wmprocesses_\rateset$ which agrees with $\mathcal{T}$ on all transition matrices $T_q^r\in\mathcal{T}$. 
+Because $\mathcal{T}\in\mathbb{T}_\rateset^{[t,s]}$, it follows that there is some corresponding $P\in\wmprocesses_\rateset$ which agrees with $\mathcal{T}$ on all transition matrices $T_q^r\in\mathcal{T}$. 
 
 Consider any $i\in\{1,\ldots,n\}$, and the corresponding transition matrix $T_{t_{i-1}}^{t_i}\in\mathcal{T}$. Clearly, we have that $T_{t_{i-1}}^{t_i}=T_{t_{i-1}}^{(t_{i-1}+\Delta_i)}$. Therefore, and because $\Delta_i\leq\sigma(u)<\delta^*\leq\delta$, it follows from Equation~\eqref{eq:lemma_total_bounded_uniform_delta} that there is some $Q_i\in\rateset$ such that
 \begin{equation}\label{eq:lemma_total_bounded_full_interval_error_linear}
@@ -1241,7 +1256,7 @@ with $T_q^r\in\mathcal{T}$ and $S_q^r\in\mathcal{S}$. Because this holds for all
 \begin{equation*}
 d(\mathcal{T},\mathcal{S}) = \sup\{\norm{T_q^r - S_q^r}\,:\,q,r\in[t,s], q\leq r\} \leq \epsilon^* < \epsilon\,.
 \end{equation*}
-Because this holds for any $\mathcal{T}\in\mathcal{T}_\rateset^{[t,s]}$, it follows that $\mathbb{C}_\epsilon$ is a finite, open $\epsilon$-cover of $\mathcal{T}_\rateset^{[t,s]}$. Because the $\epsilon\in\realspos$ was arbitrary, we conclude that $\mathcal{T}_\rateset^{[t,s]}$ is totally bounded.
+Because this holds for any $\mathcal{T}\in\mathbb{T}_\rateset^{[t,s]}$, it follows that $\mathbb{C}_\epsilon$ is a finite, open $\epsilon$-cover of $\mathbb{T}_\rateset^{[t,s]}$. Because the $\epsilon\in\realspos$ was arbitrary, we conclude that $\mathbb{T}_\rateset^{[t,s]}$ is totally bounded.
 \end{proof}
 
 \begin{proof}[Proof of Claim~\ref{claim:composition_restricted_trans_mat_sys_in_set}]
@@ -1411,43 +1426,20 @@ Putting this all together, we find that
 \end{align*}
 \end{proof}
 
-\begin{lemma}
-Consider any non-empty bounded set of rate matrices $\rateset$, and any $t,s\in\realsnonneg$ such that $t\leq s$. Then, the metric space $(\mathcal{T}_\rateset^{[t,s]},d)$ is totally bounded under the metric $d$, defined as in Equation~\eqref{eq:trans_mat_system_metric}.
-\end{lemma}
+\begin{corollary}
+Consider any non-empty bounded set of rate matrices $\rateset$, and any $t,s\in\realsnonneg$ such that $t\leq s$. Then, the metric space $(\mathbb{T}_\rateset^{[t,s]},d)$ is totally bounded under the metric $d$, defined as in Equation~\eqref{eq:trans_mat_system_metric}.
+\end{corollary}
 \begin{proof}
-Let $\widetilde{\rateset}$ denote the convex closure of $\rateset$. Then, clearly, $\widetilde{\rateset}$ is a non-empty, bounded, and convex set of rate matrices, and furthermore, $\mathcal{T}_\rateset^{[t,s]}\subseteq \mathcal{T}_{\widetilde{\rateset}}^{[t,s]}$.
+Let $\widetilde{\rateset}$ denote the convex closure of $\rateset$. Then, clearly, $\widetilde{\rateset}$ is a non-empty, bounded, and convex set of rate matrices, and furthermore, $\mathbb{T}_\rateset^{[t,s]}\subseteq \mathbb{T}_{\widetilde{\rateset}}^{[t,s]}$.
 
-By Lemma~{\bf REF}, $\mathcal{T}_{\widetilde{\rateset}}^{[t,s]}$ is totally bounded. Therefore, and because any subset of a totally bounded set is itself totally bounded~{\bf CITE}, it follows that $\mathcal{T}_\rateset^{[t,s]}$ is totally bounded as well.
+By Lemma~{\bf REF}, $\mathbb{T}_{\widetilde{\rateset}}^{[t,s]}$ is totally bounded. Therefore, and because any subset of a totally bounded set is itself totally bounded~{\bf CITE}, it follows that $\mathbb{T}_\rateset^{[t,s]}$ is totally bounded as well.
 \end{proof}
 
 \begin{theorem}
-Consider any non-empty, bounded and closed set of rate matrices $\rateset$, and any $t,s\in\realsnonneg$ such that $t\leq s$. Then, the metric space $(\mathcal{T}_\rateset^{[t,s]},d)$ is compact under the topology generated by the metric $d$, defined as in Equation~\eqref{eq:trans_mat_system_metric}.
+Consider any non-empty, bounded and closed set of rate matrices $\rateset$, and any $t,s\in\realsnonneg$ such that $t\leq s$. Then, the metric space $(\mathbb{T}_\rateset^{[t,s]},d)$ is compact under the topology generated by the metric $d$, defined as in Equation~\eqref{eq:trans_mat_system_metric}.
 \end{theorem}
 \begin{proof}
 **** Direct consequence of the lemma X and Y.
-\end{proof}
-
-\begin{proposition}
-Consider any $t,s\in\realsnonneg$ such that $t\leq s$, and any non-empty bounded set of rate matrices $\rateset$. Then, for all $\mathcal{T}\in\mathcal{T}_\rateset^{[t,s]}$, there is a $P\in\wmprocesses_\rateset$ for which it holds that $\mathcal{T}_P^{[t,s]}=\mathcal{T}$.
-\end{proposition}
-\begin{proof}
-*** rewrite below
-
-Consider any $t,s\in\realsnonneg$ such that $t\leq s$, any non-empty bounded set of rate matrices $\rateset$, any $Q\in\rateset$, and any $\mathcal{S}\in\mathcal{T}_\rateset^{[t,s]}$. Consider the family of transition matrices $\mathcal{T}$, defined for all $q,r\in\realsnonneg$ with $q\leq r$, as
-\begin{equation*}
-T_q^r \coloneqq \left\{\begin{array}{ll}
-e^{Q(r-q)} & \quad\text{if $q,r\leq t$ or $s\leq q,r$} \\
-T_q^tT_t^r & \quad\text{if $q< t$ and $r\in[t,s]$} \\
-T_q^sT_s^r & \quad\text{if $q\in[t,s]$ and $s< r$} \\
-S_q^r\in\mathcal{S} & \quad\text{if $q,r\in[t,s]$}
-\end{array}
-\right.
-\end{equation*}
-Then, $\mathcal{T}$ is a well-behaved transition matrix system. 
-
-Furthermore, for any probability mass function $p$ on $\states$, there is a well-behaved Markov chain $P$ such that $\mathcal{T}_P=\mathcal{T}$ and $P(X_0=x)=p(x)$ for all $x\in\states$, and for which it holds that $P\in\wmprocesses_\rateset$.
-
-**** finish this
 \end{proof}
 
 \subsection{Stuff that needs to find a place}
