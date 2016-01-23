@@ -1122,19 +1122,85 @@ d(\mathcal{T}^{[t,s]},\mathcal{S}^{[t,s]}) \coloneqq \sup\left\{\norm{T_q^r - S_
 \end{equation}
 where, for all $q,r\in[t,s]$, it is understood that $T_q^r\in\mathcal{T}^{[t,s]}$ and $S_q^r\in\mathcal{S}^{[t,s]}$.
 
-For any sequence $\left\{\mathcal{T}_i^{[t,s]}\right\}_{i\in\nats}$ of restricted transition matrix systems, we define the limit---if it exists---as the family $\mathcal{T}_*^{[t,s]}\coloneqq\lim_{i\to\infty}\mathcal{T}_i^{[t,s]}$ of matrices defined for all $q,r\in[t,s]$ as
-\begin{equation*}
-\presuper{*}T_q^r \coloneqq \lim_{i\to\infty} \presuper{i}T_q^r\,,
-\end{equation*}
-where, for all $i\in\nats$, it is understood that $\presuper{i}T_q^r\in\mathcal{T}_i^{[t,s]}$.
-
 We have the following results.
 
 \begin{lemma}
-Consider any Cauchy sequence $\left\{\mathcal{T}_i^{[t,s]}\right\}_{i\in\nats}$ of restricted transition matrix systems. Then, the limit $\mathcal{T}_*^{[t,s]}\coloneqq\lim_{i\to\infty}\mathcal{T}_i^{[t,s]}$ exists, and is a restricted transition matrix system. Furthermore, if for all $i\in\nats$ it holds that $\mathcal{T}_i^{[t,s]}$ is well-behaved, then $\mathcal{T}_*^{[t,s]}$ is also well-behaved.
+Consider any $t,s\in\realsnonneg$ with $t\leq s$, and any Cauchy sequence $\left\{\mathcal{T}_i^{[t,s]}\right\}_{i\in\nats}$ of restricted transition matrix systems. Consider the family $\mathcal{T}_*^{[t,s]}$ of matrices $\presuper{*}T_q^r$, defined for all $q,r\in[t,s]$ with $q\leq r$ as
+\begin{equation*}
+\presuper{*}T_q^r \coloneqq \lim_{i\to\infty} \presuper{i}T_q^r\,,
+\end{equation*}
+where it is understood that $\presuper{i}T_q^r\in\mathcal{T}_i^{[t,s]}$ for all $i\in\nats$.
+
+Then, $\mathcal{T}_*^{[t,s]}$ exists, is a restricted transition matrix system defined on $[t,s]$, and $\mathcal{T}_*^{[t,s]}=\lim_{i\to\infty}\mathcal{T}_i^{[t,s]}$. Furthermore, if for all $i\in\nats$ it holds that $\mathcal{T}_i^{[t,s]}$ is well-behaved, then $\mathcal{T}_*^{[t,s]}$ is also well-behaved.
 \end{lemma}
 \begin{proof}
-**** I have this written down.
+By assumption, the sequence $\left\{\mathcal{T}_i^{[t,s]}\right\}_{i\in\nats}$ is Cauchy, meaning that
+\begin{equation*}
+(\forall\epsilon\in\realspos)(\exists n\in\nats)(\forall i,j > n)\,:\,d(\mathcal{T}_i^{[t,s]},\mathcal{T}_j^{[t,s]}) < \epsilon\,.
+\end{equation*}
+We first show that $\mathcal{T}_*^{[t,s]}$ exists. To this end, consider any $q,r\in[t,s]$ such that $q\leq r$. Consider the sequence $\left\{\presuper{i}T_q^r\right\}_{i\in\nats}$. Then, because $\left\{\mathcal{T}_i^{[t,s]}\right\}_{i\in\nats}$ is Cauchy, the sequence $\left\{\presuper{i}T_q^r\right\}_{i\in\nats}$ is also clearly Cauchy. Therefore, and because this is a sequence of matrices, the limit $\presuper{*}T_q^r\coloneqq\lim_{i\to\infty}\presuper{i}T_q^r$ of this sequence clearly exists. Furthermore, because this is a sequence of transition matrices, $\presuper{*}T_q^r$ is also clearly a transition matrix. Therefore, and because the $q,r\in[t,s]$ were arbitrary, the family $\mathcal{T}_*^{[t,s]}$ exists. Furthermore, we have found that it is a family of transition matrices.
+
+We now show that $\mathcal{T}_*^{[t,s]}$ is a restricted transition matrix system. Consider any $r\in[t,s]$. Clearly, we have that
+\begin{equation*}
+\presuper{*}T_r^r = \lim_{i\to\infty} \presuper{i}T_r^r = \lim_{i\to\infty} I = I\,.
+\end{equation*}
+It remains to show that for all $\tau,r,\sigma\in[t,s]$ such that $\tau\leq r\leq\sigma$, it holds that
+\begin{equation*}
+\presuper{*}T_\tau^\sigma = \presuper{*}T_\tau^r\presuper{*}T_r^\sigma\,.
+\end{equation*}
+Suppose \emph{ex absurdo} that this does not hold. Then, because $\presuper{*}T_\tau^\sigma = \lim_{i\to\infty} \presuper{i}T_\tau^\sigma=\lim_{i\to\infty}\presuper{i}T_\tau^r\presuper{i}T_r^\sigma$, we have that
+\begin{equation*}
+\lim_{i\to\infty} \presuper{i}T_\tau^r\presuper{i}T_r^\sigma \neq \presuper{*}T_\tau^r\presuper{*}T_r^\sigma\,.
+\end{equation*}
+Therefore, it holds that
+\begin{equation*}
+(\exists \epsilon\in\realspos)(\forall n\in\nats)(\exists i>n)\,:\,\norm{\presuper{i}T_\tau^r\presuper{i}T_r^\sigma - \presuper{*}T_\tau^r\presuper{*}T_r^\sigma} \geq \epsilon\,.
+\end{equation*}
+Consider such an $\epsilon\in\realspos$. Then, because $\presuper{*}T_\tau^r=\lim_{i\to\infty}\presuper{i}T_\tau^r$ and $\presuper{*}T_r^\sigma=\lim_{i\to\infty}\presuper{i}T_r^\sigma$ there must be some $n_\tau,n_\sigma\in\nats$ such that
+\begin{equation*}
+(\forall i>n_\tau)\,:\,\norm{\presuper{*}T_\tau^r - \presuper{i}T_\tau^r} < \frac{\epsilon}{2}\,, \quad\text{and,}\quad (\forall i>n_\sigma)\,:\,\norm{\presuper{*}T_r^\sigma - \presuper{i}T_r^\sigma} < \frac{\epsilon}{2}\,.
+\end{equation*}
+Consider now any $n\in\nats$ such that $n>\max\{n_\tau,n_\sigma\}$. Then, there must be some $i\in\nats$ such that $i>n$, and for which, by Lemma~{\bf RECURSIVE},
+\begin{equation*}
+\epsilon \leq \norm{\presuper{i}T_\tau^r\presuper{i}T_r^\sigma - \presuper{*}T_\tau^r\presuper{*}T_r^\sigma} < \frac{\epsilon}{2} + \frac{\epsilon}{2} = \epsilon\,.
+\end{equation*}
+From this contradiction, we conclude that indeed
+\begin{equation*}
+\presuper{*}T_\tau^\sigma = \presuper{*}T_\tau^r\presuper{*}T_r^\sigma\,.
+\end{equation*}
+Therefore, $\mathcal{T}_*^{[t,s]}$ is a restricted transition matrix system.
+
+We next show that $\mathcal{T}_*^{[t,s]}=\lim_{i\to\infty}\mathcal{T}_i^{[t,s]}$. Suppose \emph{ex absurdo} that this does not hold. Then,
+\begin{equation*}
+(\exists\epsilon\in\realspos)(\forall n\in\nats)(\exists i>n)\,:\,d(\mathcal{T}_*^{[t,s]}, \mathcal{T}_i^{[t,s]}) \geq \epsilon\,.
+\end{equation*}
+Consider such an $\epsilon\in\realspos$. Because the sequence $\left\{\mathcal{T}_i^{[t,s]}\right\}_{i\in\nats}$ is Cauchy, we have that
+\begin{equation*}
+(\exists n\in\nats)(\forall i,j>n)\,:\,d(\mathcal{T}_i^{[t,s]},\mathcal{T}_j^{[t,s]}) < \frac{\epsilon}{3}\,.
+\end{equation*}
+Consider this $n$. Then, there must be some $i\in\nats$ with $i>n$, such that
+\begin{equation*}
+d(\mathcal{T}_*^{[t,s]}, \mathcal{T}_i^{[t,s]}) = \sup\left\{\norm{\presuper{*}T_q^r - \presuper{i}T_q^r}\,:\,q,r\in[t,s], q\leq r\right\} \geq \epsilon\,,
+\end{equation*}
+meaning that, for all $\epsilon'\in\realspos$, there are some $q,r\in[t,s]$ with $q\leq r$, such that
+\begin{equation*}
+\norm{\presuper{*}T_q^r - \presuper{i}T_q^r} + \epsilon' > \epsilon\,.
+\end{equation*}
+Let $\epsilon'\coloneqq\nicefrac{\epsilon}{3}$, and choose any such $q,r\in[t,s]$ with $q\leq r$. Then, because $\presuper{*}T_q^r=\lim_{k\to\infty}\presuper{k}T_q^r$, there must be some $j\in\nats$ such that $j>n$, and for which
+\begin{equation*}
+\norm{\presuper{*}T_q^r - \presuper{j}T_q^r} < \frac{\epsilon}{3}\,.
+\end{equation*}
+Putting this together, we find that
+\begin{align*}
+\epsilon &< \norm{\presuper{*}T_q^r - \presuper{i}T_q^r} + \frac{\epsilon}{3} \\
+ &\leq \norm{\presuper{*}T_q^r - \presuper{j}T_q^r} + \norm{\presuper{j}T_q^r - \presuper{i}T_q^r} + \frac{\epsilon}{3} \\
+ &< \frac{\epsilon}{3} + d(\mathcal{T}_j^{[t,s]},\mathcal{T}_i^{[t,s]}) + \frac{\epsilon}{3} \\
+ &< \frac{\epsilon}{3} + \frac{\epsilon}{3} + \frac{\epsilon}{3} \\
+ &= \epsilon\,.
+\end{align*}
+Hence, we have found a contradiction, and therefore $\mathcal{T}_*^{[t,s]}=\lim_{i\to\infty}\mathcal{T}_i^{[t,s]}$.
+
+We finally show that if each $\mathcal{T}_i^{[t,s]}$ is well-behaved, that then $\mathcal{T}_*^{[t,s]}$ is also well-behaved.
 \end{proof}
 
 \begin{lemma}
