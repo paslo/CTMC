@@ -1089,9 +1089,9 @@ This is immediate from Definition~\ref{def:lower_exp} and Proposition \ref{prop:
 
 Recall from Proposition~\ref{prop:Markovhassystem} that for all $P\in\wmprocesses$, there is a well-behaved transition matrix system $\mathcal{T}_P$ corresponding to this $P$. For any $t,s\in\realsnonneg$ such that $t\leq s$, let $\mathcal{T}_P^{[t,s]}$ be the restriction of $\mathcal{T}_P$ to the interval $[t,s]$. That is, $\mathcal{T}_P^{[t,s]}$ contains all transition matrices $T_q^r\in\mathcal{T}_P$ such that $q,r\in[t,s]$ with $q\leq r$.
 
-Because these restricted transition matrix systems are only defined on some interval $[t,s]$, it will be useful to define a product operator between two such systems $\mathcal{T}^{[t,r]}$ and $\mathcal{T}^{[r,s]}$. To his end, let
+Because these restricted transition matrix systems are only defined on some given interval, it will be useful to define a concatenation operator between two such systems defined on adjacent intervals. To his end, for any $t,r,s\in\realsnonneg$ such that $t\leq r\leq s$, and any two restricted transition matrix systems $\mathcal{T}^{[t,r]}$ and $\mathcal{T}^{[r,s]}$, let
 \begin{equation*}
-\mathcal{T}^{[t,r]} \otimes \mathcal{T}^{[r,s]} \coloneqq \mathcal{T}^{[t,r]} \cup \mathcal{T}^{[r,s]} \cup \left\{T_\tau^rT_r^{\tau'}\,\Big\vert\,T_{\tau}^r\in\mathcal{T}^{[t,r]},\,T_r^{\tau'}\in\mathcal{T}^{[r,s]},\,\forall\tau\in[t,r]\forall\tau'\in[r,s]\right\}\,.
+\mathcal{T}^{[t,r]} \otimes \mathcal{T}^{[r,s]} \coloneqq \mathcal{T}^{[t,r]} \cup \mathcal{T}^{[r,s]} \cup \left\{T_\tau^rT_r^{\sigma}\,\Big\vert\,T_{\tau}^r\in\mathcal{T}^{[t,r]},\,T_r^{\sigma}\in\mathcal{T}^{[r,s]},\,\forall\tau\in[t,r],\,\forall\sigma\in[r,s]\right\}\,.
 \end{equation*}
 \begin{proposition}
 Consider any $t,r,s\in\realsnonneg$ such that $t\leq r\leq s$, and any two restricted transition matrix systems $\mathcal{T}^{[t,r]}$ and $\mathcal{T}^{[r,s]}$. Then,
@@ -1101,7 +1101,7 @@ Consider any $t,r,s\in\realsnonneg$ such that $t\leq r\leq s$, and any two restr
 is a restricted transition matrix system defined on $[t,s]$.
 \end{proposition}
 \begin{proof}
-*** TODO
+*** TODO, but super trivial
 \end{proof}
 
 We will now look at spaces of such restricted transition matrix systems. To this end, for any non-empty bounded set of rate matrices $\rateset$ and any $t,s\in\realsnonneg$ such that $t\leq s$, let
@@ -1120,12 +1120,12 @@ We have the following results.
 Consider any non-empty, bounded and closed set of rate matrices $\rateset$, and any $t,s\in\realsnonneg$ such that $t\leq s$. Then, the metric space $(\mathbb{T}_\rateset^{[t,s]},d)$ is complete under the metric $d$, defined as in Equation~\eqref{eq:trans_mat_system_metric}.
 \end{lemma}
 \begin{proof}
-We need to show that for any Cauchy sequence $\left\{\mathcal{T}_i\right\}_{i\in\nats}$ in $\mathbb{T}_\rateset^{[t,s]}$, it holds that $\mathcal{T}_*\coloneqq\lim_{i\to\infty}\mathcal{T}_i$ exists and satisfies $\mathcal{T}_*\in\mathbb{T}_\rateset^{[t,s]}$. Therefore, consider any Cauchy sequence $\left\{\mathcal{T}_i\right\}_{i\in\nats}$ in  $\mathbb{T}_\rateset^{[t,s]}$, meaning that
+We need to show that for any Cauchy sequence $\left\{\mathcal{T}_i^{[t,s]}\right\}_{i\in\nats}$ in $\mathbb{T}_\rateset^{[t,s]}$, it holds that $\mathcal{T}_*^{[t,s]}\coloneqq\lim_{i\to\infty}\mathcal{T}_i^{[t,s]}$ exists and satisfies $\mathcal{T}_*^{[t,s]}\in\mathbb{T}_\rateset^{[t,s]}$. Therefore, consider any Cauchy sequence $\left\{\mathcal{T}_i^{[t,s]}\right\}_{i\in\nats}$ in  $\mathbb{T}_\rateset^{[t,s]}$, meaning that
 \begin{equation*}
-(\forall\epsilon\in\realspos)(\exists N\in\nats)(\forall i,j>N)\,:\,d(\mathcal{T}_i,\mathcal{T}_j) < \epsilon\,.
+(\forall\epsilon\in\realspos)(\exists N\in\nats)(\forall i,j>N)\,:\,d(\mathcal{T}_i^{[t,s]},\mathcal{T}_j^{[t,s]}) < \epsilon\,.
 \end{equation*}
 
-We will first show that $\mathcal{T}_*\coloneqq\lim_{i\to\infty}\mathcal{T}_i$ exists.
+We will first show that $\mathcal{T}_*^{[t,s]}\coloneqq\lim_{i\to\infty}\mathcal{T}_i^{[t,s]}$ exists.
 
 *** {\bf TODO} finish this
 \end{proof}
@@ -1138,11 +1138,11 @@ We have to show that $(\mathbb{T}_\rateset^{[t,s]},d)$ is totally bounded, meani
 
 Equivalently, we need to show that for all $\epsilon\in\realspos$, there is some set
 \begin{equation*}
-\mathbb{C}_\epsilon\coloneqq \left\{\mathcal{T}_i\in\mathbb{T}_\rateset^{[t,s]}\,:\,i\in\{1,\ldots,N\}\right\}\,,
+\mathbb{C}_\epsilon\coloneqq \left\{\mathcal{T}_i^{[t,s]}\in\mathbb{T}_\rateset^{[t,s]}\,:\,i\in\{1,\ldots,N\}\right\}\,,
 \end{equation*}
 with $N\in\nats$, such that
 \begin{equation*}
-(\forall \mathcal{T}\in\mathbb{T}_\rateset^{[t,s]})(\exists \mathcal{S}\in \mathbb{C}_\epsilon)\,:\,d(\mathcal{T},\mathcal{S}) < \epsilon\,.
+(\forall \mathcal{T}^{[t,s]}\in\mathbb{T}_\rateset^{[t,s]})(\exists \mathcal{S}^{[t,s]}\in \mathbb{C}_\epsilon)\,:\,d(\mathcal{T}^{[t,s]},\mathcal{S}^{[t,s]}) < \epsilon\,.
 \end{equation*}
 
 Fix any $\epsilon\in\realspos$, and define $C\coloneqq (s-t)$. We will start by constructing $\mathbb{C}_\epsilon$. To ensure that the cover is open, choose first any $\epsilon^*<\epsilon$. Then, let
@@ -1190,11 +1190,11 @@ Because each $\mathbb{T}_i$ is finite, there are only finitely many ways in whic
 \end{equation*}
 then $\mathbb{C}_\epsilon$ contains a finite number of elements, and, due to Claim~\ref{claim:composition_restricted_trans_mat_sys_in_set}, $\mathbb{C}_\epsilon\subset \mathbb{T}_\rateset^{[t,s]}$.
 
-It remains to show that $\mathbb{C}_\epsilon$ generates an open $\epsilon$-cover of $\mathbb{T}_\rateset^{[t,s]}$. To this end, consider any $\mathcal{T}\in\mathbb{T}_\rateset^{[t,s]}$. We will show that there is some $\mathcal{S}\in \mathbb{C}_{\epsilon}$ such that $d(\mathcal{T},\mathcal{S})<\epsilon$. We start by constructing this $\mathcal{S}$.
+It remains to show that $\mathbb{C}_\epsilon$ generates an open $\epsilon$-cover of $\mathbb{T}_\rateset^{[t,s]}$. To this end, consider any $\mathcal{T}^{[t,s]}\in\mathbb{T}_\rateset^{[t,s]}$. We will show that there is some $\mathcal{S}^{[t,s]}\in \mathbb{C}_{\epsilon}$ such that $d(\mathcal{T}^{[t,s]},\mathcal{S}^{[t,s]})<\epsilon$. We start by constructing this $\mathcal{S}^{[t,s]}$.
 
-Because $\mathcal{T}\in\mathbb{T}_\rateset^{[t,s]}$, it follows that there is some corresponding $P\in\wmprocesses_\rateset$ which agrees with $\mathcal{T}$ on all transition matrices $T_q^r\in\mathcal{T}$. 
+Because $\mathcal{T}^{[t,s]}\in\mathbb{T}_\rateset^{[t,s]}$, it follows that there is some corresponding $P\in\wmprocesses_\rateset$ which agrees with $\mathcal{T}^{[t,s]}$ on all transition matrices $T_q^r\in\mathcal{T}^{[t,s]}$. 
 
-Consider any $i\in\{1,\ldots,n\}$, and the corresponding transition matrix $T_{t_{i-1}}^{t_i}\in\mathcal{T}$. Clearly, we have that $T_{t_{i-1}}^{t_i}=T_{t_{i-1}}^{(t_{i-1}+\Delta_i)}$. Therefore, and because $\Delta_i\leq\sigma(u)<\delta^*\leq\delta$, it follows from Equation~\eqref{eq:lemma_total_bounded_uniform_delta} that there is some $Q_i\in\rateset$ such that
+Consider any $i\in\{1,\ldots,n\}$, and the corresponding transition matrix $T_{t_{i-1}}^{t_i}\in\mathcal{T}^{[t,s]}$. Clearly, we have that $T_{t_{i-1}}^{t_i}=T_{t_{i-1}}^{(t_{i-1}+\Delta_i)}$. Therefore, and because $\Delta_i\leq\sigma(u)<\delta^*\leq\delta$, it follows from Equation~\eqref{eq:lemma_total_bounded_uniform_delta} that there is some $Q_i\in\rateset$ such that
 \begin{equation}\label{eq:lemma_total_bounded_full_interval_error_linear}
 \norm{T_{t_{i-1}}^{t_i} - (I+\Delta_i Q_i)} < \frac{\Delta_i\epsilon^*}{6C}\,.
 \end{equation}
@@ -1206,23 +1206,23 @@ Consider this $\widetilde{Q}_i$. Then, because $\widetilde{Q}_i\in\rateset_{\eps
 
 If we now repeat this selection for all $i\in\{1,\ldots,n\}$, we end up with a collection $\mathcal{T}_{\widetilde{Q_1}}^{[t_{0},t_1]},\ldots,\mathcal{T}_{\widetilde{Q_n}}^{[t_{n-1},t_n]}$ such that $\mathcal{T}_{\widetilde{Q_i}}^{[t_{i-1},t_i]}\in \mathbb{T}_i$ for all $i\in\{1,\ldots,n\}$. Hence, by the construction of $\mathbb{C}_{\epsilon'}$, we have that
 \begin{equation*}
-\mathcal{S}\coloneqq \mathcal{T}_{\widetilde{Q_1}}^{[t_{0},t_1]} \otimes \cdots \otimes \mathcal{T}_{\widetilde{Q_n}}^{[t_{n-1},t_n]} \in \mathbb{C}_\epsilon\,.
+\mathcal{S}^{[t,s]}\coloneqq \mathcal{T}_{\widetilde{Q_1}}^{[t_{0},t_1]} \otimes \cdots \otimes \mathcal{T}_{\widetilde{Q_n}}^{[t_{n-1},t_n]} \in \mathbb{C}_\epsilon\,.
 \end{equation*}
-It remains to show that $d(\mathcal{T},\mathcal{S})<\epsilon$. We make use of the following two claims, which are proved below.
+It remains to show that $d(\mathcal{T}^{[t,s]},\mathcal{S}^{[t,s]})<\epsilon$. We make use of the following two claims, which are proved below.
 \begin{claim}\label{claim:lemma_total_bounded_full_interval_error}
-Consider any $i\in\{1,\ldots,n\}$. Then, with $T_{t_{i-1}}^{t_i}\in\mathcal{T}$ and $S_{t_{i-1}}^{t_i}\in\mathcal{S}$, it holds that
+Consider any $i\in\{1,\ldots,n\}$. Then, with $T_{t_{i-1}}^{t_i}\in\mathcal{T}^{[t,s]}$ and $S_{t_{i-1}}^{t_i}\in\mathcal{S}^{[t,s]}$, it holds that
 \begin{equation*}
 \norm{T_{t_{i-1}}^{t_i} - S_{t_{i-1}}^{t_i}} < \frac{\Delta_i\epsilon^*}{3C} + \Delta_i\epsilon'\,.
 \end{equation*}
 \end{claim}
 \begin{claim}\label{claim:lemma_total_bounded_sub_interval_error}
-Consider any $i\in\{1,\ldots,n\}$, and any $q,r\in[t_{i-1},t_i]$ such that $q\leq r$. Then, with $T_q^r\in\mathcal{T}$ and $S_q^r\in\mathcal{S}$, it holds that
+Consider any $i\in\{1,\ldots,n\}$, and any $q,r\in[t_{i-1},t_i]$ such that $q\leq r$. Then, with $T_q^r\in\mathcal{T}^{[t,s]}$ and $S_q^r\in\mathcal{S}^{[t,s]}$, it holds that
 \begin{equation*}
 \norm{T_q^r - S_q^r} < \frac{\Delta_i\epsilon^*}{3C} + \frac{\epsilon^*}{6}\,.
 \end{equation*}
 \end{claim}
 
-We first give a bound on the difference between two transition matrices in $\mathcal{T}$ and $\mathcal{S}$, for any given time points. To this end, consider any $q,r\in[t,s]$ such that $q\leq r$, and the transition matrices $T_q^r\in\mathcal{T}$ and $S_q^r\in\mathcal{S}$. We consider three different cases; either $q$ and $r$ coincide on some interval $[t_{i-1},t_i]$, or they lie in consecutive intervals $[t_{i-1},t_i]$ and $[t_i,t_{i+1}]$, or there is at least one interval $[t_{k-1},t_k]$ such that $q<t_{k-1}$ and $r>t_k$. 
+We first give a bound on the difference between two transition matrices in $\mathcal{T}^{[t,s]}$ and $\mathcal{S}^{[t,s]}$, for any given time points. To this end, consider any $q,r\in[t,s]$ such that $q\leq r$, and the transition matrices $T_q^r\in\mathcal{T}^{[t,s]}$ and $S_q^r\in\mathcal{S}^{[t,s]}$. We consider three different cases; either $q$ and $r$ coincide on some interval $[t_{i-1},t_i]$, or they lie in consecutive intervals $[t_{i-1},t_i]$ and $[t_i,t_{i+1}]$, or there is at least one interval $[t_{k-1},t_k]$ such that $q<t_{k-1}$ and $r>t_k$. 
 
 If $q,r\in[t_{i-1},t_i]$ for some $i\in\{1,\ldots,n\}$, then it follows from Claim~\ref{claim:lemma_total_bounded_sub_interval_error} that
 \begin{equation*}
@@ -1252,11 +1252,11 @@ In summary, we have shown that for all $q,r\in[t,s]$ with $q\leq r$, it holds th
 \begin{equation*}
 \norm{T_q^r - S_q^r} < \epsilon^*\,,
 \end{equation*}
-with $T_q^r\in\mathcal{T}$ and $S_q^r\in\mathcal{S}$. Because this holds for all $q$ and $r$, it follows that
+with $T_q^r\in\mathcal{T}^{[t,s]}$ and $S_q^r\in\mathcal{S}^{[t,s]}$. Because this holds for all $q$ and $r$, it follows that
 \begin{equation*}
-d(\mathcal{T},\mathcal{S}) = \sup\{\norm{T_q^r - S_q^r}\,:\,q,r\in[t,s], q\leq r\} \leq \epsilon^* < \epsilon\,.
+d(\mathcal{T}^{[t,s]},\mathcal{S}^{[t,s]}) = \sup\{\norm{T_q^r - S_q^r}\,:\,q,r\in[t,s], q\leq r\} \leq \epsilon^* < \epsilon\,.
 \end{equation*}
-Because this holds for any $\mathcal{T}\in\mathbb{T}_\rateset^{[t,s]}$, it follows that $\mathbb{C}_\epsilon$ is a finite, open $\epsilon$-cover of $\mathbb{T}_\rateset^{[t,s]}$. Because the $\epsilon\in\realspos$ was arbitrary, we conclude that $\mathbb{T}_\rateset^{[t,s]}$ is totally bounded.
+Because this holds for any $\mathcal{T}^{[t,s]}\in\mathbb{T}_\rateset^{[t,s]}$, it follows that $\mathbb{C}_\epsilon$ is a finite, open $\epsilon$-cover of $\mathbb{T}_\rateset^{[t,s]}$. Because the $\epsilon\in\realspos$ was arbitrary, we conclude that $\mathbb{T}_\rateset^{[t,s]}$ is totally bounded.
 \end{proof}
 
 \begin{proof}[Proof of Claim~\ref{claim:composition_restricted_trans_mat_sys_in_set}]
@@ -1264,7 +1264,7 @@ Because this holds for any $\mathcal{T}\in\mathbb{T}_\rateset^{[t,s]}$, it follo
 \end{proof}
 
 \begin{proof}[Proof of Claim~\ref{claim:lemma_total_bounded_full_interval_error}]
-Consider any $i\in\{1,\ldots,n\}$. Then, with $T_{t_{i-1}}^{t_i}\in\mathcal{T}$ and $S_{t_{i-1}}^{t_i}\in\mathcal{S}$, it follows from Equation~\eqref{eq:lemma_total_bounded_full_interval_error_linear} that there is some $Q_i\in\rateset$ such that
+Consider any $i\in\{1,\ldots,n\}$. Then, with $T_{t_{i-1}}^{t_i}\in\mathcal{T}^{[t,s]}$ and $S_{t_{i-1}}^{t_i}\in\mathcal{S}^{[t,s]}$, it follows from Equation~\eqref{eq:lemma_total_bounded_full_interval_error_linear} that there is some $Q_i\in\rateset$ such that
 \begin{align*}
 \norm{T_{t_{i-1}}^{t_i} - S_{t_{i-1}}^{t_i}} &\leq \norm{T_{t_{i-1}}^{t_i} - (I+\Delta_iQ_i)} + \norm{(I+\Delta_iQ_i) - S_{t_{i-1}}^{t_i}} \\
  &\leq \norm{T_{t_{i-1}}^{t_i} - (I+\Delta_iQ_i)} + \norm{(I+\Delta_iQ_i) - (I+\Delta_i\widetilde{Q}_i)} + \norm{(I+\Delta_i\widetilde{Q}_i) - S_{t_{i-1}}^{t_i}} \\
@@ -1272,14 +1272,14 @@ Consider any $i\in\{1,\ldots,n\}$. Then, with $T_{t_{i-1}}^{t_i}\in\mathcal{T}$ 
  &= \frac{\Delta_i\epsilon^*}{6C} + \Delta_i\epsilon' + \norm{(I+\Delta_i\widetilde{Q}_i) - e^{\widetilde{Q}_i\cdot\Delta_i}} \\
  &\leq \frac{\Delta_i\epsilon^*}{6C} + \Delta_i\epsilon' + \Delta_i^2\norm{\rateset}^2\,,
 \end{align*}
-where the strict equality follows from the definition of $\mathcal{S}$, and the final inequality follows from Lemma~\ref{lemma:linearpartofexponential}. Furthermore, because $\Delta_i\leq\sigma(u)<\delta^*\leq\nicefrac{\epsilon^*}{(6C\norm{\rateset}^2)}$, we have that
+where the strict equality follows from the definition of $\mathcal{S}^{[t,s]}$, and the final inequality follows from Lemma~\ref{lemma:linearpartofexponential}. Furthermore, because $\Delta_i\leq\sigma(u)<\delta^*\leq\nicefrac{\epsilon^*}{(6C\norm{\rateset}^2)}$, we have that
 \begin{equation*}
 \norm{T_{t_{i-1}}^{t_i} - S_{t_{i-1}}^{t_i}} < \frac{\Delta_i\epsilon^*}{6C} + \Delta_i\epsilon' + \Delta_i^2\norm{\rateset}^2 < 2\frac{\Delta_i\epsilon^*}{6C} + \Delta_i\epsilon' = \frac{\Delta_i\epsilon^*}{3C} + \Delta_i\epsilon'\,.
 \end{equation*}
 \end{proof}
 
 \begin{proof}[Proof of Claim~\ref{claim:lemma_total_bounded_sub_interval_error}]
-Consider any $i\in\{1,\ldots,n\}$, and any $q,r\in[t_{i-1},t_i]$ such that $q\leq r$. Consider the transition matrices $T_q^r\in\mathcal{T}$ and $S_q^r\in\mathcal{S}$. Then, because $(r-q)\leq\Delta_i\leq\sigma(u)<\delta^*\leq\delta$, it follows from Equation~\ref{eq:lemma_total_bounded_uniform_delta} that there is some $Q\in\rateset$ such that
+Consider any $i\in\{1,\ldots,n\}$, and any $q,r\in[t_{i-1},t_i]$ such that $q\leq r$. Consider the transition matrices $T_q^r\in\mathcal{T}^{[t,s]}$ and $S_q^r\in\mathcal{S}^{[t,s]}$. Then, because $(r-q)\leq\Delta_i\leq\sigma(u)<\delta^*\leq\delta$, it follows from Equation~\ref{eq:lemma_total_bounded_uniform_delta} that there is some $Q\in\rateset$ such that
 \begin{align*}
 \norm{T_q^r - S_q^r} &< \frac{(r-q)\epsilon^*}{6C} + \norm{(I+(r-q)Q) - S_q^r} \\
  &\leq \frac{(r-q)\epsilon^*}{6C} + \norm{(I+(r-q)Q) - (I+(r-q)\widetilde{Q}_i)} + \norm{(I+(r-q)\widetilde{Q}_i) - S_q^r} \\
