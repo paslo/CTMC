@@ -36,7 +36,7 @@
 \newtheorem{remark}{Remark}
 \newtheorem*{remark*}{Remark}
 
-\newtheorem{claim}{Claim}
+\newtheorem{claim}{Claim}[theorem]
 \newtheorem*{claim*}{Claim}
 
 \algrenewcommand\algorithmicrequire{\textbf{Input:}}
@@ -98,6 +98,12 @@
 \newcommand{\argmin}{\arg\min}
 
 \newcommand{\exampleend}{\hfill$\Diamond$}
+
+\def\presuper#1#2%
+  {\mathop{}%
+   \mathopen{\vphantom{#2}}^{#1}%
+   \kern-\scriptspace%
+   #2}
 
 \title{Imprecise Continuous-Time Markov Chains}
 
@@ -1108,13 +1114,28 @@ We will now look at spaces of such restricted transition matrix systems. To this
 \begin{equation*}
 \mathbb{T}_\rateset^{[t,s]} \coloneqq \left\{\mathcal{T}_P^{[t,s]}\,:\,P\in\wmprocesses_\rateset\right\}\,.
 \end{equation*}
+
+*** blabla rewrite
 We next endow this space $\mathbb{T}_\rateset^{[t,s]}$ with the following metric $d$,  defined for all $\mathcal{T}^{[t,s]},\mathcal{S}^{[t,s]}\in\mathbb{T}_\rateset^{[t,s]}$ as
 \begin{equation}\label{eq:trans_mat_system_metric}
 d(\mathcal{T}^{[t,s]},\mathcal{S}^{[t,s]}) \coloneqq \sup\left\{\norm{T_q^r - S_q^r}\,:\,q,r\in[t,s], q\leq r\right\}\,,
 \end{equation}
 where, for all $q,r\in[t,s]$, it is understood that $T_q^r\in\mathcal{T}^{[t,s]}$ and $S_q^r\in\mathcal{S}^{[t,s]}$.
 
+For any sequence $\left\{\mathcal{T}_i^{[t,s]}\right\}_{i\in\nats}$ of restricted transition matrix systems, we define the limit---if it exists---as the family $\mathcal{T}_*^{[t,s]}\coloneqq\lim_{i\to\infty}\mathcal{T}_i^{[t,s]}$ of matrices defined for all $q,r\in[t,s]$ as
+\begin{equation*}
+\presuper{*}T_q^r \coloneqq \lim_{i\to\infty} \presuper{i}T_q^r\,,
+\end{equation*}
+where, for all $i\in\nats$, it is understood that $\presuper{i}T_q^r\in\mathcal{T}_i^{[t,s]}$.
+
 We have the following results.
+
+\begin{lemma}
+Consider any Cauchy sequence $\left\{\mathcal{T}_i^{[t,s]}\right\}_{i\in\nats}$ of restricted transition matrix systems. Then, the limit $\mathcal{T}_*^{[t,s]}\coloneqq\lim_{i\to\infty}\mathcal{T}_i^{[t,s]}$ exists, and is a restricted transition matrix system. Furthermore, if for all $i\in\nats$ it holds that $\mathcal{T}_i^{[t,s]}$ is well-behaved, then $\mathcal{T}_*^{[t,s]}$ is also well-behaved.
+\end{lemma}
+\begin{proof}
+**** I have this written down.
+\end{proof}
 
 \begin{lemma}
 Consider any non-empty, bounded and closed set of rate matrices $\rateset$, and any $t,s\in\realsnonneg$ such that $t\leq s$. Then, the metric space $(\mathbb{T}_\rateset^{[t,s]},d)$ is complete under the metric $d$, defined as in Equation~\eqref{eq:trans_mat_system_metric}.
@@ -1125,9 +1146,11 @@ We need to show that for any Cauchy sequence $\left\{\mathcal{T}_i^{[t,s]}\right
 (\forall\epsilon\in\realspos)(\exists N\in\nats)(\forall i,j>N)\,:\,d(\mathcal{T}_i^{[t,s]},\mathcal{T}_j^{[t,s]}) < \epsilon\,.
 \end{equation*}
 
-We will first show that $\mathcal{T}_*^{[t,s]}\coloneqq\lim_{i\to\infty}\mathcal{T}_i^{[t,s]}$ exists.
+Because the sequence $\left\{\mathcal{T}_i^{[t,s]}\right\}_{i\in\nats}$ is Cauchy, it follows from Lemma~{\bf REF} that the limit $\mathcal{T}_*^{[t,s]}$ exists, and is a restricted transition matrix system. Furthermore, because for all $i\in\nats$ it holds that $\mathcal{T}_i^{[t,s]}\in\mathbb{T}_\rateset^{[t,s]}$, we have that each $\mathcal{T}_i^{[t,s]}$ is well-behaved. Therefore, by Lemma~{\bf REF}, $\mathcal{T}_*^{[t,s]}$ is also well-behaved.
 
-*** {\bf TODO} finish this
+It remains to show that $\mathcal{T}_*^{[t,s]}\in\mathbb{T}_\rateset^{[t,s]}$.
+
+*** I have this written down.
 \end{proof}
 
 \begin{lemma}
