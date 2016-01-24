@@ -1122,6 +1122,12 @@ d(\mathcal{T}^{[t,s]},\mathcal{S}^{[t,s]}) \coloneqq \sup\left\{\norm{T_q^r - S_
 \end{equation}
 where, for all $q,r\in[t,s]$, it is understood that $T_q^r\in\mathcal{T}^{[t,s]}$ and $S_q^r\in\mathcal{S}^{[t,s]}$.
 
+For any sequence $\left\{\mathcal{T}_i^{[t,s]}\right\}_{i\in\nats}$ of restricted transition matrix systems, we say that this sequence is \emph{uniformly well-behaved} if there is some $B\in\realspos$ such that, for all $i\in\nats$ and all $r\in[t,s]$, it holds that
+\begin{equation*}
+\limsup_{\Delta\to0^+}\norm{\frac{1}{\Delta}\left(\presuper{i}T_r^{r+\Delta}-I\right)} < B\,,\quad\text{and,}\quad \limsup_{\Delta\to0^+}\norm{\frac{1}{\Delta}\left(\presuper{i}T_{r-\Delta}^{r}-I\right)} < B\,.
+\end{equation*}
+Here, it is understood that $\presuper{i}T_r^{r+\Delta},\presuper{i}T_{r-\Delta}^{r}\in\mathcal{T}_i^{[t,s]}$ for all $i\in\nats$.
+
 We have the following results.
 
 \begin{lemma}
@@ -1131,7 +1137,7 @@ Consider any $t,s\in\realsnonneg$ with $t\leq s$, and any Cauchy sequence $\left
 \end{equation*}
 where it is understood that $\presuper{i}T_q^r\in\mathcal{T}_i^{[t,s]}$ for all $i\in\nats$.
 
-Then, $\mathcal{T}_*^{[t,s]}$ exists, is a restricted transition matrix system defined on $[t,s]$, and $\mathcal{T}_*^{[t,s]}=\lim_{i\to\infty}\mathcal{T}_i^{[t,s]}$. Furthermore, if for all $i\in\nats$ it holds that $\mathcal{T}_i^{[t,s]}$ is well-behaved, then $\mathcal{T}_*^{[t,s]}$ is also well-behaved.
+Then, $\mathcal{T}_*^{[t,s]}$ exists, is a restricted transition matrix system defined on $[t,s]$, and $\mathcal{T}_*^{[t,s]}=\lim_{i\to\infty}\mathcal{T}_i^{[t,s]}$. Furthermore, if $\left\{\mathcal{T}_i^{[t,s]}\right\}_{i\in\nats}$ is uniformly well-behaved, then $\mathcal{T}_*^{[t,s]}$ is well-behaved.
 \end{lemma}
 \begin{proof}
 By assumption, the sequence $\left\{\mathcal{T}_i^{[t,s]}\right\}_{i\in\nats}$ is Cauchy, meaning that
@@ -1190,7 +1196,7 @@ Let $\epsilon'\coloneqq\nicefrac{\epsilon}{3}$, and choose any such $q,r\in[t,s]
 \begin{equation*}
 \norm{\presuper{*}T_q^r - \presuper{j}T_q^r} < \frac{\epsilon}{3}\,.
 \end{equation*}
-Putting this together, we find that
+Consider this $j$. Putting this together, we find that
 \begin{align*}
 \epsilon &< \norm{\presuper{*}T_q^r - \presuper{i}T_q^r} + \frac{\epsilon}{3} \\
  &\leq \norm{\presuper{*}T_q^r - \presuper{j}T_q^r} + \norm{\presuper{j}T_q^r - \presuper{i}T_q^r} + \frac{\epsilon}{3} \\
@@ -1200,7 +1206,53 @@ Putting this together, we find that
 \end{align*}
 Hence, we have found a contradiction, and therefore $\mathcal{T}_*^{[t,s]}=\lim_{i\to\infty}\mathcal{T}_i^{[t,s]}$.
 
-We finally show that if each $\mathcal{T}_i^{[t,s]}$ is well-behaved, that then $\mathcal{T}_*^{[t,s]}$ is also well-behaved.
+We finally show that if  $\left\{\mathcal{T}_i^{[t,s]}\right\}_{i\in\nats}$ is uniformly well-behaved, that then $\mathcal{T}_*^{[t,s]}$ is well-behaved. Suppose \emph{ex absurdo} that this does not hold. Then, it must hold that, for some $r\in[t,s]$, either
+\begin{equation*}
+\limsup_{\Delta\to0^+}\norm{\frac{1}{\Delta}\left(\presuper{*}T_r^{r+\Delta}-I\right)} \nless \infty\,,\quad\text{or,}\quad \limsup_{\Delta\to0^+}\norm{\frac{1}{\Delta}\left(\presuper{*}T_{r-\Delta}^{r}-I\right)} \nless \infty\,.
+\end{equation*}
+We only give the proof for the first case; the proof for the second case is completely analogous. Therefore, in this case, it holds that
+\begin{equation*}
+(\forall B\in\realsnonneg)(\forall \delta\in\realspos)(\exists \Delta\in(0,\delta))\,:\,\norm{\frac{1}{\Delta}\left(\presuper{*}T_r^{r+\Delta}-I\right)} \geq B\,.
+\end{equation*}
+Consider now any sequence $\{B_k\}_{k\in\nats}$ in $\realsnonneg$ such that $\{B_k\}_{k\in\nats}\to+\infty$. For all $k\in\nats$, this implies the existence of some $\Delta_k\in\realspos$ such that $\Delta_k<\Delta_{k-1}$, with $\Delta_0\coloneqq 1$, and for which
+\begin{equation*}
+\norm{\frac{1}{\Delta_k}\left(\presuper{*}T_r^{r+\Delta_k}-I\right)} \geq B_k\,.
+\end{equation*}
+Consider this sequence $\left\{\Delta_k\right\}_{k\in\nats}$. Clearly, we have that $\left\{\Delta_k\right\}_{k\in\nats}\to0^+$, and,
+\begin{equation*}
+(\forall B\in\realspos)(\exists n\in\nats)(\forall k>n)\,:\,\norm{\frac{1}{\Delta_k}\left(\presuper{*}T_r^{r+\Delta_k}-I\right)} > B\,.
+\end{equation*}
+
+Because the sequence $\left\{\mathcal{T}_i^{[t,s]}\right\}_{i\in\nats}$ is uniformly well-behaved, there must be some $B^*\in\realspos$ such that, for all $i\in\nats$, it holds that
+\begin{equation*}
+(\exists\delta_i\in\realspos)(\forall\Delta\in(0,\delta_i))\,:\,\norm{\frac{1}{\Delta}\left(\presuper{i}T_r^{r+\Delta}-I\right)} < B^*\,.
+\end{equation*}
+For this $B^*$, we have that
+\begin{equation*}
+(\exists n\in\nats)(\forall k>n)\,:\,\norm{\frac{1}{\Delta_k}\left(\presuper{*}T_r^{r+\Delta_k}-I\right)} > 2B^*\,.
+\end{equation*}
+Consider this $n$.
+
+Then, because $\mathcal{T}_*^{[t,s]}=\lim_{i\to\infty}\mathcal{T}_i^{[t,s]}$, there must be some $i\in\nats$ such that 
+\begin{equation*}
+d(\mathcal{T}_*^{[t,s]},\mathcal{T}_i^{[t,s]})<B^*\,.
+\end{equation*}
+Consider this $i$. Then, because $\{\Delta_k\}_{k\in\nats}\to0^+$, there must be some $k\in\nats$ such that $k>n$ and $\Delta_k <\delta_i$\,. Consider this $k$.
+
+Putting this together, we have found that
+\begin{align*}
+2B^* &< \norm{\frac{1}{\Delta_k}\left(\presuper{*}T_r^{r+\Delta_k}-I\right)} \\
+ &\leq \norm{\frac{1}{\Delta_k}\left(\presuper{*}T_r^{r+\Delta_k}-I\right) - \frac{1}{\Delta_k}\left(\presuper{i}T_r^{r+\Delta_k}-I\right)} + \norm{\frac{1}{\Delta_k}\left(\presuper{i}T_r^{r+\Delta_k}-I\right)} \\
+ &< \Delta_k d(\mathcal{T}_*^{[t,s]},\mathcal{T}_i^{[t,s]}) + B^* \\
+ &< \Delta_0 d(\mathcal{T}_*^{[t,s]},\mathcal{T}_i^{[t,s]}) + B^* \\
+ &= d(\mathcal{T}_*^{[t,s]},\mathcal{T}_i^{[t,s]}) + B^* \\
+ &< B^* + B^*\,.
+\end{align*}
+Hence, we have found a contradiction. Similarly, if instead
+\begin{equation*}
+\limsup_{\Delta\to0^+} \norm{\frac{1}{\Delta}\left(\presuper{*}T_{r-\Delta}^{r}-I\right)} \nless \infty\,,
+\end{equation*}
+we find a contradiction using a completely analogous argument. Therefore, we conclude that $\mathcal{T}_*^{[t,s]}$ is well-behaved.
 \end{proof}
 
 \begin{lemma}
