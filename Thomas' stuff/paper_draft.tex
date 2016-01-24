@@ -1259,16 +1259,54 @@ we find a contradiction using a completely analogous argument. Therefore, we con
 Consider any non-empty, bounded and closed set of rate matrices $\rateset$, and any $t,s\in\realsnonneg$ such that $t\leq s$. Then, the metric space $(\mathbb{T}_\rateset^{[t,s]},d)$ is complete under the metric $d$, defined as in Equation~\eqref{eq:trans_mat_system_metric}.
 \end{lemma}
 \begin{proof}
-We need to show that for any Cauchy sequence $\left\{\mathcal{T}_i^{[t,s]}\right\}_{i\in\nats}$ in $\mathbb{T}_\rateset^{[t,s]}$, it holds that $\mathcal{T}_*^{[t,s]}\coloneqq\lim_{i\to\infty}\mathcal{T}_i^{[t,s]}$ exists and satisfies $\mathcal{T}_*^{[t,s]}\in\mathbb{T}_\rateset^{[t,s]}$. Therefore, consider any Cauchy sequence $\left\{\mathcal{T}_i^{[t,s]}\right\}_{i\in\nats}$ in  $\mathbb{T}_\rateset^{[t,s]}$, meaning that
+We need to show that for any Cauchy sequence $\left\{\mathcal{T}_i^{[t,s]}\right\}_{i\in\nats}$ in $\mathbb{T}_\rateset^{[t,s]}$, it holds that $\mathcal{T}_*^{[t,s]}\coloneqq\lim_{i\to\infty}\mathcal{T}_i^{[t,s]}$ exists and satisfies $\mathcal{T}_*^{[t,s]}\in\mathbb{T}_\rateset^{[t,s]}$. Therefore, consider any Cauchy sequence $\left\{\mathcal{T}_i^{[t,s]}\right\}_{i\in\nats}$ in  $\mathbb{T}_\rateset^{[t,s]}$.
+
+Because this sequence $\left\{\mathcal{T}_i^{[t,s]}\right\}_{i\in\nats}$ is Cauchy, it follows from Lemma~{\bf REF} that the limit $\mathcal{T}_*^{[t,s]}$ exists, and is a restricted transition matrix system. Furthermore, because for all $i\in\nats$ it holds that $\mathcal{T}_i^{[t,s]}\in\mathbb{T}_\rateset^{[t,s]}$, we have that each $\mathcal{T}_i^{[t,s]}$ is well-behaved. Therefore, by Lemma~{\bf REF}, $\mathcal{T}_*^{[t,s]}$ is also well-behaved. ***** {\bf TODO} actually have to show that it is uniformly well-behaved, but that's clearly true
+
+It remains to show that $\mathcal{T}_*^{[t,s]}\in\mathbb{T}_\rateset^{[t,s]}$. To this end, consider any $Q\in\rateset$, and let $\mathcal{T}_Q$ be the transition matrix system corresponding to this $Q$, defined as in Definition~\ref{def:systemfromQ}. Let 
 \begin{equation*}
-(\forall\epsilon\in\realspos)(\exists N\in\nats)(\forall i,j>N)\,:\,d(\mathcal{T}_i^{[t,s]},\mathcal{T}_j^{[t,s]}) < \epsilon\,.
+\mathcal{T}_*\coloneqq \mathcal{T}_Q^{[0,t]}\otimes \mathcal{T}_*^{[t,s]} \otimes \mathcal{T}_Q^{[s,\infty)}\,.
 \end{equation*}
+Then, clearly, $\mathcal{T}_*$ is a transition matrix system, and because $\mathcal{T}_Q$ and $\mathcal{T}_*^{[t,s]}$ are well-behaved, $\mathcal{T}_*$ is also well-behaved. Therefore, and due to Theorem~\ref{theo:uniqueMarkovchain}, there is some $P_*\in\wmprocesses$ such that $\mathcal{T}_{P_*}=\mathcal{T}_*$. We will show that $P_*\in\wmprocesses_\rateset$, which then implies that $\mathcal{T}_{P_*}^{[t,s]}=\mathcal{T}_*^{[t,s]}\in\mathbb{T}_\rateset^{[t,s]}$.
 
-Because the sequence $\left\{\mathcal{T}_i^{[t,s]}\right\}_{i\in\nats}$ is Cauchy, it follows from Lemma~{\bf REF} that the limit $\mathcal{T}_*^{[t,s]}$ exists, and is a restricted transition matrix system. Furthermore, because for all $i\in\nats$ it holds that $\mathcal{T}_i^{[t,s]}\in\mathbb{T}_\rateset^{[t,s]}$, we have that each $\mathcal{T}_i^{[t,s]}$ is well-behaved. Therefore, by Lemma~{\bf REF}, $\mathcal{T}_*^{[t,s]}$ is also well-behaved.
+Suppose \emph{ex absurdo} that $P_*\notin\wmprocesses_\rateset$. Then, there must be some $r\in\realsnonneg$ such that $\smash{\overline{\partial}}\presuper{*}T_r^r\nsubseteq\rateset$. Therefore, and because $\smash{\overline{\partial}}\presuper{*}T_r^r$ is non-empty, there must be some $Q_*\in \smash{\overline{\partial}}\presuper{*}T_r^r$ such that $Q_*\notin\rateset$. 
 
-It remains to show that $\mathcal{T}_*^{[t,s]}\in\mathbb{T}_\rateset^{[t,s]}$.
 
-*** I have this written down.
+Because $Q_*\in \smash{\overline{\partial}}\presuper{*}T_r^r$, we have that either $Q_*\in \smash{\overline{\partial}}_+\presuper{*}T_r^r$, or $Q_*\in \smash{\overline{\partial}}_-\presuper{*}T_r^r$. We only show that $Q_*\in \smash{\overline{\partial}}_+\presuper{*}T_r^r$ leads to a contradiction; the proof for $Q_*\in \smash{\overline{\partial}}_-\presuper{*}T_r^r$ is completely analogous. 
+
+Therefore, suppose that $Q_*\in \smash{\overline{\partial}}_+\presuper{*}T_r^r$. Because for all $r<t$ and $r>s$ it holds that $\smash{\overline{\partial}}_+\presuper{*}T_r^r=\{Q\}\subseteq\rateset$, we clearly have that $r\in[t,s]$. Furthermore, because $Q_*\in \smash{\overline{\partial}}_+\presuper{*}T_r^r$, by Equation~\eqref{eq:rightouterderivative}, this implies the existence of a sequence $\{\Delta_k\}_{k\in\nats}\to0^+$ such that
+\begin{equation}\label{eq:lemma_transmatsystem_complete_limit_rate}
+Q_* = \lim_{k\to\infty}\frac{1}{\Delta_k}\left(\presuper{*}T_r^{r+\Delta_k} - I\right)\,.
+\end{equation}
+
+Now, consider any $i\in\nats$, and the corresponding restricted transition matrix system $\mathcal{T}_i^{[t,s]}$. Define $\epsilon_i\coloneqq d(\mathcal{T}_*^{[t,s]},\mathcal{T}_i^{[t,s]})$. Because $\mathcal{T}_i^{[t,s]}$ corresponds to some Markov chain $P_i\in\wmprocesses_\rateset$, by Proposition~\ref{prop:outerderivativebehaveslikelimit}, we have that
+\begin{equation*}
+(\exists \delta_i\in\realspos)(\forall \Delta\in(0,\delta_i))(\exists Q_i\in\rateset)\,:\,\norm{\frac{\presuper{i}T_r^{r+\Delta} - I}{\Delta} - Q_i} < \epsilon_i\,.
+\end{equation*}
+Consider this $\delta_i$. Due to Equation~\eqref{eq:lemma_transmatsystem_complete_limit_rate}, there must be some $n_i\in\nats$ such that, for all $k>n_i$, it holds that
+\begin{equation*}
+\norm{\frac{\presuper{*}T_r^{r+\Delta_k} - I}{\Delta_k} - Q_*} < \epsilon_i\,.
+\end{equation*}
+Consider this $n_i$. Finally, because $\{\Delta_k\}_{k\in\nats}\to0^+$, there must be some $k_i\in\nats$ such that $k_i>n_i$, and for which $\Delta_{k_i}<\min\{\delta_i,1\}$. Consider this $k_i$. Then, because $\Delta_{k_i}<\delta_i$, there must be some $Q_i\in\rateset$ such that
+\begin{equation*}
+\norm{\frac{\presuper{i}T_r^{r+\Delta_{k_i}} - I}{\Delta_{k_i}} - Q_i} < \epsilon_i\,.
+\end{equation*}
+Consider this $Q_i$. Putting this together, we have found a rate matrix $Q_i\in\rateset$, such that
+\begin{align*}
+\norm{Q_i - Q_*} &\leq \norm{\frac{\presuper{i}T_r^{r+\Delta_{k_i}} - I}{\Delta_{k_i}} - Q_i} + \norm{\frac{\presuper{*}T_r^{r+\Delta_{k_i}} - I}{\Delta_{k_i}} - Q_*} + \norm{\frac{\presuper{i}T_r^{r+\Delta_{k_i}} - I}{\Delta_{k_i}} - \frac{\presuper{*}T_r^{r+\Delta_{k_i}} - I}{\Delta_{k_i}}} \\
+ &< \epsilon_i + \epsilon_i + \Delta_{k_i}d(\mathcal{T}_*^{[t,s]},\mathcal{T}_i^{[t,s]}) \\
+ &< 2\epsilon_i + d(\mathcal{T}_*^{[t,s]},\mathcal{T}_i^{[t,s]})\,.
+\end{align*}
+where the last inequality used the fact that $\Delta_{k_i}<1$. Therefore, and by the definition of $\epsilon_i$, we have that
+\begin{equation}\label{eq:lemma_transmatsystem_complete_rate_sequence_converges}
+\norm{Q_i - Q_*} < 3d(\mathcal{T}_*^{[t,s]},\mathcal{T}_i^{[t,s]})\,.
+\end{equation}
+
+If we now repeat this selection for all $i\in\nats$, we end up with a sequence $\{Q_i\}_{i\in\nats}$ in $\rateset$. Furthermore, because $\mathcal{T}_*^{[t,s]}=\lim_{i\to\infty}\mathcal{T}_i^{[t,s]}$, it clearly follows from Equation~\eqref{eq:lemma_transmatsystem_complete_rate_sequence_converges} that $Q_*=\lim_{i\to\infty} Q_i$. Because this sequence $\{Q_i\}_{i\in\nats}$ is in $\rateset$, and because $\rateset$ is closed, we must therefore have that $Q_*\in\rateset$. 
+
+This contradicts our earlier statement that $Q_*\notin\rateset$, and therefore $Q_*\notin\smash{\overline{\partial}}_+\presuper{*}T_r^r$. A completely analogous argument shows that $Q_*\in\smash{\overline{\partial}}_-\presuper{*}T_r^r$ also leads to a contradiction. Therefore, we have that $\smash{\overline{\partial}}\presuper{*}T_r^r\subseteq\rateset$ for all $r\in\realsnonneg$, and hence $P_*\in\wmprocesses_\rateset$. Hence, we find that indeed $\mathcal{T}_*^{[t,s]}=\mathcal{T}_{P_*}^{[t,s]}\in\mathbb{T}_\rateset^{[t,s]}$.
+
+Therefore, and because the Cauchy sequence $\left\{\mathcal{T}_i^{[t,s]}\right\}_{i\in\nats}$ in $\mathbb{T}_\rateset^{[t,s]}$ was arbitrary, we conclude that $\mathbb{T}_\rateset^{[t,s]}$ is complete.
 \end{proof}
 
 \begin{lemma}
