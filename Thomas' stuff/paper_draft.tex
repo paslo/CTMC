@@ -746,7 +746,7 @@ P(X_s=y\vert X_{t}=x)=P(X_s=y\vert X_t=x, X_{t_0}=x_{0}, \dots, X_{t_n}=x_{n}).
 A stochastic process that satisfies this property is called a \emph{Markov chain}. We denote the set of all Markov chains by $\mprocesses$ and use $\wmprocesses$ to refer to the subset that only contains the well-behaved Markov chains.
 \end{definition}
 
-\subsection{Transition Matrix Systems}
+\subsection{Transition Matrix Systems}\label{sec:trans_mat_systems}
 
 We know from Proposition~\ref{prop:stochasticprocess:simpleproperties} that the transition matrices of a stochastic process---and therefore also, in particular, of a Markov chain---satisfy a number of simple properties. For the specific case of a Markov chain $P\in\mprocesses$, the family of transition matrices $\mathcal{T}_P$ also satisfies an additional property---see Equation~\eqref{eq:transmatrixproduct} below. Whenever this is the case, we will call such a family of transition matrices a transition matrix system.
 
@@ -1095,34 +1095,56 @@ This is immediate from Definition~\ref{def:lower_exp} and Proposition \ref{prop:
 
 \subsection{Compactness of Space of Transition Matrix Systems}
 
-Recall from Proposition~\ref{prop:Markovhassystem} that for all $P\in\wmprocesses$, there is a well-behaved transition matrix system $\mathcal{T}_P$ corresponding to this $P$. For any $t,s\in\realsnonneg$ such that $t\leq s$, let $\mathcal{T}_P^{[t,s]}$ be the restriction of $\mathcal{T}_P$ to the interval $[t,s]$. That is, $\mathcal{T}_P^{[t,s]}$ contains all transition matrices $T_q^r\in\mathcal{T}_P$ such that $q,r\in[t,s]$ with $q\leq r$.
+Recall from Section~\ref{sec:trans_mat_systems} that a transition matrix system $\mathcal{T}$ is a family of transition matrices $T_t^s$, defined for all $t,s\in\realsnonneg$ for which $t\leq s$. In particular, such a family of matrices satisfies $T_t^t=I$ for all $t\in\realsnonneg$, and $T_t^s=T_t^rT_r^s$ for all $t,r,s\in\realsnonneg$ with $t\leq r\leq s$.
+
+We will now consider restrictions of transition matrix systems to some specified interval of $\realsnonneg$. In particular, for any transition matrix system $\mathcal{T}$ and any $t,s\in\realsnonneg$, let
+\begin{equation*}
+\mathcal{T}^{[t,s]} \coloneqq \left\{T_q^r\in\mathcal{T}\,:\,q,r\in[t,s],\, q\leq r\right\}\,.
+\end{equation*}
+We call such a family $\mathcal{T}^{[t,s]}$ a \emph{restricted transition matrix system}.
+
+%Recall from Section~\ref{sec:trans_mat_systems} that for all $P\in\wmprocesses$, there is a well-behaved transition matrix system $\mathcal{T}_P$ corresponding to this $P$. For any $t,s\in\realsnonneg$ such that $t\leq s$, let $\mathcal{T}_P^{[t,s]}$ be the restriction of $\mathcal{T}_P$ to the interval $[t,s]$. That is, $\mathcal{T}_P^{[t,s]}$ contains all transition matrices $T_q^r\in\mathcal{T}_P$ such that $q,r\in[t,s]$ with $q\leq r$.
 
 Because these restricted transition matrix systems are only defined on some given interval, it will be useful to define a concatenation operator between two such systems defined on adjacent intervals. To his end, for any $t,r,s\in\realsnonneg$ such that $t\leq r\leq s$, and any two restricted transition matrix systems $\mathcal{T}^{[t,r]}$ and $\mathcal{T}^{[r,s]}$, let
-\begin{equation*}
-\mathcal{T}^{[t,r]} \otimes \mathcal{T}^{[r,s]} \coloneqq \mathcal{T}^{[t,r]} \cup \mathcal{T}^{[r,s]} \cup \left\{T_\tau^rT_r^{\sigma}\,\Big\vert\,T_{\tau}^r\in\mathcal{T}^{[t,r]},\,T_r^{\sigma}\in\mathcal{T}^{[r,s]},\,\forall\tau\in[t,r],\,\forall\sigma\in[r,s]\right\}\,.
-\end{equation*}
+\begin{align*}
+\mathcal{T}^{[t,r]} \otimes \mathcal{T}^{[r,s]} \coloneqq &\mathcal{T}^{[t,r]} \cup \mathcal{T}^{[r,s]} \\
+ &\quad \cup \left\{T_\tau^\sigma\coloneqq T_\tau^rT_r^{\sigma}\,\Big\vert\,T_{\tau}^r\in\mathcal{T}^{[t,r]},\,T_r^{\sigma}\in\mathcal{T}^{[r,s]},\,\forall\tau\in[t,r],\,\forall\sigma\in[r,s]\right\}\,.
+\end{align*}
 \begin{proposition}
 Consider any $t,r,s\in\realsnonneg$ such that $t\leq r\leq s$, and any two restricted transition matrix systems $\mathcal{T}^{[t,r]}$ and $\mathcal{T}^{[r,s]}$. Then,
 \begin{equation*}
 \mathcal{T}^{[t,s]} \coloneqq \mathcal{T}^{[t,r]}\otimes \mathcal{T}^{[r,s]}
 \end{equation*}
-is a restricted transition matrix system defined on $[t,s]$.
+is a restricted transition matrix system defined on $[t,s]$. Furthermore, if both $\mathcal{T}^{[t,r]}$ and $\mathcal{T}^{[r,s]}$ are well behaved, then $\mathcal{T}^{[t,s]}$ is also well-behaved.
 \end{proposition}
 \begin{proof}
-*** TODO, but super trivial
+Clearly, $\mathcal{T}^{[t,s]}$ is a family of transition matrices, and in particular, for all $\tau,\sigma\in[t,s]$ such that $\tau\leq \sigma$, there is a transition matrix $T_\tau^\sigma\in\mathcal{T}^{[t,s]}$. Furthermore, for all $q\in[t,s]$, we have that either $q\in[t,r]$ or $q\in[r,s]$. In either case, we have that $T_q^q=I$, because either $T_q^q\in\mathcal{T}^{[t,r]}$ or $T_q^q\in\mathcal{T}^{[r,s]}$. It remains to show that for all $\tau,q,\sigma\in[t,s]$ with $\tau\leq q\leq\sigma$, it holds that
+\begin{equation*}
+T_\tau^\sigma = T_\tau^qT_q^\sigma\,.
+\end{equation*}
+If both $\tau,\sigma\in[t,r]$ or if both $\tau,\sigma\in[r,s]$, this clearly holds. Therefore, suppose that $\tau\in[t,r]$ and $\sigma\in[r,s]$. Suppose furthermore that $q\in[t,r]$. Then, from the definition of the concatenation operator, we have that $T_q^\sigma=T_q^rT_r^\sigma$. Because $\tau,q,r\in[t,r]$, we know that $T_\tau^qT_q^r=T_\tau^r$, and hence, by the definition of the concatenation operator,
+\begin{equation*}
+T_\tau^qT_q^\sigma = T_\tau^qT_q^rT_r^\sigma = T_\tau^rT_r^\sigma = T_\tau^\sigma\,.
+\end{equation*}
+An exactly analogous argument proves the case for $q\in[r,s]$. Therefore, we conclude that $\mathcal{T}^{[t,s]}$ is a restricted transition matrix system.
+
+It remains to show that if $\mathcal{T}^{[t,r]}$ and $\mathcal{T}^{[r,s]}$ are both well-behaved, that then $\mathcal{T}^{[t,s]}$ is also well-behaved. We need to show that for all $q\in[t,s]$, it holds that
+\begin{equation*}
+\limsup_{\Delta\to0^+}\norm{\frac{1}{\Delta}\left(T_q^{q+\Delta} - I\right)} < +\infty,\quad\text{and,}\quad \limsup_{\Delta\to0^+}\norm{\frac{1}{\Delta}\left(T_{q-\Delta}^{q} - I\right)} < +\infty\,.
+\end{equation*}
+Because this clearly holds for all $q\in[t,r)$ and all $q\in(r,s]$, the interesting case is to show that this holds for $q=r$. However, for all $\Delta\in\realspos$ we have that $T_r^{r+\Delta}\in\mathcal{T}^{[r,s]}$, and $T_{r-\Delta}^{r}\in\mathcal{T}^{[t,r]}$. Because both $\mathcal{T}^{[t,r]}$ and $\mathcal{T}^{[r,s]}$ are well-behaved, we find that $\mathcal{T}^{[t,s]}$ is also well-behaved at $q=r$. Hence, $\mathcal{T}^{[t,s]}$ is well-behaved.
 \end{proof}
+
+For any two restricted transition matrix systems $\mathcal{T}^{[t,s]}$ and $\mathcal{S}^{[t,s]}$ defined on the same interval $[t,s]$, we define a metric $d$ as
+\begin{equation}\label{eq:trans_mat_system_metric}
+d(\mathcal{T}^{[t,s]},\mathcal{S}^{[t,s]}) \coloneqq \sup\left\{\norm{T_q^r - S_q^r}\,:\,q,r\in[t,s], q\leq r\right\}\,,
+\end{equation}
+where, for all $q,r\in[t,s]$, it is understood that $T_q^r\in\mathcal{T}^{[t,s]}$ and $S_q^r\in\mathcal{S}^{[t,s]}$.
 
 We will now look at spaces of such restricted transition matrix systems. To this end, for any non-empty bounded set of rate matrices $\rateset$ and any $t,s\in\realsnonneg$ such that $t\leq s$, let
 \begin{equation*}
 \mathbb{T}_\rateset^{[t,s]} \coloneqq \left\{\mathcal{T}_P^{[t,s]}\,:\,P\in\wmprocesses_\rateset\right\}\,.
 \end{equation*}
-
-*** blabla rewrite
-We next endow this space $\mathbb{T}_\rateset^{[t,s]}$ with the following metric $d$,  defined for all $\mathcal{T}^{[t,s]},\mathcal{S}^{[t,s]}\in\mathbb{T}_\rateset^{[t,s]}$ as
-\begin{equation}\label{eq:trans_mat_system_metric}
-d(\mathcal{T}^{[t,s]},\mathcal{S}^{[t,s]}) \coloneqq \sup\left\{\norm{T_q^r - S_q^r}\,:\,q,r\in[t,s], q\leq r\right\}\,,
-\end{equation}
-where, for all $q,r\in[t,s]$, it is understood that $T_q^r\in\mathcal{T}^{[t,s]}$ and $S_q^r\in\mathcal{S}^{[t,s]}$.
 
 For any sequence $\left\{\mathcal{T}_i^{[t,s]}\right\}_{i\in\nats}$ of restricted transition matrix systems, we say that this sequence is \emph{uniformly well-behaved} if there is some $B\in\realspos$ such that, for all $i\in\nats$ and all $r\in[t,s]$, it holds that
 \begin{equation*}
@@ -1132,7 +1154,7 @@ Here, it is understood that $\presuper{i}T_r^{r+\Delta},\presuper{i}T_{r-\Delta}
 
 We have the following results.
 
-\begin{lemma}
+\begin{lemma}\label{lemma:restricted_trans_mat_system_cauchy_converges}
 Consider any $t,s\in\realsnonneg$ with $t\leq s$, and any Cauchy sequence $\left\{\mathcal{T}_i^{[t,s]}\right\}_{i\in\nats}$ of restricted transition matrix systems. Consider the family $\mathcal{T}_*^{[t,s]}$ of matrices $\presuper{*}T_q^r$, defined for all $q,r\in[t,s]$ with $q\leq r$ as
 \begin{equation*}
 \presuper{*}T_q^r \coloneqq \lim_{i\to\infty} \presuper{i}T_q^r\,,
@@ -1257,13 +1279,18 @@ Hence, we have found a contradiction. Similarly, if instead
 we find a contradiction using a completely analogous argument. Therefore, we conclude that $\mathcal{T}_*^{[t,s]}$ is well-behaved.
 \end{proof}
 
-\begin{lemma}
+\begin{lemma}\label{lemma:restricted_trans_mat_system_complete_if_Q_closed}
 Consider any non-empty, bounded and closed set of rate matrices $\rateset$, and any $t,s\in\realsnonneg$ such that $t\leq s$. Then, the metric space $(\mathbb{T}_\rateset^{[t,s]},d)$ is complete under the metric $d$, defined as in Equation~\eqref{eq:trans_mat_system_metric}.
 \end{lemma}
 \begin{proof}
-We need to show that for any Cauchy sequence $\left\{\mathcal{T}_i^{[t,s]}\right\}_{i\in\nats}$ in $\mathbb{T}_\rateset^{[t,s]}$, it holds that $\mathcal{T}_*^{[t,s]}\coloneqq\lim_{i\to\infty}\mathcal{T}_i^{[t,s]}$ exists and satisfies $\mathcal{T}_*^{[t,s]}\in\mathbb{T}_\rateset^{[t,s]}$. Therefore, consider any Cauchy sequence $\left\{\mathcal{T}_i^{[t,s]}\right\}_{i\in\nats}$ in  $\mathbb{T}_\rateset^{[t,s]}$.
+We need to show that for any Cauchy sequence $\left\{\mathcal{T}_i^{[t,s]}\right\}_{i\in\nats}$ in $\mathbb{T}_\rateset^{[t,s]}$, it holds that $\mathcal{T}_*^{[t,s]}\coloneqq\lim_{i\to\infty}\mathcal{T}_i^{[t,s]}$ exists and satisfies $\mathcal{T}_*^{[t,s]}\in\mathbb{T}_\rateset^{[t,s]}$. Therefore, consider any Cauchy sequence $\left\{\mathcal{T}_i^{[t,s]}\right\}_{i\in\nats}$ in  $\mathbb{T}_\rateset^{[t,s]}$. 
 
-Because this sequence $\left\{\mathcal{T}_i^{[t,s]}\right\}_{i\in\nats}$ is Cauchy, it follows from Lemma~{\bf REF} that the limit $\mathcal{T}_*^{[t,s]}$ exists, and is a restricted transition matrix system. Furthermore, because for all $i\in\nats$ it holds that $\mathcal{T}_i^{[t,s]}\in\mathbb{T}_\rateset^{[t,s]}$, we have that each $\mathcal{T}_i^{[t,s]}$ is well-behaved. Therefore, by Lemma~{\bf REF}, $\mathcal{T}_*^{[t,s]}$ is also well-behaved. ***** {\bf TODO} actually have to show that it is uniformly well-behaved, but that's clearly true
+We first make the following claim, which is proved below.
+\begin{claim}\label{claim:lemma_restricted_trans_mat_system_complete_uniformly_well_behaved}
+The sequence $\left\{\mathcal{T}_i^{[t,s]}\right\}_{i\in\nats}$ is uniformly well-behaved.
+\end{claim}
+
+Now, because this sequence $\left\{\mathcal{T}_i^{[t,s]}\right\}_{i\in\nats}$ is Cauchy, it follows from Lemma~\ref{lemma:restricted_trans_mat_system_cauchy_converges} that the limit $\mathcal{T}_*^{[t,s]}$ exists, and is a restricted transition matrix system. Furthermore, due to Claim~\ref{claim:lemma_restricted_trans_mat_system_complete_uniformly_well_behaved} and Lemma~\ref{lemma:restricted_trans_mat_system_cauchy_converges}, $\mathcal{T}_*^{[t,s]}$ is well-behaved.
 
 It remains to show that $\mathcal{T}_*^{[t,s]}\in\mathbb{T}_\rateset^{[t,s]}$. To this end, consider any $Q\in\rateset$, and let $\mathcal{T}_Q$ be the transition matrix system corresponding to this $Q$, defined as in Definition~\ref{def:systemfromQ}. Let 
 \begin{equation*}
@@ -1310,8 +1337,44 @@ This contradicts our earlier statement that $Q_*\notin\rateset$, and therefore $
 
 Therefore, and because the Cauchy sequence $\left\{\mathcal{T}_i^{[t,s]}\right\}_{i\in\nats}$ in $\mathbb{T}_\rateset^{[t,s]}$ was arbitrary, we conclude that $\mathbb{T}_\rateset^{[t,s]}$ is complete.
 \end{proof}
+\begin{proof}[Proof of Claim~\ref{claim:lemma_restricted_trans_mat_system_complete_uniformly_well_behaved}]
+We have to show that the sequence $\left\{\mathcal{T}_i^{[t,s]}\right\}_{i\in\nats}$ in $\mathbb{T}_\rateset^{[t,s]}$ is uniformly well-behaved, meaning that there is some $B\in\realsnonneg$ such that for all $i\in\nats$ and all $r\in[t,s]$, it holds that
+\begin{equation}\label{eq:restricted_trans_mat_sequence_uniformly_bounded}
+\limsup_{\Delta\to0^+}\norm{\frac{1}{\Delta}\left(\presuper{i}T_r^{r+\Delta} - I\right)} < B,\quad\text{and,}\quad \limsup_{\Delta\to0^+}\norm{\frac{1}{\Delta}\left(\presuper{i}T_{r-\Delta}^{r} - I\right)} < B\,.
+\end{equation}
 
-\begin{lemma}
+Let $B\coloneqq 2\norm{\rateset}$, and assume \emph{ex absurdo} that Equation~\eqref{eq:restricted_trans_mat_sequence_uniformly_bounded} does not hold. Then, there must be some $i\in\nats$ and some $r\in[t,s]$, such that either
+\begin{equation*}
+\limsup_{\Delta\to0^+}\norm{\frac{1}{\Delta}\left(\presuper{i}T_r^{r+\Delta} - I\right)} \geq B,\quad\text{or,}\quad \limsup_{\Delta\to0^+}\norm{\frac{1}{\Delta}\left(\presuper{i}T_{r-\Delta}^{r} - I\right)} \geq B\,.
+\end{equation*}
+We only give a proof for the first case; the proof for the second case is completely analogous. Hence, in this case,
+\begin{equation*}
+(\forall \delta\in\realspos)(\exists \Delta\in(0,\delta))\,:\,\norm{\frac{1}{\Delta}\left(\presuper{i}T_r^{r+\Delta} - I\right)} \geq B\,.
+\end{equation*}
+Because $\mathcal{T}_i^{[t,s]}\in\mathbb{T}_\rateset^{[t,s]}$, there must be some process $P_i\in\wmprocesses_\rateset$ for which $\mathcal{T}_{P_i}^{[t,s]}=\mathcal{T}_i^{[t,s]}$. Because $P_i\in\wmprocesses_\rateset$, and due to Proposition~\ref{prop:outerderivativebehaveslikelimit}, this implies that
+\begin{equation*}
+(\exists \delta\in\realspos)(\forall\Delta\in(0,\delta))(\exists Q\in\rateset)\,:\,\norm{\frac{\presuper{i}T_r^{r+\Delta}-I}{\Delta} - Q} < \norm{\rateset}\,.
+\end{equation*}
+Consider this $\delta\in\realspos$. Then, there must be a $\Delta\in\realspos$ such that $\Delta<\delta$, and for which
+\begin{equation*}
+\norm{\frac{1}{\Delta}\left(\presuper{i}T_r^{r+\Delta} - I\right)} \geq B\,.
+\end{equation*}
+Consider this $\Delta$. Because $\Delta<\delta$, there must then be some $Q\in\rateset$ such that
+\begin{equation*}
+\norm{\frac{\presuper{i}T_r^{r+\Delta}-I}{\Delta} - Q} < \norm{\rateset}\,.
+\end{equation*}
+Consider this $Q$. Putting this together, we have that
+\begin{align*}
+2\norm{\rateset} = B &\leq \norm{\frac{1}{\Delta}\left(\presuper{i}T_r^{r+\Delta} - I\right)} \\
+ &\leq \norm{\frac{1}{\Delta}\left(\presuper{i}T_r^{r+\Delta} - I\right) - Q} + \norm{Q} \\
+ &< \norm{\rateset} + \norm{Q} \leq 2\norm{\rateset}\,.
+\end{align*}
+Hence, we have found a contradiction. The argument for the second case in Equation~\eqref{eq:restricted_trans_mat_sequence_uniformly_bounded} is exactly analogous, and also leads to a contradiction.
+
+Therefore, we conclude that the sequence $\left\{\mathcal{T}_i^{[t,s]}\right\}_{i\in\nats}$ is uniformly well-behaved.
+\end{proof}
+
+\begin{lemma}\label{lemma:restricted_trans_mat_system_totally_bounded_if_Q_bounded_convex}
 Consider any non-empty, bounded and convex set of rate matrices $\rateset$, and any $t,s\in\realsnonneg$ such that $t\leq s$. Then, the metric space $(\mathbb{T}_\rateset^{[t,s]},d)$ is totally bounded under the metric $d$, defined as in Equation~\eqref{eq:trans_mat_system_metric}.
 \end{lemma}
 \begin{proof}
@@ -1441,7 +1504,31 @@ Because this holds for any $\mathcal{T}^{[t,s]}\in\mathbb{T}_\rateset^{[t,s]}$, 
 \end{proof}
 
 \begin{proof}[Proof of Claim~\ref{claim:composition_restricted_trans_mat_sys_in_set}]
+For all $i\in\{1,\ldots,n\}$, choose some $\mathcal{T}_i^{[t_{i-1},t_i]}\in\mathbb{T}_i$. Let
+\begin{equation*}
+\mathcal{T}^{[t,s]}\coloneqq \mathcal{T}_1^{[t_{0},t_1]} \otimes \mathcal{T}_2^{[t_{1},t_2]} \cdots \otimes \mathcal{T}_n^{[t_{n-1},t_n]}\,.
+\end{equation*}
+Because for all $i\in\{1,\ldots,n\}$ we have that $\mathcal{T}_i^{[t_{i-1},t_i]}$ is a well-behaved restricted transition matrix system, it follows from Proposition~{\bf REF} that $\mathcal{T}^{[t,s]}$ is a well-behaved restricted transition matrix system defined on $[t,s]$.
 
+We now have to show that $\mathcal{T}^{[t,s]} \in \mathbb{T}_\rateset^{[t,s]}$. To this end, consider any $Q\in\rateset$, and let $\mathcal{T}_Q$ be the transition matrix system corresponding to $Q$, defined as in Definition~\ref{def:systemfromQ}. Let
+\begin{equation*}
+\mathcal{T} \coloneqq \mathcal{T}_Q^{[0,t]}\otimes \mathcal{T}^{[t,s]} \otimes \mathcal{T}_Q^{[s,\infty)}\,.
+\end{equation*}
+Then, clearly, $\mathcal{T}$ is an (unrestricted) transition matrix system, and because $\mathcal{T}^{[t,s]}$ and $\mathcal{T}_Q$ are well-behaved, $\mathcal{T}$ is also well-behaved. Therefore, and due to Theorem~\ref{theo:uniqueMarkovchain}, there is some $P\in\wmprocesses$ for which $\mathcal{T}_P = \mathcal{T}$.
+
+We will show that $P\in\wmprocesses_\rateset$, which then implies that $\mathcal{T}_P = \mathcal{T}\in\mathbb{T}_\rateset^{[t,s]}$. To show that $P\in\wmprocesses_\rateset$, we have to show that $\smash{\overline{\partial}}T_r^r\subseteq\rateset$ for all $r\in\realsnonneg$. To this end, consider any $r\in\realsnonneg$.
+
+We will consider several cases. If $r<t$, we have that $\smash{\overline{\partial}}T_r^r$ corresponds to $\mathcal{T}_Q^{[0,t]}$, and hence $\smash{\overline{\partial}}T_r^r=\{Q\}\subseteq\rateset$. If $r>s$, then $\smash{\overline{\partial}}T_r^r$ corresponds to $\mathcal{T}_Q^{[s,\infty)}$, in which case also $\smash{\overline{\partial}}T_r^r=\{Q\}\subseteq\rateset$.
+
+Next, if $r\in(t_{i-1},t_i)$ for some $i\in\{1,\ldots,n\}$, then $\smash{\overline{\partial}}T_r^r$ corresponds to $\mathcal{T}_i^{[t_{i-1},t_i]}=\mathcal{T}_{Q_i}^{[t_{i-1},t_i]}$ for some $Q_i\in\rateset_{\epsilon'}$, and hence $\smash{\overline{\partial}}T_r^r=\{Q_i\}$. Because $\rateset_{\epsilon'}\subseteq\rateset$, it follows that then also $\smash{\overline{\partial}}T_r^r\subseteq\rateset$.
+
+The remaining cases are when $r=t_i$ for some $i\in\{0,\ldots,n\}$. Suppose that, for some $i\in\{1,\ldots,n-1\}$, it holds that $r=t_i$. Then, $\smash{\overline{\partial}}_-T_r^r=\{Q_{i}\}$, and $\smash{\overline{\partial}}_+T_r^r=\{Q_{i+1}\}$. Hence,
+\begin{equation*}
+\smash{\overline{\partial}}T_r^r = \smash{\overline{\partial}}_-T_r^r\cup\smash{\overline{\partial}}_+T_r^r=\{Q_{i},Q_{i+1}\}\subseteq\rateset\,.
+\end{equation*}
+Finally, if $r=t_0$, then $\smash{\overline{\partial}}_-T_r^r=\{Q\}$ and $\smash{\overline{\partial}}_+T_r^r=\{Q_1\}$, and hence $\smash{\overline{\partial}}T_r^r\subseteq\rateset$. If $r=t_n$, we have $\smash{\overline{\partial}}_-T_r^r=\{Q_n\}$ and $\smash{\overline{\partial}}_+T_r^r=\{Q\}$, and therefore $\smash{\overline{\partial}}T_r^r\subseteq\rateset$.
+
+In summary, we have found that $\smash{\overline{\partial}}T_r^r\subseteq\rateset$ for all $r\in\realsnonneg$, and hence $P\in\wmprocesses_\rateset$. Therefore, $\mathcal{T}_P^{[t,s]}=\mathcal{T}^{[t,s]}\in\mathbb{T}_\rateset^{[t,s]}$.
 \end{proof}
 
 \begin{proof}[Proof of Claim~\ref{claim:lemma_total_bounded_full_interval_error}]
@@ -1474,6 +1561,22 @@ where the last inequality follows from the fact that $\Delta_i\leq\sigma(u)<\del
 \begin{equation*}
 \norm{T_q^r - S_q^r} < \frac{\Delta_i\epsilon^*}{3C} + 2\Delta_i\norm{\rateset} < \frac{\Delta_i\epsilon^*}{3C} + \frac{\epsilon^*}{6}\,.
 \end{equation*}
+\end{proof}
+
+\begin{corollary}\label{cor:restricted_trans_mat_system_totally_bounded_if_Q_bounded}
+Consider any non-empty bounded set of rate matrices $\rateset$, and any $t,s\in\realsnonneg$ such that $t\leq s$. Then, the metric space $(\mathbb{T}_\rateset^{[t,s]},d)$ is totally bounded under the metric $d$, defined as in Equation~\eqref{eq:trans_mat_system_metric}.
+\end{corollary}
+\begin{proof}
+Let $\widetilde{\rateset}$ denote the convex closure of $\rateset$. Then, clearly, $\widetilde{\rateset}$ is a non-empty, bounded, and convex set of rate matrices, and furthermore, $\mathbb{T}_\rateset^{[t,s]}\subseteq \mathbb{T}_{\widetilde{\rateset}}^{[t,s]}$.
+
+By Lemma~\ref{lemma:restricted_trans_mat_system_totally_bounded_if_Q_bounded_convex}, $\mathbb{T}_{\widetilde{\rateset}}^{[t,s]}$ is totally bounded. Therefore, and because any subset of a totally bounded set is itself totally bounded~{\bf CITE}, it follows that $\mathbb{T}_\rateset^{[t,s]}$ is totally bounded as well.
+\end{proof}
+
+\begin{theorem}\label{theorem:restricted_transmatsystem_space_compact_if_Q_closed}
+Consider any non-empty, bounded and closed set of rate matrices $\rateset$, and any $t,s\in\realsnonneg$ such that $t\leq s$. Then, the metric space $(\mathbb{T}_\rateset^{[t,s]},d)$ is compact under the topology generated by the metric $d$, defined as in Equation~\eqref{eq:trans_mat_system_metric}.
+\end{theorem}
+\begin{proof}
+Immediate consequence of Lemma~\ref{lemma:restricted_trans_mat_system_complete_if_Q_closed} and Corollary~\ref{cor:restricted_trans_mat_system_totally_bounded_if_Q_bounded}.
 \end{proof}
 
 \begin{lemma}
@@ -1607,21 +1710,6 @@ Putting this all together, we find that
 \end{align*}
 \end{proof}
 
-\begin{corollary}
-Consider any non-empty bounded set of rate matrices $\rateset$, and any $t,s\in\realsnonneg$ such that $t\leq s$. Then, the metric space $(\mathbb{T}_\rateset^{[t,s]},d)$ is totally bounded under the metric $d$, defined as in Equation~\eqref{eq:trans_mat_system_metric}.
-\end{corollary}
-\begin{proof}
-Let $\widetilde{\rateset}$ denote the convex closure of $\rateset$. Then, clearly, $\widetilde{\rateset}$ is a non-empty, bounded, and convex set of rate matrices, and furthermore, $\mathbb{T}_\rateset^{[t,s]}\subseteq \mathbb{T}_{\widetilde{\rateset}}^{[t,s]}$.
-
-By Lemma~{\bf REF}, $\mathbb{T}_{\widetilde{\rateset}}^{[t,s]}$ is totally bounded. Therefore, and because any subset of a totally bounded set is itself totally bounded~{\bf CITE}, it follows that $\mathbb{T}_\rateset^{[t,s]}$ is totally bounded as well.
-\end{proof}
-
-\begin{theorem}\label{theorem:restricted_transmatsystem_space_compact_if_Q_closed}
-Consider any non-empty, bounded and closed set of rate matrices $\rateset$, and any $t,s\in\realsnonneg$ such that $t\leq s$. Then, the metric space $(\mathbb{T}_\rateset^{[t,s]},d)$ is compact under the topology generated by the metric $d$, defined as in Equation~\eqref{eq:trans_mat_system_metric}.
-\end{theorem}
-\begin{proof}
-**** Direct consequence of the lemma X and Y.
-\end{proof}
 
 \subsection{Stuff that needs to find a place}
 
@@ -2217,7 +2305,7 @@ Because $\mathcal{T}_*^{[t,s]}\in\mathbb{T}_\rateset^{[t,s]}$, there must be som
 \begin{equation*}
 \presuper{*}T_t^s = \lim_{k\to\infty}\presuper{i_k}T_t^s\,.
 \end{equation*}
-Furthermore, because the sequence $\left\{\presuper{i_k}T_t^s \right\}_{k\in\nats}$ is a subsequence of $\left\{\presuper{i}T_t^s\right\}_{i\in\nats}$, we find from Equation~\eqref{eq:prop_lower_is_reached_limit} that
+Therefore, and because the sequence $\left\{\presuper{i_k}T_t^s \right\}_{k\in\nats}$ is a subsequence of $\left\{\presuper{i}T_t^s\right\}_{i\in\nats}$, we find from Equation~\eqref{eq:prop_lower_is_reached_limit} that
 \begin{equation*}
 \norm{L_t^sf - \presuper{*}T_t^sf} = 0\,.
 \end{equation*}
