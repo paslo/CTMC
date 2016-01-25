@@ -1648,10 +1648,16 @@ P(A\vert X_u=x_u)=P_{x_u}(A\vert X_u=x_u)
 \end{theorem}
 \begin{proof}
 Let $\mathcal{C}\coloneqq\mathcal{C}_\emptyset\cup(\bigcup_{x_u\in\states^u}\mathcal{C}_{x_u})$, with
-\begin{equation*}
+\begin{multline}\label{eq:theo:aanelkaarplakken:firstpartofdomain}
 \mathcal{C}_\emptyset\coloneqq
-\{(A,X_v=x_v)\colon *** \}
-\end{equation*}
+\{(A,X_v=x_v)\in\mathcal{C}^{\mathrm{SP}}\colon \max v<\max u\text{~and~}\\A\in\left\langle
+\left\{
+(X_t=x)
+\colon
+x\in\states,t\in[0,\max u]
+\right\}
+\right\rangle\}
+\end{multline}
 and
 \begin{equation*}
 \mathcal{C}_{x_u}\coloneqq\{
@@ -1680,7 +1686,7 @@ We first prove that $\tilde{P}$ is a coherent conditional probability on $\mathc
 \end{equation}
 with $C_0\coloneqq\cup_{i=1}^nC_i$.
 
-Let $S_\emptyset\coloneqq\left\{i\in\{1,\dots,n\}\colon(A_i,C_i)\in\mathcal{C}_\emptyset\right\}$. Since $P_\emptyset$ is a stochastic process, it follows from Corollary~\ref{corol:processiffcoherent} and Equation~\eqref{eq:theo:aanelkaarplakken:defPtilde} that *** still need to tackle the $S_\emptyset=\emptyset$ case separately ***
+Let $S_\emptyset\coloneqq\left\{i\in\{1,\dots,n\}\colon(A_i,C_i)\in\mathcal{C}_\emptyset\right\}$. We first consider the case $S_\emptyset\neq\emptyset$. Then since $P_\emptyset$ is a stochastic process, it follows from Corollary~\ref{corol:processiffcoherent} and Equation~\eqref{eq:theo:aanelkaarplakken:defPtilde} that
 \begin{equation*}%\label{eq:theo:aanelkaarplakken:cohfirstpart}
 \sup\left\{\sum_{i\in S_\emptyset}\lambda_i\ind{C_i}(\omega)\bigl(\tilde{P}(A_i\vert C_i)-\ind{A_i}(\omega)\bigr)~\Bigg\vert~\omega\in C_\emptyset\right\}\geq0,
 \end{equation*}
@@ -1688,6 +1694,9 @@ with $C_\emptyset\coloneqq\cup_{i\in S_\emptyset}C_i$. Since $S_\emptyset$ is fi
 \begin{equation}\label{eq:theo:aanelkaarplakken:geqfirstpart}
 \sum_{i\in S_\emptyset}\lambda_i\ind{C_i}(\omega^*)\bigl(\tilde{P}(A_i\vert C_i)-\ind{A_i}(\omega^*)\bigr)\geq0.
 \end{equation}
+If $S_\emptyset=\emptyset$, we let $\omega^*$ be any element of $C_0$. Clearly, this path $\omega^*$ will then also satisfy Equation~\eqref{eq:theo:aanelkaarplakken:geqfirstpart}.
+
+
 Let $x_u^*\in\states^u$ be defined by $x_t^*\coloneqq \omega^*(t)$ for all $t\in u$, and let
 \begin{equation*}
 E\coloneqq
@@ -1709,26 +1718,24 @@ i\in\{1,\dots,n\}
 C_i\cap E\neq\emptyset
 \}.
 \end{equation*}
-Then for all $i\in S^*$, we have that $(A_i,C_i)\in\mathcal{C}_{x_u^*}$ and therefore, there are $u\subseteq v_i\in\mathcal{U}$ and $x_{v_i\setminus u}\in\states^{v_i\setminus u}$ such that $C_i=(X_u=x_u^*)\cap(X_{v_i\setminus u}=x_{v_i\setminus u})$, which we use to define
+We first consider the case $S^*\neq\emptyset$. Then for all $i\in S^*$, we have that $(A_i,C_i)\in\mathcal{C}_{x_u^*}$ and therefore, there are $u\subseteq v_i\in\mathcal{U}$ and $x_{v_i\setminus u}\in\states^{v_i\setminus u}$ such that $C_i=(X_u=x_u^*)\cap(X_{v_i\setminus u}=x_{v_i\setminus u})$, which we use to define
 \begin{equation*}
 C_i^{*}\coloneqq(X_u=x_u^*)\cap(X_{v_i\setminus [0,\max u]}=x_{v_i\setminus [0,\max u]})
 \end{equation*}
-
-
-*** need to add stuff here ***
-
-
-Since $P_{x_u^*}$ is a stochastic process, it follows from Corollary~\ref{corol:processiffcoherent} and Equation~\eqref{eq:theo:aanelkaarplakken:defPtilde} that
-*** still need to tackle the $S^*=\emptyset$ case seperately ***
-
+Since $P_{x_u^*}$ is a stochastic process, it then follows from Corollary~\ref{corol:processiffcoherent} that
 \begin{equation*}%\label{eq:theo:aanelkaarplakken:secondpart}
-\sup\left\{\sum_{i\in S^*}\lambda_i\ind{C_i^*}(\omega)\bigl(\tilde{P}(A_i\vert C_i)-\ind{A_i}(\omega)\bigr)~\Bigg\vert~\omega\in C^*\right\}\geq0,
+\sup\left\{\sum_{i\in S^*}\lambda_i\ind{C_i^*}(\omega)\bigl(P_{x_u^*}(A_i\vert C_i^*)-\ind{A_i}(\omega)\bigr)~\Bigg\vert~\omega\in C^*\right\}\geq0,
 \end{equation*}
-with $C^*\coloneqq\cup_{i\in S^*}C_i^*$.
+with $C^*\coloneqq\cup_{i\in S^*}C_i^*$. Because of Equation~\eqref{eq:theo:aanelkaarplakken:defPtilde}, this implies that
+\begin{equation*}%\label{eq:theo:aanelkaarplakken:secondpart}
+\sup\left\{\sum_{i\in S^*}\lambda_i\ind{C_i^*}(\omega)\bigl(\tilde{P}(A_i\vert C_i)-\ind{A_i}(\omega)\bigr)~\Bigg\vert~\omega\in C^*\right\}\geq0.
+\end{equation*}
 Since $S^*$ is finite and because, for every $i\in S^*$, $\ind{A_i}$ and $\ind{C_i^*}$ can only take two values---$0$ or $1$---it follows that this supremum is taken over a finite set of real numbers, which implies that it is actually a maximum. Therefore, there is some $\omega^{**}\in C^*$ such that
 \begin{equation}\label{eq:theo:aanelkaarplakken:geqsecondpart}
 \sum_{i\in S^*}\lambda_i\ind{C_i^*}(\omega^{**})\bigl(\tilde{P}(A_i\vert C_i)-\ind{A_i}(\omega^{**})\bigr)\geq0.
 \end{equation}
+If $S^*=\emptyset$, we let $\omega^{**}$ be any element of $C_0$. Clearly, this path $\omega^{**}$ will then also satisfy Equation~\eqref{eq:theo:aanelkaarplakken:geqsecondpart}.
+
 Now let $\omega^{***}\in\Omega$ be defined by
 \begin{equation*}
 \omega^{***}(t)\coloneqq
@@ -1747,13 +1754,13 @@ Then *** still need to add some extra explanations for the equations below ***
 \begin{equation*}
 \sum_{i\in S_\emptyset}\lambda_i\ind{C_i}(\omega^{***})\bigl(\tilde{P}(A_i\vert C_i)-\ind{A_i}(\omega^{***})\bigr)
 =
-\sum_{i\in S\emptyset}\lambda_i\ind{C_i}(\omega^{*})\bigl(\tilde{P}(A_i\vert C_i)-\ind{A_i}(\omega^{*})\bigr)\geq0,
+\sum_{i\in S_\emptyset}\lambda_i\ind{C_i}(\omega^{*})\bigl(\tilde{P}(A_i\vert C_i)-\ind{A_i}(\omega^{*})\bigr)\geq0,
 \end{equation*}
 and, for all $i\in\{1,\dots,n\}\setminus\{S_\emptyset\cup S^*\}$, $\ind{C_i}(\omega^{***})=0$. Therefore, we find that
 \begin{equation*}
 \sum_{i=1}^n\lambda_i\ind{C_i}(\omega^{***})\bigl(\tilde{P}(A_i\vert C_i)-\ind{A_i}(\omega^{***})\geq0,
 \end{equation*}
-which, since $\omega^{***}\in C_0$, implies that Equation~\eqref{eq:theo:aanelkaarplakken:coh} holds. Hence, $\tilde{P}$ is coherent.
+which, since $\omega^{***}\in C_0$ (STILL NEED TO PROVE THIS!), implies that Equation~\eqref{eq:theo:aanelkaarplakken:coh} holds. Hence, $\tilde{P}$ is coherent.
 
 
 Therefore, and because of Theorem~\ref{theo:coherentextendable}, $\tilde{P}$ can be extended to a full conditional probability $\tilde{P}^*$. If we now let $P$ be the restriction of $\tilde{P}^*$ to $\mathcal{C}^\mathrm{SP}$, then $P$ is a stochastic process that extends $\tilde{P}$, which implies that $P$ satisfies Equations~\eqref{eq:theo:aanelkaarplakken:equalsfirst} and~\eqref{eq:theo:aanelkaarplakken:equalssecond}. In the remainder of this proof, we will show that $P\in\wprocesses_\rateset$.
