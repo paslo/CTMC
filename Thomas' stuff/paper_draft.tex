@@ -1749,7 +1749,7 @@ x\in\states,t\in[0,\max u]
 \right\rangle\}
 \end{multline}
 and
-\begin{equation*}
+\begin{equation}\label{eq:theo:aanelkaarplakken:secondpartofdomain}
 \mathcal{C}_{x_u}\coloneqq\{
 (A,X_v=x_v)
 \colon
@@ -1757,7 +1757,7 @@ u\subseteq v\in\mathcal{U},\,
 x_{v\setminus u}\in\states^{v\setminus u},\,
  A\in\mathcal{A}_{u\cup(v\setminus[0,\max u])}
 \}
-\end{equation*}
+\end{equation}
 for all $x_u\in\states^u$, and consider a real-valued function $\tilde{P}$ on $\mathcal{C}$ that is defined by 
 \begin{equation}\label{eq:theo:aanelkaarplakken:defPtilde}
 \tilde{P}(A\vert X_v=x_v)
@@ -1787,36 +1787,29 @@ with $C^*\coloneqq\cup_{i\in S^*}C_i$. Therefore, there is some $\omega^*\in C^*
 If $S^*=\emptyset$, we let $\omega^*$ be any element of $C_0$. Clearly, this path $\omega^*$ will then also satisfy Equation~\eqref{eq:theo:aanelkaarplakken:geqfirstpart}.
 
 
-Let $x_u^*\in\states^u$ be defined by $x_t^*\coloneqq \omega^*(t)$ for all $t\in u$, and let
-\begin{equation*}
-E\coloneqq
-\{
-\omega\in\Omega
-\colon
-\omega(s)=\omega^*(s)
-\text{~for all $t\in[0,\max u]$}
-\}
-\end{equation*}
-and
-\begin{equation*}
+Let $x_u^*\in\states^u$ be defined by $x_t^*\coloneqq \omega^*(t)$ for all $t\in u$.
+Then for all $(A_i,C_i)\in\mathcal{C}_{x_u^*}$, we know from Equation~\eqref{eq:theo:aanelkaarplakken:secondpartofdomain} that there are $u\subseteq v_i\in\mathcal{U}$ and $x_{v_i\setminus u}\in\states^{v_i\setminus u}$ such that
+\begin{equation}\label{eq:theo:aanelkaarplakken:Cisplit}
+C_i=(X_u=x_u^*)\cap(X_{v_i\setminus u}=x_{v_i\setminus u})=C_i^*\cap C_i^{**},
+\end{equation}
+with 
+\begin{equation}\label{eq:theo:aanelkaarplakken:Cistarstar}
+C_i^{**}\coloneqq(X_u=x_u^*)\cap(X_{v_i\setminus [0,\max u]}=x_{v_i\setminus [0,\max u]})\vspace{2mm}
+\end{equation}
+and $C_i^{*}\coloneqq(X_{v_i\cap [0,\max u]}=x_{v_i\cap [0,\max u]})$. Using this notation, we define
+\begin{equation}\label{eq:theo:aanelkaarplakken:Sstarstardef}
 S^{**}\coloneqq
 \{
 i\in\{1,\dots,n\}
 \colon
 (A_i,C_i)\in\mathcal{C}_{x_u^*}
 \text{~and~}
-C_i\cap E\neq\emptyset
+\ind{C_i^*}(\omega^*)=1
 \}.
-\end{equation*}
-We first consider the case $S^{**}\neq\emptyset$. Then for all $i\in S^{**}$, we have that $(A_i,C_i)\in\mathcal{C}_{x_u^*}$ and therefore, it follows that there are $u\subseteq v_i\in\mathcal{U}$ and $x_{v_i\setminus u}\in\states^{v_i\setminus u}$ such that
-\begin{equation*}
-C_i=(X_u=x_u^*)\cap(X_{v_i\setminus u}=x_{v_i\setminus u})=C_i^*\cap C_i^{**},
-\end{equation*}
-with 
-\begin{equation}\label{eq:theo:aanelkaarplakken:Cistarstar}
-C_i^{**}\coloneqq(X_u=x_u^*)\cap(X_{v_i\setminus [0,\max u]}=x_{v_i\setminus [0,\max u]})\vspace{2mm}
 \end{equation}
-and $C_i^{*}\coloneqq(X_{v_i\cap [0,\max u]}=x_{v_i\cap [0,\max u]})$. Since $P_{x_u^*}$ is a stochastic process, it then follows from Corollary~\ref{corol:processiffcoherent} that
+
+
+We first consider the case $S^{**}\neq\emptyset$. Since $P_{x_u^*}$ is a stochastic process, it then follows from Corollary~\ref{corol:processiffcoherent} that
 \begin{equation*}%\label{eq:theo:aanelkaarplakken:secondpart}
 \max\left\{\sum_{i\in S^{**}}\lambda_i\ind{C_i^{**}}(\omega)\bigl(P_{x_u^*}(A_i\vert C_i^{**})-\ind{A_i}(\omega)\bigr)~\Bigg\vert~\omega\in C^{**}\right\}\geq0,
 \end{equation*}
@@ -1845,43 +1838,57 @@ Now let $\omega^{***}$ be defined by
 \text{~~~for all $t\in\reals_{\geq0}$.}
 \end{equation*}
 Then since $\omega^*$ and $\omega^{**}$ both belong to $\Omega$---are cadlag functions from $\reals_{\geq0}$ to $\states$---it follows that $\omega^{***}\in\Omega$. Furthermore, because of Equation~\eqref{eq:theo:aanelkaarplakken:starstarniceonu}, we know that
-\begin{equation*}
+\begin{equation}\label{eq:theo:aanelkaarplakken:triplestarpartone}
 \omega^{***}(t)=\omega^*(t)
-\text{~~for all $t\in [0,\max u]$}
-\end{equation*}
+\text{~~for all $t\in [0,\max u]$}\vspace{-3mm}
+\end{equation}
 and
-\begin{equation*}
+\begin{equation}\label{eq:theo:aanelkaarplakken:triplestarparttwo}
 \omega^{***}(t)=\omega^{**}(t)
 \text{~~for all $t\in u\cup [\max u,+\infty)$}.
-\end{equation*}
+\vspace{2mm}
+\end{equation}
 
-*** still need to finish the stuff below ***
+%*** still need to finish the stuff below ***
 
-
-
-Then *** still need to add some extra explanations for the equations below ***
-(The indicator of $C_i$/$C_i^{**}$ part holds because $\omega^{***}$ and $\omega^{*}$ agree before $\max u$ and because $C_i\cap E\neq\emptyset$. The indicator of $A_i$ part holds because $A_i$ only depends on time points in or beyond $u$ and because $\omega^{**}$ and $\omega^{***}$ coincide on those time points.)
-\begin{equation*}
-\sum_{i\in S^{**}}\lambda_i\ind{C_i}(\omega^{***})\bigl(\tilde{P}(A_i\vert C_i)-\ind{A_i}(\omega^{***})\bigr)
-=
-\sum_{i\in S^{**}}\lambda_i\ind{C_i^{**}}(\omega^{**})\bigl(\tilde{P}(A_i\vert C_i)-\ind{A_i}(\omega^{**})\bigr)\geq0,
-\end{equation*}
-and (this holds because $C_i$ and $A_i$ only depend on time points $\leq\max u$, and because $\omega^{***}$ and $\omega^{*}$ coincide on those time points)
-\begin{equation*}
+For any $i\in S^*$, we infer from Equation~\eqref{eq:theo:aanelkaarplakken:firstpartofdomain} that the value of $\ind{A_i}(\omega^{***})$ and $\ind{C_i}(\omega^{***})$ is completely determined by $\omega^{***}(t)$, $t\in[0,\max u]$. Therefore, it follows from Equations~\eqref{eq:theo:aanelkaarplakken:geqfirstpart} and ~\eqref{eq:theo:aanelkaarplakken:triplestarpartone} that 
+\begin{equation}\label{eq:theo:aanelkaarplakken:geqfirstparttriplestar}
 \sum_{i\in S^*}\lambda_i\ind{C_i}(\omega^{***})\bigl(\tilde{P}(A_i\vert C_i)-\ind{A_i}(\omega^{***})\bigr)
-=
-\sum_{i\in S^*}\lambda_i\ind{C_i}(\omega^{*})\bigl(\tilde{P}(A_i\vert C_i)-\ind{A_i}(\omega^{*})\bigr)\geq0,
+%=
+%\sum_{i\in S^*}\lambda_i\ind{C_i}(\omega^{*})\bigl(\tilde{P}(A_i\vert C_i)-\ind{A_i}(\omega^{*})\bigr)
+\geq0.
+\end{equation}
+
+For any $i\in S^{**}$, Equations~\eqref{eq:theo:aanelkaarplakken:Cisplit},~\eqref{eq:theo:aanelkaarplakken:triplestarpartone},~\eqref{eq:theo:aanelkaarplakken:Sstarstardef} and~\eqref{eq:theo:aanelkaarplakken:triplestarparttwo}---in that order---imply that
+\begin{equation*}\ind{C_i}(\omega^{***})
+=\ind{C_i^*}(\omega^{***})\ind{C_i^{**}}(\omega^{***})
+=\ind{C_i^*}(\omega^{*})\ind{C_i^{**}}(\omega^{***})
+=\ind{C_i^{**}}(\omega^{***})
+=\ind{C_i^{**}}(\omega^{**})
 \end{equation*}
-and, for all $i\in\{1,\dots,n\}\setminus\{S^*\cup S^{**}\}$, $\ind{C_i}(\omega^{***})=0$ (this holds because $\omega^{***}(u)=\omega^{*}(u)=x_u^*\neq x_u$ or because $C_i\cap E=\emptyset$ (which, since $\omega^{***}\in E$, implies that $\omega^{***}\notin C_i$)). Therefore, we find that
+and Equations~\eqref{eq:theo:aanelkaarplakken:secondpartofdomain} and~\eqref{eq:theo:aanelkaarplakken:triplestarparttwo} imply that $\ind{A_i}(\omega^{***})=\ind{A_i}(\omega^{**})$. Therefore, it follows from Equation~\eqref{eq:theo:aanelkaarplakken:geqsecondpart} that
+\begin{equation}\label{eq:theo:aanelkaarplakken:geqsecondparttriplestar}
+\sum_{i\in S^{**}}\lambda_i\ind{C_i}(\omega^{***})\bigl(\tilde{P}(A_i\vert C_i)-\ind{A_i}(\omega^{***})\bigr)
+\geq0.
+\end{equation}
+
+Consider now any $i\in\{1,\dots,n\}$ such that $i\notin S^*$ and $i\notin S^{**}$. Since $i\notin S^*$, there is some $x_u\in\states^u$ such that $(A_i,C_i)\in\mathcal{C}_{x_u}$. If $x_u= x_u^*$, then since $i\notin S^{**}$, it follows from Equation~\eqref{eq:theo:aanelkaarplakken:Sstarstardef} that $\ind{C_i^*}(\omega^*)=0$, and therefore, Equations~\eqref{eq:theo:aanelkaarplakken:Cisplit},~\eqref{eq:theo:aanelkaarplakken:triplestarpartone} and~\eqref{eq:theo:aanelkaarplakken:Sstarstardef}---in that order---imply that
+\begin{equation*}\ind{C_i}(\omega^{***})
+=\ind{C_i^*}(\omega^{***})\ind{C_i^{**}}(\omega^{***})
+=\ind{C_i^*}(\omega^{*})\ind{C_i^{**}}(\omega^{***})
+=0.
+\end{equation*}
+If $x_u\neq x_u^*$, then $(X_u=x_u)\cap(X_u=x_u^*)=\emptyset$, and therefore, since $(A_i,C_i)\in\mathcal{C}_{x_u}$ implies that $C_i\subseteq (X_u=x_u)$, it follows that $C_i\cap (X_u=x_u^*)=\emptyset$. Since it follows from Equations~\eqref{eq:theo:aanelkaarplakken:starstarniceonu} and~\eqref{eq:theo:aanelkaarplakken:triplestarparttwo} that $\omega^{***}(t)=x_t^*$ for all $t\in u$, this implies that $\omega^{***}\notin C_i$, and therefore, we find that $\ind{C_i}(\omega^{***})=0$.
+Hence, in all cases, we find that $\ind{C_i}(\omega^{***})=0$. Since this is true for any $i\in\{1,\dots,n\}$ such that $i\notin S^*$ and $i\notin S^{**}$, it follows from Equations~\eqref{eq:theo:aanelkaarplakken:geqfirstparttriplestar} and~\eqref{eq:theo:aanelkaarplakken:geqsecondparttriplestar} that
 \begin{equation*}
 \sum_{i=1}^n\lambda_i\ind{C_i}(\omega^{***})\bigl(\tilde{P}(A_i\vert C_i)-\ind{A_i}(\omega^{***})\geq0,
 \end{equation*}
-which, since $\omega^{***}\in C_0$, implies that Equation~\eqref{eq:theo:aanelkaarplakken:coh} holds. Hence, $\tilde{P}$ is coherent.
+which, since $\omega^{***}\in C_0$ (*** STILL NEED TO PROVE THIS ***), implies that Equation~\eqref{eq:theo:aanelkaarplakken:coh} holds. Hence, $\tilde{P}$ is coherent.
 
 
-Therefore, and because of Theorem~\ref{theo:coherentextendable}, $\tilde{P}$ can be extended to a full conditional probability $\tilde{P}^*$. If we now let $P$ be the restriction of $\tilde{P}^*$ to $\mathcal{C}^\mathrm{SP}$, then $P$ is a stochastic process that extends $\tilde{P}$, which implies that $P$ satisfies Equations~\eqref{eq:theo:aanelkaarplakken:equalsfirst} and~\eqref{eq:theo:aanelkaarplakken:equalssecond}. In the remainder of this proof, we will show that $P\in\wprocesses_\rateset$.
+Since $\tilde{P}$ is coherent, and because of Theorem~\ref{theo:coherentextendable}, $\tilde{P}$ can be extended to a full conditional probability $\tilde{P}^*$. If we now let $P$ be the restriction of $\tilde{P}^*$ to $\mathcal{C}^\mathrm{SP}$, then $P$ is a stochastic process that extends $\tilde{P}$, which implies that $P$ satisfies Equations~\eqref{eq:theo:aanelkaarplakken:equalsfirst} and~\eqref{eq:theo:aanelkaarplakken:equalssecond}. In the remainder of this proof, we will show that $P\in\wprocesses_\rateset$.
 
-*** still need to finish this ***
+*** still need to finish the stuff below ***
 
 Consider any $v\in\mathcal{U}$ and $t\in\reals_{\geq0}$ such that $v<t$ and $u<t$. Then for all $x_v\in\states^v$ and $y\in\states$, we have that
 \begin{align*}
