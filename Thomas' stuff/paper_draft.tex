@@ -1962,11 +1962,10 @@ Finally, previous work only focused on functions $f\in\gamblesX$ defined at a si
 \end{proof}
 
 \begin{lemma}\label{lemma:recursive}
-Consider two sequences $A_1,\ldots,A_n$ and $B_1,\ldots,B_n$ of non-negatively homogeneous operators from $\gamblesX$ to $\gamblesX$, such that $\norm{A_i}\leq 1$ and $\norm{B_i}\leq 1$ for all $i\in\{1,\ldots,n\}$. Suppose that it holds for all $i\in\{1,\ldots,n\}$ that $\norm{A_i - B_i} \leq c_i$, for some $c_i\in\realsnonneg$. Then,
+Consider two sequences $A_1,\ldots,A_n$ and $B_1,\ldots,B_n$ of non-negatively homogeneous operators from $\gamblesX$ to $\gamblesX$, such that $\norm{A_i}\leq 1$ and $\norm{B_i}\leq 1$ for all $i\in\{1,\ldots,n\}$. Then,
 \begin{equation}\label{eq:lemma_recursive_inequality}
-\norm{\prod_{i=1}^nA_i - \prod_{i=1}^nB_i} \leq \sum_{i=1}^n c_i\,.
+\norm{\prod_{i=1}^nA_i - \prod_{i=1}^nB_i} \leq \sum_{i=1}^n \norm{A_i - B_i}\,.
 \end{equation}
-Furthermore, if it strictly holds that $\norm{A_i - B_i} < c_i$ for some $i\in\{1,\ldots,n\}$, then the inequality in Equation~\eqref{eq:lemma_recursive_inequality} is also strict.
 \end{lemma}
 \begin{proof}
 We provide a proof by induction. Clearly, Equation~\eqref{eq:lemma_recursive_inequality} holds for $n=1$. Suppose that it holds for $n=k-1$. We show that it then also holds for $n=k$.
@@ -1976,9 +1975,9 @@ We provide a proof by induction. Clearly, Equation~\eqref{eq:lemma_recursive_ine
  &= \norm{\left(\prod_{i=1}^{n-1}A_i\right)(A_n - B_n)} + \norm{\left(\prod_{i=1}^{n-1}A_i - \prod_{i=1}^{n-1}B_i\right)B_n} \\
  &\leq \norm{\prod_{i=1}^{n-1}A_i}\norm{A_n - B_n} + \norm{\prod_{i=1}^{n-1}A_i - \prod_{i=1}^{n-1}B_i}\norm{B_n} \\
  &\leq \norm{A_n - B_n} + \norm{\prod_{i=1}^{n-1}A_i - \prod_{i=1}^{n-1}B_i} \\
- &\leq c_n + \sum_{i=1}^{n-1}c_i = \sum_{i=1}^{n}c_i\,.
+ &\leq \norm{A_n - B_n} + \sum_{i=1}^{n-1}\norm{A_i - B_i} = \sum_{i=1}^{n}\norm{A_i - B_i}\,.
 \end{align*}
-Here, in the second-to-last inequality, we used the fact that $\norm{A_i}\leq 1$ and $\norm{B_i}\leq 1$ for all $i\in\{1,\ldots,n\}$. In the final inequality, we used the induction hypothesis and the assumption that $\norm{A_n - B_n}\leq c_n$. If instead strictly $\norm{A_n - B_n}< c_n$, we can therefore replace the final inequality with a strict inequality.
+Here, in the second-to-last inequality, we used the fact that $\norm{A_i}\leq 1$ and $\norm{B_i}\leq 1$ for all $i\in\{1,\ldots,n\}$. In the final inequality, we used the induction hypothesis.
 \end{proof}
 
 \begin{lemma}\label{lemma:alt_axiom_prob}
@@ -3663,14 +3662,38 @@ For all $i\in\nats$, let now $w_i\in\mathcal{U}_{[t,s]}$ be such that $w_i=u_i\c
 \begin{equation*}
 \Phi_{w_i} = \prod_{k=1}^{n_i}(I+\Delta_{k}^{u_i}\lrate)\prod_{k=1}^{m_i}(I+\Delta_{k}^{v_i}\lrate) = \Phi_{u_i}\Phi_{v_i}\,.
 \end{equation*}
-Furthermore, we have that
+
+%We will now show that
+%\begin{equation*}
+%\lim_{i\to\infty}\Phi_{w_i} = \lim_{i\to\infty}\{\Phi_{u_i}\Phi_{v_i}\} = \lim_{i\to\infty}\{\Phi_{u_i}\}\lim_{i\to\infty}\{\Phi_{v_i}\}\,.
+%\lim_{i\to\infty}\{\Phi_{u_i}\Phi_{v_i}\} = \lim_{i\to\infty}\{\Phi_{u_i}\}\lim_{i\to\infty}\{\Phi_{v_i}\}\,.
+%\end{equation*}
+%Due to Theorem~\ref{theo:convergencelowerbound}, this now implies that
+%\begin{equation*}
+%L_t^s = \lim_{i\to\infty}\Phi_{w_i} = \lim_{i\to\infty}\{\Phi_{u_i}\}\lim_{i\to\infty}\{\Phi_{v_i}\} = L_t^rL_r^s\,.
+%\end{equation*}
+Furthermore, due to Theorem~\ref{theo:convergencelowerbound}, we have that $L_t^s = \lim_{i\to\infty}\Phi_{w_i}$.
+It remains to show that
 \begin{equation*}
-\lim_{i\to\infty}\Phi_{w_i} = \lim_{i\to\infty}\{\Phi_{u_i}\Phi_{v_i}\} = \lim_{i\to\infty}\{\Phi_{u_i}\}\lim_{i\to\infty}\{\Phi_{v_i}\}\,.
+L_t^s = \lim_{i\to\infty}\Phi_{w_i} = L_t^rL_r^s\,.
 \end{equation*}
-Due to Theorem~\ref{theo:convergencelowerbound}, this now implies that
+Suppose \emph{ex absurdo} that this does not hold. Then,
 \begin{equation*}
-L_t^s = \lim_{i\to\infty}\Phi_{w_i} = \lim_{i\to\infty}\{\Phi_{u_i}\}\lim_{i\to\infty}\{\Phi_{v_i}\} = L_t^rL_r^s\,.
+(\exists \epsilon\in\realspos)(\forall n\in\nats)(\exists i>n)\,:\,\norm{\Phi_{w_i} - L_t^rL_r^s} \geq \epsilon\,.
 \end{equation*}
+Consider this $\epsilon$. Because $\lim_{i\to\infty}\Phi_{u_i}=L_t^r$ and $\lim_{i\to\infty}\Phi_{v_i}=L_r^s$, we have that
+\begin{equation*}
+(\exists n_u\in\nats)(\forall i>n_u)\,:\,\norm{L_t^r - \Phi_{u_i}}<\frac{\epsilon}{2}\,,\quad\text{and,}\quad(\exists n_v\in\nats)(\forall i>n_v)\,:\,\norm{L_r^s - \Phi_{v_i}}<\frac{\epsilon}{2}\,.
+\end{equation*}
+Let now $n\coloneqq \max\{n_u,n_v\}$. Then, there is some $i>n$ such that
+\begin{equation*}
+\norm{\Phi_{w_i} - L_t^rL_r^s} \geq \epsilon\,.
+\end{equation*}
+Because $\Phi_{w_i}=\Phi_{u_i}\Phi_{v_i}$, and due to Lemma~\ref{lemma:recursive}, we find that
+\begin{align*}
+\epsilon &\leq \norm{\Phi_{u_i}\Phi_{v_i} - L_t^rL_r^s} \leq \norm{L_t^r - \Phi_{u_i}} + \norm{L_r^s - \Phi_{v_i}} < \frac{\epsilon}{2} + \frac{\epsilon}{2} = \epsilon\,,
+\end{align*}
+a contradiction. Hence, we find that indeed $L_t^s=L_t^rL_r^s$.
 \end{proof}
 
 
