@@ -1,4 +1,5 @@
 \documentclass[10pt]{paper}
+%\documentclass[3p]{elsarticle}
 %\documentclass[a4paper,reqno]{amsart}
 \usepackage[british]{babel}
 %\usepackage[garamond]{mathdesign}
@@ -16,9 +17,9 @@
 \usepackage{tikz}
 \usepackage{nicefrac}
 \usepackage{bm}
-\usepackage{algorithm}
-\usepackage{algorithmicx}
-\usepackage{algpseudocode}
+%\usepackage{algorithm}
+%\usepackage{algorithmicx}
+%\usepackage{algpseudocode}
 
 %\usepackage{hyperref}
 %\usepackage{pdfsync}
@@ -39,8 +40,8 @@
 \newtheorem{claim}{Claim}[theorem]
 \newtheorem*{claim*}{Claim}
 
-\algrenewcommand\algorithmicrequire{\textbf{Input:}}
-\algrenewcommand\algorithmicensure{\textbf{Output:}}
+%\algrenewcommand\algorithmicrequire{\textbf{Input:}}
+%\algrenewcommand\algorithmicensure{\textbf{Output:}}
 
 % - macros
 
@@ -113,6 +114,7 @@
 %\affil[2]{Ghent University}
 
 \author{Thomas Krak \and Jasper de Bock}
+%\author{Thomas Krak and Jasper de Bock}
 
 \begin{document}
 
@@ -1110,7 +1112,7 @@ Because these restricted transition matrix systems are only defined on some give
 \mathcal{T}^{[t,r]} \otimes \mathcal{T}^{[r,s]} \coloneqq &\mathcal{T}^{[t,r]} \cup \mathcal{T}^{[r,s]} \\
  &\quad \cup \left\{T_\tau^\sigma\coloneqq T_\tau^rT_r^{\sigma}\,\Big\vert\,T_{\tau}^r\in\mathcal{T}^{[t,r]},\,T_r^{\sigma}\in\mathcal{T}^{[r,s]},\,\forall\tau\in[t,r],\,\forall\sigma\in[r,s]\right\}\,.
 \end{align*}
-\begin{proposition}
+\begin{proposition}\label{prop:concat_restr_trans_mat_systems_is_system}
 Consider any $t,r,s\in\realsnonneg$ such that $t\leq r\leq s$, and any two restricted transition matrix systems $\mathcal{T}^{[t,r]}$ and $\mathcal{T}^{[r,s]}$. Then,
 \begin{equation*}
 \mathcal{T}^{[t,s]} \coloneqq \mathcal{T}^{[t,r]}\otimes \mathcal{T}^{[r,s]}
@@ -1190,7 +1192,7 @@ Consider such an $\epsilon\in\realspos$. Then, because $\presuper{*}T_\tau^r=\li
 \begin{equation*}
 (\forall i>n_\tau)\,:\,\norm{\presuper{*}T_\tau^r - \presuper{i}T_\tau^r} < \frac{\epsilon}{2}\,, \quad\text{and,}\quad (\forall i>n_\sigma)\,:\,\norm{\presuper{*}T_r^\sigma - \presuper{i}T_r^\sigma} < \frac{\epsilon}{2}\,.
 \end{equation*}
-Consider now any $n\in\nats$ such that $n>\max\{n_\tau,n_\sigma\}$. Then, there must be some $i\in\nats$ such that $i>n$, and for which, by Lemma~{\bf RECURSIVE},
+Consider now any $n\in\nats$ such that $n>\max\{n_\tau,n_\sigma\}$. Then, there must be some $i\in\nats$ such that $i>n$, and for which, by Lemma~\ref{lemma:recursive},
 \begin{equation*}
 \epsilon \leq \norm{\presuper{i}T_\tau^r\presuper{i}T_r^\sigma - \presuper{*}T_\tau^r\presuper{*}T_r^\sigma} < \frac{\epsilon}{2} + \frac{\epsilon}{2} = \epsilon\,.
 \end{equation*}
@@ -1404,7 +1406,7 @@ with $N'\in\nats$, such that
 \end{equation*}
 For each $Q_i\in\rateset_{\epsilon'}$, we let $\mathcal{T}_{Q_i}$ be the family of transition matrices defined as in Definition~\ref{def:systemfromQ}.
 
-Now, because $\rateset$ is non-empty, bounded, and convex, due to Lemma~{\bf REF}, there is some $\delta\in\realspos$ such that, for all $P\in\wmprocesses_\rateset$, all $t\in\realsnonneg$, and all $\Delta\in\realspos$ with $\Delta<\delta$,
+Now, because $\rateset$ is non-empty, bounded, and convex, due to Lemma~\ref{lemma:uniform_delta_for_convex_markov_set}, there is some $\delta\in\realspos$ such that, for all $P\in\wmprocesses_\rateset$, all $t\in\realsnonneg$, and all $\Delta\in\realspos$ with $\Delta<\delta$,
 \begin{equation}\label{eq:lemma_total_bounded_uniform_delta}
 (\exists Q\in\rateset)\,\norm{T_t^{t+\Delta} - (I+\Delta Q)} < \frac{\Delta\epsilon^*}{6C}\,.
 \end{equation}
@@ -1473,7 +1475,7 @@ If $q,r\in[t_{i-1},t_i]$ for some $i\in\{1,\ldots,n\}$, then it follows from Cla
 \norm{T_q^r - S_q^r} < \frac{\Delta_i\epsilon^*}{3C} + \frac{\epsilon^*}{6} < \frac{\epsilon^*}{3} + \frac{\epsilon^*}{6} < \epsilon^*\,.
 \end{equation*}
 
-For the second case, suppose that $q\in[t_{i-1},t_i]$ and $r\in[t_i,t_{i+1}]$ for some $i\in\{1,\ldots,n-1\}$. Then, because $T_q^r$ and $S_q^r$ satisfy Equation~\eqref{eq:transmatrixproduct}, it follows from Lemma~{\bf RECURSIVE} and Claim~\ref{claim:lemma_total_bounded_sub_interval_error} that
+For the second case, suppose that $q\in[t_{i-1},t_i]$ and $r\in[t_i,t_{i+1}]$ for some $i\in\{1,\ldots,n-1\}$. Then, because $T_q^r$ and $S_q^r$ satisfy Equation~\eqref{eq:transmatrixproduct}, it follows from Lemma~\ref{lemma:recursive} and Claim~\ref{claim:lemma_total_bounded_sub_interval_error} that
 \begin{align*}
 \norm{T_q^r - S_q^r} &= \norm{T_q^{t_i}T_{t_i}^r - S_q^{t_i}S_{t_i}^r} \\
  &< \frac{\Delta_i\epsilon^*}{3C} + \frac{\Delta_{i+1}\epsilon^*}{3C} + \frac{\epsilon^*}{6} + \frac{\epsilon^*}{6} \\
@@ -1482,7 +1484,7 @@ For the second case, suppose that $q\in[t_{i-1},t_i]$ and $r\in[t_i,t_{i+1}]$ fo
  &< \epsilon^*\,.
 \end{align*}
 
-In any other case, there must be some $i,j\in\{1,\ldots,n\}$ such that $i+1<j$, and for which $q\in[t_{i-1},t_i]$ and $r\in[t_{j-1},t_j]$. Therefore, and because $T_q^r$ and $S_q^r$ satisfy Equation~\eqref{eq:transmatrixproduct}, it follows from Lemma~{\bf RECURSIVE} and Claim~\ref{claim:lemma_total_bounded_full_interval_error} and~\ref{claim:lemma_total_bounded_sub_interval_error} that
+In any other case, there must be some $i,j\in\{1,\ldots,n\}$ such that $i+1<j$, and for which $q\in[t_{i-1},t_i]$ and $r\in[t_{j-1},t_j]$. Therefore, and because $T_q^r$ and $S_q^r$ satisfy Equation~\eqref{eq:transmatrixproduct}, it follows from Lemma~\ref{lemma:recursive} and Claim~\ref{claim:lemma_total_bounded_full_interval_error} and~\ref{claim:lemma_total_bounded_sub_interval_error} that
 \begin{align*}
 \norm{T_q^r - S_q^r} &= \norm{T_q^{t_i}\left(\prod_{k=i+1}^{j-1}T_{t_{k-1}}^{t_k}\right)T_{t_{j-1}}^r - S_q^{t_i}\left(\prod_{k=i+1}^{j-1}S_{t_{k-1}}^{t_k}\right)S_{t_{j-1}}^r} \\
  &< \frac{\Delta_i\epsilon^*}{3C} + \frac{\epsilon^*}{6} + \left(\sum_{k=i+1}^{j-1}\frac{\Delta_k\epsilon^*}{3C} + \Delta_k\epsilon'\right) + \frac{\Delta_{j}\epsilon^*}{3C} + \frac{\epsilon^*}{6} \\
@@ -1508,7 +1510,7 @@ For all $i\in\{1,\ldots,n\}$, choose some $\mathcal{T}_i^{[t_{i-1},t_i]}\in\math
 \begin{equation*}
 \mathcal{T}^{[t,s]}\coloneqq \mathcal{T}_1^{[t_{0},t_1]} \otimes \mathcal{T}_2^{[t_{1},t_2]} \cdots \otimes \mathcal{T}_n^{[t_{n-1},t_n]}\,.
 \end{equation*}
-Because for all $i\in\{1,\ldots,n\}$ we have that $\mathcal{T}_i^{[t_{i-1},t_i]}$ is a well-behaved restricted transition matrix system, it follows from Proposition~{\bf REF} that $\mathcal{T}^{[t,s]}$ is a well-behaved restricted transition matrix system defined on $[t,s]$.
+Because for all $i\in\{1,\ldots,n\}$ we have that $\mathcal{T}_i^{[t_{i-1},t_i]}$ is a well-behaved restricted transition matrix system, it follows from Proposition~\ref{prop:concat_restr_trans_mat_systems_is_system} that $\mathcal{T}^{[t,s]}$ is a well-behaved restricted transition matrix system defined on $[t,s]$.
 
 We now have to show that $\mathcal{T}^{[t,s]} \in \mathbb{T}_\rateset^{[t,s]}$. To this end, consider any $Q\in\rateset$, and let $\mathcal{T}_Q$ be the transition matrix system corresponding to $Q$, defined as in Definition~\ref{def:systemfromQ}. Let
 \begin{equation*}
@@ -1579,7 +1581,7 @@ Consider any non-empty, bounded and closed set of rate matrices $\rateset$, and 
 Immediate consequence of Lemma~\ref{lemma:restricted_trans_mat_system_complete_if_Q_closed} and Corollary~\ref{cor:restricted_trans_mat_system_totally_bounded_if_Q_bounded}.
 \end{proof}
 
-\begin{lemma}
+\begin{lemma}\label{lemma:convex_rate_set_contains_approximation}
 Consider any non-empty, bounded and convex set of rate matrices $\rateset$, any $\Delta\in\realspos$ such that $\Delta<\nicefrac{1}{\norm{\rateset}}$, and any $u\in\mathcal{U}_{[0,\Delta]}$ with $u=t_0,\ldots,t_n$. For all $i\in\{1,\ldots,n\}$, choose some $Q_i\in\rateset$. Let
 \begin{equation*}
 Q \coloneqq \sum_{i=1}^n \frac{\Delta_i}{\Delta}Q_i\,.
@@ -1634,8 +1636,8 @@ e^a = \sum_{i=0}^\infty\frac{a^i}{i!} = 1 + a + \frac{a^2}{2!} + \frac{a^3}{3!} 
 Hence, it follows that $(1+a)<e^a$ for all $a\in\realspos$. Therefore in particular, we find that $(1+\Delta_i\norm{\rateset})<e^{\Delta_i\norm{\rateset}}$ for all $i\in\{1,\ldots,n\}$. Hence,
 \begin{align*}
 \norm{\prod_{i=1}^n(I+\Delta_iQ_i) - (I+\Delta Q)} &\leq \prod_{i=1}^n(1+\Delta_i\norm{\rateset}) - (1 + \Delta\norm{\rateset}) \\
- &< e^{\Delta_1\norm{\rateset}}\prod_{i=2}^n(1+\Delta_i\norm{\rateset}) - (1 + \Delta\norm{\rateset}) \\
- &\quad\vdots \\
+% &< e^{\Delta_1\norm{\rateset}}\prod_{i=2}^n(1+\Delta_i\norm{\rateset}) - (1 + \Delta\norm{\rateset}) \\
+% &\quad\vdots \\
  &< \prod_{i=1}^n e^{\Delta_i\norm{\rateset}} - (1 + \Delta\norm{\rateset}) \\
  &= e^{\sum_{i=1}^n\Delta_i\norm{\rateset}} - (1 + \Delta\norm{\rateset}) \\
  &= e^{\Delta\norm{\rateset}} - (1 + \Delta\norm{\rateset})\,.
@@ -1652,18 +1654,18 @@ Hence, because $\Delta<\nicefrac{1}{\norm{\rateset}}$, we find that
 \end{proof}
 
 \begin{proof}[Proof of Claim~\ref{claim:bound_on_exp}]
-The claim follows immediately from the fact that the inequality
+We have to show that $e^a-(1+a)<a^2$ for all $a\in\realspos$ such that $a<1$. To this end, consider the function
 \begin{equation*}
-e^a - (1 + a) < a^2
+f(a) \coloneqq 1 + a + a^2 - e^a\,.
 \end{equation*}
-holds for all $a\in(0,1.79328)$, up to some numerical error on the upper bound.
-
-Unfortunately, solving this problem involves finding the roots of a function with quadratic and exponential terms, which has no algebraic solution. However, the claim is easily verified using graphical methods, or checked with automated theorem provers like Mathematica~{\bf REF}.
-
-***** IF YOU HAVE ANY IDEA HOW TO SOLVE THIS NICELY, PLEASE LET ME KNOW :)
+Clearly, the inequality of interest holds whenever $f(a)>0$. Now, we clearly have that $f(0)=0$. Furthermore, if we consider the first and second derivatives,
+\begin{equation*}
+\frac{d f(a)}{d a}=1+2a-e^a\,,\quad\text{and,}\quad\frac{d^2 f(a)}{da^2}=2-e^a\,,
+\end{equation*}
+we see that at $a=0$, the function is in a local minimum, because $\nicefrac{df(a)}{da}=0$ and $\nicefrac{d^2f(a)}{da^2}>0$. Hence, $f(a)>0$ will hold close to $a=0$. Furthermore, inspection of the second derivative shows that the first derivative increases until $a=\ln(2)$, after which it remains decreasing. Therefore, $f(a)$ is monotonically increasing on $(0,b)$, for some value $b>\ln(2)$ at which the first derivative becomes negative. To prove the claim, we therefore only have to note that $\nicefrac{df(a)}{da} > 0$ still holds at $a=1$.
 \end{proof}
 
-\begin{lemma}
+\begin{lemma}\label{lemma:uniform_delta_for_convex_markov_set}
 Let $\rateset$ be any non-empty, bounded and convex set of rate matrices, and choose any $\epsilon\in\realspos$. Then, there is some $\delta\in\realspos$ such that for all $P\in\wmprocesses_\rateset$, all $t\in\realsnonneg$, and all $\Delta\in\realspos$ such that $\Delta<\delta$,
 \begin{equation*}
 (\exists Q\in\rateset)\,\norm{T_{t}^{t+\Delta} - (I+\Delta Q)} < \Delta\epsilon\,.
@@ -1676,7 +1678,7 @@ Fix any $\epsilon\in\realspos$, and let
 \end{equation*}
 Choose any $P\in\wmprocesses_\rateset$, any $t\in\realsnonneg$, and any $\Delta<\delta$.
 
-Let $\epsilon'\coloneqq \nicefrac{\epsilon}{2}$. Then, by Lemma~{\bf REF}, there is some $u\in\mathcal{U}_{[t,t+\Delta]}$ with $u=t_0,\ldots,t_n$, such that, for all $i\in\{1,\ldots,n\}$,
+Let $\epsilon'\coloneqq \nicefrac{\epsilon}{2}$. Then, by Lemma~\ref{lemma:bound_on_linear_approx_partition}, there is some $u\in\mathcal{U}_{[t,t+\Delta]}$ with $u=t_0,\ldots,t_n$, such that, for all $i\in\{1,\ldots,n\}$,
 \begin{equation*}
 (\exists Q\in\rateset)\,\norm{T_{t_{i-1}}^{t_i} - (I+\Delta_iQ)} < \Delta_i\epsilon'.
 \end{equation*}
@@ -1684,8 +1686,7 @@ This implies the existence of rate matrices $Q_1,\ldots,Q_n\in\rateset$, such th
 \begin{equation*}
 \norm{T_{t_{i-1}}^{t_i} - (I+\Delta_iQ_i)} < \Delta_i\epsilon'\,.
 \end{equation*}
-Therefore, and due to **** SOME LEMMA WITH A GENERAL VERSION OF THE RECURSIVELY PROVEN NORM INEQUALITY THAT WE USE A LOT IN THIS PAPER ***
-we find using the Markov property of $P$ that
+Therefore, and due to Lemma~\ref{lemma:recursive}, we find using the Markov property of $P$ that
 \begin{align*}
 \norm{T_t^{t+\Delta} - \prod_{i=1}^n(I+\Delta_iQ_i)} &= \norm{\prod_{i=1}^nT_{t_{i-1}}^{t_i} - \prod_{i=1}^n(I+\Delta_iQ_i)} \\
  &< \sum_{i=1}^n\Delta_i\epsilon' \\
@@ -1695,7 +1696,7 @@ Let now
 \begin{equation*}
 Q\coloneqq \sum_{i=1}^n \frac{\Delta_i}{\Delta} Q_i\,.
 \end{equation*}
-Then, by Lemma~{\bf REF}, we have that $Q\in\rateset$, and because $\Delta<\delta\leq\nicefrac{1}{\norm{\rateset}}$,
+Then, by Lemma~\ref{lemma:convex_rate_set_contains_approximation}, we have that $Q\in\rateset$, and because $\Delta<\delta\leq\nicefrac{1}{\norm{\rateset}}$,
 \begin{equation*}
 \norm{\prod_{i=1}^n(I+\Delta_iQ_i) - (I+\Delta Q)} < \Delta^2\norm{\rateset}^2\,.
 \end{equation*}
@@ -2545,6 +2546,26 @@ Finally, previous work only focused on functions $f\in\gamblesX$ defined at a si
 \appendix
 
 \section{Proofs and Lemmas for Section~\ref{sec:prelim}}
+
+\begin{lemma}\label{lemma:recursive}
+Consider two sequences $A_1,\ldots,A_n$ and $B_1,\ldots,B_n$ of non-negatively homogeneous operators from $\gamblesX$ to $\gamblesX$, such that $\norm{A_i}\leq 1$ and $\norm{B_i}\leq 1$ for all $i\in\{1,\ldots,n\}$. Suppose that it holds for all $i\in\{1,\ldots,n\}$ that $\norm{A_i - B_i} \leq c_i$, for some $c_i\in\realsnonneg$. Then,
+\begin{equation}\label{eq:lemma_recursive_inequality}
+\norm{\prod_{i=1}^nA_i - \prod_{i=1}^nB_i} \leq \sum_{i=1}^n c_i\,.
+\end{equation}
+Furthermore, if it strictly holds that $\norm{A_i - B_i} < c_i$ for some $i\in\{1,\ldots,n\}$, then the inequality in Equation~\eqref{eq:lemma_recursive_inequality} is also strict.
+\end{lemma}
+\begin{proof}
+We provide a proof by induction. Clearly, Equation~\eqref{eq:lemma_recursive_inequality} holds for $n=1$. Suppose that it holds for $n=k-1$. We show that it then also holds for $n=k$.
+\begin{align*}
+\norm{\prod_{i=1}^nA_i - \prod_{i=1}^nB_i} &= \norm{\prod_{i=1}^nA_i - \left(\prod_{i=1}^{n-1}A_i\right)B_n + \left(\prod_{i=1}^{n-1}A_i\right)B_n - \prod_{i=1}^nB_i} \\
+ &\leq \norm{\prod_{i=1}^nA_i - \left(\prod_{i=1}^{n-1}A_i\right)B_n} + \norm{\left(\prod_{i=1}^{n-1}A_i\right)B_n - \prod_{i=1}^nB_i} \\
+ &= \norm{\left(\prod_{i=1}^{n-1}A_i\right)(A_n - B_n)} + \norm{\left(\prod_{i=1}^{n-1}A_i - \prod_{i=1}^{n-1}B_i\right)B_n} \\
+ &\leq \norm{\prod_{i=1}^{n-1}A_i}\norm{A_n - B_n} + \norm{\prod_{i=1}^{n-1}A_i - \prod_{i=1}^{n-1}B_i}\norm{B_n} \\
+ &\leq \norm{A_n - B_n} + \norm{\prod_{i=1}^{n-1}A_i - \prod_{i=1}^{n-1}B_i} \\
+ &\leq c_n + \sum_{i=1}^{n-1}c_i = \sum_{i=1}^{n}c_i\,.
+\end{align*}
+Here, in the second-to-last inequality, we used the fact that $\norm{A_i}\leq 1$ and $\norm{B_i}\leq 1$ for all $i\in\{1,\ldots,n\}$. In the final inequality, we used the induction hypothesis and the assumption that $\norm{A_n - B_n}\leq c_n$. If instead strictly $\norm{A_n - B_n}< c_n$, we can therefore replace the final inequality with a strict inequality.
+\end{proof}
 
 \begin{proof}[Proof of Proposition~\ref{prop:norm_properties}]
 *** Most are obvious, as that's what it means to be a ``norm''. Others follow trivially from the definitions. Properties~\ref{N:normAB} and \ref{N:normAf} probably require a proof.
