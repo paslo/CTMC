@@ -1730,39 +1730,12 @@ and furthermore,
 
 **** blablabla, ondergrens bereikt als $\rateset$ ook closed is
 
-\begin{proposition}
+\begin{proposition}\label{prop:lower_expectation_reached_if_Q_closed}
 Let $\rateset$ be an arbitrary non-empty, bounded, and closed set of rate matrices that has separately specified rows, with corresponding lower transition rate operator $\lrate$, and let $\underline{\mathcal{T}}_{\lrate}$ be the family of lower transition operators corresponding to $\lrate$. Then, for all $t,s\in\realsnonneg$ such that $t<s$, and all $f\in\gamblesX$, there is some $P\in\wmprocesses_\rateset$ such that
 \begin{equation*}
 L_t^sf = T_t^sf\,.
 \end{equation*}
 \end{proposition}
-\begin{proof}
-Consider any sequence $\{\epsilon_i\}_{i\in\nats}$ in $\realspos$ such that $\{\epsilon_i\}_{i\in\nats}\to0^+$. Due to Proposition~\ref{theorem:lower_markov_bound_is_tight}, for all $i\in\nats$, there is some $P_i\in\wmprocesses_\rateset$ such that
-\begin{equation*}
-\norm{L_t^sf - \presuper{i}T_t^sf} < \epsilon_i\,,
-\end{equation*}
-where $\presuper{i}T_t^s$ is the transition matrix corresponding to $P_i$. Consider the sequence $\{P_i\}_{i\in\nats}$. Then, because $\{\epsilon_i\}_{i\in\nats}\to0^+$, the corresponding sequence $\{\presuper{i}T_t^s\}_{i\in\nats}$ clearly satisfies
-\begin{equation}\label{eq:prop_lower_is_reached_limit}
-\lim_{i\to\infty}\norm{L_t^sf - \presuper{i}T_t^sf} = 0\,.
-\end{equation}
-
-For each $P_i$ in $\{P_i\}_{i\in\nats}$, consider the restricted transition matrix system $\mathcal{T}_i^{[t,s]}$. Because $P_i\in\wmprocesses_\rateset$, we clearly have that $\mathcal{T}_i^{[t,s]}\in\mathbb{T}_\rateset^{[t,s]}$, where $\mathbb{T}_\rateset^{[t,s]}$ is the space of all restricted transition matrix systems corresponding to $\wmprocesses_\rateset$, defined as in Section~{\bf REF}.
-
-Therefore, the sequence $\left\{\mathcal{T}_i^{[t,s]}\right\}_{i\in\nats}$ is clearly in $\mathbb{T}_\rateset^{[t,s]}$. Because $\rateset$ is non-empty, bounded, and closed, by Theorem~\ref{theorem:restricted_transmatsystem_space_compact_if_Q_closed}, the space $\mathbb{T}_\rateset^{[t,s]}$ is compact under the metric $d$ defined as in Equation~\eqref{eq:trans_mat_system_metric}. Therefore, the sequence $\left\{\mathcal{T}_i^{[t,s]}\right\}_{i\in\nats}$ contains a convergent subsequence $\left\{\mathcal{T}_{i_k}^{[t,s]}\right\}_{k\in\nats}$, of which the limit $\mathcal{T}_*^{[t,s]}\coloneqq \lim_{k\to\infty}\mathcal{T}_{i_k}^{[t,s]}$ belongs to $\mathbb{T}_\rateset^{[t,s]}$.
-
-Because $\mathcal{T}_*^{[t,s]}\in\mathbb{T}_\rateset^{[t,s]}$, there must be some $P_*\in\wmprocesses_\rateset$ such that $\mathcal{T}_{P_*}^{[t,s]}=\mathcal{T}_*^{[t,s]}$. Furthermore, this $P_*$ has a corresponding transition matrix $\presuper{*}T_t^s$ which, by Lemma~{\bf REF}, is given by
-\begin{equation*}
-\presuper{*}T_t^s = \lim_{k\to\infty}\presuper{i_k}T_t^s\,.
-\end{equation*}
-Therefore, and because the sequence $\left\{\presuper{i_k}T_t^s \right\}_{k\in\nats}$ is a subsequence of $\left\{\presuper{i}T_t^s\right\}_{i\in\nats}$, we find from Equation~\eqref{eq:prop_lower_is_reached_limit} that
-\begin{equation*}
-\norm{L_t^sf - \presuper{*}T_t^sf} = 0\,.
-\end{equation*}
-In summary, we have found a $P_*\in\wmprocesses_\rateset$ with a corresponding transition matrix $\presuper{*}T_t^s$, such that
-\begin{equation*}
-L_t^sf = \presuper{*}T_t^sf\,.
-\end{equation*}
-\end{proof}
 
 **** blablabla
 
@@ -1984,6 +1957,10 @@ Finally, previous work only focused on functions $f\in\gamblesX$ defined at a si
 
 \section{Proofs and Lemmas for Section~\ref{sec:prelim}}
 
+\begin{proof}[Proof of Proposition~\ref{prop:norm_properties}]
+*** Most are obvious, as that's what it means to be a ``norm''. Others follow trivially from the definitions. Properties~\ref{N:normAB} and \ref{N:normAf} probably require a proof.
+\end{proof}
+
 \begin{lemma}\label{lemma:recursive}
 Consider two sequences $A_1,\ldots,A_n$ and $B_1,\ldots,B_n$ of non-negatively homogeneous operators from $\gamblesX$ to $\gamblesX$, such that $\norm{A_i}\leq 1$ and $\norm{B_i}\leq 1$ for all $i\in\{1,\ldots,n\}$. Suppose that it holds for all $i\in\{1,\ldots,n\}$ that $\norm{A_i - B_i} \leq c_i$, for some $c_i\in\realsnonneg$. Then,
 \begin{equation}\label{eq:lemma_recursive_inequality}
@@ -2002,10 +1979,6 @@ We provide a proof by induction. Clearly, Equation~\eqref{eq:lemma_recursive_ine
  &\leq c_n + \sum_{i=1}^{n-1}c_i = \sum_{i=1}^{n}c_i\,.
 \end{align*}
 Here, in the second-to-last inequality, we used the fact that $\norm{A_i}\leq 1$ and $\norm{B_i}\leq 1$ for all $i\in\{1,\ldots,n\}$. In the final inequality, we used the induction hypothesis and the assumption that $\norm{A_n - B_n}\leq c_n$. If instead strictly $\norm{A_n - B_n}< c_n$, we can therefore replace the final inequality with a strict inequality.
-\end{proof}
-
-\begin{proof}[Proof of Proposition~\ref{prop:norm_properties}]
-*** Most are obvious, as that's what it means to be a ``norm''. Others follow trivially from the definitions. Properties~\ref{N:normAB} and \ref{N:normAf} probably require a proof.
 \end{proof}
 
 \begin{lemma}\label{lemma:alt_axiom_prob}
@@ -4121,6 +4094,34 @@ $\norm{L_t^sg - T_t^sg} < \epsilon$.
 Together this implies, using Definition~\ref{def:lower_non_markov}, that
 \begin{equation*}
 \left[L_t^sg\right](x) = \inf\left\{\left[T_t^sf\right](x)\,:\,P\in\processes_\rateset\right\} = \underline{\mathbb{E}}\left[g(X_s)\,\vert\,X_t=x\right]\,.
+\end{equation*}
+\end{proof}
+
+\begin{proof}[Proof of Proposition~\ref{prop:lower_expectation_reached_if_Q_closed}]
+Consider any sequence $\{\epsilon_i\}_{i\in\nats}$ in $\realspos$ such that $\{\epsilon_i\}_{i\in\nats}\to0^+$. Due to Proposition~\ref{theorem:lower_markov_bound_is_tight}, for all $i\in\nats$, there is some $P_i\in\wmprocesses_\rateset$ such that
+\begin{equation*}
+\norm{L_t^sf - \presuper{i}T_t^sf} < \epsilon_i\,,
+\end{equation*}
+where $\presuper{i}T_t^s$ is the transition matrix corresponding to $P_i$. Consider the sequence $\{P_i\}_{i\in\nats}$. Then, because $\{\epsilon_i\}_{i\in\nats}\to0^+$, the corresponding sequence $\{\presuper{i}T_t^s\}_{i\in\nats}$ clearly satisfies
+\begin{equation}\label{eq:prop_lower_is_reached_limit}
+\lim_{i\to\infty}\norm{L_t^sf - \presuper{i}T_t^sf} = 0\,.
+\end{equation}
+
+For each $P_i$ in $\{P_i\}_{i\in\nats}$, consider the restricted transition matrix system $\mathcal{T}_i^{[t,s]}$. Because $P_i\in\wmprocesses_\rateset$, we clearly have that $\mathcal{T}_i^{[t,s]}\in\mathbb{T}_\rateset^{[t,s]}$, where $\mathbb{T}_\rateset^{[t,s]}$ is the space of all restricted transition matrix systems corresponding to $\wmprocesses_\rateset$, defined as in Section~{\bf REF}.
+
+Therefore, the sequence $\left\{\mathcal{T}_i^{[t,s]}\right\}_{i\in\nats}$ is clearly in $\mathbb{T}_\rateset^{[t,s]}$. Because $\rateset$ is non-empty, bounded, and closed, by Theorem~\ref{theorem:restricted_transmatsystem_space_compact_if_Q_closed}, the space $\mathbb{T}_\rateset^{[t,s]}$ is compact under the metric $d$ defined as in Equation~\eqref{eq:trans_mat_system_metric}. Therefore, the sequence $\left\{\mathcal{T}_i^{[t,s]}\right\}_{i\in\nats}$ contains a convergent subsequence $\left\{\mathcal{T}_{i_k}^{[t,s]}\right\}_{k\in\nats}$, of which the limit $\mathcal{T}_*^{[t,s]}\coloneqq \lim_{k\to\infty}\mathcal{T}_{i_k}^{[t,s]}$ belongs to $\mathbb{T}_\rateset^{[t,s]}$.
+
+Because $\mathcal{T}_*^{[t,s]}\in\mathbb{T}_\rateset^{[t,s]}$, there must be some $P_*\in\wmprocesses_\rateset$ such that $\mathcal{T}_{P_*}^{[t,s]}=\mathcal{T}_*^{[t,s]}$. Furthermore, this $P_*$ has a corresponding transition matrix $\presuper{*}T_t^s$ which, by Lemma~{\bf REF}, is given by
+\begin{equation*}
+\presuper{*}T_t^s = \lim_{k\to\infty}\presuper{i_k}T_t^s\,.
+\end{equation*}
+Therefore, and because the sequence $\left\{\presuper{i_k}T_t^s \right\}_{k\in\nats}$ is a subsequence of $\left\{\presuper{i}T_t^s\right\}_{i\in\nats}$, we find from Equation~\eqref{eq:prop_lower_is_reached_limit} that
+\begin{equation*}
+\norm{L_t^sf - \presuper{*}T_t^sf} = 0\,.
+\end{equation*}
+In summary, we have found a $P_*\in\wmprocesses_\rateset$ with a corresponding transition matrix $\presuper{*}T_t^s$, such that
+\begin{equation*}
+L_t^sf = \presuper{*}T_t^sf\,.
 \end{equation*}
 \end{proof}
 
