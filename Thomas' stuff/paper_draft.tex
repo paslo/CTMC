@@ -1901,122 +1901,6 @@ Thus, we see that the operator $L_t^s$ can also be used to compute lower expecta
 
 \subsection{Multi-Variable Functions on Multiple Points in the Future}\label{sec:decomposition}
 
-*** I would generalise this section a bit. How about we first prove an extended version of Corollary~\ref{cor:inf_works_for_multivar} that does not use $L$, but instead just decomposes a lower expectation operator into two parts (both of which may consist of multiple time points). The specific version with $L$ then follows by combining this result with Corollary~\ref{cor:inf_works_for_single_future_var}. ***
-
-**** doing some setup for new approach
-
-\begin{theorem}
-Let $\rateset$ be an arbitrary non-empty, bounded, and convex set of rate matrices, with the corresponding set $\wprocesses_\rateset$ of well-behaved stochastic processes consistent with $\rateset$. Then, for any $t\in\realsnonneg$, any $u\in\mathcal{U}_{<t}$ and $v\in\mathcal{U}_{\geq t}$, any $f\in\gambles(\states^{u\cup v})$, and any $w\subseteq v$,
-\begin{equation}\label{eq:lower_exp_factorizes}
-\underline{\mathbb{E}}^{\mathrm{W}}_\rateset\left[f(X_u,X_v)\,\vert\,X_u\right] = \underline{\mathbb{E}}^{\mathrm{W}}_\rateset\Bigl[\underline{\mathbb{E}}^{\mathrm{W}}_\rateset\left[f(X_u,X_v)\,\vert\,X_u,X_{v\setminus w}\right] \,\Big\vert\,X_u\Bigr] 
-\end{equation}
-\end{theorem}
-\begin{proof}
-Consider any $P\in\wprocesses_\rateset$. Then, clearly, due to the basic properties of expectation and the definition of $\underline{\mathbb{E}}^{\mathrm{W}}_\rateset$, it holds that
-\begin{align*}
-\mathbb{E}\left[f(X_u,X_v)\,\vert\,X_u\right] &= \mathbb{E}\bigl[\mathbb{E}\left[f(X_u,X_v)\,\vert\,X_u,X_{v\setminus w}\right]\,\vert\,X_u\bigr] \\
- &\geq \mathbb{E}\bigl[\underline{\mathbb{E}}^{\mathrm{W}}_\rateset\left[f(X_u,X_v)\,\vert\,X_u,X_{v\setminus w}\right]\,\vert\,X_u\bigr] \\
- &\geq \underline{\mathbb{E}}^{\mathrm{W}}_\rateset\bigl[\underline{\mathbb{E}}^{\mathrm{W}}_\rateset\left[f(X_u,X_v)\,\vert\,X_u,X_{v\setminus w}\right]\,\vert\,X_u\bigr]\,,
-\end{align*}
-where in the second step we used the fact that the (outer) expectation computes a convex combination of values. Because this holds for any $P\in\wprocesses_\rateset$, it follows that
-\begin{equation*}
-\underline{\mathbb{E}}^{\mathrm{W}}_\rateset\left[f(X_u,X_v)\,\vert\,X_u\right] \geq \underline{\mathbb{E}}^{\mathrm{W}}_\rateset\bigl[\underline{\mathbb{E}}^{\mathrm{W}}_\rateset\left[f(X_u,X_v)\,\vert\,X_u,X_{v\setminus w}\right]\,\vert\,X_u\bigr]\,.
-\end{equation*}
-
-To prove Equation~\eqref{eq:lower_exp_factorizes}, it therefore remains to show that, for all $\epsilon\in\realspos$, there is some $P\in\wprocesses_\rateset$ such that
-\begin{equation*}
-\norm{\mathbb{E}\left[f(X_u,X_v)\,\vert\,X_u\right] - \underline{\mathbb{E}}^{\mathrm{W}}_\rateset\bigl[\underline{\mathbb{E}}^{\mathrm{W}}_\rateset\left[f(X_u,X_v)\,\vert\,X_u,X_{v\setminus w}\right]\,\vert\,X_u\bigr]} < \epsilon\,.
-\end{equation*}
-Fix any $\epsilon\in\realspos$. Due to the definition of the norm, we have to show that
-\begin{equation*}
-\max\left\{\abs{\mathbb{E}\left[f(x_u,X_v)\,\vert\,x_u\right] - \underline{\mathbb{E}}^{\mathrm{W}}_\rateset\bigl[\underline{\mathbb{E}}^{\mathrm{W}}_\rateset\left[f(x_u,X_v)\,\vert\,x_u,X_{v\setminus w}\right]\,\vert\,x_u\bigr]}\,:\,x_u\in\states^u\right\} < \epsilon\,.
-\end{equation*}
-
-\begin{remark}
-******
-
-I need the following property, which is true but not explicit from the statement of Theorem~\ref{theo:aanelkaarplakken} (notation in the context of that theorem, not this one):
-\begin{equation*}
-P(X_z=x_z\,\vert\,X_v=x_v) = P_\emptyset(X_z=x_z\,\vert\,X_v=x_v)\quad\text{for all $z,v\subseteq u$ with $z\cup v=u$ and $x_{z\cup v}\in\states^{z\cup v}$.}
-\end{equation*}
-
-******
-\end{remark}
-Let now $z\coloneqq v\setminus w$. For any $x_u\in\states^u$, consider
-\begin{equation*}
-\underline{\mathbb{E}}^{\mathrm{W}}_\rateset\bigl[\underline{\mathbb{E}}^{\mathrm{W}}_\rateset[f(x_u,X_z,X_w)\,\vert\,x_u,X_z]\,\big\vert\,x_u\bigr] = \inf\{\mathbb{E}\bigl[\underline{\mathbb{E}}^{\mathrm{W}}_\rateset[f(x_u,X_z,X_w)\,\vert\,x_u,X_z]\,\big\vert\,x_u\bigr]\,:\,P\in\wprocesses_\rateset\}\,.
-\end{equation*}
-Because this is an infimum, this implies that there must be some stochastic process $P_{X_z,x_u}\in\wprocesses_\rateset$, with expectation operator $\mathbb{E}_{X_z,x_u}$, such that
-\begin{equation*}
-\mathbb{E}_{X_z,x_u}\bigl[\underline{\mathbb{E}}^{\mathrm{W}}_\rateset[f(x_u,X_z,X_w)\,\vert\,x_u,X_z]\,\big\vert\,x_u\bigr] - \frac{\epsilon}{2} < \underline{\mathbb{E}}^{\mathrm{W}}_\rateset\bigl[\underline{\mathbb{E}}^{\mathrm{W}}_\rateset[f(x_u,X_z,X_w)\,\vert\,x_u,X_z]\,\big\vert\,x_u\bigr]\,.
-\end{equation*}
-Next, for all $x_u\in\states^u$ and $x_{z}\in\states^z$, consider
-\begin{equation*}
-\underline{\mathbb{E}}^{\mathrm{W}}_\rateset\left[f(x_u,x_z,X_w)\,\vert\,x_u,x_z\right] = \inf\left\{\mathbb{E}\left[f(x_u,x_z,X_w)\,\vert\,x_u,x_z\right] \,:\, P\in\wprocesses_\rateset\right\}\,.
-\end{equation*}
-Because this is an infimum, there must be some $P_{X_w,x_z,x_u}\in\wprocesses_\rateset$, with expectation operator $\mathbb{E}_{X_w,x_z,x_u}$, such that
-\begin{equation*}
-\mathbb{E}_{X_w,x_z,x_u}\left[f(x_u,x_z,X_w)\,\vert\,x_u,x_z\right] - \frac{\epsilon}{2} < \underline{\mathbb{E}}^{\mathrm{W}}_\rateset\left[f(x_u,x_z,X_w)\,\vert\,x_u,x_z\right]\,.
-\end{equation*}
-In summary, for all $x_u\in\states^u$, we have found a process $P_{X_z,x_u}\in\wprocesses_\rateset$, and, for all $x_u\in\states^u$ and all $x_z\in\states^z$, we have found a process $P_{X_w,x_z,x_u}\in\wprocesses_\rateset$.
-
-Consider now any $x_u\in\states^u$, and the processes $P_{X_z,x_u}$ and $P_{X_w,x_z,x_u}$ for all $x_z\in\states^z$. Because $\rateset$ is non-empty, bounded, and convex, Theorem~{\bf REF} implies the existence of a process $P_{X_w,X_z,x_u}\in\wprocesses_\rateset$, such that
-\begin{align*}
-P_{X_w,X_z,x_u}(X_z=x_z\,\vert\,X_u=x_u) &= P_{X_z,x_u}(X_z=x_z\,\vert\,X_u=x_u) \\
-\text{and,} \\
-P_{X_w,X_z,x_u}(X_w=x_w\,\vert\,X_u=x_u,X_z=x_z) &= P_{X_w,x_z,x_u}(X_w=x_w\,\vert\,X_u=x_u,X_z=x_z)\,,
-\end{align*}
-for all $x_z\in\states^z$ and all $x_w\in\states^w$.
-
-Finally, consider an arbitrary $P_{X_u}\in\wprocesses_\rateset$, and the processes $P_{X_w,X_z,x_u}$ for all $x_u\in\states^u$. Theorem~{\bf REF} then implies the existence of some $P_{X_w,X_z,X_u}$ such that, for all $x_u\in\states$,
-\begin{align*}
-P_{X_w,X_z,X_u}(X_z=x_z\,\vert\,X_u=x_u) &= P_{X_w,X_z,x_u}(X_z=x_z\,\vert\,X_u=x_u) \\
- &= P_{X_z,x_u}(X_z=x_z\,\vert\,X_u=x_u) \\
-\text{and,} \\
-P_{X_w,X_z,X_u}(X_w=x_w\,\vert\,X_u=x_u,X_z=x_z) &= P_{X_w,X_z,x_u}(X_w=x_w\,\vert\,X_u=x_u,X_z=x_z) \\
- &= P_{X_w,x_z,x_u}(X_w=x_w\,\vert\,X_u=x_u,X_z=x_z)
-\end{align*}
-For notational convenience, denote $P\coloneqq P_{X_w,X_z,X_u}$.
-
-It remains to show that $P$ satisfies equation REF. To this end, assume \emph{ex absurdo} that it does not. This implies the existence of some $x_u\in\states^u$, for which
-\begin{equation*}
-\epsilon \leq \abs{\mathbb{E}\left[f(x_u,X_v)\,\vert\,x_u\right] - \underline{\mathbb{E}}^{\mathrm{W}}_\rateset\bigl[\underline{\mathbb{E}}^{\mathrm{W}}_\rateset\left[f(x_u,X_v)\,\vert\,x_u,X_{v\setminus w}\right]\,\vert\,x_u\bigr]}\,.
-\end{equation*}
-This implies that
-\begin{align*}
- &\quad \underline{\mathbb{E}}^{\mathrm{W}}_\rateset\bigl[\underline{\mathbb{E}}^{\mathrm{W}}_\rateset\left[f(x_u,X_v)\,\vert\,x_u,X_{v\setminus w}\right]\,\vert\,x_u\bigr] \\
- &\leq \mathbb{E}\left[f(X_u,X_v)\,\vert\,x_u\right] - \epsilon \\
- &= \mathbb{E}\bigl[\mathbb{E}[f(x_u,X_z,X_w)\,\vert\,x_u,X_z]\,\big\vert\,x_u\bigr] - \epsilon \\
- &= \sum_{x_z\in\states^z}P(X_z=x_z\,\vert\,X_u=x_u)\mathbb{E}[f(x_u,x_z,X_w)\,\vert\,x_u,x_z] - \epsilon \\
- &= \sum_{x_z\in\states^z}P_{X_z,x_u}(X_z=x_z\,\vert\,X_u=x_u)\mathbb{E}_{X_w,x_z,x_u}[f(x_u,x_z,X_w)\,\vert\,x_u,x_z] - \epsilon\,,
-\end{align*}
-where in the last step we applied Equation REF. Using Equation REF, we therefore find that
-\begin{align*}
- &\quad \underline{\mathbb{E}}^{\mathrm{W}}_\rateset\bigl[\underline{\mathbb{E}}^{\mathrm{W}}_\rateset\left[f(x_u,X_v)\,\vert\,x_u,X_{v\setminus w}\right]\,\vert\,x_u\bigr] \\
- &\leq \sum_{x_z\in\states^z}P_{X_z,x_u}(X_z=x_z\,\vert\,X_u=x_u)\mathbb{E}_{X_w,x_z,x_u}[f(x_u,x_z,X_w)\,\vert\,x_u,x_z] - \epsilon \\
- &= \sum_{x_z\in\states^z}P_{X_z,x_u}(X_z=x_z\,\vert\,X_u=x_u)\left(\mathbb{E}_{X_w,x_z,x_u}[f(x_u,x_z,X_w)\,\vert\,x_u,x_z] - \frac{\epsilon}{2}\right) - \frac{\epsilon}{2} \\
- &< \sum_{x_z\in\states^z}P_{X_z,x_u}(X_z=x_z\,\vert\,X_u=x_u)\underline{\mathbb{E}}^{\mathrm{W}}_\rateset\left[f(x_u,x_z,X_w)\,\vert\,x_u,x_z\right] - \frac{\epsilon}{2} \\
- &= \mathbb{E}_{X_z,x_u}\bigl[\underline{\mathbb{E}}^{\mathrm{W}}_\rateset\left[f(x_u,X_z,X_w)\,\vert\,x_u,X_z\right] \,\vert\,x_u\bigr] - \frac{\epsilon}{2}\,.
-\end{align*}
-Therefore, and due to Equation REF, we finally find
-\begin{align*}
-\underline{\mathbb{E}}^{\mathrm{W}}_\rateset\bigl[\underline{\mathbb{E}}^{\mathrm{W}}_\rateset\left[f(x_u,X_v)\,\vert\,x_u,X_{v\setminus w}\right]\,\vert\,x_u\bigr] &< \mathbb{E}_{X_z,x_u}\bigl[\underline{\mathbb{E}}^{\mathrm{W}}_\rateset\left[f(x_u,X_z,X_w)\,\vert\,x_u,X_z\right] \,\vert\,x_u\bigr] - \frac{\epsilon}{2} \\
- &< \underline{\mathbb{E}}^{\mathrm{W}}_\rateset\bigl[\underline{\mathbb{E}}^{\mathrm{W}}_\rateset\left[f(x_u,X_z,X_w)\,\vert\,x_u,X_z\right] \,\vert\,x_u\bigr] \\
- &= \underline{\mathbb{E}}^{\mathrm{W}}_\rateset\bigl[\underline{\mathbb{E}}^{\mathrm{W}}_\rateset\left[f(x_u,X_v)\,\vert\,x_u,X_{v\setminus w}\right]\,\vert\,x_u\bigr]\,,
-\end{align*}
-a contradiction. Hence, it follows that indeed
-\begin{equation*}
-\norm{\mathbb{E}\left[f(X_u,X_v)\,\vert\,X_u\right] - \underline{\mathbb{E}}^{\mathrm{W}}_\rateset\bigl[\underline{\mathbb{E}}^{\mathrm{W}}_\rateset\left[f(X_u,X_v)\,\vert\,X_u,X_{v\setminus w}\right]\,\vert\,X_u\bigr]} < \epsilon\,.
-\end{equation*}
-Because the $\epsilon$ was arbitrary, together with Equation REF, it then follows that
-\begin{align*}
-\underline{\mathbb{E}}^{\mathrm{W}}_\rateset[\underline{\mathbb{E}}^{\mathrm{W}}_\rateset [f(x_u,X_v)\,\vert\,x_u,X_{v\setminus w}]\,\vert\,x_u] %&= \inf\{\mathbb{E}\bigl[\mathbb{E}\left[f(X_u,X_v)\,\vert\,X_u,X_{v\setminus w}\right]\,\vert\,x_u\bigr]\,:\,P\in\wprocesses_\rateset\} \\
- &= \inf\{\mathbb{E}\left[f(X_u,X_v)\,\vert\,x_u\right]\,:\,P\in\wprocesses_\rateset\} \\
- &= \underline{\mathbb{E}}^{\mathrm{W}}_\rateset\left[f(X_u,X_v)\,\vert\,x_u\right]\,.
-\end{align*}
-\end{proof}
-
-
 **** blabla
 
 We now consider functions $f\in\gambles(\states^{u\cup v})$, where $u=t_0,\ldots,t_n$ is a sequence of time points in a process' history, and $v=s_0,\ldots,s_m$ is a sequence of time points in a process' future; hence, we assume $s_0>t_n$. As the next example shows, the lower expectation of such functions, when taken with respect to a set $\wmprocesses_\rateset$ of Markov processes, no longer necessarily corresponds to the lower expectation taken with respect to a set $\wprocesses_\rateset$ of non-Markov processes.
@@ -2026,35 +1910,61 @@ We now consider functions $f\in\gambles(\states^{u\cup v})$, where $u=t_0,\ldots
 \exampleend
 \end{exmp}
 
+**** doing some setup for new approach
 
+\begin{theorem}\label{theorem:decomposition_multivar}
+Let $\rateset$ be an arbitrary non-empty, bounded, and convex set of rate matrices, with the corresponding set $\wprocesses_\rateset$ of well-behaved stochastic processes consistent with $\rateset$. Then, for any $t\in\realsnonneg$, any $u\in\mathcal{U}_{<t}$ and $v\in\mathcal{U}_{\geq t}$, any $f\in\gambles(\states^{u\cup v})$, and any $w\subseteq v$,
+\begin{equation}\label{eq:lower_exp_factorizes}
+\underline{\mathbb{E}}^{\mathrm{W}}_\rateset\left[f(X_u,X_v)\,\vert\,X_u\right] = \underline{\mathbb{E}}^{\mathrm{W}}_\rateset\Bigl[\underline{\mathbb{E}}^{\mathrm{W}}_\rateset\left[f(X_u,X_v)\,\vert\,X_u,X_{v\setminus w}\right] \,\Big\vert\,X_u\Bigr] 
+\end{equation}
+\end{theorem}
 
-**** rewrite most things (everything) below
+*** blabla, uitleg dat dit niet werkt over set van Markov chains
 
-An obvious question is therefore what the operator $L_t^s$ computes for functions of this form, as it clearly cannot compute both $\underline{\mathbb{E}}^{\mathrm{WM}}_{\,\rateset}$ and $\underline{\mathbb{E}}^\mathrm{W}_{\,\rateset}$. As we will see below, it turns out that we can use $L_t^s$ to compute the lower expectation of such functions with respect to sets of non-Markov processes. We start by showing that, using a composition of these operators, we can compute a lower bound with respect to a set $\wprocesses_\rateset$.
-\begin{proposition}\label{prop:multivar_bounded}
-Let $\rateset$ be an arbitrary non-empty bounded set of rate matrices with corresponding lower transition rate operator $\lrate$, and let $\underline{\mathcal{T}}_{\lrate}$ be the family of lower transition operators corresponding to $\lrate$. Then, for any $P\in\wprocesses_\rateset$, any $s,s'\in\realsnonneg$ such that $s<s'$, any $u\in\mathcal{U}_{<s}$ and $x_u\in\states^u$, any $v\in\mathcal{U}_{[s,s']}$, and any $f\in\gambles(\states^{u\cup v})$,
+*** blabla, dit kunnen we recursief doen totdat elke lower expectation nog maar een tijdpunt bevat. ergo, als $\rateset$ ook s.s.r. heeft, dan
+
+\begin{corollary}
+Let $\rateset$ be an arbitrary non-empty, bounded, and convex set of rate matrices that has separately specified rows, with corresponding lower transition rate operator $\lrate$, and let $\underline{\mathcal{T}}_{\lrate}$ be the family of lower transition operators corresponding to $\lrate$. 
+
+Consider any $t\in\realsnonneg$, any $u\in\mathcal{U}_{<t}$ and $v\in\mathcal{U}_{\geq t}$ with $u=t_0,\ldots,t_n$ and $v={s_0,\ldots,s_m}$. Then, for any $f\in\gambles(\states^{u\cup v})$ and any $x_u\in\states^u$,
 \begin{equation*}
-\left[L_{t_n}^{s_0}L_{s_0}^{s_1}\cdots L_{s_{m-1}}^{s_m}f\right](x_{t_0},\ldots,x_{t_n}) \leq \mathbb{E}[f(x_{t_0},\ldots,x_{t_n},X_{s_0},\ldots,X_{s_m})\,\vert\,X_{t_0,\ldots,t_n}=x_{t_0,\ldots,t_n}]\,.
-\end{equation*}
-\end{proposition}
-
-Note that a direct implication of this, together with Proposition~\ref{prop:lower_exp_markov_bounded_by_nonmarkov}, is that $L_t^s$ can also be used to compute lower bounds on the expectation with respect to a set $\wmprocesses_\rateset$ of Markov processes. However, this bound will then in general not be tight, and hence will not correspond to the lower expectation.
-
-To see why, observe that in the term $[L_{t_n}^{s_0}L_{s_0}^{s_1}\cdots L_{s_{m-1}}^{s_m}f](x_{t_0},\ldots,x_{t_n})$, the operators $L_{s_{i-1}}^{s_i}$ can take on different values depending on the choice of $(x_{t_0},\ldots,x_{t_n},x_{s_0},\ldots,x_{s_{i-1}})$. Hence, to approach these values of $L_{s_{i-1}}^{s_i}$ from within a set $\wmprocesses$ of Markov processes, we have to be able to pick the approximating values such that they depend on the specific trajectory $(x_{t_0},\ldots,x_{t_n},x_{s_0},\ldots,x_{s_{i-1}})$, and this is exactly what the Markov condition prevents us from doing. As the next result shows, we can however approach this quantity from within a set $\wprocesses_\rateset$ of non-Markov processes.
-
-\begin{proposition}\label{prop:multivar_bound_tight}
-Let $\rateset$ be an arbitrary non-empty bounded set of rate matrices that has separately specified rows, with corresponding lower transition rate operator $\lrate$, and let $\underline{\mathcal{T}}_{\lrate}$ be the family of lower transition operators corresponding to $\lrate$. Then, for all $s,s'\in\realsnonneg$ such that $s<s'$, all $u\in\mathcal{U}_{<s}$, all $v\in\mathcal{U}_{[s,s']}$, all $f\in\gambles(\states^{u\cup v})$, and all $\epsilon\in\realspos$, there is a $P\in\wprocesses_\rateset$ such that
-\begin{equation*}
-\norm{L_{t_n}^{s_0}L_{s_0}^{s_1}\cdots L_{s_{m-1}}^{s_m}f - \mathbb{E}[f(X_{t_0},\ldots,X_{t_n},X_{s_0},\ldots,X_{s_m})\,\vert\,X_{t_0,\ldots,t_n}]} < \epsilon\,.
-\end{equation*}
-\end{proposition}
-
-\begin{corollary}\label{cor:inf_works_for_multivar}
-Let $\rateset$ be an arbitrary non-empty bounded set of rate matrices that has separately specified rows, with corresponding lower transition rate operator $\lrate$, and let $\underline{\mathcal{T}}_{\lrate}$ be the family of lower transition operators corresponding to $\lrate$. Then, for all $s,s'\in\realsnonneg$ such that $s<s'$, all $u\in\mathcal{U}_{<s}$ and $x_u\in\states^u$, all $v\in\mathcal{U}_{[s,s']}$, and all $f\in\gambles(\states^{u\cup v})$,
-\begin{equation*}
-\left[L_{t_n}^{s_0}L_{s_0}^{s_1}\cdots L_{s_{m-1}}^{s_m}f\right](x_{t_0},\ldots,x_{t_n}) = \underline{\mathbb{E}}^{\mathrm{W}}_{\,\rateset}[f(x_{t_0},\ldots,x_{t_n},X_{s_0},\ldots,X_{s_m})\,\vert\,X_{t_0,\ldots,t_n}=x_{t_0,\ldots,t_n}]\,.
+\left[L_{t_n}^{s_0}L_{s_0}^{s_1}\cdots L_{s_{m-1}}^{s_m}f\right](x_u) = \underline{\mathbb{E}}^{\mathrm{W}}_{\,\rateset}[f(x_u,X_v)\,\vert\,x_u]\,.
 \end{equation*}
 \end{corollary}
+\begin{proof}
+Immediate consequence of Theorem~\ref{theorem:decomposition_multivar} and Corollary~\ref{cor:inf_works_for_single_future_var}.
+\end{proof}
+
+*** blabla, composition of lower operators is reached if and only if $\rateset=\rateset_{\lrate}$.
+
+
+%**** rewrite most things (everything) below
+%
+%An obvious question is therefore what the operator $L_t^s$ computes for functions of this form, as it clearly cannot compute both $\underline{\mathbb{E}}^{\mathrm{WM}}_{\,\rateset}$ and $\underline{\mathbb{E}}^\mathrm{W}_{\,\rateset}$. As we will see below, it turns out that we can use $L_t^s$ to compute the lower expectation of such functions with respect to sets of non-Markov processes. We start by showing that, using a composition of these operators, we can compute a lower bound with respect to a set $\wprocesses_\rateset$.
+%\begin{proposition}\label{prop:multivar_bounded}
+%Let $\rateset$ be an arbitrary non-empty bounded set of rate matrices with corresponding lower transition rate operator $\lrate$, and let $\underline{\mathcal{T}}_{\lrate}$ be the family of lower transition operators corresponding to $\lrate$. Then, for any $P\in\wprocesses_\rateset$, any $s,s'\in\realsnonneg$ such that $s<s'$, any $u\in\mathcal{U}_{<s}$ and $x_u\in\states^u$, any $v\in\mathcal{U}_{[s,s']}$, and any $f\in\gambles(\states^{u\cup v})$,
+%\begin{equation*}
+%\left[L_{t_n}^{s_0}L_{s_0}^{s_1}\cdots L_{s_{m-1}}^{s_m}f\right](x_{t_0},\ldots,x_{t_n}) \leq \mathbb{E}[f(x_{t_0},\ldots,x_{t_n},X_{s_0},\ldots,X_{s_m})\,\vert\,X_{t_0,\ldots,t_n}=x_{t_0,\ldots,t_n}]\,.
+%\end{equation*}
+%\end{proposition}
+%
+%Note that a direct implication of this, together with Proposition~\ref{prop:lower_exp_markov_bounded_by_nonmarkov}, is that $L_t^s$ can also be used to compute lower bounds on the expectation with respect to a set $\wmprocesses_\rateset$ of Markov processes. However, this bound will then in general not be tight, and hence will not correspond to the lower expectation.
+%
+%To see why, observe that in the term $[L_{t_n}^{s_0}L_{s_0}^{s_1}\cdots L_{s_{m-1}}^{s_m}f](x_{t_0},\ldots,x_{t_n})$, the operators $L_{s_{i-1}}^{s_i}$ can take on different values depending on the choice of $(x_{t_0},\ldots,x_{t_n},x_{s_0},\ldots,x_{s_{i-1}})$. Hence, to approach these values of $L_{s_{i-1}}^{s_i}$ from within a set $\wmprocesses$ of Markov processes, we have to be able to pick the approximating values such that they depend on the specific trajectory $(x_{t_0},\ldots,x_{t_n},x_{s_0},\ldots,x_{s_{i-1}})$, and this is exactly what the Markov condition prevents us from doing. As the next result shows, we can however approach this quantity from within a set $\wprocesses_\rateset$ of non-Markov processes.
+%
+%\begin{proposition}\label{prop:multivar_bound_tight}
+%Let $\rateset$ be an arbitrary non-empty bounded set of rate matrices that has separately specified rows, with corresponding lower transition rate operator $\lrate$, and let $\underline{\mathcal{T}}_{\lrate}$ be the family of lower transition operators corresponding to $\lrate$. Then, for all $s,s'\in\realsnonneg$ such that $s<s'$, all $u\in\mathcal{U}_{<s}$, all $v\in\mathcal{U}_{[s,s']}$, all $f\in\gambles(\states^{u\cup v})$, and all $\epsilon\in\realspos$, there is a $P\in\wprocesses_\rateset$ such that
+%\begin{equation*}
+%\norm{L_{t_n}^{s_0}L_{s_0}^{s_1}\cdots L_{s_{m-1}}^{s_m}f - \mathbb{E}[f(X_{t_0},\ldots,X_{t_n},X_{s_0},\ldots,X_{s_m})\,\vert\,X_{t_0,\ldots,t_n}]} < \epsilon\,.
+%\end{equation*}
+%\end{proposition}
+%
+%\begin{corollary}\label{cor:inf_works_for_multivar}
+%Let $\rateset$ be an arbitrary non-empty bounded set of rate matrices that has separately specified rows, with corresponding lower transition rate operator $\lrate$, and let $\underline{\mathcal{T}}_{\lrate}$ be the family of lower transition operators corresponding to $\lrate$. Then, for all $s,s'\in\realsnonneg$ such that $s<s'$, all $u\in\mathcal{U}_{<s}$ and $x_u\in\states^u$, all $v\in\mathcal{U}_{[s,s']}$, and all $f\in\gambles(\states^{u\cup v})$,
+%\begin{equation*}
+%\left[L_{t_n}^{s_0}L_{s_0}^{s_1}\cdots L_{s_{m-1}}^{s_m}f\right](x_{t_0},\ldots,x_{t_n}) = \underline{\mathbb{E}}^{\mathrm{W}}_{\,\rateset}[f(x_{t_0},\ldots,x_{t_n},X_{s_0},\ldots,X_{s_m})\,\vert\,X_{t_0,\ldots,t_n}=x_{t_0,\ldots,t_n}]\,.
+%\end{equation*}
+%\end{corollary}
 
 \subsection{Computational Aspects}\label{sec:tractability}
 
@@ -4405,28 +4315,131 @@ Because $g\in\gambles(\states^{\{s\}})$, by Theorem~\ref{theorem:lower_markov_bo
 This is a direct consequence of Propositions \ref{prop:markov_set_subset_of_nonmarkov_set}, \ref{prop:lower_exp_markov_bounded_by_nonmarkov}, \ref{prop:multi_var_single_future_bounded}, and \ref{prop:multi_var_single_future_tight}. The proof is similar to that of Corollary~\ref{cor:lower_operator_is_infimum}.
 \end{proof}
 
-
-\begin{proof}[Proof of Proposition~\ref{prop:multivar_bounded}]
-By the basic properties of expectation, we can decompose the expectation functional as
+\begin{proof}[Proof of Theorem~\ref{theorem:decomposition_multivar}]
+Consider any $P\in\wprocesses_\rateset$. Then, clearly, due to the basic properties of expectation and the definition of $\underline{\mathbb{E}}^{\mathrm{W}}_\rateset$, it holds that
 \begin{align*}
- &\quad \mathbb{E}[f(x_{t_0},\ldots,x_{t_n},X_{s_0},\ldots,X_{s_m})\,\vert\,X_{t_0,\ldots,t_n}=x_{t_0,\ldots,t_n}] \\
- &= \mathbb{E}\bigl[\mathbb{E}[f(x_{t_0},\ldots,x_{t_n},X_{s_0},\ldots,X_{s_m})\,\vert\,X_{t_0,\ldots,t_n}=x_{t_0,\ldots,t_n},X_{s_0,\ldots,s_{m-1}}]\,\big\vert\,X_{t_0,\ldots,t_n}=x_{t_0,\ldots,t_n}\bigr]\,.
+\mathbb{E}\left[f(X_u,X_v)\,\vert\,X_u\right] &= \mathbb{E}\bigl[\mathbb{E}\left[f(X_u,X_v)\,\vert\,X_u,X_{v\setminus w}\right]\,\vert\,X_u\bigr] \\
+ &\geq \mathbb{E}\bigl[\underline{\mathbb{E}}^{\mathrm{W}}_\rateset\left[f(X_u,X_v)\,\vert\,X_u,X_{v\setminus w}\right]\,\vert\,X_u\bigr] \\
+ &\geq \underline{\mathbb{E}}^{\mathrm{W}}_\rateset\bigl[\underline{\mathbb{E}}^{\mathrm{W}}_\rateset\left[f(X_u,X_v)\,\vert\,X_u,X_{v\setminus w}\right]\,\vert\,X_u\bigr]\,,
 \end{align*}
-Note that the nested expectation is conditioned on the time points $t_0,\ldots,t_n,s_0,\ldots,s_{m-1}$; it therefore only computes an expectation on a single point $s_m$ in the future. Hence, by Proposition~\ref{prop:multi_var_single_future_bounded} and the fact that the (outer) expectation computes a convex combination of values, we have
+where in the second step we used the fact that the (outer) expectation computes a convex combination of values. Because this holds for any $P\in\wprocesses_\rateset$, it follows that
+\begin{equation*}
+\underline{\mathbb{E}}^{\mathrm{W}}_\rateset\left[f(X_u,X_v)\,\vert\,X_u\right] \geq \underline{\mathbb{E}}^{\mathrm{W}}_\rateset\bigl[\underline{\mathbb{E}}^{\mathrm{W}}_\rateset\left[f(X_u,X_v)\,\vert\,X_u,X_{v\setminus w}\right]\,\vert\,X_u\bigr]\,.
+\end{equation*}
+
+To prove Equation~\eqref{eq:lower_exp_factorizes}, it therefore remains to show that, for all $\epsilon\in\realspos$, there is some $P\in\wprocesses_\rateset$ such that
+\begin{equation*}
+\norm{\mathbb{E}\left[f(X_u,X_v)\,\vert\,X_u\right] - \underline{\mathbb{E}}^{\mathrm{W}}_\rateset\bigl[\underline{\mathbb{E}}^{\mathrm{W}}_\rateset\left[f(X_u,X_v)\,\vert\,X_u,X_{v\setminus w}\right]\,\vert\,X_u\bigr]} < \epsilon\,.
+\end{equation*}
+Fix any $\epsilon\in\realspos$. Due to the definition of the norm, we have to show that
+\begin{equation*}
+\max\left\{\abs{\mathbb{E}\left[f(x_u,X_v)\,\vert\,x_u\right] - \underline{\mathbb{E}}^{\mathrm{W}}_\rateset\bigl[\underline{\mathbb{E}}^{\mathrm{W}}_\rateset\left[f(x_u,X_v)\,\vert\,x_u,X_{v\setminus w}\right]\,\vert\,x_u\bigr]}\,:\,x_u\in\states^u\right\} < \epsilon\,.
+\end{equation*}
+
+\begin{remark}
+******
+
+I need the following property, which is true but not explicit from the statement of Theorem~\ref{theo:aanelkaarplakken} (notation in the context of that theorem, not this one):
+\begin{equation*}
+P(X_z=x_z\,\vert\,X_v=x_v) = P_\emptyset(X_z=x_z\,\vert\,X_v=x_v)\quad\text{for all $z,v\subseteq u$ with $z\cup v=u$ and $x_{z\cup v}\in\states^{z\cup v}$.}
+\end{equation*}
+
+******
+\end{remark}
+Let now $z\coloneqq v\setminus w$. For any $x_u\in\states^u$, consider
+\begin{equation*}
+\underline{\mathbb{E}}^{\mathrm{W}}_\rateset\bigl[\underline{\mathbb{E}}^{\mathrm{W}}_\rateset[f(x_u,X_z,X_w)\,\vert\,x_u,X_z]\,\big\vert\,x_u\bigr] = \inf\{\mathbb{E}\bigl[\underline{\mathbb{E}}^{\mathrm{W}}_\rateset[f(x_u,X_z,X_w)\,\vert\,x_u,X_z]\,\big\vert\,x_u\bigr]\,:\,P\in\wprocesses_\rateset\}\,.
+\end{equation*}
+Because this is an infimum, this implies that there must be some stochastic process $P_{X_z,x_u}\in\wprocesses_\rateset$, with expectation operator $\mathbb{E}_{X_z,x_u}$, such that
+\begin{equation*}
+\mathbb{E}_{X_z,x_u}\bigl[\underline{\mathbb{E}}^{\mathrm{W}}_\rateset[f(x_u,X_z,X_w)\,\vert\,x_u,X_z]\,\big\vert\,x_u\bigr] - \frac{\epsilon}{2} < \underline{\mathbb{E}}^{\mathrm{W}}_\rateset\bigl[\underline{\mathbb{E}}^{\mathrm{W}}_\rateset[f(x_u,X_z,X_w)\,\vert\,x_u,X_z]\,\big\vert\,x_u\bigr]\,.
+\end{equation*}
+Next, for all $x_u\in\states^u$ and $x_{z}\in\states^z$, consider
+\begin{equation*}
+\underline{\mathbb{E}}^{\mathrm{W}}_\rateset\left[f(x_u,x_z,X_w)\,\vert\,x_u,x_z\right] = \inf\left\{\mathbb{E}\left[f(x_u,x_z,X_w)\,\vert\,x_u,x_z\right] \,:\, P\in\wprocesses_\rateset\right\}\,.
+\end{equation*}
+Because this is an infimum, there must be some $P_{X_w,x_z,x_u}\in\wprocesses_\rateset$, with expectation operator $\mathbb{E}_{X_w,x_z,x_u}$, such that
+\begin{equation*}
+\mathbb{E}_{X_w,x_z,x_u}\left[f(x_u,x_z,X_w)\,\vert\,x_u,x_z\right] - \frac{\epsilon}{2} < \underline{\mathbb{E}}^{\mathrm{W}}_\rateset\left[f(x_u,x_z,X_w)\,\vert\,x_u,x_z\right]\,.
+\end{equation*}
+In summary, for all $x_u\in\states^u$, we have found a process $P_{X_z,x_u}\in\wprocesses_\rateset$, and, for all $x_u\in\states^u$ and all $x_z\in\states^z$, we have found a process $P_{X_w,x_z,x_u}\in\wprocesses_\rateset$.
+
+Consider now any $x_u\in\states^u$, and the processes $P_{X_z,x_u}$ and $P_{X_w,x_z,x_u}$ for all $x_z\in\states^z$. Because $\rateset$ is non-empty, bounded, and convex, Theorem~{\bf REF} implies the existence of a process $P_{X_w,X_z,x_u}\in\wprocesses_\rateset$, such that for all $x_z\in\states^z$ and all $x_w\in\states^w$,
 \begin{align*}
-&\quad\mathbb{E}[f(x_{t_0},\ldots,x_{t_n},X_{s_0},\ldots,X_{s_m})\,\vert\,X_{t_0,\ldots,t_n}=x_{t_0,\ldots,t_n}] \\
- &\geq \mathbb{E}\bigl[[L_{s_{m-1}}^{s_m}f](x_{t_0},\ldots,x_{t_n},X_{s_0},\ldots,X_{s_{m-1}})\,\vert\,X_{t_0,\ldots,t_n}=x_{t_0,\ldots,t_n}\bigr]\,.
+P_{X_w,X_z,x_u}(X_z=x_z\,\vert\,X_u=x_u) &= P_{X_z,x_u}(X_z=x_z\,\vert\,X_u=x_u)\,, \\
+\text{and,} \\
+P_{X_w,X_z,x_u}(X_w=x_w\,\vert\,X_u=x_u,X_z=x_z) &= P_{X_w,x_z,x_u}(X_w=x_w\,\vert\,X_u=x_u,X_z=x_z)\,,
 \end{align*}
-The proof is then finished by backward induction on $m$.
+
+Finally, consider an arbitrary $P_{X_u}\in\wprocesses_\rateset$, and the processes $P_{X_w,X_z,x_u}$ for all $x_u\in\states^u$. Theorem~{\bf REF} then implies the existence of some $P_{X_w,X_z,X_u}$ such that, for all $x_u\in\states^u$, all $x_z\in\states^z$, and all $x_w\in\states^w$,
+\begin{align*}
+P_{X_w,X_z,X_u}(X_z=x_z\,\vert\,X_u=x_u) &= P_{X_w,X_z,x_u}(X_z=x_z\,\vert\,X_u=x_u) \\
+ &= P_{X_z,x_u}(X_z=x_z\,\vert\,X_u=x_u)\,, \\
+\text{and,} \\
+P_{X_w,X_z,X_u}(X_w=x_w\,\vert\,X_u=x_u,X_z=x_z) &= P_{X_w,X_z,x_u}(X_w=x_w\,\vert\,X_u=x_u,X_z=x_z) \\
+ &= P_{X_w,x_z,x_u}(X_w=x_w\,\vert\,X_u=x_u,X_z=x_z)\,.
+\end{align*}
+For notational convenience, denote $P\coloneqq P_{X_w,X_z,X_u}$.
+
+It remains to show that $P$ satisfies equation REF. To this end, assume \emph{ex absurdo} that it does not. This implies the existence of some $x_u\in\states^u$, for which
+\begin{equation*}
+\epsilon \leq \abs{\mathbb{E}\left[f(x_u,X_v)\,\vert\,x_u\right] - \underline{\mathbb{E}}^{\mathrm{W}}_\rateset\bigl[\underline{\mathbb{E}}^{\mathrm{W}}_\rateset\left[f(x_u,X_v)\,\vert\,x_u,X_{v\setminus w}\right]\,\vert\,x_u\bigr]}\,.
+\end{equation*}
+This implies that
+\begin{align*}
+ &\quad \underline{\mathbb{E}}^{\mathrm{W}}_\rateset\bigl[\underline{\mathbb{E}}^{\mathrm{W}}_\rateset\left[f(x_u,X_v)\,\vert\,x_u,X_{v\setminus w}\right]\,\vert\,x_u\bigr] \\
+ &\leq \mathbb{E}\left[f(X_u,X_v)\,\vert\,x_u\right] - \epsilon \\
+ &= \mathbb{E}\bigl[\mathbb{E}[f(x_u,X_z,X_w)\,\vert\,x_u,X_z]\,\big\vert\,x_u\bigr] - \epsilon \\
+ &= \sum_{x_z\in\states^z}P(X_z=x_z\,\vert\,X_u=x_u)\mathbb{E}[f(x_u,x_z,X_w)\,\vert\,x_u,x_z] - \epsilon \\
+ &= \sum_{x_z\in\states^z}P_{X_z,x_u}(X_z=x_z\,\vert\,X_u=x_u)\mathbb{E}_{X_w,x_z,x_u}[f(x_u,x_z,X_w)\,\vert\,x_u,x_z] - \epsilon\,,
+\end{align*}
+where in the last step we applied Equation REF. Using Equation REF, we therefore find that
+\begin{align*}
+ &\quad \underline{\mathbb{E}}^{\mathrm{W}}_\rateset\bigl[\underline{\mathbb{E}}^{\mathrm{W}}_\rateset\left[f(x_u,X_v)\,\vert\,x_u,X_{v\setminus w}\right]\,\vert\,x_u\bigr] \\
+ &\leq \sum_{x_z\in\states^z}P_{X_z,x_u}(X_z=x_z\,\vert\,X_u=x_u)\mathbb{E}_{X_w,x_z,x_u}[f(x_u,x_z,X_w)\,\vert\,x_u,x_z] - \epsilon \\
+ &= \sum_{x_z\in\states^z}P_{X_z,x_u}(X_z=x_z\,\vert\,X_u=x_u)\left(\mathbb{E}_{X_w,x_z,x_u}[f(x_u,x_z,X_w)\,\vert\,x_u,x_z] - \frac{\epsilon}{2}\right) - \frac{\epsilon}{2} \\
+ &< \sum_{x_z\in\states^z}P_{X_z,x_u}(X_z=x_z\,\vert\,X_u=x_u)\underline{\mathbb{E}}^{\mathrm{W}}_\rateset\left[f(x_u,x_z,X_w)\,\vert\,x_u,x_z\right] - \frac{\epsilon}{2} \\
+ &= \mathbb{E}_{X_z,x_u}\bigl[\underline{\mathbb{E}}^{\mathrm{W}}_\rateset\left[f(x_u,X_z,X_w)\,\vert\,x_u,X_z\right] \,\vert\,x_u\bigr] - \frac{\epsilon}{2}\,.
+\end{align*}
+Therefore, and due to Equation REF, we finally find
+\begin{align*}
+\underline{\mathbb{E}}^{\mathrm{W}}_\rateset\bigl[\underline{\mathbb{E}}^{\mathrm{W}}_\rateset\left[f(x_u,X_v)\,\vert\,x_u,X_{v\setminus w}\right]\,\vert\,x_u\bigr] &< \mathbb{E}_{X_z,x_u}\bigl[\underline{\mathbb{E}}^{\mathrm{W}}_\rateset\left[f(x_u,X_z,X_w)\,\vert\,x_u,X_z\right] \,\vert\,x_u\bigr] - \frac{\epsilon}{2} \\
+ &< \underline{\mathbb{E}}^{\mathrm{W}}_\rateset\bigl[\underline{\mathbb{E}}^{\mathrm{W}}_\rateset\left[f(x_u,X_z,X_w)\,\vert\,x_u,X_z\right] \,\vert\,x_u\bigr] \\
+ &= \underline{\mathbb{E}}^{\mathrm{W}}_\rateset\bigl[\underline{\mathbb{E}}^{\mathrm{W}}_\rateset\left[f(x_u,X_v)\,\vert\,x_u,X_{v\setminus w}\right]\,\vert\,x_u\bigr]\,,
+\end{align*}
+a contradiction. Hence, it follows that indeed
+\begin{equation*}
+\norm{\mathbb{E}\left[f(X_u,X_v)\,\vert\,X_u\right] - \underline{\mathbb{E}}^{\mathrm{W}}_\rateset\bigl[\underline{\mathbb{E}}^{\mathrm{W}}_\rateset\left[f(X_u,X_v)\,\vert\,X_u,X_{v\setminus w}\right]\,\vert\,X_u\bigr]} < \epsilon\,.
+\end{equation*}
+Because the $\epsilon$ was arbitrary, together with Equation REF, it then follows that
+\begin{align*}
+\underline{\mathbb{E}}^{\mathrm{W}}_\rateset[\underline{\mathbb{E}}^{\mathrm{W}}_\rateset [f(x_u,X_v)\,\vert\,x_u,X_{v\setminus w}]\,\vert\,x_u] %&= \inf\{\mathbb{E}\bigl[\mathbb{E}\left[f(X_u,X_v)\,\vert\,X_u,X_{v\setminus w}\right]\,\vert\,x_u\bigr]\,:\,P\in\wprocesses_\rateset\} \\
+ &= \inf\{\mathbb{E}\left[f(X_u,X_v)\,\vert\,x_u\right]\,:\,P\in\wprocesses_\rateset\} \\
+ &= \underline{\mathbb{E}}^{\mathrm{W}}_\rateset\left[f(X_u,X_v)\,\vert\,x_u\right]\,.
+\end{align*}
 \end{proof}
 
-\begin{proof}[Proof of Proposition~\ref{prop:multivar_bound_tight}]
-{\bf TODO} *** deze is nog een beetje ingewikkeld, we moeten weer een process bouwen en laten zien dat die in $\wprocesses_\rateset$ zit ***
-\end{proof}
-
-\begin{proof}[Proof of Corollary~\ref{cor:inf_works_for_multivar}]
-This is a direct consequence of Propositions~\ref{prop:multivar_bounded} and \ref{prop:multivar_bound_tight}.
-\end{proof}
+%\begin{proof}[Proof of Proposition~\ref{prop:multivar_bounded}]
+%By the basic properties of expectation, we can decompose the expectation functional as
+%\begin{align*}
+% &\quad \mathbb{E}[f(x_{t_0},\ldots,x_{t_n},X_{s_0},\ldots,X_{s_m})\,\vert\,X_{t_0,\ldots,t_n}=x_{t_0,\ldots,t_n}] \\
+% &= \mathbb{E}\bigl[\mathbb{E}[f(x_{t_0},\ldots,x_{t_n},X_{s_0},\ldots,X_{s_m})\,\vert\,X_{t_0,\ldots,t_n}=x_{t_0,\ldots,t_n},X_{s_0,\ldots,s_{m-1}}]\,\big\vert\,X_{t_0,\ldots,t_n}=x_{t_0,\ldots,t_n}\bigr]\,.
+%\end{align*}
+%Note that the nested expectation is conditioned on the time points $t_0,\ldots,t_n,s_0,\ldots,s_{m-1}$; it therefore only computes an expectation on a single point $s_m$ in the future. Hence, by Proposition~\ref{prop:multi_var_single_future_bounded} and the fact that the (outer) expectation computes a convex combination of values, we have
+%\begin{align*}
+%&\quad\mathbb{E}[f(x_{t_0},\ldots,x_{t_n},X_{s_0},\ldots,X_{s_m})\,\vert\,X_{t_0,\ldots,t_n}=x_{t_0,\ldots,t_n}] \\
+% &\geq \mathbb{E}\bigl[[L_{s_{m-1}}^{s_m}f](x_{t_0},\ldots,x_{t_n},X_{s_0},\ldots,X_{s_{m-1}})\,\vert\,X_{t_0,\ldots,t_n}=x_{t_0,\ldots,t_n}\bigr]\,.
+%\end{align*}
+%The proof is then finished by backward induction on $m$.
+%\end{proof}
+%
+%\begin{proof}[Proof of Proposition~\ref{prop:multivar_bound_tight}]
+%{\bf TODO} *** deze is nog een beetje ingewikkeld, we moeten weer een process bouwen en laten zien dat die in $\wprocesses_\rateset$ zit ***
+%\end{proof}
+%
+%\begin{proof}[Proof of Corollary~\ref{cor:inf_works_for_multivar}]
+%This is a direct consequence of Propositions~\ref{prop:multivar_bounded} and \ref{prop:multivar_bound_tight}.
+%\end{proof}
 
 
 \end{document}
