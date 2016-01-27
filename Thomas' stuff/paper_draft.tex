@@ -1328,42 +1328,57 @@ Since $\tilde{P}$ is coherent, and because of Theorem~\ref{theo:coherentextendab
 
 *** still need to finish the stuff below ***
 
-Consider any $v\in\mathcal{U}$ and $t\in\reals_{\geq0}$ such that $v<t$ and $u<t$. Then for all $x_v\in\states^v$ and $y\in\states$, we have that
+Consider any $v\in\mathcal{U}$ and $s\in\reals_{\geq0}$ such that $v<s$ and $u<s$. Then for all $x_v\in\states^v$ and $y\in\states$, we have that
 \begin{align*}
-P(X_t&=y\vert X_v=x_v)
+P(X_s&=y\vert X_v=x_v)
 %&=P(X_t=y\vert X_{v\setminus u}=x_{v\setminus u}, X_{v\cap u}=x_{v\cap u})\\
 =
 \sum_{x_{u\setminus v}\in\states^{u\setminus v}}
-P(X_t=y,
+P(X_s=y,
 X_{u\setminus v}=x_{u\setminus v}
 \vert X_v=x_v)\\
 %\vert X_{v\setminus u}=x_{v\setminus u}, X_{v\cap u}=x_{v\cap u})
 &=
 \sum_{x_{u\setminus v}\in\states^{u\setminus v}}
-P(X_t=y\vert
+P(X_s=y\vert
 X_{u\setminus v}=x_{u\setminus v}, X_v=x_v)
 P(X_{u\setminus v}=x_{u\setminus v}
 \vert X_v=x_v)\\
 &=
 \sum_{x_{u\setminus v}\in\states^{u\setminus v}}
-P(X_t=y\vert
+P(X_s=y\vert
 X_{u}=x_{u}, X_{v\setminus u}=x_{v\setminus u})
 P(X_{u\setminus v}=x_{u\setminus v}
 \vert X_v=x_v)\\
 &=
 \sum_{x_{u\setminus v}\in\states^{u\setminus v}}
-\tilde{P}(X_t=y\vert
+\tilde{P}(X_s=y\vert
 X_{u}=x_{u}, X_{v\setminus u}=x_{v\setminus u})
 P(X_{u\setminus v}=x_{u\setminus v}
 \vert X_v=x_v)\\
 &=
 \sum_{x_{u\setminus v}\in\states^{u\setminus v}}
-P_{x_u}(X_t=y\vert
+P_{x_u}(X_s=y\vert
 X_{u}=x_{u}, X_{v\setminus [0,\max u]}=x_{v\setminus [0,\max u]})
 P(X_{u\setminus v}=x_{u\setminus v}
 \vert X_v=x_v)
 \end{align*}
 *** Because of this equality, well-behavedness and compatibility with $\rateset$ will follow from the fact that $P_{x_u}$ has these properties. ***
+
+This equality allows us to prove that $P$ is well-behaved and consistent with $\mathcal{Q}$.
+
+We first prove that $P$ is well-behaved. In order to do this, we consider any time sequence $0\leq t_0<\dots<t_{n}<t$ and any set of states $x_{0},\dots,x_{n},x,y\in\states$, and we distinguish between two cases: $t<\max u$ and $t\geq\max u$. If $t<\max u$, we see that $(X_{t+\Delta}=y,(X_t=x, X_{t_0}=x_{0}, \dots, X_{t_n}=x_{n}))\in\mathcal{C}_\emptyset$ for all $\Delta\in(0,\max u-\max v]$ and therefore, since $P$ is an extension of $\tilde{P}$, it follows from Equation~\eqref{eq:theo:aanelkaarplakken:defPtilde} that
+\begin{multline*}
+\limsup_{\Delta\to 0^{+}}\frac{1}{\Delta}\abs{P(X_{t+\Delta}=y\vert X_t=x, X_{t_0}=x_{0}, \dots, X_{t_n}=x_{n})-\delta_{xy}}\\
+=\limsup_{\Delta\to 0^{+}}\frac{1}{\Delta}\abs{P_\emptyset(X_{t+\Delta}=y\vert X_t=x, X_{t_0}=x_{0}, \dots, X_{t_n}=x_{n})-\delta_{xy}}<+\infty,
+\end{multline*}
+where the final inequality is a consequence of the well-behavedness of $P_\emptyset$. If $t\geq \max u$, it follows from Equation
+
+
+\begin{equation*}
+\limsup_{\Delta\to 0^{+}}\frac{1}{\Delta}\abs{P(X_{t}=y\vert X_{t-\Delta}=x, X_{t_0}=x_{0}, \dots, X_{t_n}=x_{n})-\delta_{xy}}<+\infty
+\end{equation*}
+
 \end{proof}
 
 \section{An Important Lower Transition Operator}
