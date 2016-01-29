@@ -863,7 +863,15 @@ For any well-behaved homogeneous Markov chain $P\in\whmprocesses$, there is a un
 
 Hence, any well-behaved homogenous Markov chain $P\in\whmprocesses$ is completely characterised by its initial distribution and a rate matrix $Q\in\mathcal{R}$. We will denote this rate matrix by $Q_P$.
 
-\subsection{Restricted Transition Matrix Systems}
+\subsection{Non-homogeneous Markov chains}
+
+In contrast to homogeneous Markov chains, a Markov chain for which Equation~\eqref{eq:homogeneousMarkov} does not hold is called---rather obviously---\emph{non-homogeneous}. While we know from Theorem~\ref{theo:homogeneoushasQ} that homogeneous Markov chains can be characterized (up to an initial distribution) by a fixed rate matrix $Q\in\mathcal{R}$, this does not hold for non-homogeneous Markov chains. 
+
+Instead, such systems are typically described by a function $Q_t$ that gives for each time point $t\in\realsnonneg$ a rate matrix $Q_t\in\mathcal{R}$. For any such function $Q_t$, the existence and uniqueness of a corresponding non-homogeneous Markov chain then depend on the specific properties of $Q_t$. Rather than attempt to treat all these different cases here, we instead refer to some examples from the literature. 
+
+Typically, some kind of (piecewise-)continuity of $Q_t$ in terms of $t$ is assumed. The specifics of these assumptions may then depend on the intended generality of the results, computational considerations, the domain of application, and so forth. For example,~\cite{aalen1978empirical} assumes that $Q_t$ is left-continuous and has bounded right-hand limits. As a stronger restriction,~\cite{johnson1989nonhomogeneous} uses a collection $Q_1,\ldots,Q_n$ of commuting rate matrices, and defines $Q_t$ as a weighted linear combination of these component rate matrices wherein the weights vary continuously with $t$. In~\cite{rindos1995exact}, a right-continuous and piecewise-constant $Q_t$ is used, meaning that $Q_t$ takes different values on various (half-open) intervals of $\realsnonneg$, but fixed values within those intervals.
+
+******
 
 **** blablabla
 
@@ -874,6 +882,13 @@ We will now consider restrictions of transition matrix systems to some specified
 \mathcal{T}^{[t,s]} \coloneqq \left\{T_q^r\in\mathcal{T}\,:\,q,r\in[t,s],\, q\leq r\right\}\,.
 \end{equation*}
 We call such a family $\mathcal{T}^{[t,s]}$ a \emph{restricted transition matrix system}.
+
+\begin{proposition}
+A family $\mathcal{T}^{[t,s]}$ is a restricted transition matrix system defined on $[t,s]$ if and only if **** satisfies decomposition, and identity matrix when no time elapses
+\end{proposition}
+\begin{proof}
+*** {\bf TODO}
+\end{proof}
 
 Because these restricted transition matrix systems are only defined on some given interval, it will be useful to define a concatenation operator between two such systems defined on adjacent intervals. To his end, for any $t,r,s\in\realsnonneg$ such that $t\leq r\leq s$, and any two restricted transition matrix systems $\mathcal{T}^{[t,r]}$ and $\mathcal{T}^{[r,s]}$, let
 \begin{align*}
@@ -888,13 +903,7 @@ Consider any $t,r,s\in\realsnonneg$ such that $t\leq r\leq s$, and any two restr
 is a restricted transition matrix system defined on $[t,s]$. Furthermore, if both $\mathcal{T}^{[t,r]}$ and $\mathcal{T}^{[r,s]}$ are well behaved, then $\mathcal{T}^{[t,s]}$ is also well-behaved.
 \end{proposition}
 
-\subsection{Non-homogeneous Markov chains}
-
-In contrast to homogeneous Markov chains, a Markov chain for which Equation~\eqref{eq:homogeneousMarkov} does not hold is called---rather obviously---\emph{non-homogeneous}. While we know from Theorem~\ref{theo:homogeneoushasQ} that homogeneous Markov chains can be characterized (up to an initial distribution) by a fixed rate matrix $Q\in\mathcal{R}$, this does not hold for non-homogeneous Markov chains. 
-
-Instead, such systems are typically described by a function $Q_t$ that gives for each time point $t\in\realsnonneg$ a rate matrix $Q_t\in\mathcal{R}$. For any such function $Q_t$, the existence and uniqueness of a corresponding non-homogeneous Markov chain then depend on the specific properties of $Q_t$. Rather than attempt to treat all these different cases here, we instead refer to some examples from the literature. 
-
-Typically, some kind of (piecewise-)continuity of $Q_t$ in terms of $t$ is assumed. The specifics of these assumptions may then depend on the intended generality of the results, computational considerations, the domain of application, and so forth. For example,~\cite{aalen1978empirical} assumes that $Q_t$ is left-continuous and has bounded right-hand limits. As a stronger restriction,~\cite{johnson1989nonhomogeneous} uses a collection $Q_1,\ldots,Q_n$ of commuting rate matrices, and defines $Q_t$ as a weighted linear combination of these component rate matrices wherein the weights vary continuously with $t$. In~\cite{rindos1995exact}, a right-continuous and piecewise-constant $Q_t$ is used, meaning that $Q_t$ takes different values on various (half-open) intervals of $\realsnonneg$, but fixed values within those intervals.
+****** Onderstaande weg, opnieuw doen in termen van compositie van r.t.m.s.
 
 The case of a left-continuous and piecewise-constant $Q_t$ is used in some proofs in our present work, and we have therefore chosen to include it here for completeness. The formal construction of such a $Q_t$, and specifically that of a corresponding transition matrix system $\mathcal{T}_{Q_t}$, is somewhat convoluted. We have therefore moved its construction to Lemma~\ref{lemma:nonhomogen_trans_mat_system} in the appendix. Intuitively, the result below can be understood as describing the existence of a non-homogeneous Markov chain that is constructed by piecing together various homogeneous Markov chains on given intervals.
 
@@ -915,6 +924,12 @@ Consider any set of stochastic processes $\mathcal{P}\subseteq\processes$. Then,
 \underline{\mathbb{E}}[\cdot\,\vert\,\cdot] \coloneqq \inf\left\{\mathbb{E}[\cdot\,\vert\,\cdot]\,:\,P\in\mathcal{P}\right\}\,.
 \end{equation*}
 \end{definition}
+
+**** Blabla
+
+*** some notes about upper expectations, and that it suffices to just consider the lower ***
+
+****
 
 Because such (conditional) lower expectations are linked to a given set $\mathcal{P}\subseteq\processes$ of stochastic processes, we will next look at how we can describe such a set $\mathcal{P}$.
 Recall from Section~\ref{sec:dynamics} that for a given stochastic process $P\in\processes$, its behavior can be described using the outer partial derivatives $\smash{\overline{\partial}}T_{t,\,x_u}^t$ of its transition matrices $T_{t,\,x_u}^t$ at each time point $t\in\realsnonneg$ and for each history $x_u\in\states^u$. There, we found that---at least for well-behaved processes---these outer partial derivatives are non-empty bounded sets of rate matrices. Hence, because individual stochastic processes can be described using sets of rate matrices, this is also a natural starting point for describing sets of processes.
@@ -1163,9 +1178,13 @@ Then,
 This is immediate from Definition~\ref{def:lower_exp} and Proposition \ref{prop:markov_set_subset_of_nonmarkov_set}.
 \end{proof}
 
-\subsection{Compactness of Space of Transition Matrix Systems}
+*** opmerking/{\bf VOORBEELD(?)} dat $\whmprocesses_\rateset$ nogal tricky is, en dat we hier niet op focussen.
 
-**** blablabla
+\subsection{*** Useful tools for construction of processes in set}
+
+***** Handige tools om bestaan van processen te bewijzen als $\rateset$ bepaalde eigenschappen heeft. In het bijzonder, als $\rateset$ closed is hebben we compactheid van ruimte van r.t.m.s., en als $\rateset$ convex is, kunnen we arbitraire processen aan elkaar plakken.
+
+***** blablabla
 
 For any two restricted transition matrix systems $\mathcal{T}^{[t,s]}$ and $\mathcal{S}^{[t,s]}$ defined on the same interval $[t,s]$, we define a metric $d$ as
 \begin{equation}\label{eq:trans_mat_system_metric}
@@ -1186,15 +1205,13 @@ We will now look at spaces of such restricted transition matrix systems. To this
 Consider any non-empty, bounded and closed set of rate matrices $\rateset$, and any $t,s\in\realsnonneg$ such that $t\leq s$. Then, the metric space $(\mathbb{T}_\rateset^{[t,s]},d)$ is compact under the topology generated by the metric $d$, defined as in Equation~\eqref{eq:trans_mat_system_metric}.
 \end{theorem}
 
-\subsection{Stuff that needs to find a place}
+\begin{exmp}
+**** Misschien voorbeeld dat we hiermee het bestaan van het tegenvoorbeeld in Example~\ref{exmp:well-behaved-no-deriv} kunnen bewijzen?
+\exampleend
+\end{exmp}
 
-*** opmerking dat $\whmprocesses_\rateset$ nogal tricky is, en dat we hier niet op focussen.
+*******
 
-**** --- $>$ MISSCHIEN DAAROM ANDERS GEWOON WEGLATEN UIT FORMELE DEFINITIES? dan verliezen we alleen wel de ongelijkheden daarmee in bovenstaande proposities. iemand enig idee?
-
-*** some notes about upper expectations, and that it suffices to just consider the lower ***
-
-*** onderstaande breekt het verhaal wel een beetje. Misschien uiteindelijk in zijn geheel naar appendix?
 
 \begin{theorem}\label{theo:aanelkaarplakken}
 Consider a non-empty convex set of rate matrices $\rateset\subseteq\mathcal{R}$.
