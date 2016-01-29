@@ -1440,7 +1440,44 @@ T_{t-\Delta,x_u}^{t}
 {}^iT_{t-\Delta,x_u}^{t}.
 \end{equation}
 
-We start by proving Equation~\eqref{eq:theo:aanelkaarplakken:convexTright}. So consider any $t\geq0$, $v\in\mathcal{U}_{<t}$ and $x_v\in\states^v$,
+We start by proving Equation~\eqref{eq:theo:aanelkaarplakken:convexTright}. So consider any $t\geq0$, $v\in\mathcal{U}_{<t}$ and $x_v\in\states^v$.
+We distinguish between two cases: $t<\max u$ and $t\geq\max u$. If $t<\max u$, then for all $x,y\in\states$ and $\Delta\in(0,\max u-\max v)$, we see that $(X_{t+\Delta}=y,(X_t=x, X_v=x_v))\in\mathcal{C}_\emptyset$, and therefore, since $P$ is an extension of $\tilde{P}$, it follows from Equation~\eqref{eq:theo:aanelkaarplakken:defPtilde} that
+\begin{equation*}
+P(X_{t+\Delta}=y\vert X_t=x, X_v=x_v)
+=P_\emptyset(X_{t+\Delta}=y\vert X_t=x, X_v=x_v).
+\end{equation*}
+This implies that 
+
+
+where the final inequality is a consequence of the well-behavedness of $P_\emptyset$. If $t\geq \max u$, then for all $\Delta>0$, it follows from Equation~\eqref{eq:theo:aanelkaarplakken:convexcombo} (with $s\coloneqq t+\Delta$ and $w\coloneqq v\cup t$) that
+\begin{align*}
+&P(X_{t+\Delta}=y\vert X_t=x, X_v=x_v)\\
+&~~~~=
+\sum_{x_{u\setminus(v\cup t)}\in\states^{u\setminus(v\cup t)}}
+P_{x_u}(X_{t+\Delta}=y\vert X_t=x, 
+X_{u\setminus t}=x_{u\setminus t}, X_{v\setminus [0,\max u]}=x_{v\setminus [0,\max u]})\\[-4mm]
+&\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad
+P(X_{u\setminus(v\cup t)}=x_{u\setminus(v\cup t)}
+\vert X_t=x, X_v=x_v)
+\end{align*}
+and therefore also that
+\begin{align*}
+&\abs{P(X_{t+\Delta}=y\vert X_t=x, X_v=x_v)-\delta_{xy}}\\
+&\leq
+\sum_{x_{u\setminus(v\cup t)}\in\states^{u\setminus(v\cup t)}}
+\abs{P_{x_u}(X_{t+\Delta}=y\vert
+X_t=x, X_{(u\setminus t)\cup(v\setminus [0,\max u])}=x_{(u\setminus t)\cup(v\setminus [0,\max u])})-\delta_{xy}}\\[-4mm]
+&\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad~~~~
+P(X_{u\setminus(v\cup t)}=x_{u\setminus(v\cup t)}
+\vert X_t=x, X_v=x_v).
+\end{align*}
+Since $P_{x_u}$ is well-behaved for all $x_u\in\states^u$, this implies that
+\begin{equation*}
+\limsup_{\Delta\to 0^{+}}\frac{1}{\Delta}\abs{P(X_{t+\Delta}=y\vert X_t=x, X_v=x_v)-\delta_{xy}}
+<+\infty.
+\end{equation*}
+Since we have shown this to be true for both cases ($t<\max u$ and $t\geq\max u$), it follows that Equation~\eqref{eq:def:well-behaved:right} is satisfied. 
+
 
 *******************
 
