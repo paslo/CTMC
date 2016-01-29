@@ -610,9 +610,9 @@ Let $P\in\processes$ be a stochastic process.  %Then for any $t,s\in\realsnonneg
 %Similarly, 
 Then, for any $t,s\in\realsnonneg$ such that $t\leq s$, any sequence of time points $u<t$, and any state assignment $x_u\in\states^u$, the corresponding (history dependent) transition matrix $T_{t,\,x_u}^s$ is---as its name suggests---a transition matrix, and $T_{t,\,x_u}^t=I$. Furthermore, $P$ is well-behaved if and only if
 \begin{equation}\label{eq:wellbehavedtransitionmatrix}%\label{eq:wellbehavedhistorictransitionmatrix}
-\lim_{\Delta\to 0^{+}}\frac{1}{\Delta}\norm{T_{t,x_u}^{t+\Delta}-I}<+\infty
+\limsup_{\Delta\to 0^{+}}\frac{1}{\Delta}\norm{T_{t,x_u}^{t+\Delta}-I}<+\infty
 \text{~~~~and~~~~}
-\lim_{\Delta\to 0^{+}}\frac{1}{\Delta}\norm{T_{t-\Delta,x_u}^t-I}<+\infty.
+\limsup_{\Delta\to 0^{+}}\frac{1}{\Delta}\norm{T_{t-\Delta,x_u}^t-I}<+\infty.
 \end{equation}
 for all $u\in\mathcal{U}$, $x_u\in\states^u$ and $t\in\reals_{\geq0}$ such that $t>u$.
 \end{proposition}
@@ -685,8 +685,6 @@ Because these directional partial derivatives do not necessarily exist, it will 
 \begin{definition}[Outer Partial Derivatives]
 For any stochastic process $P\in\processes$, any $t\in\realsnonneg$, any sequence of time points $u<t$, and any state assignment $x_u\in\states^u$, the \emph{right-} and \emph{left-sided} \emph{outer partial derivatives} of $T_{t,x_u}^t$ are defined, respectively, as
 \begin{align}
-\label{eq:rightouterderivative}
-\begin{split}
 \overline{\partial}_{+}
 {T^t_{t,\,x_u}}
 &\coloneqq
@@ -702,7 +700,7 @@ Q\in\mathcal{R}
 (T^{t+\Delta_i}_{t,\,x_u}-I)
 =Q
 \right)
-\right\}\\
+\right\}\label{eq:rightouterderivative}\\
 \overline{\partial}_{-}
 {T^t_{t,\,x_u}}
 &\coloneqq
@@ -717,9 +715,8 @@ Q\in\mathcal{R}
 \frac{1}{\Delta_i}
 (T^{t}_{t-\Delta_i,\,x_u}-I)
 =Q
-\right)
+\right)\label{eq:leftouterderivative}
 \right\}
-\end{split}
 \end{align}
 Furthermore, the \emph{outer partial derivative} of $T_{t,x_u}^t$ is defined as
 \begin{equation*}
@@ -805,9 +802,9 @@ T_t^s=T_t^r T_r^s
 \end{equation}
 and $T_t^t=I$ for all $t\geq0$. A transition matrix system  $\mathcal{T}$ is called \emph{well-behaved} if 
 \begin{equation}\label{eq:wellbehavedtransitionmatrixsystem}%\label{eq:wellbehavedhistorictransitionmatrix}
-\lim_{\Delta\to 0^{+}}\frac{1}{\Delta}\norm{T_{t}^{t+\Delta}-I}<+\infty
+\limsup_{\Delta\to 0^{+}}\frac{1}{\Delta}\norm{T_{t}^{t+\Delta}-I}<+\infty
 \text{~~~~and~~~~}
-\lim_{\Delta\to 0^{+}}\frac{1}{\Delta}\norm{T_{t-\Delta}^t-I}<+\infty.
+\limsup_{\Delta\to 0^{+}}\frac{1}{\Delta}\norm{T_{t-\Delta}^t-I}<+\infty.
 \end{equation}
 for all $t\in\reals_{\geq0}$.
 \end{definition}
@@ -1456,25 +1453,65 @@ We are now ready to prove that $P$ is well-behaved and consistent with $\mathcal
 We start by proving that $P$ is well-behaved. First consider any $t\geq0$, $v\in\mathcal{U}_{<t}$ and $x_v\in\states^v$. 
 Then due to Equation~\eqref{eq:theo:aanelkaarplakken:convexTright}, and because every process ${}^iP$ that appears in these equations is well-behaved, it follows from Proposition~\ref{prop:stochasticprocess:simpleproperties} that
 \begin{equation*}
-\lim_{\Delta\to 0^{+}}\frac{1}{\Delta}\norm{T_{t,x_u}^{t+\Delta}-I}
-=\sum_{i\in I}\lambda_i\lim_{\Delta\to 0^{+}}\frac{1}{\Delta}\norm{{}^iT_{t,x_u}^{t+\Delta}-I}
+\limsup_{\Delta\to 0^{+}}\frac{1}{\Delta}\norm{T_{t,x_u}^{t+\Delta}-I}
+\leq\sum_{i\in I}\lambda_i\limsup_{\Delta\to 0^{+}}\frac{1}{\Delta}\norm{{}^iT_{t,x_u}^{t+\Delta}-I}
 <+\infty.
 \end{equation*}
 Similarly, for any $t>0$, $v\in\mathcal{U}_{<t}$ and $x_v\in\states^v$, Equation~\eqref{eq:theo:aanelkaarplakken:convexTleft} implies that
 \begin{equation*}
-\lim_{\Delta\to 0^{+}}\frac{1}{\Delta}\norm{T_{t-\Delta,x_u}^t-I}
-=\sum_{i\in I}\lambda_i\lim_{\Delta\to 0^{+}}\frac{1}{\Delta}\norm{T_{t-\Delta,x_u}^t-I}
+\limsup_{\Delta\to 0^{+}}\frac{1}{\Delta}\norm{T_{t-\Delta,x_u}^t-I}
+\leq\sum_{i\in I}\lambda_i\limsup_{\Delta\to 0^{+}}\frac{1}{\Delta}\norm{T_{t-\Delta,x_u}^t-I}
 <+\infty.
 \end{equation*}
 Hence, by invoking Proposition~\ref{prop:stochasticprocess:simpleproperties}, it follows that $P$ is well-behaved.
 
-We end by proving that $P$ is consistent with $\rateset$. Assume \emph{ex absurdo} that $P$ is not consistent with $\rateset$, or equivalently, that there are $t\geq0$, $v\in\mathcal{U}_{<t}$, $x_v\in\states^v$ and $Q\in\mathcal{R}$ such that $Q\in\overline{\partial}
-{T^t_{t,\,x_u}}$ and $Q\notin\rateset$. We will show that this leads to a contradiction. We consider two (possibly overlapping) cases: $\smash{Q\in\overline{\partial}_{+}
-{T^t_{t,\,x_u}}}$ and $\smash{Q\in\overline{\partial}_{-}
-{T^t_{t,\,x_u}}}$.
+We end by proving that $P$ is consistent with $\rateset$. Assume \emph{ex absurdo} that $P$ is not consistent with $\rateset$, or equivalently, that there are $t\geq0$, $v\in\mathcal{U}_{<t}$, $x_v\in\states^v$ and $Q^*\in\mathcal{R}$ such that $Q^*\in\overline{\partial}
+{T^t_{t,\,x_v}}$ and $Q^*\notin\rateset$. We will show that this leads to a contradiction. 
+We consider two (possibly overlapping) cases: $\smash{Q^*\in\overline{\partial}_{+}
+{T^t_{t,\,x_v}}}$ and $\smash{Q^*\in\overline{\partial}_{-}
+{T^t_{t,\,x_v}}}$.
 
-If $\smash{Q\in\overline{\partial}_{+}
-{T^t_{t,\,x_u}}}$, it follows from Equation
+If $\smash{Q^*\in\overline{\partial}_{+}
+{T^t_{t,\,x_v}}}$, it follows from Equation~\eqref{eq:rightouterderivative} that there is a sequence $\{\Delta_j>0\}_{j\in\nats}$ such that $\lim_{j\to\infty}\Delta_j=0$ and 
+\begin{equation}\label{eq:theo:aanelkaarplakken:Qstar}
+\lim_{j\to+\infty}
+\frac{1}{\Delta_j}
+(T^{t+\Delta_j}_{t,\,x_v}-I)
+=Q^*
+\end{equation}
+Consider $I$, $\{\lambda_i\}_{i\in I}$, $\{{}^iP\in\wprocesses_\rateset\}_{i\in I}$ and $\delta$  as in Equation~\eqref{eq:theo:aanelkaarplakken:convexTright}. Fix any $i\in I$. Since ${}^iP$ is well-behaved, the sequence
+\begin{equation*}%\label{eq:theo:aanelkaarplakken:fixingsubsequence}
+\left\{\frac{1}{\Delta_j}
+({}^iT^{t+\Delta_j}_{t,\,x_v}-I)\right\}_{j\in\nats}
+\end{equation*}
+is bounded, and therefore, the Bolzano-Weierstra{\ss} theorem implies that it has a convergent subsequence, of which we denote the limit by $Q_i$. Hence, without loss of generality---simply remove the indexes $j$ that do not correspond to the subsequence---we may assume that
+\begin{equation}\label{eq:theo:aanelkaarplakken:fixingsubsequence}
+\lim_{j\to+\infty}\frac{1}{\Delta_j}
+({}^iT^{t+\Delta_j}_{t,\,x_v}-I)=Q_i.
+\end{equation}
+Since we know from Proposition~\ref{prop:rate_from_stochastic_matrix} that $Q_i$ is a limit of rate matrices, $Q_i$ is also a rate matrix, and therefore, it follows from Equation~\eqref{eq:rightouterderivative} that $Q_i\in\smash{\overline{\partial}_{+}
+{{}^iT^t_{t,\,x_v}}}$, which, since ${}^iP$ is consistent with $\rateset$, implies that $Q_i\in\rateset$. By repeating this argument for every other $i\in I$, we obtain a set of rate matrices $\{Q_i\in\rateset\}_{i\in I}$ such that, without loss of generality, Equation~\eqref{eq:theo:aanelkaarplakken:fixingsubsequence} holds for every $i\in I$. Additionally, since $\lim_{j\to\infty}\Delta_j=0$, we may assume without loss of generality that $0<\Delta_j<\delta$ for all $j\in\nats$. Equations~\eqref{eq:theo:aanelkaarplakken:convexTright} and~\eqref{eq:theo:aanelkaarplakken:fixingsubsequence} now imply that
+\begin{equation*}
+\lim_{j\to+\infty}
+\frac{1}{\Delta_j}
+(T_{t,x_u}^{t+\Delta_j}-I)
+=\lim_{j\to+\infty}
+\frac{1}{\Delta_j}
+(\sum_{i\in I}\lambda_i
+{}^iT_{t,x_u}^{t+\Delta_j}-I)
+%=
+%\sum_{i\in I}\lambda_i
+%\lim_{j\to+\infty}
+%\frac{1}{\Delta_j}
+%({}^iT_{t,x_u}^{t+\Delta_j}-I)
+=\sum_{i\in I}\lambda_i Q_i,
+\end{equation*}
+which, because of Equation~\eqref{eq:theo:aanelkaarplakken:Qstar}, implies that $Q^*=\sum_{i\in I}\lambda_i Q_i$. Since $\rateset$ is convex, this implies that $Q^*\in\rateset$, a contradiction.
+
+If $\smash{Q^*\in\overline{\partial}_{-}
+{T^t_{t,\,x_v}}}$, a completely analogous argument leads to the same contradiction: simply use Equations~\eqref{eq:leftouterderivative} and~\eqref{eq:theo:aanelkaarplakken:convexTleft} instead of Equations~\eqref{eq:rightouterderivative} and~\eqref{eq:theo:aanelkaarplakken:convexTright}, respectively, and adapt the rest of the argument accordingly.
+
+
 
 ***** old version of proof ****
 
