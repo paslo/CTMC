@@ -1425,63 +1425,80 @@ P(X_{u\setminus w}=x_{u\setminus w}
 %P(X_{u\setminus w}=x_{u\setminus w}
 %\vert X_w=x_w)
 \end{align}
-Using this equality, we will now show that, for any $t\geq0$, $v\in\mathcal{U}_{<t}$ and $x_v\in\states^v$, there is some finite index set $I$, a set of non-negative coefficients $(\lambda_i)_{i\in S}$ that sum to one, and a set of stochastic processes $({}^iP\in\wprocesses_\rateset)_{i\in I}$ such that
+Using this equality, we will now show that, for any $t\geq0$, $v\in\mathcal{U}_{<t}$ and $x_v\in\states^v$, there is some finite index set $I$, some $v^*\in\mathcal{U}_{<t}$, a set of non-negative coefficients $(\lambda_i)_{i\in I}$ that sum to one, a set of stochastic processes $({}^iP\in\wprocesses_\rateset)_{i\in I}$ and a set of state instantiations $({}^ix_{v^*}\in\states^{v^*})_{i\in I}$ such that
 \begin{equation}\label{eq:theo:aanelkaarplakken:convexTright}
 (\exists \delta>0)~(\forall 0<\Delta<\delta)~~
-T_{t,x_u}^{t+\Delta}
+T_{t,x_v}^{t+\Delta}
 =\sum_{i\in I}\lambda_i
-{}^iT_{t,x_u}^{t+\Delta}
+{}^iT_{t,{}^ix_{v^*}}^{t+\Delta}
 \end{equation}
-and, similarly, that for any $t>0$, $v\in\mathcal{U}_{<t}$ and $x_v\in\states^v$, there is some finite index set $I$, a set of non-negative coefficients $(\lambda_i)_{i\in S}$ that sum to one, and a set of stochastic processes $({}^iP\in\wprocesses_\rateset)_{i\in I}$ such that
+and, similarly, that for any $t>0$, $v\in\mathcal{U}_{<t}$ and $x_v\in\states^v$, there is some finite index set $I$, some $v^*\in\mathcal{U}_{<t}$, a set of non-negative coefficients $(\lambda_i)_{i\in I}$ that sum to one, a set of stochastic processes $({}^iP\in\wprocesses_\rateset)_{i\in I}$ and a set of state instantiations $({}^ix_{v^*}\in\states^{v^*})_{i\in I}$ such that
 \begin{equation}\label{eq:theo:aanelkaarplakken:convexTleft}
 (\exists \delta>0)~(\forall 0<\Delta<\delta)~~
-T_{t-\Delta,x_u}^{t}
+T_{t-\Delta,x_v}^{t}
 =\sum_{i\in I}\lambda_i
-{}^iT_{t-\Delta,x_u}^{t}.
+{}^iT_{t-\Delta,{}^ix_{v^*}}^{t}.
 \end{equation}
 
 We start by proving Equation~\eqref{eq:theo:aanelkaarplakken:convexTright}. So consider any $t\geq0$, $v\in\mathcal{U}_{<t}$ and $x_v\in\states^v$.
-We distinguish between two cases: $t<\max u$ and $t\geq\max u$. If $t<\max u$, then for all $x,y\in\states$ and $\Delta\in(0,\max u-\max v)$, we see that $(X_{t+\Delta}=y,(X_t=x, X_v=x_v))\in\mathcal{C}_\emptyset$, and therefore, since $P$ is an extension of $\tilde{P}$, it follows from Equation~\eqref{eq:theo:aanelkaarplakken:defPtilde} that
+We distinguish between two cases: $t<\max u$ and $t\geq\max u$. If $t<\max u$, then for all $\Delta\in(0,\max u-\max v)$ and $x,y\in\states$, we see that $(X_{t+\Delta}=y,(X_t=x, X_v=x_v))\in\mathcal{C}_\emptyset$, and therefore, since $P$ is an extension of $\tilde{P}$, it follows from Equation~\eqref{eq:theo:aanelkaarplakken:defPtilde} that
 \begin{equation*}
 P(X_{t+\Delta}=y\vert X_t=x, X_v=x_v)
 =P_\emptyset(X_{t+\Delta}=y\vert X_t=x, X_v=x_v).
 \end{equation*}
-This implies that 
-
-
-where the final inequality is a consequence of the well-behavedness of $P_\emptyset$. If $t\geq \max u$, then for all $\Delta>0$, it follows from Equation~\eqref{eq:theo:aanelkaarplakken:convexcombo} (with $s\coloneqq t+\Delta$ and $w\coloneqq v\cup t$) that
+Hence, if we let $I\coloneqq\{i\}$, $v^*\coloneqq v$, $\lambda_i\coloneqq 1$, ${}^iP\coloneqq P_\emptyset$ and ${}^ix_{v^*}\coloneqq x_\emptyset$, Equation~\eqref{eq:theo:aanelkaarplakken:convexTright} is satisfied by choosing $\delta\coloneqq \max u-\max v$.
+If $t\geq \max u$, then for all $\Delta>0$, it follows from Equation~\eqref{eq:theo:aanelkaarplakken:convexcombo} (with $s\coloneqq t+\Delta$ and $w\coloneqq v\cup t$) that
 \begin{align*}
 &P(X_{t+\Delta}=y\vert X_t=x, X_v=x_v)\\
 &~~~~=
 \sum_{x_{u\setminus(v\cup t)}\in\states^{u\setminus(v\cup t)}}
 P_{x_u}(X_{t+\Delta}=y\vert X_t=x, 
-X_{u\setminus t}=x_{u\setminus t}, X_{v\setminus [0,\max u]}=x_{v\setminus [0,\max u]})\\[-4mm]
+X_{(u\setminus t)\cup(v\setminus [0,\max u])}= 
+x_{(u\setminus t)\cup(v\setminus [0,\max u])})\\[-4mm]
 &\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad
-P(X_{u\setminus(v\cup t)}=x_{u\setminus(v\cup t)}
-\vert X_t=x, X_v=x_v)
-\end{align*}
-and therefore also that
-\begin{align*}
-&\abs{P(X_{t+\Delta}=y\vert X_t=x, X_v=x_v)-\delta_{xy}}\\
-&\leq
-\sum_{x_{u\setminus(v\cup t)}\in\states^{u\setminus(v\cup t)}}
-\abs{P_{x_u}(X_{t+\Delta}=y\vert
-X_t=x, X_{(u\setminus t)\cup(v\setminus [0,\max u])}=x_{(u\setminus t)\cup(v\setminus [0,\max u])})-\delta_{xy}}\\[-4mm]
-&\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad~~~~
 P(X_{u\setminus(v\cup t)}=x_{u\setminus(v\cup t)}
 \vert X_t=x, X_v=x_v).
 \end{align*}
-Since $P_{x_u}$ is well-behaved for all $x_u\in\states^u$, this implies that
+Therefore, if we let $I\coloneqq\states^{u\setminus(v\cup t)}$, $v^*\coloneqq (u\setminus t)\cup(v\setminus [0,\max u])$ and, for all $x_{u\setminus(v\cup t)}\in I$,
+\begin{equation*}
+\lambda_{x_{u\setminus(v\cup t)}}
+\coloneqq P(X_{u\setminus(v\cup t)}=x_{u\setminus(v\cup t)}
+\vert X_t=x, X_v=x_v),
+\end{equation*}
+${}^{x_{u\setminus(v\cup t)}}P=P_{x_u}$ and ${}^{x_{u\setminus(v\cup t)}}x_{v^*}\coloneqq
+x_{(u\setminus t)\cup(v\setminus [0,\max u])}$, Equation~\eqref{eq:theo:aanelkaarplakken:convexTright} is satisfied for any $\delta>0$.
+Hence, Equation~\eqref{eq:theo:aanelkaarplakken:convexTright} is satisfied in both cases.
+
+Next, we will now prove Equation~\eqref{eq:theo:aanelkaarplakken:convexTleft}. So, consider any $t>0$, $v\in\mathcal{U}_{<t}$ and $x_v\in\states^v$.
+We distinguish between two cases: $t\leq\max u$ and $t>\max u$. 
+
+If $t\leq\max u$, we see that $(X_{t}=y,(X_{t-\Delta}=x, X_v=x_v))\in\mathcal{C}_\emptyset$ for all $\Delta\in(0,t-\max v)$ and therefore, since $P$ is an extension of $\tilde{P}$, it follows from Equation~\eqref{eq:theo:aanelkaarplakken:defPtilde} that
+\begin{multline*}
+\limsup_{\Delta\to 0^{+}}\frac{1}{\Delta}\abs{P(X_{t}=y\vert X_{t-\Delta}=x, X_v=x_v)-\delta_{xy}}\\
+=\limsup_{\Delta\to 0^{+}}\frac{1}{\Delta}\abs{P_\emptyset(X_{t}=y\vert X_{t-\Delta}=x, X_v=x_v)-\delta_{xy}}<+\infty,
+\end{multline*}
+where the final inequality is a consequence of the well-behavedness of $P_\emptyset$. If $t>\max u$, then for all $\Delta\in(0,\min\{t-\max v,t-\max u\})$, using a similar argument as before, it follows from Equation~\eqref{eq:theo:aanelkaarplakken:convexcombo} (now with $s\coloneqq t$ and $w\coloneqq v\cup\{t-\Delta\}$) that
+\begin{align*}
+&\abs{P(X_{t}=y\vert X_{t-\Delta}=x, X_v=x_v)-\delta_{xy}}\\
+&\quad\quad\leq
+\sum_{x_{u\setminus v}\in\states^{u\setminus v }}
+\abs{P_{x_u}(X_{t}=y\vert
+X_{t-\Delta}=x, X_{u\cup(v\setminus [0,\max u])}=x_{u\cup(v\setminus [0,\max u])})-\delta_{xy}}\\[-4mm]
+&\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad
+P(X_{u\setminus v}=x_{u\setminus v}
+\vert X_t=x, X_v=x_v),
+\end{align*}
+which, since $P_{x_u}$ is well-behaved for all $x_u\in\states^u$, implies that
 \begin{equation*}
 \limsup_{\Delta\to 0^{+}}\frac{1}{\Delta}\abs{P(X_{t+\Delta}=y\vert X_t=x, X_v=x_v)-\delta_{xy}}
 <+\infty.
 \end{equation*}
-Since we have shown this to be true for both cases ($t<\max u$ and $t\geq\max u$), it follows that Equation~\eqref{eq:def:well-behaved:right} is satisfied. 
+Since we have shown this to be true for both cases ($t\leq\max u$ and $t>\max u$), it follows that Equation~\eqref{eq:def:well-behaved:left} is satisfied.
+
+Since we have shown that, for any (possibly empty) time sequence $v\in\mathcal{U}$, any $x_v\in\states^v$ and any $x,y\in\states$, Equations~\eqref{eq:def:well-behaved:right} and~\eqref{eq:def:well-behaved:left} are satisfied, it follows from Definition~\ref{def:well-behaved} that $P$ is well-behaved.
 
 
-*******************
 
-Need to add a proof for Equations~\eqref{eq:theo:aanelkaarplakken:convexTright} and~\eqref{eq:theo:aanelkaarplakken:convexTleft} here.
 
 *******************
 
@@ -1549,81 +1566,6 @@ which, because of Equation~\eqref{eq:theo:aanelkaarplakken:Qstar}, implies that 
 
 If $\smash{Q^*\in\overline{\partial}_{-}
 {T^t_{t,\,x_v}}}$, a completely analogous argument leads to the same contradiction: simply use Equations~\eqref{eq:leftouterderivative} and~\eqref{eq:theo:aanelkaarplakken:convexTleft} instead of Equations~\eqref{eq:rightouterderivative} and~\eqref{eq:theo:aanelkaarplakken:convexTright}, respectively, and adapt the rest of the argument accordingly.
-
-
-
-***** old version of proof ****
-
-As we are about to show, this equality allows us to prove that $P$ is well-behaved and consistent with $\mathcal{Q}$.
-
-In order to prove that $P$ is well-behaved, we consider any (possibly empty) time sequence $v\in\mathcal{U}$, any $x_v\in\states^v$ and any $x,y\in\states$. 
-
-First fix any $t\in\reals_{\geq0}$ such that $t>v$.
-We distinguish between two cases: $t<\max u$ and $t\geq\max u$. If $t<\max u$, we see that $(X_{t+\Delta}=y,(X_t=x, X_v=x_v))\in\mathcal{C}_\emptyset$ for all $\Delta\in(0,\max u-\max v]$ and therefore, since $P$ is an extension of $\tilde{P}$, it follows from Equation~\eqref{eq:theo:aanelkaarplakken:defPtilde} that
-\begin{multline*}
-\limsup_{\Delta\to 0^{+}}\frac{1}{\Delta}\abs{P(X_{t+\Delta}=y\vert X_t=x, X_v=x_v)-\delta_{xy}}\\
-=\limsup_{\Delta\to 0^{+}}\frac{1}{\Delta}\abs{P_\emptyset(X_{t+\Delta}=y\vert X_t=x, X_v=x_v)-\delta_{xy}}<+\infty,
-\end{multline*}
-where the final inequality is a consequence of the well-behavedness of $P_\emptyset$. If $t\geq \max u$, then for all $\Delta>0$, it follows from Equation~\eqref{eq:theo:aanelkaarplakken:convexcombo} (with $s\coloneqq t+\Delta$ and $w\coloneqq v\cup t$) that
-\begin{align*}
-&P(X_{t+\Delta}=y\vert X_t=x, X_v=x_v)\\
-&~~~~=
-\sum_{x_{u\setminus(v\cup t)}\in\states^{u\setminus(v\cup t)}}
-P_{x_u}(X_{t+\Delta}=y\vert X_t=x, 
-X_{u\setminus t}=x_{u\setminus t}, X_{v\setminus [0,\max u]}=x_{v\setminus [0,\max u]})\\[-4mm]
-&\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad
-P(X_{u\setminus(v\cup t)}=x_{u\setminus(v\cup t)}
-\vert X_t=x, X_v=x_v)
-\end{align*}
-and therefore also that
-\begin{align*}
-&\abs{P(X_{t+\Delta}=y\vert X_t=x, X_v=x_v)-\delta_{xy}}\\
-&\leq
-\sum_{x_{u\setminus(v\cup t)}\in\states^{u\setminus(v\cup t)}}
-\abs{P_{x_u}(X_{t+\Delta}=y\vert
-X_t=x, X_{(u\setminus t)\cup(v\setminus [0,\max u])}=x_{(u\setminus t)\cup(v\setminus [0,\max u])})-\delta_{xy}}\\[-4mm]
-&\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad~~~~
-P(X_{u\setminus(v\cup t)}=x_{u\setminus(v\cup t)}
-\vert X_t=x, X_v=x_v).
-\end{align*}
-Since $P_{x_u}$ is well-behaved for all $x_u\in\states^u$, this implies that
-\begin{equation*}
-\limsup_{\Delta\to 0^{+}}\frac{1}{\Delta}\abs{P(X_{t+\Delta}=y\vert X_t=x, X_v=x_v)-\delta_{xy}}
-<+\infty.
-\end{equation*}
-Since we have shown this to be true for both cases ($t<\max u$ and $t\geq\max u$), it follows that Equation~\eqref{eq:def:well-behaved:right} is satisfied. 
-
-Next, fix any $t\in\reals_{>0}$ such that $t>v$.
-We distinguish between two cases: $t\leq\max u$ and $t>\max u$. If $t\leq\max u$, we see that $(X_{t}=y,(X_{t-\Delta}=x, X_v=x_v))\in\mathcal{C}_\emptyset$ for all $\Delta\in(0,t-\max v)$ and therefore, since $P$ is an extension of $\tilde{P}$, it follows from Equation~\eqref{eq:theo:aanelkaarplakken:defPtilde} that
-\begin{multline*}
-\limsup_{\Delta\to 0^{+}}\frac{1}{\Delta}\abs{P(X_{t}=y\vert X_{t-\Delta}=x, X_v=x_v)-\delta_{xy}}\\
-=\limsup_{\Delta\to 0^{+}}\frac{1}{\Delta}\abs{P_\emptyset(X_{t}=y\vert X_{t-\Delta}=x, X_v=x_v)-\delta_{xy}}<+\infty,
-\end{multline*}
-where the final inequality is a consequence of the well-behavedness of $P_\emptyset$. If $t>\max u$, then for all $\Delta\in(0,\min\{t-\max v,t-\max u\})$, using a similar argument as before, it follows from Equation~\eqref{eq:theo:aanelkaarplakken:convexcombo} (now with $s\coloneqq t$ and $w\coloneqq v\cup\{t-\Delta\}$) that
-\begin{align*}
-&\abs{P(X_{t}=y\vert X_{t-\Delta}=x, X_v=x_v)-\delta_{xy}}\\
-&\quad\quad\leq
-\sum_{x_{u\setminus v}\in\states^{u\setminus v }}
-\abs{P_{x_u}(X_{t}=y\vert
-X_{t-\Delta}=x, X_{u\cup(v\setminus [0,\max u])}=x_{u\cup(v\setminus [0,\max u])})-\delta_{xy}}\\[-4mm]
-&\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad
-P(X_{u\setminus v}=x_{u\setminus v}
-\vert X_t=x, X_v=x_v),
-\end{align*}
-which, since $P_{x_u}$ is well-behaved for all $x_u\in\states^u$, implies that
-\begin{equation*}
-\limsup_{\Delta\to 0^{+}}\frac{1}{\Delta}\abs{P(X_{t+\Delta}=y\vert X_t=x, X_v=x_v)-\delta_{xy}}
-<+\infty.
-\end{equation*}
-Since we have shown this to be true for both cases ($t\leq\max u$ and $t>\max u$), it follows that Equation~\eqref{eq:def:well-behaved:left} is satisfied.
-
-Since we have shown that, for any (possibly empty) time sequence $v\in\mathcal{U}$, any $x_v\in\states^v$ and any $x,y\in\states$, Equations~\eqref{eq:def:well-behaved:right} and~\eqref{eq:def:well-behaved:left} are satisfied, it follows from Definition~\ref{def:well-behaved} that $P$ is well-behaved.
-
-
-
-*** still need to prove consistency ***
-
-
 \end{proof}
 
 \section{An Important Lower Transition Operator}
