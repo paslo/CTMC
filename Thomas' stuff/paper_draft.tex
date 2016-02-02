@@ -1906,25 +1906,6 @@ Finally, previous work only focused on functions $f\in\gamblesX$ defined at a si
 *** Most are obvious, as that's what it means to be a ``norm''. Others follow trivially from the definitions. Properties~\ref{N:normAB} and \ref{N:normAf} probably require a proof.
 \end{proof}
 
-\begin{lemma}\label{lemma:recursive}
-Consider two sequences $A_1,\ldots,A_n$ and $B_1,\ldots,B_n$ of non-negatively homogeneous operators from $\gamblesX$ to $\gamblesX$, such that $\norm{A_i}\leq 1$ and $\norm{B_i}\leq 1$ for all $i\in\{1,\ldots,n\}$. Then,
-\begin{equation}\label{eq:lemma_recursive_inequality}
-\norm{\prod_{i=1}^nA_i - \prod_{i=1}^nB_i} \leq \sum_{i=1}^n \norm{A_i - B_i}\,.
-\end{equation}
-\end{lemma}
-\begin{proof}
-We provide a proof by induction. Clearly, Equation~\eqref{eq:lemma_recursive_inequality} holds for $n=1$. Suppose that it holds for $n=k-1$. We show that it then also holds for $n=k$.
-\begin{align*}
-\norm{\prod_{i=1}^nA_i - \prod_{i=1}^nB_i} &= \norm{\prod_{i=1}^nA_i - \left(\prod_{i=1}^{n-1}A_i\right)B_n + \left(\prod_{i=1}^{n-1}A_i\right)B_n - \prod_{i=1}^nB_i} \\
- &\leq \norm{\prod_{i=1}^nA_i - \left(\prod_{i=1}^{n-1}A_i\right)B_n} + \norm{\left(\prod_{i=1}^{n-1}A_i\right)B_n - \prod_{i=1}^nB_i} \\
- &= \norm{\left(\prod_{i=1}^{n-1}A_i\right)(A_n - B_n)} + \norm{\left(\prod_{i=1}^{n-1}A_i - \prod_{i=1}^{n-1}B_i\right)B_n} \\
- &\leq \norm{\prod_{i=1}^{n-1}A_i}\norm{A_n - B_n} + \norm{\prod_{i=1}^{n-1}A_i - \prod_{i=1}^{n-1}B_i}\norm{B_n} \\
- &\leq \norm{A_n - B_n} + \norm{\prod_{i=1}^{n-1}A_i - \prod_{i=1}^{n-1}B_i} \\
- &\leq \norm{A_n - B_n} + \sum_{i=1}^{n-1}\norm{A_i - B_i} = \sum_{i=1}^{n}\norm{A_i - B_i}\,.
-\end{align*}
-Here, in the second-to-last inequality, we used the fact that $\norm{A_i}\leq 1$ and $\norm{B_i}\leq 1$ for all $i\in\{1,\ldots,n\}$. In the final inequality, we used the induction hypothesis.
-\end{proof}
-
 \begin{lemma}\label{lemma:alt_axiom_prob}
 Let $P$ be any map from $\power\times\nonemptypower$ to $\reals$. Then, $P$ is a full conditional probability if and only if it satisfies
 \begin{enumerate}[label=P\arabic*:,ref=P\arabic*]
@@ -2524,6 +2505,25 @@ T_t^s=T_0^{s-t}=e^{Q(s-t)}
 or equivalently, that $\mathcal{T}_P=\mathcal{T}_Q$.
 
 Finally, we prove that $Q$ is unique. Assume \emph{ex absurdo} that this is not the case, or equivalently, that there are rate matrices $Q_1$ and $Q_2$, with $Q_1\neq Q_2$, such that $\mathcal{T}_P=\mathcal{T}_{Q_1}$ and $\mathcal{T}_P=\mathcal{T}_{Q_2}$. It then follows from Definition~\ref{def:systemfromQ} that $\partial_{+}{T^0_{0}}=Q_1$ and $\partial_{+}{T^0_{0}}=Q_2$, which implies that $Q_1=Q_2$. From this contradiction, it follows $Q$ is indeed unique.
+\end{proof}
+
+\begin{lemma}\label{lemma:recursive}
+Consider two sequences $A_1,\ldots,A_n$ and $B_1,\ldots,B_n$ of non-negatively homogeneous operators from $\gamblesX$ to $\gamblesX$, such that $\norm{A_i}\leq 1$ and $\norm{B_i}\leq 1$ for all $i\in\{1,\ldots,n\}$. Then,
+\begin{equation}\label{eq:lemma_recursive_inequality}
+\norm{\prod_{i=1}^nA_i - \prod_{i=1}^nB_i} \leq \sum_{i=1}^n \norm{A_i - B_i}\,.
+\end{equation}
+\end{lemma}
+\begin{proof}
+We provide a proof by induction. Clearly, Equation~\eqref{eq:lemma_recursive_inequality} holds for $n=1$. Suppose that it holds for $n=k-1$. We show that it then also holds for $n=k$.
+\begin{align*}
+\norm{\prod_{i=1}^nA_i - \prod_{i=1}^nB_i} &= \norm{\prod_{i=1}^nA_i - \left(\prod_{i=1}^{n-1}A_i\right)B_n + \left(\prod_{i=1}^{n-1}A_i\right)B_n - \prod_{i=1}^nB_i} \\
+ &\leq \norm{\prod_{i=1}^nA_i - \left(\prod_{i=1}^{n-1}A_i\right)B_n} + \norm{\left(\prod_{i=1}^{n-1}A_i\right)B_n - \prod_{i=1}^nB_i} \\
+ &= \norm{\left(\prod_{i=1}^{n-1}A_i\right)(A_n - B_n)} + \norm{\left(\prod_{i=1}^{n-1}A_i - \prod_{i=1}^{n-1}B_i\right)B_n} \\
+ &\leq \norm{\prod_{i=1}^{n-1}A_i}\norm{A_n - B_n} + \norm{\prod_{i=1}^{n-1}A_i - \prod_{i=1}^{n-1}B_i}\norm{B_n} \\
+ &\leq \norm{A_n - B_n} + \norm{\prod_{i=1}^{n-1}A_i - \prod_{i=1}^{n-1}B_i} \\
+ &\leq \norm{A_n - B_n} + \sum_{i=1}^{n-1}\norm{A_i - B_i} = \sum_{i=1}^{n}\norm{A_i - B_i}\,.
+\end{align*}
+Here, in the second-to-last inequality, we used the fact that $\norm{A_i}\leq 1$ and $\norm{B_i}\leq 1$ for all $i\in\{1,\ldots,n\}$. In the final inequality, we used the induction hypothesis.
 \end{proof}
 
 \begin{proof}[Proof of Proposition~\ref{prop:concat_restr_trans_mat_systems_is_system}]
