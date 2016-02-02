@@ -1687,48 +1687,77 @@ This changes if the set $\wprocesses_\rateset$ is not only well-behaved, include
 
 Having shown in Section~\ref{sec:single_var_lower_exp} that the operator $L_t^s$ computes lower expectations for functions $f\in\gamblesX$ defined on a single point in time, we will now turn our attention to functions defined on multiple time points. Because we are considering \emph{conditional} expectations, where the conditioning is done with respect to states in a (non-)Markov chain's history, it makes sense to distinguish between two different classes of functions defined at multiple time points. 
 
-First, in Section~\ref{sec:function_single_future_multiple_past}, we will consider functions defined on a single time point in a chain's future, and multiple time points in the chain's history. Thus, we will consider functions $f\in\gambles(\states^{u\cup\{s\}})$, and lower expectations of the form
-\begin{equation*}
-\underline{\mathbb{E}}\left[f(X_{t_0},\ldots,X_{t_n},X_s)\,\vert\,X_{t_0},\ldots,X_{t_n}\right]\,.
-\end{equation*}
-We will see that it is a straightforward implication of our results from Section~\ref{sec:single_var_lower_exp} that such lower expectations are computable using $L_t^s$, both with respect to sets of Markov chains and with respect to sets of non-Markov chains.
+**** blabla
 
-In Section~\ref{sec:decomposition} we will generalize this to functions defined on multiple time points in a chain's future and history, considering functions $f\in\gambles(\states^{u\cup v})$ and lower expectations of the form
-\begin{equation*}
-\underline{\mathbb{E}}\left[f(X_{t_0},\ldots,X_{t_n},X_{s_0},\ldots,X_{s_m})\,\vert\,X_{t_0},\ldots,X_{t_n}\right]\,.
-\end{equation*}
-As we will see, for functions of this kind the lower expectations with respect to sets of non-Markov chains no longer correspond to those taken with respect to sets of Markov chains. One of the main results of this paper, however, is that we can still use the operator $L_t^s$ to compute lower expectations of this form if taken with respect to sets of non-Markov chains. We will see that this is because the optimization problem involved in computing lower expectations in some sense becomes simpler when we drop the Markov assumption.
-
-Finally, in Section~\ref{sec:tractability}, we will show that although $L_t^s$ provides us with a way to compute such lower expectations, doing so for general functions $f\in\gambles(\states^{u\cup v})$ is still computationally intractable. However, we then provide algorithms to tractably compute lower expectations for large and practically useful subclasses of $\gambles(\states^{u\cup v})$.
+%First, in Section~\ref{sec:function_single_future_multiple_past}, we will consider functions defined on a single time point in a chain's future, and multiple time points in the chain's history. Thus, we will consider functions $f\in\gambles(\states^{u\cup\{s\}})$, and lower expectations of the form
+%\begin{equation*}
+%\underline{\mathbb{E}}\left[f(X_{t_0},\ldots,X_{t_n},X_s)\,\vert\,X_{t_0},\ldots,X_{t_n}\right]\,.
+%\end{equation*}
+%We will see that it is a straightforward implication of our results from Section~\ref{sec:single_var_lower_exp} that such lower expectations are computable using $L_t^s$, both with respect to sets of Markov chains and with respect to sets of non-Markov chains.
+%
+%In Section~\ref{sec:decomposition} we will generalize this to functions defined on multiple time points in a chain's future and history, considering functions $f\in\gambles(\states^{u\cup v})$ and lower expectations of the form
+%\begin{equation*}
+%\underline{\mathbb{E}}\left[f(X_{t_0},\ldots,X_{t_n},X_{s_0},\ldots,X_{s_m})\,\vert\,X_{t_0},\ldots,X_{t_n}\right]\,.
+%\end{equation*}
+%As we will see, for functions of this kind the lower expectations with respect to sets of non-Markov chains no longer correspond to those taken with respect to sets of Markov chains. One of the main results of this paper, however, is that we can still use the operator $L_t^s$ to compute lower expectations of this form if taken with respect to sets of non-Markov chains. We will see that this is because the optimization problem involved in computing lower expectations in some sense becomes simpler when we drop the Markov assumption.
+%
+%Finally, in Section~\ref{sec:tractability}, we will show that although $L_t^s$ provides us with a way to compute such lower expectations, doing so for general functions $f\in\gambles(\states^{u\cup v})$ is still computationally intractable. However, we then provide algorithms to tractably compute lower expectations for large and practically useful subclasses of $\gambles(\states^{u\cup v})$.
 
 \subsection{Multi-Variable Functions on a Single Point in the Future}\label{sec:function_single_future_multiple_past}
 
-We start by considering functions $f\in\gambles(\states^{u\cup\{s\}})$ defined on a single time point $s$ in a (non-)Markov chain's future, and multiple time points $u=t_0,\ldots,t_n$ in a chain's history. Recall our notation from Section~\ref{sec:multivar_notation}; we write $f(x_{t_0},\ldots,x_{t_n},X_s)$ for the restriction of $f$ to $\states^{\{s\}}$ for a specific state assignment $(x_{t_0},\ldots,x_{t_n})$, and have defined
+We start by considering functions $f\in\gambles(\states^{u\cup\{s\}})$ defined on a single time point $s$ in a (non-)Markov chain's future, and multiple time points $u=t_0,\ldots,t_n$ in a chain's history. Observe that for any stochastic process $P$, the conditional expectation of such a function satisfies, for any $x_u\in\states^u$,
 \begin{equation*}
-\left[L_{t_n}^sf\right](x_{t_0},\ldots,x_{t_n}) \equiv \left[L_{t_n}^sf(x_{t_0},\ldots,x_{t_n},X_s)\right](x_{t_n})\,.
+\mathbb{E}[f(X_u,X_s)\,\vert\,X_u=x_u] = \mathbb{E}[f(x_u,X_s)\,\vert\,X_u=x_u]\,.
 \end{equation*}
-The following results are now direct implications of, and analogies to, our results from Section~\ref{sec:single_var_lower_exp}.
-
-\begin{proposition}\label{prop:multi_var_single_future_bounded}
-Let $\rateset$ be an arbitrary non-empty bounded set of rate matrices with corresponding lower transition rate operator $\lrate$, and let $\underline{\mathcal{T}}_{\lrate}$ be the family of lower transition operators corresponding to $\lrate$. Then, for any $P\in\wprocesses_\rateset$, any $s\in\realsnonneg$, any $u\in\mathcal{U}_{<s}$, any $x_u\in\states^u$, and any $f\in\gambles(\states^{u\cup\{s\}})$,
+Therefore, and because a lower expectation is an infimum over such expectations, we find that also
 \begin{equation*}
-\left[L_{t_n}^sf\right](x_{t_0},\ldots,x_{t_n}) \leq \mathbb{E}\left[f(x_{t_0},\ldots,x_{t_n},X_s)\,\vert\,X_{t_0}=x_{t_0},\ldots,X_{t_n}=x_{t_n}\right]\,.
+\underline{\mathbb{E}}[f(X_u,X_s)\,\vert\,X_u=x_u] = \underline{\mathbb{E}}[f(x_u,X_s)\,\vert\,X_u=x_u]\,.
 \end{equation*}
-\end{proposition}
 
-\begin{proposition}\label{prop:multi_var_single_future_tight}
-Let $\rateset$ be an arbitrary non-empty bounded set of rate matrices that has separately specified rows, with corresponding lower transition rate operator $\lrate$, and let $\underline{\mathcal{T}}_{\lrate}$ be the family of lower transition operators corresponding to $\lrate$. Then, for all $s\in\realsnonneg$, all $u\in\mathcal{U}_{<s}$, all $x_u\in\states^u$, all $f\in\gambles(\states^{u\cup\{s\}})$, and all $\epsilon\in\realspos$, there is a $P\in\wmprocesses_\rateset$ such that
+Now, recall our notation from Section~\ref{sec:multivar_notation}; the function $f(x_u,X_s)$ is the restriction of a function $f\in\gambles(\states^{u\cup\{s\}})$ to the state $\states^{\{s\}}$, specific to the state assignment $x_u\in\states^u$. In other words, for all $x_u\in\states^u$, there is some function $g_{x_u}\in\gambles(\states^{\{s\}})$, such that $g_{x_u}(x_s)=f(x_u,x_s)$ for all $x_s\in\states^{\{s\}}$.
+
+Hence, the problem of computing $\underline{\mathbb{E}}[f(x_u,X_s)\,\vert\,X_u=x_u]$ is in fact equivalent to computing $\underline{\mathbb{E}}[g_{x_u}(X_s)\,\vert\,X_u=x_u]$. Furthermore, because $g_{x_u}\in\gambles(\states^{\{s\}})=\gamblesX$, we already know from Section~\ref{sec:single_var_lower_exp} how to do this! We therefore have the following result as an immediate consequence of our previous results.
+
+\begin{corollary}\label{cor:inf_works_for_single_future_var}
+Let $\rateset$ be an arbitrary non-empty bounded set of rate matrices that has separately specified rows, with corresponding lower transition rate operator $\lrate$, and let $\underline{\mathcal{T}}_{\lrate}$ be the family of lower transition operators corresponding to $\lrate$. Then, for all $s\in\realsnonneg$, all $u\in\mathcal{U}_{<s}$, all $x_u\in\states^u$, and all $f\in\gambles(\states^{u\cup\{s\}})$,
 \begin{equation*}
-\abs{\left[L_{t_n}^sf\right](x_{t_0},\ldots,x_{t_n}) - \mathbb{E}\left[f(x_{t_0},\ldots,x_{t_n},X_s)\,\vert\,X_{t_0}=x_{t_0},\ldots,X_{t_n}=x_{t_n}\right]} < \epsilon\,.
+\left[L_{t_n}^s f\right](x_u) = \underline{\mathbb{E}}^{\mathrm{WM}}_{\,\rateset}[f(x_u,X_s)\,\vert\,X_u=x_u]\,,
 \end{equation*}
-\end{proposition}
+and furthermore,
+\begin{equation*}
+\left[L_{t_n}^s f\right](x_u) = \underline{\mathbb{E}}^\mathrm{W}_{\,\rateset}[f(x_u,X_s)\,\vert\,X_u=x_u]\,.
+\end{equation*}
+\end{corollary}
+\begin{proof}
+Immediate consequence of Corollary~\ref{cor:lower_operator_is_infimum}.
+\end{proof}
 
-Note that this result is weaker than the corresponding Theorem~\ref{theorem:lower_markov_bound_is_tight} in Section~\ref{sec:single_var_lower_exp}. Specifically, this says that for a given history $x_u\in\states^u$, there is a $P\in\wmprocesses_\rateset$ that approaches $\left[L_{t_n}^sf\right](x_{t_0},\ldots,x_{t_n})$. This does not imply that there is a $P\in\wmprocesses_\rateset$ that approaches $\left[L_{t_n}^sf\right](x_{t_0},\ldots,x_{t_n})$ for \emph{all} histories! 
-
-We will see in Section~\ref{sec:decomposition} that this is exactly the reason that computing lower expectations with respect to sets of non-Markov processes is ``easy''; by dropping the Markov assumption, the corresponding optimization problems become solvable locally with respect to a given history. In contrast, the optimization over sets of Markov processes must there be done globally with respect to all possible histories, because they do not allow for minimizing selections specific to a given trajectory.
-
-For our present purposes, Proposition~\ref{prop:multi_var_single_future_tight} is still strong enough to imply the following result.
-
+%Recall our notation from Section~\ref{sec:multivar_notation}; we write $f(x_{t_0},\ldots,x_{t_n},X_s)$ for the restriction of $f$ to $\states^{\{s\}}$ for a specific state assignment $(x_{t_0},\ldots,x_{t_n})$, and have defined
+%\begin{equation*}
+%\left[L_{t_n}^sf\right](x_{t_0},\ldots,x_{t_n}) \equiv \left[L_{t_n}^sf(x_{t_0},\ldots,x_{t_n},X_s)\right](x_{t_n})\,.
+%\end{equation*}
+%The following results are now direct implications of, and analogies to, our results from Section~\ref{sec:single_var_lower_exp}.
+%
+%\begin{proposition}\label{prop:multi_var_single_future_bounded}
+%Let $\rateset$ be an arbitrary non-empty bounded set of rate matrices with corresponding lower transition rate operator $\lrate$, and let $\underline{\mathcal{T}}_{\lrate}$ be the family of lower transition operators corresponding to $\lrate$. Then, for any $P\in\wprocesses_\rateset$, any $s\in\realsnonneg$, any $u\in\mathcal{U}_{<s}$, any $x_u\in\states^u$, and any $f\in\gambles(\states^{u\cup\{s\}})$,
+%\begin{equation*}
+%\left[L_{t_n}^sf\right](x_{t_0},\ldots,x_{t_n}) \leq \mathbb{E}\left[f(x_{t_0},\ldots,x_{t_n},X_s)\,\vert\,X_{t_0}=x_{t_0},\ldots,X_{t_n}=x_{t_n}\right]\,.
+%\end{equation*}
+%\end{proposition}
+%
+%\begin{proposition}\label{prop:multi_var_single_future_tight}
+%Let $\rateset$ be an arbitrary non-empty bounded set of rate matrices that has separately specified rows, with corresponding lower transition rate operator $\lrate$, and let $\underline{\mathcal{T}}_{\lrate}$ be the family of lower transition operators corresponding to $\lrate$. Then, for all $s\in\realsnonneg$, all $u\in\mathcal{U}_{<s}$, all $x_u\in\states^u$, all $f\in\gambles(\states^{u\cup\{s\}})$, and all $\epsilon\in\realspos$, there is a $P\in\wmprocesses_\rateset$ such that
+%\begin{equation*}
+%\abs{\left[L_{t_n}^sf\right](x_{t_0},\ldots,x_{t_n}) - \mathbb{E}\left[f(x_{t_0},\ldots,x_{t_n},X_s)\,\vert\,X_{t_0}=x_{t_0},\ldots,X_{t_n}=x_{t_n}\right]} < \epsilon\,.
+%\end{equation*}
+%\end{proposition}
+%
+%Note that this result is weaker than the corresponding Theorem~\ref{theorem:lower_markov_bound_is_tight} in Section~\ref{sec:single_var_lower_exp}. Specifically, this says that for a given history $x_u\in\states^u$, there is a $P\in\wmprocesses_\rateset$ that approaches $\left[L_{t_n}^sf\right](x_{t_0},\ldots,x_{t_n})$. This does not imply that there is a $P\in\wmprocesses_\rateset$ that approaches $\left[L_{t_n}^sf\right](x_{t_0},\ldots,x_{t_n})$ for \emph{all} histories! 
+%
+%We will see in Section~\ref{sec:decomposition} that this is exactly the reason that computing lower expectations with respect to sets of non-Markov processes is ``easy''; by dropping the Markov assumption, the corresponding optimization problems become solvable locally with respect to a given history. In contrast, the optimization over sets of Markov processes must there be done globally with respect to all possible histories, because they do not allow for minimizing selections specific to a given trajectory.
+%
+%For our present purposes, Proposition~\ref{prop:multi_var_single_future_tight} is still strong enough to imply the following result.
+%
 %\begin{proposition}
 %In essentie, voor alle $f\in\gambles(\states^{u\cup\{s\}})$ en alle $\epsilon\in\realspos$, is er een $P\in\mprocesses_\rateset$ zodat
 %\begin{equation*}
@@ -1738,20 +1767,20 @@ For our present purposes, Proposition~\ref{prop:multi_var_single_future_tight} i
 %\begin{proof}
 %{\bf TODO} This is immediate.
 %\end{proof}
-
-\begin{corollary}\label{cor:inf_works_for_single_future_var}
-Let $\rateset$ be an arbitrary non-empty bounded set of rate matrices that has separately specified rows, with corresponding lower transition rate operator $\lrate$, and let $\underline{\mathcal{T}}_{\lrate}$ be the family of lower transition operators corresponding to $\lrate$. Then, for all $s\in\realsnonneg$, all $u\in\mathcal{U}_{<s}$, all $x_u\in\states^u$, and all $f\in\gambles(\states^{u\cup\{s\}})$,
-\begin{equation*}
-\left[L_{t_n}^s f\right](x_{t_0},\ldots,x_{t_n}) = \underline{\mathbb{E}}^{\mathrm{WM}}_{\,\rateset}[f(x_{t_0},\ldots,x_{t_n},X_s)\,\vert\,X_{t_0}=x_{t_0},\ldots,X_{t_n}=x_{t_n}]\,,
-\end{equation*}
-and furthermore,
-\begin{equation*}
-\left[L_{t_n}^s f\right](x_{t_0},\ldots,x_{t_n}) = \underline{\mathbb{E}}^\mathrm{W}_{\,\rateset}[f(x_{t_0},\ldots,x_{t_n},X_s)\,\vert\,X_{t_0}=x_{t_0},\ldots,X_{t_n}=x_{t_n}]\,.
-\end{equation*}
-\end{corollary}
-
-Thus, we see that the operator $L_t^s$ can also be used to compute lower expectations of functions $f\in\gambles(\states^{u\cup\{s\}})$, both with respect to sets of Markov processes and with respect to sets of non-Markov processes. We will now turn to functions defined on multiple time points in a process' future, where we will find this correspondence to no longer hold.
-
+%
+%\begin{corollary}\label{cor:inf_works_for_single_future_var}
+%Let $\rateset$ be an arbitrary non-empty bounded set of rate matrices that has separately specified rows, with corresponding lower transition rate operator $\lrate$, and let $\underline{\mathcal{T}}_{\lrate}$ be the family of lower transition operators corresponding to $\lrate$. Then, for all $s\in\realsnonneg$, all $u\in\mathcal{U}_{<s}$, all $x_u\in\states^u$, and all $f\in\gambles(\states^{u\cup\{s\}})$,
+%\begin{equation*}
+%\left[L_{t_n}^s f\right](x_{t_0},\ldots,x_{t_n}) = \underline{\mathbb{E}}^{\mathrm{WM}}_{\,\rateset}[f(x_{t_0},\ldots,x_{t_n},X_s)\,\vert\,X_{t_0}=x_{t_0},\ldots,X_{t_n}=x_{t_n}]\,,
+%\end{equation*}
+%and furthermore,
+%\begin{equation*}
+%\left[L_{t_n}^s f\right](x_{t_0},\ldots,x_{t_n}) = \underline{\mathbb{E}}^\mathrm{W}_{\,\rateset}[f(x_{t_0},\ldots,x_{t_n},X_s)\,\vert\,X_{t_0}=x_{t_0},\ldots,X_{t_n}=x_{t_n}]\,.
+%\end{equation*}
+%\end{corollary}
+%
+%Thus, we see that the operator $L_t^s$ can also be used to compute lower expectations of functions $f\in\gambles(\states^{u\cup\{s\}})$, both with respect to sets of Markov processes and with respect to sets of non-Markov processes. We will now turn to functions defined on multiple time points in a process' future, where we will find this correspondence to no longer hold.
+%
 
 \subsection{Multi-Variable Functions on Multiple Points in the Future}\label{sec:decomposition}
 
@@ -4538,25 +4567,25 @@ a contradiction with Equation~\eqref{eq:nonwellbehaved_limit_diagonal_left}. The
 
 \section{Proofs and Lemmas for Section~\ref{sec:funcs_multi_time_points}}
 
-\begin{proof}[Proof of Proposition~\ref{prop:multi_var_single_future_bounded}]
-Because $f(x_{t_0},\ldots,x_{t_n},X_s)$ is a restriction of $f$ to $\states^{\{s\}}$, there is some $g\in\gambles(\states^{\{s\}})$ such that $g(x_s) = f(x_{t_0},\ldots,x_{t_n},x_s)$ for all $x_s\in\states^{\{s\}}$. By substitution, we therefore have to show that $\left[L_t^sg\right](x_{t_n}) \leq \mathbb{E}\left[g(X_s)\,\vert\,X_{t_0,\ldots,t_n}=x_{t_0,\ldots,t_n}\right]$. Because $g\in\gambles(\states^{\{s\}})$, this inequality holds by Theorem~\ref{theorem:nonmarkov_single_var_lower_bounded}.
-\end{proof}
-
-\begin{proof}[Proof of Proposition~\ref{prop:multi_var_single_future_tight}]
-Because $f(x_{t_0},\ldots,x_{t_n},X_s)$ is a restriction of $f$ to $\states^{\{s\}}$, there is some $g\in\gambles(\states^{\{s\}})$ such that $g(x_s) = f(x_{t_0},\ldots,x_{t_n},x_s)$ for all $x_s\in\states^{\{s\}}$. By substitution, we now have to show that there is a $P\in\wmprocesses_\rateset$ such that
-\begin{equation*}
-\abs{\left[L_t^sg\right](x_{t_n})-\mathbb{E}[g(X_s)\,\vert\,X_{t_0,\ldots,t_n}=x_{t_0,\ldots,t_n}]} < \epsilon\,. 
-\end{equation*}
-
-Because $g\in\gambles(\states^{\{s\}})$, by Theorem~\ref{theorem:lower_markov_bound_is_tight} there must be some $P\in\wmprocesses_\rateset$ such that $\norm{L_t^sg - \mathbb{E}[g(X_s)\,\vert\,X_{t_n}]} < \epsilon$. Consider this $P$. By the Markov property, its expectation must satisfy $\abs{\left[L_t^sg\right](x_{t_n})-\mathbb{E}[g(X_s)\,\vert\,X_{t_0,\ldots,t_n}=x_{t_0,\ldots,t_n}]} = \abs{\left[L_t^sg\right](x_{t_n})-\mathbb{E}[g(X_s)\,\vert\,X_{t_n}=x_{t_n}]}$, and by the definition of the norm, we have 
-\begin{equation*}
-\abs{\left[L_t^sg\right](x_{t_n})-\mathbb{E}[g(X_s)\,\vert\,X_{t_n}=x_{t_n}]} \leq \norm{L_t^sg-\mathbb{E}[g(X_s)\,\vert\,X_{t_n}]} < \epsilon\,.
-\end{equation*}
-\end{proof}
-
-\begin{proof}[Proof of Corollary~\ref{cor:inf_works_for_single_future_var}]
-This is a direct consequence of Propositions \ref{prop:markov_set_subset_of_nonmarkov_set}, \ref{prop:lower_exp_markov_bounded_by_nonmarkov}, \ref{prop:multi_var_single_future_bounded}, and \ref{prop:multi_var_single_future_tight}. The proof is similar to that of Corollary~\ref{cor:lower_operator_is_infimum}.
-\end{proof}
+%\begin{proof}[Proof of Proposition~\ref{prop:multi_var_single_future_bounded}]
+%Because $f(x_{t_0},\ldots,x_{t_n},X_s)$ is a restriction of $f$ to $\states^{\{s\}}$, there is some $g\in\gambles(\states^{\{s\}})$ such that $g(x_s) = f(x_{t_0},\ldots,x_{t_n},x_s)$ for all $x_s\in\states^{\{s\}}$. By substitution, we therefore have to show that $\left[L_t^sg\right](x_{t_n}) \leq \mathbb{E}\left[g(X_s)\,\vert\,X_{t_0,\ldots,t_n}=x_{t_0,\ldots,t_n}\right]$. Because $g\in\gambles(\states^{\{s\}})$, this inequality holds by Theorem~\ref{theorem:nonmarkov_single_var_lower_bounded}.
+%\end{proof}
+%
+%\begin{proof}[Proof of Proposition~\ref{prop:multi_var_single_future_tight}]
+%Because $f(x_{t_0},\ldots,x_{t_n},X_s)$ is a restriction of $f$ to $\states^{\{s\}}$, there is some $g\in\gambles(\states^{\{s\}})$ such that $g(x_s) = f(x_{t_0},\ldots,x_{t_n},x_s)$ for all $x_s\in\states^{\{s\}}$. By substitution, we now have to show that there is a $P\in\wmprocesses_\rateset$ such that
+%\begin{equation*}
+%\abs{\left[L_t^sg\right](x_{t_n})-\mathbb{E}[g(X_s)\,\vert\,X_{t_0,\ldots,t_n}=x_{t_0,\ldots,t_n}]} < \epsilon\,. 
+%\end{equation*}
+%
+%Because $g\in\gambles(\states^{\{s\}})$, by Theorem~\ref{theorem:lower_markov_bound_is_tight} there must be some $P\in\wmprocesses_\rateset$ such that $\norm{L_t^sg - \mathbb{E}[g(X_s)\,\vert\,X_{t_n}]} < \epsilon$. Consider this $P$. By the Markov property, its expectation must satisfy $\abs{\left[L_t^sg\right](x_{t_n})-\mathbb{E}[g(X_s)\,\vert\,X_{t_0,\ldots,t_n}=x_{t_0,\ldots,t_n}]} = \abs{\left[L_t^sg\right](x_{t_n})-\mathbb{E}[g(X_s)\,\vert\,X_{t_n}=x_{t_n}]}$, and by the definition of the norm, we have 
+%\begin{equation*}
+%\abs{\left[L_t^sg\right](x_{t_n})-\mathbb{E}[g(X_s)\,\vert\,X_{t_n}=x_{t_n}]} \leq \norm{L_t^sg-\mathbb{E}[g(X_s)\,\vert\,X_{t_n}]} < \epsilon\,.
+%\end{equation*}
+%\end{proof}
+%
+%\begin{proof}[Proof of Corollary~\ref{cor:inf_works_for_single_future_var}]
+%This is a direct consequence of Propositions \ref{prop:markov_set_subset_of_nonmarkov_set}, \ref{prop:lower_exp_markov_bounded_by_nonmarkov}, \ref{prop:multi_var_single_future_bounded}, and \ref{prop:multi_var_single_future_tight}. The proof is similar to that of Corollary~\ref{cor:lower_operator_is_infimum}.
+%\end{proof}
 
 %\begin{proof}[Proof of Proposition~\ref{prop:multivar_bounded}]
 %By the basic properties of expectation, we can decompose the expectation functional as
