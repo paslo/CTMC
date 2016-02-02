@@ -1798,20 +1798,23 @@ We now consider functions $f\in\gambles(\states^{u\cup v})$, where $u=t_0,\ldots
 
 *** blabla, dit kunnen we recursief doen totdat elke lower expectation nog maar een tijdpunt bevat. ergo, als $\rateset$ ook s.s.r. heeft, dan
 
-\begin{corollary}
+\begin{corollary}\label{cor:composition_lower_trans}
 Let $\rateset$ be an arbitrary non-empty, bounded, and convex set of rate matrices that has separately specified rows, with corresponding lower transition rate operator $\lrate$, and let $\underline{\mathcal{T}}_{\lrate}$ be the family of lower transition operators corresponding to $\lrate$. 
 
 Consider any $t\in\realsnonneg$, any $u\in\mathcal{U}_{<t}$ and $v\in\mathcal{U}_{\geq t}$ with $u=t_0,\ldots,t_n$ and $v={s_0,\ldots,s_m}$. Then, for any $f\in\gambles(\states^{u\cup v})$ and any $x_u\in\states^u$,
-\begin{equation*}
+\begin{equation}\label{eq:composition_lower_trans}
 \left[L_{t_n}^{s_0}L_{s_0}^{s_1}\cdots L_{s_{m-1}}^{s_m}f\right](x_u) = \underline{\mathbb{E}}^{\mathrm{W}}_{\,\rateset}[f(x_u,X_v)\,\vert\,x_u]\,.
-\end{equation*}
+\end{equation}
 \end{corollary}
 \begin{proof}
 Immediate consequence of Theorem~\ref{theorem:decomposition_multivar} and Corollary~\ref{cor:inf_works_for_single_future_var}.
 \end{proof}
 
-*** blabla, composition of lower operators is reached if and only if $\rateset=\rateset_{\lrate}$.
+Observe, therefore, that we can use our lower transition operator to compute lower expectations of arbitrary functions $f\in\gambles(\states^{u\cup v})$ with respect to the set $\wprocesses_\rateset$, whenever $\rateset$ is at least non-empty, bounded, convex, and has separately specified rows. Due to Proposition~\ref{prop:dominating_unique_characterization}, this is the case whenever $\rateset=\text{int}(\rateset_{\lrate})$, the interior of the set of rate matrices $\rateset_{\lrate}$ that dominate the lower envelope $\lrate$ of $\rateset$. In other words, for arbitrary functions, the smallest set of stochastic processes for which our lower transition operator can compute the lower expectation is given by $\wprocesses_{\text{int}(\rateset_{\lrate})}$.
 
+If $\rateset$ is furthermore closed, then by Proposition~\ref{prop:dominating_unique_characterization}, we have that $\rateset=\rateset_{\lrate}$. In that case, the lower expectation is taken with respect to $\wprocesses_\rateset=\wprocesses_{\rateset_{\lrate}}$ which, by Theorem~\ref{theo:dominating_rate_processes_max_set}, is exactly the largest set of stochastic processes for which our lower transition operator computes the lower expectation.
+
+The difference between $\wprocesses_{\text{int}(\rateset_{\lrate})}$ and $\wprocesses_{\rateset_{\lrate}}$ is that for the latter set, due to Proposition~\ref{prop:lower_expectation_reached_if_Q_closed}, the lower expectation is always reached, and hence is in fact a minimum.
 
 %**** rewrite most things (everything) below
 %
