@@ -3601,17 +3601,6 @@ Fix any $\epsilon\in\realspos$. Due to the definition of the norm, we have to sh
 \begin{equation*}
 \max\left\{\abs{\mathbb{E}\left[f(x_u,X_v)\,\vert\,x_u\right] - \underline{\mathbb{E}}^{\mathrm{W}}_\rateset\bigl[\underline{\mathbb{E}}^{\mathrm{W}}_\rateset\left[f(x_u,X_v)\,\vert\,x_u,X_{v\setminus w}\right]\,\vert\,x_u\bigr]}\,:\,x_u\in\states^u\right\} < \epsilon\,.
 \end{equation*}
-
-\begin{remark}
-******
-
-I need the following property, which is true but not explicit from the statement of Theorem~\ref{theo:aanelkaarplakken} (notation in the context of that theorem, not this one):
-\begin{equation*}
-P(X_z=x_z\,\vert\,X_v=x_v) = P_\emptyset(X_z=x_z\,\vert\,X_v=x_v)\quad\text{for all $z,v\subseteq u$ with $z\cup v=u$ and $x_{z\cup v}\in\states^{z\cup v}$.}
-\end{equation*}
-
-******
-\end{remark}
 Let now $z\coloneqq v\setminus w$. For any $x_u\in\states^u$, consider
 \begin{equation*}
 \underline{\mathbb{E}}^{\mathrm{W}}_\rateset\bigl[\underline{\mathbb{E}}^{\mathrm{W}}_\rateset[f(x_u,X_z,X_w)\,\vert\,x_u,X_z]\,\big\vert\,x_u\bigr] = \inf\{\mathbb{E}\bigl[\underline{\mathbb{E}}^{\mathrm{W}}_\rateset[f(x_u,X_z,X_w)\,\vert\,x_u,X_z]\,\big\vert\,x_u\bigr]\,:\,P\in\wprocesses_\rateset\}\,.
@@ -4363,37 +4352,21 @@ Because the $\epsilon\in\realspos$ was arbitrary, this completes the proof.
 %\end{proof}
 
 \begin{proof}[Proof of Proposition~\ref{theorem:lower_markov_bound_is_tight}]
-Choose any $f\in\gamblesX$ and any $\epsilon\in\realspos$. Let $C\coloneqq (s-t)$. 
-
-The proof works by selecting a rate matrix at each point in time, showing that there is a $P\in\mprocesses_\rateset$ that is characterized by this construction, and finally establishing that this $P$ satisfies the inequality of interest.
-
-By Lemma~\ref{lemma:rateset_has_arginf}, for all $\tau\in[t,s]$ there is some rate matrix $Q_\tau\in\rateset$ such that
-\begin{equation}\label{eq:lower_char_rate_matrix}
-\norm{\lrate \lbound_\tau^sf - Q_\tau \lbound_\tau^sf} < \frac{\epsilon}{2C}\,.
-\end{equation}
-To fix $Q_\tau$'s values outside of the interval $[t,s]$, let $Q_\tau \coloneqq Q_t$ for all $\tau\in[0,t]$, and let $Q_\tau\coloneqq Q_s$ for all $\tau>s$.
-%Define a \emph{lower-characterizing rate matrix} $Q_\tau$ as
-%\begin{equation}\label{eq:lower_char_rate_matrix}
-%Q_\tau(x_\tau,\cdot)\coloneqq \argmin\left\{ Q(x_\tau,\cdot)\bigl[\lbound_\tau^sf\bigr]\,:\,Q(x_\tau,\cdot)\in\mathcal{Q}_{x_\tau}\right\}\quad\text{for all $x_\tau\in\states$ and $\tau\in[t,s]$}\,.
-%\end{equation}
-%Note that the $\argmin\{\cdot\}$ may be set-valued, in which case take an arbitrary element.
-%Furthermore, let $Q_\tau \coloneqq Q_t$ for all $\tau\in[0,t]$, and let $Q_\tau\coloneqq Q_s$ for all $\tau>s$.
-
-Next, define
+Choose any $f\in\gamblesX$ and any $\epsilon\in\realspos$. Let $C\coloneqq (s-t)$, and define
 \begin{equation}\label{eq:delta_required_for_tight_bound}
-\delta \coloneqq \min\left\{\frac{\epsilon}{4C\norm{\mathcal{Q}}^2\norm{f}},\frac{1}{\norm{\lrate}}\right\}\,,
+\delta \coloneqq \frac{\epsilon}{4C\norm{\mathcal{Q}}^2\norm{f}}\,.
 \end{equation}
-and choose any $n>\nicefrac{C}{\delta}$. Then, for $\Delta\coloneqq \nicefrac{C}{n}$, we have $\Delta<\delta$.
-
-For all $k\in\{0,\ldots,n\}$, define $t_k=t+k\Delta$. Let $u\coloneqq t_0,t_1,\ldots,t_n$. Finally, define a piecewise-constant approximation $Q_\tau^u$ to $Q_\tau$ such that, for all $k\in\{1,\ldots,n\}$,
-\begin{equation}\label{eq:lower_char_matrix_linear_approx}
-Q_\tau^u \coloneqq Q_{t_k},\quad\text{for all $\tau\in (t_{k-1},t_k]$}\,.
+Then, choose any $u\in\mathcal{U}_{[t,s]}$ such that $\sigma(u)<\delta$, with $u=t_0,\ldots,t_n$. Due to Lemma~\ref{lemma:rateset_has_arginf}, for all $i\in\{0,\ldots,n\}$, there is some $Q_i\in\rateset$ such that
+\begin{equation}\label{eq:prop_lower_markov_tight_rate_error}
+\norm{\lrate L_{t_i}^sf - Q_iL_{t_i}^sf} < \frac{\epsilon}{2C}\,.
 \end{equation}
-Let $Q_\tau^u\coloneqq Q_{t_0}$ for all $\tau\leq t_0$ and let $Q_\tau^u\coloneqq Q_{t_n}$ for all $\tau>t_n$.
+For all $i\in\{0,\ldots,n\}$, let $\mathcal{T}_{Q_i}$ denote the transition matrix system corresponding to $Q_i$, as in Definition~\ref{def:systemfromQ}. Then, by Lemma~\ref{lemma:nonhomogeneous_in_process_set}, there is some $P\in\wmprocesses_\rateset$ with transition matrix system $\mathcal{T}_P$, such that
+\begin{equation*}
+\mathcal{T}_P = \mathcal{T}_{Q_0}^{[0,t_0]}\otimes \mathcal{T}_{Q_1}^{[t_0,t_1]}\otimes \cdots \otimes \mathcal{T}_{Q_n}^{[t_{n-1},t_n]} \otimes \mathcal{T}_{Q_n}^{[t_{n},\infty)}\,.
+\end{equation*}
+It remains to show that this $P$ has a corresponding transition matrix $T_t^s$ which satisfies $\norm{L_t^sf - T_t^sf} < \epsilon$. We first note that, for all $i\in\{1,\ldots,n\}$, the transition matrix $T_{t_{i-1}}^{t_i}$ corresponding to $P$ satisfies $T_{t_{i-1}}^{t_i} = e^{Q_i\cdot\Delta_i}$.
 
-Then, $Q_\tau^u$ is a left-continuous, piecewise-constant function that gives for each time point $\tau\in\realsnonneg$ a rate matrix $Q_\tau^u\in\rateset\subset\mathcal{R}$, such that the value of $Q_\tau^u$ differs on a finite number of intervals. Therefore, by Proposition~\ref{prop:continuous_rate_matrix_has_process}, there is some $P\in\wmprocesses$ such that $\mathcal{T}_P=\mathcal{T}_{Q_\tau^u}$, where $\mathcal{T}_{Q_\tau^u}$ is defined as in Lemma~\ref{lemma:nonhomogen_trans_mat_system}. Furthermore, because $Q_\tau^u$ takes values in $\rateset$, by Lemma~\ref{lemma:nonhomogeneous_in_process_set}, $P$ furthermore satisfies $P\in\wmprocesses_\rateset$. It remains to show that, for this $P$, it holds that $\norm{L_t^sf - T_t^sf}<\epsilon$. 
-
-We start by factorizing the interval $[t,s]$ according to $u$, as follows.
+We then factorize the interval $[t,s]$ according to $u$, using Proposition~\ref{prop:lower_trans_system_is_system} and the Markov property of $P$, to obtain
 \begin{align*}
 \norm{L_t^sf - T_t^sf} &= \norm{L_{t_0}^{t_n}f - T_{t_0}^{t_n}f} \\
  &\leq \norm{L_{t_0}^{t_n}f - T_{t_0}^{t_{n-1}}L_{t_{n-1}}^{t_n}f} + \norm{T_{t_0}^{t_{n-1}}L_{t_{n-1}}^{t_n}f - T_{t_0}^{t_n}f} \\
@@ -4408,38 +4381,66 @@ Recursion on the first summand yields
 &\vdots \\
  &\leq \sum_{i=1}^{n} \norm{L_{t_{i-1}}^{t_i}\left[L_{t_i}^{t_n}f\right] - T_{t_{i-1}}^{t_i}\left[L_{t_i}^{t_n}f\right]}\,.
 \end{align*}
-For all $i\in\{1,\ldots,n\}$, we have using Lemma~\ref{lemma:justthelinearpart} and the facts that $\Delta<\delta\leq\nicefrac{1}{\norm{\lrate}}$ and $\norm{\lrate}\leq\norm{\rateset}$,
+Consider now any $i\in\{1,\ldots,n\}$. Then, we find from Lemma~\ref{lemma:justthelinearpart} that
 \begin{align*}
 &\quad \norm{L_{t_{i-1}}^{t_i}\left[L_{t_i}^{t_n}f\right] - T_{t_{i-1}}^{t_i}\left[L_{t_i}^{t_n}f\right]} \\
-&\leq \norm{L_{t_{i-1}}^{t_i}\left[L_{t_i}^{t_n}f\right] - \left[I+\Delta\lrate\right]L_{t_i}^{t_n}f} + \norm{\left[I+\Delta\lrate\right]L_{t_i}^{t_n}f - T_{t_{i-1}}^{t_i}\left[L_{t_i}^{t_n}f\right]} \\
-&\leq \norm{L_{t_{i-1}}^{t_i} - \left[I+\Delta\lrate\right]}\cdot\norm{f} + \norm{\left[I+\Delta\lrate\right]L_{t_i}^{t_n}f - T_{t_{i-1}}^{t_i}\left[L_{t_i}^{t_n}f\right]} \\
-&\leq \Delta^2\norm{\lrate}^2\norm{f} + \norm{\left[I+\Delta\lrate\right]L_{t_i}^{t_n}f - T_{t_{i-1}}^{t_i}\left[L_{t_i}^{t_n}f\right]} \\
-&\leq \Delta^2\norm{\mathcal{Q}}^2\norm{f} + \norm{\left[I+\Delta\lrate\right]L_{t_i}^{t_n}f - T_{t_{i-1}}^{t_i}\left[L_{t_i}^{t_n}f\right]}\,.
+&\leq \norm{L_{t_{i-1}}^{t_i}\left[L_{t_i}^{t_n}f\right] - \left[I+\Delta_i\lrate\right]L_{t_i}^{t_n}f} + \norm{\left[I+\Delta_i\lrate\right]L_{t_i}^{t_n}f - T_{t_{i-1}}^{t_i}\left[L_{t_i}^{t_n}f\right]} \\
+&\leq \norm{L_{t_{i-1}}^{t_i} - \left[I+\Delta_i\lrate\right]}\cdot\norm{f} + \norm{\left[I+\Delta_i\lrate\right]L_{t_i}^{t_n}f - T_{t_{i-1}}^{t_i}\left[L_{t_i}^{t_n}f\right]} \\
+&\leq \Delta_i^2\norm{\lrate}^2\norm{f} + \norm{\left[I+\Delta_i\lrate\right]L_{t_i}^{t_n}f - T_{t_{i-1}}^{t_i}\left[L_{t_i}^{t_n}f\right]} \\
+&\leq \Delta_i^2\norm{\mathcal{Q}}^2\norm{f} + \norm{\left[I+\Delta_i\lrate\right]L_{t_i}^{t_n}f - T_{t_{i-1}}^{t_i}\left[L_{t_i}^{t_n}f\right]}\,,
 \end{align*}
-By Equation~\eqref{eq:lower_char_rate_matrix}, we have $\norm{Q_{t_i}L_{t_i}^{t_n}f - \lrate L_{t_i}^{t_n}f} < \nicefrac{\epsilon}{2C}$. Furthermore, by Equation~\eqref{eq:lower_char_matrix_linear_approx}, we have $Q_{t_i}^u=Q_{t_i}$, so that
+where in the last step we used the fact that $\norm{\lrate}\leq\norm{\rateset}$. We now focus on the remaining second summand:
 \begin{align*}
- &\quad \norm{L_{t_{i-1}}^{t_i}\left[L_{t_i}^{t_n}f\right] - T_{t_{i-1}}^{t_i}\left[L_{t_i}^{t_n}f\right]} \\
- &\leq \Delta^2\norm{\mathcal{Q}}^2\norm{f} + \norm{\left[I+\Delta\lrate\right]L_{t_i}^{t_n}f - T_{t_{i-1}}^{t_i}\left[L_{t_i}^{t_n}f\right]} \\
- &\leq \Delta^2\norm{\mathcal{Q}}^2\norm{f} + \norm{\left[I+\Delta Q_{t_i}^u\right]L_{t_i}^{t_n}f - T_{t_{i-1}}^{t_i}\left[L_{t_i}^{t_n}f\right]} + \norm{\left[I+\Delta \lrate\right]L_{t_i}^{t_n}f - \left[I+\Delta Q_{t_i}^u\right]L_{t_i}^{t_n}f} \\
- &= \Delta^2\norm{\mathcal{Q}}^2\norm{f} + \norm{\left[I+\Delta Q_{t_i}^u\right]L_{t_i}^{t_n}f - T_{t_{i-1}}^{t_i}\left[L_{t_i}^{t_n}f\right]} + \Delta\norm{\lrate L_{t_i}^{t_n}f - Q_{t_i}L_{t_i}^{t_n}f} \\
- &\leq \Delta^2\norm{\mathcal{Q}}^2\norm{f} + \norm{\left[I+\Delta Q_{t_i}^u\right]L_{t_i}^{t_n}f - T_{t_{i-1}}^{t_i}\left[L_{t_i}^{t_n}f\right]} + \frac{\Delta\epsilon}{2C} \\
- &\leq \Delta^2\norm{\mathcal{Q}}^2\norm{f} + \norm{\left[I+\Delta Q_{t_i}^u\right] - T_{t_{i-1}}^{t_i}}\cdot\norm{f} + \frac{\Delta\epsilon}{2C} \\
- &= \Delta^2\norm{\mathcal{Q}}^2\norm{f} + \norm{\left[I+\Delta Q_{t_i}\right] - e^{Q_{t_i}\cdot(t_i-t_{i-1})}}\cdot\norm{f} + \frac{\Delta\epsilon}{2C} \\
- &\leq 2\Delta^2\norm{\mathcal{Q}}^2\norm{f} + \frac{\Delta\epsilon}{2C}\,,
+ &\quad \norm{\left[I+\Delta_i\lrate\right]L_{t_i}^{t_n}f - T_{t_{i-1}}^{t_i}\left[L_{t_i}^{t_n}f\right]} \\
+ &\leq \norm{\left[I+\Delta_i\lrate\right]L_{t_i}^{t_n}f - \left[I+\Delta_iQ_i\right]L_{t_i}^{t_n}f} + \norm{\left[I+\Delta_iQ_i\right]L_{t_i}^{t_n}f - T_{t_{i-1}}^{t_i}\left[L_{t_i}^{t_n}f\right]} \\
+ &\leq \norm{\left[I+\Delta_i\lrate\right]L_{t_i}^{t_n}f - \left[I+\Delta_iQ_i\right]L_{t_i}^{t_n}f} + \norm{\left[I+\Delta_iQ_i\right] - T_{t_{i-1}}^{t_i}}\cdot\norm{f} \\
+ &= \Delta_i\norm{\lrate L_{t_i}^{t_n}f - Q_iL_{t_i}^{t_n}f} + \norm{\left[I+\Delta_iQ_i\right] - e^{Q_i\cdot\Delta_i}}\cdot\norm{f} \\
+ &< \frac{\Delta_i\epsilon}{2C} + \Delta_i^2\norm{Q_i}^2\norm{f}\,,
 \end{align*}
-where we used the definition of $T_{t_{i-1}}^{t_i}$ from Lemma~\ref{lemma:nonhomogen_trans_mat_system}, and where the last step used Lemma~\ref{lemma:linearpartofexponential} and the fact that $\norm{Q_{t_i}}\leq\norm{\rateset}$, since $Q_{t_i}\in\rateset$.
+where in the last step we applied Equation~\eqref{eq:prop_lower_markov_tight_rate_error} and Lemma~\ref{lemma:linearpartofexponential}. Hence, we have found that for any $i\in\{1,\ldots,n\}$, it holds that
+\begin{align*}
+&\quad \norm{L_{t_{i-1}}^{t_i}\left[L_{t_i}^{t_n}f\right] - T_{t_{i-1}}^{t_i}\left[L_{t_i}^{t_n}f\right]} \\
+ &< \Delta_i^2\norm{\mathcal{Q}}^2\norm{f} + \norm{\left[I+\Delta_i\lrate\right]L_{t_i}^{t_n}f - T_{t_{i-1}}^{t_i}\left[L_{t_i}^{t_n}f\right]} \\
+ &< \Delta_i^2\norm{\mathcal{Q}}^2\norm{f} + \Delta_i^2\norm{Q_i}^2\norm{f} + \frac{\Delta_i\epsilon}{2C} \\
+ &\leq 2\Delta_i^2\norm{\mathcal{Q}}^2\norm{f} + \frac{\Delta_i\epsilon}{2C} \\
+ &< 2\Delta_i\delta\norm{\mathcal{Q}}^2\norm{f} + \frac{\Delta_i\epsilon}{2C}\,,
+\end{align*}
+where we used $\norm{Q_i}\leq\norm{\rateset}$, and in the final step applied $\Delta_i\leq\sigma(u)<\delta$.
 
-Thus, using the fact that $n\Delta=C$, we find
+Because the $i$ was arbitrary, we find using Equation~\eqref{eq:delta_required_for_tight_bound} that
 \begin{align*}
 \norm{L_t^sf - T_t^sf} &\leq \sum_{i=1}^n \norm{L_{t_{i-1}}^{t_i}\left[L_{t_i}^{t_n}f\right] - T_{t_{i-1}}^{t_i}\left[L_{t_i}^{t_n}f\right]} \\
- &\leq \sum_{i=1}^n 2\Delta^2\norm{\mathcal{Q}}^2\norm{f} + \frac{\Delta\epsilon}{2C} \\
- &= 2n\Delta^2\norm{\mathcal{Q}}^2\norm{f} + n\frac{\Delta\epsilon}{2C}\\
- &= 2C\Delta\norm{\mathcal{Q}}^2\norm{f} + \frac{\epsilon}{2}\,,
+ &< \sum_{i=1}^n 2\Delta_i\delta\norm{\mathcal{Q}}^2\norm{f} + \frac{\Delta_i\epsilon}{2C} \\
+ &= 2C\delta\norm{\mathcal{Q}}^2\norm{f} + \frac{C\epsilon}{2C} \\
+ &= 2C\frac{\epsilon}{4C\norm{\rateset}^2\norm{f}}\norm{\mathcal{Q}}^2\norm{f} + \frac{C\epsilon}{2C} \\
+ &= \frac{\epsilon}{2} + \frac{\epsilon}{2} = \epsilon\,.
 \end{align*}
-so that by Equation~\eqref{eq:delta_required_for_tight_bound} and the fact that $\Delta<\delta$, we have
-\begin{equation*}
-\norm{L_t^sf - T_t^sf} \leq 2C\Delta\norm{\mathcal{Q}}^2\norm{f} + \frac{\epsilon}{2} < 2C\delta\norm{\mathcal{Q}}^2\norm{f} + \frac{\epsilon}{2} \leq \frac{\epsilon}{2} + \frac{\epsilon}{2} = \epsilon\,.
-\end{equation*}
+%***
+%
+%By Equation~\eqref{eq:lower_char_rate_matrix}, we have $\norm{Q_{t_i}L_{t_i}^{t_n}f - \lrate L_{t_i}^{t_n}f} < \nicefrac{\epsilon}{2C}$. Furthermore, by Equation~\eqref{eq:lower_char_matrix_linear_approx}, we have $Q_{t_i}^u=Q_{t_i}$, so that
+%\begin{align*}
+% &\quad \norm{L_{t_{i-1}}^{t_i}\left[L_{t_i}^{t_n}f\right] - T_{t_{i-1}}^{t_i}\left[L_{t_i}^{t_n}f\right]} \\
+% &\leq \Delta^2\norm{\mathcal{Q}}^2\norm{f} + \norm{\left[I+\Delta\lrate\right]L_{t_i}^{t_n}f - T_{t_{i-1}}^{t_i}\left[L_{t_i}^{t_n}f\right]} \\
+% &\leq \Delta^2\norm{\mathcal{Q}}^2\norm{f} + \norm{\left[I+\Delta Q_{t_i}^u\right]L_{t_i}^{t_n}f - T_{t_{i-1}}^{t_i}\left[L_{t_i}^{t_n}f\right]} + \norm{\left[I+\Delta \lrate\right]L_{t_i}^{t_n}f - \left[I+\Delta Q_{t_i}^u\right]L_{t_i}^{t_n}f} \\
+% &= \Delta^2\norm{\mathcal{Q}}^2\norm{f} + \norm{\left[I+\Delta Q_{t_i}^u\right]L_{t_i}^{t_n}f - T_{t_{i-1}}^{t_i}\left[L_{t_i}^{t_n}f\right]} + \Delta\norm{\lrate L_{t_i}^{t_n}f - Q_{t_i}L_{t_i}^{t_n}f} \\
+% &\leq \Delta^2\norm{\mathcal{Q}}^2\norm{f} + \norm{\left[I+\Delta Q_{t_i}^u\right]L_{t_i}^{t_n}f - T_{t_{i-1}}^{t_i}\left[L_{t_i}^{t_n}f\right]} + \frac{\Delta\epsilon}{2C} \\
+% &\leq \Delta^2\norm{\mathcal{Q}}^2\norm{f} + \norm{\left[I+\Delta Q_{t_i}^u\right] - T_{t_{i-1}}^{t_i}}\cdot\norm{f} + \frac{\Delta\epsilon}{2C} \\
+% &= \Delta^2\norm{\mathcal{Q}}^2\norm{f} + \norm{\left[I+\Delta Q_{t_i}\right] - e^{Q_{t_i}\cdot(t_i-t_{i-1})}}\cdot\norm{f} + \frac{\Delta\epsilon}{2C} \\
+% &\leq 2\Delta^2\norm{\mathcal{Q}}^2\norm{f} + \frac{\Delta\epsilon}{2C}\,,
+%\end{align*}
+%where we used the definition of $T_{t_{i-1}}^{t_i}$ from Lemma~\ref{lemma:nonhomogen_trans_mat_system}, and where the last step used Lemma~\ref{lemma:linearpartofexponential} and the fact that $\norm{Q_{t_i}}\leq\norm{\rateset}$, since $Q_{t_i}\in\rateset$.
+%
+%Thus, using the fact that $n\Delta=C$, we find
+%\begin{align*}
+%\norm{L_t^sf - T_t^sf} &\leq \sum_{i=1}^n \norm{L_{t_{i-1}}^{t_i}\left[L_{t_i}^{t_n}f\right] - T_{t_{i-1}}^{t_i}\left[L_{t_i}^{t_n}f\right]} \\
+% &\leq \sum_{i=1}^n 2\Delta^2\norm{\mathcal{Q}}^2\norm{f} + \frac{\Delta\epsilon}{2C} \\
+% &= 2n\Delta^2\norm{\mathcal{Q}}^2\norm{f} + n\frac{\Delta\epsilon}{2C}\\
+% &= 2C\Delta\norm{\mathcal{Q}}^2\norm{f} + \frac{\epsilon}{2}\,,
+%\end{align*}
+%so that by Equation~\eqref{eq:delta_required_for_tight_bound} and the fact that $\Delta<\delta$, we have
+%\begin{equation*}
+%\norm{L_t^sf - T_t^sf} \leq 2C\Delta\norm{\mathcal{Q}}^2\norm{f} + \frac{\epsilon}{2} < 2C\delta\norm{\mathcal{Q}}^2\norm{f} + \frac{\epsilon}{2} \leq \frac{\epsilon}{2} + \frac{\epsilon}{2} = \epsilon\,.
+%\end{equation*}
 \end{proof}
 
 \begin{proof}[Proof of Corollary~\ref{cor:lower_operator_is_infimum}]
