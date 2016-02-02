@@ -893,6 +893,8 @@ To this end, we now consider restrictions of transition matrix systems to some s
 \end{equation*}
 We call such a family $\mathcal{T}^{[t,s]}$ a \emph{restricted transition matrix system}.
 
+**** misschien iets zeggen dat we ook open intervallen toelaten; in het bijzonder heb ik $\mathcal{T}^{[t,\infty)}$ nodig.
+
 \begin{proposition}\label{prop:restr_trans_mat_system_if_semigroup}
 A family $\mathcal{T}^{[t,s]}$ is a restricted transition matrix system defined on $[t,s]$ if and only if it is a family of transition matrices $T_q^r$ defined for all $q,r\in[t,s]$ with $q\leq r$, and, for all $\tau,r,\sigma\in[t,s]$ such that $\tau\leq r\leq \sigma$, it holds that $T_\tau^\sigma = T_\tau^rT_r^\sigma$, and $T_r^r=I$.
 \end{proposition}
@@ -916,7 +918,7 @@ is a restricted transition matrix system defined on $[t,s]$. Furthermore, if bot
 
 We now have the required tools for the construction of the non-homogeneous Markov chains in which we will be mostly interested. In particular, if for any rate matrix $Q\in\mathcal{R}$ we now let $\mathcal{T}_Q^{[t,s]}$ be the restriction of $\mathcal{T}_Q$, defined as in Definition~\ref{def:systemfromQ}, we have the following result.
 
-\begin{proposition}\label{prop:continuous_rate_matrix_has_process}
+\begin{proposition}\label{prop:finite_different_rate_matrix_has_process}
 Consider any finite sequence of time points $u=t_0,\ldots,t_n$, and a corresponding collection of rate matrices $Q_0,\ldots,Q_{n+1}\in\mathcal{R}$. Then, there exists a well-behaved continuous-time Markov chain $P\in\wmprocesses$ with transition matrix system $\mathcal{T}_P$, such that
 \begin{equation*}
 \mathcal{T}_P = \mathcal{T}_{Q_0}^{[0,t_0]}\otimes \mathcal{T}_{Q_1}^{[t_0,t_1]} \otimes \cdots \otimes \mathcal{T}_{Q_n}^{[t_{n-1},t_n]} \otimes \mathcal{T}_{Q_{n+1}}^{[t_n,\infty)}\,.
@@ -2510,61 +2512,24 @@ It remains to show that if $\mathcal{T}^{[t,r]}$ and $\mathcal{T}^{[r,s]}$ are b
 Because this clearly holds for all $q\in[t,r)$ and all $q\in(r,s]$, the interesting case is to show that this holds for $q=r$. However, for all $\Delta\in\realspos$ we have that $T_r^{r+\Delta}\in\mathcal{T}^{[r,s]}$, and $T_{r-\Delta}^{r}\in\mathcal{T}^{[t,r]}$. Because both $\mathcal{T}^{[t,r]}$ and $\mathcal{T}^{[r,s]}$ are well-behaved, we find that $\mathcal{T}^{[t,s]}$ is also well-behaved at $q=r$. Hence, $\mathcal{T}^{[t,s]}$ is well-behaved.
 \end{proof}
 
-\begin{lemma}\label{lemma:nonhomogen_trans_mat_system}
-Let $Q_t$ be a left-continuous, piecewise-constant function that gives for each time point $t\in\realsnonneg$ a rate matrix $Q_t\in\mathcal{R}$, such that $Q_t$ takes different values on at most a finite number of intervals. Specifically, let $Q_t$ be such that there exists some ordered $u\in\mathcal{U}$ with $u=t_0,\ldots,t_n$ and rate matrices $\tilde{Q}_1,\ldots,\tilde{Q}_n\in\mathcal{R}$ such that, for all $t\in\realsnonneg$,
-\begin{equation*}
-Q_t = \tilde{Q}_i\,,\quad\text{if $t\in(t_{i-1},t_{i}]$, for all $i\in\{1,\ldots,n\}$}\,,
-\end{equation*}
-and $Q_t=\tilde{Q}_1$ if $t\leq t_0$, and $Q_t=\tilde{Q}_n$ if $t>t_n$. For notational convenience, let $t_{-1}\coloneqq-1$, $t_{n+1}\coloneqq +\infty$, $\tilde{Q}_0\coloneqq \tilde{Q}_1$, and $\tilde{Q}_{n+1}\coloneqq \tilde{Q}_n$. Then, for all $t\in\realsnonneg$, it holds that
-\begin{equation*}
-Q_t = \tilde{Q}_i\,,\quad\text{if $t\in(t_{i-1},t_i]$, for all $i\in\{0,\ldots,n+1\}$.}
-\end{equation*}
-
-Consider now a family $\mathcal{T}_{Q_t}$ of matrices $T_t^s$, defined recursively for all $t,s\in\realsnonneg$ with $t\leq s$, such that
-\begin{equation*}
-T_t^s \coloneqq \left\{\begin{array}{ll}
-e^{Q_s(s-t)} & \text{if $\bigl(\exists i\in\{0,\ldots,n+1\}\,:\,t,s\in[t_{i-1},t_i]\bigr)$, and} \\
-T_t^{t_{i-1}}T_{t_{i-1}}^s & \text{where $i\in\{1,\ldots,n+1\}$ is such that $s\in(t_{i-1},t_i]$, otherwise.}
-\end{array}\right.
-\end{equation*}
-Then, $\mathcal{T}_{Q_t}$ is a well-behaved transition matrix system.
-\end{lemma}
-\begin{proof}
-For any $T_t^s\in\mathcal{T}_{Q_t}$, it is clear that $T_t^s$ is a transition matrix if $t$ and $s$ coincide on some interval $[t_{i-1},t_i]$, with $i\in\{0,\ldots,n+1\}$, because then $T_t^s=e^{Q_s(s-t)}$. If they do not coincide, say $t\in[t_{i-1},t_i]$ and $s\in[t_{j-1},t_j]$ for some $i,j\in\{0,\ldots,n+1\}$ with $i<j$, by recursion, we find that
-\begin{equation*}
-T_t^s = T_t^{t_i}T_{t_i}^{t_{i+1}}\cdots T_{t_{j-2}}^{t_{j-1}}T_{t_{j-1}}^s\,.
-\end{equation*}
-Note that on the right-hand side of this equality, for each factor $T_a^b$, the time points $a$ and $b$ coincide on some interval, and hence each $T_a^b$ is a transition matrix. Hence, the right-hand side of this equality is a composition of transition matrices, and hence $T_t^s$ is a transition matrix. Therefore, $\mathcal{T}_{Q_t}$ is clearly a family of transition matrices.
-
-Furthermore, it is clear that for any $T_t^t\in\mathcal{T}_{Q_t}$, it holds that $T_t^t=I$, because $t$ and $t$ trivially coincide on some interval, so that we find $T_t^t=e^{Q_t\cdot 0}=I$. Hence, for $\mathcal{T}_{Q_t}$ to be a transition matrix system, it remains to show that all $T_t^s\in\mathcal{T}_{Q_t}$ satisfy Equation~\eqref{eq:transmatrixproduct}.
-
-If $t$ and $s$ coincide on some interval, Equation~\eqref{eq:transmatrixproduct} trivially holds for $T_t^s$. If they do not coincide, a similar factorization as found above yields the same result. Hence, $\mathcal{T}_{Q_t}$ is a transition matrix system. 
-
-It remains to show that $\mathcal{T}_{Q_t}$ is well-behaved, i.e., that it also satisfies Equation~\eqref{eq:wellbehavedtransitionmatrix}.
-Note that in the first limit expression of~\eqref{eq:wellbehavedtransitionmatrix}, for small enough $\Delta$, the time points $t$ and $t+\Delta$ coincide on some interval. On this interval, it holds that there is some $Q\in\rateset$ such that $Q_{t+\Delta}=Q$ for all $\Delta>0$ such that $t$ and $t+\Delta$ coincide. Hence, we find that
-\begin{equation*}
-\lim_{\Delta\to0^+}\frac{1}{\Delta}\norm{T_t^{t+\Delta}-I} = \lim_{\Delta\to0^+}\frac{1}{\Delta}\norm{e^{Q_{t+\Delta}\cdot\Delta}-I} = \lim_{\Delta\to0^+}\frac{1}{\Delta}\norm{e^{Q\cdot\Delta}-I} = \norm{Q} < +\infty\,,
-\end{equation*}
-where the last equality used the well-known derivative of the matrix exponential. Similarly, for the second limit expression of~\eqref{eq:wellbehavedtransitionmatrix}, for small enough $\Delta$, it holds that $t-\Delta$ and $t$ coincide on some interval. Hence
-\begin{equation*}
-\lim_{\Delta\to0^+}\frac{1}{\Delta}\norm{T_{t-\Delta}^{t}-I} = \lim_{\Delta\to0^+}\frac{1}{\Delta}\norm{e^{Q_t\cdot \Delta}-I}=\norm{Q_t}<+\infty\,.
-\end{equation*}
-Therefore, $\mathcal{T}_{Q_t}$ is well-behaved.
-\end{proof}
-
-\begin{proof}[Proof of Proposition~\ref{prop:continuous_rate_matrix_has_process}]
-By Lemma~\ref{lemma:nonhomogen_trans_mat_system}, $\mathcal{T}_{Q_t}$ is a well-behaved transition matrix system. Therefore, by Theorem~{\bf REF}, there exists a well-behaved continuous-time Markov chain $P\in\wmprocesses$ such that $\mathcal{T}_P=\mathcal{T}_{Q_t}$.
-\end{proof}
-
 \begin{lemma}\label{lemma:nonhomogeneous_in_process_set}
-Let $P\in\wmprocesses$ be such that there exists a left-continuous, piecewise-constant function $Q_t$ such that $\mathcal{T}_P=\mathcal{T}_{Q_t}$, where $\mathcal{T}_{Q_t}$ is defined as in Lemma~\ref{lemma:nonhomogen_trans_mat_system}. Then, for any set of rate matrices $\rateset$ for which it holds that $Q_t\in\rateset$ for all $t\in\realsnonneg$, it holds that $P\in\wmprocesses_\rateset$.
+Consider any non-empty bounded set of rate matrices $\rateset$, any finite sequence of time points $u=t_0,\ldots,t_n$, and a corresponding collection of rate matrices $Q_0,\ldots,Q_{n+1}\in\rateset$. Then, there exists a well-behaved continuous-time Markov chain $P\in\wmprocesses_\rateset$ with transition matrix system $\mathcal{T}_P$, such that
+\begin{equation}\label{eq:nonhomogen_in_process_set_system_composition}
+\mathcal{T}_P = \mathcal{T}_{Q_0}^{[0,t_0]}\otimes \mathcal{T}_{Q_1}^{[t_0,t_1]} \otimes \cdots \otimes \mathcal{T}_{Q_n}^{[t_{n-1},t_n]} \otimes \mathcal{T}_{Q_{n+1}}^{[t_n,\infty)}\,.
+\end{equation}
 \end{lemma}
 \begin{proof}
-Note that, by the definition of $\mathcal{T}_{Q_t}$, it holds for all $t\in\realsnonneg$ that $\partial_+T_t^t$ and $\partial_-T_t^t$ exist, and that they satisfy $\partial_+T_t^t,\partial_-T_t^t\in\rateset$. Therefore, and because $P$ is well-behaved, by Corollary~\ref{corol:outersingleton} we have that $\smash{\overline{\partial}}_+T_t^t=\{\partial_+T_t^t\}$ and $\smash{\overline{\partial}}_-T_t^t=\{\partial_-T_t^t\}$. Hence, we find that
+Because $\rateset\subset\mathcal{R}$, it follows immediately from Proposition~\ref{prop:finite_different_rate_matrix_has_process} that there is a $P\in\wmprocesses$ with transition matrix system $\mathcal{T}_P$, such that Equation~\eqref{eq:nonhomogen_in_process_set_system_composition} holds. It remains to show that $P\in\wmprocesses_\rateset$.
+
+To prove this, we have to show that $\smash{\overline{\partial}}T_t^t\subseteq\rateset$ for all $t\in\realsnonneg$. To this end, consider any $t\in\realsnonneg$.
+
+We will consider several cases. If $t<t_0$, we have that $\smash{\overline{\partial}}T_t^t$ corresponds to $\mathcal{T}_{Q_0}^{[0,t_0]}$, and hence $\smash{\overline{\partial}}T_t^t=\{Q_0\}\subseteq\rateset$. If $t>t_n$, then $\smash{\overline{\partial}}T_t^t$ corresponds to $\mathcal{T}_{Q_{n+1}}^{[t_n,\infty)}$, in which case $\smash{\overline{\partial}}T_t^t=\{Q_{n+1}\}\subseteq\rateset$. Similarly, if $t\in(t_{i-1},t_i)$ for some $i\in\{1,\ldots,n\}$, then $\smash{\overline{\partial}}T_t^t$ corresponds to $\mathcal{T}_{Q_i}^{[t_{i-1},t_i]}$, and hence $\smash{\overline{\partial}}T_t^t=\{Q_i\}\subseteq\rateset$.
+
+The remaining cases are when $t=t_i$ for some $i\in\{0,\ldots,n\}$. In this case, we have that $\smash{\overline{\partial}}_-T_t^t=\{Q_i\}$ and $\smash{\overline{\partial}}_+T_t^t=\{Q_{i+1}\}$. Hence,
 \begin{equation*}
-\smash{\overline{\partial}}T_t^t = \smash{\overline{\partial}}_+T_t^t\cup \smash{\overline{\partial}}_-T_t^t = \{\partial_+T_t^t, \partial_-T_t^t\}\,,
+\smash{\overline{\partial}}T_t^t = \smash{\overline{\partial}}_-T_t^t\cup\smash{\overline{\partial}}_+T_t^t=\{Q_{i},Q_{i+1}\}\subseteq\rateset\,.
 \end{equation*}
-from which it follows that, for all $t\in\realsnonneg$, it holds that $\smash{\overline{\partial}}T_t^t\subseteq\rateset$. Therefore, by Definition~\ref{def:markov_process_set_new}, we find that $P\in\wmprocesses_\rateset$.
+Because this covers all the possible cases, in summary, we have found that $\smash{\overline{\partial}}T_t^t\subseteq\rateset$ for all $t\in\realsnonneg$, and hence $P\in\wmprocesses_\rateset$.
 \end{proof}
 
 \begin{lemma}\label{lemma:linearpartofexponential}
@@ -3085,7 +3050,7 @@ with $N'\in\nats$, such that
 \begin{equation*}
 (\forall Q\in\rateset)(\exists Q_i\in\rateset_{\epsilon'})\,:\,\norm{Q - Q_i} < \epsilon'\,.
 \end{equation*}
-For each $Q_i\in\rateset_{\epsilon'}$, we let $\mathcal{T}_{Q_i}$ be the family of transition matrices defined as in Definition~\ref{def:systemfromQ}.
+For each $Q_i\in\rateset_{\epsilon'}$, we let $\mathcal{T}_{Q_i}$ be the transition matrix system defined as in Definition~\ref{def:systemfromQ}.
 
 Now, because $\rateset$ is non-empty, bounded, and convex, due to Lemma~\ref{lemma:uniform_delta_for_convex_markov_set}, there is some $\delta\in\realspos$ such that, for all $P\in\wmprocesses_\rateset$, all $t\in\realsnonneg$, and all $\Delta\in\realspos$ with $\Delta<\delta$,
 \begin{equation}\label{eq:lemma_total_bounded_uniform_delta}
@@ -3096,9 +3061,9 @@ Consider this $\delta$. Let now
 \delta^* \coloneqq \min\left\{\frac{\epsilon^*}{6C\norm{\rateset}^2},\, \frac{\epsilon^*}{12\norm{\rateset}},\, \delta\right\}\,.
 \end{equation*}
 
-Choose now any $u\in\mathcal{U}_{[t,s]}$ with $\sigma(u)<\delta^*$, such that $u=t_0,\ldots,t_n$. Consider any $i\in\{1,\ldots,n\}$. We then let $\mathcal{T}_{Q_j}^{[t_{i-1},t_i]}\subset\mathcal{T}_{Q_j}$ be the set of all transition matrices in $\mathcal{T}_{Q_j}$ that are defined on the interval $[t_{i-1},t_i]$, for all $j\in\{1,\ldots,N'\}$.
+Choose now any $u\in\mathcal{U}_{[t,s]}$ with $\sigma(u)<\delta^*$, such that $u=t_0,\ldots,t_n$. Consider any $i\in\{1,\ldots,n\}$. For all $Q_j\in\rateset_{\epsilon'}$, we then let $\mathcal{T}_{Q_j}^{[t_{i-1},t_i]}$ be the restriction of the transition matrix system $\mathcal{T}_{Q_j}$ to the interval $[t_{i-1},t_i]$.
 
-We now consider the set of these families of transition matrices. For all $i\in\{1,\ldots,n\}$, let $\mathbb{T}_i$ be the set of families of transition matrices defined by
+We now consider the set of these restricted transition matrix systems. For all $i\in\{1,\ldots,n\}$, let $\mathbb{T}_i$ be the set of families of transition matrices defined by
 \begin{equation*}
 \mathbb{T}_i \coloneqq \left\{ \mathcal{T}_{Q_j}^{[t_{i-1},t_i]} \,:\,Q_j\in\rateset_{\epsilon'} \right\}\,.
 \end{equation*}
@@ -3108,14 +3073,14 @@ We now use the following claim, which is proved below.
 \begin{claim}\label{claim:composition_restricted_trans_mat_sys_in_set}
 For all $i\in\{1,\ldots,n\}$, choose some $\mathcal{T}_i^{[t_{i-1},t_i]}\in\mathbb{T}_i$. Then,
 \begin{equation*}
-\mathcal{T}_1^{[t_{0},t_1]} \otimes \mathcal{T}_2^{[t_{1},t_2]} \cdots \otimes \mathcal{T}_n^{[t_{n-1},t_n]} \in \mathbb{T}_\rateset^{[t,s]}\,.
+\left(\mathcal{T}_1^{[t_{0},t_1]} \otimes \mathcal{T}_2^{[t_{1},t_2]} \cdots \otimes \mathcal{T}_n^{[t_{n-1},t_n]}\right) \in \mathbb{T}_\rateset^{[t,s]}\,.
 \end{equation*}
 \end{claim}
 Because each $\mathbb{T}_i$ is finite, there are only finitely many ways in which the product in Claim~\ref{claim:composition_restricted_trans_mat_sys_in_set} can be constructed. Therefore, if we now let
 \begin{equation*}
 \mathbb{C}_\epsilon \coloneqq \left\{\mathcal{T}_1^{[t_{0},t_1]} \otimes \mathcal{T}_2^{[t_{1},t_2]} \cdots \otimes \mathcal{T}_n^{[t_{n-1},t_n]}\,:\,\left(\forall i\in\{1,\ldots,n\} \,:\,\mathcal{T}_i^{[t_{i-1},t_i]}\in\mathbb{T}_i\right) \right\}\,,
 \end{equation*}
-then $\mathbb{C}_\epsilon$ contains a finite number of elements, and, due to Claim~\ref{claim:composition_restricted_trans_mat_sys_in_set}, $\mathbb{C}_\epsilon\subset \mathbb{T}_\rateset^{[t,s]}$.
+then $\mathbb{C}_\epsilon$ contains a finite number of elements, and, due to Claim~\ref{claim:composition_restricted_trans_mat_sys_in_set}, $\mathbb{C}_\epsilon\subseteq \mathbb{T}_\rateset^{[t,s]}$.
 
 It remains to show that $\mathbb{C}_\epsilon$ generates an open $\epsilon$-cover of $\mathbb{T}_\rateset^{[t,s]}$. To this end, consider any $\mathcal{T}^{[t,s]}\in\mathbb{T}_\rateset^{[t,s]}$. We will show that there is some $\mathcal{S}^{[t,s]}\in \mathbb{C}_{\epsilon}$ such that $d(\mathcal{T}^{[t,s]},\mathcal{S}^{[t,s]})<\epsilon$. We start by constructing this $\mathcal{S}^{[t,s]}$.
 
@@ -3194,24 +3159,12 @@ For all $i\in\{1,\ldots,n\}$, choose some $\mathcal{T}_i^{[t_{i-1},t_i]}\in\math
 Because for all $i\in\{1,\ldots,n\}$ we have that $\mathcal{T}_i^{[t_{i-1},t_i]}$ is a well-behaved restricted transition matrix system, it follows from Proposition~\ref{prop:concat_restr_trans_mat_systems_is_system} that $\mathcal{T}^{[t,s]}$ is a well-behaved restricted transition matrix system defined on $[t,s]$.
 
 We now have to show that $\mathcal{T}^{[t,s]} \in \mathbb{T}_\rateset^{[t,s]}$. To this end, consider any $Q\in\rateset$, and let $\mathcal{T}_Q$ be the transition matrix system corresponding to $Q$, defined as in Definition~\ref{def:systemfromQ}. Let
-\begin{equation*}
-\mathcal{T} \coloneqq \mathcal{T}_Q^{[0,t]}\otimes \mathcal{T}^{[t,s]} \otimes \mathcal{T}_Q^{[s,\infty)}\,.
-\end{equation*}
-Then, clearly, $\mathcal{T}$ is an (unrestricted) transition matrix system, and because $\mathcal{T}^{[t,s]}$ and $\mathcal{T}_Q$ are well-behaved, $\mathcal{T}$ is also well-behaved. Therefore, and due to Theorem~\ref{theo:uniqueMarkovchain}, there is some $P\in\wmprocesses$ for which $\mathcal{T}_P = \mathcal{T}$.
-
-We will show that $P\in\wmprocesses_\rateset$, which then implies that $\mathcal{T}_P = \mathcal{T}\in\mathbb{T}_\rateset^{[t,s]}$. To show that $P\in\wmprocesses_\rateset$, we have to show that $\smash{\overline{\partial}}T_r^r\subseteq\rateset$ for all $r\in\realsnonneg$. To this end, consider any $r\in\realsnonneg$.
-
-We will consider several cases. If $r<t$, we have that $\smash{\overline{\partial}}T_r^r$ corresponds to $\mathcal{T}_Q^{[0,t]}$, and hence $\smash{\overline{\partial}}T_r^r=\{Q\}\subseteq\rateset$. If $r>s$, then $\smash{\overline{\partial}}T_r^r$ corresponds to $\mathcal{T}_Q^{[s,\infty)}$, in which case also $\smash{\overline{\partial}}T_r^r=\{Q\}\subseteq\rateset$.
-
-Next, if $r\in(t_{i-1},t_i)$ for some $i\in\{1,\ldots,n\}$, then $\smash{\overline{\partial}}T_r^r$ corresponds to $\mathcal{T}_i^{[t_{i-1},t_i]}=\mathcal{T}_{Q_i}^{[t_{i-1},t_i]}$ for some $Q_i\in\rateset_{\epsilon'}$, and hence $\smash{\overline{\partial}}T_r^r=\{Q_i\}$. Because $\rateset_{\epsilon'}\subseteq\rateset$, it follows that then also $\smash{\overline{\partial}}T_r^r\subseteq\rateset$.
-
-The remaining cases are when $r=t_i$ for some $i\in\{0,\ldots,n\}$. Suppose that, for some $i\in\{1,\ldots,n-1\}$, it holds that $r=t_i$. Then, $\smash{\overline{\partial}}_-T_r^r=\{Q_{i}\}$, and $\smash{\overline{\partial}}_+T_r^r=\{Q_{i+1}\}$. Hence,
-\begin{equation*}
-\smash{\overline{\partial}}T_r^r = \smash{\overline{\partial}}_-T_r^r\cup\smash{\overline{\partial}}_+T_r^r=\{Q_{i},Q_{i+1}\}\subseteq\rateset\,.
-\end{equation*}
-Finally, if $r=t_0$, then $\smash{\overline{\partial}}_-T_r^r=\{Q\}$ and $\smash{\overline{\partial}}_+T_r^r=\{Q_1\}$, and hence $\smash{\overline{\partial}}T_r^r\subseteq\rateset$. If $r=t_n$, we have $\smash{\overline{\partial}}_-T_r^r=\{Q_n\}$ and $\smash{\overline{\partial}}_+T_r^r=\{Q\}$, and therefore $\smash{\overline{\partial}}T_r^r\subseteq\rateset$.
-
-In summary, we have found that $\smash{\overline{\partial}}T_r^r\subseteq\rateset$ for all $r\in\realsnonneg$, and hence $P\in\wmprocesses_\rateset$. Therefore, $\mathcal{T}_P^{[t,s]}=\mathcal{T}^{[t,s]}\in\mathbb{T}_\rateset^{[t,s]}$.
+\begin{align*}
+\mathcal{T} &\coloneqq \mathcal{T}_Q^{[0,t]}\otimes \mathcal{T}^{[t,s]} \otimes \mathcal{T}_Q^{[s,\infty)} \\
+ &= \mathcal{T}_Q^{[0,t]}\otimes \mathcal{T}_1^{[t_{0},t_1]} \otimes \mathcal{T}_2^{[t_{1},t_2]} \cdots \otimes \mathcal{T}_n^{[t_{n-1},t_n]} \otimes \mathcal{T}_Q^{[s,\infty)} \\
+ &= \mathcal{T}_Q^{[0,t]}\otimes \mathcal{T}_{Q_1}^{[t_{0},t_1]} \otimes \mathcal{T}_{Q_2}^{[t_{1},t_2]} \cdots \otimes \mathcal{T}_{Q_n}^{[t_{n-1},t_n]} \otimes \mathcal{T}_Q^{[s,\infty)} \,,
+\end{align*}
+for the corresponding rate matrices $Q_1,\ldots,Q_n\in\rateset_{\epsilon'}\subseteq\rateset$. Then, it follows from Lemma~\ref{lemma:nonhomogeneous_in_process_set} that there is some $P\in\wmprocesses_\rateset$ such that $\mathcal{T}_P=\mathcal{T}$. Because $P\in\wmprocesses_\rateset$, it follows that the restricted transition matrix system satisfies $\mathcal{T}^{[t,s]}=\mathcal{T}_P^{[t,s]}\in\mathbb{T}_\rateset^{[t,s]}$.
 \end{proof}
 
 \begin{proof}[Proof of Claim~\ref{claim:lemma_total_bounded_full_interval_error}]
