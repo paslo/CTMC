@@ -805,7 +805,7 @@ A stochastic process that satisfies this property is called a \emph{Markov chain
 
 We know from Proposition~\ref{prop:stochasticprocess:simpleproperties} that the transition matrices of a stochastic process---and therefore also, in particular, of a Markov chain---satisfy a number of simple properties. For the specific case of a Markov chain $P\in\mprocesses$, the family of transition matrices $\mathcal{T}_P$ also satisfies an additional property---see Equation~\eqref{eq:transmatrixproduct} below. Whenever this is the case, we will call such a family of transition matrices a transition matrix system.
 
-\begin{definition}[Transition matrix system]
+\begin{definition}[Transition matrix system]\label{def:trans_mat_system}
 A \emph{transition matrix system} $\mathcal{T}$ is a family of transition matrices $T_t^s$, defined for all $0\leq t\leq s$, such that
 \begin{equation}\label{eq:transmatrixproduct}
 T_t^s=T_t^r T_r^s
@@ -881,28 +881,27 @@ In contrast to homogeneous Markov chains, a Markov chain for which Equation~\eqr
 
 Instead, such systems are typically described by a function $Q_t$ that gives for each time point $t\in\realsnonneg$ a rate matrix $Q_t\in\mathcal{R}$. For any such function $Q_t$, the existence and uniqueness of a corresponding non-homogeneous Markov chain then depend on the specific properties of $Q_t$. Rather than attempt to treat all these different cases here, we instead refer to some examples from the literature. 
 
-Typically, some kind of (piecewise-)continuity of $Q_t$ in terms of $t$ is assumed. The specifics of these assumptions may then depend on the intended generality of the results, computational considerations, the domain of application, and so forth. For example,~\cite{aalen1978empirical} assumes that $Q_t$ is left-continuous and has bounded right-hand limits. As a stronger restriction,~\cite{johnson1989nonhomogeneous} uses a collection $Q_1,\ldots,Q_n$ of commuting rate matrices, and defines $Q_t$ as a weighted linear combination of these component rate matrices wherein the weights vary continuously with $t$. In~\cite{rindos1995exact}, a right-continuous and piecewise-constant $Q_t$ is used, meaning that $Q_t$ takes different values on various (half-open) intervals of $\realsnonneg$, but fixed values within those intervals.
+Typically, some kind of continuity of $Q_t$ in terms of $t$ is assumed. The specifics of these assumptions may then depend on the intended generality of the results, computational considerations, the domain of application, and so forth. For example,~\cite{aalen1978empirical} assumes that $Q_t$ is left-continuous and has bounded right-hand limits. As a stronger restriction,~\cite{johnson1989nonhomogeneous} uses a collection $Q_1,\ldots,Q_n$ of commuting rate matrices, and defines $Q_t$ as a weighted linear combination of these component rate matrices wherein the weights vary continuously with $t$. In~\cite{rindos1995exact}, a right-continuous and piecewise-constant $Q_t$ is used, meaning that $Q_t$ takes different values on various (half-open) intervals of $\realsnonneg$, but fixed values within those intervals.
 
-******
+Also for our present work, we will require some tools to describe non-homogeneous Markov chains for which the function $Q_t$ differs on at most a finite number of intervals. However, it will be convenient to define these tools in a slightly more general way, so that we can re-use them later. The basic idea in what follows is to construct a transition matrix system $\mathcal{T}$ out of various ``restricted transition matrix systems'' defined on given intervals. Theorem~\ref{theo:uniqueMarkovchain} then guarantees that there is a Markov chain that corresponds to such a $\mathcal{T}$.
 
-**** blablabla
+%Recall from Section~\ref{sec:trans_mat_systems} that a transition matrix system $\mathcal{T}$ is a family of transition matrices $T_t^s$, defined for all $t,s\in\realsnonneg$ for which $t\leq s$. In particular, such a family of matrices satisfies $T_t^t=I$ for all $t\in\realsnonneg$, and $T_t^s=T_t^rT_r^s$ for all $t,r,s\in\realsnonneg$ with $t\leq r\leq s$.
 
-Recall from Section~\ref{sec:trans_mat_systems} that a transition matrix system $\mathcal{T}$ is a family of transition matrices $T_t^s$, defined for all $t,s\in\realsnonneg$ for which $t\leq s$. In particular, such a family of matrices satisfies $T_t^t=I$ for all $t\in\realsnonneg$, and $T_t^s=T_t^rT_r^s$ for all $t,r,s\in\realsnonneg$ with $t\leq r\leq s$.
-
-We will now consider restrictions of transition matrix systems to some specified interval of $\realsnonneg$. In particular, for any transition matrix system $\mathcal{T}$ and any $t,s\in\realsnonneg$, let
+To this end, we now consider restrictions of transition matrix systems to some specified interval of $\realsnonneg$. In particular, for any transition matrix system $\mathcal{T}$ and any $t,s\in\realsnonneg$, let
 \begin{equation*}
 \mathcal{T}^{[t,s]} \coloneqq \left\{T_q^r\in\mathcal{T}\,:\,q,r\in[t,s],\, q\leq r\right\}\,.
 \end{equation*}
 We call such a family $\mathcal{T}^{[t,s]}$ a \emph{restricted transition matrix system}.
 
-\begin{proposition}
-A family $\mathcal{T}^{[t,s]}$ is a restricted transition matrix system defined on $[t,s]$ if and only if **** satisfies decomposition, and identity matrix when no time elapses
+\begin{proposition}\label{prop:restr_trans_mat_system_if_semigroup}
+A family $\mathcal{T}^{[t,s]}$ is a restricted transition matrix system defined on $[t,s]$ if and only if it is a family of transition matrices $T_q^r$ defined for all $q,r\in[t,s]$ with $q\leq r$, and, for all $\tau,r,\sigma\in[t,s]$ such that $\tau\leq r\leq \sigma$, it holds that $T_\tau^\sigma = T_\tau^rT_r^\sigma$, and $T_r^r=I$.
 \end{proposition}
 \begin{proof}
-*** {\bf TODO}
+Trivial consequence of Definition~\ref{def:trans_mat_system}.
 \end{proof}
+We will henceforth adopt the same terminology for restricted transition matrix systems that we use for (normal) transition matrix systems. In particular, we will call $\mathcal{T}^{[t,s]}$ well-behaved if it satisfies Equation~\eqref{eq:wellbehavedtransitionmatrixsystem} on the interval $[t,s]$.
 
-Because these restricted transition matrix systems are only defined on some given interval, it will be useful to define a concatenation operator between two such systems defined on adjacent intervals. To his end, for any $t,r,s\in\realsnonneg$ such that $t\leq r\leq s$, and any two restricted transition matrix systems $\mathcal{T}^{[t,r]}$ and $\mathcal{T}^{[r,s]}$, let
+Now, because these restricted transition matrix systems are only defined on some given interval, it will be useful to define a concatenation operator between two such systems defined on adjacent intervals. To his end, for any $t,r,s\in\realsnonneg$ such that $t\leq r\leq s$, and any two restricted transition matrix systems $\mathcal{T}^{[t,r]}$ and $\mathcal{T}^{[r,s]}$, let
 \begin{align*}
 \mathcal{T}^{[t,r]} \otimes \mathcal{T}^{[r,s]} \coloneqq &\mathcal{T}^{[t,r]} \cup \mathcal{T}^{[r,s]} \\
  &\quad \cup \left\{T_\tau^\sigma\coloneqq T_\tau^rT_r^{\sigma}\,\Big\vert\,T_{\tau}^r\in\mathcal{T}^{[t,r]},\,T_r^{\sigma}\in\mathcal{T}^{[r,s]},\,\forall\tau\in[t,r],\,\forall\sigma\in[r,s]\right\}\,.
@@ -915,7 +914,17 @@ Consider any $t,r,s\in\realsnonneg$ such that $t\leq r\leq s$, and any two restr
 is a restricted transition matrix system defined on $[t,s]$. Furthermore, if both $\mathcal{T}^{[t,r]}$ and $\mathcal{T}^{[r,s]}$ are well behaved, then $\mathcal{T}^{[t,s]}$ is also well-behaved.
 \end{proposition}
 
-******
+We now have the required tools for the construction of the non-homogeneous Markov chains in which we will be mostly interested. In particular, if for any rate matrix $Q\in\mathcal{R}$ we now let $\mathcal{T}_Q^{[t,s]}$ be the restriction of $\mathcal{T}_Q$, defined as in Definition~\ref{def:systemfromQ}, we have the following result.
+
+\begin{proposition}\label{prop:continuous_rate_matrix_has_process}
+Consider any finite sequence of time points $u=t_0,\ldots,t_n$, and a corresponding collection of rate matrices $Q_0,\ldots,Q_{n+1}\in\mathcal{R}$. Then, there exists a well-behaved continuous-time Markov chain $P\in\wmprocesses$ with transition matrix system $\mathcal{T}_P$, such that
+\begin{equation*}
+\mathcal{T}_P = \mathcal{T}_{Q_0}^{[0,t_0]}\otimes \mathcal{T}_{Q_1}^{[t_0,t_1]} \otimes \cdots \otimes \mathcal{T}_{Q_n}^{[t_{n-1},t_n]} \otimes \mathcal{T}_{Q_{n+1}}^{[t_n,\infty)}\,.
+\end{equation*}
+\end{proposition}
+\begin{proof}
+Trivial consequence of Propositions~\ref{prop:systemQ} and~\ref{prop:concat_restr_trans_mat_systems_is_system}, and Theorem~\ref{theo:uniqueMarkovchain}.
+\end{proof}
 
 \begin{exmp}
 **** Misschien voorbeeld dat we hiermee het bestaan van het tegenvoorbeeld in Example~\ref{exmp:well-behaved-no-deriv} kunnen bewijzen?
@@ -923,13 +932,9 @@ is a restricted transition matrix system defined on $[t,s]$. Furthermore, if bot
 \end{exmp}
 
 
-****** Onderstaande weg, opnieuw doen in termen van compositie van r.t.m.s.
-
-The case of a left-continuous and piecewise-constant $Q_t$ is used in some proofs in our present work, and we have therefore chosen to include it here for completeness. The formal construction of such a $Q_t$, and specifically that of a corresponding transition matrix system $\mathcal{T}_{Q_t}$, is somewhat convoluted. We have therefore moved its construction to Lemma~\ref{lemma:nonhomogen_trans_mat_system} in the appendix. Intuitively, the result below can be understood as describing the existence of a non-homogeneous Markov chain that is constructed by piecing together various homogeneous Markov chains on given intervals.
-
-\begin{proposition}\label{prop:continuous_rate_matrix_has_process}
-Consider any left-continuous, piecewise-constant function $Q_t$ that gives for each time point $t\in\realsnonneg$ a rate matrix $Q_t\in\mathcal{R}$, such that $Q_t$ takes different values on at most a finite number of intervals. Then, there exists a well-behaved continuous-time Markov chain $P\in\wmprocesses$ such that $\mathcal{T}_P=\mathcal{T}_{Q_t}$, where $\mathcal{T}_{Q_t}$ is defined as in Lemma~\ref{lemma:nonhomogen_trans_mat_system}.
-\end{proposition}
+%\begin{proposition}\label{prop:continuous_rate_matrix_has_process}
+%Consider any left-continuous, piecewise-constant function $Q_t$ that gives for each time point $t\in\realsnonneg$ a rate matrix $Q_t\in\mathcal{R}$, such that $Q_t$ takes different values on at most a finite number of intervals. Then, there exists a well-behaved continuous-time Markov chain $P\in\wmprocesses$ such that $\mathcal{T}_P=\mathcal{T}_{Q_t}$, where $\mathcal{T}_{Q_t}$ is defined as in Lemma~\ref{lemma:nonhomogen_trans_mat_system}.
+%\end{proposition}
 
 \section{Imprecise Continuous-Time Markov chains}
 \label{sec:iCTMC}
