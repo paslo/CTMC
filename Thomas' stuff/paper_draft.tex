@@ -382,16 +382,16 @@ with $C_0\coloneqq\cup_{i=1}^nC_i$.
 
 *** Explain that most authors consider a supremum. However, since $n$ is finite and because, for every $i\in\{1,\dots,n\}$, $\ind{A_i}$ and $\ind{C_i}$ can only take two values---$0$ or $1$---it follows that this supremum is taken over a finite set of real numbers, which implies that it is actually a maximum. ***
 
+\begin{proposition}\label{prop:fullcoherent}
+Let $P$ be a real-valued map from $\power\times\nonemptypower$ to $\reals$. Then $P$ is a full conditional probability if and only if it is a coherent conditional probability.
+\end{proposition}
+
+
 \begin{theorem}\label{theo:coherentextendable}
-Let $P$ be a real-valued map from $\mathcal{C}\subseteq\power\times\nonemptypower$ to $\reals$. Then $P$ is a coherent conditional probability if and only if it can be extended to a full conditional probability.
+Let $P$ be a real-valued map from $\mathcal{C}\subseteq\power\times\nonemptypower$ to $\reals$. Then $P$ can be extended to a full conditional probability if and only if it is a coherent conditional probability.
 \end{theorem}
 
-\begin{corollary}\label{corol:fullcoherent}
-Let $P$ be a real-valued map from $\power\times\nonemptypower$ to $\reals$. Then $P$ is a coherent conditional probability if and only if it is a full conditional probability.
-\end{corollary}
-\begin{proof}
-Trivial consequence of Theorem~\ref{theo:coherentextendable}.
-\end{proof}
+
 
 \subsection{Transition (Rate) Matrices}\label{sec:trans_rate_matrices}
 
@@ -1900,23 +1900,17 @@ Finally, previous work only focused on functions $f\in\gamblesX$ defined at a si
 
 \appendix
 
-\section{Proofs and Lemmas for Section~\ref{sec:prelim}}
+\section{Proofs of results in Section~\ref{sec:prelim}}
 
-\begin{proof}[Proof of Theorem~\ref{theo:coherentextendable}]
-We start by proving the ``if" direction; if $P$ can be extended to a full conditional probability, it is a coherent conditional probability on $\mathcal{C}\subseteq\power\times\nonemptypower$. Let $P$ be a map from $\mathcal{C}\subseteq\power\times\nonemptypower$ to $\reals$ such that it has an extension $P^*$ on $\power\times\nonemptypower$ that is a full conditional probability. 
-
-Because events are subsets of $\Omega$, we have that the set $\power$ of all events is the power set of $\Omega$. Hence, $\power$ is an algebra of events. Furthermore, because $P^*$ satisfies~\ref{def:coh_prob_1}-\ref{def:coh_prob_4}, by Lemma~\ref{lemma:alt_axiom_prob}, it also satisfies~\ref{lem:alt_axiom_prob_1}-\ref{lem:alt_axiom_prob_3}. Therefore~\cite{berti1991coherent}, $P^*$ is a coherent conditional probability on $\power\times\nonemptypower$. Hence {(\bf LEMMA?)}, $P^*$ is coherent on the subset $\mathcal{C}\subseteq\power\times\nonemptypower$. Note that because $P^*$ is an extension of $P$, $P$ and $P^*$ take the same values on $\mathcal{C}$. Therefore, and because $P^*$ is coherent on $\mathcal{C}$, $P$ is also coherent on $\mathcal{C}$. Hence, $P$ is a coherent conditional probability.
-
-We now prove the other direction; if $P$ is coherent on $\mathcal{C}\subseteq\power\times\nonemptypower$, it can be extended to a full conditional probability.
-Let $P$ be a coherent conditional probability on $\mathcal{C}\subseteq\power\times\nonemptypower$. Then, there exists~\cite[Theorem 4]{regazzini1985finitely} an extension $P^*$ of $P$ to the set $\power\times\nonemptypower$, such that $P^*$ is a coherent conditional probability.
-
-Recall that $\power$ is an algebra of events. Therefore~\cite{berti1991coherent}, and because $P^*$ is coherent on $\power\times\nonemptypower$, $P^*$ satisfies~\ref{lem:alt_axiom_prob_1}-\ref{lem:alt_axiom_prob_3}. Hence, by Lemma~\ref{lemma:alt_axiom_prob}, $P^*$ also satisfies~\ref{def:coh_prob_1}-\ref{def:coh_prob_4}. Therefore, $P^*$ is an extension of $P$ that is a full conditional probability.
+\begin{proof}[Proof of Proposition~\ref{prop:fullcoherent}]
+Since $\power$ is clearly an algebra of events, it follows from Reference~\cite{berti1991coherent} that $P$ is a coherent conditional probability if and only if it satisfies the conditions~\ref{lem:alt_axiom_prob_1}-\ref{lem:alt_axiom_prob_3} in Lemma~\ref{lemma:alt_axiom_prob}. The result now follows directly from Lemma~\ref{lemma:alt_axiom_prob}.
 \end{proof}
+
 
 \begin{lemma}\label{lemma:alt_axiom_prob}
 Let $P$ be any map from $\power\times\nonemptypower$ to $\reals$. Then, $P$ is a full conditional probability if and only if it satisfies
 \begin{enumerate}[label=P\arabic*:,ref=P\arabic*]
-\item $P(\cdot\,\vert\,C)$ is a non-negative, (finitely-)additive function on $\power$, for all $C\in\nonemptypower$;\label{lem:alt_axiom_prob_1}
+\item $P(\cdot\,\vert\,C)$ is a non-negative, additive function on $\power$, for all $C\in\nonemptypower$;\label{lem:alt_axiom_prob_1}
 \item $P(A\,\vert\,C)=1$ for all $A\in\power$ and $C\in\nonemptypower$ such that $C\subseteq A$;\label{lem:alt_axiom_prob_2}
 \item $P(A\cap D\,\vert\,C)=P(A\,\vert\,D\cap C)P(D\,\vert\,C)$ for all $A\in\power$ and $C,D\cap C\in\nonemptypower$.\label{lem:alt_axiom_prob_3}
 \end{enumerate}
@@ -1961,6 +1955,14 @@ P(A\cap D\,\vert\,C) &= P(A\,\vert\,D\cap C)P(D\,\vert\,C)\,,
 \end{align*}
 which proves~\ref{lem:alt_axiom_prob_3}.
 \end{proof}
+
+
+\begin{proof}[Proof of Theorem~\ref{theo:coherentextendable}]
+First assume that $P$ can be extended to a full conditional probability $P^*$. Proposition~\ref{prop:fullcoherent} then implies that $P^*$ is a coherent conditional probability, and therefore, since $P$ is the restriction of $P^*$ to $\mathcal{C}$, it clearly follows from Definition~\ref{def:coherence} that $P$ is a coherent conditional probability.
+
+Conversely, if $P$ is a coherent conditional probability, it follows from Reference~\cite[Theorem 4]{regazzini1985finitely}  that $P$ can be extended to a coherent conditional probability $P^*$ on the set $\power\times\nonemptypower$, which, because of Proposition~\ref{prop:fullcoherent}, is a full conditional probability.
+\end{proof}
+
 
 \begin{proof}[Proof of Proposition~\ref{prop:stochastic_from_rate_matrix}]
 Let $T=[I+\Delta Q]$. We will verify the properties from Definition~\ref{def:stoch_matrix}.
@@ -2132,7 +2134,7 @@ We first prove that $\tilde{P}$ is a coherent conditional probability on $\mathc
 \end{equation}
 with $C_0\coloneqq\cup_{i=1}^nC_i$.
 Since every sequence $u_i$ is finite, there is some finite set $w=\{w_0,w_1,\dots,w_m\}\subset\reals_{\geq0}$ of time points, with $m\in\nats$, such that $0=w_0<w_1<\dots<w_m$ and, for all $i\in\{1,\dots,n\}$, $u_i\subseteq w$ and $s_i\in w$.
-Let $P_w$ be the restriction of $\tilde{P}$ to $\mathcal{C}_w$, with $\mathcal{C}_w$ defined as in Lemma~\ref{lemma:simplechaincoherence}. Then since $P_w$ clearly satisfies the conditions of Lemma~\ref{lemma:simplechaincoherence}, it follows that $P_w$ is a coherent conditional probability. Because of Theorem~\ref{theo:coherentextendable}, this implies that $P_w$ is the restriction to $\mathcal{C}_w$ of some full conditional probability $\tilde{P}_w$ that, because of Corollary~\ref{corol:fullcoherent}, is coherent. Hence, we find that
+Let $P_w$ be the restriction of $\tilde{P}$ to $\mathcal{C}_w$, with $\mathcal{C}_w$ defined as in Lemma~\ref{lemma:simplechaincoherence}. Then since $P_w$ clearly satisfies the conditions of Lemma~\ref{lemma:simplechaincoherence}, it follows that $P_w$ is a coherent conditional probability. Because of Theorem~\ref{theo:coherentextendable}, this implies that $P_w$ is the restriction to $\mathcal{C}_w$ of some full conditional probability $\tilde{P}_w$ that, because of Proposition~\ref{prop:fullcoherent}, is coherent. Hence, we find that
 \begin{equation}\label{eq:theo:uniqueMarkovchain:coh2}
 \sup\left\{\sum_{i=1}^n\lambda_i\ind{C_i}(\omega)\bigl(\tilde{P}_w(A_i\vert C_i)-\ind{A_i}(\omega)\bigr)~\Bigg\vert~\omega\in C_0\right\}\geq0.
 \end{equation}
