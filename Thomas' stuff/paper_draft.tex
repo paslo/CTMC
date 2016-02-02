@@ -1228,9 +1228,9 @@ Consider any non-empty, bounded and closed set of rate matrices $\rateset$, and 
 **** blablabla, ondergrens bereikt als $\rateset$ ook closed is
 
 \begin{proposition}\label{prop:lower_expectation_reached_if_Q_closed}
-Let $\rateset$ be an arbitrary non-empty, bounded, and closed set of rate matrices that has separately specified rows, with corresponding lower transition rate operator $\lrate$, and let $\underline{\mathcal{T}}_{\lrate}$ be the family of lower transition operators corresponding to $\lrate$. Then, for all $t,s\in\realsnonneg$ such that $t<s$, and all $f\in\gamblesX$, there is some $P\in\wmprocesses_\rateset$ such that
+Let $\rateset$ be an arbitrary non-empty, bounded, and closed set of rate matrices. Then, for all $t,s\in\realsnonneg$ such that $t<s$, all $f\in\gamblesX$, and all $x\in\states$, there is some $P\in\wmprocesses_\rateset$ with expectation operator $\mathbb{E}$, such that
 \begin{equation*}
-L_t^sf = T_t^sf\,.
+\underline{\mathbb{E}}^{\mathrm{WM}}_\rateset[f(X_s)\,\vert\,X_t=x] = \mathbb{E}[f(X_s)\,\vert\,X_t=x]\,.
 \end{equation*}
 \end{proposition}
 
@@ -1255,7 +1255,7 @@ P(A\vert X_u=x_u)=P_{x_u}(A\vert X_u=x_u).
 *** blabla
 
 \begin{theorem}\label{theorem:decomposition_multivar}
-Let $\rateset$ be an arbitrary non-empty, bounded, and convex set of rate matrices, with the corresponding set $\wprocesses_\rateset$ of well-behaved stochastic processes consistent with $\rateset$. Then, for any $t\in\realsnonneg$, any $u\in\mathcal{U}_{<t}$ and $v\in\mathcal{U}_{\geq t}$, any $f\in\gambles(\states^{u\cup v})$, and any $w\subseteq v$,
+Let $\rateset$ be an arbitrary non-empty, bounded, and convex set of rate matrices. Then, for any $t\in\realsnonneg$, any $u\in\mathcal{U}_{<t}$ and $v\in\mathcal{U}_{\geq t}$, any $f\in\gambles(\states^{u\cup v})$, and any $w\subseteq v$,
 \begin{equation}\label{eq:lower_exp_factorizes}
 \underline{\mathbb{E}}^{\mathrm{W}}_\rateset\left[f(X_u,X_v)\,\vert\,X_u\right] = \underline{\mathbb{E}}^{\mathrm{W}}_\rateset\Bigl[\underline{\mathbb{E}}^{\mathrm{W}}_\rateset\left[f(X_u,X_v)\,\vert\,X_u,X_{v\setminus w}\right] \,\Big\vert\,X_u\Bigr] 
 \end{equation}
@@ -3255,13 +3255,19 @@ Immediate consequence of Lemma~\ref{lemma:restricted_trans_mat_system_complete_i
 \end{proof}
 
 \begin{proof}[Proof of Proposition~\ref{prop:lower_expectation_reached_if_Q_closed}]
-Consider any sequence $\{\epsilon_i\}_{i\in\nats}$ in $\realspos$ such that $\{\epsilon_i\}_{i\in\nats}\to0^+$. Due to Proposition~\ref{theorem:lower_markov_bound_is_tight}, for all $i\in\nats$, there is some $P_i\in\wmprocesses_\rateset$ such that
+Consider any sequence $\{\epsilon_i\}_{i\in\nats}$ in $\realspos$ such that $\{\epsilon_i\}_{i\in\nats}\to0^+$. Because $\underline{\mathbb{E}}^{\mathrm{WM}}_\rateset$ computes an infimum, for all $i\in\nats$, there is some $P_i\in\wmprocesses_\rateset$ such that
 \begin{equation*}
-\norm{L_t^sf - \presuper{i}T_t^sf} < \epsilon_i\,,
+\abs{\underline{\mathbb{E}}^{\mathrm{WM}}_\rateset[f(X_s)\,\vert\,X_t=x] - \mathbb{E}_{P_i}[f(X_s)\,\vert\,X_t=x]} < \epsilon_i\,,
 \end{equation*}
-where $\presuper{i}T_t^s$ is the transition matrix corresponding to $P_i$. Consider the sequence $\{P_i\}_{i\in\nats}$. Then, because $\{\epsilon_i\}_{i\in\nats}\to0^+$, the corresponding sequence $\{\presuper{i}T_t^s\}_{i\in\nats}$ clearly satisfies
+where $\mathbb{E}_{P_i}$ is the expectation taken with respect to $P_i$. Recall from Remark~{\bf REF} that 
+\begin{equation*}
+\mathbb{E}_{P_i}[f(X_s)\,\vert\,X_t=x] = \left[\presuper{i}T_t^sf\right](x)\,,
+\end{equation*}
+where $\presuper{i}T_t^s$ is the transition matrix corresponding to $P_i$.
+
+Consider the sequence $\{P_i\}_{i\in\nats}$. Then, because $\{\epsilon_i\}_{i\in\nats}\to0^+$, the corresponding sequence $\{\presuper{i}T_t^s\}_{i\in\nats}$ clearly satisfies
 \begin{equation}\label{eq:prop_lower_is_reached_limit}
-\lim_{i\to\infty}\norm{L_t^sf - \presuper{i}T_t^sf} = 0\,.
+\lim_{i\to\infty}\abs{\underline{\mathbb{E}}^{\mathrm{WM}}_\rateset[f(X_s)\,\vert\,X_t=x] - \left[\presuper{i}T_t^sf\right](x)} = 0\,.
 \end{equation}
 
 For each $P_i$ in $\{P_i\}_{i\in\nats}$, consider the restricted transition matrix system $\mathcal{T}_i^{[t,s]}$. Because $P_i\in\wmprocesses_\rateset$, we clearly have that $\mathcal{T}_i^{[t,s]}\in\mathbb{T}_\rateset^{[t,s]}$, where $\mathbb{T}_\rateset^{[t,s]}$ is the space of all restricted transition matrix systems corresponding to $\wmprocesses_\rateset$, defined as in Section~{\bf REF}.
@@ -3274,11 +3280,11 @@ Because $\mathcal{T}_*^{[t,s]}\in\mathbb{T}_\rateset^{[t,s]}$, there must be som
 \end{equation*}
 Therefore, and because the sequence $\left\{\presuper{i_k}T_t^s \right\}_{k\in\nats}$ is a subsequence of $\left\{\presuper{i}T_t^s\right\}_{i\in\nats}$, we find from Equation~\eqref{eq:prop_lower_is_reached_limit} that
 \begin{equation*}
-\norm{L_t^sf - \presuper{*}T_t^sf} = 0\,.
+\abs{\underline{\mathbb{E}}^{\mathrm{WM}}_\rateset[f(X_s)\,\vert\,X_t=x] - \left[\presuper{*}T_t^sf\right](x)} = 0\,.
 \end{equation*}
 In summary, we have found a $P_*\in\wmprocesses_\rateset$ with a corresponding transition matrix $\presuper{*}T_t^s$, such that
 \begin{equation*}
-L_t^sf = \presuper{*}T_t^sf\,.
+\underline{\mathbb{E}}^{\mathrm{WM}}_\rateset[f(X_s)\,\vert\,X_t=x] = \left[\presuper{*}T_t^sf\right](x) = \mathbb{E}_{P_*}[f(X_s)\,\vert\,X_t=x]\,.
 \end{equation*}
 \end{proof}
 
