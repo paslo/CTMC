@@ -959,12 +959,11 @@ Consider any set of stochastic processes $\mathcal{P}\subseteq\processes$. Then,
 ****
 
 Because such (conditional) lower expectations are linked to a given set $\mathcal{P}\subseteq\processes$ of stochastic processes, we will next look at how we can describe such a set $\mathcal{P}$.
-Recall from Section~\ref{sec:dynamics} that for a given stochastic process $P\in\processes$, its behavior can be described using the outer partial derivatives $\smash{\overline{\partial}}T_{t,\,x_u}^t$ of its transition matrices $T_{t,\,x_u}^t$ at each time point $t\in\realsnonneg$ and for each history $x_u\in\states^u$. There, we found that---at least for well-behaved processes---these outer partial derivatives are non-empty bounded sets of rate matrices. Hence, because individual stochastic processes can be described using sets of rate matrices, this is also a natural starting point for describing sets of processes.
+Recall from Section~\ref{sec:dynamics} that for a given stochastic process $P\in\processes$, its behavior can be described using the outer partial derivatives $\smash{\overline{\partial}}T_{t,\,x_u}^t$ of its transition matrices $T_{t,\,x_u}^t$ at each time $t\in\realsnonneg$ and for each history $x_u\in\states^u$. There, we found that---at least for well-behaved processes---these outer partial derivatives are non-empty bounded sets of rate matrices. Hence, because individual stochastic processes can be described using sets of rate matrices, this is also a natural starting point for describing sets of processes.
 
-Therefore, consider some non-empty bounded set $\rateset\subset\mathcal{R}$ of rate matrices. We can then ask if there are any processes that are described by this set $\rateset$. Indeed, we found in Section~\ref{sec:homogen_markov_chain} that for any $Q\in\rateset$, there is a well-behaved homogeneous Markov chain that is characterized---up to its initial distribution---by this $Q$. Hence, an obvious way to construct a set $\mathcal{P}$ from a given set $\rateset$ is as the set of well-behaved homogeneous Markov chains characterized by elements of $\rateset$. Observe, however, that in doing so we ignore the initial distributions of these processes. %Therefore, one obvious way to describe a set of well-behaved homogeneous Markov chains $\mathcal{P}\subset\whmprocesses$ is with the set of rate matrices that characterize the various $P\in\mathcal{P}$. Turning this around, we can for a given set $\rateset\subset\mathcal{R}$ construct $\mathcal{P}$ as the set of all well-behaved homogeneous Markov chains described by elements of $\rateset$. Note that in either case---describing $\mathcal{P}$ with some $\rateset$, or, given some $\rateset$, constructing a $\mathcal{P}$---we ignore the initial distributions of the processes. 
-We here briefly note that this is not problematic for our intended purposes, and will return to this observation shortly.
+Therefore, consider some non-empty bounded set $\rateset\subset\mathcal{R}$ of rate matrices. We can then ask if there are any processes that are described by this set $\rateset$. Indeed, we found in Section~\ref{sec:homogen_markov_chain} that for any $Q\in\rateset$, there is a well-behaved homogeneous Markov chain that is characterized---up to its initial distribution---by this $Q$. Hence, an obvious way to construct a set $\mathcal{P}$ from a given set $\rateset$ is as the set of well-behaved homogeneous Markov chains characterized by elements of $\rateset$.
 
-For now, we first consider whether we can also describe sets of non-homogeneous, (non-)Markov processes using a given set $\rateset$ of rate matrices. However, it should be clear that for such processes, this is less straightforward than in the homogeneous case. In particular, because such a set $\rateset$ is not explicitly connected to any time point $t$ or history $x_u$, asking if a (non-homogeneous, non-Markov) process is described by this set is in some sense an ill-posed question.
+From this, we might next consider whether we can also describe sets of non-homogeneous, (non-)Markov processes using a given set $\rateset$ of rate matrices. However, it should be clear that for such processes, this is less straightforward than in the homogeneous case. In particular, because such a set $\rateset$ is not explicitly connected to any time $t$ or history $x_u$, asking if a (non-homogeneous, non-Markov) process is described by this set is in some sense an ill-posed question.
 Therefore, rather than asking if a process can be described by some set of rate matrices, we will now introduce the following weaker notion of \emph{consistency} of a stochastic process with a given set of rate matrices.
 
 \begin{definition}[Consistent Process]
@@ -986,7 +985,7 @@ Hence, if we consider the set $\mathcal{P}$ of all stochastic processes consiste
 
 **** some notes on how to fix this: ignore it (works if only interested in conditional lower expectation, as shown below), fix the initial $P(X_0=x)=p(x)$ for all $P\in\mathcal{P}$ consistent with some $\rateset$ (then we can also ignore it: compute the conditional, and multiply the $p$ to get unconditional), or take a set $\mathcal{M}$ of probability mass functions on $\states$, and constrain $\mathcal{P}$ such that for all $P\in\mathcal{P}$, $P(X_0)\in\mathcal{M}$. (under some?? conditions), we can just focus on conditional, then compute lower expectation w.r.t. $\mathcal{M}$. hence, we can always ignore it.
 
-We briefly mentioned earlier that our ignoring of the initial distributions is not a problem for our intended purposes. The reason for this is that we are constructing these sets $\mathcal{P}$ of processes with the intent to compute conditional lower expectations with respect to these sets. In particular, this conditioning is done on states in the process' history. Therefore, once this conditioning is taken into account, the under-parameterization with respect to the initial distributions becomes irrelevant, as shown by the example below.
+%We briefly mentioned earlier that our ignoring of the initial distributions is not a problem for our intended purposes. The reason for this is that we are constructing these sets $\mathcal{P}$ of processes with the intent to compute conditional lower expectations with respect to these sets. In particular, this conditioning is done on states in the process' history. Therefore, once this conditioning is taken into account, the under-parameterization with respect to the initial distributions becomes irrelevant, as shown by the example below.
 
 \begin{exmp}
 Suppose that $\mathcal{P}$ is the set of all well-behaved homogeneous Markov chains consistent with some $\rateset=\{Q\}$. As is clear from Example~\ref{example:singleton_infinite_consistent}, $\mathcal{P}$ contains an infinite number of stochastic processes. However, while these processes differ in their initial distributions, for any time points $t,s\in\realsnonneg$ such that $t\leq s$, their transition matrices $T_t^s$ are identical. In particular, these satisfy $T_t^s=e^{Q(s-t)}$, as was found in Section~\ref{sec:homogen_markov_chain}.
@@ -1025,6 +1024,7 @@ Consider any non-empty bounded set of rate matrices $\rateset$, and any set of s
 \mathcal{P}_{\rateset} \coloneqq \left\{P\in\mathcal{P}\,:\,P\sim\rateset\right\}\,.
 \end{equation*}
 \end{definition}
+Such a set $\mathcal{P}_\rateset$ will also be called an \emph{imprecise continuous-time Markov chain}. We will next focus on some specific cases.
 
 \subsection{Types of Imprecise Continuous-Time Markov Chains}
 
@@ -1457,10 +1457,11 @@ L_t^s = L_{t+\Delta}^{s+\Delta}\,.
 \begin{proposition}\label{prop:lower_transition_has_deriv}
 Let $\lrate$ be an arbitrary lower transition rate operator, and let $\underline{\mathcal{T}}_{\lrate}$ be the corresponding lower transition operator system. Then, for all $t,s\in\realsnonneg$ such that $t<s$, it holds that
 \begin{equation*}
-\frac{d}{dt}\lbound_t^s=-\lrate\lbound_t^s\,,\quad\text{and,}\quad\frac{d}{ds}\lbound_t^s=\lbound_t^s\lrate\,.
+\frac{\partial}{\partial t}\lbound_t^s=-\lrate\lbound_t^s=-\lbound_t^s\lrate\,,\quad\text{and,}\quad\frac{\partial}{\partial s}\lbound_t^s=\lbound_t^s\lrate=\lrate\lbound_t^s\,.
 \end{equation*}
 % Then $\frac{d}{dt}\lbound_t^s=-\lrate\lbound_t^s$ and $\frac{d}{ds}\lbound_t^s=\lbound_t^s\lrate$, meaning that
 \end{proposition}
+As an immediate consequence, we have found that a lower transition rate operator $\lrate$ always commutes with its corresponding lower transition operator. That is, for any $t,s\in\realsnonneg$ with $t\leq s$, it holds that $\lrate L_t^s=L_t^s\lrate$.
 
 **** blabla kijk het lijkt inderdaad op matrix exponential
 
@@ -1651,7 +1652,7 @@ One conclusion that we can draw from this is that if $\rateset$ is any non-empty
 \begin{equation*}
 [L_{t_n}^sf](x_{t_n}) = \underline{\mathbb{E}}_{\,\rateset}^{\mathrm{WM}}[f(X_s)\,\vert\,X_{t_n}=x_{t_n}] = \underline{\mathbb{E}}_{\,\rateset}^{\mathrm{W}}[f(X_s)\,\vert\,X_u=x_u] = \underline{\mathbb{E}}_{\,\rateset_{\lrate}}^{\mathrm{W}}[f(X_s)\,\vert\,X_u=x_u]\,.
 \end{equation*}
-In other words, for functions defined on a single time point, the lower expectations with respect to the sets $\wmprocesses_{\rateset}$, $\wprocesses_{\rateset}$, and $\wprocesses_{\rateset_{\lrate}}$ are all the same!
+In other words, for functions defined on a single time point, the lower expectations with respect to the sets $\wmprocesses_{\rateset}$, $\wprocesses_{\rateset}$, and $\wprocesses_{\rateset_{\lrate}}$ are all the same! Consequently, the lower expectation will also be the same for any set $\mathcal{P}\subset\processes$ that satisfies $\wmprocesses_\rateset \subseteq \mathcal{P} \subseteq \wprocesses_{\rateset_{\lrate}}$.
 
 Another way of putting this is that, if one is interested in the lower expectation with respect to, say, $\wprocesses_{\rateset}$, and if $\rateset$ is non-empty and bounded with separately specified rows, that convexifying or closing $\rateset$ will not influence the lower expectation for functions defined on a single time point. This is due to Proposition~\ref{prop:dominating_unique_characterization}, which states that if you do this, you obtain $\rateset=\rateset_{\lrate}$.
 
@@ -4057,7 +4058,7 @@ L_t^s=\lim_{i\to\infty}\Phi_{u_i}=\lim_{i\to\infty}\Phi_{u_i^*}=L_{t+\Delta}^{s+
 \end{proof}
 
 \begin{proof}[Proof of Proposition~\ref{prop:lower_transition_has_deriv}]
-The proposition claims that $\frac{d}{dt}L_t^s=-\lrate L_t^s$ and $\frac{d}{ds}L_t^s=L_t^s\lrate$, meaning that
+We will first prove that $\frac{\partial}{\partial t}L_t^s=-\lrate L_t^s$ and $\frac{\partial}{\partial s}L_t^s=L_t^s\lrate$, meaning that
 \begin{equation}\label{eq:lower_deriv_backward}
 (\forall\epsilon>0)\,
 (\exists\delta>0)\,
@@ -4130,6 +4131,22 @@ Now,
  &< 2\delta\norm{\lrate}^2 \\
  &= \epsilon\,.
 \end{align*}
+
+It remains to show that $L_t^s\lrate=\lrate L_t^s$. To this end, consider any $\epsilon\in\realspos$. Then, it follows from Equations~\eqref{eq:lower_deriv_backward} and~\eqref{eq:lower_deriv_forward} that there exist $\delta_-,\delta_+\in\realspos$, such that
+\begin{align*}
+(\forall\Delta:0<\abs{\Delta}<\delta_-)&\,\norm{\frac{L_{t+\Delta}^s - L_t^s}{\Delta} + \lrate L_t^s} < \frac{\epsilon}{2}\,, \\
+&\text{and,}\\
+(\forall\Delta:0<\abs{\Delta}<\delta_+)&\,\norm{\frac{L_{t}^{s+\Delta} - L_t^s}{\Delta} - L_t^s\lrate} < \frac{\epsilon}{2}\,.
+\end{align*}
+Consider now any $\Delta\in\realspos$ such that $\Delta<\min\{\delta_-,\delta_+\}$. Then,
+\begin{align*}
+ &\quad \norm{\lrate L_t^s - L_t^s\lrate} \\
+ &\leq \norm{\lrate L_t^s - \frac{L_{t-\Delta}^s - L_t^s}{\Delta}} + \norm{\frac{L_{t-\Delta}^s - L_t^s}{\Delta} - \frac{L_{t}^{s+\Delta} - L_t^s}{\Delta}} + \norm{\frac{L_{t}^{s+\Delta} - L_t^s}{\Delta} - L_t^s\lrate} \\
+ &= \norm{\lrate L_t^s + \frac{L_{t-\Delta}^s - L_t^s}{-\Delta}} + \norm{\frac{L_{t-\Delta}^s - L_t^s}{\Delta} - \frac{L_{t}^{s+\Delta} - L_t^s}{\Delta}} + \norm{\frac{L_{t}^{s+\Delta} - L_t^s}{\Delta} - L_t^s\lrate} \\
+ &< \frac{\epsilon}{2} + \norm{\frac{L_{t-\Delta}^s - L_t^s}{\Delta} - \frac{L_{t}^{s+\Delta} - L_t^s}{\Delta}} + \frac{\epsilon}{2} \\
+ &= \epsilon\,,
+\end{align*}
+where in the last step we applied $L_{t-\Delta}^s=L_t^{s+\Delta}$, by Proposition~\ref{prop:lower_transition_is_homogeneous}. Hence, we have found that $\norm{\lrate L_t^s - L_t^s\lrate}<\epsilon$. Because this holds for any $\epsilon\in\realspos$, we conclude that indeed $\lrate L_t^s=L_t^s\lrate$.
 \end{proof}
 
 \section{Proofs and Lemmas for Section~\ref{sec:connections}}
