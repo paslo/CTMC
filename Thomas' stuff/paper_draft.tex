@@ -1358,17 +1358,33 @@ Simply check each of the properties.
 The metric space $(\underline{\mathcal{T}},d)$ is complete under the metric $d$ induced by our usual norm $\norm{\cdot}$.
 \end{proposition}
 
-\noindent We conclude this section with the following result.
-\begin{proposition}\label{lemma:productiscoherent}
-Consider any $t,s\in\realsnonneg$ such that $t<s$, any lower transition rate operator $\lrate$, and any sequence $u\in\mathcal{U}_{[t,s]}$ of time points such that $\sigma(u)\leq\nicefrac{1}{\norm{\lrate}}$. Then
-\begin{equation*}
-\prod_{k=1}^n(I+\Delta_k\lrate)\coloneqq (I+\Delta_1\lrate)(I+\Delta_2\lrate)\cdots (I+\Delta_n\lrate)
-\end{equation*}
-is a lower transition operator.
-\end{proposition}
+% \noindent We conclude this section with the following result.
+% \begin{proposition}\label{lemma:productiscoherent}
+% Consider any $t,s\in\realsnonneg$ such that $t<s$, any lower transition rate operator $\lrate$, and any sequence $u\in\mathcal{U}_{[t,s]}$ of time points such that $\sigma(u)\leq\nicefrac{1}{\norm{\lrate}}$. Then
+% \begin{equation*}
+% \prod_{k=1}^n(I+\Delta_k\lrate)\coloneqq (I+\Delta_1\lrate)(I+\Delta_2\lrate)\cdots (I+\Delta_n\lrate)
+% \end{equation*}
+% is a lower transition operator.
+% \end{proposition}
+% \begin{proof}
+% Trivial consequence of Propositions~\ref{lemma:normQsmallenough} and~\ref{lemma:compositioncoherence}.
+% \end{proof}
+
+*** I WILL TURN ALL THESE LITLE PROPETIES INTO ONE PROPOSITION AND REFER TO MY CONVERGENCE PAPER FOR THEIR PROOF ***
+
+\begin{lemma}\label{lemma:differencenormofcoherenttransrate}
+Consider any two non-negatively homogeneous operators $A$, $B$ from $\gamblesX$ to $\gamblesX$, and let $\lrate$ be an arbitrary lower transition rate operator. Then, it holds that $\norm{\lrate A-\lrate B}\leq 2\norm{\lrate}\norm{A-B}$.
+\end{lemma}
 \begin{proof}
-Trivial consequence of Propositions~\ref{lemma:normQsmallenough} and~\ref{lemma:compositioncoherence}.
+*** {\bf TODO } *** This can be shown to follow from the definition of the norm and the properties of $\lrate$.
 \end{proof}
+
+% \begin{lemma}\label{lemma:differencenormofcoherenttrans}
+% Consider any two non-negatively homogeneous operators $A$, $B$ from $\gamblesX$ to $\gamblesX$, and let $\lt$ be an arbitrary lower transition operator. Then, it holds that $\norm{\lt A-\lt B}\leq \norm{A-B}$.
+% \end{lemma}
+% \begin{proof}
+% *** {\bf TODO } *** This can be shown to follow from coherence.
+% \end{proof}
 
 \subsection{The Operator of Interest}
 
@@ -2835,13 +2851,13 @@ This implies the existence of rate matrices $Q_1,\ldots,Q_n\in\rateset$, such th
 \end{equation*}
 Therefore, and due to Lemma~\ref{lemma:recursive}, we find using the Markov property of $P$ that
 \begin{align*}
-\norm{T_t^{t+\Delta} - \prod_{i=1}^n(I+\Delta_iQ_i)} &= \norm{\prod_{i=1}^nT_{t_{i-1}}^{t_i} - \prod_{i=1}^n(I+\Delta_iQ_i)} \\
- &< \sum_{i=1}^n\Delta_i\epsilon' \\
- &= \Delta\epsilon'\,.
+\norm{T_t^{t+\Delta} - \prod_{i=1}^n(I+\Delta_iQ_i)} &= \norm{\prod_{i=1}^nT_{t_{i-1}}^{t_i} - \prod_{i=1}^n(I+\Delta_iQ_i)}
+ < \sum_{i=1}^n\Delta_i\epsilon' 
+ = \Delta\epsilon'.
 \end{align*}
 Let now
 \begin{equation*}
-Q\coloneqq \sum_{i=1}^n \frac{\Delta_i}{\Delta} Q_i\,.
+Q\coloneqq \sum_{i=1}^n \frac{\Delta_i}{\Delta} Q_i.
 \end{equation*}
 Then $Q\in\rateset$ because $\rateset$ is convex and, since $\Delta<\delta\leq\nicefrac{1}{\norm{\rateset}}$, it follows from Lemma~\ref{lemma:convex_rate_set_contains_approximation} that
 \begin{equation*}
@@ -3781,81 +3797,101 @@ d(\lt,\underline{S}) &= \norm{\lt - \underline{S}} \\
 Thus, $d$ is conserving with respect to $d_1^*,\ldots,d_m^*$, and hence $(\underline{\mathcal{T}},d)$ is complete.
 \end{proof}
 
-\begin{lemma}\label{lemma:differencenormofcoherenttransrate}
-Consider any two non-negatively homogeneous operators $A$, $B$ from $\gamblesX$ to $\gamblesX$, and let $\lrate$ be an arbitrary lower transition rate operator. Then, it holds that $\norm{\lrate A-\lrate B}\leq 2\norm{\lrate}\norm{A-B}$.
-\end{lemma}
-\begin{proof}
-*** {\bf TODO } *** This can be shown to follow from the definition of the norm and the properties of $\lrate$.
-\end{proof}
-
-\begin{lemma}\label{lemma:differencenormofcoherenttrans}
-Consider any two non-negatively homogeneous operators $A$, $B$ from $\gamblesX$ to $\gamblesX$, and let $\lt$ be an arbitrary lower transition operator. Then, it holds that $\norm{\lt A-\lt B}\leq \norm{A-B}$.
-\end{lemma}
-\begin{proof}
-*** {\bf TODO } *** This can be shown to follow from coherence.
-\end{proof}
-
-\begin{lemma}\label{lemma:justtheindicator}
-Consider any sequence $0<\Delta_i\leq\nicefrac{1}{\norm{\lrate}}$, $i=1,\dots,n$, and let $\Delta\coloneqq\sum_{i=1}^n\Delta_i$. Then
-\begin{equation*}
-\norm{\prod_{i=1}^n(I+\Delta_i\lrate)-I}\leq\Delta\norm{\lrate}.
-\end{equation*}
-\end{lemma}
-\begin{proof}
-\begin{align*}
-\norm{\prod_{i=1}^n(I+\Delta_i\lrate)-I}
-&=\norm{\prod_{i=1}^n(I+\Delta_i\lrate)-\prod_{i=1}^{n-1}(I+\Delta_i\lrate)+\prod_{i=1}^{n-1}(I+\Delta_i\lrate)-I}\\
-&\leq\norm{\prod_{i=1}^n(I+\Delta_i\lrate)-\prod_{i=1}^{n-1}(I+\Delta_i\lrate)}+\norm{\prod_{i=1}^{n-1}(I+\Delta_i\lrate)-I}\\
-&\leq\norm{(I+\Delta_n\lrate)-I}+\norm{\prod_{i=1}^{n-1}(I+\Delta_i\lrate)-I}\\
-&=\Delta_n\norm{\lrate}+\norm{\prod_{i=1}^{n-1}(I+\Delta_i\lrate)-I}
-\end{align*}
-where the last inequality follows from Lemma~\ref{lemma:differencenormofcoherenttrans}. By repeating this argument over and over again (actually, by induction), we find that
-\begin{align*}
-\norm{\prod_{i=1}^n(I+\Delta_i\lrate)-I}
-\leq \Delta_n\norm{\lrate} +\Delta_{n-1}\norm{\lrate}+\cdots
-+\Delta_1\norm{\lrate}
-=\Delta\norm{\lrate}.
-\end{align*}
-\end{proof}
+% \begin{lemma}\label{lemma:justtheindicator}
+% Consider any sequence $0<\Delta_i\leq\nicefrac{1}{\norm{\lrate}}$, $i=1,\dots,n$, and let $\Delta\coloneqq\sum_{i=1}^n\Delta_i$. Then
+% \begin{equation*}
+% \norm{\prod_{i=1}^n(I+\Delta_i\lrate)-I}\leq\Delta\norm{\lrate}.
+% \end{equation*}
+% \end{lemma}
+% \begin{proof}
+% \begin{align*}
+% \norm{\prod_{i=1}^n(I+\Delta_i\lrate)-I}
+% &=\norm{\prod_{i=1}^n(I+\Delta_i\lrate)-\prod_{i=1}^{n-1}(I+\Delta_i\lrate)+\prod_{i=1}^{n-1}(I+\Delta_i\lrate)-I}\\
+% &\leq\norm{\prod_{i=1}^n(I+\Delta_i\lrate)-\prod_{i=1}^{n-1}(I+\Delta_i\lrate)}+\norm{\prod_{i=1}^{n-1}(I+\Delta_i\lrate)-I}\\
+% &\leq\norm{(I+\Delta_n\lrate)-I}+\norm{\prod_{i=1}^{n-1}(I+\Delta_i\lrate)-I}\\
+% &=\Delta_n\norm{\lrate}+\norm{\prod_{i=1}^{n-1}(I+\Delta_i\lrate)-I}
+% \end{align*}
+% where the last inequality follows from Lemma~\ref{lemma:differencenormofcoherenttrans}. By repeating this argument over and over again (actually, by induction), we find that
+% \begin{align*}
+% \norm{\prod_{i=1}^n(I+\Delta_i\lrate)-I}
+% \leq \Delta_n\norm{\lrate} +\Delta_{n-1}\norm{\lrate}+\cdots
+% +\Delta_1\norm{\lrate}
+% =\Delta\norm{\lrate}.
+% \end{align*}
+% \end{proof}
 
 \begin{lemma}\label{lemma:justthelinearpart}
-Consider any sequence $0<\Delta_i\leq\nicefrac{1}{\norm{\lrate}}$, $i=1,\dots,n$, and let $\Delta\coloneqq\sum_{i=1}^n\Delta_i$. Then
+Consider a lower transition rate operator $\lrate$ and, for all $i\in\{1,\ldots,n\}$, some $0\leq\Delta_i\leq\nicefrac{1}{\norm{\rateset}}$. Let $\Delta\coloneqq\sum_{i=1}^n\Delta_i$. Then
 \begin{equation*}
 \norm{\prod_{i=1}^n(I+\Delta_i\lrate)-(I+\Delta\lrate)}\leq\Delta^2\norm{\lrate}^2.
 \end{equation*}
 \end{lemma}
 \begin{proof}
-\begin{align*}
-&\norm{\prod_{i=1}^n(I+\Delta_i\lrate)-(I+\Delta\lrate)}\\
-&=\norm{\prod_{i=2}^n(I+\Delta_i\lrate)+\Delta_1\lrate\left(\prod_{i=2}^n(I+\Delta_i\lrate)\right)-(I+\sum_{i=2}^n\Delta_i\lrate)-\Delta_1\lrate}\\
-&\leq\norm{\prod_{i=2}^n(I+\Delta_i\lrate)-(I+\sum_{i=2}^n\Delta_i\lrate)}+\norm{\Delta_1\lrate\left(\prod_{i=2}^n(I+\Delta_i\lrate)\right)-\Delta_1\lrate}\\
-&\leq\norm{\prod_{i=2}^n(I+\Delta_i\lrate)-(I+\sum_{i=2}^n\Delta_i\lrate)}+\Delta_1\norm{\lrate\left(\prod_{i=2}^n(I+\Delta_i\lrate)\right)-\lrate}\\
-&\leq\norm{\prod_{i=2}^n(I+\Delta_i\lrate)-(I+\sum_{i=2}^n\Delta_i\lrate)}+\Delta_1 2\norm{\lrate}\norm{\prod_{i=2}^n(I+\Delta_i\lrate)-I},
-\end{align*}
-where the last inequality follows from Lemma~\ref{lemma:differencenormofcoherenttransrate}. Due to Lemma~\ref{lemma:justtheindicator}, this implies that
-\begin{align*}
-&\norm{\prod_{i=1}^n(I+\Delta_i\lrate)-(I+\Delta\lrate)}\\
-&\leq\norm{\prod_{i=2}^n(I+\Delta_i\lrate)-(I+\sum_{i=2}^n\Delta_i\lrate)}+\Delta_1 2\norm{\lrate}\left(\sum_{i=2}^n\Delta_i\right)\norm{\lrate}\\
-&=\norm{\prod_{i=2}^n(I+\Delta_i\lrate)-(I+\sum_{i=2}^n\Delta_i\lrate)}+2\norm{\lrate}^2\Delta_1\left(\sum_{i=2}^n\Delta_i\right).
-\end{align*}
-By continuing in this way (applying induction) we find that
-\begin{align*}
-&\norm{\prod_{i=1}^n(I+\Delta_i\lrate)-(I+\Delta\lrate)}\\
-&\leq
-\norm{\prod_{i=n}^n(I+\Delta_i\lrate)-(I+\sum_{i=n}^n\Delta_i\lrate)}
-+2\norm{\lrate}^2\Delta_{n-1}\left(\sum_{i=n}^n\Delta_i\right)
-+\cdots
-+2\norm{\lrate}^2\Delta_1\left(\sum_{i=2}^n\Delta_i\right)\\
-&=2\norm{\lrate}^2\Delta_{n-1}\left(\sum_{i=n}^n\Delta_i\right)
-+\cdots
-+2\norm{\lrate}^2\Delta_1\left(\sum_{i=2}^n\Delta_i\right)\\
-&=2\norm{\lrate}^2\sum_{k=1}^n\Delta_k\sum_{i=k+1}^n\Delta_i\\
-&\leq2\norm{\lrate}^2\frac{1}{2}\left(\sum_{k=1}^n\Delta_k\right)^2=\Delta^2\norm{\lrate}^2
-\end{align*}
+We provide a proof by induction. For $n=1$, the result is trivial. So consider the case $n\geq2$ and assume that the result is true for $n-1$. 
+
+For all $i\in\{2,\dots,n\}$, since $\Delta_i\leq\nicefrac{1}{\norm{\lrate}}$, it follows from Proposition~\ref{lemma:normQsmallenough} that $(I+\Delta_i\lrate)$ and $I$ are lower transition operators, which implies that they are non-negatively homogeneous and, because of Proposition~\ref{lemma:normofcoherenttrans}, that $\norm{I+\Delta_i\lrate}\leq1$ and $\norm{I}\leq1$. Therefore,
+\begin{multline*}
+\norm{\prod_{i=1}^n(I+\Delta_i\lrate)-(I+\Delta\lrate)}\\
+\begin{aligned}
+&=\norm{\prod_{i=2}^n(I+\Delta_i\lrate)+\Delta_1\lrate\prod_{i=2}^n(I-\Delta_i\lrate)-(I+\sum_{i=2}^n\Delta_i\lrate)-\Delta_1\lrate}\\
+&\leq\norm{\prod_{i=2}^n(I+\Delta_i\lrate)-(I+\sum_{i=2}^n\Delta_i\lrate)}+\norm{\Delta_1\lrate\prod_{i=2}^n(I-\Delta_i\lrate)-\Delta_1\lrate}\\
+&\leq(\sum_{i=2}^n\Delta_i)^2\norm{\lrate}^2
++2\Delta_1\norm{\lrate}
+\norm{\prod_{i=2}^n(I+\Delta_i\lrate)-I}\\
+&\leq(\sum_{i=2}^n\Delta_i)^2\norm{\lrate}^2
++2\Delta_1\norm{\lrate}
+\sum_{i=2}^n
+\norm{(I+\Delta_i\lrate)-I}\\
+% &=(\sum_{i=2}^n\Delta_i)^2\norm{\lrate}^2
+% +2\Delta_1\norm{\lrate}
+% \sum_{i=2}^n
+% \Delta_i\norm{\lrate}\\
+&=(\sum_{i=2}^n\Delta_i)^2\norm{\lrate}^2
++\Big(2\Delta_1
+\sum_{i=2}^n
+\Delta_i\Big)\norm{\lrate}^2
+\leq\Big(
+\Delta_1+\sum_{i=2}^n\Delta_i
+\Big)^2\norm{\lrate}^2
+=\Delta^2\norm{\lrate}^2,
+\end{aligned}
+\end{multline*}\\[3pt]
+where the second inequality follows from the induction hypothesis and Lemma~\ref{lemma:differencenormofcoherenttransrate}, and the third inequality follows from Lemma~\ref{lemma:recursive}.
 \end{proof}
 
+
+% \begin{proof}
+% \begin{align*}
+% &\norm{\prod_{i=1}^n(I+\Delta_i\lrate)-(I+\Delta\lrate)}\\
+% &=\norm{\prod_{i=2}^n(I+\Delta_i\lrate)+\Delta_1\lrate\left(\prod_{i=2}^n(I+\Delta_i\lrate)\right)-(I+\sum_{i=2}^n\Delta_i\lrate)-\Delta_1\lrate}\\
+% &\leq\norm{\prod_{i=2}^n(I+\Delta_i\lrate)-(I+\sum_{i=2}^n\Delta_i\lrate)}+\norm{\Delta_1\lrate\left(\prod_{i=2}^n(I+\Delta_i\lrate)\right)-\Delta_1\lrate}\\
+% &\leq\norm{\prod_{i=2}^n(I+\Delta_i\lrate)-(I+\sum_{i=2}^n\Delta_i\lrate)}+\Delta_1\norm{\lrate\left(\prod_{i=2}^n(I+\Delta_i\lrate)\right)-\lrate}\\
+% &\leq\norm{\prod_{i=2}^n(I+\Delta_i\lrate)-(I+\sum_{i=2}^n\Delta_i\lrate)}+\Delta_1 2\norm{\lrate}\norm{\prod_{i=2}^n(I+\Delta_i\lrate)-I},
+% \end{align*}
+% where the last inequality follows from Lemma~\ref{lemma:differencenormofcoherenttransrate}. Due to Lemma~\ref{lemma:justtheindicator}, this implies that
+% \begin{align*}
+% &\norm{\prod_{i=1}^n(I+\Delta_i\lrate)-(I+\Delta\lrate)}\\
+% &\leq\norm{\prod_{i=2}^n(I+\Delta_i\lrate)-(I+\sum_{i=2}^n\Delta_i\lrate)}+\Delta_1 2\norm{\lrate}\left(\sum_{i=2}^n\Delta_i\right)\norm{\lrate}\\
+% &=\norm{\prod_{i=2}^n(I+\Delta_i\lrate)-(I+\sum_{i=2}^n\Delta_i\lrate)}+2\norm{\lrate}^2\Delta_1\left(\sum_{i=2}^n\Delta_i\right).
+% \end{align*}
+% By continuing in this way (applying induction) we find that
+% \begin{align*}
+% &\norm{\prod_{i=1}^n(I+\Delta_i\lrate)-(I+\Delta\lrate)}\\
+% &\leq
+% \norm{\prod_{i=n}^n(I+\Delta_i\lrate)-(I+\sum_{i=n}^n\Delta_i\lrate)}
+% +2\norm{\lrate}^2\Delta_{n-1}\left(\sum_{i=n}^n\Delta_i\right)
+% +\cdots
+% +2\norm{\lrate}^2\Delta_1\left(\sum_{i=2}^n\Delta_i\right)\\
+% &=2\norm{\lrate}^2\Delta_{n-1}\left(\sum_{i=n}^n\Delta_i\right)
+% +\cdots
+% +2\norm{\lrate}^2\Delta_1\left(\sum_{i=2}^n\Delta_i\right)\\
+% &=2\norm{\lrate}^2\sum_{k=1}^n\Delta_k\sum_{i=k+1}^n\Delta_i\\
+% &\leq2\norm{\lrate}^2\frac{1}{2}\left(\sum_{k=1}^n\Delta_k\right)^2=\Delta^2\norm{\lrate}^2
+% \end{align*}
+% \end{proof}
+
 \begin{lemma}\label{lemma:differencebetweennested}
-For any $k\in\{1,\dots,n\}$, consider a sequence of $\Delta_{k,i}>0$, $i=1,\dots,n_k$ and let $\Delta_k\coloneqq\sum_{i=1}^{n_k}\Delta_{n,k}$. Let $\Delta\coloneqq\sum_{k=1}^n\Delta_k$ and let $\alpha\coloneqq\max\{\Delta_k\colon k\in\{1,\dots,n\}\}$. If $\alpha\leq\nicefrac{1}{\norm{\lrate}}$, then
+For any $k\in\{1,\dots,n\}$, consider a sequence $\Delta_{k,i}>0$, $i\in\{1,\dots,n_k\}$, and let $\Delta_k\coloneqq\sum_{i=1}^{n_k}\Delta_{k,i}$. Let $\Delta\coloneqq\sum_{k=1}^n\Delta_k$ and let $\alpha\coloneqq\max_{k=1}^n\Delta_k$. Then for any lower transition rate operator $\lrate$ such that $\alpha\leq\nicefrac{1}{\norm{\lrate}}$:
 \begin{equation*}
 \norm{\prod_{k=1}^n\left(\prod_{i=1}^{n_k}(I+\Delta_{k,i}\lrate)\right)
 -
@@ -3865,111 +3901,28 @@ For any $k\in\{1,\dots,n\}$, consider a sequence of $\Delta_{k,i}>0$, $i=1,\dots
 \end{equation*}
 \end{lemma}
 \begin{proof}
-\begin{align*}
-&\norm{\prod_{k=1}^n\left(\prod_{i=1}^{n_k}(I+\Delta_{k,i}\lrate)\right)
--
-\prod_{k=1}^n(I+\Delta_k\lrate)
-}\\
-&=\norm{\left(\prod_{k=1}^{n-1}\left(\prod_{i=1}^{n_k}(I+\Delta_{k,i}\lrate)\right)\right)\left(\prod_{i=1}^{n_n}(I+\Delta_{n,i}\lrate)\right)
--
-\left(\prod_{k=1}^{n-1}(I+\Delta_k\lrate)\right)(I+\Delta_n\lrate)
-}\\
-&\leq\norm{
-\left(\prod_{k=1}^{n-1}\left(\prod_{i=1}^{n_k}(I+\Delta_{k,i}\lrate)\right)\right)\left(\prod_{i=1}^{n_n}(I+\Delta_{n,i}\lrate)\right)
--
-\left(\prod_{k=1}^{n-1}(I+\Delta_k\lrate)\right)
-\left(\prod_{i=1}^{n_n}(I+\Delta_{n,i}\lrate)\right)
-}\\
-&~~~~+\norm{
-\left(\prod_{k=1}^{n-1}(I+\Delta_k\lrate)\right)
-\left(\prod_{i=1}^{n_n}(I+\Delta_{n,i}\lrate)\right)
--
-\left(\prod_{k=1}^{n-1}(I+\Delta_k\lrate)\right)(I+\Delta_n\lrate)
-}\\
-&=\norm{
-\left(
-\left(
-\prod_{k=1}^{n-1}\left(\prod_{i=1}^{n_k}(I+\Delta_{k,i}\lrate)\right)
-\right)
--
-\left(\prod_{k=1}^{n-1}(I+\Delta_k\lrate)\right)
-\right)
-\left(\prod_{i=1}^{n_n}(I+\Delta_{n,i}\lrate)\right)
-}\\
-&~~~~+\norm{
-\left(\prod_{k=1}^{n-1}(I+\Delta_k\lrate)\right)
-\left(\prod_{i=1}^{n_n}(I+\Delta_{n,i}\lrate)\right)
--
-\left(\prod_{k=1}^{n-1}(I+\Delta_k\lrate)\right)(I+\Delta_n\lrate)
-}\\
-&\leq\norm{
-\left(
-\prod_{k=1}^{n-1}\left(\prod_{i=1}^{n_k}(I+\Delta_{k,i}\lrate)\right)
-\right)
--
-\left(\prod_{k=1}^{n-1}(I+\Delta_k\lrate)\right)
-}
-\norm{
-\left(\prod_{i=1}^{n_n}(I+\Delta_{n,i}\lrate)\right)
-}\\
-&~~~~+\norm{
-\left(\prod_{k=1}^{n-1}(I+\Delta_k\lrate)\right)
-\left(\prod_{i=1}^{n_n}(I+\Delta_{n,i}\lrate)\right)
--
-\left(\prod_{k=1}^{n-1}(I+\Delta_k\lrate)\right)(I+\Delta_n\lrate)
-},
-\end{align*}
-
-\noindent
-which, because of Lemma~\ref{lemma:productiscoherent}, \ref{lemma:normofcoherenttrans} and~\ref{lemma:differencenormofcoherenttrans}, implies that
-
-\begin{align*}
-&\norm{\prod_{k=1}^n\left(\prod_{i=1}^{n_k}(I+\Delta_{k,i}\lrate)\right)
--
-\prod_{k=1}^n(I+\Delta_k\lrate)
-}\\
-&\leq\norm{
-\left(
-\prod_{k=1}^{n-1}\left(\prod_{i=1}^{n_k}(I+\Delta_{k,i}\lrate)\right)
-\right)
--
-\left(\prod_{k=1}^{n-1}(I+\Delta_k\lrate)\right)
-}\\
-&~~~~+\norm{
-\left(\prod_{i=1}^{n_n}(I+\Delta_{n,i}\lrate)\right)
--
-(I+\Delta_n\lrate)
-}\\
-&\leq
-\norm{
-\left(
-\prod_{k=1}^{n-1}\left(\prod_{i=1}^{n_k}(I+\Delta_{k,i}\lrate)\right)
-\right)
--
-\left(\prod_{k=1}^{n-1}(I+\Delta_k\lrate)\right)
-}
-+
-\Delta_n^2\norm{\lrate}^2,
-\end{align*}
-where the last inequality follows from Lemma~\ref{lemma:justthelinearpart}.
-
-By continuing in this way (applying induction), we find that
+Fix any $k\in\{1,\dots,n\}$. Then for all $i\in\{1,\dots,n_k\}$, since $\Delta_{k,i}\leq\Delta_k\leq\alpha\leq\nicefrac{1}{\norm{\lrate}}$, it follows from Propositions~\ref{lemma:normQsmallenough} and~\ref{lemma:compositioncoherence} that $\prod_{i=1}^{n_k}(I+\Delta_{k,i}\lrate)$ and $(I+\Delta_k\lrate)$ are lower transition operators, which implies that they are non-negatively homogeneous and, because of Proposition~\ref{lemma:normofcoherenttrans}, that $\norm{\prod_{i=1}^{n_k}(I+\Delta_{k,i}\lrate)}\leq1$ and $\norm{(I+\Delta_k\lrate)}\leq1$. Therefore,
 \begin{align*}
 \norm{\prod_{k=1}^n\left(\prod_{i=1}^{n_k}(I+\Delta_{k,i}\lrate)\right)
 -
 \prod_{k=1}^n(I+\Delta_k\lrate)
 }
 &\leq
-\Delta_1^2\norm{\lrate}^2+\cdot+\Delta_k^2\norm{\lrate}^2+\cdot
-+
-\Delta_n^2\norm{\lrate}^2\\
+\sum_{k=1}^n
+\norm{
+	\left(\prod_{i=1}^{n_k}(I+\Delta_{k,i}\lrate)\right)
+	-
+	(I+\Delta_k\lrate)
+}\\
 &\leq
-\alpha\Delta_1\norm{\lrate}^2+\cdot+\alpha\Delta_k\norm{\lrate}^2+\cdot
-+
-\alpha\Delta_n\norm{\lrate}^2\\
-&=
-\alpha\Delta\norm{\lrate}^2
+\sum_{k=1}^n
+\Delta_k^2\norm{\lrate}^2
+\leq
+\sum_{k=1}^n
+\alpha\Delta_k\norm{\lrate}^2
+=\alpha\Delta\norm{\lrate}^2,
 \end{align*}
+where the first inequality follows from Lemma~\ref{lemma:recursive} and the second inequality follows from Lemma~\ref{lemma:justthelinearpart}.
 \end{proof}
 
 
