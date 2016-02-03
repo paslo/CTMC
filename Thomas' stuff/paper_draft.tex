@@ -339,34 +339,34 @@ A full conditional probability $P$ is a real-valued map from $\power\times\nonem
 
 \begin{enumerate}[label=F\arabic*:,ref=F\arabic*]
 \item
-$P(C\vert C)=1$;\label{def:coh_prob_1}
+$P(A\vert C)\geq 0$;\label{def:coh_prob_2}
 \item
-$0\leq P(A\vert C)\leq 1$;\label{def:coh_prob_2}
+$P(A\vert C)=1$ if $C\subseteq A$;\label{def:coh_prob_1}
 \item
 $P(A\cup B\vert C)=P(A\vert C)+P(B\vert C)$ if $A\cap B=\emptyset$;\label{def:coh_prob_3}
 \item
-$P(A\vert C)=P(A\vert D)P(D\vert C)$ if $A\subseteq D\subseteq C$.\label{def:coh_prob_4}
+$P(A\cap D\vert C)=P(A\vert D\cap C)P(D\vert C)$ if $D\cap C\neq\emptyset$.\label{def:coh_prob_6}
 \end{enumerate}
 \vspace{5pt}
 
 \noindent
 For any $A\in\power$ and $C\in\nonemptypower$, we call $P(A\vert C)$ the probability of $A$ conditional on $C$. Also, for any $A\in\power$, we use the shorthand notation $P(A)\coloneqq P(A\vert\paths)$ and then call $P(A)$ the probability of $A$.
-The following additional properties can easily be shown to follow from \ref{def:coh_prob_1}--\ref{def:coh_prob_4}; see Appendix~\ref{app:prelim} for a proof. For all $A\in\power$ and all $C,D\in\nonemptypower$:
+The following additional properties can easily be shown to follow from \ref{def:coh_prob_2}--\ref{def:coh_prob_6}; see Appendix~\ref{app:prelim} for a proof. For all $A\in\power$ and all $C\in\nonemptypower$:
 \vspace{5pt}
-
 \begin{enumerate}[label=F\arabic*:,ref=F\arabic*]
  \setcounter{enumi}{4}
 \item
-$P(\emptyset\vert C)=0$.\label{def:coh_prob_8}
+$P(\emptyset\vert C)=0$;\label{def:coh_prob_8}
 \item
 $P(\Omega\vert C)=1$;\label{def:coh_prob_5}
 \item
-$P(A\vert C)=P(A\cap C\vert C)$.\label{def:coh_prob_7}
+$P(A\vert C)=P(A\cap C\vert C)$;\label{def:coh_prob_7}
 \item
-$P(A\cap D\vert C)=P(A\vert D\cap C)P(D\vert C)$ if $D\cap C\neq\emptyset$;\label{def:coh_prob_6}
+$0\leq P(A\vert C)\leq 1$.\label{def:coh_prob_2b}
+% \item
+% $P(A\vert C)=P(A\vert D)P(D\vert C)$ if $A\subseteq D\subseteq C$.\label{def:coh_prob_4}
 \end{enumerate}
 \vspace{5pt}
-
 \end{definition}
 
 
@@ -380,7 +380,7 @@ Let $P$ be a real-valued map from $\mathcal{C}\subseteq\power\times\nonemptypowe
 with $C_0\coloneqq\cup_{i=1}^nC_i$.
 \end{definition}
 
-*** Explain that most authors consider a supremum. However, since $n$ is finite and because, for every $i\in\{1,\dots,n\}$, $\ind{A_i}$ and $\ind{C_i}$ can only take two values---$0$ or $1$---it follows that this supremum is taken over a finite set of real numbers, which implies that it is actually a maximum. ***
+*** Explain that most authors consider a supremum. However, since $n$ is finite and because, for every $i\in\{1,\dots,n\}$, $\ind{A_i}$ and $\ind{C_i}$ can only take two values---$0$ or $1$---it follows that this supremum is taken over a finite set of real numbers, which implies that it is actually a maximum. Also explain that some authors also require this with $\min$ and $\leq0$; this is not necessary because it is implied. ***
 
 \begin{proposition}\label{prop:fullcoherent}
 Let $P$ be a real-valued map from $\power\times\nonemptypower$ to $\reals$. Then $P$ is a full conditional probability if and only if it is a coherent conditional probability.
