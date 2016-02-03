@@ -1603,7 +1603,7 @@ As the following result shows, the operator $L_t^s$ corresponding to a lower tra
 \begin{proposition}\label{theorem:nonmarkov_single_var_lower_bounded}
 Let $\rateset$ be an arbitrary non-empty bounded set of rate matrices with corresponding lower transition rate operator $\lrate$, and let $\underline{\mathcal{T}}_{\lrate}$ be the family of lower transition operators corresponding to $\lrate$. Then, for any $P\in\wprocesses_\rateset$, any $s\in\realsnonneg$, any $u\in\mathcal{U}_{<s}$, any $x_u\in\states^u$, and any $f\in\gamblesX$,
 \begin{equation*}
-[L_{t_n}^s f](x_{t_n}) \leq \mathbb{E}[f(X_s)\,\vert\,X_{t_0}=x_{t_0},\ldots,X_{t_n}=x_{t_n}]\,.
+[L_{t_n}^s f](x_{t_n}) \leq \mathbb{E}[f(X_s)\,\vert\,X_u=x_u]\,.
 \end{equation*}
 \end{proposition}
 
@@ -1612,7 +1612,7 @@ As this result shows, $L_t^sf$ is a lower bound on the expectation of a function
 \begin{proposition}\label{theorem:lower_markov_bound_is_tight}
 Let $\rateset$ be an arbitrary non-empty bounded set of rate matrices that has separately specified rows, with corresponding lower transition rate operator $\lrate$, and let $\underline{\mathcal{T}}_{\lrate}$ be the family of lower transition operators corresponding to $\lrate$. Then for all $t,s\in\realsnonneg$ such that $t<s$, all $f\in\gamblesX$, and all $\epsilon\in\realspos$, there exists a $P\in\wmprocesses_{\rateset}$ such that
 \begin{equation*}
-\norm{\lbound_t^sf-T_t^sf} < \epsilon\,.
+\norm{\lbound_t^sf-\mathbb{E}[f(X_s)\,\vert\,X_t]} < \epsilon\,.
 \end{equation*}
 \end{proposition}
 
@@ -1621,16 +1621,14 @@ Together, Propositions~\ref{theorem:nonmarkov_single_var_lower_bounded} and~\ref
 \begin{corollary}\label{cor:lower_operator_is_infimum}
 Let $\rateset$ be an arbitrary non-empty bounded set of rate matrices that has separately specified rows, with corresponding lower transition rate operator $\lrate$, and let $\underline{\mathcal{T}}_{\lrate}$ be the family of lower transition operators corresponding to $\lrate$. Then, for all $f\in\gamblesX$, all $t,s\in\realsnonneg$ such that $t<s$, all $u\in\mathcal{U}_{<t}$, all $x_u\in\states^u$, and all $x\in\states$,
 \begin{align*}
-\left[L_t^sf\right](x) &= \underline{\mathbb{E}}^{\mathrm{WM}}_{\,\rateset}[f(X_s)\,\vert\,X_t=x,X_{t_0}=x_{t_0},\ldots,X_{t_n}=x_{t_n}] \\
- &= \underline{\mathbb{E}}^{\mathrm{WM}}_{\,\rateset}[f(X_s)\,\vert\,X_t=x]\,,%\inf\Bigl\{\left[T_t^sf\right](x)\,:\,P\in\mprocesses_\rateset\Bigr\}\,.
+\left[L_t^sf\right](x) &= \underline{\mathbb{E}}^{\mathrm{WM}}_{\,\rateset}[f(X_s)\,\vert\,X_t=x,X_u=x_u] \\
+ &= \underline{\mathbb{E}}^{\mathrm{WM}}_{\,\rateset}[f(X_s)\,\vert\,X_t=x]\,,
 \end{align*}
 and furthermore,
 \begin{equation*}
-\left[L_t^sf\right](x) = \underline{\mathbb{E}}^{\mathrm{W}}_{\,\rateset}[f(X_s)\,\vert\,X_t=x,X_{t_0}=x_{t_0},\ldots,X_{t_n}=x_{t_n}]\,.%\inf\Bigl\{\left[T_t^sf\right](x)\,:\,P\in\mprocesses_\rateset\Bigr\}\,.
+\left[L_t^sf\right](x) = \underline{\mathbb{E}}^{\mathrm{W}}_{\,\rateset}[f(X_s)\,\vert\,X_t=x,X_u=x_u]\,.
 \end{equation*}
 \end{corollary}
-
-**** blablabla
 
 Thus, we find that there is a correspondence between the operator $L_t^s$ and lower expectations with respect to sets of stochastic processes. However, we also find that this correspondence is not one-to-one. Clearly, Corollary~\ref{cor:lower_operator_is_infimum} shows that $L_t^s$ computes the lower expectation for the different sets $\wmprocesses_\rateset$ and $\wprocesses_\rateset$. Furthermore, we know from Section~\ref{sec:connections_rate} that different sets $\rateset^1$ and $\rateset^2$ may have the same corresponding lower transition rate operator $\lrate$. Hence, whenever this is the case, $L_t^s$ would---assuming the conditions in Corollary~\ref{cor:lower_operator_is_infimum} are met by both $\rateset^1$ and $\rateset^2$---then compute the lower expectation with respect to both $\wmprocesses_{\rateset^1}$ and $\wmprocesses_{\rateset^2}$ (and also, furthermore, for $\wprocesses_{\rateset^1}$ and $\wprocesses_{\rateset^2}$). An obvious question, therefore, would be what the largest set of stochastic processes is for which $L_t^s$ computes the lower expectation.
 
@@ -1643,23 +1641,27 @@ Thus, we find that there is a correspondence between the operator $L_t^s$ and lo
 Recall from Section~\ref{sec:connections_rate} that for a given lower transition rate operator $\lrate$, its set of dominating rate matrices $\rateset_{\lrate}$ is---by definition---the largest set of rate matrices which has $\lrate$ as its lower envelope. The following result shows that the set $\wprocesses_{\rateset_{\lrate}}$ of well-behaved stochastic processes consistent with $\rateset_{\lrate}$ is the largest set of stochastic processes for which $L_t^s$ computes the lower expectation.
 
 \begin{theorem}\label{theo:dominating_rate_processes_max_set}
-Let $\lrate$ be an arbitrary lower transition rate operator, with $\rateset_{\lrate}$ its set of dominating rate matrices, and let  $\underline{\mathcal{T}}_{\lrate}$ be the family of lower transition operators corresponding to $\lrate$. Then, for all $f\in\gamblesX$, all $t,s\in\realsnonneg$ such that $t<s$, all $u\in\mathcal{U}_{<t}$, all $x_u\in\states^u$, and all $x\in\states$,
+Let $\lrate$ be an arbitrary lower transition rate operator, with $\rateset_{\lrate}$ its set of dominating rate matrices, and let  $\underline{\mathcal{T}}_{\lrate}$ be the family of lower transition operators corresponding to $\lrate$. Then, the set $\wprocesses_{\rateset_{\lrate}}$ is the largest set of stochastic processes for which, for any $f\in\gamblesX$, any $t,s\in\realsnonneg$ such that $t<s$, any $u\in\mathcal{U}_{<t}$, any $x_u\in\states^u$, and any $x\in\states$,
 \begin{equation*}
-\left[L_t^sf\right](x) = \inf\left\{\mathbb{E}[f(X_s)\,\vert\,X_t=x,X_{t_0},\ldots,X_{t_n}=x_{t_n}]\,:\,P\in\wprocesses_{\rateset_{\lrate}}\right\}\,,
-\end{equation*}
-and, contrariwise, for all $P\in\processes$ such that $P\notin\wprocesses_{\rateset_{\lrate}}$, there is some $f\in\gamblesX$, some $t,s\in\realsnonneg$ with $t<s$, some $u\in\mathcal{U}_{<t}$, and some $x_u\in\states^u$, such that for some $x\in\states$,
-\begin{equation*}
-\mathbb{E}\left[f(X_s)\,\vert\,X_t=x,X_{t_0}=x_{t_0},\ldots,X_{t_n}=x_{t_n}\right] < \left[L_t^sf\right](x)\,.
+[L_t^sf](x) = \underline{\mathbb{E}}_{\,\rateset_{\lrate}}^{\mathrm{W}}[f(X_s)\,\vert\,X_t=x,X_u=x_u]\,.
 \end{equation*}
 \end{theorem}
 
-Similar to our results from Section~\ref{sec:connections_rate}, we conclude from this that sets of stochastic processes are more informative than their corresponding lower expectations. In general, different sets $\wprocesses_\rateset$ of stochastic processes can have their lower expectations computed by the same lower transition operator $L_t^s$, and hence they necessarily have the same lower expectation. 
+One conclusion that we can draw from this is that if $\rateset$ is any non-empty and bounded set of rate matrices that has separately specified rows, and lower transition rate operator $\lrate$, that then
+\begin{equation*}
+[L_{t_n}^sf](x_{t_n}) = \underline{\mathbb{E}}_{\,\rateset}^{\mathrm{WM}}[f(X_s)\,\vert\,X_{t_n}=x_{t_n}] = \underline{\mathbb{E}}_{\,\rateset}^{\mathrm{W}}[f(X_s)\,\vert\,X_u=x_u] = \underline{\mathbb{E}}_{\,\rateset_{\lrate}}^{\mathrm{W}}[f(X_s)\,\vert\,X_u=x_u]\,.
+\end{equation*}
+In other words, for functions defined on a single time point, the lower expectations with respect to the sets $\wmprocesses_{\rateset}$, $\wprocesses_{\rateset}$, and $\wprocesses_{\rateset_{\lrate}}$ are all the same!
 
-Therefore, even if $L_t^s$ computes the lower expectation with respect to $\wprocesses_\rateset$, knowledge of $L_t^s$ does not in general suffice to reconstruct $\wprocesses_\rateset$. We can, however, construct an outer approximation which is guaranteed to contain $\wprocesses_\rateset$, as follows. From Proposition~\ref{prop:lower_transition_has_deriv}, we can find the lower transition rate operator $\lrate$ that characterizes $L_t^s$, using $\lim_{\Delta\to0^+}\nicefrac{1}{\Delta}(L_t^{t+\Delta}-I)=\lrate$. Using this operator $\lrate$, we can construct the set $\rateset_{\lrate}$ of rate matrices that dominate $\lrate$. Finally, we can construct the set $\wprocesses_{\rateset_{\lrate}}$. Because $L_t^s$ computes the lower expectation with respect to $\wprocesses_\rateset$, Theorem~\ref{theo:dominating_rate_processes_max_set} now guarantees that $\wprocesses_\rateset\subseteq\wprocesses_{\rateset_{\lrate}}$.
+Another way of putting this is that, if one is interested in the lower expectation with respect to, say, $\wprocesses_{\rateset}$, and if $\rateset$ is non-empty and bounded with separately specified rows, that convexifying or closing $\rateset$ will not influence the lower expectation for functions defined on a single time point. This is due to Proposition~\ref{prop:dominating_unique_characterization}, which states that if you do this, you obtain $\rateset=\rateset_{\lrate}$.
 
-This changes if the set $\wprocesses_\rateset$ is not only well-behaved, includes non-Markov processes, and is such that $\rateset$ is non-empty and bounded with separately specified rows, but furthermore is such that $\rateset$ is closed and convex. In that case, $L_t^s$ serves as an alternative characterization of $\wprocesses_\rateset$, because then, by Proposition~\ref{prop:dominating_unique_characterization}, it holds that $\wprocesses_\rateset=\wprocesses_{\rateset_{\lrate}}$.
-
-**** ergens voelt het wel nice om die karakterisatie in termen van de set $\wprocesses_\rateset$ zelf te doen, in plaats van in termen van $\rateset$. een resultaat zoals hieronder staat (in commentaar, in de latex file) zou daarvoor kunnen helpen.
+%Similar to our results from Section~\ref{sec:connections_rate}, we conclude from this that sets of stochastic processes are more informative than their corresponding lower expectations. In general, different sets $\wprocesses_\rateset$ of stochastic processes can have their lower expectations computed by the same lower transition operator $L_t^s$, and hence they necessarily have the same lower expectation. 
+%
+%Therefore, even if $L_t^s$ computes the lower expectation with respect to $\wprocesses_\rateset$, knowledge of $L_t^s$ does not in general suffice to reconstruct $\wprocesses_\rateset$. We can, however, construct an outer approximation which is guaranteed to contain $\wprocesses_\rateset$, as follows. From Proposition~\ref{prop:lower_transition_has_deriv}, we can find the lower transition rate operator $\lrate$ that characterizes $L_t^s$, using $\lim_{\Delta\to0^+}\nicefrac{1}{\Delta}(L_t^{t+\Delta}-I)=\lrate$. Using this operator $\lrate$, we can construct the set $\rateset_{\lrate}$ of rate matrices that dominate $\lrate$. Finally, we can construct the set $\wprocesses_{\rateset_{\lrate}}$. Because $L_t^s$ computes the lower expectation with respect to $\wprocesses_\rateset$, Theorem~\ref{theo:dominating_rate_processes_max_set} now guarantees that $\wprocesses_\rateset\subseteq\wprocesses_{\rateset_{\lrate}}$.
+%
+%This changes if the set $\wprocesses_\rateset$ is not only well-behaved, includes non-Markov processes, and is such that $\rateset$ is non-empty and bounded with separately specified rows, but furthermore is such that $\rateset$ is closed and convex. In that case, $L_t^s$ serves as an alternative characterization of $\wprocesses_\rateset$, because then, by Proposition~\ref{prop:dominating_unique_characterization}, it holds that $\wprocesses_\rateset=\wprocesses_{\rateset_{\lrate}}$.
+%
+%**** ergens voelt het wel nice om die karakterisatie in termen van de set $\wprocesses_\rateset$ zelf te doen, in plaats van in termen van $\rateset$. een resultaat zoals hieronder staat (in commentaar, in de latex file) zou daarvoor kunnen helpen.
 
 %**** misschien nog zoiets toevoegen ergens? voor elke $\mathcal{P}\subset\processes$, (misschien rekening houden met $t,s,x_u$ om geldig te laten zijn),
 %\begin{equation*}
@@ -1716,7 +1718,11 @@ Therefore, and because a lower expectation is an infimum over such expectations,
 
 Now, recall our notation from Section~\ref{sec:multivar_notation}; the function $f(x_u,X_s)$ is the restriction of a function $f\in\gambles(\states^{u\cup\{s\}})$ to the state $\states^{\{s\}}$, specific to the state assignment $x_u\in\states^u$. In other words, for all $x_u\in\states^u$, there is some function $g_{x_u}\in\gambles(\states^{\{s\}})$, such that $g_{x_u}(x_s)=f(x_u,x_s)$ for all $x_s\in\states^{\{s\}}$.
 
-Hence, the problem of computing $\underline{\mathbb{E}}[f(x_u,X_s)\,\vert\,X_u=x_u]$ is in fact equivalent to computing $\underline{\mathbb{E}}[g_{x_u}(X_s)\,\vert\,X_u=x_u]$. Furthermore, because $g_{x_u}\in\gambles(\states^{\{s\}})=\gamblesX$, we already know from Section~\ref{sec:single_var_lower_exp} how to do this! We therefore have the following result as an immediate consequence of our previous results.
+Hence, the problem of computing $\underline{\mathbb{E}}[f(x_u,X_s)\,\vert\,X_u=x_u]$ is in fact equivalent to computing $\underline{\mathbb{E}}[g_{x_u}(X_s)\,\vert\,X_u=x_u]$. Furthermore, because $g_{x_u}\in\gambles(\states^{\{s\}})=\gamblesX$, we already know from Section~\ref{sec:single_var_lower_exp} how to do this! In particular, recall from Section~\ref{sec:multivar_notation} that for operators from $\gamblesX$ to $\gamblesX$, and functions $f\in\gambles(\states^{u\cup\{s\}})$, we write
+\begin{equation*}
+\left[L_{t_n}^sf\right](x_u) \equiv \left[L_{t_n}^sf(x_u,X_s)\right](x_{t_n}) = \left[L_{t_n}^sg_{x_u}(X_s)\right](x_{t_n})\,.
+\end{equation*}
+We therefore have the following result as an immediate consequence of our previous results.
 
 \begin{corollary}\label{cor:inf_works_for_single_future_var}
 Let $\rateset$ be an arbitrary non-empty bounded set of rate matrices that has separately specified rows, with corresponding lower transition rate operator $\lrate$, and let $\underline{\mathcal{T}}_{\lrate}$ be the family of lower transition operators corresponding to $\lrate$. Then, for all $s\in\realsnonneg$, all $u\in\mathcal{U}_{<s}$, all $x_u\in\states^u$, and all $f\in\gambles(\states^{u\cup\{s\}})$,
