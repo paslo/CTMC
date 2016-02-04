@@ -1395,9 +1395,9 @@ We will in this section introduce a specific lower transition operator on which 
 Before defining the operator of interest, we first give some preliminary results to provide intuition on how this operator will be constructed. We start with a bound on the distance between two operators $\Phi_u$ and $\Phi_{u*}$.
 
 \begin{proposition}\label{prop:differencebetweenu}
-Consider any $t,s\in\realsnonneg$ such that $t<s$, and any $u,u^*\in\mathcal{U}_{[t,s]}$ such that $\sigma(u)<\alpha$ and $\sigma(u^*)<\alpha$, with $0<\alpha\leq\nicefrac{1}{\norm{\lrate}}$. Let $\Delta\coloneqq s-t$. Then,
+Consider any $t,s\in\realsnonneg$ such that $t<s$, and any $u,u^*\in\mathcal{U}_{[t,s]}$ such that $\sigma(u)<\delta$ and $\sigma(u^*)<\delta$, with $0<\delta\leq\nicefrac{1}{\norm{\lrate}}$. Let $C\coloneqq s-t$. Then,
 \begin{equation*}
-\norm{\Phi_u-\Phi_{u^*}}\leq 2\alpha\Delta\norm{\lrate}^2
+\norm{\Phi_u-\Phi_{u^*}}\leq 2\delta C\norm{\lrate}^2\,.
 \end{equation*}
 \end{proposition}
 
@@ -3891,17 +3891,17 @@ where the second inequality follows from the induction hypothesis and Lemma~\ref
 % \end{proof}
 
 \begin{lemma}\label{lemma:differencebetweennested}
-For any $k\in\{1,\dots,n\}$, consider a sequence $\Delta_{k,i}>0$, $i\in\{1,\dots,n_k\}$, and let $\Delta_k\coloneqq\sum_{i=1}^{n_k}\Delta_{k,i}$. Let $\Delta\coloneqq\sum_{k=1}^n\Delta_k$ and let $\alpha\coloneqq\max_{k=1}^n\Delta_k$. Then for any lower transition rate operator $\lrate$ such that $\alpha\leq\nicefrac{1}{\norm{\lrate}}$:
+For any $k\in\{1,\dots,n\}$, consider a sequence $\Delta_{k,i}>0$, $i\in\{1,\dots,n_k\}$, and let $\Delta_k\coloneqq\sum_{i=1}^{n_k}\Delta_{k,i}$. Let $C\coloneqq\sum_{k=1}^n\Delta_k$ and let $\delta\coloneqq\max_{k=1}^n\Delta_k$. Then for any lower transition rate operator $\lrate$ such that $\delta\leq\nicefrac{1}{\norm{\lrate}}$:
 \begin{equation*}
 \norm{\prod_{k=1}^n\left(\prod_{i=1}^{n_k}(I+\Delta_{k,i}\lrate)\right)
 -
 \prod_{k=1}^n(I+\Delta_k\lrate)
 }
-\leq\alpha\Delta\norm{\lrate}^2.
+\leq\delta C\norm{\lrate}^2.
 \end{equation*}
 \end{lemma}
 \begin{proof}
-Fix any $k\in\{1,\dots,n\}$. Then for all $i\in\{1,\dots,n_k\}$, since $\Delta_{k,i}\leq\Delta_k\leq\alpha\leq\nicefrac{1}{\norm{\lrate}}$, it follows from Propositions~\ref{lemma:normQsmallenough} and~\ref{lemma:compositioncoherence} that $\prod_{i=1}^{n_k}(I+\Delta_{k,i}\lrate)$ and $(I+\Delta_k\lrate)$ are lower transition operators, which implies that they are non-negatively homogeneous and, because of Proposition~\ref{lemma:normofcoherenttrans}, that $\norm{\prod_{i=1}^{n_k}(I+\Delta_{k,i}\lrate)}\leq1$ and $\norm{(I+\Delta_k\lrate)}\leq1$. Therefore,
+Fix any $k\in\{1,\dots,n\}$. Then for all $i\in\{1,\dots,n_k\}$, since $\Delta_{k,i}\leq\Delta_k\leq\delta\leq\nicefrac{1}{\norm{\lrate}}$, it follows from Propositions~\ref{lemma:normQsmallenough} and~\ref{lemma:compositioncoherence} that $\prod_{i=1}^{n_k}(I+\Delta_{k,i}\lrate)$ and $(I+\Delta_k\lrate)$ are lower transition operators, which implies that they are non-negatively homogeneous and, because of Proposition~\ref{lemma:normofcoherenttrans}, that $\norm{\prod_{i=1}^{n_k}(I+\Delta_{k,i}\lrate)}\leq1$ and $\norm{(I+\Delta_k\lrate)}\leq1$. Therefore,
 \begin{align*}
 \norm{\prod_{k=1}^n\left(\prod_{i=1}^{n_k}(I+\Delta_{k,i}\lrate)\right)
 -
@@ -3919,8 +3919,8 @@ Fix any $k\in\{1,\dots,n\}$. Then for all $i\in\{1,\dots,n_k\}$, since $\Delta_{
 \Delta_k^2\norm{\lrate}^2
 \leq
 \sum_{k=1}^n
-\alpha\Delta_k\norm{\lrate}^2
-=\alpha\Delta\norm{\lrate}^2,
+\delta\Delta_k\norm{\lrate}^2
+=\delta C\norm{\lrate}^2,
 \end{align*}
 where the first inequality follows from Lemma~\ref{lemma:recursive} and the second inequality follows from Lemma~\ref{lemma:justthelinearpart}.
 \end{proof}
@@ -3933,13 +3933,13 @@ This implies that, for all $k\in\{1,\dots,n\}$, there is some sequence $\Delta_{
 \begin{equation*}
 \Phi_{u'}\coloneqq\prod_{k=1}^n\left(\prod_{i=1}^{n_k}(I+\Delta_{k,i}\lrate)\right).
 \end{equation*}
-It then follows from Lemma~\ref{lemma:differencebetweennested} that $\norm{\Phi_{u'}-\Phi_u}\leq\alpha\Delta\norm{\lrate}^2$. 
+It then follows from Lemma~\ref{lemma:differencebetweennested} that $\norm{\Phi_{u'}-\Phi_u}\leq\delta C\norm{\lrate}^2$. 
 
 Similarly, for all $k\in\{1,\dots,n^*\}$, there is some sequence $\Delta^*_{k,i}>0$, $i\in\{1,\dots,n^*_k\}$, such that $\Delta^*_k=\sum_{i=1}^{n^*_k}\Delta^*_{k,i}$ and
 \begin{equation*}
 \Phi_{u'}\coloneqq\prod_{k=1}^{n^*}\left(\prod_{i=1}^{n^*_k}(I+\Delta^*_{k,i}\lrate)\right).
 \end{equation*}
-It then follows from Lemma~\ref{lemma:differencebetweennested} that $\norm{\Phi_{u'}-\Phi_{u^*}}\leq\alpha\Delta\norm{\lrate}^2$.
+It then follows from Lemma~\ref{lemma:differencebetweennested} that $\norm{\Phi_{u'}-\Phi_{u^*}}\leq\delta C\norm{\lrate}^2$.
 
 Hence, we find that
 \begin{equation*}
@@ -3950,7 +3950,7 @@ Hence, we find that
 \norm{\Phi_{u}-\Phi_{u'}}
 +
 \norm{\Phi_{u'}-\Phi_{u^*}}
-\leq2\alpha\Delta\norm{\lrate}^2.
+\leq2\delta C\norm{\lrate}^2.
 \end{equation*}
 \end{proof}
 
@@ -3961,9 +3961,9 @@ Since $\lim_{n\to\infty}\sigma(u_n)=0$, and because of Lemma~\ref{lemma:producti
 \begin{proof}[Proof of Theorem~\ref{theo:convergencelowerbound}]
 Start by considering any sequence $\{u_i\}_{i\in\nats}$ in $\mathcal{U}_{[t,s]}$ such that $\lim_{i\to\infty}\sigma(u_i)=0$. Due to Corollary~\ref{corol:limitexistsandiscoherent}, the sequence $\{\Phi_{u_i}\}_{i\in\nats}$ converges to a lower transition operator, which we denote by $\lt$. 
 
-Consider now any $\epsilon>0$ and let $\Delta\coloneqq s-t$ and
+Consider now any $\epsilon>0$ and let $C\coloneqq s-t$ and
 \begin{equation*}
-\delta\coloneqq\min\left\{\frac{\epsilon}{4\Delta\norm{\lrate}^2},\frac{1}{\norm{\lrate}}\right\}.
+\delta\coloneqq\min\left\{\frac{\epsilon}{4C\norm{\lrate}^2},\frac{1}{\norm{\lrate}}\right\}.
 \end{equation*}
 
 \noindent Since $\{\Phi_{u_i}\}_{i\in\nats}$ converges to $\lt$, there is some $N\in\nats$ such that
@@ -3980,7 +3980,7 @@ Therefore, since $\lim_{i\to\infty}\sigma(u_i)=0$, there is some $N^*\geq N$ suc
 \begin{equation*}
 \norm{\lt - \Phi_u}\leq\norm{\lt-\Phi_{u_{N^*}}}
 +\norm{\Phi_{u_{N^*}}-\Phi_u}
-<\frac{\epsilon}{2}+2\delta\Delta\norm{\lrate}^2\leq\epsilon,
+<\frac{\epsilon}{2}+2\delta C\norm{\lrate}^2\leq\epsilon,
 \end{equation*}
 where the strict inequality follows from Proposition~\ref{prop:differencebetweenu}.
 In summary, we have shown that there is lower transition operator $\lt$ such that
