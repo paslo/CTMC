@@ -1483,19 +1483,18 @@ Finally, we note that the derivatives of these lower transition operators always
 \begin{proposition}\label{prop:lower_transition_has_deriv}
 Let $\lrate$ be an arbitrary lower transition rate operator, and let $\underline{\mathcal{T}}_{\lrate}$ be the corresponding lower transition operator system. Then, for all $t,s\in\realsnonneg$ such that $t<s$, it holds that
 \begin{equation*}
-\frac{\partial}{\partial t}\lbound_t^s=-\lrate\lbound_t^s=-\lbound_t^s\lrate\,,\quad\text{and,}\quad\frac{\partial}{\partial s}\lbound_t^s=\lbound_t^s\lrate=\lrate\lbound_t^s\,.
+\frac{\partial}{\partial t}\lbound_t^s=-\lrate\lbound_t^s\,,\quad\text{and,}\quad\frac{\partial}{\partial s}\lbound_t^s=\lrate\lbound_t^s\,.
 \end{equation*}
 % Then $\frac{d}{dt}\lbound_t^s=-\lrate\lbound_t^s$ and $\frac{d}{ds}\lbound_t^s=\lbound_t^s\lrate$, meaning that
 \end{proposition}
-As an immediate consequence, we have found that a lower transition rate operator $\lrate$ always commutes with its corresponding lower transition operator. That is, for any $t,s\in\realsnonneg$ with $t\leq s$, it holds that $\lrate L_t^s=L_t^s\lrate$.
 
 Another conclusion that we can draw from this, is that $L_t^s$ can be expressed as the solution of the differential equation
 \begin{equation*}
-\frac{\partial}{\partial s}L_t^s=\lrate L_t^s=L_t^s\lrate\,,\quad\quad L_t^t=I\,.
+\frac{\partial}{\partial s}L_t^s=\lrate L_t^s\,,\quad\quad L_t^t=I\,.
 \end{equation*}
 Observe, therefore, the strong correspondence between the operator $L_t^s$ corresponding to some $\lrate$, and the matrix exponential $e^{Q(s-t)}$ of any rate matrix $Q\in\mathcal{R}$. In particular, it is well known {\bf REF} that this matrix exponential is the solution of the differential equation
 \begin{equation*}
-\frac{\partial}{\partial s}e^{Q(s-t)}=Qe^{Q(s-t)}=e^{Q(s-t)}Q\,,\quad\quad e^{Q(t-t)}=I\,.
+\frac{\partial}{\partial s}e^{Q(s-t)}=Qe^{Q(s-t)}\,,\quad\quad e^{Q(t-t)}=I\,.
 \end{equation*}
 Indeed, it is easily verified that any rate matrix $Q\in\mathcal{R}$ will satisfy properties~\ref{LR:constantzero}-\ref{LR:nondiagpos} from Definition~\ref{def:coh_low_trans_rate}, and hence any such $Q$ is in fact a lower transition rate operator. It follows from the above that the lower transition operator $L_t^s$ corresponding to this $\lrate=Q$ will satisfy $L_t^s=e^{Q(s-t)}$. 
 
@@ -4052,33 +4051,33 @@ L_t^s=\lim_{i\to\infty}\Phi_{u_i}=\lim_{i\to\infty}\Phi_{u_i^*}=L_{t+\Delta}^{s+
 \end{proof}
 
 \begin{proof}[Proof of Proposition~\ref{prop:lower_transition_has_deriv}]
-We will first prove that $\frac{\partial}{\partial t}L_t^s=-\lrate L_t^s$ and $\frac{\partial}{\partial s}L_t^s=L_t^s\lrate$, meaning that
+We will prove that $\frac{\partial}{\partial t}L_t^s=-\lrate L_t^s$ and $\frac{\partial}{\partial s}L_t^s=\lrate L_t^s$, meaning that
 \begin{equation}\label{eq:lower_deriv_backward}
 (\forall\epsilon>0)\,
 (\exists\delta>0)\,
 (\forall\Delta\,:\,0<\lvert\Delta\rvert <\delta)~
-\Big\lVert\frac{L_{t+\Delta}^s-L_t^s}{\Delta}+\lrate L_t^s\Big\rVert<\epsilon
+\norm{\frac{L_{t+\Delta}^s-L_t^s}{\Delta}+\lrate L_t^s}<\epsilon
 \end{equation}
 and
 \begin{equation}\label{eq:lower_deriv_forward}
 (\forall\epsilon>0)\,
 (\exists\delta>0)\,
 (\forall\Delta\,:\,0<\lvert\Delta\rvert<\delta)~
-\Big\lVert\frac{L_{t}^{s+\Delta}-L_t^s}{\Delta}-\lbound_t^s\lrate \Big\rVert<\epsilon.
+\norm{\frac{L_{t}^{s+\Delta}-L_t^s}{\Delta}-\lrate\lbound_t^s }<\epsilon.
 \end{equation}
 We start by proving Equation~\eqref{eq:lower_deriv_backward}. Choose any $\epsilon\in\realspos$, and let
 \begin{equation}\label{eq:derivative_max_delta}
-\delta \coloneqq \frac{\epsilon}{3\norm{\lrate}^2}.
+\delta \coloneqq \min\left\{\frac{\epsilon}{5\norm{\lrate}^2},\frac{1}{\norm{\lrate}}\right\}.
 \end{equation}
 Then, consider any $\Delta\neq 0$ such that $\lvert\Delta\rvert<\delta$. We will show that
 \begin{equation*}
-\Big\lVert\frac{L_{t+\Delta}^s-L_t^s}{\Delta}+\lrate L_t^s\Big\rVert<\epsilon
+\norm{\frac{L_{t+\Delta}^s-L_t^s}{\Delta}+\lrate L_t^s}<\epsilon\,.
 \end{equation*}
 Start by rewriting the statement slightly to prevent having to consider different cases for positive and negative $\Delta$. Let $t'\coloneqq\max\{t,t+\Delta\}$, and let $\Delta'\coloneqq t'-t$. Then,
 \begin{equation*}
-\Big\lVert\frac{L_{t+\Delta}^s-L_t^s}{\Delta}+\lrate L_t^s\Big\rVert = \norm{\frac{L_{t'}^s - L_{t'-\lvert\Delta\rvert}^s}{\lvert\Delta\rvert}+\lrate L_{t'-\Delta'}^s}\,.
+\norm{\frac{L_{t+\Delta}^s-L_t^s}{\Delta}+\lrate L_t^s} = \norm{\frac{L_{t'}^s - L_{t'-\lvert\Delta\rvert}^s}{\lvert\Delta\rvert}+\lrate L_{t'-\Delta'}^s}\,.
 \end{equation*}
-Now,
+Now, using Propositions~\ref{prop:lower_trans_system_is_system} and~\ref{prop:lower_transition_is_homogeneous}, we find that
 \begin{align*}
 \norm{\frac{L_{t'}^s - L_{t'-\lvert\Delta\rvert}^s}{\lvert\Delta\rvert}+\lrate L_{t'-\Delta'}^s} &= \norm{\frac{L_{t'}^s - L_{t'-\lvert\Delta\rvert}^{t'}L_{t'}^s}{\lvert\Delta\rvert}+\lrate L_{t'-\Delta'}^{t'}L_{t'}^s} \\
  &\leq \norm{\frac{I - L_{t'-\lvert\Delta\rvert}^{t'}}{\lvert\Delta\rvert}+\lrate L_{t'-\Delta'}^{t'}}\norm{L_{t'}^s} \\
@@ -4086,61 +4085,85 @@ Now,
  &= \norm{\frac{I - L_{0}^{\lvert\Delta\rvert}}{\lvert\Delta\rvert}+\lrate L_{0}^{\Delta'}} \\
  &= \norm{\frac{L_{0}^{\lvert\Delta\rvert} - I}{\lvert\Delta\rvert}-\lrate L_{0}^{\Delta'}} \\
  &\leq \norm{\frac{L_{0}^{\lvert\Delta\rvert} - I}{\lvert\Delta\rvert}-\lrate} + \norm{\lrate - \lrate L_{0}^{\Delta'}} \\
- &\leq \frac{1}{\lvert\Delta\rvert}\cdot\norm{L_{0}^{\lvert\Delta\rvert} - (I+\lvert\Delta\rvert\lrate)} + 2\norm{\lrate}\norm{I - L_{0}^{\Delta'}} \\
- &\leq \lvert\Delta\rvert\cdot\norm{\lrate}^2 + 2\Delta'\norm{\lrate}^2.
+ &\leq \frac{1}{\lvert\Delta\rvert}\cdot\norm{L_{0}^{\lvert\Delta\rvert} - (I+\lvert\Delta\rvert\lrate)} + 2\norm{\lrate}\norm{I - L_{0}^{\Delta'}}\,.
+% &\leq \lvert\Delta\rvert\cdot\norm{\lrate}^2 + 2\Delta'\norm{\lrate}^2.
 \end{align*}
-Because $\Delta'$ satisfies either $\Delta'=0$ or $\Delta'=\lvert\Delta\rvert$, we have that $\Delta'\leq\lvert\Delta\rvert$. Thus,
+Next, using Lemma~\ref{lemma:justthelinearpart} together with Theorem~\ref{theo:convergencelowerbound}, we find that
+\begin{equation*}
+\norm{L_0^{\abs{\Delta}}-(I+\abs{\Delta}\lrate)} \leq \abs{\Delta}^2\norm{\lrate}^2\,.
+\end{equation*}
+Furthermore, again using Lemma~\ref{lemma:justthelinearpart} together with Theorem~\ref{theo:convergencelowerbound}, and also the fact that $\Delta'\leq\abs{\Delta}<\delta\leq\nicefrac{1}{\norm{\lrate}}$, we find
 \begin{align*}
-\norm{\frac{L_{t'}^s - L_{t'-\lvert\Delta\rvert}^s}{\lvert\Delta\rvert}+\lrate L_{t'-\Delta'}^s} &\leq \lvert\Delta\rvert\cdot\norm{\lrate}^2 + 2\Delta'\norm{\lrate}^2 \\
- &\leq \lvert\Delta\rvert\cdot\norm{\lrate}^2 + 2\lvert\Delta\rvert\cdot\norm{\lrate}^2 \\
- &= 3\lvert\Delta\rvert\cdot\norm{\lrate}^2 \\
- &< 3\delta\norm{\lrate}^2 \\
- &= \epsilon\,,
-\end{align*}
-where the last step used Equation~\eqref{eq:derivative_max_delta}. This concludes the proof of Equation~\eqref{eq:lower_deriv_backward}. We will now prove Equation~\eqref{eq:lower_deriv_forward}.
-
-Again choose any $\epsilon\in\realspos$, and let $\delta$ be given by
-\begin{equation*}
-\delta \coloneqq \frac{\epsilon}{2\norm{\lrate}^2}\,.
-\end{equation*}
-Consider any $\Delta\neq 0$ such that $\lvert\Delta\rvert<\delta$. We will show that
-\begin{equation*}
-\Big\lVert\frac{L_{t}^{s+\Delta}-L_t^s}{\Delta}-\lbound_t^s\lrate \Big\rVert<\epsilon\,.
-\end{equation*}
-We again first rewrite the statement to prevent having to perform case-work in the sign of $\Delta$. Let $s'\coloneqq\min\{s,s+\Delta\}$, and let $\Delta'\coloneqq s-s'$. Then,
-\begin{equation*}
-\Big\lVert\frac{L_{t}^{s+\Delta}-L_t^s}{\Delta}-\lbound_t^s\lrate \Big\rVert = \norm{\frac{L_t^{s'+\lvert\Delta\rvert} - L_t^{s'}}{\lvert\Delta\rvert} - L_t^{s'+\Delta'}\lrate}\,.
-\end{equation*}
-Now,
-\begin{align*}
-\norm{\frac{L_t^{s'+\lvert\Delta\rvert} - L_t^{s'}}{\lvert\Delta\rvert} - L_t^{s'+\Delta'}\lrate} &= \norm{\frac{L_t^{s'}L_{s'}^{s'+\lvert\Delta\rvert} - L_t^{s'}}{\lvert\Delta\rvert} - L_t^{s'}L_{s'}^{s'+\Delta'}\lrate} \\
- &\leq \norm{L_t^{s'}}\norm{\frac{L_{s'}^{s'+\lvert\Delta\rvert} - I}{\lvert\Delta\rvert} - L_{s'}^{s'+\Delta'}\lrate} \\
- &\leq \norm{\frac{L_{s'}^{s'+\lvert\Delta\rvert} - I}{\lvert\Delta\rvert} - L_{s'}^{s'+\Delta'}\lrate} \\
- &= \norm{\frac{L_{0}^{\lvert\Delta\rvert} - I}{\lvert\Delta\rvert} - L_{0}^{\Delta'}\lrate} \\
- &\leq \norm{\frac{L_{0}^{\lvert\Delta\rvert} - I}{\lvert\Delta\rvert} - \lrate} + \norm{\lrate - L_{0}^{\Delta'}\lrate} \\
- &\leq \frac{1}{\lvert\Delta\rvert}\cdot\norm{L_{0}^{\lvert\Delta\rvert} - (I+\lvert\Delta\rvert\lrate)} + \norm{\lrate}\norm{I - L_{0}^{\Delta'}} \\
- &\leq \lvert\Delta\rvert\cdot\norm{\lrate}^2 + \Delta'\norm{\lrate}^2 \\
- &\leq \lvert\Delta\rvert\cdot\norm{\lrate}^2 + \lvert\Delta\rvert\cdot\norm{\lrate}^2 \\
- &= 2\lvert\Delta\rvert\cdot\norm{\lrate}^2 \\
- &< 2\delta\norm{\lrate}^2 \\
- &= \epsilon\,.
+\norm{I - L_0^{\Delta'}} &\leq \norm{I - (I+\Delta'\lrate)} + \norm{(I+\Delta'\lrate) - L_0^{\Delta'}} \\
+ &\leq \Delta'\norm{\lrate} + (\Delta')^2\norm{\lrate}^2 \\
+ &< \Delta'\norm{\lrate} + \Delta'\delta\norm{\lrate}^2 \\
+ &\leq \Delta'\norm{\lrate} + \Delta'\norm{\lrate} = 2\Delta'\norm{\lrate}\,.
 \end{align*}
 
-It remains to show that $L_t^s\lrate=\lrate L_t^s$. To this end, consider any $\epsilon\in\realspos$. Then, it follows from Equations~\eqref{eq:lower_deriv_backward} and~\eqref{eq:lower_deriv_forward} that there exist $\delta_-,\delta_+\in\realspos$, such that
+Again using $\Delta'\leq\abs{\Delta}$, we therefore find that
 \begin{align*}
-(\forall\Delta:0<\abs{\Delta}<\delta_-)&\,\norm{\frac{L_{t+\Delta}^s - L_t^s}{\Delta} + \lrate L_t^s} < \frac{\epsilon}{2}\,, \\
-&\text{and,}\\
-(\forall\Delta:0<\abs{\Delta}<\delta_+)&\,\norm{\frac{L_{t}^{s+\Delta} - L_t^s}{\Delta} - L_t^s\lrate} < \frac{\epsilon}{2}\,.
+\norm{\frac{L_{t'}^s - L_{t'-\lvert\Delta\rvert}^s}{\lvert\Delta\rvert}+\lrate L_{t'-\Delta'}^s} &\leq 
+\frac{1}{\lvert\Delta\rvert}\cdot\norm{L_{0}^{\lvert\Delta\rvert} - (I+\lvert\Delta\rvert\lrate)} + 2\norm{\lrate}\norm{I - L_{0}^{\Delta'}} \\
+ &< \frac{1}{\abs{\Delta}}\abs{\Delta}^2\norm{\lrate}^2 + 2\norm{\lrate}(2\Delta'\norm{\lrate}) \\
+ &= \abs{\Delta}\norm{\lrate}^2 + 4\Delta'\norm{\lrate}^2 \\
+ &\leq \abs{\Delta}\norm{\lrate}^2 + 4\abs{\Delta}\norm{\lrate}^2 \\
+ &= 5\abs{\Delta}\norm{\lrate}^2 \\
+ &< 5\delta\norm{\lrate}^2 \leq \epsilon\,,
+%\lvert\Delta\rvert\cdot\norm{\lrate}^2 + 2\Delta'\norm{\lrate}^2 \\
+% &\leq \lvert\Delta\rvert\cdot\norm{\lrate}^2 + 2\lvert\Delta\rvert\cdot\norm{\lrate}^2 \\
+% &= 3\lvert\Delta\rvert\cdot\norm{\lrate}^2 \\
+% &< 3\delta\norm{\lrate}^2 = \epsilon\,,
 \end{align*}
-Consider now any $\Delta\in\realspos$ such that $\Delta<\min\{\delta_-,\delta_+\}$. Then,
+where the second-to-last inequality used $\abs{\Delta}<\delta$, and the final step used Equation~\eqref{eq:derivative_max_delta}. This concludes the proof of Equation~\eqref{eq:lower_deriv_backward}. 
+
+To prove Equation~\eqref{eq:lower_deriv_forward}, note that for any $\Delta\neq 0$, it holds that
 \begin{align*}
- &\quad \norm{\lrate L_t^s - L_t^s\lrate} \\
- &\leq \norm{\lrate L_t^s - \frac{L_{t-\Delta}^s - L_t^s}{\Delta}} + \norm{\frac{L_{t-\Delta}^s - L_t^s}{\Delta} - \frac{L_{t}^{s+\Delta} - L_t^s}{\Delta}} + \norm{\frac{L_{t}^{s+\Delta} - L_t^s}{\Delta} - L_t^s\lrate} \\
- &= \norm{\lrate L_t^s + \frac{L_{t-\Delta}^s - L_t^s}{-\Delta}} + \norm{\frac{L_{t-\Delta}^s - L_t^s}{\Delta} - \frac{L_{t}^{s+\Delta} - L_t^s}{\Delta}} + \norm{\frac{L_{t}^{s+\Delta} - L_t^s}{\Delta} - L_t^s\lrate} \\
- &< \frac{\epsilon}{2} + \norm{\frac{L_{t-\Delta}^s - L_t^s}{\Delta} - \frac{L_{t}^{s+\Delta} - L_t^s}{\Delta}} + \frac{\epsilon}{2} \\
- &= \epsilon\,,
+\norm{\frac{L_{t}^{s+\Delta}-L_t^s}{\Delta}-\lrate\lbound_t^s} &= \norm{\frac{L_{t}^{s+\Delta}-L_t^s}{-\Delta}+\lrate\lbound_t^s} = \norm{\frac{L_{t-\Delta}^{s}-L_t^s}{-\Delta}+\lrate\lbound_t^s}\,,
 \end{align*}
-where in the last step we applied $L_{t-\Delta}^s=L_t^{s+\Delta}$, by Proposition~\ref{prop:lower_transition_is_homogeneous}. Hence, we have found that $\norm{\lrate L_t^s - L_t^s\lrate}<\epsilon$. Because this holds for any $\epsilon\in\realspos$, we conclude that indeed $\lrate L_t^s=L_t^s\lrate$.
+where the second equality used Proposition~\ref{prop:lower_transition_is_homogeneous}. Therefore, the proof of Equation~\eqref{eq:lower_deriv_forward} follows immediately from Equation~\eqref{eq:lower_deriv_backward}, by simply flipping the sign of $\Delta$.
+
+%Again choose any $\epsilon\in\realspos$, and let $\delta$ be given by
+%\begin{equation*}
+%\delta \coloneqq \frac{\epsilon}{2\norm{\lrate}^2}\,.
+%\end{equation*}
+%Consider any $\Delta\neq 0$ such that $\lvert\Delta\rvert<\delta$. We will show that
+%\begin{equation*}
+%\Big\lVert\frac{L_{t}^{s+\Delta}-L_t^s}{\Delta}-\lbound_t^s\lrate \Big\rVert<\epsilon\,.
+%\end{equation*}
+%We again first rewrite the statement to prevent having to perform case-work in the sign of $\Delta$. Let $s'\coloneqq\min\{s,s+\Delta\}$, and let $\Delta'\coloneqq s-s'$. Then,
+%\begin{equation*}
+%\Big\lVert\frac{L_{t}^{s+\Delta}-L_t^s}{\Delta}-\lbound_t^s\lrate \Big\rVert = \norm{\frac{L_t^{s'+\lvert\Delta\rvert} - L_t^{s'}}{\lvert\Delta\rvert} - L_t^{s'+\Delta'}\lrate}\,.
+%\end{equation*}
+%Now,
+%\begin{align*}
+%\norm{\frac{L_t^{s'+\lvert\Delta\rvert} - L_t^{s'}}{\lvert\Delta\rvert} - L_t^{s'+\Delta'}\lrate} &= \norm{\frac{L_t^{s'}L_{s'}^{s'+\lvert\Delta\rvert} - L_t^{s'}}{\lvert\Delta\rvert} - L_t^{s'}L_{s'}^{s'+\Delta'}\lrate} \\
+% &\leq \norm{L_t^{s'}}\norm{\frac{L_{s'}^{s'+\lvert\Delta\rvert} - I}{\lvert\Delta\rvert} - L_{s'}^{s'+\Delta'}\lrate} \\
+% &\leq \norm{\frac{L_{s'}^{s'+\lvert\Delta\rvert} - I}{\lvert\Delta\rvert} - L_{s'}^{s'+\Delta'}\lrate} \\
+% &= \norm{\frac{L_{0}^{\lvert\Delta\rvert} - I}{\lvert\Delta\rvert} - L_{0}^{\Delta'}\lrate} \\
+% &\leq \norm{\frac{L_{0}^{\lvert\Delta\rvert} - I}{\lvert\Delta\rvert} - \lrate} + \norm{\lrate - L_{0}^{\Delta'}\lrate} \\
+% &\leq \frac{1}{\lvert\Delta\rvert}\cdot\norm{L_{0}^{\lvert\Delta\rvert} - (I+\lvert\Delta\rvert\lrate)} + \norm{\lrate}\norm{I - L_{0}^{\Delta'}} \\
+% &\leq \lvert\Delta\rvert\cdot\norm{\lrate}^2 + \Delta'\norm{\lrate}^2 \\
+% &\leq \lvert\Delta\rvert\cdot\norm{\lrate}^2 + \lvert\Delta\rvert\cdot\norm{\lrate}^2 \\
+% &= 2\lvert\Delta\rvert\cdot\norm{\lrate}^2 \\
+% &< 2\delta\norm{\lrate}^2 \\
+% &= \epsilon\,.
+%\end{align*}
+%
+%It remains to show that $L_t^s\lrate=\lrate L_t^s$. To this end, consider any $\epsilon\in\realspos$. Then, it follows from Equations~\eqref{eq:lower_deriv_backward} and~\eqref{eq:lower_deriv_forward} that there exist $\delta_-,\delta_+\in\realspos$, such that
+%\begin{align*}
+%(\forall\Delta:0<\abs{\Delta}<\delta_-)&\,\norm{\frac{L_{t+\Delta}^s - L_t^s}{\Delta} + \lrate L_t^s} < \frac{\epsilon}{2}\,, \\
+%&\text{and,}\\
+%(\forall\Delta:0<\abs{\Delta}<\delta_+)&\,\norm{\frac{L_{t}^{s+\Delta} - L_t^s}{\Delta} - L_t^s\lrate} < \frac{\epsilon}{2}\,.
+%\end{align*}
+%Consider now any $\Delta\in\realspos$ such that $\Delta<\min\{\delta_-,\delta_+\}$. Then,
+%\begin{align*}
+% &\quad \norm{\lrate L_t^s - L_t^s\lrate} \\
+% &\leq \norm{\lrate L_t^s - \frac{L_{t-\Delta}^s - L_t^s}{\Delta}} + \norm{\frac{L_{t-\Delta}^s - L_t^s}{\Delta} - \frac{L_{t}^{s+\Delta} - L_t^s}{\Delta}} + \norm{\frac{L_{t}^{s+\Delta} - L_t^s}{\Delta} - L_t^s\lrate} \\
+% &= \norm{\lrate L_t^s + \frac{L_{t-\Delta}^s - L_t^s}{-\Delta}} + \norm{\frac{L_{t-\Delta}^s - L_t^s}{\Delta} - \frac{L_{t}^{s+\Delta} - L_t^s}{\Delta}} + \norm{\frac{L_{t}^{s+\Delta} - L_t^s}{\Delta} - L_t^s\lrate} \\
+% &< \frac{\epsilon}{2} + \norm{\frac{L_{t-\Delta}^s - L_t^s}{\Delta} - \frac{L_{t}^{s+\Delta} - L_t^s}{\Delta}} + \frac{\epsilon}{2} \\
+% &= \epsilon\,,
+%\end{align*}
+%where in the last step we applied $L_{t-\Delta}^s=L_t^{s+\Delta}$, by Proposition~\ref{prop:lower_transition_is_homogeneous}. Hence, we have found that $\norm{\lrate L_t^s - L_t^s\lrate}<\epsilon$. Because this holds for any $\epsilon\in\realspos$, we conclude that indeed $\lrate L_t^s=L_t^s\lrate$.
 \end{proof}
 
 \section{Proofs and Lemmas for Section~\ref{sec:connections}}
