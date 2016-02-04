@@ -2525,21 +2525,22 @@ Finally, we prove that $Q$ is unique. Assume \emph{ex absurdo} that this is not 
 
 \begin{lemma}\label{lemma:recursive}
 Consider two sequences $A_1,\ldots,A_n$ and $B_1,\ldots,B_n$ of non-negatively homogeneous operators from $\gamblesX$ to $\gamblesX$, such that $\norm{A_i}\leq 1$ and $\norm{B_i}\leq 1$ for all $i\in\{1,\ldots,n\}$. Then,
-\begin{equation}\label{eq:lemma_recursive_inequality}
+\begin{equation*}
 \norm{\prod_{i=1}^nA_i - \prod_{i=1}^nB_i} \leq \sum_{i=1}^n \norm{A_i - B_i}\,.
-\end{equation}
+\end{equation*}
 \end{lemma}
 \begin{proof}
-We provide a proof by induction. Clearly, Equation~\eqref{eq:lemma_recursive_inequality} holds for $n=1$. Suppose that it holds for $n=k-1$. We show that it then also holds for $n=k$.
-\begin{align*}
-\norm{\prod_{i=1}^nA_i - \prod_{i=1}^nB_i} &= \norm{\prod_{i=1}^nA_i - \left(\prod_{i=1}^{n-1}A_i\right)B_n + \left(\prod_{i=1}^{n-1}A_i\right)B_n - \prod_{i=1}^nB_i} \\
- &\leq \norm{\prod_{i=1}^nA_i - \left(\prod_{i=1}^{n-1}A_i\right)B_n} + \norm{\left(\prod_{i=1}^{n-1}A_i\right)B_n - \prod_{i=1}^nB_i} \\
- &= \norm{\left(\prod_{i=1}^{n-1}A_i\right)(A_n - B_n)} + \norm{\left(\prod_{i=1}^{n-1}A_i - \prod_{i=1}^{n-1}B_i\right)B_n} \\
- &\leq \norm{\prod_{i=1}^{n-1}A_i}\norm{A_n - B_n} + \norm{\prod_{i=1}^{n-1}A_i - \prod_{i=1}^{n-1}B_i}\norm{B_n} \\
- &\leq \norm{A_n - B_n} + \norm{\prod_{i=1}^{n-1}A_i - \prod_{i=1}^{n-1}B_i} \\
- &\leq \norm{A_n - B_n} + \sum_{i=1}^{n-1}\norm{A_i - B_i} = \sum_{i=1}^{n}\norm{A_i - B_i}\,.
-\end{align*}
-Here, in the second-to-last inequality, we used the fact that $\norm{A_i}\leq 1$ and $\norm{B_i}\leq 1$ for all $i\in\{1,\ldots,n\}$. In the final inequality, we used the induction hypothesis.
+This is a special case of Lemma~\ref{lemma:recursive_lower_trans}, which states a more general version.
+%We provide a proof by induction. Clearly, Equation~\eqref{eq:lemma_recursive_inequality} holds for $n=1$. Suppose that it holds for $n=k-1$. We show that it then also holds for $n=k$.
+%\begin{align*}
+%\norm{\prod_{i=1}^nA_i - \prod_{i=1}^nB_i} &= \norm{\prod_{i=1}^nA_i - \left(\prod_{i=1}^{n-1}A_i\right)B_n + \left(\prod_{i=1}^{n-1}A_i\right)B_n - \prod_{i=1}^nB_i} \\
+% &\leq \norm{\prod_{i=1}^nA_i - \left(\prod_{i=1}^{n-1}A_i\right)B_n} + \norm{\left(\prod_{i=1}^{n-1}A_i\right)B_n - \prod_{i=1}^nB_i} \\
+% &= \norm{\left(\prod_{i=1}^{n-1}A_i\right)(A_n - B_n)} + \norm{\left(\prod_{i=1}^{n-1}A_i - \prod_{i=1}^{n-1}B_i\right)B_n} \\
+% &\leq \norm{\prod_{i=1}^{n-1}A_i}\norm{A_n - B_n} + \norm{\prod_{i=1}^{n-1}A_i - \prod_{i=1}^{n-1}B_i}\norm{B_n} \\
+% &\leq \norm{A_n - B_n} + \norm{\prod_{i=1}^{n-1}A_i - \prod_{i=1}^{n-1}B_i} \\
+% &\leq \norm{A_n - B_n} + \sum_{i=1}^{n-1}\norm{A_i - B_i} = \sum_{i=1}^{n}\norm{A_i - B_i}\,.
+%\end{align*}
+%Here, in the second-to-last inequality, we used the fact that $\norm{A_i}\leq 1$ and $\norm{B_i}\leq 1$ for all $i\in\{1,\ldots,n\}$. In the final inequality, we used the induction hypothesis.
 \end{proof}
 
 \begin{proof}[Proof of Proposition~\ref{prop:concat_restr_trans_mat_systems_is_system}]
@@ -3819,8 +3820,27 @@ Thus, $d$ is conserving with respect to $d_1^*,\ldots,d_m^*$, and hence $(\under
 % \end{align*}
 % \end{proof}
 
+\begin{lemma}\label{lemma:recursive_lower_trans}
+Consider two finite sequences $\underline{T}_1,\ldots,\underline{T}_n$ and $\underline{S}_1,\ldots,\underline{S}_n$ of lower transition operators. Then,
+\begin{equation}\label{eq:lemma_recursive_inequality}
+\norm{\prod_{i=1}^n\underline{T}_i - \prod_{i=1}^n\underline{S}_i} \leq \sum_{i=1}^n \norm{\underline{T}_i - \underline{S}_i}\,.
+\end{equation}
+\end{lemma}
+\begin{proof}
+We provide a proof by induction. Clearly, Equation~\eqref{eq:lemma_recursive_inequality} holds for $n=1$. Suppose that it holds for $n-1$. We show that it then also holds for $n$.
+\begin{align*}
+\norm{\prod_{i=1}^n\underline{T}_i - \prod_{i=1}^n\underline{S}_i} &= \norm{\prod_{i=1}^n\underline{T}_i - \left(\prod_{i=1}^{n-1}\underline{T}_i\right)\underline{S}_n + \left(\prod_{i=1}^{n-1}\underline{T}_i\right)\underline{S}_n - \prod_{i=1}^n\underline{S}_i} \\
+ &\leq \norm{\prod_{i=1}^n\underline{T}_i - \left(\prod_{i=1}^{n-1}\underline{T}_i\right)\underline{S}_n} + \norm{\left(\prod_{i=1}^{n-1}\underline{T}_i\right)\underline{S}_n - \prod_{i=1}^n\underline{S}_i} \\
+ &= \norm{\left(\prod_{i=1}^{n-1}\underline{T}_i\right)\underline{T}_n - \left(\prod_{i=1}^{n-1}\underline{T}_i\right)\underline{S}_n} + \norm{\left(\prod_{i=1}^{n-1}\underline{T}_i - \prod_{i=1}^{n-1}\underline{S}_i\right)\underline{S}_n} \\
+ &\leq \norm{\underline{T}_n - \underline{S}_n} + \norm{\prod_{i=1}^{n-1}\underline{T}_i - \prod_{i=1}^{n-1}\underline{S}_i}\norm{\underline{S}_n} \\
+ &\leq \norm{\underline{T}_n - \underline{S}_n} + \norm{\prod_{i=1}^{n-1}\underline{T}_i - \prod_{i=1}^{n-1}\underline{S}_i} \\
+ &\leq \norm{\underline{T}_n - \underline{S}_n} + \sum_{i=1}^{n-1}\norm{\underline{T}_i - \underline{S}_i} = \sum_{i=1}^{n}\norm{\underline{T}_i - \underline{S}_i}\,.
+\end{align*}
+Here, in the second inequality, we applied Proposition~\ref{lemma:compositioncoherence} and the fact that $\norm{\underline{T}A - \underline{T}B}\leq\norm{A - B}$ for any lower transition operator $\underline{T}$, due to Lemma {\bf YOU REMOVED THIS ;)}. In the third inequality, we used $\norm{\underline{S}_n}\leq 1$, by Proposition~\ref{lemma:normofcoherenttrans}. In the final inequality, we used the induction hypothesis.
+\end{proof}
+
 \begin{lemma}\label{lemma:justthelinearpart}
-Consider a lower transition rate operator $\lrate$ and, for all $i\in\{1,\ldots,n\}$, some $0\leq\Delta_i\leq\nicefrac{1}{\norm{\rateset}}$. Let $\Delta\coloneqq\sum_{i=1}^n\Delta_i$. Then
+Consider a lower transition rate operator $\lrate$ and, for all $i\in\{1,\ldots,n\}$, some $0\leq\Delta_i\leq\nicefrac{1}{\norm{\lrate}}$. Let $\Delta\coloneqq\sum_{i=1}^n\Delta_i$. Then
 \begin{equation*}
 \norm{\prod_{i=1}^n(I+\Delta_i\lrate)-(I+\Delta\lrate)}\leq\Delta^2\norm{\lrate}^2.
 \end{equation*}
@@ -3828,7 +3848,7 @@ Consider a lower transition rate operator $\lrate$ and, for all $i\in\{1,\ldots,
 \begin{proof}
 We provide a proof by induction. For $n=1$, the result is trivial. So consider the case $n\geq2$ and assume that the result is true for $n-1$. 
 
-For all $i\in\{2,\dots,n\}$, since $\Delta_i\leq\nicefrac{1}{\norm{\lrate}}$, it follows from Proposition~\ref{lemma:normQsmallenough} that $(I+\Delta_i\lrate)$ and $I$ are lower transition operators, which implies that they are non-negatively homogeneous and, because of Proposition~\ref{lemma:normofcoherenttrans}, that $\norm{I+\Delta_i\lrate}\leq1$ and $\norm{I}\leq1$. Therefore,
+For all $i\in\{2,\dots,n\}$, since $\Delta_i\leq\nicefrac{1}{\norm{\lrate}}$, it follows from Proposition~\ref{lemma:normQsmallenough} that $(I+\Delta_i\lrate)$ and $I$ are lower transition operators and, because of Proposition~\ref{lemma:normofcoherenttrans}, that $\norm{I+\Delta_i\lrate}\leq1$ and $\norm{I}\leq1$. Therefore,
 \begin{multline*}
 \norm{\prod_{i=1}^n(I+\Delta_i\lrate)-(I+\Delta\lrate)}\\
 \begin{aligned}
@@ -3855,7 +3875,7 @@ For all $i\in\{2,\dots,n\}$, since $\Delta_i\leq\nicefrac{1}{\norm{\lrate}}$, it
 =\Delta^2\norm{\lrate}^2,
 \end{aligned}
 \end{multline*}\\[3pt]
-where the second inequality follows from the induction hypothesis and Lemma~\ref{lemma:differencenormofcoherenttransrate}, and the third inequality follows from Lemma~\ref{lemma:recursive}.
+where the second inequality follows from the induction hypothesis and Lemma~\ref{lemma:differencenormofcoherenttransrate}, and the third inequality follows from Lemma~\ref{lemma:recursive_lower_trans}.
 \end{proof}
 
 
@@ -3900,7 +3920,7 @@ For any $k\in\{1,\dots,n\}$, consider a sequence $\Delta_{k,i}>0$, $i\in\{1,\dot
 \end{equation*}
 \end{lemma}
 \begin{proof}
-Fix any $k\in\{1,\dots,n\}$. Then for all $i\in\{1,\dots,n_k\}$, since $\Delta_{k,i}\leq\Delta_k\leq\delta\leq\nicefrac{1}{\norm{\lrate}}$, it follows from Propositions~\ref{lemma:normQsmallenough} and~\ref{lemma:compositioncoherence} that $\prod_{i=1}^{n_k}(I+\Delta_{k,i}\lrate)$ and $(I+\Delta_k\lrate)$ are lower transition operators, which implies that they are non-negatively homogeneous and, because of Proposition~\ref{lemma:normofcoherenttrans}, that $\norm{\prod_{i=1}^{n_k}(I+\Delta_{k,i}\lrate)}\leq1$ and $\norm{(I+\Delta_k\lrate)}\leq1$. Therefore,
+Fix any $k\in\{1,\dots,n\}$. Then for all $i\in\{1,\dots,n_k\}$, since $\Delta_{k,i}\leq\Delta_k\leq\delta\leq\nicefrac{1}{\norm{\lrate}}$, it follows from Propositions~\ref{lemma:normQsmallenough} and~\ref{lemma:compositioncoherence} that $\prod_{i=1}^{n_k}(I+\Delta_{k,i}\lrate)$ and $(I+\Delta_k\lrate)$ are lower transition operators and, because of Proposition~\ref{lemma:normofcoherenttrans}, that $\norm{\prod_{i=1}^{n_k}(I+\Delta_{k,i}\lrate)}\leq1$ and $\norm{(I+\Delta_k\lrate)}\leq1$. Therefore,
 \begin{align*}
 \norm{\prod_{k=1}^n\left(\prod_{i=1}^{n_k}(I+\Delta_{k,i}\lrate)\right)
 -
@@ -3921,7 +3941,7 @@ Fix any $k\in\{1,\dots,n\}$. Then for all $i\in\{1,\dots,n_k\}$, since $\Delta_{
 \delta\Delta_k\norm{\lrate}^2
 =\delta C\norm{\lrate}^2,
 \end{align*}
-where the first inequality follows from Lemma~\ref{lemma:recursive} and the second inequality follows from Lemma~\ref{lemma:justthelinearpart}.
+where the first inequality follows from Lemma~\ref{lemma:recursive_lower_trans} and the second inequality follows from Lemma~\ref{lemma:justthelinearpart}.
 \end{proof}
 
 
@@ -4031,7 +4051,7 @@ Let now $n\coloneqq \max\{n_u,n_v\}$. Then, there is some $i>n$ such that
 \begin{equation*}
 \norm{\Phi_{w_i} - L_t^rL_r^s} \geq \epsilon\,.
 \end{equation*}
-Because $\Phi_{w_i}=\Phi_{u_i}\Phi_{v_i}$, and due to Lemma~\ref{lemma:recursive}, we find that
+Because $\Phi_{w_i}=\Phi_{u_i}\Phi_{v_i}$, and due to Lemma~\ref{lemma:recursive_lower_trans}, we find that
 \begin{align*}
 \epsilon &\leq \norm{\Phi_{u_i}\Phi_{v_i} - L_t^rL_r^s} \leq \norm{L_t^r - \Phi_{u_i}} + \norm{L_r^s - \Phi_{v_i}} < \frac{\epsilon}{2} + \frac{\epsilon}{2} = \epsilon\,,
 \end{align*}
