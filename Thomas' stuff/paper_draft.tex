@@ -153,18 +153,17 @@ Lorem ipsum.
 
 \section{Introduction}\label{sec:introduction}
 
-*** wat introtekst
+Continuous-time Markov chains are stochastic process models that are used to describe the behavior of dynamical systems under uncertainty. These models describe the stochastic evolution of such a system through a discrete state-space and over a continuous time-dimension. This class of models has found widespread applications in such fields as queuing theory {\bf CITE}, mathematical finance {\bf CITE}, epidemiology {\bf CITE}, and systems reliability analysis {\bf CITE}, among others {\bf CITE} {\bf CITE} {\bf CITE}.
 
-*** motivatie: precieze discrete-tijd markov ketens, precieze continue-tijd markov ketens, bruikbaar (en gebruikt) in verschillende domeinen (voorbeelden)
+As in any modeling task, simplifying assumptions tend to be made when working with these models. We would argue, however, that these assumptions are sometimes grounded more in pragmatism than in informed consideration of the underlying system. Such simplifying assumptions may include time-homogeneity, whereby the behavior of the system is independent of the absolute point in time at which it is considered; the Markov assumption, that the future behavior of the system only depends on its current state, and not on its history; and differentiability of the state-transition probabilities, which leads to convenient analytic expressions but which need not hold if the system is exposed to unknown external perturbations. 
 
+Therefore, we consider in this paper \emph{imprecise continuous-time Markov chains}, which can be used to robustly model systems for which the above assumptions need not hold. The following provides a motivating toy example that will return throughout this work. Although the model in this example is clearly too simple to be of practical use, it does already illustrate that the simplifying assumptions above are clearly unrealistic.
 \begin{exmp}
-*** Some ideas for motivating example:
-
 **** Simple binary-state disease model:
 \begin{equation*}
 (\text{Healthy}) \leftrightarrows (\text{Sick})
 \end{equation*}
-This models a person periodically getting sick, and recovering after some time.
+This models a person periodically getting sick, and recovering after some time. *** time-homogeneity -$>$ nope, seasonal dependence. markov -$>$ nope, being sick more often could make you more (or less, through immunity) likely for future. differentiability -$>$ nope, if exposed to someone carrying a virus.
 
 %\noindent * Pros:
 %\begin{itemize}
@@ -201,9 +200,15 @@ This models a person periodically getting sick, and recovering after some time.
 \exampleend
 \end{exmp}
 
-*** aanhalen eerder werk in imprecieze varianten: imprecieze discrete-tijd, imprecieze continue-tijd (werk damjan), toepassingen (werk damjan + matthias)
+**** korte uitleg IP
 
-*** doel dit paper: wat willen we doen en waarom, wat zijn onze hoofdresultaten
+*** beetje aanhalen eerder werk discrete tijd
+
+*** aanhalen imprecieze continue-tijd (werk damjan), toepassingen (werk damjan + matthias)
+
+%*** doel dit paper: wat willen we doen en waarom, wat zijn onze hoofdresultaten
+
+Our aims with this paper are threefold: to solidify the theoretical foundations of imprecise continuous-time Markov chains; to extend and generalize previous results about the computability of lower expectations for this model class; and to provide analytical tools and results to aid the future analysis and development of algorithms.
 
 Our main contributions are the following:
 \begin{enumerate}
@@ -212,9 +217,11 @@ Our main contributions are the following:
 \item We introduce a ``lower transition operator'' for imprecise continuous-time Markov chains, and show that this operator satisfies convenient algebraic properties like time-homogeneity, differentiability, and Markovian-like factorization. We show that we can use this operator to compute lower expectations for arbitrary functions on the state space, and provide an exact characterization of the largest set of processes for which a given such operator does this.
 \end{enumerate}
 
-*** opbouw van paper
+The remainder of this paper is organized as follows. In Section~\ref{sec:prelim}, we introduce notation and some basic concepts that will be used throughout. Section~\ref{sec:stochastic_processes} formally introduces stochastic processes, and provides tools for describing their dynamics. Section~\ref{sec:cont_time_markov_chains} focuses on the special case of continuous-time Markov chains. 
 
-*** {\bf lange bewijzen en lemmas die niet verhelderend zijn staan allemaal in appendix}
+In Section~\ref{sec:iCTMC}, we formalize the notion of imprecise continuous-time Markov chains, and state some powerful properties that can aid in their analysis. Section~\ref{sec:lowertrans} introduces a lower transition operator for imprecise continuous-time Markov chains, and we show in Sections~\ref{sec:connections} and~\ref{sec:funcs_multi_time_points} that this operator can be used to compute lower expectations of arbitrary functions on the state space. In Section~\ref{sec:prev_work}, we relate and compare our results to previous work from the literature. Section~\ref{sec:conclusions} finally contains some conclusions, along with pointers to possible future work.
+
+Throughout, most proofs and technical lemmas related to our results can be found in the appendix, where they are organized by section and chronological appearance.
 
 \section{Preliminaries}\label{sec:prelim}
 
@@ -1101,7 +1108,7 @@ This is immediate from Definition~\ref{def:lower_exp} and Proposition \ref{prop:
 
 We have in the previous section defined imprecise continuous-time Markov chains as sets of stochastic processes consistent with some set $\rateset$ of rate matrices. An obvious question, therefore, is to see if we can express properties of these sets $\wmprocesses_\rateset$ and $\wprocesses_\rateset$ in relation to properties of the set $\rateset$. We have by assumption stated that such a $\rateset$ must be non-empty and bounded, and will here consider the cases where $\rateset$ is additionally closed or convex.
 
-We start by considering a set $\wmprocesses_\rateset$. Recall from Section~\ref{sec:dynamics} that for any function $f\in\gamblesX$, its expectation with respect to a process $P\in\wmprocesses_\rateset$ can alternatively be expressed using the transition matrix corresponding to this process. Specifically, it holds that $\mathbb{E}[f(X_s)\,\vert\,X_t]=T_t^sf$. Note furthermore that a lower expectation $\underline{\mathbb{E}}_{\,\rateset}^{\mathrm{WM}}$ is an infimum over the set of expectations $\mathbb{E}$ corresponding to all $P\in\wmprocesses_\rateset$. It should therefore be clear that the set of transition matrices $T_t^s$ corresponding to all $P\in\wmprocesses$ is also of interest to us.
+We start by considering a set $\wmprocesses_\rateset$. Recall from Section~\ref{sec:dynamics} that for any function $f\in\gamblesX$, its expectation with respect to a process $P\in\wmprocesses_\rateset$ can alternatively be expressed using the transition matrix corresponding to this process. Specifically, it holds that $\mathbb{E}[f(X_s)\,\vert\,X_t]=T_t^sf$. Note furthermore that a lower expectation $\underline{\mathbb{E}}_{\,\rateset}^{\mathrm{WM}}$ is an infimum over the set of expectations $\mathbb{E}$ corresponding to all $P\in\wmprocesses_\rateset$. It should therefore be clear that the set of transition matrices $T_t^s$ corresponding to all $P\in\wmprocesses_\rateset$ is also of interest to us.
 
 Recall from Section~\ref{sec:cont_time_markov_chains} that for each $P\in\wmprocesses_\rateset$, there is a transition matrix system $\mathcal{T}_P$ containing all transition matrices corresponding to $P$. Furthermore, this $\mathcal{T}_P$ has a restriction $\mathcal{T}_P^{[t,s]}$ to the interval $[t,s]$, and $T_t^s\in\mathcal{T}_P^{[t,s]}$. We will now look at the space of the restricted transition matrix systems corresponding to all $P\in\wmprocesses_\rateset$. To this end, for any non-empty bounded set of rate matrices $\rateset$ and any $t,s\in\realsnonneg$ such that $t\leq s$, let
 \begin{equation*}
