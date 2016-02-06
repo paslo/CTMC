@@ -421,10 +421,10 @@ Conversely, if $P$ is a coherent conditional probability on $\mathcal{C}$, it fo
 A real-valued matrix $Q$ is said to be a \emph{transition rate matrix}, or sometimes simply \emph{rate matrix}, if
 
 \vspace{5pt}
-\begin{enumerate}[label=R\arabic*:]
-\item
+\begin{enumerate}[label=R\arabic*:,ref=R\arabic*]
+\item\label{def:Q:sumzero}
 $\sum_{y\in\states}Q(x,y)=0$ for all $x\in\states$;
-\item
+\item\label{def:Q:nonnegoffdiagonal}
 $Q(x,y)\geq0$ for all $x,y\in\states$ such that $x\neq y$.
 \end{enumerate}
 \vspace{5pt}
@@ -437,10 +437,10 @@ We use $\mathcal{R}$ to denote the set of all transition rate matrices.
 \begin{definition}[Transition Matrix]\label{def:stoch_matrix}
 A real-valued matrix $T$ is said to be a \emph{transition matrix} if
 \vspace{5pt}
-\begin{enumerate}[label=S\arabic*:,ref=N\arabic*]
-\item
+\begin{enumerate}[label=S\arabic*:,ref=S\arabic*]
+\item\label{def:T:sumone}
 $\sum_{y\in\states}T(x,y)=1$ for all $x\in\states$;\label{def:trans_matrix_is_stochastic}
-\item
+\item\label{def:T:nonneg}
 $T(x,y)\geq0$ for all $x,y\in\states$.
 \end{enumerate}
 \vspace{5pt}
@@ -1819,8 +1819,6 @@ Finally, previous work only focused on functions $f\in\gamblesX$ defined at a si
 
 \appendix
 
-test
-
 \section{Proofs of results in Section~\ref{sec:prelim}}\label{app:prelim}
 
 \begin{proof}[Proof of \ref{def:coh_prob_2b}-\ref{def:coh_prob_5}]
@@ -1897,19 +1895,15 @@ P(A\cap C\vert C)
 
 
 \begin{proof}[Proof of Proposition~\ref{prop:stochastic_from_rate_matrix}]
-Let $T=[I+\Delta Q]$. We will verify the properties from Definition~\ref{def:stoch_matrix}.
-
-We start with property S1. Consider any $x\in\states$. Then
+\ref{def:T:sumone} follows from \ref{def:Q:sumzero}: for all $x\in\states$, \ref{def:Q:sumzero} implies that
 \begin{equation*}
-\sum_{y\in\states} T(x,y) = \sum_{y\in\states} [I + \Delta Q](x,y) = \sum_{y\in\states}I(x,y) + \Delta \sum_{y\in\states}Q(x,y) = 1\,,
+\sum_{y\in\states} T(x,y) = \sum_{y\in\states} [I + \Delta Q](x,y) = \sum_{y\in\states}I(x,y) + \Delta \sum_{y\in\states}Q(x,y) = 1+\Delta 0=1.
 \end{equation*}
-where we used property R1 from Definition~\ref{def:rate_matrix}.
-
-For property S2, note that $0\leq \Delta \leq \nicefrac{1}{\norm{Q}}$. Hence, for all $x\in\states$, we have $-1\leq \Delta Q(x,x) \leq 0$, so that $[I+\Delta Q](x,x) \geq 0$. Furthermore, for all $x,y\in\states$ s.t. $x\neq y$, we have $0\leq \Delta Q(x,y) \leq 1$, so that $[I+\Delta Q](x,y)\geq 0$.
+\ref{def:T:nonneg} follows from~\ref{def:Q:nonnegoffdiagonal} and because $0\leq \Delta \leq \nicefrac{1}{\norm{Q}}$: for all $x,y\in\states$ such that $x\neq y$, $0\leq \Delta \leq \nicefrac{1}{\norm{Q}}$ implies that $[I+\Delta Q](x,x)=1+\Delta Q(x,x)\geq 1-\Delta\norm{Q}\geq0$, and \ref{def:Q:nonnegoffdiagonal} and $\Delta\geq0$ implies that $[I+\Delta Q](x,y)=\Delta Q(x,y)\geq0$.
 \end{proof}
 
 \begin{proof}[Proof of Proposition~\ref{prop:rate_from_stochastic_matrix}]
-This follows from a similar argument as the proof of Proposition~\ref{prop:stochastic_from_rate_matrix}; simply verify the properties from Definition~\ref{def:rate_matrix}.
+This proof is analogous to that of Proposition~\ref{prop:stochastic_from_rate_matrix}; simply verify each of the properties in Definition~\ref{def:rate_matrix}.
 \end{proof}
 
 \section{Proofs and Lemmas for Section~\ref{sec:stochastic_processes}}
