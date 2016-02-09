@@ -495,32 +495,41 @@ We will in Section~\ref{sec:def_stochastic_processes} start by formalizing the n
 
 We start by defining continuous-time stochastic processes. Such a stochastic process is a construct that moves through the state space $\states$ over a continuous time line $\realsnonneg$. A specific realization or instance of this behavior will be called a path or a trajectory. The stochasticity of the process is quantified using a full conditional probability measure on a set of events, which describe specific (combinations of) states in which the process can be at certain time points. These ideas are formalized as follows.
 
-*** Section 1.1 of ``Continuous-Time Markov Chains: An Applications-Oriented Approach'' has made me doubt (but only slightly) whether using cadlag paths is always possible. I still think they are, but we should check. If not, then we can use the set of all possible functions from $\realsnonneg$ to $\states$, but that would make the whole unique extension to $\sigma$-algebra story less elegant. (see page 15 and onwards in that book as well!!!) ***
+%*** Section 1.1 of ``Continuous-Time Markov Chains: An Applications-Oriented Approach'' has made me doubt (but only slightly) whether using cadlag paths is always possible. I still think they are, but we should check. If not, then we can use the set of all possible functions from $\realsnonneg$ to $\states$, but that would make the whole unique extension to $\sigma$-algebra story less elegant. (see page 15 and onwards in that book as well!!!) ***
 
-A \emph{path} $\omega$ is a cadlag function from $\realsnonneg$ to $\states$, where cadlag means that it is right continuous for all $t\in\realsnonneg$ and that the left limit exists for all $t\in\realspos$. Let $\paths$ be the set of all paths. For any path $\omega\in\paths$ and any time point $t\in\realsnonneg$, the value of $\omega$ in $t$ is denoted by $\omega(t)$. The set $\Omega$ will form the possibility space for a full conditional probability measure. Hence, an \emph{event} is a subset $E$ of $\paths$. We again denote the set of all events by $\power$ and we let $\nonemptypower\coloneqq\power\setminus\{\emptyset\}$. 
+A \emph{path} $\omega$ is a function from $\realsnonneg$ to $\states$, and we denote with $\omega(t)$ the value of $\omega$ at time $t$. For any sequence of time points $u\in\mathcal{U}$ and any path $\omega$, we will write $\omega\vert_{u}$ to denote the restriction of $\omega$ to $u\subset\realsnonneg$. Using this notation, we write for any $x_u\in\states^u$ that $\omega\vert_u=x_u$ if it holds that $\omega(t)=x_{t}$ for all $t\in u$.
 
-A stochastic process will be defined below as the restriction of a full conditional probability measure to a specific subset of the set $\power\times\nonemptypower$ of all (conditional) events, as follows.
+Let $\paths$ be any set of paths such that
+\begin{equation}\label{eq:path_exists_for_finite_points}
+(\forall u\in\mathcal{U}_\emptyset)(\forall x_u\in\states^u)(\exists \omega\in\Omega)\,:\,\omega\vert_u=x_u\,.
+\end{equation}
+Thus, $\Omega$ must be at least such that, for any non-empty finite sequence of time points $u\in\mathcal{U}_\emptyset$ and any state assignment $x_u\in\states^u$ on those time points, there is a path $\omega\in\Omega$ that agrees with $x_u$. **** some notes about what other authors consider (right-continuity, cadlag functions, blabla)
+
+This set $\Omega$ will form the possibility space for a full conditional probability. Hence, an \emph{event} is a subset $E$ of $\paths$. We again denote the set of all events by $\power$ and we let $\nonemptypower\coloneqq\power\setminus\{\emptyset\}$. 
+
+A stochastic process will be defined below as the restriction of a full conditional probability to a specific subset of the set $\power\times\nonemptypower$ of all (conditional) events, as follows.
 
 For any $t\in\realsnonneg$ and $x\in\states$, we define the elementary event
 \begin{equation*}
 (X_t=x)\coloneqq\{\omega\in\paths\colon\omega(t)=x\}.
 \end{equation*}
+
 %We use $\events^{\mathrm{f}}$ to denote the set of all these elementary events. 
-Similarly, for any finite ordered sequence of time points $u=t_1,\ldots,t_n$ with $n\in\nats_0$ and $t_i\in\realsnonneg,i\in\{1,\ldots,n\}$, and any state assignment $x_u\in\states^u$, we define the event
-\begin{align*}
-(X_u=x_u)\coloneqq\left(X_{t_1}=x_{t_1}, \dots, X_{t_n}=x_{t_n}\right)
-\coloneqq&
+%Similarly, for any finite ordered sequence of time points $u=t_1,\ldots,t_n$ with $n\in\nats_0$ and $t_i\in\realsnonneg,i\in\{1,\ldots,n\}$, and any state assignment $x_u\in\states^u$, we define the event
+%\begin{align*}
+%(X_u=x_u)\coloneqq\left(X_{t_1}=x_{t_1}, \dots, X_{t_n}=x_{t_n}\right)
+%\coloneqq&
 %\bigcap_{i\in\{0,\dots,n\}}(X_{t_i}=x_{t_i})\\
 %=&
-\left\{\omega\in\paths\colon(\forall i\in\{1,\dots,n\}\,:~\omega(t_i)=x_{t_i})\right\}.%,
-\end{align*}
+%\left\{\omega\in\paths\colon(\forall i\in\{1,\dots,n\}\,:~\omega(t_i)=x_{t_i})\right\}.%,
+%\end{align*}
 %which we will sometimes also denote by $(X_{t_i}=x_{t_i}, i\in\{0,\dots,n\})$.
 %We use $\events^{\mathrm{s}}$ to denote the set of all these events.
-Consider now any $t\in\realsnonneg$. We then let $\mathcal{A}_{>t}$ be the algebra that is generated by all the elementary events $(X_s=x)$, for all $s> t$ and $x\in\states$,\footnote{This is the smallest subset of $\power$ that contains all these elementary events and that is furthermore closed under complements, finite unions and hence also finite intersections.} and we let $\mathcal{F}_{\leq t}$ be the set of all events $\left(X_{t_1}=x_{t_1}, \dots, X_{t_n}=x_{t_n}\right)$, for all finite sequences $u\leq t$ and all $x_u\in\states^u$.%, and we define $\filter\coloneqq\mathcal{C}_{\leq t}\setminus\{\emptyset\}$.
-
-For a given $t\in\realsnonneg$, we will refer to $\mathcal{A}_{> t}$ as the set of possible future events, and to $\mathcal{F}_{\leq t}$ as the set of historic events, or possible histories.
-
-*** Changing the definition a bit ***
+%Consider now any $t\in\realsnonneg$. We then let $\mathcal{A}_{>t}$ be the algebra that is generated by all the elementary events $(X_s=x)$, for all $s> t$ and $x\in\states$,\footnote{This is the smallest subset of $\power$ that contains all these elementary events and that is furthermore closed under complements, finite unions and hence also finite intersections.} and we let $\mathcal{F}_{\leq t}$ be the set of all events $\left(X_{t_1}=x_{t_1}, \dots, X_{t_n}=x_{t_n}\right)$, for all finite sequences $u\leq t$ and all $x_u\in\states^u$.%, and we define $\filter\coloneqq\mathcal{C}_{\leq t}\setminus\{\emptyset\}$.
+%
+%For a given $t\in\realsnonneg$, we will refer to $\mathcal{A}_{> t}$ as the set of possible future events, and to $\mathcal{F}_{\leq t}$ as the set of historic events, or possible histories.
+%
+%*** Changing the definition a bit ***
 
 For any set of events $\mathcal{E}\subseteq\power$, we use $\langle\mathcal{E}\rangle$ to denote the algebra that is generated by them. Using this notation, for any $u\in\mathcal{U}$, we let
 \begin{equation*}
@@ -534,7 +543,15 @@ x\in\states,t\in u\cup\reals_{>u}
 \right\}
 \right\rangle
 \end{equation*}
-be the algebra that is generated by the elementary events whose time point is either preceded by or belongs to $u$.
+be the algebra that is generated by the elementary events whose time point is either preceded by or belongs to $u$. Then clearly, for any $A\in\mathcal{A}_u$, it holds that $A\in\power$.
+
+Furthermore, due to Equation~\eqref{eq:path_exists_for_finite_points}, for any $u\in\mathcal{U}$ and any $x_u\in\states^u$, the event
+\begin{equation*}
+(X_u=x_u) \coloneqq \{\omega\in\Omega\,:\,\omega\vert_u=x_u\}
+\end{equation*}
+is non-empty\footnote{Note that if $u=\emptyset$, then $\omega\vert_u=x_u$ is vacuously true, and hence in that case $(X_u=x_u)=\Omega$.}, and therefore satisfies $(X_u=x_u)\in\nonemptypower$. 
+
+Hence, for any $A\in\mathcal{A}_u$, the conditional event $(A,X_u=x_u)\coloneqq (A,(X_u=x_u))$ will satisfy $(A,X_u=x_u)\in\power\times\nonemptypower$.
 
 \begin{definition}[Stochastic Process]\label{def:stoch_process}
 A \emph{stochastic process} is the restriction of a full conditional probability to
