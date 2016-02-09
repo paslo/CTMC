@@ -493,7 +493,7 @@ We will in Section~\ref{sec:def_stochastic_processes} start by formalizing the n
 
 \subsection{Stochastic Processes}\label{sec:def_stochastic_processes}
 
-We start by defining continuous-time stochastic processes. Such a stochastic process is a construct that moves through the state space $\states$ over a continuous time line $\realsnonneg$. A specific realization or instance of this behavior will be called a path or a trajectory. The stochasticity of the process is quantified using a full conditional probability on a set of events, which describe specific (combinations of) states in which the process can be at certain time points. These ideas are formalized as follows.
+We start by defining continuous-time stochastic processes. Such a stochastic process is a construct that moves through the state space $\states$ over a continuous time line $\realsnonneg$. A specific realization of this behavior will be called a path or a trajectory. The stochasticity of the process is quantified using a full conditional probability on a set of events, which describe specific (combinations of) states in which the process can be at certain time points. These ideas are formalized as follows.
 
 %*** Section 1.1 of ``Continuous-Time Markov Chains: An Applications-Oriented Approach'' has made me doubt (but only slightly) whether using cadlag paths is always possible. I still think they are, but we should check. If not, then we can use the set of all possible functions from $\realsnonneg$ to $\states$, but that would make the whole unique extension to $\sigma$-algebra story less elegant. (see page 15 and onwards in that book as well!!!) ***
 
@@ -503,11 +503,9 @@ Let $\paths$ be any set of paths such that
 \begin{equation}\label{eq:path_exists_for_finite_points}
 (\forall u\in\mathcal{U}_\emptyset)(\forall x_u\in\states^u)(\exists \omega\in\Omega)\,:\,\omega\vert_u=x_u\,.
 \end{equation}
-Thus, $\Omega$ must be at least such that, for any non-empty finite sequence of time points $u\in\mathcal{U}_\emptyset$ and any state assignment $x_u\in\states^u$ on those time points, there is a path $\omega\in\Omega$ that agrees with $x_u$. Essentially, Equation~\eqref{eq:path_exists_for_finite_points} guarantees that $\Omega$ is ``large enough to be interesting''.
+Thus, $\Omega$ must be at least such that, for any non-empty finite sequence of time points $u\in\mathcal{U}_\emptyset$ and any state assignment $x_u\in\states^u$ on those time points, there is a path $\omega\in\Omega$ that agrees with $x_u$. This set $\Omega$ will form the possibility space for a full conditional probability. Essentially, Equation~\eqref{eq:path_exists_for_finite_points} guarantees that $\Omega$ is ``large enough to be interesting''\footnote{Note that other authors typically define $\Omega$ differently. For example, $\Omega$ could be the set of \emph{all} functions from $\realsnonneg$ to $\states$ {\bf CITE}. Other definitions could be to let $\Omega$ be the set of all (right-)continuous paths, or the set of all right-continuous path with left-sided limits (paths that are \emph{cadlag} functions) {\bf CITE}. Observe that all these choices for $\Omega$ will satisfy Equation~\eqref{eq:path_exists_for_finite_points}, and would therefore be valid in our setting. However, we do not specifically require any of these additional properties in this paper. Hence, we have chosen to omit them from our definition.}.
 
-Note that other authors typically define $\Omega$ differently. For example, $\Omega$ could be the set of \emph{all} functions from $\realsnonneg$ to $\states$ {\bf CITE}. Other definitions could be to let $\Omega$ be the set of all (right-)continuous paths, or the set of all right-continuous path with left-sided limits (paths that are \emph{cadlag} functions) {\bf CITE}. Observe that all these choices for $\Omega$ will satisfy Equation~\eqref{eq:path_exists_for_finite_points}, and would therefore be valid in our setting. However, we do not specifically require any of these additional properties in this paper. Hence, we have chosen to omit them from our definition.
-
-This set $\Omega$ will form the possibility space for a full conditional probability. Hence, an \emph{event} is a subset $E$ of $\paths$. We again denote the set of all events by $\power$ and we let $\nonemptypower\coloneqq\power\setminus\{\emptyset\}$. A stochastic process will be defined below as the restriction of a full conditional probability to a specific subset of the set $\power\times\nonemptypower$ of all (conditional) events, as follows.
+An \emph{event} is a subset $E$ of $\paths$. We again denote the set of all events by $\power$ and we let $\nonemptypower\coloneqq\power\setminus\{\emptyset\}$. A stochastic process will be defined below as the restriction of a full conditional probability to a specific subset of the set $\power\times\nonemptypower$ of all (conditional) events, as follows.
 
 For any $t\in\realsnonneg$ and $x\in\states$, we define the elementary event
 \begin{equation*}
@@ -549,7 +547,7 @@ Furthermore, due to Equation~\eqref{eq:path_exists_for_finite_points}, for any $
 \begin{equation*}
 (X_u=x_u) \coloneqq \{\omega\in\Omega\,:\,\omega\vert_u=x_u\}
 \end{equation*}
-is non-empty\footnote{Note that if $u=\emptyset$, then $\omega\vert_u=x_u$ is vacuously true, and hence in that case $(X_u=x_u)=\Omega$.}, and therefore satisfies $(X_u=x_u)\in\nonemptypower$. 
+is non-empty, and therefore satisfies $(X_u=x_u)\in\nonemptypower$. Observe that if $u=\emptyset$, then $\omega\vert_u=x_u$ is vacuously true, and hence in that case $(X_u=x_u)=\Omega$.
 
 Hence, for any $A\in\mathcal{A}_u$, the conditional event $(A,X_u=x_u)\coloneqq (A,(X_u=x_u))$ will satisfy $(A,X_u=x_u)\in\power\times\nonemptypower$.
 
@@ -571,24 +569,24 @@ Let $P$ be a real-valued map from $\mathcal{C}^\mathrm{SP}$ to $\reals$. Then $P
 Trivial consequence of Corollary~\ref{corol:coherentextendable}.
 \end{proof}
 
-Because Definition~\ref{def:cond_prob} only covered finitely additive full conditional probability measures, this also restricts our definition of stochastic processes to finitely additive stochastic processes. The advantage is that this simplifies considerably the subsequent analysis, and, as shown below, the extension to a $\sigma$-additive stochastic process can always be made when this is required.
-
-*** explain that $\sigma$-additivity is not required ***
-
-*** discuss that a unique $\sigma$-additive extension always exists, but that for our purposes, it is not necessary to consider it ***
-
-\begin{proposition}{\cite[Theorem 2]{berti2002coherent}} 
-Let $P\in\processes$ be a stochastic process. Then, there exists an extension $P^*$ of $P$ to the set
-\begin{equation*}
-\mathcal{C}^{\mathrm{SP}*} \coloneqq \left\{(A,X_u=x_u)\colon
-u\in\mathcal{U},~x_u\in\states^u,~A\in\sigma(\mathcal{A}_u)
-\right\}\subset\power\times\nonemptypower\,,
-\end{equation*}
-where $\sigma(\mathcal{A}_u)$ is the $\sigma$-algebra generated by $\mathcal{A}_u$, such that $P^*$ is a coherent conditional probability that is $\sigma$-additive on $\mathcal{C}^{\mathrm{SP}*}$.
-\end{proposition}
-\begin{proof}
-*** {\bf TODO}, but follows rather straightforwardly from \cite[Theorem 2]{berti2002coherent} and Lemma~\ref{lem:stoch_process_sigma_add_on_algebra}. Definitely works for a fixed $t$, maybe show that it also works for the set generated by all $t\in\realsnonneg$.
-\end{proof}
+%Because Definition~\ref{def:cond_prob} only covered finitely additive full conditional probability measures, this also restricts our definition of stochastic processes to finitely additive stochastic processes. The advantage is that this simplifies considerably the subsequent analysis, and, as shown below, the extension to a $\sigma$-additive stochastic process can always be made when this is required.
+%
+%*** explain that $\sigma$-additivity is not required ***
+%
+%*** discuss that a unique $\sigma$-additive extension always exists, but that for our purposes, it is not necessary to consider it ***
+%
+%\begin{proposition}{\cite[Theorem 2]{berti2002coherent}} 
+%Let $P\in\processes$ be a stochastic process. Then, there exists an extension $P^*$ of $P$ to the set
+%\begin{equation*}
+%\mathcal{C}^{\mathrm{SP}*} \coloneqq \left\{(A,X_u=x_u)\colon
+%u\in\mathcal{U},~x_u\in\states^u,~A\in\sigma(\mathcal{A}_u)
+%\right\}\subset\power\times\nonemptypower\,,
+%\end{equation*}
+%where $\sigma(\mathcal{A}_u)$ is the $\sigma$-algebra generated by $\mathcal{A}_u$, such that $P^*$ is a coherent conditional probability that is $\sigma$-additive on $\mathcal{C}^{\mathrm{SP}*}$.
+%\end{proposition}
+%\begin{proof}
+%*** {\bf TODO}, but follows rather straightforwardly from \cite[Theorem 2]{berti2002coherent} and Lemma~\ref{lem:stoch_process_sigma_add_on_algebra}. Definitely works for a fixed $t$, maybe show that it also works for the set generated by all $t\in\realsnonneg$.
+%\end{proof}
 
 \subsection{Well-behaved stochastic processes}\label{sec:well_behaved}
 
@@ -1934,33 +1932,33 @@ This proof is analogous to that of Proposition~\ref{prop:stochastic_from_rate_ma
 
 \section{Proofs and Lemmas for Section~\ref{sec:stochastic_processes}}
 
-*** Next 2 Lemmas use old definitions, ignore for now please
-
-\begin{lemma}
-For any $t\in\realsnonneg$, let $\mathcal{A}_{>t}$ be the algebra of subsets of $\Omega$ generated by all the elementary events $(X_s=x)= \{\omega\in\Omega\,:\,\omega(s)=x\}$, for all $x\in\states$ and all $s>t$. Consider any pairwise-disjoint sequence $\{A_i\}_{i\in\nats}$ such that $A_i\in\mathcal{A}_{>t}$ for all $i\in\nats$ and $A_i\cap A_j=\emptyset$ for all $i,j\in\nats$ with $i\neq j$, and for which $\cup_{i=1}^\infty A_i\in\mathcal{A}_{>t}$. Then, there is some $n\in\nats$ such that, for all $j>n$, it holds that $A_j=\emptyset$.
-\end{lemma}
-\begin{proof}
-{\bf TODO}, but fairly trivial since $\mathcal{A}_{>t}$ is the algebra generated by all elementary events.
-\end{proof}
-
-\begin{lemma}\label{lem:stoch_process_sigma_add_on_algebra}
-Let $P:\mathcal{C}^{\mathrm{SP}}\to\reals$ be a stochastic process, where $\mathcal{C}^{\mathrm{SP}}$ is defined as in Definition~\ref{def:stoch_process}. Then, for all $t\in\realsnonneg$ and all $C\in\mathcal{F}_{\leq t}$, the map $P(\cdot\,\vert\,C):\mathcal{A}_{>t}\to\reals$ is $\sigma$-additive on $\mathcal{A}_{>t}$, meaning that for every pairwise-disjoint sequence $\{A_i\}_{i\in\nats}$ such that $A_i\in\mathcal{A}_{>t}$ for all $i\in\nats$ and $A_i\cap A_j=\emptyset$ for all $i,j\in\nats$ with $i\neq j$, and for which $\cup_{i=1}^\infty A_i\in\mathcal{A}_{>t}$, it holds that
-\begin{equation*}
-P\left(\bigcup_{i=1}^\infty A_i\,\Big\vert\,C\right) = \sum_{i=1}^\infty P(A_i\,\vert\,C)\,.
-\end{equation*}
-\end{lemma}
-\begin{proof}
-Consider any $t\in\realsnonneg$, any $C\in\mathcal{F}_{\leq t}$, and any pairwise-disjoint sequence $\{A_i\}_{i\in\nats}$ in $\mathcal{A}_{>t}$ such that $\cup_{i=1}^\infty A_i\in\mathcal{A}_{>t}$. Then, by Lemma {\bf REF}, there is some $n\in\nats$ such that, for all $j>n$, it holds that $A_j=\emptyset$. Hence, we find that the claim reduces to
-\begin{align*}
-P\left(\bigcup_{i=1}^\infty A_i\,\Big\vert\,C\right) &= \sum_{i=1}^\infty P(A_i\,\vert\,C) \\
+%*** Next 2 Lemmas use old definitions, ignore for now please
+%
+%\begin{lemma}
+%For any $t\in\realsnonneg$, let $\mathcal{A}_{>t}$ be the algebra of subsets of $\Omega$ generated by all the elementary events $(X_s=x)= \{\omega\in\Omega\,:\,\omega(s)=x\}$, for all $x\in\states$ and all $s>t$. Consider any pairwise-disjoint sequence $\{A_i\}_{i\in\nats}$ such that $A_i\in\mathcal{A}_{>t}$ for all $i\in\nats$ and $A_i\cap A_j=\emptyset$ for all $i,j\in\nats$ with $i\neq j$, and for which $\cup_{i=1}^\infty A_i\in\mathcal{A}_{>t}$. Then, there is some $n\in\nats$ such that, for all $j>n$, it holds that $A_j=\emptyset$.
+%\end{lemma}
+%\begin{proof}
+%{\bf TODO}, but fairly trivial since $\mathcal{A}_{>t}$ is the algebra generated by all elementary events.
+%\end{proof}
+%
+%\begin{lemma}\label{lem:stoch_process_sigma_add_on_algebra}
+%Let $P:\mathcal{C}^{\mathrm{SP}}\to\reals$ be a stochastic process, where $\mathcal{C}^{\mathrm{SP}}$ is defined as in Definition~\ref{def:stoch_process}. Then, for all $t\in\realsnonneg$ and all $C\in\mathcal{F}_{\leq t}$, the map $P(\cdot\,\vert\,C):\mathcal{A}_{>t}\to\reals$ is $\sigma$-additive on $\mathcal{A}_{>t}$, meaning that for every pairwise-disjoint sequence $\{A_i\}_{i\in\nats}$ such that $A_i\in\mathcal{A}_{>t}$ for all $i\in\nats$ and $A_i\cap A_j=\emptyset$ for all $i,j\in\nats$ with $i\neq j$, and for which $\cup_{i=1}^\infty A_i\in\mathcal{A}_{>t}$, it holds that
+%\begin{equation*}
+%P\left(\bigcup_{i=1}^\infty A_i\,\Big\vert\,C\right) = \sum_{i=1}^\infty P(A_i\,\vert\,C)\,.
+%\end{equation*}
+%\end{lemma}
+%\begin{proof}
+%Consider any $t\in\realsnonneg$, any $C\in\mathcal{F}_{\leq t}$, and any pairwise-disjoint sequence $\{A_i\}_{i\in\nats}$ in $\mathcal{A}_{>t}$ such that $\cup_{i=1}^\infty A_i\in\mathcal{A}_{>t}$. Then, by Lemma {\bf REF}, there is some $n\in\nats$ such that, for all $j>n$, it holds that $A_j=\emptyset$. Hence, we find that the claim reduces to
+%\begin{align*}
+%P\left(\bigcup_{i=1}^\infty A_i\,\Big\vert\,C\right) &= \sum_{i=1}^\infty P(A_i\,\vert\,C) \\
 %P\left(\bigcup_{i=1}^n A_i\,\Big\vert\,C\right) &= \sum_{i=1}^n P(A_i\,\vert\,C) + \sum_{i=n+1}^\infty P(A_i\,\vert\,C) \\
-P\left(\bigcup_{i=1}^n A_i\,\Big\vert\,C\right) &= \sum_{i=1}^n P(A_i\,\vert\,C) + \sum_{i=n+1}^\infty P(\emptyset\,\vert\,C) \\
-P\left(\bigcup_{i=1}^n A_i\,\Big\vert\,C\right) &= \sum_{i=1}^n P(A_i\,\vert\,C)\,,
-\end{align*}
-which we know to be true from finite-additivity of $P(\cdot\,\vert\,C)$.
-
-**** Maybe expand this last argument a bit by linking it to~\ref{def:coh_prob_3}.
-\end{proof}
+%P\left(\bigcup_{i=1}^n A_i\,\Big\vert\,C\right) &= \sum_{i=1}^n P(A_i\,\vert\,C) + \sum_{i=n+1}^\infty P(\emptyset\,\vert\,C) \\
+%P\left(\bigcup_{i=1}^n A_i\,\Big\vert\,C\right) &= \sum_{i=1}^n P(A_i\,\vert\,C)\,,
+%\end{align*}
+%which we know to be true from finite-additivity of $P(\cdot\,\vert\,C)$.
+%
+%**** Maybe expand this last argument a bit by linking it to~\ref{def:coh_prob_3}.
+%\end{proof}
 
 
 \begin{proof}[Proof of Proposition~\ref{prop:boundednon-emptyandclosed}]
