@@ -493,21 +493,21 @@ We will in Section~\ref{sec:def_stochastic_processes} start by formalizing the n
 
 \subsection{Stochastic Processes}\label{sec:def_stochastic_processes}
 
-We start by defining continuous-time stochastic processes. Such a stochastic process is a construct that moves through the state space $\states$ over a continuous time line $\realsnonneg$. A specific realization or instance of this behavior will be called a path or a trajectory. The stochasticity of the process is quantified using a full conditional probability measure on a set of events, which describe specific (combinations of) states in which the process can be at certain time points. These ideas are formalized as follows.
+We start by defining continuous-time stochastic processes. Such a stochastic process is a construct that moves through the state space $\states$ over a continuous time line $\realsnonneg$. A specific realization or instance of this behavior will be called a path or a trajectory. The stochasticity of the process is quantified using a full conditional probability on a set of events, which describe specific (combinations of) states in which the process can be at certain time points. These ideas are formalized as follows.
 
 %*** Section 1.1 of ``Continuous-Time Markov Chains: An Applications-Oriented Approach'' has made me doubt (but only slightly) whether using cadlag paths is always possible. I still think they are, but we should check. If not, then we can use the set of all possible functions from $\realsnonneg$ to $\states$, but that would make the whole unique extension to $\sigma$-algebra story less elegant. (see page 15 and onwards in that book as well!!!) ***
 
-A \emph{path} $\omega$ is a function from $\realsnonneg$ to $\states$, and we denote with $\omega(t)$ the value of $\omega$ at time $t$. For any sequence of time points $u\in\mathcal{U}$ and any path $\omega$, we will write $\omega\vert_{u}$ to denote the restriction of $\omega$ to $u\subset\realsnonneg$. Using this notation, we write for any $x_u\in\states^u$ that $\omega\vert_u=x_u$ if it holds that $\omega(t)=x_{t}$ for all $t\in u$.
+A \emph{path} $\omega$ is a function from $\realsnonneg$ to $\states$, and we denote with $\omega(t)$ the value of $\omega$ at time $t$. For any sequence of time points $u\in\mathcal{U}$ and any path $\omega$, we will write $\omega\vert_{u}$ to denote the restriction of $\omega$ to $u\subset\realsnonneg$. Using this notation, we write for any $x_u\in\states^u$ that $\omega\vert_u=x_u$ if, for all $t\in u$, it holds that $\omega(t)=x_{t}$, with $x_t\in x_u$.
 
 Let $\paths$ be any set of paths such that
 \begin{equation}\label{eq:path_exists_for_finite_points}
 (\forall u\in\mathcal{U}_\emptyset)(\forall x_u\in\states^u)(\exists \omega\in\Omega)\,:\,\omega\vert_u=x_u\,.
 \end{equation}
-Thus, $\Omega$ must be at least such that, for any non-empty finite sequence of time points $u\in\mathcal{U}_\emptyset$ and any state assignment $x_u\in\states^u$ on those time points, there is a path $\omega\in\Omega$ that agrees with $x_u$. **** some notes about what other authors consider (right-continuity, cadlag functions, blabla)
+Thus, $\Omega$ must be at least such that, for any non-empty finite sequence of time points $u\in\mathcal{U}_\emptyset$ and any state assignment $x_u\in\states^u$ on those time points, there is a path $\omega\in\Omega$ that agrees with $x_u$. Essentially, Equation~\eqref{eq:path_exists_for_finite_points} guarantees that $\Omega$ is ``large enough to be interesting''.
 
-This set $\Omega$ will form the possibility space for a full conditional probability. Hence, an \emph{event} is a subset $E$ of $\paths$. We again denote the set of all events by $\power$ and we let $\nonemptypower\coloneqq\power\setminus\{\emptyset\}$. 
+Note that other authors typically define $\Omega$ differently. For example, $\Omega$ could be the set of \emph{all} functions from $\realsnonneg$ to $\states$ {\bf CITE}. Other definitions could be to let $\Omega$ be the set of all (right-)continuous paths, or the set of all right-continuous path with left-sided limits (paths that are \emph{cadlag} functions) {\bf CITE}. Observe that all these choices for $\Omega$ will satisfy Equation~\eqref{eq:path_exists_for_finite_points}, and would therefore be valid in our setting. However, we do not specifically require any of these additional properties in this paper. Hence, we have chosen to omit them from our definition.
 
-A stochastic process will be defined below as the restriction of a full conditional probability to a specific subset of the set $\power\times\nonemptypower$ of all (conditional) events, as follows.
+This set $\Omega$ will form the possibility space for a full conditional probability. Hence, an \emph{event} is a subset $E$ of $\paths$. We again denote the set of all events by $\power$ and we let $\nonemptypower\coloneqq\power\setminus\{\emptyset\}$. A stochastic process will be defined below as the restriction of a full conditional probability to a specific subset of the set $\power\times\nonemptypower$ of all (conditional) events, as follows.
 
 For any $t\in\realsnonneg$ and $x\in\states$, we define the elementary event
 \begin{equation*}
