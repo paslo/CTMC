@@ -963,6 +963,11 @@ For any interval $\mathbf{I}\subseteq\realsnonneg$, a family $\mathcal{T}^{\math
 \begin{proof}
 Trivial consequence of Definition~\ref{def:trans_mat_system}.
 \end{proof}
+
+*** I needed this in the proofs: ***
+Let $\mathbb{T}^{\mathbf{I}}$ be the set of all restricted transition matrix systems $\mathcal{T}^{\mathbf{I}}$ on $\mathbf{I}$.
+**********************
+
 We will henceforth adopt the same terminology for restricted transition matrix systems that we use for (normal) transition matrix systems. In particular, we will call $\mathcal{T}^{\mathbf{I}}$ well-behaved if it satisfies Equation~\eqref{eq:wellbehavedtransitionmatrixsystem} on the interval $\mathbf{I}$.
 
 Now, because these restricted transition matrix systems are only defined on some given interval, it will be useful to define a concatenation operator between two such systems defined on adjacent intervals. We will say that two intervals $\mathbf{I},\mathbf{J}\subseteq\realsnonneg$ are \emph{adjacent} if, without loss of generality, $\mathbf{I}$ is closed on the right and $\mathbf{J}$ is closed on the left, and $\max\mathbf{I}=\min\mathbf{J}$. Then, for any two adjacent intervals $\mathbf{I},\mathbf{J}\subseteq\realsnonneg$, and any two restricted transition matrix systems $\mathcal{T}^{\mathbf{I}}$ and $\mathcal{T}^{\mathbf{J}}$, let $r\coloneqq\max\mathbf{I}=\min\mathbf{J}$, and
@@ -2821,19 +2826,24 @@ Since $\epsilon>0$ is arbitrary, it follows that $\norm{T_t^s-I}\leq(s-t)\norm{\
 \end{proof}
 
 \begin{lemma}\label{lemma:restricted_trans_mat_system_cauchy_converges}
-Consider any $t,s\in\realsnonneg$ with $t\leq s$, and any Cauchy sequence $\left\{\mathcal{T}_i^{[t,s]}\right\}_{i\in\nats}$ of restricted transition matrix systems. Consider the family $\mathcal{T}_*^{[t,s]}$ of matrices $\presuper{*}T_q^r$, defined for all $q,r\in[t,s]$ with $q\leq r$ as
-\begin{equation*}
-\presuper{*}T_q^r \coloneqq \lim_{i\to\infty} \presuper{i}T_q^r\,,
-\end{equation*}
-where it is understood that $\presuper{i}T_q^r\in\mathcal{T}_i^{[t,s]}$ for all $i\in\nats$.
-Then $\mathcal{T}_*^{[t,s]}$ exists, is a restricted transition matrix system defined on $[t,s]$, and $\mathcal{T}_*^{[t,s]}=\lim_{i\to\infty}\mathcal{T}_i^{[t,s]}$.
+Consider any interval $\mathbf{I}\subseteq\realsnonneg$, let $\mathbb{T}^{\mathbf{I}}$ be the set of all restricted transition matrix systems on $\mathbf{I}$ and let $d$ be the metric that is defined in Equation~\eqref{eq:trans_mat_system_metric}. The metric space $\smash{(\mathbb{T}^{\mathbf{I}},d)}$ is then complete.
 \end{lemma}
+
 \begin{proof}
-By assumption, the sequence $\left\{\mathcal{T}_i^{[t,s]}\right\}_{i\in\nats}$ is Cauchy, meaning that
-\begin{equation*}
-(\forall\epsilon\in\realspos)(\exists n\in\nats)(\forall i,j > n)\,:\,d(\mathcal{T}_i^{[t,s]},\mathcal{T}_j^{[t,s]}) < \epsilon\,.
-\end{equation*}
-We first show that $\mathcal{T}_*^{[t,s]}$ exists. To this end, consider any $q,r\in[t,s]$ such that $q\leq r$. Consider the sequence $\left\{\presuper{i}T_q^r\right\}_{i\in\nats}$. Then, because $\left\{\mathcal{T}_i^{[t,s]}\right\}_{i\in\nats}$ is Cauchy, the sequence $\left\{\presuper{i}T_q^r\right\}_{i\in\nats}$ is also clearly Cauchy. Therefore, and because this is a sequence of matrices, the limit $\presuper{*}T_q^r\coloneqq\lim_{i\to\infty}\presuper{i}T_q^r$ of this sequence clearly exists. Furthermore, because this is a sequence of transition matrices, $\presuper{*}T_q^r$ is also clearly a transition matrix. Therefore, and because the $q,r\in[t,s]$ were arbitrary, the family $\mathcal{T}_*^{[t,s]}$ exists. Furthermore, we have found that it is a family of transition matrices.
+Consider any sequence $\{\mathcal{T}_i^{\mathbf{I}}\}_{i\in\nats}$ in $\mathbb{T}^{\mathbf{I}}$ that is Cauchy. We will prove that this sequence converges to a limit that belongs to $\mathbb{T}^{\mathbf{I}}$. For all $i\in\nats$ and any $t,s\in\mathbf{I}$ such that $t\leq s$, we will use $\presuper{i}T_t^s$ to denote the transition matrix that corresponds to $\mathcal{T}_i^{\mathbf{I}}$. 
+
+Since $\{\mathcal{T}_i^{\mathbf{I}}\}_{i\in\nats}$ is cauchy, %we know that
+% \begin{equation*}
+% (\forall\epsilon\in\realspos)\,(\exists n\in\nats)\,(\forall k,\ell > n)~d(\mathcal{T}_k^{\mathbf{I}},\mathcal{T}_\ell^{\mathbf{I}}) < \epsilon,
+% \end{equation*}
+%and therefore, 
+it follows from Equation~\eqref{eq:trans_mat_system_metric} that
+\begin{equation}\label{eq:lemma:restricted_trans_mat_system_cauchy_converges:consequenceofCauchy}
+(\forall\epsilon\in\realspos)\,(\exists n_\epsilon\in\nats)\,(\forall k,\ell > n_\epsilon)\,(\forall t,s\in\mathbf{I}\colon t\leq s)
+~\norm{\presuper{k}T_t^s-\presuper{\ell}T_t^s} < \epsilon.
+\end{equation}
+Clearly, for any $t,s\in\mathbf{I}$ such that $t\leq s$, this implies that the sequence $\{\presuper{i}T_t^s\}_{i\in\nats}$ is Cauchy. Since the set of all transition matrices---of the same finite dimension---is trivially complete, this implies that the sequence $\{\presuper{i}T_t^s\}_{i\in\nats}$ has a limit $\presuper{*}T_t^s$, and that this limit is a transition matrix. We will use $\mathcal{T}_*^{\mathbf{I}}$ to denote the family of transition matrices that consists of these limits.
+
 
 We now show that $\mathcal{T}_*^{[t,s]}$ is a restricted transition matrix system. Consider any $r\in[t,s]$. Clearly, we have that
 \begin{equation*}
@@ -2864,36 +2874,21 @@ From this contradiction, we conclude that indeed
 \presuper{*}T_\tau^\sigma = \presuper{*}T_\tau^r\presuper{*}T_r^\sigma\,.
 \end{equation*}
 Therefore, $\mathcal{T}_*^{[t,s]}$ is a restricted transition matrix system.
+In the remainder of this proof, we will show that $\mathcal{T}_*^{\mathbf{I}}=\lim_{i\to\infty}\mathcal{T}_i^{\mathbf{I}}$. 
 
-We next show that $\mathcal{T}_*^{[t,s]}=\lim_{i\to\infty}\mathcal{T}_i^{[t,s]}$. Suppose \emph{ex absurdo} that this does not hold. Then,
+Fix any $\epsilon>0$ and consider the corresponding $n_\epsilon\in\nats$ whose existence is guaranteed by Equation~\eqref{eq:lemma:restricted_trans_mat_system_cauchy_converges:consequenceofCauchy}. Fix any $k>n_\epsilon$. For any $t,s\in\mathbf{I}$ such that $t\leq s$, it then follows from Equation~\eqref{eq:lemma:restricted_trans_mat_system_cauchy_converges:consequenceofCauchy} that, for all $\ell>n_\epsilon$:
 \begin{equation*}
-(\exists\epsilon\in\realspos)(\forall n\in\nats)(\exists i>n)\,:\,d(\mathcal{T}_*^{[t,s]}, \mathcal{T}_i^{[t,s]}) \geq \epsilon\,.
+\norm{\presuper{k}T_t^s-\presuper{*}T_t^s}
+\leq
+\norm{\presuper{k}T_t^s-\presuper{\ell}T_t^s}
++
+\norm{\presuper{\ell}T_t^s-\presuper{*}T_t^s} < \epsilon+\norm{\presuper{\ell}T_t^s-\presuper{*}T_t^s}.
 \end{equation*}
-Consider such an $\epsilon\in\realspos$. Because the sequence $\left\{\mathcal{T}_i^{[t,s]}\right\}_{i\in\nats}$ is Cauchy, we have that
+Since $\lim_{\ell\to+\infty}\presuper{\ell}T_t^s=\presuper{*}T_t^s$, this implies that $\norm{\presuper{k}T_t^s-\presuper{*}T_t^s}\leq\epsilon$. Since this is true for all $t,s\in\mathbf{I}$ such that $t\leq s$, it follows from Equation~\eqref{eq:trans_mat_system_metric} that $d(\mathcal{T}_k^{\mathbf{I}},\mathcal{T}_*^{\mathbf{I}})\leq\epsilon$. Since $\epsilon>0$ was arbitrary, we conclude that
 \begin{equation*}
-(\exists n\in\nats)(\forall i,j>n)\,:\,d(\mathcal{T}_i^{[t,s]},\mathcal{T}_j^{[t,s]}) < \frac{\epsilon}{3}\,.
+(\forall\epsilon\in\realspos)\,(\exists n_\epsilon\in\nats)\,(\forall k > n_\epsilon)~d(\mathcal{T}_k^{\mathbf{I}},\mathcal{T}_*^{\mathbf{I}})\leq\epsilon,
 \end{equation*}
-Consider this $n$. Then, there must be some $i\in\nats$ with $i>n$, such that
-\begin{equation*}
-d(\mathcal{T}_*^{[t,s]}, \mathcal{T}_i^{[t,s]}) = \sup\left\{\norm{\presuper{*}T_q^r - \presuper{i}T_q^r}\,:\,q,r\in[t,s], q\leq r\right\} \geq \epsilon\,,
-\end{equation*}
-meaning that, for all $\epsilon'\in\realspos$, there are some $q,r\in[t,s]$ with $q\leq r$, such that
-\begin{equation*}
-\norm{\presuper{*}T_q^r - \presuper{i}T_q^r} + \epsilon' > \epsilon\,.
-\end{equation*}
-Let $\epsilon'\coloneqq\nicefrac{\epsilon}{3}$, and choose any such $q,r\in[t,s]$ with $q\leq r$. Then, because $\presuper{*}T_q^r=\lim_{k\to\infty}\presuper{k}T_q^r$, there must be some $j\in\nats$ such that $j>n$, and for which
-\begin{equation*}
-\norm{\presuper{*}T_q^r - \presuper{j}T_q^r} < \frac{\epsilon}{3}\,.
-\end{equation*}
-Consider this $j$. Putting this together, we find that
-\begin{align*}
-\epsilon &< \norm{\presuper{*}T_q^r - \presuper{i}T_q^r} + \frac{\epsilon}{3} \\
- &\leq \norm{\presuper{*}T_q^r - \presuper{j}T_q^r} + \norm{\presuper{j}T_q^r - \presuper{i}T_q^r} + \frac{\epsilon}{3} \\
- &< \frac{\epsilon}{3} + d(\mathcal{T}_j^{[t,s]},\mathcal{T}_i^{[t,s]}) + \frac{\epsilon}{3} \\
- &< \frac{\epsilon}{3} + \frac{\epsilon}{3} + \frac{\epsilon}{3} \\
- &= \epsilon\,.
-\end{align*}
-Hence, we have found a contradiction, and therefore $\mathcal{T}_*^{[t,s]}=\lim_{i\to\infty}\mathcal{T}_i^{[t,s]}$.
+which implies that $\mathcal{T}_*^{\mathbf{I}}=\lim_{i\to\infty}\mathcal{T}_i^{\mathbf{I}}$.
 \end{proof}
 
 *** the part of the proof below will become part of another proof ***
