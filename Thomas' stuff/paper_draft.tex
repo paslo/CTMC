@@ -2844,38 +2844,21 @@ it follows from Equation~\eqref{eq:trans_mat_system_metric} that
 (\forall\epsilon\in\realspos)\,(\exists n_\epsilon\in\nats)\,(\forall k,\ell > n_\epsilon)\,(\forall t,s\in\mathbf{I}\colon t\leq s)
 ~\norm{\presuper{k}T_t^s-\presuper{\ell}T_t^s} < \epsilon.
 \end{equation}
-Clearly, for any $t,s\in\mathbf{I}$ such that $t\leq s$, this implies that the sequence $\{\presuper{i}T_t^s\}_{i\in\nats}$ is Cauchy. Since the set of all transition matrices---of the same finite dimension---is trivially complete, this implies that the sequence $\{\presuper{i}T_t^s\}_{i\in\nats}$ has a limit $\presuper{*}T_t^s$, and that this limit is a transition matrix. We will use $\mathcal{T}_*^{\mathbf{I}}$ to denote the family of transition matrices that consists of these limits.
+Clearly, for any $t,s\in\mathbf{I}$ such that $t\leq s$, this implies that the sequence $\{\presuper{i}T_t^s\}_{i\in\nats}$ is Cauchy. Since the set of all transition matrices---of the same finite dimension---is trivially complete, this implies that the sequence $\{\presuper{i}T_t^s\}_{i\in\nats}$ has a limit $\presuper{*}T_t^s$, and that this limit is a transition matrix. We use $\mathcal{T}_*^{\mathbf{I}}$ to denote the family of transition matrices that consists of these limits. %We will now prove that $\mathcal{T}_*^{\mathbf{I}}$ is a restricted transition matrix system.
 
-
-We now show that $\mathcal{T}_*^{[t,s]}$ is a restricted transition matrix system. Consider any $r\in[t,s]$. Clearly, we have that
-\begin{equation*}
-\presuper{*}T_r^r = \lim_{i\to\infty} \presuper{i}T_r^r = \lim_{i\to\infty} I = I\,.
-\end{equation*}
-It remains to show that for all $\tau,r,\sigma\in[t,s]$ such that $\tau\leq r\leq\sigma$, it holds that
-\begin{equation*}
-\presuper{*}T_\tau^\sigma = \presuper{*}T_\tau^r\presuper{*}T_r^\sigma\,.
-\end{equation*}
-Suppose \emph{ex absurdo} that this does not hold. Then, because $\presuper{*}T_\tau^\sigma = \lim_{i\to\infty} \presuper{i}T_\tau^\sigma=\lim_{i\to\infty}\presuper{i}T_\tau^r\presuper{i}T_r^\sigma$, we have that
-\begin{equation*}
-\lim_{i\to\infty} \presuper{i}T_\tau^r\presuper{i}T_r^\sigma \neq \presuper{*}T_\tau^r\presuper{*}T_r^\sigma\,.
-\end{equation*}
-Therefore, it holds that
-\begin{equation*}
-(\exists \epsilon\in\realspos)(\forall n\in\nats)(\exists i>n)\,:\,\norm{\presuper{i}T_\tau^r\presuper{i}T_r^\sigma - \presuper{*}T_\tau^r\presuper{*}T_r^\sigma} \geq \epsilon\,.
-\end{equation*}
-Consider such an $\epsilon\in\realspos$. Then, because $\presuper{*}T_\tau^r=\lim_{i\to\infty}\presuper{i}T_\tau^r$ and $\presuper{*}T_r^\sigma=\lim_{i\to\infty}\presuper{i}T_r^\sigma$ there must be some $n_\tau,n_\sigma\in\nats$ such that
-\begin{equation*}
-(\forall i>n_\tau)\,:\,\norm{\presuper{*}T_\tau^r - \presuper{i}T_\tau^r} < \frac{\epsilon}{2}\,, \quad\text{and,}\quad (\forall i>n_\sigma)\,:\,\norm{\presuper{*}T_r^\sigma - \presuper{i}T_r^\sigma} < \frac{\epsilon}{2}\,.
-\end{equation*}
-Consider now any $n\in\nats$ such that $n>\max\{n_\tau,n_\sigma\}$. Then, there must be some $i\in\nats$ such that $i>n$, and for which, by Lemma~\ref{lemma:recursive},
-\begin{equation*}
-\epsilon \leq \norm{\presuper{i}T_\tau^r\presuper{i}T_r^\sigma - \presuper{*}T_\tau^r\presuper{*}T_r^\sigma} < \frac{\epsilon}{2} + \frac{\epsilon}{2} = \epsilon\,.
-\end{equation*}
-From this contradiction, we conclude that indeed
-\begin{equation*}
-\presuper{*}T_\tau^\sigma = \presuper{*}T_\tau^r\presuper{*}T_r^\sigma\,.
-\end{equation*}
-Therefore, $\mathcal{T}_*^{[t,s]}$ is a restricted transition matrix system.
+Fix any $t,r,s\in I$ such that $t\leq r\leq s$. Then for any $i\in\nats$, because $\mathcal{T}_i^{\mathbf{I}}$ is a restricted transition matrix system, we know  that $\presuper{i}T_t^t=I$ and $\presuper{i}T_t^s=\presuper{i}T_t^r\presuper{i}T_r^s$, which implies that $\norm{\presuper{*}T_t^t-I}=\norm{\presuper{*}T_t^t-\presuper{i}T_t^t}$ and, due to Lemma~\ref{lemma:recursive}, that
+\begin{align*}
+\norm{\presuper{*}T_t^s-\presuper{*}T_t^r\presuper{*}T_r^s}
+&\leq
+\norm{\presuper{*}T_t^s-\presuper{i}T_t^s}+\norm{\presuper{i}T_t^r\presuper{i}T_r^s-\presuper{*}T_t^r\presuper{*}T_r^s}\\
+&\leq
+\norm{\presuper{*}T_t^s-\presuper{i}T_t^s}
++
+\norm{\presuper{i}T_t^r-\presuper{*}T_t^r}
++
+\norm{\presuper{i}T_r^s-\presuper{*}T_r^s}.
+\end{align*}
+Since we know that $\lim_{i\to+\infty}\presuper{i}T_t^t=\presuper{*}T_t^t$, $\lim_{i\to+\infty}\presuper{i}T_t^s=\presuper{*}T_t^s$, $\lim_{i\to+\infty}\presuper{i}T_t^r=\presuper{*}T_t^r$ and $\lim_{i\to+\infty}\presuper{i}T_r^s=\presuper{*}T_r^s$, this implies that $\norm{\presuper{*}T_t^t-I}=0$ and $\norm{\presuper{*}T_t^s-\presuper{*}T_t^r\presuper{*}T_r^s}=0$, or equivalently, that $\presuper{*}T_t^t=I$ and $\presuper{*}T_t^s=\presuper{*}T_t^r\presuper{*}T_r^s$. Since this is true for any $t,r,s\in I$ such that $t\leq r\leq s$, and because we already know that that the family $\mathcal{T}_*^{\mathbf{I}}$ consists of transition matrix systems, it follows from Proposition~\ref{prop:restr_trans_mat_system_if_semigroup} that $\mathcal{T}_*^{\mathbf{I}}$ is a restricted transition matrix system.
 In the remainder of this proof, we will show that $\mathcal{T}_*^{\mathbf{I}}=\lim_{i\to\infty}\mathcal{T}_i^{\mathbf{I}}$. 
 
 Fix any $\epsilon>0$ and consider the corresponding $n_\epsilon\in\nats$ whose existence is guaranteed by Equation~\eqref{eq:lemma:restricted_trans_mat_system_cauchy_converges:consequenceofCauchy}. Fix any $k>n_\epsilon$. For any $t,s\in\mathbf{I}$ such that $t\leq s$, it then follows from Equation~\eqref{eq:lemma:restricted_trans_mat_system_cauchy_converges:consequenceofCauchy} that, for all $\ell>n_\epsilon$:
