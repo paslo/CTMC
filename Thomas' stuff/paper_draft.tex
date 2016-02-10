@@ -2883,7 +2883,7 @@ Consider a non-empty, bounded and closed set of rate matrices $\rateset$ and any
 Consider any sequence $\{\mathcal{T}_i^{[t,s]}\}_{i\in\nats}$ in $\mathbb{T}_{\rateset}^{[t,s]}$ that is Cauchy. We need to prove that this sequence converges to a limit $\mathcal{T}_*^{[t,s]}$ that belongs to $\mathbb{T}_{\rateset}^{[t,s]}$. Since we already know from Lemma~\ref{lemma:restricted_trans_mat_system_cauchy_converges} this limit exists and belongs to $\mathbb{T}^{[t,s]}$, the only thing that remains to be shown is that $\mathcal{T}_*^{[t,s]}\in\mathbb{T}_{\rateset}^{[t,s]}$. 
 Throughout this proof, for any $q,r\in[t,s]$ such that $q\leq r$, we will use $\presuper{*}T_q^r$ to denote the transition matrix that corresponds to $\mathcal{T}_*^{[t,s]}$ and, for all $i\in\nats$, we will use $\presuper{i}T_q^r$ to denote the transition matrix that corresponds to $\mathcal{T}_i^{[t,s]}$. 
 
-Consider any $r\in[t,s]$ and fix $\Delta>0$. It then follows from Lemma~\ref{lemma:uniformelywellbehaved} that, for all $i\in\nats$:
+Consider any $r\in[t,s]$ and fix $\Delta>0$. Then due to Lemma~\ref{lemma:uniformelywellbehaved}, for all $i\in\nats$:
 \begin{equation*}
 \norm{\presuper{*}T_r^{r+\Delta}-I}
 \leq\norm{\presuper{*}T_r^{r+\Delta}-\presuper{i}T_r^{r+\Delta}}+\norm{\presuper{i}T_r^{r+\Delta}-I}
@@ -2901,14 +2901,12 @@ It remains to be show that $\mathcal{T}_*^{[t,s]}\in\mathbb{T}_\rateset^{[t,s]}$
 \begin{equation*}
 \mathcal{T}_*\coloneqq \mathcal{T}_Q^{[0,t]}\otimes \mathcal{T}_*^{[t,s]} \otimes \mathcal{T}_Q^{[s,\infty)}\,.
 \end{equation*}
-Then clearly, $\mathcal{T}_*$ is a transition matrix system, and, since $\mathcal{T}_Q$ and $\mathcal{T}_*^{[t,s]}$ are well-behaved, $\mathcal{T}_*$ is also well-behaved. Therefore, and due to Theorem~\ref{theo:uniqueMarkovchain}, there is some $P_*\in\wmprocesses$ such that $\mathcal{T}_{P_*}=\mathcal{T}_*$. We will show that $P_*\in\wmprocesses_\rateset$, which then implies that $\mathcal{T}_{P_*}^{[t,s]}=\mathcal{T}_*^{[t,s]}\in\mathbb{T}_\rateset^{[t,s]}$.
+Then clearly, $\mathcal{T}_*$ is a transition matrix system and, since $\mathcal{T}_*^{[t,s]}$ is well-behaved, it follows from Proposition~\ref{prop:systemQ} and~\ref{prop:concat_restr_trans_mat_systems_is_system} that $\mathcal{T}_*$ is also well-behaved. Therefore, and because of Theorem~\ref{theo:uniqueMarkovchain}, there is some $P_*\in\wmprocesses$ such that $\mathcal{T}_{P_*}=\mathcal{T}_*$. In the remainder of this proof, we will show that $P_*\in\wmprocesses_\rateset$, which then implies that $\mathcal{T}_*^{[t,s]}\in\mathbb{T}_\rateset^{[t,s]}$.
 
-Suppose \emph{ex absurdo} that $P_*\notin\wmprocesses_\rateset$. Then, there must be some $r\in\realsnonneg$ such that $\smash{\overline{\partial}}\presuper{*}T_r^r\nsubseteq\rateset$. Therefore, and because $\smash{\overline{\partial}}\presuper{*}T_r^r$ is non-empty, there must be some $Q_*\in \smash{\overline{\partial}}\presuper{*}T_r^r$ such that $Q_*\notin\rateset$. 
+Fix any $r\in\realsnonneg$. We need to show that $\smash{\overline{\partial}}\presuper{*}T_r^r\subseteq\rateset$, or equivalently, that $\smash{\overline{\partial}_{+}}\hspace{-3pt}\presuper{*}T_r^r\subseteq\rateset$ and $\smash{\overline{\partial}_{-}}\hspace{-3pt}\presuper{*}T_r^r\subseteq\rateset$. We will only prove that $\smash{\overline{\partial}_{+}}\hspace{-3pt}\presuper{*}T_r^r\subseteq\rateset$. The proof for $\smash{\overline{\partial}_{-}}\hspace{-3pt}\presuper{*}T_r^r\subseteq\rateset$ is completely analogous. 
+So fix any $Q_*\in\smash{\overline{\partial}_{+}}\hspace{-3pt}\presuper{*}T_r^r$. We will show that $Q_*\in\rateset$. If $r<t$ or $s\leq r$, this holds trivially because in that case, we know that $\smash{\overline{\partial}}_+\presuper{*}T_r^r=\{Q\}\subseteq\rateset$ *** REFERENCE TO PROPERTY ***. Therefore, without loss of generality, we may assume $r\in[t,s)$. 
 
-
-Because $Q_*\in \smash{\overline{\partial}}\presuper{*}T_r^r$, we have that either $Q_*\in \smash{\overline{\partial}}_+\presuper{*}T_r^r$, or $Q_*\in \smash{\overline{\partial}}_-\presuper{*}T_r^r$. We only show that $Q_*\in \smash{\overline{\partial}}_+\presuper{*}T_r^r$ leads to a contradiction; the proof for $Q_*\in \smash{\overline{\partial}}_-\presuper{*}T_r^r$ is completely analogous. 
-
-Therefore, suppose that $Q_*\in \smash{\overline{\partial}}_+\presuper{*}T_r^r$. Because for all $r<t$ and $r>s$ it holds that $\smash{\overline{\partial}}_+\presuper{*}T_r^r=\{Q\}\subseteq\rateset$, we clearly have that $r\in[t,s]$. Furthermore, because $Q_*\in \smash{\overline{\partial}}_+\presuper{*}T_r^r$, by Equation~\eqref{eq:rightouterderivative}, this implies the existence of a sequence $\{\Delta_k\}_{k\in\nats}\to0^+$ such that
+Since $Q_*\in \smash{\overline{\partial}}_+\hspace{-3pt}\presuper{*}T_r^r$, Equation~\eqref{eq:rightouterderivative} implies the existence of a sequence $\{\Delta_k\}_{k\in\nats}\to0^+$ such that
 \begin{equation}\label{eq:lemma_transmatsystem_complete_limit_rate}
 Q_* = \lim_{k\to\infty}\frac{1}{\Delta_k}\left(\presuper{*}T_r^{r+\Delta_k} - I\right)\,.
 \end{equation}
@@ -2937,8 +2935,6 @@ where the last inequality used the fact that $\Delta_{k_i}<1$. Therefore, and by
 \end{equation}
 
 If we now repeat this selection for all $i\in\nats$, we end up with a sequence $\{Q_i\}_{i\in\nats}$ in $\rateset$. Furthermore, because $\mathcal{T}_*^{[t,s]}=\lim_{i\to\infty}\mathcal{T}_i^{[t,s]}$, it clearly follows from Equation~\eqref{eq:lemma_transmatsystem_complete_rate_sequence_converges} that $Q_*=\lim_{i\to\infty} Q_i$. Because this sequence $\{Q_i\}_{i\in\nats}$ is in $\rateset$, and because $\rateset$ is closed, we must therefore have that $Q_*\in\rateset$. 
-
-This contradicts our earlier statement that $Q_*\notin\rateset$, and therefore $Q_*\notin\smash{\overline{\partial}}_+\presuper{*}T_r^r$. A completely analogous argument shows that $Q_*\in\smash{\overline{\partial}}_-\presuper{*}T_r^r$ also leads to a contradiction. Therefore, we have that $\smash{\overline{\partial}}\presuper{*}T_r^r\subseteq\rateset$ for all $r\in\realsnonneg$, and hence $P_*\in\wmprocesses_\rateset$. Hence, we find that indeed $\mathcal{T}_*^{[t,s]}=\mathcal{T}_{P_*}^{[t,s]}\in\mathbb{T}_\rateset^{[t,s]}$.
 \end{proof}
 
 \begin{lemma}\label{lemma:restricted_trans_mat_system_totally_bounded_if_Q_bounded_convex}
