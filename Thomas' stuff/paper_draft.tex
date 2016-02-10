@@ -309,47 +309,65 @@ $\norm{Af}\leq\norm{A}\norm{f}$
 \end{multicols}
 \end{proposition}
 
-\subsection{wat notatie voor meerdere variabelen}\label{sec:multivar_notation}
+\subsection{Notation for the Joint State Space}\label{sec:multivar_notation}
 
-*** dit kan opzich wel korter denk ik, maar kunnen we bij oppoetsen straks nog wel even checken ***
-
-We will also find it convenient to have notation for functions defined on the state space at multiple time points.
-To this end, consider any $t,s\in\realsnonneg$ such that $t<s$, and any $u\in\mathcal{U}_{[t,s]}$. We will now define
+We will also find it convenient to have notation for functions defined on the state space at (multiple) explicit time points. To this end, for any finite sequence of time points $u\in\mathcal{U}$ such that $u=t_0,\ldots,t_n$, we let
 \begin{equation*}
-\states^u\coloneqq \prod_{i=0}^n\states
+\states^u \coloneqq \prod_{i=0}^n \states
 \end{equation*}
-to be the joint state space at times $t_0,\ldots,t_n$. Let $\gambles(\states^u)$ denote the set of functions on $(X_{t_0},\ldots,X_{t_n})$.
+denote the joint state space at the time points in $u$. Note that if $u$ only contains a single time point $t$, then we simply have that $\states^u=\states^{\{t\}}=\states$. In that case, all our previous conventions apply, but the explicit use of the time point is at times convenient. The corresponding joint state assignment will be written as $x_u\in\states^u$, with which we then mean the state assignment $(x_{t_0},\ldots,x_{t_n})\in\states^{\{t_0\}}\times\cdots\times\states^{\{t_n\}}$.
 
-For any $t,t',s\in\realsnonneg$ such that $t<t'<s$ and any $u\in\mathcal{U}_{[t,t']}$, let $\states^{\{s\}}$ denote the state space at time $s$, and let
+For any $u\in\mathcal{U}$, we use $\gambles(\states^u)$ to denote the set of real-valued functions on $\states^u$. For any $f\in\gambles(\states^u)$, let the norm $\norm{f}$ be defined as
 \begin{equation*}
-\states^{u\cup\{s\}} \coloneqq \states^u\times\states^{\{s\}}
-\end{equation*}
-denote the joint state space at times $t_0,\ldots,t_n,s$. Similarly, for any $t,t',s,s'\in\realsnonneg$ such that $t<t'<s<s'$, any $u\in\mathcal{U}_{[t,t']}$ and $v\in\mathcal{U}_{[s,s']}$, let
-\begin{equation*}
-\states^{u\cup v}\coloneqq\states^u\times\states^v\,.
-\end{equation*}
-Let the sets of functions $\gambles(\states^{u\cup\{s\}})$ and $\gambles(\states^{u\cup v})$ be defined in the obvious manner.
-
-For any function $f\in\gambles(\states^{\{t_0\}}\times\cdots\times\states^{\{t_n\}})$, let the norm $\norm{f}$ be defined as
-\begin{equation*}
-\norm{f} \coloneqq \max\left\{ \abs{f(x_{t_0},\ldots,x_{t_n})}\,:\,(x_{t_0},\ldots,x_{t_n})\in \states^{\{t_0\}}\times\cdots\times\states^{\{t_n\}}\right\}\,.
+\norm{f} \coloneqq \max\{\abs{f(x_u)}\,:\,x_u\in\states^u\}\,.
 \end{equation*}
 
-For the sake of brevity, we will also write a joint state assignment as
+For a function $f\in\gambles(\states^{u\cup\{s\}})$, we will write $f(x_u,X_s)$ for the restriction of $f$ to $\states^{\{s\}}$ specific to the joint state assignment $x_u\in\states^u$. Thus, $f(x_u,X_s)$ corresponds to a $g\in\gambles(\states^{\{s\}})$ such that $g(x_s) = f(x_u,x_s)$ for all $x_s\in\states^{\{s\}}$.
+
+Finally, we will want to use operators as defined in Section~\ref{sec:func_oper_norm} for functions defined on (multiple) explicit time points. To this end, for any $f\in\gambles(\states^{u\cup\{s\}})$, with $u<s$, and any non-negatively homogeneous operator $A$ from $\gamblesX$ to $\gamblesX$, we stipulate the following convention. If $A$ is applied to $f$, it will be applied to the restriction of $f$ to the \emph{latest} time point at which it is defined---the time point $s$, in this case. Because this restriction depends on the specific state assignment $x_u$ corresponding to the other time points $u=t_0,\ldots,t_n$, the result is a function $[Af]\in\gambles(\states^u)$. In other words, we stipulate that
 \begin{equation*}
-\left(X_{t_0,\ldots,t_n}=x_{t_0,\ldots,t_n}\right)\equiv (X_{t_0}=x_{t_0},\ldots,X_{t_n}=x_{t_n})\,.
+[Af](x_u) \coloneqq [Af(x_u,X_s)](x_{t_n})\,.
 \end{equation*}
 
-**** {\bf ATTN:} We started using $x_u\in\states^u$ as shorthand notation for the state assignment $(x_{t_0},\ldots,x_{t_n})\in\states^{\{t_0\}}\times\cdots\times\states^{\{t_n\}}$. Still need to properly introduce that somewhere.
-
-For a function $f\in\gambles(\states^{u\cup\{s\}})$, we will write $f(x_{t_0},\ldots,x_{t_n},X_s)$ for the restriction of $f$ to $\states^{\{s\}}$ specific to the joint state assignment $(x_{t_0},\ldots,x_{t_n})$. Thus, $f(x_{t_0},\ldots,x_{t_n},X_s)$ corresponds to a $g\in\gambles(\states^{\{s\}})$ such that $g(x_s) = f(x_{t_0},\ldots,x_{t_n},x_s)$ for all $x_s\in\states^{\{s\}}$.
-
-Finally, we will want to use operators as defined in Section~\ref{sec:func_oper_norm} for functions defined on (multiple) explicit time points. It is clear that an operator $A$ defined on $\gamblesX$ can be applied to any element of a set of functions $\gambles(\states^{\{s\}})$ that depend on the state at just a single point in time. It remains to determine how to cope with functions defined on multiple time points. 
-
-To avoid introducing overly complex notation, we will stipulate the following convention. If $f\in\gambles(\states^u)$ is a function defined on an ordered sequence $u$ of time points $t_0<t_1<\cdots<t_n$, and if $A$ is a non-negatively homogeneous operator from $\gamblesX$ to $\gamblesX$, we allow $A$ to be applied to $f$ by applying it to the restriction of $f$ to the state $\states^{\{t_n\}}$ at the \emph{latest} time point $t_n$ in $u$. Because such a restriction is dependent on the specific state assignment $(x_{t_0},\ldots,x_{t_{n-1}})$, the result is a function $[Af]\in\gambles(\states^{\{t_0,\ldots,t_{n-1}\}})$. In other words, we then have
-\begin{equation*}
-\left[Af\right](x_{t_0},\ldots,x_{t_{n-1}}) \equiv \left[A f(x_{t_0},\ldots,x_{t_{n-1}},X_{t_n})\right](x_{t_{n-1}})\,.
-\end{equation*}
+%*** dit kan opzich wel korter denk ik, maar kunnen we bij oppoetsen straks nog wel even checken ***
+%
+%We will also find it convenient to have notation for functions defined on the state space at multiple time points.
+%To this end, consider any $t,s\in\realsnonneg$ such that $t<s$, and any $u\in\mathcal{U}_{[t,s]}$. We will now define
+%\begin{equation*}
+%\states^u\coloneqq \prod_{i=0}^n\states
+%\end{equation*}
+%to be the joint state space at times $t_0,\ldots,t_n$. Let $\gambles(\states^u)$ denote the set of functions on $(X_{t_0},\ldots,X_{t_n})$.
+%
+%For any $t,t',s\in\realsnonneg$ such that $t<t'<s$ and any $u\in\mathcal{U}_{[t,t']}$, let $\states^{\{s\}}$ denote the state space at time $s$, and let
+%\begin{equation*}
+%\states^{u\cup\{s\}} \coloneqq \states^u\times\states^{\{s\}}
+%\end{equation*}
+%denote the joint state space at times $t_0,\ldots,t_n,s$. Similarly, for any $t,t',s,s'\in\realsnonneg$ such that $t<t'<s<s'$, any $u\in\mathcal{U}_{[t,t']}$ and $v\in\mathcal{U}_{[s,s']}$, let
+%\begin{equation*}
+%\states^{u\cup v}\coloneqq\states^u\times\states^v\,.
+%\end{equation*}
+%Let the sets of functions $\gambles(\states^{u\cup\{s\}})$ and $\gambles(\states^{u\cup v})$ be defined in the obvious manner.
+%
+%For any function $f\in\gambles(\states^{\{t_0\}}\times\cdots\times\states^{\{t_n\}})$, let the norm $\norm{f}$ be defined as
+%\begin{equation*}
+%\norm{f} \coloneqq \max\left\{ \abs{f(x_{t_0},\ldots,x_{t_n})}\,:\,(x_{t_0},\ldots,x_{t_n})\in \states^{\{t_0\}}\times\cdots\times\states^{\{t_n\}}\right\}\,.
+%\end{equation*}
+%
+%For the sake of brevity, we will also write a joint state assignment as
+%\begin{equation*}
+%\left(X_{t_0,\ldots,t_n}=x_{t_0,\ldots,t_n}\right)\equiv (X_{t_0}=x_{t_0},\ldots,X_{t_n}=x_{t_n})\,.
+%\end{equation*}
+%
+%**** {\bf ATTN:} We started using $x_u\in\states^u$ as shorthand notation for the state assignment $(x_{t_0},\ldots,x_{t_n})\in\states^{\{t_0\}}\times\cdots\times\states^{\{t_n\}}$. Still need to properly introduce that somewhere.
+%
+%For a function $f\in\gambles(\states^{u\cup\{s\}})$, we will write $f(x_{t_0},\ldots,x_{t_n},X_s)$ for the restriction of $f$ to $\states^{\{s\}}$ specific to the joint state assignment $(x_{t_0},\ldots,x_{t_n})$. Thus, $f(x_{t_0},\ldots,x_{t_n},X_s)$ corresponds to a $g\in\gambles(\states^{\{s\}})$ such that $g(x_s) = f(x_{t_0},\ldots,x_{t_n},x_s)$ for all $x_s\in\states^{\{s\}}$.
+%
+%Finally, we will want to use operators as defined in Section~\ref{sec:func_oper_norm} for functions defined on (multiple) explicit time points. It is clear that an operator $A$ defined on $\gamblesX$ can be applied to any element of a set of functions $\gambles(\states^{\{s\}})$ that depend on the state at just a single point in time. It remains to determine how to cope with functions defined on multiple time points. 
+%
+%To avoid introducing overly complex notation, we will stipulate the following convention. If $f\in\gambles(\states^u)$ is a function defined on an ordered sequence $u$ of time points $t_0<t_1<\cdots<t_n$, and if $A$ is a non-negatively homogeneous operator from $\gamblesX$ to $\gamblesX$, we allow $A$ to be applied to $f$ by applying it to the restriction of $f$ to the state $\states^{\{t_n\}}$ at the \emph{latest} time point $t_n$ in $u$. Because such a restriction is dependent on the specific state assignment $(x_{t_0},\ldots,x_{t_{n-1}})$, the result is a function $[Af]\in\gambles(\states^{\{t_0,\ldots,t_{n-1}\}})$. In other words, we then have
+%\begin{equation*}
+%\left[Af\right](x_{t_0},\ldots,x_{t_{n-1}}) \equiv \left[A f(x_{t_0},\ldots,x_{t_{n-1}},X_{t_n})\right](x_{t_{n-1}})\,.
+%\end{equation*}
 
 \subsection{Full Conditional Probabilities}\label{sec:cond_prob}
 
