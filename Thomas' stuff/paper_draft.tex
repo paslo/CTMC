@@ -315,11 +315,11 @@ We will also find it convenient to have notation for functions defined on the st
 \begin{equation*}
 \states^u \coloneqq \prod_{i=0}^n \states
 \end{equation*}
-denote the joint state space at the time points in $u$. Note that if $u$ only contains a single time point $t$, then we simply have that $\states^u=\states^{\{t\}}=\states$. In that case, all our previous conventions apply, but the explicit use of the time point is at times convenient. The corresponding joint state assignment will be written as $x_u\in\states^u$, with which we then mean the state assignment $(x_{t_0},\ldots,x_{t_n})\in\states^{\{t_0\}}\times\cdots\times\states^{\{t_n\}}$.
+denote the joint state space at the time points in $u$. Note that if $u$ only contains a single time point $t$, then we simply have that $\states^u=\states^{\{t\}}=\states$. In that case, all our previous conventions apply, but the explicit use of the time point is at times convenient. The corresponding joint state assignment will be written as $x_u\in\states^u$, with which we then mean the state assignment $(x_{t_0},\ldots,x_{t_n})\in\states^{\{t_0\}}\times\cdots\times\states^{\{t_n\}}$. If $u=\emptyset$, then the notation $x_\emptyset\in\states^\emptyset$ may be used as a ``dummy'' placeholder, typically leading to statements that are vacuously true.
 
-For any $u\in\mathcal{U}$, we use $\gambles(\states^u)$ to denote the set of real-valued functions on $\states^u$. For any $f\in\gambles(\states^u)$, let the norm $\norm{f}$ be defined as
+For any $u\in\mathcal{U}_\emptyset$, we use $\gambles(\states^u)$ to denote the set of real-valued functions on $\states^u$. For any $f\in\gambles(\states^u)$, let the norm $\norm{f}$ be defined as
 \begin{equation*}
-\norm{f} \coloneqq \max\{\abs{f(x_u)}\,:\,x_u\in\states^u\}\,.
+\norm{f} \coloneqq \norm{f}_{\infty} \coloneqq \max\{\abs{f(x_u)}\,:\,x_u\in\states^u\}\,.
 \end{equation*}
 
 For a function $f\in\gambles(\states^{u\cup\{s\}})$, we will write $f(x_u,X_s)$ for the restriction of $f$ to $\states^{\{s\}}$ specific to the joint state assignment $x_u\in\states^u$. Thus, $f(x_u,X_s)$ corresponds to a $g\in\gambles(\states^{\{s\}})$ such that $g(x_s) = f(x_u,x_s)$ for all $x_s\in\states^{\{s\}}$.
@@ -663,9 +663,9 @@ Let $P\in\processes$ be any stochastic process. Then, for any $t,s\in\realsnonne
 \begin{equation*}
 T^s_{t,\,x_u}(x_t,x_s)
 \coloneqq
-P(X_s=x_s\vert X_t=x_t, X_{t_0}=x_{0}, \dots, X_{t_n}=x_{n})\quad\text{for all $x_s,x_t\in\states$}\,.
+P(X_s=x_s\vert X_t=x_t, X_u=x_u)\quad\text{for all $x_s,x_t\in\states$}\,.
 \end{equation*}
-For notational convenience, we will allow $u$ to be empty, in which case we will simply have that $T_{t,\,x_u}^s=T_t^s$.
+For notational convenience, we allow $u$ to be empty, in which case $T_{t,\,x_u}^s=T_t^s$.
 \end{definition}
 
 The following proposition establishes some simple properties of these corresponding (history-dependent) transition matrices.
@@ -856,7 +856,7 @@ This follows trivially from Proposition~\ref{prop:outerderivativebehaveslikelimi
 Having introduced continuous-time stochastic processes in Section~\ref{sec:stochastic_processes}, we will in this section focus on a specific class of such processes: the \emph{continuous-time Markov chains}.
 
 \begin{definition}[Markov Property, Markov Chain]\label{def:markov_property}
-A stochastic process $P\in\processes$ satisfies the \emph{Markov property} if, for any time sequence $u\in\mathcal{U}$, any $x_u\in\states^u$, any $t,s\in\realsnonneg$ such that $u\leq t\leq s$, and any states $x,y\in\states$:
+A stochastic process $P\in\processes$ satisfies the \emph{Markov property} if, for any time sequence $u\in\mathcal{U}$, any $x_u\in\states^u$, any $t,s\in\realsnonneg$ such that $u< t\leq s$, and any states $x,y\in\states$:
 \begin{equation*}
 P(X_s=y\,\vert\,X_t=x,X_u=x_u) = P(X_s=y\,\vert\, X_{t}=x)\,.
 \end{equation*}
@@ -1247,8 +1247,9 @@ $\lrate(\lambda f)(x)=\lambda\lrate(f)(x)$;
 \item\label{LR:nondiagpos}
 $\lrate(\ind{y})(x)\geq0$ for all $y\in\states$ such that $x\neq y$.
 \end{enumerate}
-\vspace{5pt}
+%\vspace{5pt}
 \end{definition}
+Note that properties~\ref{LR:constantzero} and~\ref{LR:nondiagpos} essentially preserve properties~\ref{def:Q:sumzero} and~\ref{def:Q:nonnegoffdiagonal} from Definition~\ref{def:rate_matrix}. However, where any rate matrix $Q$ represents a linear map, properties~\ref{LR:subadditive} and~\ref{LR:homo} merely require that a lower transition rate operator $\lrate$ is \emph{super-}additive and \emph{non-negatively} homogeneous. Hence, any rate matrix is in fact also a lower transition rate operator, with the latter concept providing a proper generalization of the former.
 
 
 \begin{definition}[Lower Transition Operator]\label{def:coh_low_trans}
@@ -1267,6 +1268,7 @@ $\lt(\lambda f)(x)=\lambda\lt(f)(x)$.
 \noindent We use $\underline{\mathcal{T}}$ to denote the set of all lower transition operators.
 \vspace{5pt}
 \end{definition}
+**** some motivation and links to lower previsions.
 
 \noindent We start by giving some useful properties of the norm of these operators.
 
