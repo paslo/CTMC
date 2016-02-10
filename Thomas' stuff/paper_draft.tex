@@ -454,7 +454,7 @@ $T(x,y)\geq0$ for all $x,y\in\states$.
 *** tralala, rate matrices and transition matrices zijn sterk gelinkt.  intuitief geven rate matrices aan hoe snel een transitie kans veranderd, in termen van $\Delta$.
 
 \begin{proposition}\label{prop:stochastic_from_rate_matrix}
-Consider any transition rate matrix $Q\in\mathcal{R}$, and any $\Delta\in\realsnonneg$ such that $\Delta \leq \nicefrac{1}{\norm{Q}}$. Then, the matrix $(I+\Delta Q)$ is a transition matrix.
+Consider any transition rate matrix $Q\in\mathcal{R}$, and any $\Delta\in\realsnonneg$ such that $\Delta \norm{Q}\leq 1$. Then, the matrix $(I+\Delta Q)$ is a transition matrix.
 \end{proposition}
 
 \begin{proposition}\label{prop:rate_from_stochastic_matrix}
@@ -2621,7 +2621,7 @@ This is a special case of a more general lemma that we prove later. To see this,
 \end{proof}
 
 \begin{lemma}\label{lemma:convex_rate_set_contains_approximation}
-Consider a non-empty, bounded, convex set of rate matrices $\rateset$ and, for all $i\in\{1,\ldots,n\}$, some $\Delta_i\geq0$ and $Q_i\in\rateset$ such that $\Delta\coloneqq\sum_{i=1}^n\Delta_i\leq\nicefrac{1}{\norm{\rateset}}$. Then
+Consider a non-empty, bounded, convex set of rate matrices $\rateset$ and, for all $i\in\{1,\ldots,n\}$, some $\Delta_i\geq0$ and $Q_i\in\rateset$ such that $\Delta_i\norm{Q_i}\leq1$. Let $\Delta\coloneqq\sum_{i=1}^n\Delta_i$. Then
 \begin{equation*}
 \norm{\prod_{i=1}^n(I+\Delta_iQ_i) - (I+\sum_{i=1}^n\Delta_iQ_i)} < \Delta^2\norm{\rateset}^2.
 \end{equation*}
@@ -2629,7 +2629,7 @@ Consider a non-empty, bounded, convex set of rate matrices $\rateset$ and, for a
 \begin{proof}
 We provide a proof by induction. For $n=1$, the result is trivial. So consider the case $n\geq2$ and assume that the result is true for $n-1$. 
 
-For all $i\in\{2,\dots,n\}$, since $\Delta_i\leq\Delta\leq\nicefrac{1}{\norm{\rateset}}\leq\nicefrac{1}{\norm{Q_i}}$, it follows from Proposition~\ref{prop:stochastic_from_rate_matrix} that $(I+\Delta_iQ_i)$ and $I$ are transition matrices. Therefore,
+For all $i\in\{2,\dots,n\}$, since $\Delta_i\norm{Q_i}\leq 1$, it follows from Proposition~\ref{prop:stochastic_from_rate_matrix} that $(I+\Delta_iQ_i)$ and $I$ are transition matrices. Therefore,
 \begin{multline*}
 \norm{\prod_{i=1}^n(I+\Delta_iQ_i)-(I+\sum_{i=1}^n\Delta_iQ_i)}\\
 \begin{aligned}
@@ -2736,49 +2736,46 @@ where the second inequality follows from the induction hypothesis and the third 
 % \end{proof}
 
 \begin{lemma}\label{lemma:uniform_delta_for_convex_markov_set}
-Let $\rateset$ be any non-empty, bounded and convex set of rate matrices, and choose any $\epsilon\in\realspos$. Then, there is some $\delta\in\realspos$ such that for all $P\in\wmprocesses_\rateset$, all $t\in\realsnonneg$, and all $\Delta\in\realsnonneg$ such that $\Delta<\delta$, *** included the case $\Delta=0$, the proof needs to be adapted ***
+Let $\rateset$ be any non-empty, bounded and convex set of rate matrices, and choose any $\epsilon\in\realspos$. Then there is some $\delta\in\realspos$ such that for all $P\in\wmprocesses_\rateset$, all $t\in\realsnonneg$, and all $\Delta\in\realsnonneg$ such that $\Delta<\delta$:
 \begin{equation*}
-(\exists Q\in\rateset)\,\norm{T_{t}^{t+\Delta} - (I+\Delta Q)} \leq \Delta\epsilon\,.
+(\exists Q\in\rateset)\,\norm{T_{t}^{t+\Delta} - (I+\Delta Q)} \leq \Delta\epsilon.
 \end{equation*}
 \end{lemma}
 \begin{proof}
-Fix any $\epsilon\in\realspos$, and let
-\begin{equation*}
-\delta \coloneqq \min\left\{\frac{\epsilon}{2\norm{\rateset}^2},\frac{1}{\norm{\rateset}}\right\}\,.
-\end{equation*}
-Choose any $P\in\wmprocesses_\rateset$, any $t\in\realsnonneg$, and any $\Delta<\delta$.
+Choose $\delta\in\realspos$ such that $\delta\norm{\rateset}<1$ and $\delta\norm{\rateset}^2<\nicefrac{\epsilon}{2}$ [this is clearly always possible] and consider any $P\in\wmprocesses_\rateset$, any $t\in\realsnonneg$ and any $\Delta<\delta$. If $\Delta=0$, the result is trivial because we know from Proposition~\ref{prop:Markovhassystem} and Definition~\ref{def:trans_mat_system} that $T_t^t=I$. Hence, without loss of generality, we may assume that $\Delta>0$.
 
-Let $\epsilon'\coloneqq \nicefrac{\epsilon}{2}$. Then, by Lemma~\ref{lemma:bound_on_linear_approx_partition}, there is some $u\in\mathcal{U}_{[t,t+\Delta]}$ with $u=t_0,\ldots,t_n$, such that, for all $i\in\{1,\ldots,n\}$,
+It now follows from Lemma~\ref{lemma:bound_on_linear_approx_partition} that there is some $v\in\mathcal{U}_{[t,t+\Delta]}$ with $v=t_0,\ldots,t_n$, such that, for all $i\in\{1,\ldots,n\}$, there is some $Q_i\in\rateset$ such that
 \begin{equation*}
-(\exists Q\in\rateset)\,\norm{T_{t_{i-1}}^{t_i} - (I+\Delta_iQ)} < \Delta_i\epsilon'.
-\end{equation*}
-This implies the existence of rate matrices $Q_1,\ldots,Q_n\in\rateset$, such that, for all $i\in\{1,\ldots,n\}$
-\begin{equation*}
-\norm{T_{t_{i-1}}^{t_i} - (I+\Delta_iQ_i)} < \Delta_i\epsilon'\,.
+\norm{T_{t_{i-1}}^{t_i} - (I+\Delta_iQ_i)} < \Delta_i\frac{\epsilon}{2}.
 \end{equation*}
 Therefore, and due to Lemma~\ref{lemma:recursive}, we find using the Markov property of $P$ that
 \begin{align*}
 \norm{T_t^{t+\Delta} - \prod_{i=1}^n(I+\Delta_iQ_i)} &= \norm{\prod_{i=1}^nT_{t_{i-1}}^{t_i} - \prod_{i=1}^n(I+\Delta_iQ_i)}
- < \sum_{i=1}^n\Delta_i\epsilon' 
- = \Delta\epsilon'.
+ < \sum_{i=1}^n\Delta_i\frac{\epsilon}{2} 
+ = \Delta\frac{\epsilon}{2}.
 \end{align*}
-Let now
+Furthermore, since we know that, for all $i\in\{1,\dots,n\}$, $\Delta_i\norm{Q_i}\leq\Delta\norm{\rateset}\leq 1$, we can apply Lemma~\ref{lemma:convex_rate_set_contains_approximation} to find that
 \begin{equation*}
-Q\coloneqq \sum_{i=1}^n \frac{\Delta_i}{\Delta} Q_i.
-\end{equation*}
-Then $Q\in\rateset$ because $\rateset$ is convex and, since $\Delta<\delta\leq\nicefrac{1}{\norm{\rateset}}$, it follows from Lemma~\ref{lemma:convex_rate_set_contains_approximation} that
-\begin{equation*}
-\norm{\prod_{i=1}^n(I+\Delta_iQ_i) - (I+\Delta Q)} < \Delta^2\norm{\rateset}^2\,.
+\norm{\prod_{i=1}^n(I+\Delta_iQ_i) - (I+\sum_{i=1}^n\Delta_i Q_i)} < \Delta^2\norm{\rateset}^2
+\leq\Delta\delta\norm{\rateset}^2
+<\Delta\frac{\epsilon}{2}.
 \end{equation*}
 
 Putting this all together, we find that
 \begin{align*}
-\norm{T_t^{t+\Delta} - (I+\Delta Q)} &\leq \norm{T_t^{t+\Delta} - \prod_{i=1}^n(I+\Delta_iQ_i)} + \norm{\prod_{i=1}^n(I+\Delta_iQ_i) - (I+\Delta Q)} \\
+\norm{T_t^{t+\Delta} - (I+\Delta Q)} &\leq \norm{T_t^{t+\Delta} - \prod_{i=1}^n(I+\Delta_iQ_i)} + \norm{\prod_{i=1}^n(I+\Delta_iQ_i) - (I+\sum_{i=1}^n\Delta_i Q_i)} \\
  &< \Delta\epsilon' + \Delta^2\norm{\rateset}^2 \\
  &< \Delta\frac{\epsilon}{2} + \Delta\delta\norm{\rateset}^2 \\
  &\leq \Delta\frac{\epsilon}{2} + \Delta\frac{\epsilon}{2\norm{\rateset}^2}\norm{\rateset}^2 \\
  &= \Delta\epsilon\,.
 \end{align*}
+
+Let now
+\begin{equation*}
+Q\coloneqq \sum_{i=1}^n \frac{\Delta_i}{\Delta} Q_i.
+\end{equation*}
+Then $Q\in\rateset$ because $\rateset$ is convex and
+
 \end{proof}
 
 
