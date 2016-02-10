@@ -248,6 +248,14 @@ Finally, we will make extensive use of finite sequences of time points. For any 
 
 We let $\mathcal{U}$ be the set of all (possibly empty) sequences of time points. For any $u\in\mathcal{U}$, we let $\max u$ be the largest time point in $u$. If $u=\emptyset$, then $t>u$ is taken to be trivially true, regardless of the value of $t$.
 
+******
+
+The sets $\mathcal{U}$ and $\mathcal{U}_{<t}$ (and so on) can no longer contain non-empty degenerate sequences (all time points must be unique). The exception is $\mathcal{U}_{[t,s]}$, which can contain degenerate sequences.
+
+If you're aware of any issues this might cause, please let me know. (I checked, but couldnt find any).
+
+******
+
 \subsection{Operators and Norms}\label{sec:func_oper_norm}
 For any vector $f\in\gamblesX$, we let
 \begin{equation*}
@@ -2048,17 +2056,17 @@ The fact that $\mathcal{T}_P$ is well-behaved if and only if $P$ is well-behaved
 Let
 \begin{multline*}
 \mathcal{C}\coloneqq\{
-(X_s=y,X_u=x_u)
+(X_s=y,X_u=x_u)\in\mathcal{C}^{\mathrm{SP}}
 \colon 
 u\in\mathcal{U}_\emptyset,~s>u,~x_u\in\states^u,~y\in\states
 \}\\
 \cup
 \{
-(X_0=y,X_\emptyset=x_\emptyset)\colon y\in\states
+(X_0=y,X_\emptyset=x_\emptyset)\in\mathcal{C}^{\mathrm{SP}}\colon y\in\states
 \}
 \end{multline*}
 and consider a real-valued function $\tilde{P}$ on $\mathcal{C}$ that is defined by 
-\begin{equation*}
+\begin{equation}\label{eq:theo:uniqueMarkovchain:prob_func}
 \tilde{P}(X_s=y\vert X_u=x_u)
 %=
 %\tilde{P}(X_s=y\vert X_{t_0}=x_{0}, \dots, X_{t_n}=x_{n})
@@ -2068,18 +2076,18 @@ p(y)&\text{~if $u=\emptyset$}\\
 T_{\max u}^s(x_{\max u},y)&\text{~otherwise}
 \end{cases}
 \text{~~~for all $(X_s=y,X_u=x_u)\in\mathcal{C}$.}
-\end{equation*}
+\end{equation}
 
 
 We first prove that $\tilde{P}$ is a coherent conditional probability on $\mathcal{C}$. So consider any $n\in\nats$ and, for all $i\in\{1,\dots,n\}$, choose $(A_i,C_i)=(X_{s_i}=y_i,X_{u_i}=x_{u_i})\in\mathcal{C}$ and $\lambda_i\in\reals$. We need to show that
 \begin{equation}\label{eq:theo:uniqueMarkovchain:coh1}
-\sup\left\{\sum_{i=1}^n\lambda_i\ind{C_i}(\omega)\bigl(\tilde{P}(A_i\vert C_i)-\ind{A_i}(\omega)\bigr)~\Bigg\vert~\omega\in C_0\right\}\geq0,
+\max\left\{\sum_{i=1}^n\lambda_i\ind{C_i}(\omega)\bigl(\tilde{P}(A_i\vert C_i)-\ind{A_i}(\omega)\bigr)~\Bigg\vert~\omega\in C_0\right\}\geq0,
 \end{equation}
 with $C_0\coloneqq\cup_{i=1}^nC_i$.
 Since every sequence $u_i$ is finite, there is some finite set $w=\{w_0,w_1,\dots,w_m\}\subset\reals_{\geq0}$ of time points, with $m\in\nats$, such that $0=w_0<w_1<\dots<w_m$ and, for all $i\in\{1,\dots,n\}$, $u_i\subseteq w$ and $s_i\in w$.
 Let $P_w$ be the restriction of $\tilde{P}$ to $\mathcal{C}_w$, with $\mathcal{C}_w$ defined as in Lemma~\ref{lemma:simplechaincoherence}. Then since $P_w$ clearly satisfies the conditions of Lemma~\ref{lemma:simplechaincoherence}, it follows that $P_w$ is a coherent conditional probability. Because of Theorem~\ref{theo:largerdomain}, this implies that $P_w$ is the restriction to $\mathcal{C}_w$ of a coherent conditional probability $\tilde{P}_w$ on $\power\times\nonemptypower$. It now follows from Definition~\ref{def:coherence} that
 \begin{equation}\label{eq:theo:uniqueMarkovchain:coh2}
-\sup\left\{\sum_{i=1}^n\lambda_i\ind{C_i}(\omega)\bigl(\tilde{P}_w(A_i\vert C_i)-\ind{A_i}(\omega)\bigr)~\Bigg\vert~\omega\in C_0\right\}\geq0.
+\max\left\{\sum_{i=1}^n\lambda_i\ind{C_i}(\omega)\bigl(\tilde{P}_w(A_i\vert C_i)-\ind{A_i}(\omega)\bigr)~\Bigg\vert~\omega\in C_0\right\}\geq0.
 \end{equation}
 By comparing Equations~\eqref{eq:theo:uniqueMarkovchain:coh1} and~\eqref{eq:theo:uniqueMarkovchain:coh2}, we see that in order to prove that $\tilde{P}$ is coherent, it suffices to show that, for all $i\in\{1,\dots,n\}$, $\tilde{P}_w(A_i\vert C_i)=\tilde{P}(A_i\vert C_i)$. So fix any $i\in\{1,\dots,n\}$. If $u_i=\emptyset$, then $s_i=0=w_0$ and therefore $(A_i,C_i)\in\mathcal{C}_w$, which implies that $\tilde{P}_w(A_i\vert C_i)=P_w(A_i\vert C_i)=\tilde{P}(A_i\vert C_i)$. If $u_i\neq\emptyset$, then since $u_i\subseteq w$, $s_i\in w$ and $s_i>u_i$, it follows from Lemma~\ref{lemma:simplechainextend} that $\tilde{P}_w(A_i\vert C_i)=\tilde{P}(A_i\vert C_i)$. Hence, $\tilde{P}$ is coherent.
 
@@ -2094,11 +2102,7 @@ By comparing Equations~\eqref{eq:theo:uniqueMarkovchain:coh1} and~\eqref{eq:theo
 % \end{equation*}
 
 
-Therefore, and because of Corollary~\ref{corol:coherentextendable}, $\tilde{P}$ can be extended to a full conditional probability $\tilde{P}^*$. If we now let $P$ be the restriction of $\tilde{P}^*$ to $\mathcal{C}^\mathrm{SP}$, then clearly, $P$ is a stochastic process that extends $\tilde{P}$, which implies that $P$ is a Markov chain 
-
-**** {\bf ATTN}: Claim of Markov property maybe needs some elaboration?
-
-such that $\mathcal{T}_P=\mathcal{T}$ and, for all $y\in\states$, $P(X_0=y)=p(y)$. Lemma~\ref{lemma:samepandTissameP} implies that this Markov chain is unique. If $\mathcal{T}$ is well-behaved, then since $\mathcal{T}_P=\mathcal{T}$, it follows from Proposition~\ref{prop:Markovhassystem} that $P$ is well-behaved.
+Therefore, and because of Corollary~\ref{corol:coherentextendable}, $\tilde{P}$ can be extended to a full conditional probability $\tilde{P}^*$. If we now let $P$ be the restriction of $\tilde{P}^*$ to $\mathcal{C}^\mathrm{SP}$, then clearly, because $\mathcal{C}\subseteq\mathcal{C}^\mathrm{SP}$, $P$ is a stochastic process that extends $\tilde{P}$. Due to Equation~\eqref{eq:theo:uniqueMarkovchain:prob_func}, this implies that $P$ is a Markov chain such that $\mathcal{T}_P=\mathcal{T}$ and, for all $y\in\states$, $P(X_0=y)=p(y)$. Lemma~\ref{lemma:samepandTissameP} implies that this Markov chain is unique. If $\mathcal{T}$ is well-behaved, then since $\mathcal{T}_P=\mathcal{T}$, it follows from Proposition~\ref{prop:Markovhassystem} that $P$ is well-behaved.
 \end{proof}
 
 \begin{lemma}\label{lemma:simplechaincoherence}
@@ -2122,7 +2126,7 @@ We provide a proof by induction. Assume that this statement is true for any $m<k
 
 Consider any $n\in\nats$ and, for all $i\in\{1,\dots,n\}$, choose $(A_i,C_i)\in\mathcal{C}_w$ and $\lambda_i\in\reals$. We need to show that
 \begin{equation}\label{eq:lemma:simplechaincoherence:TB}
-\sup\left\{\sum_{i=1}^n\lambda_i\ind{C_i}(\omega)\bigl(P_w(A_i\vert C_i)-\ind{A_i}(\omega)\bigr)~\Bigg\vert~\omega\in C_0\right\}\geq0,
+\max\left\{\sum_{i=1}^n\lambda_i\ind{C_i}(\omega)\bigl(P_w(A_i\vert C_i)-\ind{A_i}(\omega)\bigr)~\Bigg\vert~\omega\in C_0\right\}\geq0,
 \end{equation}
 with $C_0\coloneqq\cup_{i=1}^nC_i$. %Clearly, without loss of generality, we may assume that for any $i_1,i_2\in\{1,\dots,n\}$ such that $i_1\neq i_2$, $(A_{i_1},C_{i_1})\neq(A_{i_2},C_{i_2})$.
 
@@ -2134,9 +2138,9 @@ C_i=(X_{w_{0}}=z_{0,i}, \dots, X_{w_{j_i-1}}=z_{j_i-1,i}).
 \end{equation*}
 Let $S=\left\{i\in\{1,\dots,n\}\colon j_i<m\right\}$. If $S\neq\emptyset$, then by the induction hypothesis, we know that
 \begin{equation*}
-\sup\left\{\sum_{i\in S}\lambda_i\ind{C_i}(\omega)\bigl(P_w(A_i\vert C_i)-\ind{A_i}(\omega)\bigr)~\Bigg\vert~\omega\in C_0^*\right\}\geq0,
+\max\left\{\sum_{i\in S}\lambda_i\ind{C_i}(\omega)\bigl(P_w(A_i\vert C_i)-\ind{A_i}(\omega)\bigr)~\Bigg\vert~\omega\in C_0^*\right\}\geq0,
 \end{equation*}
-with $C_0^*\coloneqq\cup_{i\in S}C_i$. Since, for all $i\in S$, $\ind{A_i}(\omega)$ and $\ind{C_i}(\omega)$ only depend on the value of $\omega$ in the finite set of time points $w$, the expression in this supremum can take only a finite number of values, and therefore, it is in fact a maximum. Hence, it follows that there is some $\omega^*\in C_0^*$ such that
+with $C_0^*\coloneqq\cup_{i\in S}C_i$. It follows that there is some $\omega^*\in C_0^*$ such that
 \begin{equation}\label{eq:lemma:simplechaincoherence:supremumreached}
 \sum_{i\in S}\lambda_i\ind{C_i}(\omega^*)\bigl(P_w(A_i\vert C_i)-\ind{A_i}(\omega^*)\bigr)\geq0.
 \end{equation}
@@ -2157,16 +2161,16 @@ Since $p$ is a probability mass function, it then follows that
 \left(\min_{y\in\states}\lambda_y\right)\sum_{x\in\states}p(x)
 =\min_{y\in\states}\lambda_y.
 \end{equation*}
-Now let $y^*$ be any element of $\states$ such that $\min_{y\in\states}\lambda_y=\lambda_{y^*}$ (since $\states$ is finite, this is always possible) and let $\omega^{**}$ be any path in $\Omega$ such that $\omega^{**}\in C^*$ and $\omega^{**}(w_m)=y^*$. Then
+Now let $y^*$ be any element of $\states$ such that $\min_{y\in\states}\lambda_y=\lambda_{y^*}$ (since $\states$ is finite, this is always possible). Let $\omega^{**}$ be any path in $\Omega$ such that $\omega^{**}\in C^*$ and $\omega^{**}(w_m)=y^*$; Equation~\eqref{eq:path_exists_for_finite_points} guarantees that this $\omega^{**}\in\Omega$ exists. Then
 \begin{equation*}
-\sum_{i\in S^*}\lambda_i(\omega^*)\bigl(P_w(A_i\vert C_i)-\ind{A_i}(\omega^{**})\bigr)
+\sum_{i\in S^*}\lambda_i\bigl(P_w(A_i\vert C_i)-\ind{A_i}(\omega^{**})\bigr)
 \geq
 \min_{y\in\states}\lambda_y
 -\sum_{i\in S^*}\lambda_i\ind{A_i}(\omega^{**})
 =\lambda_{y^*}-\lambda_{y^*}=0.
 \end{equation*}
 
-Let $S^{**}\coloneqq\{1,\dots,n\}\setminus(S\cup S^*)$. Since $\omega^{**}\in C^*$, we find that $\ind{C_i}(w^{**})=\ind{C_i}(w^{*})$ and $\ind{A_i}(w^{**})=\ind{A_i}(w^{*})$ for all $i\in S$, that $\ind{C_i}(w^{**})=1$ for all $i\in S^{*}$, and that $\ind{C_i}(w^{**})=0$ for all $i\in S^{**}$. Hence, it follows from Equation~\eqref{eq:lemma:simplechaincoherence:supremumreached} that
+Let $S^{**}\coloneqq\{1,\dots,n\}\setminus(S\cup S^*)$. Since $\omega^{**}\in C^*$, we find that $\ind{C_i}(\omega^{**})=\ind{C_i}(\omega^{*})$ and $\ind{A_i}(\omega^{**})=\ind{A_i}(\omega^{*})$ for all $i\in S$, that $\ind{C_i}(\omega^{**})=1$ for all $i\in S^{*}$, and that $\ind{C_i}(\omega^{**})=0$ for all $i\in S^{**}$. Hence, it follows from Equation~\eqref{eq:lemma:simplechaincoherence:supremumreached} that
 \begin{equation*}
 \sum_{i=1}^n\lambda_i\ind{C_i}(\omega^{**})\bigl(P_w(A_i\vert C_i)-\ind{A_i}(\omega^{**})\bigr)
 \geq
@@ -2276,7 +2280,7 @@ u\in\mathcal{U},~s\in\reals_{\geq0},~s>u,~x_u\in\states^u,~y\in\states
 \end{align*}
 are identical. We denote this common restriction by $\tilde{P}^*$.
 
-Consider now any $(A,X_u=x_u)\in\mathcal{C}^\mathrm{SP}$. Then since $A\in\mathcal{A}_u$, there is some finite set of time points $v=\{v_1,v_2,\dots,v_n\}\subseteq\reals_{\geq0}$, with $n\in\nats_\emptyset$, such that $\max u<v_1<v_2<\dots<v_n$, and some set $S\subseteq\states^{u\cup v}$ such that $A=\cup_{z_{u\cup v}\in S}(X_{u\cup v}=z_{u\cup v})$. 
+Consider now any $(A,X_u=x_u)\in\mathcal{C}^\mathrm{SP}$. Then since $A\in\mathcal{A}_u$, there is some finite set of time points $v=\{v_1,v_2,\dots,v_n\}\subseteq\reals_{\geq0}$, with $n\in\nats_0$, such that $\max u<v_1<v_2<\dots<v_n$, and some set $S\subseteq\states^{u\cup v}$ such that $A=\cup_{z_{u\cup v}\in S}(X_{u\cup v}=z_{u\cup v})$. 
 Let $S_v\coloneqq\{s_v\in\states^v\colon (x_u,z_v)\in S\}$.
 For any $j\in\{1,2\}$, we then find that
 \begin{align*}
@@ -3183,7 +3187,7 @@ x\in\states,t\in[0,\max u]
 and
 \begin{equation}\label{eq:theo:aanelkaarplakken:secondpartofdomain}
 \mathcal{C}_{x_u}\coloneqq\{
-(A,X_v=x_v)
+(A,X_v=x_v)\in\mathcal{C}^\mathrm{SP}
 \colon
 u\subseteq v\in\mathcal{U},\,
 x_{v\setminus u}\in\states^{v\setminus u},\,
@@ -3219,16 +3223,16 @@ with $C^*\coloneqq\cup_{i\in S^*}C_i$. Therefore, there is some $\omega^*\in C^*
 If $S^*=\emptyset$, we let $\omega^*$ be any element of $C_0$ (this is always possible, because $C_0\neq\emptyset$). Clearly, this path $\omega^*$ will then also satisfy Equation~\eqref{eq:theo:aanelkaarplakken:geqfirstpart}.
 
 
-Let $x_u^*\in\states^u$ be defined by $x_t^*\coloneqq \omega^*(t)$ for all $t\in u$.
+Let $x_u^*\in\states^u$ be defined by $x_u^*\coloneqq \omega^*\vert_u$.
 Then for all $i\in\{1,\dots,n\}$ such that $(A_i,C_i)\in\mathcal{C}_{x_u^*}$, we know from Equation~\eqref{eq:theo:aanelkaarplakken:secondpartofdomain} that there are $u\subseteq v_i\in\mathcal{U}$ and $x_{v_i\setminus u}\in\states^{v_i\setminus u}$ such that
 \begin{equation}\label{eq:theo:aanelkaarplakken:Cisplit}
-C_i=(X_u=x_u^*)\cap(X_{v_i\setminus u}=x_{v_i\setminus u})=C_i^*\cap C_i^{**},
+C_i=(X_u=x_u^*)\cap(X_{v_i\setminus u}=x_{v_i\setminus u})=C_i^*\cap C_i^{**},\vspace{2mm}
 \end{equation}
-with 
+with $C_i^{*}\coloneqq(X_{v_i\cap [0,\max u]}=x_{v_i\cap [0,\max u]})$, and
 \begin{equation}\label{eq:theo:aanelkaarplakken:Cistarstar}
-C_i^{**}\coloneqq(X_u=x_u^*)\cap(X_{v_i\setminus [0,\max u]}=x_{v_i\setminus [0,\max u]})\vspace{2mm}
+C_i^{**}\coloneqq(X_u=x_u^*)\cap(X_{v_i\setminus [0,\max u]}=x_{v_i\setminus [0,\max u]})\,.
 \end{equation}
-and $C_i^{*}\coloneqq(X_{v_i\cap [0,\max u]}=x_{v_i\cap [0,\max u]})$. Using this notation, we define
+Using this notation, we define
 \begin{equation}\label{eq:theo:aanelkaarplakken:Sstarstardef}
 S^{**}\coloneqq
 \{
@@ -3255,29 +3259,33 @@ which allows us to infer that there is some $\omega^{**}\in C^{**}$ such that
 \end{equation}
 Furthermore, since $\omega^{**}\in C^{**}$, Equation~\eqref{eq:theo:aanelkaarplakken:Cistarstar} implies that
 \begin{equation}\label{eq:theo:aanelkaarplakken:starstarniceonu}
-\omega^{**}(t)=x_t^*
-\text{~~for all $t\in u$.}
+\omega^{**}\vert_u=x_u^*\,.
+%\text{~~for all $t\in u$.}
 \end{equation}
 If $S^{**}=\emptyset$, we let $\omega^{**}=\omega^{*}$. Clearly, also in this case, $\omega^{**}$ satisfies Equations~\eqref{eq:theo:aanelkaarplakken:geqsecondpart} and~\eqref{eq:theo:aanelkaarplakken:starstarniceonu}.
 
-Now let $\omega^{***}$ be defined by
+For any $i\in\{1,\ldots,n\}$, because $(A_i,C_i)\in\mathcal{C}$, there exists some finite sequence of time points $w_{C_i}\in\mathcal{U}$ such that $C_i$ only depends on the time points in $w_{C_i}$. Furthermore, it follows from Equations~\eqref{eq:theo:aanelkaarplakken:firstpartofdomain} and~\eqref{eq:theo:aanelkaarplakken:secondpartofdomain} that $A_i$ is an element of some algebra $\mathcal{A}$. Therefore, there is also some finite sequence of time points $w_{A_i}\in\mathcal{U}$, such that $A_i$ only depends on the time points in $w_{A_i}$. If we now let $w_i\coloneqq w_{A_i}\cup w_{C_i}$, then $(A_i,C_i)$ only depends on the (finite) sequence of time points $w_i$.
+
+Because this holds for any $i\in\{1,\ldots,n\}$, this implies the existence of some finite sequence $w\in\mathcal{U}$, with $w=s_0< s_1<\ldots<s_m$, such that $w_i\subseteq w$ for all $i\in\{1,\ldots,n\}$.
+
+Now let $\omega^{***}\in\Omega$ be any path such that
 \begin{equation*}%\label{eq:theo:aanelkaarplakken:omegatriplestar}
-\omega^{***}(t)\coloneqq
+\omega^{***}(s)\coloneqq
 \begin{cases}
-\omega^{*}(t) & \text{if $t<\max u$}\\
-\omega^{**}(t) & \text{if $t\geq \max u$}
+\omega^{*}(s) & \text{if $s<\max u$}\\
+\omega^{**}(s) & \text{if $s\geq \max u$}
 \end{cases}
-\text{~~~for all $t\in\reals_{\geq0}$.}
+\text{~~~for all $s\in w$.}
 \end{equation*}
-Then since $\omega^*$ and $\omega^{**}$ both belong to $\Omega$---are cadlag functions from $\reals_{\geq0}$ to $\states$---it follows that $\omega^{***}\in\Omega$. Furthermore, because of Equation~\eqref{eq:theo:aanelkaarplakken:starstarniceonu}, we know that
+Equation~\eqref{eq:path_exists_for_finite_points} guarantees that this $\omega^{***}\in\Omega$ exists. Furthermore, because of Equation~\eqref{eq:theo:aanelkaarplakken:starstarniceonu}, we know that
 \begin{equation}\label{eq:theo:aanelkaarplakken:triplestarpartone}
 \omega^{***}(t)=\omega^*(t)
-\text{~~for all $t\in [0,\max u]$}\vspace{-3mm}
+\text{~~for all $t\in (w\cap[0,\max u])$}\vspace{-3mm}
 \end{equation}
 and
 \begin{equation}\label{eq:theo:aanelkaarplakken:triplestarparttwo}
 \omega^{***}(t)=\omega^{**}(t)
-\text{~~for all $t\in u\cup [\max u,+\infty)$}
+\text{~~for all $t\in (w\cap(u\cup [\max u,+\infty))$}
 \vspace{2mm}
 \end{equation}
 and therefore, it follows from Equation~\eqref{eq:theo:aanelkaarplakken:Cisplit} that
@@ -3296,7 +3304,7 @@ for all $i\in\{1,\dots,n\}$ such that $(A_i,C_i)\in\mathcal{C}_{x_u^*}$.
 
 %*** still need to finish the stuff below ***
 
-Next, for any $i\in S^*$, we infer from Equation~\eqref{eq:theo:aanelkaarplakken:firstpartofdomain} that the value of $\ind{A_i}(\omega^{***})$ and $\ind{C_i}(\omega^{***})$ is completely determined by $\omega^{***}(t)$, $t\in[0,\max u]$. Therefore, it follows from Equations~\eqref{eq:theo:aanelkaarplakken:geqfirstpart} and ~\eqref{eq:theo:aanelkaarplakken:triplestarpartone} that 
+Next, for any $i\in S^*$, we infer from Equation~\eqref{eq:theo:aanelkaarplakken:firstpartofdomain} that the value of $\ind{A_i}(\omega^{***})$ and $\ind{C_i}(\omega^{***})$ is completely determined by $\omega^{***}(t)$, $t\in(w\cap[0,\max u])$. Therefore, it follows from Equations~\eqref{eq:theo:aanelkaarplakken:geqfirstpart} and ~\eqref{eq:theo:aanelkaarplakken:triplestarpartone} that 
 \begin{equation}\label{eq:theo:aanelkaarplakken:geqfirstparttriplestar}
 \sum_{i\in S^*}\lambda_i\ind{C_i}(\omega^{***})\bigl(\tilde{P}(A_i\vert C_i)-\ind{A_i}(\omega^{***})\bigr)
 %=
@@ -3324,7 +3332,7 @@ Next, assume that $S^*=\emptyset$. In that case, we have that $\omega^*\in C_0$,
 So, in all cases, we find that $\omega^{***}\in C_0$. By combining this with Equation~\eqref{eq:theo:aanelkaarplakken:geqtotal}, it follows that Equation~\eqref{eq:theo:aanelkaarplakken:coh} holds, and therefore, that $\tilde{P}$ is coherent.
 
 
-Since $\tilde{P}$ is coherent, and because of Corollary~\ref{corol:coherentextendable}, $\tilde{P}$ can be extended to a full conditional probability $\tilde{P}^*$. If we now let $P$ be the restriction of $\tilde{P}^*$ to $\mathcal{C}^\mathrm{SP}$, then $P$ is a stochastic process that extends $\tilde{P}$, which implies that $P$ satisfies Equations~\eqref{eq:theo:aanelkaarplakken:equalsfirst} and~\eqref{eq:theo:aanelkaarplakken:equalssecond}. In the remainder of this proof, we will show that $P\in\wprocesses_\rateset$.
+Since $\tilde{P}$ is coherent, and because of Corollary~\ref{corol:coherentextendable}, $\tilde{P}$ can be extended to a full conditional probability $\tilde{P}^*$. If we now let $P$ be the restriction of $\tilde{P}^*$ to $\mathcal{C}^\mathrm{SP}$, then $P$ is a stochastic process that, because $\mathcal{C}\subseteq\mathcal{C}^\mathrm{SP}$, extends $\tilde{P}$. Due to Equation~\eqref{eq:theo:aanelkaarplakken:defPtilde}, this implies that $P$ satisfies Equations~\eqref{eq:theo:aanelkaarplakken:equalsfirst} and~\eqref{eq:theo:aanelkaarplakken:equalssecond}. In the remainder of this proof, we will show that $P\in\wprocesses_\rateset$.
 
 In order to do this, we start by establishing an important equality.
 Consider any $w\in\mathcal{U}$ and $s\in\reals_{\geq0}$ such that $w<s$ and $u<s$. Then for all $x_w\in\states^w$ and $y\in\states$, we have that
