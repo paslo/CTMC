@@ -2963,7 +2963,11 @@ Therefore, and because the Cauchy sequence $\left\{\mathcal{T}_i^{[t,s]}\right\}
 Consider any non-empty, bounded and convex set of rate matrices $\rateset$, and any $t,s\in\realsnonneg$ such that $t\leq s$. Then, the metric space $\smash{(\mathbb{T}_\rateset^{[t,s]},d)}$ is totally bounded under the metric $d$, defined as in Equation~\eqref{eq:trans_mat_system_metric}.
 \end{lemma}
 \begin{proof}
-In order to prove that $(\mathbb{T}_\rateset^{[t,s]},d)$ is totally bounded, it suffices to construct, for all $\epsilon\in\realspos$, a finite collection of open $\epsilon$-balls centered on elements of $\smash{\mathbb{T}_\rateset^{[t,s]}}$, such that this collection covers $\smash{\mathbb{T}_\rateset^{[t,s]}}$ *** REF ***. Fix any $\epsilon>0$. We will now construct such a finite collection of open $\epsilon$-balls.
+In order to prove that $(\mathbb{T}_\rateset^{[t,s]},d)$ is totally bounded, it suffices to prove that, for all $\epsilon\in\realspos$, there is a finite collection of open $\epsilon$-balls centered on elements of $\smash{\mathbb{T}_\rateset^{[t,s]}}$, such that this collection covers $\smash{\mathbb{T}_\rateset^{[t,s]}}$ *** REF ***, or equivalently, that there is a finite subset $\mathbb{C}_\epsilon$ of $\smash{\mathbb{T}_\rateset^{[t,s]}}$ such that
+\begin{equation}\label{lemma:restricted_trans_mat_system_totally_bounded_if_Q_bounded_convex:thereisacover}
+(\forall \mathcal{T}^{[t,s]}\in\mathbb{T}_\rateset^{[t,s]})\,(\exists \mathcal{S}^{[t,s]}\in \mathbb{C}_\epsilon)~d(\mathcal{T}^{[t,s]},\mathcal{S}^{[t,s]}) < \epsilon\,.
+\end{equation}
+Fix any $\epsilon>0$. We will now construct such a set $\mathbb{C}_\epsilon$ and prove that it satisfies Equation~\eqref{lemma:restricted_trans_mat_system_totally_bounded_if_Q_bounded_convex:thereisacover}.
 
 %In other words: for any $\epsilon>0$, we need to construct a finite set $\mathbb{C}_\epsilon\subseteq\mathbb{T}_\rateset^{[t,s]}$ such that $\mathbb{T}_\rateset^{[t,s]}\subseteq\cup$
 
@@ -2980,44 +2984,16 @@ Choose $\epsilon_1,\epsilon_2,\epsilon_3,\epsilon_4\in\reals_{>0}$ such that
 $(s-t)(\epsilon_1+\epsilon_2+\epsilon_3)+2\epsilon_4<\nicefrac{\epsilon}{2}$ and choose $\delta_3,\delta_4\in\reals_{>0}$ such that $\delta_3\norm{\rateset}^2<\epsilon_3$ and $2\delta_4\norm{\rateset}<\epsilon_4$ [this is clearly always possible].
 
 
-Because $\rateset$ is non-empty, bounded and convex, we know from Lemma~\ref{lemma:uniform_delta_for_convex_markov_set} that there is some $\delta_1\in\realspos$ such that for all $P\in\wmprocesses_\rateset$, all $t\in\realsnonneg$, and all $\Delta\in\realsnonneg$ such that $\Delta<\delta_1$:
-\begin{equation}\label{lemma:restricted_trans_mat_system_totally_bounded_if_Q_bounded_convex:epsilon1}
-(\exists Q\in\rateset)\,\norm{T_t^{t+\Delta} - (I+\Delta Q)} \leq \Delta\epsilon_1.
-\end{equation}
-
 Because $\rateset$ is bounded and finite-dimensional, it is totally bounded under the metric induced by our usual norm $\norm{\cdot}$. Therefore, $\rateset$ admits a finite cover of open balls with radius $\epsilon_2$. In other words, there is some finite set $\rateset_{\epsilon_2}\subseteq\rateset$ such that
 \begin{equation}\label{lemma:restricted_trans_mat_system_totally_bounded_if_Q_bounded_convex:epsilon2}
 (\forall Q\in\rateset)(\exists \tilde{Q}\in\rateset_{\epsilon_2})\,:\,\norm{Q - \tilde{Q}} < \epsilon_2.
 \end{equation}
-
-Let $\delta\coloneqq\min\{\delta_1,\delta_3,\delta_4\}$. Then for all $P\in\wmprocesses_\rateset$, all $t\in\realsnonneg$, and all $\Delta\in\realsnonneg$ such that $\Delta<\delta$, it follows from Equations~\eqref{lemma:restricted_trans_mat_system_totally_bounded_if_Q_bounded_convex:epsilon1} and~\eqref{lemma:restricted_trans_mat_system_totally_bounded_if_Q_bounded_convex:epsilon2} and Lemma~\ref{lemma:linearpartofexponential} that there are $Q\in\rateset$ and $\tilde{Q}\in\rateset_{\epsilon_2}$ such that 
-\begin{align*}
-\norm{T_t^{t+\Delta}-e^{\tilde{Q}\Delta}}
-&\leq
-\norm{T_t^{t+\Delta}-(I+\Delta Q)}
-+\norm{\Delta(Q-\tilde{Q})}
-+\norm{I+\Delta\tilde{Q}-e^{\tilde{Q}\Delta}}\\
-&\leq
-\Delta\epsilon_1
-+\Delta\epsilon_2
-+\Delta^2\norm{\rateset}^2
-\leq\Delta(\epsilon_1+\epsilon_2+\epsilon_3),
-\end{align*}
-where the final inequality holds because $\Delta\norm{\rateset}^2\leq\delta\norm{\rateset}^2\leq\delta_3\norm{\rateset}^2<\epsilon_3$. Hence, for all $P\in\wmprocesses_\rateset$, all $t\in\realsnonneg$, and all $\Delta\in\realsnonneg$ such that $\Delta<\delta$:
-\begin{equation}\label{lemma:restricted_trans_mat_system_totally_bounded_if_Q_bounded_convex:epsilon123}
-(\exists \tilde{Q}\in\rateset_{\epsilon_2})~
-\norm{T_t^{t+\Delta}-e^{\tilde{Q}\Delta}}
-\leq
-\Delta(\epsilon_1+\epsilon_2+\epsilon_3)
+Furthermore, because $\rateset$ is non-empty, bounded and convex, we know from Lemma~\ref{lemma:uniform_delta_for_convex_markov_set} that there is some $\delta_1\in\realspos$ such that for all $P\in\wmprocesses_\rateset$, all $t\in\realsnonneg$, and all $\Delta\in\realsnonneg$ such that $\Delta<\delta_1$:
+\begin{equation}\label{lemma:restricted_trans_mat_system_totally_bounded_if_Q_bounded_convex:epsilon1}
+(\exists Q\in\rateset)\,\norm{T_t^{t+\Delta} - (I+\Delta Q)} \leq \Delta\epsilon_1.
 \end{equation}
 
-
-% Consider this $\delta$. Let now
-% \begin{equation*}
-% \delta^* \coloneqq \min\left\{\frac{\epsilon^*}{6C\norm{\rateset}^2},\, \frac{\epsilon^*}{12\norm{\rateset}},\, \delta\right\}\,.
-% \end{equation*}
-
-Consider now any $u\in\mathcal{U}_{[t,s]}$ such that $\sigma(u)<\delta$. Then, without loss of generality, there is some $n\in\nats$ such that $u=t_0,\ldots,t_n$. 
+Now let $\delta\coloneqq\min\{\delta_1,\delta_3,\delta_4\}$ and consider any $u\in\mathcal{U}_{[t,s]}$ such that $\sigma(u)<\delta$. Then, without loss of generality, there is some $n\in\nats$ such that $u=t_0,\ldots,t_n$. 
 %Then, let $\mathbb{T}_i$ be the set of restricted transition matrix systems defined by
 % \begin{equation*}
 % \mathbb{T}_i \coloneqq \left\{ \mathcal{T}_{Q_j}^{[t_{i-1},t_i]} \,:\,Q_j\in\rateset_{\epsilon'} \right\}\,.
@@ -3027,32 +3003,32 @@ Consider now any $u\in\mathcal{U}_{[t,s]}$ such that $\sigma(u)<\delta$. Then, w
 %Because each $\mathbb{T}_i$ is finite, there are only finitely many ways in which the product in Claim~\ref{claim:composition_restricted_trans_mat_sys_in_set} can be constructed. Therefore, if we now let
 Let
 \begin{equation*}
-\mathbb{C}_\epsilon \coloneqq \left\{\mathcal{T}_{\tilde{Q}_1}^{[t_{0},t_1]} \otimes \mathcal{T}_{\tilde{Q}_2}^{[t_{1},t_2]} \cdots \otimes \mathcal{T}_{\tilde{Q}_n}^{[t_{n-1},t_n]}\,:\,\left(\forall i\in\{1,\ldots,n\}\right)\,\tilde{Q}_i\in\rateset_{\epsilon_2}\right\},
+\mathbb{C}_\epsilon \coloneqq \left\{\mathcal{T}_{\tilde{Q}_1}^{[t_{0},t_1]} \otimes \mathcal{T}_{\tilde{Q}_2}^{[t_{1},t_2]}\otimes~ \cdots ~\otimes \mathcal{T}_{\tilde{Q}_n}^{[t_{n-1},t_n]}\,:\,\left(\forall i\in\{1,\ldots,n\}\right)\,\tilde{Q}_i\in\rateset_{\epsilon_2}\right\},
 \end{equation*}
 where, for any $\tilde{Q}\in\rateset_{\epsilon_2}$, we let $\mathcal{T}_{\tilde{Q}}^{[t_{i-1},t_i]}$ be the restriction of $\mathcal{T}_{\tilde{Q}}$ to the interval $[t_{i-1},t_i]$, with $\mathcal{T}_{\tilde{Q}}$ as in Definition~\ref{def:systemfromQ}.
-Since $n$ and $\abs{\rateset_{\epsilon_2}}$ are finite, this set $\mathbb{C}_\epsilon$ is clearly also finite and, because of Claim~\ref{claim:composition_restricted_trans_mat_sys_in_set}, it is a subset of $\mathbb{T}_\rateset^{[t,s]}$.
+Since $n$ and $\abs{\rateset_{\epsilon_2}}$ are finite, $\mathbb{C}_\epsilon$ is clearly finite and, because of Claim~\ref{claim:composition_restricted_trans_mat_sys_in_set}, $\mathbb{C}_\epsilon$ is a subset of $\mathbb{T}_\rateset^{[t,s]}$. The only thing that we still need to prove is that $\mathbb{C}_\epsilon$ satisfies Equation~\eqref{lemma:restricted_trans_mat_system_totally_bounded_if_Q_bounded_convex:thereisacover}.
 
-
-
-
-
-It remains to show that $\mathbb{C}_\epsilon$ generates an open $\epsilon$-cover of $\mathbb{T}_\rateset^{[t,s]}$. To this end, consider any $\mathcal{T}^{[t,s]}\in\mathbb{T}_\rateset^{[t,s]}$. We will show that there is some $\mathcal{S}^{[t,s]}\in \mathbb{C}_{\epsilon}$ such that $d(\mathcal{T}^{[t,s]},\mathcal{S}^{[t,s]})<\epsilon$. We start by constructing this $\mathcal{S}^{[t,s]}$.
-
-Because $\mathcal{T}^{[t,s]}\in\mathbb{T}_\rateset^{[t,s]}$, it follows that there is some corresponding $P\in\wmprocesses_\rateset$ which agrees with $\mathcal{T}^{[t,s]}$ on all transition matrices $T_q^r\in\mathcal{T}^{[t,s]}$. 
-
-Consider any $i\in\{1,\ldots,n\}$, and the corresponding transition matrix $T_{t_{i-1}}^{t_i}\in\mathcal{T}^{[t,s]}$. Clearly, we have that $T_{t_{i-1}}^{t_i}=T_{t_{i-1}}^{(t_{i-1}+\Delta_i)}$. Therefore, and because $\Delta_i\leq\sigma(u)<\delta^*\leq\delta$, it follows from Equation~\eqref{eq:lemma_total_bounded_uniform_delta} that there is some $Q_i\in\rateset$ such that
-\begin{equation}\label{eq:lemma_total_bounded_full_interval_error_linear}
-\norm{T_{t_{i-1}}^{t_i} - (I+\Delta_i Q_i)} < \frac{\Delta_i\epsilon^*}{6C}\,.
-\end{equation}
-Consider this $Q_i$. Because $Q_i\in\rateset$, it follows that there is some $\widetilde{Q}_i\in\rateset_{\epsilon'}$ such that
+So fix any $\mathcal{T}^{[t,s]}\in\mathbb{T}_\rateset^{[t,s]}$. %We will show that there is some $\mathcal{S}^{[t,s]}\in \mathbb{C}_{\epsilon}$ such that $d(\mathcal{T}^{[t,s]},\mathcal{S}^{[t,s]})<\epsilon$. We start by constructing this $\mathcal{S}^{[t,s]}$.
+Then for all $i\in\{1,\dots,n\}$, since $\Delta_i\leq\sigma(u)<\delta\leq\delta_1$, 
+%Because $\mathcal{T}^{[t,s]}\in\mathbb{T}_\rateset^{[t,s]}$, it follows that there is some corresponding $P\in\wmprocesses_\rateset$ which agrees with $\mathcal{T}^{[t,s]}$ on all transition matrices $T_q^r\in\mathcal{T}^{[t,s]}$. 
+it follows from Equations~\eqref{lemma:restricted_trans_mat_system_totally_bounded_if_Q_bounded_convex:epsilon1} and~\eqref{lemma:restricted_trans_mat_system_totally_bounded_if_Q_bounded_convex:epsilon2}---in that order---and Lemma~\ref{lemma:linearpartofexponential} that there are $Q_i\in\rateset$ and $\tilde{Q}_i^*\in\rateset_{\epsilon_2}$ such that 
+\begin{align}
+\norm{T_{t_{i-1}}^{t_i}-e^{\tilde{Q}_i^*\Delta_i}}
+&\leq
+\norm{T_{t_{i-1}}^{t_i}-(I+\Delta_i Q_i)}
++\norm{\Delta_i(Q_i-\tilde{Q}_i^*)}
++
+\big\lVert I+\Delta_i\tilde{Q}_i^*-e^{\tilde{Q}_i^*\Delta_i}
+\big\lVert\notag\\
+&\leq
+\Delta_i\epsilon_1
++\Delta_i\epsilon_2
++\Delta_i^2\norm{\rateset}^2
+\leq\Delta_i(\epsilon_1+\epsilon_2+\epsilon_3),\label{lemma:restricted_trans_mat_system_totally_bounded_if_Q_bounded_convex:epsilon123}
+\end{align}
+where the final inequality holds because $\Delta_i\norm{\rateset}^2\leq\delta\norm{\rateset}^2\leq\delta_3\norm{\rateset}^2<\epsilon_3$. We now use these $\tilde{Q}_i^*\in\rateset_{\epsilon_2}$, $i\in\{1,\dots,n\}$, to define
 \begin{equation*}
-\norm{Q_i - \widetilde{Q}_i} < \epsilon'\,.
-\end{equation*}
-Consider this $\widetilde{Q}_i$. Then, because $\widetilde{Q}_i\in\rateset_{\epsilon'}$, we have that $\mathcal{T}_{\widetilde{Q_i}}^{[t_{i-1},t_i]}\in\mathbb{T}_i$.
-
-If we now repeat this selection for all $i\in\{1,\ldots,n\}$, we end up with a collection $\mathcal{T}_{\widetilde{Q_1}}^{[t_{0},t_1]},\ldots,\mathcal{T}_{\widetilde{Q_n}}^{[t_{n-1},t_n]}$ such that $\mathcal{T}_{\widetilde{Q_i}}^{[t_{i-1},t_i]}\in \mathbb{T}_i$ for all $i\in\{1,\ldots,n\}$. Hence, by the construction of $\mathbb{C}_{\epsilon'}$, we have that
-\begin{equation*}
-\mathcal{S}^{[t,s]}\coloneqq \mathcal{T}_{\widetilde{Q_1}}^{[t_{0},t_1]} \otimes \cdots \otimes \mathcal{T}_{\widetilde{Q_n}}^{[t_{n-1},t_n]} \in \mathbb{C}_\epsilon\,.
+\mathcal{S}^{[t,s]}\coloneqq \mathcal{T}_{\tilde{Q}_1^*}^{[t_{0},t_1]} \otimes\mathcal{T}_{\tilde{Q}_1^*}^{[t_{0},t_1]} \otimes ~\cdots~ \otimes \mathcal{T}_{\tilde{Q}_n^*}^{[t_{n-1},t_n]} \in \mathbb{C}_\epsilon.
 \end{equation*}
 It remains to show that $d(\mathcal{T}^{[t,s]},\mathcal{S}^{[t,s]})<\epsilon$. We make use of the following two claims, which are proved below.
 \begin{claim}\label{claim:lemma_total_bounded_full_interval_error}
