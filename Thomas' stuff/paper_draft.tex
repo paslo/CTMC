@@ -2748,38 +2748,32 @@ Let $\rateset$ be any non-empty, bounded and convex set of rate matrices, and ch
 \begin{proof}
 Choose $\delta\in\realspos$ such that $\delta\norm{\rateset}<1$ and $\delta\norm{\rateset}^2<\nicefrac{\epsilon}{2}$ [this is clearly always possible] and consider any $P\in\wmprocesses_\rateset$, any $t\in\realsnonneg$ and any $\Delta<\delta$. If $\Delta=0$, the result is trivial because we know from Proposition~\ref{prop:Markovhassystem} and Definition~\ref{def:trans_mat_system} that $T_t^t=I$. Hence, without loss of generality, we may assume that $\Delta>0$.
 
-It now follows from Lemma~\ref{lemma:bound_on_linear_approx_partition} that there is some $v\in\mathcal{U}_{[t,t+\Delta]}$ with $v=t_0,\ldots,t_n$, such that, for all $i\in\{1,\ldots,n\}$, there is some $Q_i\in\rateset$ such that
+It now follows from Lemma~\ref{lemma:bound_on_linear_approx_partition} that there is some $v\in\mathcal{U}_{[t,t+\Delta]}$ with $v=t_0,\ldots,t_n$ and $t=t_0<t_1<\dots<t_n=t+\Delta$ and, for all $i\in\{1,\ldots,n\}$, some $Q_i\in\rateset$ such that
 \begin{equation*}
-\norm{T_{t_{i-1}}^{t_i} - (I+\Delta_iQ_i)} < \Delta_i\frac{\epsilon}{2}.
+\norm{T_{t_{i-1}}^{t_i} - (I+\Delta_iQ_i)} < \Delta_i\frac{\epsilon}{2}
+\text{~~and~~}
+\Delta_i\norm{Q_i}\leq \Delta\norm{\rateset}\leq \delta\norm{\rateset}<1.
 \end{equation*}
-Therefore, and due to Lemma~\ref{lemma:recursive}, we find using the Markov property of $P$ that
-\begin{align*}
-\norm{T_t^{t+\Delta} - \prod_{i=1}^n(I+\Delta_iQ_i)} &= \norm{\prod_{i=1}^nT_{t_{i-1}}^{t_i} - \prod_{i=1}^n(I+\Delta_iQ_i)}
+Therefore, it follows from Propositions~\ref{prop:stochastic_from_rate_matrix} and~\ref{prop:Markovhassystem}, Definition~\ref{def:trans_mat_system} and Lemma~\ref{lemma:recursive} that
+\begin{equation*}%\label{lemma:uniform_delta_for_convex_markov_set:firstinequality}
+\norm{T_t^{t+\Delta} - \prod_{i=1}^n(I+\Delta_iQ_i)} = \norm{\prod_{i=1}^nT_{t_{i-1}}^{t_i} - \prod_{i=1}^n(I+\Delta_iQ_i)}
  < \sum_{i=1}^n\Delta_i\frac{\epsilon}{2} 
  = \Delta\frac{\epsilon}{2}.
-\end{align*}
-Furthermore, since we know that, for all $i\in\{1,\dots,n\}$, $\Delta_i\norm{Q_i}\leq\Delta\norm{\rateset}\leq 1$, we can apply Lemma~\ref{lemma:convex_rate_set_contains_approximation} to find that
-\begin{equation*}
-\norm{\prod_{i=1}^n(I+\Delta_iQ_i) - (I+\sum_{i=1}^n\Delta_i Q_i)} < \Delta^2\norm{\rateset}^2
-\leq\Delta\delta\norm{\rateset}^2
-<\Delta\frac{\epsilon}{2}.
 \end{equation*}
-
-Putting this all together, we find that
-\begin{align*}
-\norm{T_t^{t+\Delta} - (I+\Delta Q)} &\leq \norm{T_t^{t+\Delta} - \prod_{i=1}^n(I+\Delta_iQ_i)} + \norm{\prod_{i=1}^n(I+\Delta_iQ_i) - (I+\sum_{i=1}^n\Delta_i Q_i)} \\
- &< \Delta\epsilon' + \Delta^2\norm{\rateset}^2 \\
- &< \Delta\frac{\epsilon}{2} + \Delta\delta\norm{\rateset}^2 \\
- &\leq \Delta\frac{\epsilon}{2} + \Delta\frac{\epsilon}{2\norm{\rateset}^2}\norm{\rateset}^2 \\
- &= \Delta\epsilon\,.
-\end{align*}
-
-Let now
-\begin{equation*}
-Q\coloneqq \sum_{i=1}^n \frac{\Delta_i}{\Delta} Q_i.
+and, with $Q\coloneqq\nicefrac{1}{\Delta}\sum_{i=1}^n \Delta_i Q_i$, it follows from Lemma~\ref{lemma:convex_rate_set_contains_approximation} that
+\begin{equation*}%\label{lemma:uniform_delta_for_convex_markov_set:secondinequality}
+\norm{\prod_{i=1}^n(I+\Delta_iQ_i)-(I+\Delta Q)}=
+\norm{\prod_{i=1}^n(I+\Delta_iQ_i) - (I+\sum_{i=1}^n\Delta_i Q_i)} < \Delta^2\norm{\rateset}^2.
 \end{equation*}
-Then $Q\in\rateset$ because $\rateset$ is convex and
-
+%It then follows from Equations~\eqref{lemma:uniform_delta_for_convex_markov_set:firstinequality} and~\eqref{lemma:uniform_delta_for_convex_markov_set:secondinequality} that
+By combining these two inequalities, we find that
+\begin{equation*}
+\norm{T_t^{t+\Delta} - (I+\Delta Q)} %\leq \norm{T_t^{t+\Delta} - \prod_{i=1}^n(I+\Delta_iQ_i)} + \norm{\prod_{i=1}^n(I+\Delta_iQ_i) - (I+\sum_{i=1}^n\Delta_i Q_i)}
+<\Delta\frac{\epsilon}{2}+\Delta^2\norm{\rateset}^2
+\leq\Delta\frac{\epsilon}{2}+\Delta\delta\norm{\rateset}^2
+<\Delta\frac{\epsilon}{2}+\Delta\frac{\epsilon}{2}=\Delta\epsilon.
+\end{equation*}
+The result now follows because the convexity of $\rateset$ implies that $Q\in\rateset$.
 \end{proof}
 
 
