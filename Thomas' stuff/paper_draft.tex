@@ -2877,7 +2877,7 @@ which implies that $\mathcal{T}_*^{\mathbf{I}}=\lim_{i\to\infty}\mathcal{T}_i^{\
 \end{proof}
 
 \begin{lemma}\label{lemma:restricted_trans_mat_system_complete_if_Q_closed}
-Consider a non-empty, bounded and closed set of rate matrices $\rateset$ and any $t,s\in\realsnonneg$ such that $t\leq s$. Let $d$ be the metric that is defined in Equation~\eqref{eq:trans_mat_system_metric}. The metric space $\smash{(\mathbb{T}_\rateset^{[t,s]},d)}$ is then complete.
+Consider a non-empty, bounded, convex and closed set of rate matrices $\rateset$ and any $t,s\in\realsnonneg$ such that $t\leq s$. Let $d$ be the metric that is defined in Equation~\eqref{eq:trans_mat_system_metric}. The metric space $\smash{(\mathbb{T}_\rateset^{[t,s]},d)}$ is then complete.
 \end{lemma}
 \begin{proof}
 Consider any sequence $\{\mathcal{T}_i^{[t,s]}\}_{i\in\nats}$ in $\mathbb{T}_{\rateset}^{[t,s]}$ that is Cauchy. We need to prove that this sequence converges to a limit $\mathcal{T}_*^{[t,s]}$ that belongs to $\mathbb{T}_{\rateset}^{[t,s]}$. Since we already know from Lemma~\ref{lemma:restricted_trans_mat_system_cauchy_converges} this limit exists and belongs to $\mathbb{T}^{[t,s]}$, the only thing that remains to be shown is that $\mathcal{T}_*^{[t,s]}\in\mathbb{T}_{\rateset}^{[t,s]}$. 
@@ -2904,46 +2904,34 @@ It remains to be show that $\mathcal{T}_*^{[t,s]}\in\mathbb{T}_\rateset^{[t,s]}$
 Then clearly, $\mathcal{T}_*$ is a transition matrix system and, since $\mathcal{T}_*^{[t,s]}$ is well-behaved, it follows from Proposition~\ref{prop:systemQ} and~\ref{prop:concat_restr_trans_mat_systems_is_system} that $\mathcal{T}_*$ is also well-behaved. Therefore, and because of Theorem~\ref{theo:uniqueMarkovchain}, there is some $P_*\in\wmprocesses$ such that $\mathcal{T}_{P_*}=\mathcal{T}_*$. In the remainder of this proof, we will show that $P_*\in\wmprocesses_\rateset$, which then implies that $\mathcal{T}_*^{[t,s]}\in\mathbb{T}_\rateset^{[t,s]}$.
 
 Fix any $r\in\realsnonneg$. We need to show that $\smash{\overline{\partial}}\presuper{*}T_r^r\subseteq\rateset$, or equivalently, that $\smash{\overline{\partial}_{+}}\hspace{-3pt}\presuper{*}T_r^r\subseteq\rateset$ and $\smash{\overline{\partial}_{-}}\hspace{-3pt}\presuper{*}T_r^r\subseteq\rateset$. We will only prove that $\smash{\overline{\partial}_{+}}\hspace{-3pt}\presuper{*}T_r^r\subseteq\rateset$. The proof for $\smash{\overline{\partial}_{-}}\hspace{-3pt}\presuper{*}T_r^r\subseteq\rateset$ is completely analogous. 
-So fix any $Q_*\in\smash{\overline{\partial}_{+}}\hspace{-3pt}\presuper{*}T_r^r$. We will show that $Q_*\in\rateset$. If $r<t$ or $s\leq r$, this holds trivially because in that case, we know that $\smash{\overline{\partial}}_+\presuper{*}T_r^r=\{Q\}\subseteq\rateset$ *** REFER TO PROPERTY ***. Therefore, without loss of generality, we may assume $r\in[t,s)$. 
+So fix any $Q_*\in\smash{\overline{\partial}_{+}}\hspace{-3pt}\presuper{*}T_r^r$. We will show that $Q_*\in\rateset$. If $r<t$ or $s\leq r$, this holds trivially because in that case, we know that $\smash{\overline{\partial}}_+\presuper{*}T_r^r=\{Q\}\subseteq\rateset$ *** REF TO PROP ***. Therefore, without loss of generality, we may assume $r\in[t,s)$. 
 
-Since $Q_*\in \smash{\overline{\partial}}_+\hspace{-3pt}\presuper{*}T_r^r$, Equation~\eqref{eq:rightouterderivative} implies the existence of a sequence $\{\Delta_k\}_{k\in\nats}\to0^+$ such that
-\begin{equation}\label{eq:lemma_transmatsystem_complete_limit_rate}
-Q_* = \lim_{k\to\infty}\frac{1}{\Delta_k}\left(\presuper{*}T_r^{r+\Delta_k} - I\right)\,.
+Fix any $m\in\nats$. Lemma~\ref{lemma:uniform_delta_for_convex_markov_set} then implies the existence of some $\delta\in\realspos$ such that
+\begin{equation}\label{eq:lemma:restricted_trans_mat_system_complete_if_Q_closed:uniformdelta}
+(\forall 0<\Delta<\delta)\,
+(\forall i\in\nats)\,
+(\exists Q\in\rateset)~\norm{\frac{\presuper{i}T_{r}^{r+\Delta} - I}{\Delta}- Q} \leq\frac{1}{m}.
 \end{equation}
-
-Now, consider any $i\in\nats$, and the corresponding restricted transition matrix system $\mathcal{T}_i^{[t,s]}$. Define $\epsilon_i\coloneqq d(\mathcal{T}_*^{[t,s]},\mathcal{T}_i^{[t,s]})$. Because $\mathcal{T}_i^{[t,s]}$ corresponds to some Markov chain $P_i\in\wmprocesses_\rateset$, by Proposition~\ref{prop:outerderivativebehaveslikelimit}, we have that
-\begin{equation*}
-(\exists \delta_i\in\realspos)(\forall \Delta\in(0,\delta_i))(\exists Q_i\in\rateset)\,:\,\norm{\frac{\presuper{i}T_r^{r+\Delta} - I}{\Delta} - Q_i} < \epsilon_i\,.
+Since $Q_*\in \smash{\overline{\partial}}_+\hspace{-3pt}\presuper{*}T_r^r$, Equation~\eqref{eq:rightouterderivative} implies the existence of some $0<\Delta_m<\delta$ such that
+\begin{equation*}%\label{eq:lemma:restricted_trans_mat_system_complete_if_Q_closed:deltam}
+\norm{\frac{\presuper{*}T_r^{r+\Delta_m} - I}{\Delta_m}-Q_*}<\frac{1}{m}
 \end{equation*}
-Consider this $\delta_i$. Due to Equation~\eqref{eq:lemma_transmatsystem_complete_limit_rate}, there must be some $n_i\in\nats$ such that, for all $k>n_i$, it holds that
-\begin{equation*}
-\norm{\frac{\presuper{*}T_r^{r+\Delta_k} - I}{\Delta_k} - Q_*} < \epsilon_i\,.
+and, since $\lim_{i\to+\infty}\presuper{i}T_r^{r+\Delta_m}=\presuper{*}T_r^{r+\Delta_m}$, there is some $i_m\in\nats$ such that
+\begin{equation*}%\label{eq:lemma:restricted_trans_mat_system_complete_if_Q_closed:im}
+\norm{\frac{\presuper{*}T_r^{r+\Delta_m}-\presuper{i_m}T_r^{r+\Delta_m}}{\Delta_m}}\leq\frac{1}{m}.
 \end{equation*}
-Consider this $n_i$. Finally, because $\{\Delta_k\}_{k\in\nats}\to0^+$, there must be some $k_i\in\nats$ such that $k_i>n_i$, and for which $\Delta_{k_i}<\min\{\delta_i,1\}$. Consider this $k_i$. Then, because $\Delta_{k_i}<\delta_i$, there must be some $Q_i\in\rateset$ such that
+Therefore, we can apply Equation~\eqref{eq:lemma:restricted_trans_mat_system_complete_if_Q_closed:uniformdelta}---with $\Delta\coloneqq\Delta_m$ and $i\coloneqq i_m$---to infer that there is some $Q_m\in\rateset$ such that
 \begin{equation*}
-\norm{\frac{\presuper{i}T_r^{r+\Delta_{k_i}} - I}{\Delta_{k_i}} - Q_i} < \epsilon_i\,.
+\norm{Q_*-Q_m}
+\leq
+\norm{Q_*-\frac{\presuper{*}T_r^{r+\Delta_m} - I}{\Delta_m}}
++
+\norm{\frac{\presuper{*}T_r^{r+\Delta_m}-\presuper{i_m}T_r^{r+\Delta_m}}{\Delta_m}}
++
+\norm{\frac{\presuper{i_m}T_{r}^{r+\Delta_m} - I}{\Delta_m}- Q_m}
+\leq\frac{3}{m}.
 \end{equation*}
-Consider this $Q_i$. Putting this together, we have found a rate matrix $Q_i\in\rateset$, such that *** THE SECOND INEQUALITY IS PROBLEMATIC! THE $\Delta_{k_i}$ SHOULD BE IN THE DENOMINATOR! ***
-
-*****
-Oeps, mijn excuses. Er is een makkelijke fix door convexiteit van $\rateset$ te introduceren, maar zou fijner zijn als dat niet hoeft.
-
-Ben jij al aan het proberen om deze te fixen, of zal ik er nog eens naar kijken? (mijn schuld tenslotte).
-
-Ik ben wel over 45 minuten weg van huis voor de rest van de dag, en niet bereikbaar tot vanavond ergens. Laat maar even weten :)
-*****
-
-\begin{align*}
-\norm{Q_i - Q_*} &\leq \norm{\frac{\presuper{i}T_r^{r+\Delta_{k_i}} - I}{\Delta_{k_i}} - Q_i} + \norm{\frac{\presuper{*}T_r^{r+\Delta_{k_i}} - I}{\Delta_{k_i}} - Q_*} + \norm{\frac{\presuper{i}T_r^{r+\Delta_{k_i}} - I}{\Delta_{k_i}} - \frac{\presuper{*}T_r^{r+\Delta_{k_i}} - I}{\Delta_{k_i}}} \\
- &< \epsilon_i + \epsilon_i + \Delta_{k_i}d(\mathcal{T}_*^{[t,s]},\mathcal{T}_i^{[t,s]}) \\
- &< 2\epsilon_i + d(\mathcal{T}_*^{[t,s]},\mathcal{T}_i^{[t,s]})\,,
-\end{align*}
-where the last inequality used the fact that $\Delta_{k_i}<1$. Therefore, and by the definition of $\epsilon_i$, we have that
-\begin{equation}\label{eq:lemma_transmatsystem_complete_rate_sequence_converges}
-\norm{Q_i - Q_*} < 3d(\mathcal{T}_*^{[t,s]},\mathcal{T}_i^{[t,s]})\,.
-\end{equation}
-
-If we now repeat this selection for all $i\in\nats$, we end up with a sequence $\{Q_i\}_{i\in\nats}$ in $\rateset$. Furthermore, because $\mathcal{T}_*^{[t,s]}=\lim_{i\to\infty}\mathcal{T}_i^{[t,s]}$, it clearly follows from Equation~\eqref{eq:lemma_transmatsystem_complete_rate_sequence_converges} that $Q_*=\lim_{i\to\infty} Q_i$. Because this sequence $\{Q_i\}_{i\in\nats}$ is in $\rateset$, and because $\rateset$ is closed, we must therefore have that $Q_*\in\rateset$. 
+By repeating this procedure for every $m\in\nats$, we obtain a sequence $\{Q_m\}_{n\in\nats}$ in $\rateset$ such that $\norm{Q_*-Q_m}\leq\nicefrac{3}{m}$ for all $m\in\nats$, which clearly implies that $\lim_{m\to+\infty}Q_m=Q_*$. Since the sequence $\{Q_m\}_{m\in\nats}$ belongs to the closed set $\rateset$, we must therefore have that $Q_*\in\rateset$.
 \end{proof}
 
 \begin{lemma}\label{lemma:restricted_trans_mat_system_totally_bounded_if_Q_bounded_convex}
