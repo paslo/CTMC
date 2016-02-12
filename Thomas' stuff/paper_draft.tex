@@ -4286,9 +4286,9 @@ We then factorize the interval $[t,s]$ according to $u$, using Proposition~\ref{
 \norm{L_t^sf - T_t^sf} &= \norm{L_{t_0}^{t_n}f - T_{t_0}^{t_n}f} \\
  &\leq \norm{L_{t_0}^{t_n}f - T_{t_0}^{t_{n-1}}L_{t_{n-1}}^{t_n}f} + \norm{T_{t_0}^{t_{n-1}}L_{t_{n-1}}^{t_n}f - T_{t_0}^{t_n}f} \\
  &\leq \norm{L_{t_0}^{t_{n-1}}L_{t_{n-1}}^{t_n}f - T_{t_0}^{t_{n-1}}L_{t_{n-1}}^{t_n}f} + \norm{{T_{t_0}^{t_{n-1}}}}\cdot\norm{L_{t_{n-1}}^{t_n}f - T_{t_{n-1}}^{t_n}f} \\
- &\leq \norm{L_{t_0}^{t_{n-1}}\left[L_{t_{n-1}}^{t_n}f\right] - T_{t_0}^{t_{n-1}}\left[L_{t_{n-1}}^{t_n}f\right]} + \norm{L_{t_{n-1}}^{t_n}f - T_{t_{n-1}}^{t_n}f} \,.
+ &= \norm{L_{t_0}^{t_{n-1}}\left[L_{t_{n-1}}^{t_n}f\right] - T_{t_0}^{t_{n-1}}\left[L_{t_{n-1}}^{t_n}f\right]} + \norm{L_{t_{n-1}}^{t_n}f - T_{t_{n-1}}^{t_n}f} \,.
 \end{align*}
-Recursion on the first summand yields
+Recursion on the first remaining summand yields
 \begin{align*}
 \norm{L_t^sf - T_t^sf} &\leq \norm{L_{t_0}^{t_{n-1}}\left[L_{t_{n-1}}^{t_n}f\right] - T_{t_0}^{t_{n-1}}\left[L_{t_{n-1}}^{t_n}f\right]} + \norm{L_{t_{n-1}}^{t_n}f - T_{t_{n-1}}^{t_n}f} \\
  &\leq \norm{L_{t_0}^{t_{n-2}}\left[L_{t_{n-2}}^{t_n}f\right] - T_{t_0}^{t_{n-2}}\left[L_{t_{n-2}}^{t_n}f\right]} \\
@@ -4359,17 +4359,17 @@ Because the $i$ was arbitrary, we find using Equation~\eqref{eq:delta_required_f
 \end{proof}
 
 \begin{proof}[Proof of Corollary~\ref{cor:lower_operator_is_infimum}]
-We start by proving the first statement. By Theorem~\ref{theorem:nonmarkov_single_var_lower_bounded} and Proposition~\ref{prop:lower_exp_markov_bounded_by_nonmarkov}, we have that for all $P\in\mprocesses_\rateset$ it holds that $\left[L_t^sg\right](x) \leq \mathbb{E}[g(X_s)\,\vert\,X_t=x]$. Furthermore, by Theorem~\ref{theorem:lower_markov_bound_is_tight}, for all $\epsilon\in\realspos$ there is some $P\in\mprocesses_\rateset$ such that $\norm{L_t^sg - T_t^sg} < \epsilon$. Together this implies, using Definition~\ref{def:lower_markov}, that
+We start by proving the first statement. By Proposition~\ref{theorem:nonmarkov_single_var_lower_bounded} and Proposition~\ref{prop:lower_exp_markov_bounded_by_nonmarkov}, we have that for all $P\in\wmprocesses_\rateset$ it holds that $\left[L_t^sf\right](x) \leq \mathbb{E}[f(X_s)\,\vert\,X_t=x]$. Furthermore, by Proposition~\ref{theorem:lower_markov_bound_is_tight}, for all $\epsilon\in\realspos$ there is some $P\in\wmprocesses_\rateset$ such that $\norm{L_t^sf - T_t^sf} < \epsilon$. Together this implies, using Definition~\ref{def:lower_exp}, that
 \begin{equation*}
-\left[L_t^sg\right](x) = \inf\left\{\left[T_t^sf\right](x)\,:\,P\in\mprocesses_\rateset\right\} = \underline{\mathbb{E}}^{\mathrm{M}}\left[g(X_s)\,\vert\,X_t=x\right]\,.
+\left[L_t^sf\right](x) = \inf\left\{\left[T_t^sf\right](x)\,:\,P\in\wmprocesses_\rateset\right\} = \underline{\mathbb{E}}^{\mathrm{WM}}_\rateset\left[f(X_s)\,\vert\,X_t=x\right]\,.
 \end{equation*}
 
-We now move on to the second statement. By Theorem~\ref{theorem:nonmarkov_single_var_lower_bounded} we have that for all $P\in\processes_\rateset$ it holds that $\left[L_t^sg\right](x) \leq \mathbb{E}[g(X_s)\,\vert\,X_t=x]$.
-Furthermore, by Theorem~\ref{theorem:lower_markov_bound_is_tight} and Proposition~\ref{prop:markov_set_subset_of_nonmarkov_set}, for all $\epsilon\in\realsnonneg$ there is some $P\in\processes_\rateset$ such that
-$\norm{L_t^sg - T_t^sg} < \epsilon$.
-Together this implies, using Definition~\ref{def:lower_non_markov}, that
+We now move on to the second statement. By Proposition~\ref{theorem:nonmarkov_single_var_lower_bounded} we have that for all $P\in\wprocesses_\rateset$ it holds that $\left[L_t^sf\right](x) \leq \mathbb{E}[f(X_s)\,\vert\,X_t=x,X_u=x_u]$.
+Furthermore, by Proposition~\ref{theorem:lower_markov_bound_is_tight} and Proposition~\ref{prop:markov_set_subset_of_nonmarkov_set}, for all $\epsilon\in\realspos$ there is some $P\in\wprocesses_\rateset$, for which $T_{t,x_u}^s=T_t^s$, such that
+$\norm{L_t^sf - T_{t,x_u}^sf} < \epsilon$.
+Together this implies, using Definition~\ref{def:lower_exp}, that
 \begin{equation*}
-\left[L_t^sg\right](x) = \inf\left\{\left[T_t^sf\right](x)\,:\,P\in\processes_\rateset\right\} = \underline{\mathbb{E}}\left[g(X_s)\,\vert\,X_t=x\right]\,.
+\left[L_t^sf\right](x) = \inf\left\{\left[T_{t,x_u}^sf\right](x)\,:\,P\in\wprocesses_\rateset\right\} = \underline{\mathbb{E}}^\mathrm{W}_\rateset\left[f(X_s)\,\vert\,X_t=x,X_u=x_u\right]\,.
 \end{equation*}
 \end{proof}
 
