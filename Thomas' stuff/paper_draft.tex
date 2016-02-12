@@ -309,7 +309,7 @@ $\norm{Af}\leq\norm{A}\norm{f}$
 \end{multicols}
 \end{proposition}
 
-\subsection{Notation for the Joint State Space}\label{sec:multivar_notation}
+\subsection{Notation for the Time-Indexed State Space}\label{sec:multivar_notation}
 
 We will also find it convenient to have notation for functions defined on the state space at (multiple) explicit time points. To this end, for any finite sequence of time points $u\in\mathcal{U}$ such that $u=t_0,\ldots,t_n$, we let
 \begin{equation*}
@@ -369,11 +369,79 @@ Finally, we will want to use operators as defined in Section~\ref{sec:func_oper_
 %\left[Af\right](x_{t_0},\ldots,x_{t_{n-1}}) \equiv \left[A f(x_{t_0},\ldots,x_{t_{n-1}},X_{t_n})\right](x_{t_{n-1}})\,.
 %\end{equation*}
 
+\subsection{Transition (Rate) Matrices}\label{sec:trans_rate_matrices}
+
+*** some intro text, explain why these are useful, and how they are related to stochastic processes
+
+\begin{definition}[Transition Rate Matrix]\label{def:rate_matrix}
+A real-valued matrix $Q$ is said to be a \emph{transition rate matrix}, or sometimes simply \emph{rate matrix}, if
+
+\vspace{5pt}
+\begin{enumerate}[label=R\arabic*:,ref=R\arabic*]
+\item\label{def:Q:sumzero}
+$\sum_{y\in\states}Q(x,y)=0$ for all $x\in\states$;
+\item\label{def:Q:nonnegoffdiagonal}
+$Q(x,y)\geq0$ for all $x,y\in\states$ such that $x\neq y$.
+\end{enumerate}
+\vspace{5pt}
+\noindent
+We use $\mathcal{R}$ to denote the set of all transition rate matrices. 
+\end{definition}
+
+\noindent Clearly, $\mathcal{R}$ is closed under finite sums and multiplication with non-negative scalars. 
+
+\begin{definition}[Transition Matrix]\label{def:stoch_matrix}
+A real-valued matrix $T$ is said to be a \emph{transition matrix} if
+\vspace{5pt}
+\begin{enumerate}[label=T\arabic*:,ref=T\arabic*]
+\item\label{def:T:sumone}
+$\sum_{y\in\states}T(x,y)=1$ for all $x\in\states$;\label{def:trans_matrix_is_stochastic}
+\item\label{def:T:nonneg}
+$T(x,y)\geq0$ for all $x,y\in\states$.
+\end{enumerate}
+\vspace{5pt}
+\noindent
+\end{definition}
+
+*** tralala, rate matrices and transition matrices zijn sterk gelinkt.  intuitief geven rate matrices aan hoe snel een transitie kans veranderd, in termen van $\Delta$.
+
+\begin{proposition}\label{prop:stochastic_from_rate_matrix}
+Consider any transition rate matrix $Q\in\mathcal{R}$, and any $\Delta\in\realsnonneg$ such that $\Delta \norm{Q}\leq 1$. Then, the matrix $(I+\Delta Q)$ is a transition matrix.
+\end{proposition}
+
+\begin{proposition}\label{prop:rate_from_stochastic_matrix}
+Consider any transition matrix $T$, and any $\Delta\in\realspos$. Then, the matrix $\nicefrac{1}{\Delta}(T-I)$ is a transition rate matrix.
+\end{proposition}
+
+% \noindent We start by establishing some properties of the norm of these matrices. Both propositions follow trivially from the definitions.
+
+% \begin{proposition}
+% Let $Q$ be an arbitrary transition rate matrix. Then, $\norm{Q}<+\infty$.
+% \end{proposition}
+
+% \begin{proposition}\label{prop:normoftransisone}
+% Let $T$ be an arbitrary transition matrix. Then, $\norm{T}=1$.
+% \end{proposition}
+
+Consider now any set $\rateset\subseteq\mathcal{R}$ of rate matrices. Then $\rateset$ is said to be \emph{non-empty} if $\rateset\neq\emptyset$ and $\rateset$ is said to be \emph{bounded} if $\norm{\rateset}<+\infty$. The following proposition provides a simple alternative characterisation of boundedness.
+
+\begin{proposition}\label{prop:alternativedefforbounded}
+A set of rate matrices $\rateset\subseteq\mathcal{R}$ is bounded if and only if
+\begin{equation*}
+\inf\left\{Q(x,x)\colon Q\in\rateset\right\}>-\infty\text{~~for all $x\in\states$.}
+\end{equation*}
+\end{proposition}
+\begin{proof}
+*** {\bf TODO}
+\end{proof}
+
 \subsection{Full Conditional Probabilities}\label{sec:cond_prob}
 
 We will in Section~\ref{sec:stochastic_processes} define continuous-time stochastic processes using the framework of full conditional probabilities, which we describe here. 
 
-Consider some arbitrary random experiment, with some (possibly infinite) \emph{possibility space} $\Omega$. An element $\omega\in\Omega$ of this set is then interpreted as one possible outcome of the random experiment. In order to describe multiple possible outcomes simultaneously, we use the notion of \emph{events}. Such an event $E$ is a subset of $\Omega$. We use $\power$ to denote the set of all events, and let $\nonemptypower\coloneqq\power\setminus\{\emptyset\}$. A full conditional probability measure $P$ is then a map from the set $\power\times\nonemptypower$ of all (conditional) events to $\reals$ that quantifies the uncertainty of the outcomes of the random experiment, as follows.
+Consider some arbitrary random experiment, with some (non-empty, possibly infinite) \emph{outcome space} $\Omega$. An element $\omega\in\Omega$ of this set is then interpreted as one possible outcome of the random experiment. In order to describe multiple possible outcomes simultaneously, we use the notion of \emph{events}. Such an event $E$ is a subset of $\Omega$. We use $\power$ to denote the set of all events, and let $\nonemptypower\coloneqq\power\setminus\{\emptyset\}$. An element $(A,C)\in\power\times\nonemptypower$ is called \emph{the event $A$ conditional on the event $C$}, and the set $\power\times\nonemptypower$ is called the set of all \emph{conditional} events. 
+
+A full conditional probability $P$ is then a map from the set $\power\times\nonemptypower$ to $\reals$ that quantifies the uncertainty of the outcomes of the random experiment, as follows.
 
 \begin{definition}[Full conditional probability]\label{def:cond_prob}
 A full conditional probability $P$ is a real-valued map from $\power\times\nonemptypower$ to $\reals$ that satisfies the following axioms. For all $A,B\in\power$ and all \mbox{$C,D\in\nonemptypower$}:
@@ -441,75 +509,6 @@ First assume that $P$ can be extended to a full conditional probability $P^*$. T
 
 Conversely, if $P$ is a coherent conditional probability on $\mathcal{C}$, it follows from Theorem~\ref{theo:largerdomain} that $P$ can be extended to a coherent conditional probability $P^*$ on $\power\times\nonemptypower$, which, because of Theorem~\ref{theo:fullcoherent}, is a full conditional probability.
 \end{proof}
-
-
-\subsection{Transition (Rate) Matrices}\label{sec:trans_rate_matrices}
-
-*** some intro text, explain why these are useful, and how they are related to stochastic processes
-
-\begin{definition}[Transition Rate Matrix]\label{def:rate_matrix}
-A real-valued matrix $Q$ is said to be a \emph{transition rate matrix}, or sometimes simply \emph{rate matrix}, if
-
-\vspace{5pt}
-\begin{enumerate}[label=R\arabic*:,ref=R\arabic*]
-\item\label{def:Q:sumzero}
-$\sum_{y\in\states}Q(x,y)=0$ for all $x\in\states$;
-\item\label{def:Q:nonnegoffdiagonal}
-$Q(x,y)\geq0$ for all $x,y\in\states$ such that $x\neq y$.
-\end{enumerate}
-\vspace{5pt}
-\noindent
-We use $\mathcal{R}$ to denote the set of all transition rate matrices. 
-\end{definition}
-
-\noindent Clearly, $\mathcal{R}$ is closed under finite sums and multiplication with non-negative scalars. 
-
-\begin{definition}[Transition Matrix]\label{def:stoch_matrix}
-A real-valued matrix $T$ is said to be a \emph{transition matrix} if
-\vspace{5pt}
-\begin{enumerate}[label=S\arabic*:,ref=S\arabic*]
-\item\label{def:T:sumone}
-$\sum_{y\in\states}T(x,y)=1$ for all $x\in\states$;\label{def:trans_matrix_is_stochastic}
-\item\label{def:T:nonneg}
-$T(x,y)\geq0$ for all $x,y\in\states$.
-\end{enumerate}
-\vspace{5pt}
-\noindent
-\end{definition}
-
-*** tralala, rate matrices and transition matrices zijn sterk gelinkt.  intuitief geven rate matrices aan hoe snel een transitie kans veranderd, in termen van $\Delta$.
-
-\begin{proposition}\label{prop:stochastic_from_rate_matrix}
-Consider any transition rate matrix $Q\in\mathcal{R}$, and any $\Delta\in\realsnonneg$ such that $\Delta \norm{Q}\leq 1$. Then, the matrix $(I+\Delta Q)$ is a transition matrix.
-\end{proposition}
-
-\begin{proposition}\label{prop:rate_from_stochastic_matrix}
-Consider any transition matrix $T$, and any $\Delta\in\realspos$. Then, the matrix $\nicefrac{1}{\Delta}(T-I)$ is a transition rate matrix.
-\end{proposition}
-
-% \noindent We start by establishing some properties of the norm of these matrices. Both propositions follow trivially from the definitions.
-
-% \begin{proposition}
-% Let $Q$ be an arbitrary transition rate matrix. Then, $\norm{Q}<+\infty$.
-% \end{proposition}
-
-% \begin{proposition}\label{prop:normoftransisone}
-% Let $T$ be an arbitrary transition matrix. Then, $\norm{T}=1$.
-% \end{proposition}
-
-Consider now any set $\rateset\subseteq\mathcal{R}$ of rate matrices. Then $\rateset$ is said to be \emph{non-empty} if $\rateset\neq\emptyset$ and $\rateset$ is said to be \emph{bounded} if $\norm{\rateset}<+\infty$. The following proposition provides a simple alternative characterisation of boundedness.
-
-\begin{proposition}\label{prop:alternativedefforbounded}
-A set of rate matrices $\rateset\subseteq\mathcal{R}$ is bounded if and only if
-\begin{equation*}
-\inf\left\{Q(x,x)\colon Q\in\rateset\right\}>-\infty\text{~~for all $x\in\states$.}
-\end{equation*}
-\end{proposition}
-\begin{proof}
-*** {\bf TODO}
-\end{proof}
-
-
 
 \section{Continuous-Time Stochastic Processes}\label{sec:stochastic_processes}
 
@@ -1249,13 +1248,13 @@ We will call a map $\lrate$ from $\gamblesX$ to $\gamblesX$ a \emph{lower transi
 %\vspace{5pt}
 \begin{enumerate}[label=LR\arabic*:,ref=LR\arabic*]
 \item\label{LR:constantzero}
-$\lrate(\mu)(x)=0$;
-\item\label{LR:subadditive}
-$\lrate(f+g)(x)\geq\lrate(f)(x)+\lrate(g)(x)$;
-\item\label{LR:homo}
-$\lrate(\lambda f)(x)=\lambda\lrate(f)(x)$;
+$\left[\lrate\mu\right](x)=0$;
 \item\label{LR:nondiagpos}
-$\lrate(\ind{y})(x)\geq0$ for all $y\in\states$ such that $x\neq y$.
+$\left[\lrate\ind{y}\right](x)\geq0$ for all $y\in\states$ such that $x\neq y$;
+\item\label{LR:subadditive}
+$\left[\lrate(f+g)\right](x)\geq\left[\lrate f\right](x)+\left[\lrate g\right](x)$;
+\item\label{LR:homo}
+$\left[\lrate(\lambda f)\right](x)= \lambda\left[\lrate f\right](x)$.
 \end{enumerate}
 %\vspace{5pt}
 \end{definition}
@@ -1266,13 +1265,13 @@ Note that properties~\ref{LR:constantzero} and~\ref{LR:nondiagpos} essentially p
 We will call a map $\lt$ from $\gamblesX$ to $\gamblesX$ a \emph{lower transition operator} if, for all $f,g\in\gamblesX$, all $\lambda\in\realsnonneg$, and all $x\in\states$:
 
 %\vspace{5pt}
-\begin{enumerate}[label=C\arabic*:]
+\begin{enumerate}[label=LT\arabic*:,ref=LT\arabic*]
 \item
-$\lt(f)(x)\geq\min\left\{f(y)\,\vert\,y\in\states\right\}$
+$\left[\lt f\right](x)\geq\min\left\{f(y)\,\vert\,y\in\states\right\}$
 \item
-$\lt(f+g)(x)\geq\lt(f)(x)+\lt(g)(x)$;
+$\left[\lt(f+g)\right](x)\geq \left[\lt f\right](x)+\left[\lt g\right](x)$;
 \item
-$\lt(\lambda f)(x)=\lambda\lt(f)(x)$.
+$\left[\lt(\lambda f)\right](x)=\lambda\left[\lt f\right](x)$.
 \end{enumerate}
 %\vspace{5pt}
 \noindent We use $\underline{\mathcal{T}}$ to denote the set of all lower transition operators.
@@ -1881,6 +1880,18 @@ Finally, previous work only focused on functions $f\in\gamblesX$ defined at a si
 
 \section{Proofs of results in Section~\ref{sec:prelim}}\label{app:prelim}
 
+\begin{proof}[Proof of Proposition~\ref{prop:stochastic_from_rate_matrix}]
+\ref{def:T:sumone} follows from \ref{def:Q:sumzero}: for all $x\in\states$, \ref{def:Q:sumzero} implies that
+\begin{equation*}
+\sum_{y\in\states} T(x,y) = \sum_{y\in\states} [I + \Delta Q](x,y) = \sum_{y\in\states}I(x,y) + \Delta \sum_{y\in\states}Q(x,y) = 1+\Delta 0=1.
+\end{equation*}
+\ref{def:T:nonneg} follows from~\ref{def:Q:nonnegoffdiagonal} and because $0\leq \Delta \leq \nicefrac{1}{\norm{Q}}$: for all $x,y\in\states$ such that $x\neq y$, $0\leq \Delta \leq \nicefrac{1}{\norm{Q}}$ implies that $[I+\Delta Q](x,x)=1+\Delta Q(x,x)\geq 1-\Delta\norm{Q}\geq0$, and \ref{def:Q:nonnegoffdiagonal} and $\Delta\geq0$ implies that $[I+\Delta Q](x,y)=\Delta Q(x,y)\geq0$.
+\end{proof}
+
+\begin{proof}[Proof of Proposition~\ref{prop:rate_from_stochastic_matrix}]
+This proof is analogous to that of Proposition~\ref{prop:stochastic_from_rate_matrix}; simply verify each of the properties in Definition~\ref{def:rate_matrix}.
+\end{proof}
+
 \begin{proof}[Proof of \ref{def:coh_prob_2b}-\ref{def:coh_prob_5}]
 Consider any $A\in\power$ and $C\in\nonemptypower$. It then follows from \ref{def:coh_prob_1} and \ref{def:coh_prob_3} that
 \vspace{-7pt}
@@ -1952,19 +1963,6 @@ P(A\cap C\vert C)
 % \end{align*}
 % which proves~\ref{lem:alt_axiom_prob_3}.
 % \end{proof}
-
-
-\begin{proof}[Proof of Proposition~\ref{prop:stochastic_from_rate_matrix}]
-\ref{def:T:sumone} follows from \ref{def:Q:sumzero}: for all $x\in\states$, \ref{def:Q:sumzero} implies that
-\begin{equation*}
-\sum_{y\in\states} T(x,y) = \sum_{y\in\states} [I + \Delta Q](x,y) = \sum_{y\in\states}I(x,y) + \Delta \sum_{y\in\states}Q(x,y) = 1+\Delta 0=1.
-\end{equation*}
-\ref{def:T:nonneg} follows from~\ref{def:Q:nonnegoffdiagonal} and because $0\leq \Delta \leq \nicefrac{1}{\norm{Q}}$: for all $x,y\in\states$ such that $x\neq y$, $0\leq \Delta \leq \nicefrac{1}{\norm{Q}}$ implies that $[I+\Delta Q](x,x)=1+\Delta Q(x,x)\geq 1-\Delta\norm{Q}\geq0$, and \ref{def:Q:nonnegoffdiagonal} and $\Delta\geq0$ implies that $[I+\Delta Q](x,y)=\Delta Q(x,y)\geq0$.
-\end{proof}
-
-\begin{proof}[Proof of Proposition~\ref{prop:rate_from_stochastic_matrix}]
-This proof is analogous to that of Proposition~\ref{prop:stochastic_from_rate_matrix}; simply verify each of the properties in Definition~\ref{def:rate_matrix}.
-\end{proof}
 
 \section{Proofs and Lemmas for Section~\ref{sec:stochastic_processes}}
 
