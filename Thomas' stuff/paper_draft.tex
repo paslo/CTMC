@@ -1203,7 +1203,7 @@ Let $\rateset$ be an arbitrary non-empty, bounded, and convex set of rate matric
 
 We next consider the case where $\rateset$ is both convex and closed, and consider the set $\wmprocesses_\rateset$. Recall from Section~\ref{sec:dynamics} that for any function $f\in\gamblesX$, its expectation with respect to a process $P\in\wmprocesses_\rateset$ can alternatively be expressed using the transition matrix corresponding to this process. Specifically, it holds that $\mathbb{E}[f(X_s)\,\vert\,X_t]=T_t^sf$. Note furthermore that a lower expectation $\underline{\mathbb{E}}_{\,\rateset}^{\mathrm{WM}}$ is an infimum over the set of expectations $\mathbb{E}$ corresponding to all $P\in\wmprocesses_\rateset$. It should therefore be clear that the set of transition matrices $T_t^s$ corresponding to all $P\in\wmprocesses_\rateset$ is also of interest to us.
 
-Recall from Section~\ref{sec:cont_time_markov_chains} that for each $P\in\wmprocesses_\rateset$, there is a transition matrix system $\mathcal{T}_P$ containing all transition matrices corresponding to $P$. Furthermore, this $\mathcal{T}_P$ has a restriction $\mathcal{T}_P^{[t,s]}$ to the interval $[t,s]$, and $T_t^s\in\mathcal{T}_P^{[t,s]}$. We will now look at the space of the restricted transition matrix systems corresponding to all $P\in\wmprocesses_\rateset$. To this end, for any non-empty bounded set of rate matrices $\rateset$ and any $t,s\in\realsnonneg$ such that $t\leq s$, let
+Recall from Section~\ref{sec:cont_time_markov_chains} that for each $P\in\wmprocesses_\rateset$, there is a transition matrix system $\mathcal{T}_P$ specifying all transition matrices corresponding to $P$. Furthermore, this $\mathcal{T}_P$ has a restriction $\mathcal{T}_P^{[t,s]}$ to the interval $[t,s]$, and this restriction also specifies $T_t^s$. We will now look at the space of the restricted transition matrix systems corresponding to all $P\in\wmprocesses_\rateset$. To this end, for any non-empty bounded set of rate matrices $\rateset$ and any $t,s\in\realsnonneg$ such that $t\leq s$, let
 \begin{equation*}
 \mathbb{T}_\rateset^{[t,s]} \coloneqq \left\{\mathcal{T}_P^{[t,s]}\,:\,P\in\wmprocesses_\rateset\right\}\,.
 \end{equation*}
@@ -1574,16 +1574,16 @@ Having established a strong connection between the operator $\lrate$ and non-emp
 As the following result shows, the operator $L_t^s$ corresponding to a lower transition rate operator $\lrate$ computes a lower bound on the expectation of a function $f\in\gamblesX$, with respect to the set $\wprocesses_\rateset$ of well-behaved stochastic processes consistent with any set $\rateset$ of which $\lrate$ is the lower envelope.
 
 \begin{proposition}\label{theorem:nonmarkov_single_var_lower_bounded}
-Let $\rateset$ be an arbitrary non-empty bounded set of rate matrices with corresponding lower transition rate operator $\lrate$, and let $\underline{\mathcal{T}}_{\lrate}$ be the family of lower transition operators corresponding to $\lrate$. Then, for any $P\in\wprocesses_\rateset$, any $s\in\realsnonneg$, any $u\in\mathcal{U}_{<s}$, any $x_u\in\states^u$, and any $f\in\gamblesX$,
+Let $\rateset$ be an arbitrary non-empty bounded set of rate matrices with corresponding lower transition rate operator $\lrate$, and let $\underline{\mathcal{T}}_{\lrate}$ be the family of lower transition operators corresponding to $\lrate$. Then, for any $P\in\wprocesses_\rateset$, any $t,s\in\realsnonneg$ such that $t\leq s$, any $u\in\mathcal{U}_{<t}$, any $x\in\states$ and $x_u\in\states^u$, and any $f\in\gamblesX$,
 \begin{equation*}
-[L_{t_n}^s f](x_{t_n}) \leq \mathbb{E}[f(X_s)\,\vert\,X_u=x_u]\,.
+[L_{t}^s f](x) \leq \mathbb{E}[f(X_s)\,\vert\,X_t=x,X_u=x_u]\,.
 \end{equation*}
 \end{proposition}
 
 As this result shows, $L_t^sf$ is a lower bound on the expectation of a function $f\in\gamblesX$, with respect to a set of stochastic processes $\wprocesses_\rateset$ induced by some non-empty bounded set of rate matrices $\rateset$. Our next result establishes that this bound is tight if $\rateset$ also has separately specified rows. Specifically, we show that $L_t^sf$ can then be approximated to arbitrary precision by carefully choosing a Markov process $P$ from the set $\wmprocesses_\rateset$.
 
 \begin{proposition}\label{theorem:lower_markov_bound_is_tight}
-Let $\rateset$ be an arbitrary non-empty bounded set of rate matrices that has separately specified rows, with corresponding lower transition rate operator $\lrate$, and let $\underline{\mathcal{T}}_{\lrate}$ be the family of lower transition operators corresponding to $\lrate$. Then for all $t,s\in\realsnonneg$ such that $t<s$, all $f\in\gamblesX$, and all $\epsilon\in\realspos$, there exists a $P\in\wmprocesses_{\rateset}$ such that
+Let $\rateset$ be an arbitrary non-empty bounded set of rate matrices that has separately specified rows, with corresponding lower transition rate operator $\lrate$, and let $\underline{\mathcal{T}}_{\lrate}$ be the family of lower transition operators corresponding to $\lrate$. Then for all $t,s\in\realsnonneg$ such that $t\leq s$, all $f\in\gamblesX$, and all $\epsilon\in\realspos$, there is a $P\in\wmprocesses_{\rateset}$ such that
 \begin{equation*}
 \norm{\lbound_t^sf-\mathbb{E}[f(X_s)\,\vert\,X_t]} < \epsilon\,.
 \end{equation*}
@@ -1592,7 +1592,7 @@ Let $\rateset$ be an arbitrary non-empty bounded set of rate matrices that has s
 Together, Propositions~\ref{theorem:nonmarkov_single_var_lower_bounded} and~\ref{theorem:lower_markov_bound_is_tight} establish a strong connection between $L_t^s$ and lower expectations $\underline{\mathbb{E}}$. In particular, for functions defined on a single point in time, they turn out to be equivalent, as shown by the result below.
 
 \begin{corollary}\label{cor:lower_operator_is_infimum}
-Let $\rateset$ be an arbitrary non-empty bounded set of rate matrices that has separately specified rows, with corresponding lower transition rate operator $\lrate$, and let $\underline{\mathcal{T}}_{\lrate}$ be the family of lower transition operators corresponding to $\lrate$. Then, for all $f\in\gamblesX$, all $t,s\in\realsnonneg$ such that $t<s$, all $u\in\mathcal{U}_{<t}$, all $x_u\in\states^u$, and all $x\in\states$,
+Let $\rateset$ be an arbitrary non-empty bounded set of rate matrices that has separately specified rows, with corresponding lower transition rate operator $\lrate$, and let $\underline{\mathcal{T}}_{\lrate}$ be the family of lower transition operators corresponding to $\lrate$. Then, for all $t,s\in\realsnonneg$ such that $t\leq s$, all $u\in\mathcal{U}_{<t}$, all $x\in\states$ and $x_u\in\states^u$, and all $f\in\gamblesX$,
 \begin{align*}
 \left[L_t^sf\right](x) &= \underline{\mathbb{E}}^{\mathrm{WM}}_{\,\rateset}[f(X_s)\,\vert\,X_t=x,X_u=x_u] \\
  &= \underline{\mathbb{E}}^{\mathrm{WM}}_{\,\rateset}[f(X_s)\,\vert\,X_t=x]\,,
@@ -1614,7 +1614,7 @@ Thus, we find that there is a correspondence between the operator $L_t^s$ and lo
 Recall from Section~\ref{sec:connections_rate} that for a given lower transition rate operator $\lrate$, its set of dominating rate matrices $\rateset_{\lrate}$ is---by definition---the largest set of rate matrices which has $\lrate$ as its lower envelope. The following result shows that the set $\wprocesses_{\rateset_{\lrate}}$ of well-behaved stochastic processes consistent with $\rateset_{\lrate}$ is the largest set of stochastic processes for which $L_t^s$ computes the lower expectation.
 
 \begin{theorem}\label{theo:dominating_rate_processes_max_set}
-Let $\lrate$ be an arbitrary lower transition rate operator, with $\rateset_{\lrate}$ its set of dominating rate matrices, and let  $\underline{\mathcal{T}}_{\lrate}$ be the family of lower transition operators corresponding to $\lrate$. Then, the set $\wprocesses_{\rateset_{\lrate}}$ is the largest set of stochastic processes for which, for any $f\in\gamblesX$, any $t,s\in\realsnonneg$ such that $t<s$, any $u\in\mathcal{U}_{<t}$, any $x_u\in\states^u$, and any $x\in\states$,
+Let $\lrate$ be an arbitrary lower transition rate operator, with $\rateset_{\lrate}$ its set of dominating rate matrices, and let  $\underline{\mathcal{T}}_{\lrate}$ be the family of lower transition operators corresponding to $\lrate$. Then, the set $\wprocesses_{\rateset_{\lrate}}$ is the largest set of stochastic processes for which, for all $t,s\in\realsnonneg$ such that $t\leq s$, all $u\in\mathcal{U}_{<t}$, all $x\in\states$ and $x_u\in\states^u$, and all $f\in\gamblesX$,
 \begin{equation*}
 [L_t^sf](x) = \underline{\mathbb{E}}_{\,\rateset_{\lrate}}^{\mathrm{W}}[f(X_s)\,\vert\,X_t=x,X_u=x_u]\,.
 \end{equation*}
@@ -1622,7 +1622,7 @@ Let $\lrate$ be an arbitrary lower transition rate operator, with $\rateset_{\lr
 
 One conclusion that we can draw from this is that if $\rateset$ is any non-empty and bounded set of rate matrices that has separately specified rows, and lower transition rate operator $\lrate$, that then
 \begin{equation*}
-[L_{t_n}^sf](x_{t_n}) = \underline{\mathbb{E}}_{\,\rateset}^{\mathrm{WM}}[f(X_s)\,\vert\,X_{t_n}=x_{t_n}] = \underline{\mathbb{E}}_{\,\rateset}^{\mathrm{W}}[f(X_s)\,\vert\,X_u=x_u] = \underline{\mathbb{E}}_{\,\rateset_{\lrate}}^{\mathrm{W}}[f(X_s)\,\vert\,X_u=x_u]\,.
+L_{t}^sf = \underline{\mathbb{E}}_{\,\rateset}^{\mathrm{WM}}[f(X_s)\,\vert\,X_{t}] = \underline{\mathbb{E}}_{\,\rateset}^{\mathrm{W}}[f(X_s)\,\vert\,X_t,X_u=x_u] = \underline{\mathbb{E}}_{\,\rateset_{\lrate}}^{\mathrm{W}}[f(X_s)\,\vert\,X_t,X_u=x_u]\,.
 \end{equation*}
 In other words, for functions defined on a single time point, the lower expectations with respect to the sets $\wmprocesses_{\rateset}$, $\wprocesses_{\rateset}$, and $\wprocesses_{\rateset_{\lrate}}$ are all the same! Consequently, the lower expectation will also be the same for any set $\mathcal{P}\subset\processes$ that satisfies $\wmprocesses_\rateset \subseteq \mathcal{P} \subseteq \wprocesses_{\rateset_{\lrate}}$.
 
@@ -3812,7 +3812,7 @@ Hence, we find that
 \end{proof}
 
 \begin{proof}[Proof of Corollary~\ref{corol:limitexistsandiscoherent}]
-Since $\lim_{i\to\infty}\sigma(u_i)=0$, and because of Propositions~\ref{lemma:normQsmallenough} and~\ref{lemma:compositioncoherence}, there is some index $n$ such that the sequence $\Phi_{u_n},\Phi_{u_{n+1}},\ldots$ consists of lower transition operators. Due to Corollary~\ref{corol:cauchy}, this sequence is Cauchy and therefore, because of Lemma~\ref{lemma:completemetricspace}, this sequence has a limit that is also a lower transition operator. Since the limit starting from $n$ and the limit starting from $1$ are identical (initial elements do not influence the limit), we find that the sequence $\left\{\Phi_{u_i}\right\}_{i\in\nats}$ has a limit, and that this limit is a lower transition operator.
+Since $\lim_{i\to\infty}\sigma(u_i)=0$, and because of Propositions~\ref{lemma:normQsmallenough} and~\ref{lemma:compositioncoherence}, there is some index $n$ such that the sequence $\Phi_{u_n},\Phi_{u_{n+1}},\ldots$ consists of lower transition operators. Due to Corollary~\ref{corol:cauchy}, this sequence is Cauchy and therefore, because of Proposition~\ref{lemma:completemetricspace}, this sequence has a limit that is also a lower transition operator. Since the limit starting from $n$ and the limit starting from $1$ are identical (initial elements do not influence the limit), we find that the sequence $\left\{\Phi_{u_i}\right\}_{i\in\nats}$ has a limit, and that this limit is a lower transition operator.
 \end{proof}
 
 \begin{proof}[Proof of Theorem~\ref{theo:convergencelowerbound}]
@@ -4031,12 +4031,12 @@ Consider any $Q\in\rateset$. It then follows from Definition~\ref{def:rate_matri
 \end{proof}
 
 \begin{proof}[Proof of Proposition~\ref{prop:dominating_nonempty_bounded}]
-Fix any $f\in\gamblesX$. Choose $\Delta>0$ small enough such that $0\leq\Delta\norm{\lrate}\leq 1$ (this always possible because of Lemma~\ref{lem:normlratefinite}). Define $\lt\coloneqq I+\Delta\lrate$. Since $\lrate$ is a lower transition rate operator, it follows from Lemma~\ref{lemma:normQsmallenough} that $\lt$ is a lower transition operator. For any $x\in\states$, we now let
+Fix any $f\in\gamblesX$. Choose $\Delta>0$ small enough such that $0\leq\Delta\norm{\lrate}\leq 1$ (this always possible because of Proposition~\ref{lem:normlratefinite}). Define $\lt\coloneqq I+\Delta\lrate$. Since $\lrate$ is a lower transition rate operator, it follows from Proposition~\ref{lemma:normQsmallenough} that $\lt$ is a lower transition operator. For any $x\in\states$, we now let
 \begin{equation*}
 \lt_xg\coloneqq(\lt g)(x)
 \text{~~for all $g\in\gamblesX$.}
 \end{equation*}
-Since $\lt$ is a lower transition operator, it follows that $\lt_x\colon \gamblesX\to\reals$ is super-additive, positively homogeneous and bounded below by the minimum operator. Hence, by definition~\cite[Definition~2.3.3]{Walley:1991vk}, $\lt_x$ is a coherent lower prevision on $\gamblesX$. Because of \cite[Theorem~3.3.3(b)]{Walley:1991vk}, this implies the existence of an expectation operator $E_x$ on $\gamblesX$---Reference~\cite{Walley:1991vk} calls this a linear prevision on $\gamblesX$---such that $E_xg\geq\lt_xg$ for all $g\in\gamblesX$ and $E_xf=\lt_xf$. Let $P_x$ be the unique probability mass function that corresponds to $E_x$. For all $x,y\in\states$, we now let $T(x,y)\coloneqq P_x(y)\coloneqq E_x(\ind{x})$. Then $T$ is clearly a stochastic matrix. Furthermore, for every $x\in\states$ and $g\in\gamblesX$, we have that $(Tg)(x)=E_xg$. Hence, it follows that $Tg\geq\lt g$ for all $g\in\gamblesX$ and that $Tf=\lt f$. Now let $Q\coloneqq\nicefrac{1}{\Delta}(T-I)$, which, because of Proposition~\ref{prop:rate_from_stochastic_matrix}, is a rate matrix. Since $Tf=\lt f$, it then follows that
+Since $\lt$ is a lower transition operator, it follows that $\lt_x\colon \gamblesX\to\reals$ is super-additive, positively homogeneous and bounded below by the minimum operator. Hence, by definition~\cite[Definition~2.3.3]{Walley:1991vk}, $\lt_x$ is a coherent lower prevision on $\gamblesX$. Because of \cite[Theorem~3.3.3(b)]{Walley:1991vk}, this implies the existence of an expectation operator $\mathbb{E}_x$ on $\gamblesX$---Reference~\cite{Walley:1991vk} calls this a linear prevision on $\gamblesX$---such that $\mathbb{E}_xg\geq\lt_xg$ for all $g\in\gamblesX$ and $\mathbb{E}_xf=\lt_xf$. Let $P_x$ be the unique probability mass function that corresponds to $\mathbb{E}_x$. For all $x,y\in\states$, we now let $T(x,y)\coloneqq P_x(y)\coloneqq \mathbb{E}_x(\ind{y})$. Then $T$ is clearly a transition matrix. Furthermore, for every $x\in\states$ and $g\in\gamblesX$, we have that $(Tg)(x)=\mathbb{E}_xg$. Hence, it follows that $Tg\geq\lt g$ for all $g\in\gamblesX$ and that $Tf=\lt f$. Now let $Q\coloneqq\nicefrac{1}{\Delta}(T-I)$, which, because of Proposition~\ref{prop:rate_from_stochastic_matrix}, is a rate matrix. Since $Tf=\lt f$, it then follows that
 \begin{equation*}
 Qf=\frac{1}{\Delta}(Tf-f)\geq\frac{1}{\Delta}(\lt f-f)=\lrate f.
 \end{equation*}
@@ -4093,96 +4093,97 @@ This is immediate from the definition of the lower envelope of $\rateset$, as gi
 \end{proof}
 
 \begin{proof}[Proof of Proposition~\ref{theorem:nonmarkov_single_var_lower_bounded}]
-Consider any $P\in\wprocesses_\rateset$, any $s\in\realsnonneg$, any $u\in\mathcal{U}_{<s}$, any $x_u\in\states^u$, and any $f\in\gamblesX$. We will show that for all $\epsilon\in\realspos$, it holds that 
+%Consider any $P\in\wprocesses_\rateset$, any $t,s\in\realsnonneg$ such that $t\leq s$, any $u\in\mathcal{U}_{<t}$, any $x\in\states$ and $x_u\in\states^u$, and any $f\in\gamblesX$. 
+We will show that for all $\epsilon\in\realspos$, it holds that 
 \begin{equation*}
-[L_{t_n}^s f](x_{t_n}) < \mathbb{E}[f(X_s)\,\vert\,X_{t_0}=x_{t_0},\ldots,X_{t_n}=x_{t_n}] + \epsilon\,,
+[L_{t}^s f](x) < \mathbb{E}[f(X_s)\,\vert\,X_t=x,X_u=x_u] + \epsilon\,,
 \end{equation*}
-which then implies that $[L_{t_n}^s f](x_{t_n}) \leq \mathbb{E}[f(X_s)\,\vert\,X_{t_0}=x_{t_0},\ldots,X_{t_n}=x_{t_n}]$. Start by choosing any $\epsilon\in\realspos$, and let $C\coloneqq(s-t_n)$. 
+which then implies that $[L_{t}^s f](x) \leq \mathbb{E}[f(X_s)\,\vert\,X_t=x,X_u=x_u]$. To avoid trivialities, we will assume that $s\neq t$. Start by choosing any $\epsilon\in\realspos$, and let $C\coloneqq(s-t)$. 
 
 Now, by Theorem~\ref{theo:convergencelowerbound}, there is some $\delta\in\realspos$ such that
 \begin{equation*}
-(\forall v\in\mathcal{U}_{[t_n,s]}\,:\,\sigma(v)<\delta) \norm{L_{t_n}^s - \Phi_v} < \frac{\epsilon}{2\norm{f}}\,,
+(\forall v\in\mathcal{U}_{[t,s]}\,:\,\sigma(v)<\delta) \norm{L_{t}^s - \Phi_v} < \frac{\epsilon}{2\norm{f}}\,,
 \end{equation*}
-which implies that for all $v\in\mathcal{U}_{[t_n,s]}$ with $\sigma(v)<\delta$, and all $x\in\states$,
+with $\Phi_v$ as in Equation~\eqref{eq:aux_lower_trans}, which implies that for all $v\in\mathcal{U}_{[t,s]}$ with $\sigma(v)<\delta$,
 \begin{equation}\label{eq:lowerbound_proof_linear_approx_lbound}
-\left[L_{t_n}^sf\right](x) - \frac{\epsilon}{2} < \left[\Phi_vf\right](x)\,.
+\left[L_{t}^sf\right](x) - \frac{\epsilon}{2} < \left[\Phi_vf\right](x)\,.
 \end{equation}
 
-Now, let $w\coloneqq t_0,\ldots,t_{n-1}$, and let $x_w\coloneqq(x_{t_0},\ldots,x_{t_{n-1}})$. Then, because $P\in\wprocesses_\rateset$, by Proposition~\ref{prop:outerderivativebehaveslikelimit}, there is some $\delta'\in\realspos$ such that for all $\Delta\in\realspos$ with $\Delta<\delta'$, there is a $Q_0\in\rateset$ such that
+Furthermore, because $P\in\wprocesses_\rateset$, by Proposition~\ref{prop:outerderivativebehaveslikelimit}, there is some $\delta'\in\realspos$ such that for all $\Delta\in\realspos$ with $\Delta<\delta'$, there is a $Q_0\in\rateset$ such that
 \begin{equation*}
-\norm{T_{t_n,x_w}^{t_n+\Delta} - (I+\Delta Q_0)} < \frac{\Delta\epsilon}{2C\norm{f}}\,.
+\norm{T_{t,x_u}^{t+\Delta} - (I+\Delta Q_0)} < \frac{\Delta\epsilon}{2C\norm{f}}\,.
 \end{equation*}
 Choose any $\Delta_0$ such that $\Delta_0<\min\{\delta,\delta'\}$. This implies that for all $g\in\gamblesX$ with $\norm{g}\leq\norm{f}$, we have that
 \begin{equation*}
-\norm{T_{t_n,x_w}^{t_n+\Delta_0}g - (I+\Delta_0 Q_0)g} < \frac{\Delta_0\epsilon}{2C}\,,
+\norm{T_{t,x_u}^{t+\Delta_0}g - (I+\Delta_0 Q_0)g} \leq \norm{T_{t,x_u}^{t+\Delta_0} - (I+\Delta_0 Q_0)}\norm{g} < \frac{\Delta_0\epsilon}{2C\norm{f}}\norm{g} \leq \frac{\Delta_0\epsilon}{2C}\,,
 \end{equation*}
-which in turn implies that for all $x\in\states$,
+which in turn implies that for all $y\in\states$,
 \begin{equation*}
-\left[(I+\Delta_0 Q_0)g\right](x) - \frac{\Delta_0\epsilon}{2C} < \left[T_{t_n,x_w}^{t_n+\Delta_0}g\right](x)\,.
+\left[(I+\Delta_0 Q_0)g\right](y) - \frac{\Delta_0\epsilon}{2C} < \left[T_{t,x_u}^{t+\Delta_0}g\right](y)\,.
 \end{equation*}
-Because $Q_0\in\rateset$, using Equation~\eqref{eq:correspondinglowertrans}, we find that, for all $g\in\gamblesX$ with $\norm{g}\leq\norm{f}$,
+Because $Q_0\in\rateset$, we find using Equation~\eqref{eq:correspondinglowertrans} that $\lrate g\leq Q_0g$, and hence that for all $g\in\gamblesX$ with $\norm{g}\leq\norm{f}$, and all $y\in\states$,
 \begin{equation}\label{eq:lowerbound_proof_linear_approx_last_part}
-\left[(I+\Delta_0 \lrate)g\right](x) - \frac{\Delta_0\epsilon}{2C} < \left[T_{t_n,x_w}^{t_n+\Delta_0}g\right](x)\,.
+\left[(I+\Delta_0 \lrate)g\right](y) - \frac{\Delta_0\epsilon}{2C} < \left[T_{t,x_u}^{t+\Delta_0}g\right](y)\,.
 \end{equation}
 
-Let $\delta^*\coloneqq\min\{\delta,\nicefrac{1}{\norm{\lrate}}\}$. 
-Because $P\in\wprocesses_\rateset$, Lemma~\ref{lemma:bound_on_linear_approx_partition} implies that there is some $v\in\mathcal{U}_{[t_n+\Delta_0,s]}$ such that $\sigma(v)<\delta^*$, with $v=\tau_0,\ldots,\tau_m$, and $\tau_0=t_n+\Delta_0$, $\tau_m=s$, and, for all $i\in\{1,\ldots,m\}$,
+We now first focus on the remaining interval $[t+\Delta_0,s]$. To this end, we fix the history $(X_t=x,X_u=x_u)$ by defining $x_{u\cup\{t\}}\in\states^{u\cup\{t\}}$ as $x_{u\cup\{t\}}\coloneqq (x_u,x)$.
+
+Next, let $\delta^*\coloneqq\min\{\delta,\nicefrac{1}{\norm{\lrate}}\}$. 
+Because $P\in\wprocesses_\rateset$, Lemma~\ref{lemma:bound_on_linear_approx_partition} implies that there is some $v\in\mathcal{U}_{[t+\Delta_0,s]}$ such that $\sigma(v)<\delta^*$, with $v=\tau_0,\ldots,\tau_m$, and $\tau_0=t+\Delta_0$, $\tau_m=s$, and, for all $i\in\{1,\ldots,m\}$,
 \begin{equation*}
-(\exists Q\in\rateset)\norm{T_{\tau_{i-1},x_u}^{\tau_{i}} - (I+\Delta_{i}Q)} < \frac{\Delta_{i}\epsilon}{2C\norm{f}}\,,
+(\exists Q\in\rateset)\norm{T_{\tau_{i-1},x_{u\cup \{t\}}}^{\tau_{i}} - (I+\Delta_{i}Q)} < \frac{\Delta_{i}\epsilon}{2C\norm{f}}\,,
 \end{equation*}
-which implies that there exist rate matrices $Q_{1},\ldots,Q_{m}$ such that, for all functions $g\in\gamblesX$ with $\norm{g}\leq\norm{f}$ and all $i\in\{1,\ldots,m\}$,
+which implies that there exist rate matrices $Q_{1},\ldots,Q_{m}\in\rateset$ such that, for all functions $g\in\gamblesX$ with $\norm{g}\leq\norm{f}$ and all $i\in\{1,\ldots,m\}$,
 \begin{equation*}
-\norm{T_{\tau_{i-1},x_u}^{\tau_{i}}g - (I+\Delta_{i}Q_i)g} < \frac{\Delta_{i}\epsilon}{2C}\,.
+\norm{T_{\tau_{i-1},x_{u\cup\{t\}}}^{\tau_{i}}g - (I+\Delta_{i}Q_i)g} \leq \norm{T_{\tau_{i-1},x_{u\cup\{t\}}}^{\tau_{i}} - (I+\Delta_{i}Q_i)} \norm{g} < \frac{\Delta_{i}\epsilon}{2C\norm{f}}\norm{g} \leq \frac{\Delta_{i}\epsilon}{2C}\,.
 \end{equation*}
-This in turn implies that for all $g\in\gamblesX$ with $\norm{g}\leq\norm{f}$, all $i\in\{1,\ldots,m\}$, and all $x\in\states$,
+This in turn implies that for all $i\in\{1,\ldots,m\}$, all $g\in\gamblesX$ with $\norm{g}\leq\norm{f}$, and all $y\in\states$,
 \begin{equation*}
-\left[(I+\Delta_{i}Q_{i})g\right](x) - \frac{\Delta_{i}\epsilon}{2C} < \left[T_{\tau_{i-1},x_u}^{\tau_{i}}g\right](x)\,.
+\left[(I+\Delta_{i}Q_{i})g\right](y) - \frac{\Delta_{i}\epsilon}{2C} < \left[T_{\tau_{i-1},x_{u\cup\{t\}}}^{\tau_{i}}g\right](y)\,.
 \end{equation*}
-Because for all $i\in\{1,\ldots,m\}$ it holds that $Q_i\in\rateset$, by Equation~\eqref{eq:correspondinglowertrans} we find that for all $g\in\gamblesX$ with $\norm{g}\leq\norm{f}$ and all $x\in\states$,
+Because for all $i\in\{1,\ldots,m\}$ it holds that $Q_i\in\rateset$, by Equation~\eqref{eq:correspondinglowertrans} we have $\lrate g\leq Q_ig$, and therefore, for all $g\in\gamblesX$ with $\norm{g}\leq\norm{f}$, and all $y\in\states$,
 \begin{equation}\label{eq:lowerbound_proof_linear_approx_lrate}
-\left[(I+\Delta_{i}\lrate)g\right](x) - \frac{\Delta_{i}\epsilon}{2C} < \left[T_{\tau_{i-1},x_u}^{\tau_{i}}g\right](x)\,.
+\left[(I+\Delta_{i}\lrate)g\right](y) - \frac{\Delta_{i}\epsilon}{2C} < \left[T_{\tau_{i-1},x_{u\cup\{t\}}}^{\tau_{i}}g\right](y)\,.
 \end{equation}
 
-Now, observe that because $\tau_m=s$,
+Now, observe that because $\tau_m=s$, it holds for all $y\in\states$ that
 \begin{align*}
-\left[T_{\tau_{m-1},x_u}^{\tau_{m}}f\right](x) &= \mathbb{E}[f(X_{\tau_m})\,\vert\,X_{\tau_{m-1}}=x,X_{t_0}=x_{t_0},\ldots,X_{t_n}=x_{t_n}]\\
- &= \mathbb{E}[f(X_{s})\,\vert\,X_{s-\Delta_m}=x,X_{t_0}=x_{t_0},\ldots,X_{t_n}=x_{t_n}]\,.
+\left[T_{\tau_{m-1},x_{u\cup\{t\}}}^{\tau_{m}}f\right](y) &= \mathbb{E}[f(X_{\tau_m})\,\vert\,X_{\tau_{m-1}}=y,X_t=x,X_u=x_u]\\
+ &= \mathbb{E}[f(X_{s})\,\vert\,X_{s-\Delta_m}=y,X_t=x,X_u=x_u]\,.
 \end{align*}
 Furthermore, by the basic properties of expectation, we have that
-\begin{align*}
-\mathbb{E}[&f(X_s)\,\vert\,X_{t_0}=x_{t_0},\ldots,X_{t_n}=x_{t_n}] \\
- & = \mathbb{E}\bigl[\mathbb{E}[f(X_s)\,\vert\,X_{s-\Delta_m},X_{t_0}=x_{t_0},\ldots,X_{t_n}=x_{t_n}]\,\vert\,X_{t_0}=x_{t_0},\ldots,X_{t_n}=x_{t_n}\bigr]\,,
-\end{align*}
+\begin{equation*}
+\mathbb{E}[f(X_s)\,\vert\,X_t=x,X_u=x_u] = \mathbb{E}\bigl[\mathbb{E}[f(X_s)\,\vert\,X_{s-\Delta_m},X_t=x,X_u=x_u]\,\vert\,X_t=x,X_u=x_u\bigr]\,,
+\end{equation*}
 and because this (outer) expectation computes a convex combination of values, we find by substitution of Equation~\eqref{eq:lowerbound_proof_linear_approx_lrate}, that
-\begin{align*}
-\mathbb{E}[&f(X_s)\,\vert\,X_{t_0}=x_{t_0},\ldots,X_{t_n}=x_{t_n}] \\
-& > \mathbb{E}\bigl[[(I+\Delta_m\lrate)f](X_{\tau_{m-1}})\,\vert\,X_{t_0}=x_{t_0},\ldots,X_{t_n}=x_{t_n}\bigr] - \frac{\Delta_{m}\epsilon}{2C}\,.
-\end{align*}
+\begin{equation*}
+\mathbb{E}[f(X_s)\,\vert\,X_t=x,X_u=x_u] > \mathbb{E}\bigl[[(I+\Delta_m\lrate)f](X_{\tau_{m-1}})\,\vert\,X_t,X_u=x_u\bigr] - \frac{\Delta_{m}\epsilon}{2C}\,.
+\end{equation*}
 
-Because $\Delta_m\leq\sigma(v)<\delta^*\leq\nicefrac{1}{\norm{\lrate}}$, we find by Proposition~\ref{lemma:normQsmallenough} that $(I+\Delta_m\lrate)$ is a lower transition operator. Therefore, by Proposition~\ref{lemma:normofcoherenttrans}, we have that $\norm{(I+\Delta_m\lrate)f}\leq\norm{f}$. Hence, Equation~\eqref{eq:lowerbound_proof_linear_approx_lrate} applies, and we can use backward induction on $m$ to find
+Because $\Delta_m\leq\sigma(v)<\delta^*\leq\nicefrac{1}{\norm{\lrate}}$, we find by Proposition~\ref{lemma:normQsmallenough} that $(I+\Delta_m\lrate)$ is a lower transition operator. Therefore, $[(I+\Delta_m\lrate)f]\in\gamblesX$, and by Proposition~\ref{lemma:normofcoherenttrans}, we have that $\norm{(I+\Delta_m\lrate)f}\leq\norm{f}$. Hence, Equation~\eqref{eq:lowerbound_proof_linear_approx_lrate} applies, and we can use backward induction on $m$ to find
 \begin{align*}
-\mathbb{E}[&f(X_s)\,\vert\,X_{t_0}=x_{t_0},\ldots,X_{t_n}=x_{t_n}] \\
-& > \mathbb{E}\bigl[[(I+\Delta_m\lrate)f](X_{\tau_{m-1}})\,\vert\,X_{t_0}=x_{t_0},\ldots,X_{t_n}=x_{t_n}\bigr] - \frac{\Delta_{m}\epsilon}{2C} \\
- &> \mathbb{E}\bigl[[(I+\Delta_{m-1}\lrate)(I+\Delta_m\lrate)f](X_{\tau_{m-2}})\,\vert\,X_{t_0}=x_{t_0},\ldots,X_{t_n}=x_{t_n}\bigr] - \frac{\Delta_{m-1}\epsilon}{2C} - \frac{\Delta_{m}\epsilon}{2C} \\
+\mathbb{E}[&f(X_s)\,\vert\,X_t=x,X_u=x_u] \\
+& > \mathbb{E}\bigl[[(I+\Delta_m\lrate)f](X_{\tau_{m-1}})\,\vert\,X_t=x,X_u=x_u\bigr] - \frac{\Delta_{m}\epsilon}{2C} \\
+ &> \mathbb{E}\bigl[[(I+\Delta_{m-1}\lrate)(I+\Delta_m\lrate)f](X_{\tau_{m-2}})\,\vert\,X_t=x,X_u=x_u\bigr] - \frac{\Delta_{m-1}\epsilon}{2C} - \frac{\Delta_{m}\epsilon}{2C} \\
 &\vdots \\
 %& > \mathbb{E}\left[\left[\left(\prod_{i=2}^m(I+\Delta_i\lrate)\right)f\right](X_{\tau_{1}})\,\Bigg\vert\,X_{t_0}=x_{t_0},\ldots,X_{t_n}=x_{t_n}\right] - \sum_{i=2}^m\frac{\Delta_{i}\epsilon}{2C} \\
-& > \mathbb{E}\left[\left[\left(\prod_{i=1}^m(I+\Delta_i\lrate)\right)f\right](X_{\tau_{0}})\,\Bigg\vert\,X_{t_0}=x_{t_0},\ldots,X_{t_n}=x_{t_n}\right] - \sum_{i=1}^m\frac{\Delta_{i}\epsilon}{2C} \\
-& = \mathbb{E}\left[\left[\left(\prod_{i=1}^m(I+\Delta_i\lrate)\right)f\right](X_{t_n+\Delta_0})\,\Bigg\vert\,X_{t_0}=x_{t_0},\ldots,X_{t_n}=x_{t_n}\right] - \sum_{i=1}^m\frac{\Delta_{i}\epsilon}{2C} \\
-&= \left[T_{t_n,x_w}^{t_n+\Delta_0}\left(\prod_{i=1}^m(I+\Delta_i\lrate)\right)f\right](x_{t_n}) - \sum_{i=1}^m\frac{\Delta_{i}\epsilon}{2C}\,.
+& > \mathbb{E}\left[\left[\left(\prod_{i=1}^m(I+\Delta_i\lrate)\right)f\right](X_{\tau_{0}})\,\Bigg\vert\,X_t=x,X_u=x_u\right] - \sum_{i=1}^m\frac{\Delta_{i}\epsilon}{2C} \\
+& = \mathbb{E}\left[\left[\left(\prod_{i=1}^m(I+\Delta_i\lrate)\right)f\right](X_{t+\Delta_0})\,\Bigg\vert\,X_t=x,X_u=x_u\right] - \sum_{i=1}^m\frac{\Delta_{i}\epsilon}{2C} \\
+&= \left[T_{t,x_u}^{t+\Delta_0}\left(\prod_{i=1}^m(I+\Delta_i\lrate)\right)f\right](x) - \sum_{i=1}^m\frac{\Delta_{i}\epsilon}{2C}\,.
 %& = \left[\left(\prod_{i=1}^m(I+\Delta_i\lrate)\right)f\right](x_{t_n}) - \sum_{i=1}^m\frac{\Delta_{i}\epsilon}{2C}\\
 %& = \left[\Phi_v f\right](x_{t_n}) - \frac{\epsilon}{2}\,,
 \end{align*}
-Because $\prod_{i=1}^m(I+\Delta_i\lrate)$ is a lower transition operator, we have that $\norm{\prod_{i=1}^m(I+\Delta_i\lrate)f}\leq\norm{f}$. Therefore, Equation~\eqref{eq:lowerbound_proof_linear_approx_last_part} applies, and hence we find that
+Because $\prod_{i=1}^m(I+\Delta_i\lrate)$ is a lower transition operator, we have that $[\prod_{i=1}^m(I+\Delta_i\lrate)f]\in\gamblesX$, and by Proposition~\ref{lemma:normofcoherenttrans}, that $\norm{\prod_{i=1}^m(I+\Delta_i\lrate)f}\leq\norm{f}$. Therefore, Equation~\eqref{eq:lowerbound_proof_linear_approx_last_part} applies, and hence we find that
 \begin{equation*}
-\mathbb{E}[f(X_s)\,\vert\,X_{t_0}=x_{t_0},\ldots,X_{t_n}=x_{t_n}] > \left[\prod_{i=0}^m(I+\Delta_i\lrate)f\right](x_{t_n}) - \sum_{i=0}^m\frac{\Delta_{i}\epsilon}{2C}\,.
+\mathbb{E}[f(X_s)\,\vert\,X_t=x,X_u=x_u] > \left[\prod_{i=0}^m(I+\Delta_i\lrate)f\right](x) - \sum_{i=0}^m\frac{\Delta_{i}\epsilon}{2C}\,.
 \end{equation*}
-Note that $\sum_{i=0}^m\Delta_i=C$. Let now $v^*\coloneqq t_n,\tau_0,\ldots,\tau_m$. Then clearly, $v^*\in\mathcal{U}_{[t_n,s]}$. We therefore have that
+Let now $v^*\coloneqq (\{t\}\cup v)=t,\tau_0,\ldots,\tau_m$. Then clearly, $v^*\in\mathcal{U}_{[t,s]}$. Then, with $\Phi_{v^*}$ as in Equation~\eqref{eq:aux_lower_trans}, we find using $\sum_{i=0}^m\Delta_i=C$ that
 \begin{equation*}
-\mathbb{E}[f(X_s)\,\vert\,X_{t_0}=x_{t_0},\ldots,X_{t_n}=x_{t_n}] > \left[\Phi_{v^*}f\right](x_{t_n}) - \frac{\epsilon}{2}\,,
+\mathbb{E}[f(X_s)\,\vert\,X_t=x,X_u=x_u] > \left[\Phi_{v^*}f\right](x) - \frac{\epsilon}{2}\,,
 \end{equation*}
-and because $\sigma(v^*)<\delta$, we now find from Equation~\eqref{eq:lowerbound_proof_linear_approx_lbound} that
+and because $\sigma(v^*)=\max\{\Delta_0,\sigma(v)\}<\delta$, we now find from Equation~\eqref{eq:lowerbound_proof_linear_approx_lbound} that
 \begin{equation*}
-\mathbb{E}[f(X_s)\,\vert\,X_{t_0}=x_{t_0},\ldots,X_{t_n}=x_{t_n}] > \left[L_{t_n}^sf\right](x_{t_n}) - \epsilon\,.
+\mathbb{E}[f(X_s)\,\vert\,X_t=x,X_u=x_u] > \left[L_{t}^sf\right](x) - \epsilon\,.
 \end{equation*}
 Because the $\epsilon\in\realspos$ was arbitrary, this completes the proof.
 \end{proof}
