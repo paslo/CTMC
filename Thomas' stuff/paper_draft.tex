@@ -1267,11 +1267,11 @@ We will call a map $\lt$ from $\gamblesX$ to $\gamblesX$ a \emph{lower transitio
 %\vspace{5pt}
 \begin{enumerate}[label=LT\arabic*:,ref=LT\arabic*]
 \item
-$\left[\lt f\right](x)\geq\min\left\{f(y)\,\vert\,y\in\states\right\}$
+$\left[\lt\,f\right](x)\geq\min\left\{f(y)\,\vert\,y\in\states\right\}$
 \item
-$\left[\lt(f+g)\right](x)\geq \left[\lt f\right](x)+\left[\lt g\right](x)$;
+$\left[\lt(f+g)\right](x)\geq \left[\lt\,f\right](x)+\left[\lt\,g\right](x)$;
 \item
-$\left[\lt(\lambda f)\right](x)=\lambda\left[\lt f\right](x)$.
+$\left[\lt(\lambda f)\right](x)=\lambda\left[\lt\,f\right](x)$.
 \end{enumerate}
 %\vspace{5pt}
 \noindent We use $\underline{\mathcal{T}}$ to denote the set of all lower transition operators.
@@ -1281,27 +1281,45 @@ $\left[\lt(\lambda f)\right](x)=\lambda\left[\lt f\right](x)$.
 
 \noindent We start by giving some useful properties of the norm of these operators.
 
-\begin{proposition}\label{lem:normlratefinite}
-For any lower transition rate operator $\lrate$, we have that $0\leq\norm{\lrate}<+\infty$.
+\begin{proposition}[Reference \cite{DeBock:2016}]\label{prop:norm_properties_lrate_lt}
+For any non-negatively homogeneous operators $A,B$ from $\gamblesX$ to $\gamblesX$, any lower transition rate operator $\lrate$, and any lower transition operator $\lt$,
+\begin{multicols}{2}
+\begin{enumerate}[label=LR\arabic*:,ref=LR\arabic*,start=5]
+\item
+$\norm{\lrate} < +\infty$ \label{LR:normlratefinite}
+\item
+$\norm{\lrate A - \lrate B} \leq 2\norm{\lrate}\norm{A - B}$ \label{LR:differenceofnorm}
+\end{enumerate}
+\begin{enumerate}[label=LT\arabic*:,ref=LT\arabic*,start=4]
+\item
+$\norm{\lt} \leq 1$ \label{LT:norm_at_most_one}
+\item
+$\norm{\lt A - \lt B} \leq \norm{A - B}$ \label{LT:differencenorm}
+\end{enumerate}
+\end{multicols}
 \end{proposition}
 
-\begin{proposition}\label{lemma:normofcoherenttrans}
-For any lower transition operator $\lt$, we have that $0\leq \norm{\lt}\leq 1$.
-\end{proposition}
+%\begin{proposition}\label{lem:normlratefinite}
+%For any lower transition rate operator $\lrate$, we have that $0\leq\norm{\lrate}<+\infty$.
+%\end{proposition}
+%
+%\begin{proposition}\label{lemma:normofcoherenttrans}
+%For any lower transition operator $\lt$, we have that $0\leq \norm{\lt}\leq 1$.
+%\end{proposition}
 
 We next establish that there is a correspondence between lower transition rate operators and lower transition operators that is analogous to the one found in Section~\ref{sec:trans_rate_matrices}.
 
-\begin{proposition}\label{lemma:normQsmallenough}
+\begin{proposition}[Reference \cite{DeBock:2016}]\label{lemma:normQsmallenough}
 Consider any lower transition rate operator $\lrate$, and any $\Delta\in\realsnonneg$ such that $\Delta\leq\nicefrac{1}{\norm{\lrate}}$. Then, the operator $(I+\Delta\lrate)$ is a lower transition operator.
 \end{proposition}
 
-\begin{proposition}\label{lemma:lower_trans_to_lower_rate}
+\begin{proposition}[Reference \cite{DeBock:2016}]\label{lemma:lower_trans_to_lower_rate}
 Consider any lower transition operator $\lt$, and any $\Delta\in\realspos$. Then, the operator $\nicefrac{1}{\Delta}(\lt - I)$ is a lower transition rate operator.
 \end{proposition}
 
 We now have two results about the set $\underline{\mathcal{T}}$ of all lower transition operators. As the first result shows, this set is closed under composition.
 \begin{proposition}\label{lemma:compositioncoherence}
-For any $\lt,\underline{S}\in\underline{\mathcal{T}}$, we have that $\left(\lt\underline{S}\right)\in\underline{\mathcal{T}}$.
+For any $\lt,\underline{S}\in\underline{\mathcal{T}}$, we have that $\left(\lt\,\underline{S}\right)\in\underline{\mathcal{T}}$.
 \end{proposition}
 \begin{proof}
 Simply check each of the properties.
@@ -1325,14 +1343,14 @@ The metric space $(\underline{\mathcal{T}},d)$ is complete under the metric $d$ 
 % Trivial consequence of Propositions~\ref{lemma:normQsmallenough} and~\ref{lemma:compositioncoherence}.
 % \end{proof}
 
-*** I WILL TURN ALL THESE LITLE PROPETIES INTO ONE PROPOSITION AND REFER TO MY CONVERGENCE PAPER FOR THEIR PROOF ***
-
-\begin{lemma}\label{lemma:differencenormofcoherenttransrate}
-Consider any two non-negatively homogeneous operators $A$, $B$ from $\gamblesX$ to $\gamblesX$, and let $\lrate$ be an arbitrary lower transition rate operator. Then, it holds that $\norm{\lrate A-\lrate B}\leq 2\norm{\lrate}\norm{A-B}$.
-\end{lemma}
-\begin{proof}
-*** {\bf TODO } *** This can be shown to follow from the definition of the norm and the properties of $\lrate$.
-\end{proof}
+%*** I WILL TURN ALL THESE LITLE PROPETIES INTO ONE PROPOSITION AND REFER TO MY CONVERGENCE PAPER FOR THEIR PROOF ***
+%
+%\begin{lemma}\label{lemma:differencenormofcoherenttransrate}
+%Consider any two non-negatively homogeneous operators $A$, $B$ from $\gamblesX$ to $\gamblesX$, and let $\lrate$ be an arbitrary lower transition rate operator. Then, it holds that $\norm{\lrate A-\lrate B}\leq 2\norm{\lrate}\norm{A-B}$.
+%\end{lemma}
+%\begin{proof}
+%*** {\bf TODO } *** This can be shown to follow from the definition of the norm and the properties of $\lrate$.
+%\end{proof}
 
 % \begin{lemma}\label{lemma:differencenormofcoherenttrans}
 % Consider any two non-negatively homogeneous operators $A$, $B$ from $\gamblesX$ to $\gamblesX$, and let $\lt$ be an arbitrary lower transition operator. Then, it holds that $\norm{\lt A-\lt B}\leq \norm{A-B}$.
