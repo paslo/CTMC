@@ -371,8 +371,21 @@ Finally, we will want to use operators as defined in Section~\ref{sec:func_oper_
 
 \subsection{Transition (Rate) Matrices}\label{sec:trans_rate_matrices}
 
-*** some intro text, explain why these are useful, and how they are related to stochastic processes
+*** blaba, transitie matrices zijn handig
+\begin{definition}[Transition Matrix]\label{def:stoch_matrix}
+A real-valued matrix $T$ is said to be a \emph{transition matrix} if
+\vspace{5pt}
+\begin{enumerate}[label=T\arabic*:,ref=T\arabic*]
+\item\label{def:T:sumone}
+$\sum_{y\in\states}T(x,y)=1$ for all $x\in\states$;\label{def:trans_matrix_is_stochastic}
+\item\label{def:T:nonneg}
+$T(x,y)\geq0$ for all $x,y\in\states$.
+\end{enumerate}
+\vspace{5pt}
+\noindent
+\end{definition}
 
+***** tralala, rate matrices zijn ook handig
 \begin{definition}[Transition Rate Matrix]\label{def:rate_matrix}
 A real-valued matrix $Q$ is said to be a \emph{transition rate matrix}, or sometimes simply \emph{rate matrix}, if
 
@@ -389,19 +402,6 @@ We use $\mathcal{R}$ to denote the set of all transition rate matrices.
 \end{definition}
 
 \noindent Clearly, $\mathcal{R}$ is closed under finite sums and multiplication with non-negative scalars. 
-
-\begin{definition}[Transition Matrix]\label{def:stoch_matrix}
-A real-valued matrix $T$ is said to be a \emph{transition matrix} if
-\vspace{5pt}
-\begin{enumerate}[label=T\arabic*:,ref=T\arabic*]
-\item\label{def:T:sumone}
-$\sum_{y\in\states}T(x,y)=1$ for all $x\in\states$;\label{def:trans_matrix_is_stochastic}
-\item\label{def:T:nonneg}
-$T(x,y)\geq0$ for all $x,y\in\states$.
-\end{enumerate}
-\vspace{5pt}
-\noindent
-\end{definition}
 
 *** tralala, rate matrices and transition matrices zijn sterk gelinkt.  intuitief geven rate matrices aan hoe snel een transitie kans veranderd, in termen van $\Delta$.
 
@@ -1018,9 +1018,9 @@ Trivial consequence of Propositions~\ref{prop:systemQ} and~\ref{prop:concat_rest
 \section{Imprecise Continuous-Time Markov chains}
 \label{sec:iCTMC}
 
-We now turn to the field of \emph{imprecise probability} {\bf CITE CITE}, and will formalize in this section the notion of \emph{imprecise continuous-time Markov chains}.
+In Sections~\ref{sec:stochastic_processes} and~\ref{sec:cont_time_markov_chains}, we formalized stochastic processes, and provided tools for describing them. We now turn to the field of \emph{imprecise probability} {\bf CITE CITE}, and will formalize in this section the notion of \emph{imprecise continuous-time Markov chains}. Here, rather than look at a single stochastic process $P\in\processes$, we instead consider jointly some \emph{set} of processes $\mathcal{P}\subseteq\processes$. 
 
-Here, rather than look at a single stochastic process $P\in\processes$, we instead consider jointly some \emph{set} of processes $\mathcal{P}\subseteq\processes$. **** blabla,lower exp
+**** blabla,lower exp
 
 \begin{definition}[Lower Expectation]\label{def:lower_exp}
 For any set of stochastic processes $\mathcal{P}\subseteq\processes$, the \emph{(conditional) lower expectation with respect to $\mathcal{P}$} is defined as
@@ -1242,25 +1242,6 @@ We focus in this section on introducing the relevant concepts, and deriving this
 
 It is clear from Section~\ref{sec:trans_rate_matrices} that there is a strong connection between transition rate matrices and transition matrices. We here generalize these two concepts to \emph{lower transition rate operators} and \emph{lower transition operators}, respectively.
 
-\begin{definition}[Lower Transition Rate Operator]\label{def:coh_low_trans_rate}
-We will call a map $\lrate$ from $\gamblesX$ to $\gamblesX$ a \emph{lower transition rate operator} if, for all $f,g\in\gamblesX$, all $\lambda\in\realsnonneg$, all constant functions $\mu\in\gamblesX$, and all $x\in\states$:
-
-%\vspace{5pt}
-\begin{enumerate}[label=LR\arabic*:,ref=LR\arabic*]
-\item\label{LR:constantzero}
-$\left[\lrate\mu\right](x)=0$;
-\item\label{LR:nondiagpos}
-$\left[\lrate\ind{y}\right](x)\geq0$ for all $y\in\states$ such that $x\neq y$;
-\item\label{LR:subadditive}
-$\left[\lrate(f+g)\right](x)\geq\left[\lrate f\right](x)+\left[\lrate g\right](x)$;
-\item\label{LR:homo}
-$\left[\lrate(\lambda f)\right](x)= \lambda\left[\lrate f\right](x)$.
-\end{enumerate}
-%\vspace{5pt}
-\end{definition}
-Note that properties~\ref{LR:constantzero} and~\ref{LR:nondiagpos} essentially preserve properties~\ref{def:Q:sumzero} and~\ref{def:Q:nonnegoffdiagonal} from Definition~\ref{def:rate_matrix}. However, where any rate matrix $Q$ represents a linear map, properties~\ref{LR:subadditive} and~\ref{LR:homo} merely require that a lower transition rate operator $\lrate$ is \emph{super-}additive and \emph{non-negatively} homogeneous. Hence, any rate matrix is in fact also a lower transition rate operator, with the latter concept providing a proper generalization of the former.
-
-
 \begin{definition}[Lower Transition Operator]\label{def:coh_low_trans}
 We will call a map $\lt$ from $\gamblesX$ to $\gamblesX$ a \emph{lower transition operator} if, for all $f,g\in\gamblesX$, all $\lambda\in\realsnonneg$, and all $x\in\states$:
 
@@ -1279,25 +1260,24 @@ $\left[\lt(\lambda f)\right](x)=\lambda\left[\lt\,f\right](x)$.
 \end{definition}
 **** some motivation and links to lower previsions.
 
-\noindent We start by giving some useful properties of the norm of these operators.
+\begin{definition}[Lower Transition Rate Operator]\label{def:coh_low_trans_rate}
+We will call a map $\lrate$ from $\gamblesX$ to $\gamblesX$ a \emph{lower transition rate operator} if, for all $f,g\in\gamblesX$, all $\lambda\in\realsnonneg$, all constant functions $\mu\in\gamblesX$, and all $x\in\states$:
 
-\begin{proposition}[Reference \cite{DeBock:2016}]\label{prop:norm_properties_lrate_lt}
-For any non-negatively homogeneous operators $A,B$ from $\gamblesX$ to $\gamblesX$, any lower transition rate operator $\lrate$, and any lower transition operator $\lt$,
-\begin{multicols}{2}
-\begin{enumerate}[label=LR\arabic*:,ref=LR\arabic*,start=5]
-\item
-$\norm{\lrate} < +\infty$ \label{LR:normlratefinite}
-\item
-$\norm{\lrate A - \lrate B} \leq 2\norm{\lrate}\norm{A - B}$ \label{LR:differenceofnorm}
+%\vspace{5pt}
+\begin{enumerate}[label=LR\arabic*:,ref=LR\arabic*]
+\item\label{LR:constantzero}
+$\left[\lrate\mu\right](x)=0$;
+\item\label{LR:nondiagpos}
+$\left[\lrate\ind{y}\right](x)\geq0$ for all $y\in\states$ such that $x\neq y$;
+\item\label{LR:subadditive}
+$\left[\lrate(f+g)\right](x)\geq\left[\lrate f\right](x)+\left[\lrate g\right](x)$;
+\item\label{LR:homo}
+$\left[\lrate(\lambda f)\right](x)= \lambda\left[\lrate f\right](x)$.
 \end{enumerate}
-\begin{enumerate}[label=LT\arabic*:,ref=LT\arabic*,start=4]
-\item
-$\norm{\lt} \leq 1$ \label{LT:norm_at_most_one}
-\item
-$\norm{\lt A - \lt B} \leq \norm{A - B}$ \label{LT:differencenorm}
-\end{enumerate}
-\end{multicols}
-\end{proposition}
+%\vspace{5pt}
+\end{definition}
+
+Note that properties~\ref{LR:constantzero} and~\ref{LR:nondiagpos} essentially preserve properties~\ref{def:Q:sumzero} and~\ref{def:Q:nonnegoffdiagonal} from Definition~\ref{def:rate_matrix}. However, where any rate matrix $Q$ represents a linear map, properties~\ref{LR:subadditive} and~\ref{LR:homo} merely require that a lower transition rate operator $\lrate$ is \emph{super-}additive and \emph{non-negatively} homogeneous. Hence, any rate matrix is in fact also a lower transition rate operator, with the latter concept providing a proper generalization of the former.
 
 %\begin{proposition}\label{lem:normlratefinite}
 %For any lower transition rate operator $\lrate$, we have that $0\leq\norm{\lrate}<+\infty$.
@@ -1307,19 +1287,39 @@ $\norm{\lt A - \lt B} \leq \norm{A - B}$ \label{LT:differencenorm}
 %For any lower transition operator $\lt$, we have that $0\leq \norm{\lt}\leq 1$.
 %\end{proposition}
 
-We next establish that there is a correspondence between lower transition rate operators and lower transition operators that is analogous to the one found in Section~\ref{sec:trans_rate_matrices}.
+**** We next establish that there is a correspondence between lower transition rate operators and lower transition operators that is analogous to the one found in Section~\ref{sec:trans_rate_matrices}.
 
 \begin{proposition}[Reference \cite{DeBock:2016}]\label{lemma:normQsmallenough}
-Consider any lower transition rate operator $\lrate$, and any $\Delta\in\realsnonneg$ such that $\Delta\leq\nicefrac{1}{\norm{\lrate}}$. Then, the operator $(I+\Delta\lrate)$ is a lower transition operator.
+Consider any lower transition rate operator $\lrate$, and any $\Delta\in\realsnonneg$ such that $\Delta\norm{\lrate}\leq 1$. Then, the operator $(I+\Delta\lrate)$ is a lower transition operator.
 \end{proposition}
 
 \begin{proposition}[Reference \cite{DeBock:2016}]\label{lemma:lower_trans_to_lower_rate}
 Consider any lower transition operator $\lt$, and any $\Delta\in\realspos$. Then, the operator $\nicefrac{1}{\Delta}(\lt - I)$ is a lower transition rate operator.
 \end{proposition}
 
+\noindent We next give some additional useful properties of the norm of these operators.
+
+\begin{proposition}[Reference \cite{DeBock:2016}]\label{prop:norm_properties_lrate_lt}
+For any lower transition operator $\lt$, any lower transition rate operator $\lrate$, and any two non-negatively homogeneous operators $A,B$ from $\gamblesX$ to $\gamblesX$,
+\begin{multicols}{2}
+\begin{enumerate}[label=LT\arabic*:,ref=LT\arabic*,start=4]
+\item
+$\norm{\lt} \leq 1$ \label{LT:norm_at_most_one}
+\item
+$\norm{\lt A - \lt B} \leq \norm{A - B}$ \label{LT:differencenorm}
+\end{enumerate}
+\begin{enumerate}[label=LR\arabic*:,ref=LR\arabic*,start=5]
+\item
+$\norm{\lrate} < +\infty$ \label{LR:normlratefinite}
+\item
+$\norm{\lrate A - \lrate B} \leq 2\norm{\lrate}\norm{A - B}$ \label{LR:differenceofnorm}
+\end{enumerate}
+\end{multicols}
+\end{proposition}
+
 We now have two results about the set $\underline{\mathcal{T}}$ of all lower transition operators. As the first result shows, this set is closed under composition.
 \begin{proposition}\label{lemma:compositioncoherence}
-For any $\lt,\underline{S}\in\underline{\mathcal{T}}$, we have that $\left(\lt\,\underline{S}\right)\in\underline{\mathcal{T}}$.
+For any $\lt,\underline{S}\in\underline{\mathcal{T}}$, it holds that $\left(\lt\,\underline{S}\right)\in\underline{\mathcal{T}}$.
 \end{proposition}
 \begin{proof}
 Simply check each of the properties.
