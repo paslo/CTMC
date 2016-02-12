@@ -2537,7 +2537,7 @@ T^{t_{i+1}}_{t_i,\,x_u}-(I+\Delta_{i+1}Q)
 \end{lemma}
 \begin{proof}
 Fix any $\epsilon>0$ and $\delta>0$.
-For any $r\in[t,s]$, it follows from Proposition~\ref{prop:outerderivativebehaveslikelimit} and Definition~\eqref{def:nonmarkovsetQ} that there is some $0<\delta_r<\delta$ such that, for all $0<\Delta<\delta_r$:
+For any $r\in[t,s]$, it follows from Proposition~\ref{prop:outerderivativebehaveslikelimit} and Definition~\ref{def:consistent_process} that there is some $0<\delta_r<\delta$ such that, for all $0<\Delta<\delta_r$:
 \begin{equation}\label{eq:epsilonboundsforlemma}
 (\exists Q\in\rateset)
 \norm{\frac{1}{\Delta}
@@ -3608,8 +3608,6 @@ Because the $\epsilon$ was arbitrary, together with Equation REF, it then follow
 
 \section{Proofs and Lemmas for Section~\ref{sec:lowertrans}}
 
-***** Still need to add proofs for \ref{lem:normlratefinite} \ref{lemma:normofcoherenttrans} \ref{lemma:normQsmallenough} \ref{lemma:lower_trans_to_lower_rate}.
-
 \begin{proof}[Proof of Proposition~\ref{lemma:completemetricspace}]
 Define for all $\lt\in\underline{\mathcal{T}}$ and all $x\in\states$ the map $\lt_x:\gamblesX\rightarrow\reals$ as
 \begin{equation*}
@@ -3688,7 +3686,7 @@ We provide a proof by induction. Clearly, Equation~\eqref{eq:lemma_recursive_ine
  &\leq \norm{\underline{T}_n - \underline{S}_n} + \norm{\prod_{i=1}^{n-1}\underline{T}_i - \prod_{i=1}^{n-1}\underline{S}_i} \\
  &\leq \norm{\underline{T}_n - \underline{S}_n} + \sum_{i=1}^{n-1}\norm{\underline{T}_i - \underline{S}_i} = \sum_{i=1}^{n}\norm{\underline{T}_i - \underline{S}_i}\,.
 \end{align*}
-Here, in the second inequality, we applied Proposition~\ref{lemma:compositioncoherence} and the fact that $\norm{\underline{T}A - \underline{T}B}\leq\norm{A - B}$ for any lower transition operator $\underline{T}$, due to Lemma {\bf YOU REMOVED THIS ;)}. In the third inequality, we used $\norm{\underline{S}_n}\leq 1$, by Proposition~\ref{lemma:normofcoherenttrans}. In the final inequality, we used the induction hypothesis.
+Here, in the second inequality, we applied Proposition~\ref{lemma:compositioncoherence} and property~\ref{LT:differencenorm}. In the third inequality, we used property~\ref{LT:norm_at_most_one}. In the final inequality, we used the induction hypothesis.
 \end{proof}
 
 \begin{lemma}\label{lemma:justthelinearpart}
@@ -3728,7 +3726,7 @@ For all $i\in\{2,\dots,n\}$, since $\Delta_i\leq\nicefrac{1}{\norm{\lrate}}$, it
 =\Delta^2\norm{\lrate}^2,
 \end{aligned}
 \end{multline*}\\[3pt]
-where the second inequality follows from the induction hypothesis and Lemma~\ref{lemma:differencenormofcoherenttransrate}, and the third inequality follows from Lemma~\ref{lemma:recursive_lower_trans}.
+where the second inequality follows from the induction hypothesis and property~\ref{LR:differenceofnorm}, and the third inequality follows from Lemma~\ref{lemma:recursive_lower_trans}.
 \end{proof}
 
 
@@ -4043,11 +4041,11 @@ where the second equality used Proposition~\ref{prop:lower_transition_is_homogen
 \section{Proofs and Lemmas for Section~\ref{sec:connections}}
 
 \begin{proof}[Proof of Proposition~\ref{prop:lowerenvelopeislowertrans}]
-Consider any $Q\in\rateset$. It then follows from Definition~\ref{def:rate_matrix} that the matrix $Q$, when regarded as a map from $\gamblesX$ to $\gamblesX$, satisfies \ref{LR:constantzero}--\ref{LR:nondiagpos}. Since each of these properties is preserved under taking lower envelopes, it follows that $\lrate$ satisfies \ref{LR:constantzero}--\ref{LR:nondiagpos}, which means that $\lrate$ is a lower transition rate operator.
+Consider any $Q\in\rateset$. It then follows from Definition~\ref{def:rate_matrix} that the matrix $Q$, when regarded as a map from $\gamblesX$ to $\gamblesX$, satisfies \ref{LR:constantzero}--\ref{LR:homo}. Since each of these properties is preserved under taking lower envelopes, it follows that $\lrate$ satisfies \ref{LR:constantzero}--\ref{LR:homo}, which means that $\lrate$ is a lower transition rate operator.
 \end{proof}
 
 \begin{proof}[Proof of Proposition~\ref{prop:dominating_nonempty_bounded}]
-Fix any $f\in\gamblesX$. Choose $\Delta>0$ small enough such that $0\leq\Delta\norm{\lrate}\leq 1$ (this always possible because of Proposition~\ref{lem:normlratefinite}). Define $\lt\coloneqq I+\Delta\lrate$. Since $\lrate$ is a lower transition rate operator, it follows from Proposition~\ref{lemma:normQsmallenough} that $\lt$ is a lower transition operator. For any $x\in\states$, we now let
+Fix any $f\in\gamblesX$. Choose $\Delta>0$ small enough such that $0\leq\Delta\norm{\lrate}\leq 1$ (this always possible because of property~\ref{LR:normlratefinite}). Define $\lt\coloneqq I+\Delta\lrate$. Since $\lrate$ is a lower transition rate operator, it follows from Proposition~\ref{lemma:normQsmallenough} that $\lt$ is a lower transition operator. For any $x\in\states$, we now let
 \begin{equation*}
 \lt_xg\coloneqq(\lt g)(x)
 \text{~~for all $g\in\gamblesX$.}
@@ -4176,7 +4174,7 @@ and because this (outer) expectation computes a convex combination of values, we
 \mathbb{E}[f(X_s)\,\vert\,X_t=x,X_u=x_u] > \mathbb{E}\bigl[[(I+\Delta_m\lrate)f](X_{\tau_{m-1}})\,\vert\,X_t,X_u=x_u\bigr] - \frac{\Delta_{m}\epsilon}{2C}\,.
 \end{equation*}
 
-Because $\Delta_m\leq\sigma(v)<\delta^*\leq\nicefrac{1}{\norm{\lrate}}$, we find by Proposition~\ref{lemma:normQsmallenough} that $(I+\Delta_m\lrate)$ is a lower transition operator. Therefore, $[(I+\Delta_m\lrate)f]\in\gamblesX$, and by Proposition~\ref{lemma:normofcoherenttrans}, we have that $\norm{(I+\Delta_m\lrate)f}\leq\norm{f}$. Hence, Equation~\eqref{eq:lowerbound_proof_linear_approx_lrate} applies, and we can use backward induction on $m$ to find
+Because $\Delta_m\leq\sigma(v)<\delta^*\leq\nicefrac{1}{\norm{\lrate}}$, we find by Proposition~\ref{lemma:normQsmallenough} that $(I+\Delta_m\lrate)$ is a lower transition operator. Therefore, $[(I+\Delta_m\lrate)f]\in\gamblesX$, and by property~\ref{LT:norm_at_most_one}, we have that $\norm{(I+\Delta_m\lrate)f}\leq\norm{f}$. Hence, Equation~\eqref{eq:lowerbound_proof_linear_approx_lrate} applies, and we can use backward induction on $m$ to find
 \begin{align*}
 \mathbb{E}[&f(X_s)\,\vert\,X_t=x,X_u=x_u] \\
 & > \mathbb{E}\bigl[[(I+\Delta_m\lrate)f](X_{\tau_{m-1}})\,\vert\,X_t=x,X_u=x_u\bigr] - \frac{\Delta_{m}\epsilon}{2C} \\
@@ -4189,7 +4187,7 @@ Because $\Delta_m\leq\sigma(v)<\delta^*\leq\nicefrac{1}{\norm{\lrate}}$, we find
 %& = \left[\left(\prod_{i=1}^m(I+\Delta_i\lrate)\right)f\right](x_{t_n}) - \sum_{i=1}^m\frac{\Delta_{i}\epsilon}{2C}\\
 %& = \left[\Phi_v f\right](x_{t_n}) - \frac{\epsilon}{2}\,,
 \end{align*}
-Because $\prod_{i=1}^m(I+\Delta_i\lrate)$ is a lower transition operator, we have that $[\prod_{i=1}^m(I+\Delta_i\lrate)f]\in\gamblesX$, and by Proposition~\ref{lemma:normofcoherenttrans}, that $\norm{\prod_{i=1}^m(I+\Delta_i\lrate)f}\leq\norm{f}$. Therefore, Equation~\eqref{eq:lowerbound_proof_linear_approx_last_part} applies, and hence we find that
+Because $\prod_{i=1}^m(I+\Delta_i\lrate)$ is a lower transition operator, we have that $[\prod_{i=1}^m(I+\Delta_i\lrate)f]\in\gamblesX$, and by property~\ref{LT:norm_at_most_one}, that $\norm{\prod_{i=1}^m(I+\Delta_i\lrate)f}\leq\norm{f}$. Therefore, Equation~\eqref{eq:lowerbound_proof_linear_approx_last_part} applies, and hence we find that
 \begin{equation*}
 \mathbb{E}[f(X_s)\,\vert\,X_t=x,X_u=x_u] > \left[\prod_{i=0}^m(I+\Delta_i\lrate)f\right](x) - \sum_{i=0}^m\frac{\Delta_{i}\epsilon}{2C}\,.
 \end{equation*}
@@ -4453,7 +4451,7 @@ By the definition of the norm, we have that $\abs{\nicefrac{1}{\Delta}\left[(L_{
 \abs{\frac{1}{\Delta}\left[(T_{t,x_u}^{t+\Delta} - I)\ind{x}\right](x)} \leq \norm{\frac{1}{\Delta}(L_{t}^{t+\Delta} - I)}\,.
 \end{equation*}
 
-Now, by Proposition~\ref{prop:lower_transition_has_deriv}, we have that $\lim_{\Delta\to0^+}\nicefrac{1}{\Delta}(L_{t}^{t+\Delta} - I) = \lrate$, and hence it follows that $\lim_{\Delta\to0^+}\norm{\nicefrac{1}{\Delta}(L_{t}^{t+\Delta} - I)} = \norm{\lrate}$. By Proposition~\ref{lem:normlratefinite}, we furthermore know that $\norm{\lrate}<+\infty$. Taking limits on both sides of our earlier inequality, we therefore find that
+Now, by Proposition~\ref{prop:lower_transition_has_deriv}, we have that $\lim_{\Delta\to0^+}\nicefrac{1}{\Delta}(L_{t}^{t+\Delta} - I) = \lrate$, and hence it follows that $\lim_{\Delta\to0^+}\norm{\nicefrac{1}{\Delta}(L_{t}^{t+\Delta} - I)} = \norm{\lrate}$. By property~\ref{LR:normlratefinite}, we furthermore know that $\norm{\lrate}<+\infty$. Taking limits on both sides of our earlier inequality, we therefore find that
 \begin{equation*}
 \limsup_{\Delta\to0^+}\abs{\frac{1}{\Delta}\left[(T_{t,x_u}^{t+\Delta} - I)\ind{x}\right](x)} \leq \limsup_{\Delta\to0^+}\norm{\frac{1}{\Delta}(L_{t}^{t+\Delta} - I)} = \norm{\lrate} < +\infty\,,
 \end{equation*}
