@@ -1044,7 +1044,7 @@ Therefore, consider some non-empty bounded set $\rateset\subset\mathcal{R}$ of r
 From this, we might next consider whether we can also describe sets of non-homogeneous, (non-)Markov processes using a given set $\rateset$ of rate matrices. However, it should be clear that for such processes, this is less straightforward than in the homogeneous case. In particular, because such a set $\rateset$ is not explicitly connected to any time $t$ or history $x_u$, asking if a (non-homogeneous, non-Markov) process is described by this set is in some sense an ill-posed question.
 Therefore, rather than asking if a process can be described by some set of rate matrices, we will now introduce the following weaker notion of \emph{consistency} of a stochastic process with a given set of rate matrices.
 
-\begin{definition}[Consistent Process]
+\begin{definition}[Consistent Process]\label{def:consistent_process}
 Consider any non-empty bounded set $\rateset$ of rate matrices, and any stochastic process $P\in\processes$. Then $P$ is said to be \emph{consistent} with $\rateset$, if
 \begin{equation*}
 (\forall t\in\realsnonneg)(\forall u\in\mathcal{U}_{<t})(\forall x_u\in\states^u)\,:\, \smash{\overline{\partial}}T_{t,x_u}^t \subseteq \rateset\,.
@@ -4374,13 +4374,18 @@ Together this implies, using Definition~\ref{def:lower_exp}, that
 \end{proof}
 
 \begin{proof}[Proof of Theorem~\ref{theo:dominating_rate_processes_max_set}]
-By Propositions~\ref{prop:dominating_nonempty_bounded} and \ref{prop:dominatingproperties}, the set $\rateset_{\lrate}$ is non-empty, bounded, has separately specified rows, and by definition has $\lrate$ as its corresponding lower transition rate operator. The first statement therefore follows directly from Corollary~\ref{cor:lower_operator_is_infimum}.
+By Propositions~\ref{prop:dominating_nonempty_bounded} and \ref{prop:dominatingproperties}, the set $\rateset_{\lrate}$ is non-empty, bounded, has separately specified rows, and has $\lrate$ as its corresponding lower transition rate operator. Therefore, the fact that $L_t^s$ computes the lower expectation for $\wprocesses_{\rateset_{\lrate}}$ follows directly from Corollary~\ref{cor:lower_operator_is_infimum}.
 
-For the second statement, take any $P\in\processes$ such that $P\notin\wprocesses_{\rateset_{\lrate}}$. Clearly, we must have that either $P\in\wprocesses$ or $P\notin\wprocesses$. We will start by assuming the former, and show that the statement then follows.
+To prove that this is the largest set for which $L_t^s$ does this, we need to show that, for every $P\notin \wprocesses_{\rateset_{\lrate}}$, there is some $t,s\in\realsnonneg$ with $t\leq s$, some $u\in\mathcal{U}_{<t}$, some $x\in\states$ and $x_u\in\states^u$, and some $f\in\gamblesX$, such that
+\begin{equation}\label{theo:largest_set_outside_process_lower}
+\mathbb{E}[f(X_s)\,\vert\,X_t=x,X_u=x_u] < [L_t^sf](x)\,.
+\end{equation}
 
-Because $P\notin\wprocesses_{\rateset_{\lrate}}$, by Definition~\ref{def:set_non_markov_process}, there must be some $t\in\realsnonneg$, some $u\in\mathcal{U}_{<t}$, and some $x_u\in\states^u$, such that $\smash{\overline{\partial}}T_{t,x_u}^{t}\nsubseteq\rateset_{\lrate}$. Furthermore, by Proposition~\ref{prop:boundednon-emptyandclosed}, we have that $\smash{\overline{\partial}}T_{t,x_u}^{t}\neq\emptyset$. Hence, there must be some rate matrix $Q\in\smash{\overline{\partial}}T_{t,x_u}^{t}$ such that $Q\notin\rateset_{\lrate}$, which by Equation~\eqref{eq:dominatingratematrices} implies that there is some $f\in\gamblesX$ and some $x\in\states$ such that $\left[Qf\right](x)<\left[\lrate f\right](x)$.
+To this end, consider any $P\in\processes$ such that $P\notin\wprocesses_{\rateset_{\lrate}}$. Clearly, we must have that either $P\in\wprocesses$ or $P\notin\wprocesses$. We will start by assuming the former, and show that the statement then follows.
 
-Now, assume \emph{ex absurdo} that the statement is false. Because $Q\in\smash{\overline{\partial}}T_{t,x_u}^{t}$, we must have that either $Q\in\smash{\overline{\partial}}_+T_{t,x_u}^{t}$ or $Q\in\smash{\overline{\partial}}_-T_{t,x_u}^{t}$. Assume it is the former. Then, by Equation~\ref{eq:rightouterderivative}, there is some $\{\Delta_i\}_{i\in\nats}\to0^+$ such that $\lim_{i\to+\infty}\nicefrac{1}{\Delta_i}(T_{t,x_u}^{t+\Delta_i}-I)=Q$. Because we assumed that the claim is false, we must have that for all $\Delta\in\realspos$, it holds that $\left[L_t^{t+\Delta}f\right](x) \leq \left[T_{t,x_u}^{t+\Delta}f\right](x)$,
+Because $P\notin\wprocesses_{\rateset_{\lrate}}$, by Definition~\ref{def:consistent_process}, there must be some $t\in\realsnonneg$, some $u\in\mathcal{U}_{<t}$, and some $x_u\in\states^u$, such that $\smash{\overline{\partial}}T_{t,x_u}^{t}\nsubseteq\rateset_{\lrate}$. Furthermore, by Proposition~\ref{prop:boundednon-emptyandclosed}, we have that $\smash{\overline{\partial}}T_{t,x_u}^{t}\neq\emptyset$. Hence, there must be some rate matrix $Q\in\smash{\overline{\partial}}T_{t,x_u}^{t}$ such that $Q\notin\rateset_{\lrate}$, which by Equation~\eqref{eq:dominatingratematrices} implies that there is some $f\in\gamblesX$ and some $x\in\states$ such that $\left[Qf\right](x)<\left[\lrate f\right](x)$.
+
+Now, assume \emph{ex absurdo} that Equation~\eqref{theo:largest_set_outside_process_lower} is false. Because $Q\in\smash{\overline{\partial}}T_{t,x_u}^{t}$, we must have that either $Q\in\smash{\overline{\partial}}_+T_{t,x_u}^{t}$ or $Q\in\smash{\overline{\partial}}_-T_{t,x_u}^{t}$. Assume it is the former. Then, by Equation~\ref{eq:rightouterderivative}, there is some $\{\Delta_i\}_{i\in\nats}\to0^+$ such that $\lim_{i\to+\infty}\nicefrac{1}{\Delta_i}(T_{t,x_u}^{t+\Delta_i}-I)=Q$. Because we assumed that Equation~\eqref{theo:largest_set_outside_process_lower} is false, we must have that for all $\Delta\in\realspos$, it holds that $\left[L_t^{t+\Delta}f\right](x) \leq \left[T_{t,x_u}^{t+\Delta}f\right](x)$,
 or equivalently, that
 \begin{equation*}
 \frac{1}{\Delta}\left[(L_t^{t+\Delta} - I)f\right](x) \leq \frac{1}{\Delta}\left[(T_{t,x_u}^{t+\Delta} - I)f\right](x)\,.
@@ -4399,19 +4404,19 @@ By Proposition~\ref{prop:lower_transition_is_homogeneous}, we have that $L_{t-\D
 \lim_{i\to+\infty}\frac{1}{\Delta_i}\left[(L_t^{t+\Delta_i} - I)f\right](x) &\leq \lim_{i\to+\infty}\frac{1}{\Delta_i}\left[(T_{t-\Delta_i,x_u}^{t} - I)f\right](x) \\
 \left[\lrate f\right](x) &\leq \left[Qf\right](x)\,,
 \end{align*}
-we again find a contradiction. Therefore, if $P\in\wprocesses$, the statement follows.
+we again find a contradiction. Therefore, if $P\in\wprocesses$, Equation~\eqref{theo:largest_set_outside_process_lower} follows.
 
-Now, suppose that instead $P\notin\wprocesses$. Assume \emph{ex absurdo} that the statement is false. Because $P\notin\wprocesses$, by Definition~\ref{def:well-behaved} there must be some $t\in\realsnonneg$, some $u\in\mathcal{U}_{<t}$, some $x_u\in\states^u$, and some $x,y\in\states$, such that either 
+Now, suppose that instead $P\notin\wprocesses$. Assume \emph{ex absurdo} that Equation~\eqref{theo:largest_set_outside_process_lower} is false. Because $P\notin\wprocesses$, by Definition~\ref{def:well-behaved} there must be some $t\in\realsnonneg$, some $u\in\mathcal{U}_{<t}$, some $x_u\in\states^u$, and some $x,y\in\states$, such that either 
 \begin{equation*}
-\limsup_{\Delta\to0^+}\frac{1}{\Delta}\abs{P(X_{t+\Delta}=y\,\vert\,X_t=x,X_{t_0}=x_{t_0},\ldots,X_{t_n}=x_{t_n})-\delta_{xy}}\nless+\infty\,,
+\limsup_{\Delta\to0^+}\frac{1}{\Delta}\abs{P(X_{t+\Delta}=y\,\vert\,X_t=x,X_u=x_u)-\delta_{xy}}\nless+\infty\,,
 \end{equation*}
 or,
 \begin{equation*}
-\limsup_{\Delta\to0^+}\frac{1}{\Delta}\abs{P(X_{t}=y\,\vert\,X_{t-\Delta}=x,X_{t_0}=x_{t_0},\ldots,X_{t_n}=x_{t_n})-\delta_{xy}}\nless+\infty\,.
+\limsup_{\Delta\to0^+}\frac{1}{\Delta}\abs{P(X_{t}=y\,\vert\,X_{t-\Delta}=x,X_u=x_u)-\delta_{xy}}\nless+\infty\,.
 \end{equation*}
-Start by assuming that it is the former. Clearly, we have for all $\Delta\in\realspos$ that $\left[T_{t,x_u}^{t+\Delta}\ind{y}\right](x)=P(X_{t+\Delta}=y\,\vert\,X_t=x,X_{t_0}=x_{t_0},\ldots,X_{t_n}=x_{t_n})$, and furthermore, that $\left[I\ind{y}\right](x)=\delta_{xy}$. Hence, we have that
+Start by assuming that it is the former. Clearly, we have for all $\Delta\in\realspos$ that $\left[T_{t,x_u}^{t+\Delta}\ind{y}\right](x)=P(X_{t+\Delta}=y\,\vert\,X_t=x,X_u=x_u)$, and furthermore, that $\left[I\ind{y}\right](x)=\delta_{xy}$. Hence, we have that
 \begin{equation*}
-\left[(T_{t,x_u}^{t+\Delta}-I)\ind{y}\right](x) = P(X_{t+\Delta}=y\,\vert\,X_t=x,X_{t_0}=x_{t_0},\ldots,X_{t_n}=x_{t_n}) - \delta_{xy}\,.
+\left[(T_{t,x_u}^{t+\Delta}-I)\ind{y}\right](x) = P(X_{t+\Delta}=y\,\vert\,X_t=x,X_u=x_u) - \delta_{xy}\,.
 \end{equation*}
 By Proposition~\ref{prop:rate_from_stochastic_matrix}, we have that $\nicefrac{1}{\Delta}(T_{t,x_u}^{t+\Delta}-I)$ is a transition rate matrix, and hence by Definition~\ref{def:rate_matrix} we must have that $\nicefrac{1}{\Delta}\left[(T_{t,x_u}^{t+\Delta}-I)\ind{x}\right](x)\leq 0$, and $\nicefrac{1}{\Delta}\abs{\left[(T_{t,x_u}^{t+\Delta}-I)\ind{y}\right](x)}\leq\nicefrac{1}{\Delta}\abs{\left[(T_{t,x_u}^{t+\Delta}-I)\ind{x}\right](x)}$. It therefore follows that also
 \begin{equation}\label{eq:nonwellbehaved_limit_diagonal}
@@ -4432,13 +4437,13 @@ By the definition of the norm, we have that $\abs{\nicefrac{1}{\Delta}\left[(L_{
 \abs{\frac{1}{\Delta}\left[(T_{t,x_u}^{t+\Delta} - I)\ind{x}\right](x)} \leq \norm{\frac{1}{\Delta}(L_{t}^{t+\Delta} - I)}\,.
 \end{equation*}
 
-Now, by Proposition~\ref{prop:lower_transition_has_deriv}, we have that $\lim_{\Delta\to0^+}\nicefrac{1}{\Delta}(L_{t}^{t+\Delta} - I) = \lrate$, and hence it follows that $\lim_{\Delta\to0^+}\norm{\nicefrac{1}{\Delta}(L_{t}^{t+\Delta} - I)} = \norm{\lrate}$. By Lemma~\ref{lem:normlratefinite}, we furthermore know that $\norm{\lrate}<+\infty$. Taking limits on both sides of our earlier inequality, we therefore find that
+Now, by Proposition~\ref{prop:lower_transition_has_deriv}, we have that $\lim_{\Delta\to0^+}\nicefrac{1}{\Delta}(L_{t}^{t+\Delta} - I) = \lrate$, and hence it follows that $\lim_{\Delta\to0^+}\norm{\nicefrac{1}{\Delta}(L_{t}^{t+\Delta} - I)} = \norm{\lrate}$. By Proposition~\ref{lem:normlratefinite}, we furthermore know that $\norm{\lrate}<+\infty$. Taking limits on both sides of our earlier inequality, we therefore find that
 \begin{equation*}
 \limsup_{\Delta\to0^+}\abs{\frac{1}{\Delta}\left[(T_{t,x_u}^{t+\Delta} - I)\ind{x}\right](x)} \leq \limsup_{\Delta\to0^+}\norm{\frac{1}{\Delta}(L_{t}^{t+\Delta} - I)} = \norm{\lrate} < +\infty\,,
 \end{equation*}
-which, by Equation~\eqref{eq:nonwellbehaved_limit_diagonal}, is a contradiction. Therefore, if the statement is indeed false, we must instead have that for some (other) $t\in\realsnonneg$, some (other) $u\in\mathcal{U}_{<t}$, some (other) $x_\in\states^u$, and some (other) $x,y\in\states$,
+which, by Equation~\eqref{eq:nonwellbehaved_limit_diagonal}, is a contradiction. Therefore, if Equation~\eqref{theo:largest_set_outside_process_lower} is indeed false, we must instead have that for some (other) $t\in\realspos$, some (other) $u\in\mathcal{U}_{<t}$, some (other) $x_u\in\states^u$, and some (other) $x,y\in\states$,
 \begin{equation}\label{eq:nonwellbehaved_limit_diagonal_left}
-\limsup_{\Delta\to0^+}\frac{1}{\Delta}\abs{P(X_{t}=y\,\vert\,X_{t-\Delta}=x,X_{t_0}=x_{t_0},\ldots,X_{t_n}=x_{t_n})-\delta_{xy}}\nless+\infty\,.
+\limsup_{\Delta\to0^+}\frac{1}{\Delta}\abs{P(X_{t}=y\,\vert\,X_{t-\Delta}=x,X_u=x_u)-\delta_{xy}}\nless+\infty\,.
 \end{equation}
 Using the same argument as before, we must then have for all $\Delta\in\realspos$ that
 \begin{equation*}
@@ -4448,7 +4453,7 @@ Because by Proposition~\ref{prop:lower_transition_is_homogeneous} we have that $
 \begin{equation*}
 \limsup_{\Delta\to0^+}\abs{\frac{1}{\Delta}\left[(T_{t-\Delta,x_u}^t - I)\ind{x}\right](x)} \leq \limsup_{\Delta\to0^+}\norm{\frac{1}{\Delta}(L_{t}^{t+\Delta} - I)} = \norm{\lrate} < +\infty\,,
 \end{equation*}
-a contradiction with Equation~\eqref{eq:nonwellbehaved_limit_diagonal_left}. Therefore, if $P\notin\wprocesses$, the statement follows.
+a contradiction with Equation~\eqref{eq:nonwellbehaved_limit_diagonal_left}. Therefore, if $P\notin\wprocesses$, Equation~\eqref{theo:largest_set_outside_process_lower} follows.
 \end{proof}
 
 \section{Proofs and Lemmas for Section~\ref{sec:funcs_multi_time_points}}
