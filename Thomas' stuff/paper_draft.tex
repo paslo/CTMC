@@ -1084,7 +1084,7 @@ Hence, even though $\mathcal{P}$ contains an infinite number of processes which 
 
 Therefore, even though different processes may be consistent with the same set $\rateset$, we need not actually find the difference between these processes interesting. In particular, this is the case whenever different processes always have the same (conditional) expectation. However, when $\rateset$ is not singleton, the collection of processes consistent with $\rateset$ actually starts to exhibit differences that lead to different conditional expectations, and that we would therefore consider interesting.
 
-\begin{exmp}
+\begin{exmp}\label{example:rateset_not_singleton}
 Suppose that $\rateset=\{Q_1,Q_2\}$ for some $Q_1,Q_2\in\mathcal{R}$ with $Q_1\neq Q_2$. Then, clearly, all well-behaved homogeneous Markov chains described by either $Q_1$ or $Q_2$ are consistent with $\rateset$. Furthermore, there will also be different non-homogeneous Markov chains consistent with $\rateset$. In particular, not only can such processes differ in their initial distribution, there will be non-homogeneous Markov chains with the same initial distribution but which differ in the choice of $Q_1$ or $Q_2$ for any given time $t\in\realsnonneg$. 
 
 Furthermore, various non-homogeneous, non-Markov processes will be consistent with $\rateset$ as well. For example, for some $t\in\realsnonneg$ and some $x_u,y_u\in\states^u$ such that $x_u\neq y_u$, such a process might satisfy $\smash{\overline{\partial}}T_{t,x_u}^t=\{Q_1\}$ and $\smash{\overline{\partial}}T_{t,y_u}^t=\{Q_2\}$.
@@ -1105,16 +1105,16 @@ Such a set $\mathcal{P}_\rateset$ will also be called an \emph{imprecise continu
 
 \subsection{Types of Imprecise Continuous-Time Markov Chains}
 
-*** lalala we behandelen verschillende specifieke gevallen ***
+It is clear from Example~\ref{example:rateset_not_singleton} that, for arbitrary $\rateset$, the entire consistent set $\processes_\rateset$ contains processes that differ not only quantitatively---differing in which $Q\in\rateset$ they use---but also qualitatively: differing in whether they satisfy homogeneity or Markov properties. We will therefore find it convenient to focus on the following sets of processes, which make explicit this qualitative difference.
 
 \begin{definition}\label{def:process_sets}
 For any non-empty bounded set of rate matrices $\rateset$,
 \begin{itemize}
-\item $\whmprocesses_\rateset\subset\whmprocesses$ is the set of all well-behaved homogeneous Markov chains consistent with $\rateset$;
-\item $\wmprocesses_\rateset\subset\wmprocesses$ is the set of all well-behaved Markov chains consistent with $\rateset$;
 \item $\wprocesses_\rateset\subset\wprocesses$ is the set of all well-behaved stochastic processes consistent with $\rateset$.
+\item $\wmprocesses_\rateset\subset\wmprocesses$ is the set of all well-behaved Markov chains consistent with $\rateset$;
+\item $\whmprocesses_\rateset\subset\whmprocesses$ is the set of all well-behaved homogeneous Markov chains consistent with $\rateset$;
 \end{itemize}
-We will denote the lower expectation with respect to $\whmprocesses_\rateset$ as $\underline{\mathbb{E}}_\rateset^{\mathrm{WHM}}$, with respect to $\wmprocesses_\rateset$ as $\underline{\mathbb{E}}_\rateset^{\mathrm{WM}}$, and with respect to $\wprocesses_\rateset$ as $\underline{\mathbb{E}}_\rateset^{\mathrm{W}}$.
+We will denote the lower expectation with respect to $\wprocesses_\rateset$ as $\underline{\mathbb{E}}_\rateset^{\mathrm{W}}$, with respect to $\wmprocesses_\rateset$ as $\underline{\mathbb{E}}_\rateset^{\mathrm{WM}}$, and with respect to  $\whmprocesses_\rateset$ as $\underline{\mathbb{E}}_\rateset^{\mathrm{WHM}}$.
 \end{definition}
 
 %\begin{proposition}\label{prop:process_sets_simplify}
@@ -1139,6 +1139,17 @@ We will denote the lower expectation with respect to $\whmprocesses_\rateset$ as
 %\begin{proof}
 %*** {\bf TODO}, but trivial.
 %\end{proof}
+Note that this qualitative difference simplifies the notion of consistency from Definition~\ref{def:consistent_process}. In particular, it holds that
+\begin{equation*}
+\wmprocesses_\rateset = \left\{P\in\wmprocesses\,:\,(\forall t\in\realsnonneg)~~ \smash{\overline{\partial}}T_t^t\subseteq\rateset\right\}\,,
+\end{equation*}
+and
+\begin{equation*}
+\whmprocesses_\rateset = \left\{P\in\whmprocesses\,:\,Q_P\in\rateset\right\}\,.
+\end{equation*}
+This first equality follows from the Markov property of the elements in $\wmprocesses$, ensuring that $\smash{\overline{\partial}}T_{t,x_u}^t=\smash{\overline{\partial}}T_t^t$ for all $u\in\mathcal{U}_{<t}$ and all $x_u\in\states^u$. The second equality follows from the Markov property and the homogeneity of the elements of $P\in\whmprocesses$, ensuring furthermore that $\smash{\overline{\partial}}T_t^t=\{Q_P\}$ for all $t\in\realsnonneg$.
+
+It should furthermore be clear that these different sets are nested, and, as an immediate result, that their corresponding lower expectations provide bounds on each other.
 
 \begin{proposition}\label{prop:markov_set_subset_of_nonmarkov_set}
 Consider any bounded set of rate matrices $\rateset$. Then,
@@ -1149,8 +1160,6 @@ Consider any bounded set of rate matrices $\rateset$. Then,
 \begin{proof}
 This is immediate from Definition~\ref{def:process_sets} and the fact that $\whmprocesses\subset\wmprocesses\subset\wprocesses$.
 \end{proof}
-
-**** some notes about simplified consistency for $\whmprocesses$ and $\wmprocesses$.
 
 \begin{proposition}\label{prop:lower_exp_markov_bounded_by_nonmarkov}
 Consider any bounded set of rate matrices $\rateset$. Then,
@@ -1164,7 +1173,16 @@ Consider any bounded set of rate matrices $\rateset$. Then,
 This is immediate from Definition~\ref{def:lower_exp} and Proposition \ref{prop:markov_set_subset_of_nonmarkov_set}.
 \end{proof}
 
-*** opmerking/{\bf VOORBEELD(?)} dat $\whmprocesses_\rateset$ nogal tricky is, en dat we hier niet op focussen.
+Ironically, it turns out that computing lower expectations for the set $\whmprocesses_\rateset$ is in general much harder than for the sets $\wmprocesses_\rateset$ or $\wprocesses_\rateset$. In fact, we will later find in Section~\ref{sec:funcs_multi_time_points} that $\wprocesses_\rateset$ is in some sense the easiest set to do this for, for arbitrary functions.
+
+The problem is, essentially, that while homogeneous Markov chains are easy to work with numerically, the set $\whmprocesses_\rateset$ does not provide enough ``degrees of freedom'' to make the optimization problem involved in computing $\underline{\mathbb{E}}^\mathrm{WHM}_\rateset$ tractable. The following example serves as an illustration.
+
+\begin{exmp}
+**** example that homogeneous case is harder than non-homogeneous case.
+\exampleend
+\end{exmp}
+
+Because of this, we will in the sequel focus on the sets $\wmprocesses_\rateset$ and $\wprocesses_\rateset$. Note that Proposition~\ref{prop:lower_exp_markov_bounded_by_nonmarkov} guarantees that either of these suffice to compute a lower bound for $\underline{\mathbb{E}}_\rateset^\mathrm{WHM}$. However, this bound will in general not be tight if one insists that any analysis should be done with respect to the set $\whmprocesses_\rateset$. We now move on to state some properties for these different sets of processes.
 
 \subsection{Closure Properties for Sets of Consistent Processes}
 
@@ -1727,7 +1745,7 @@ Hence, the problem of computing $\underline{\mathbb{E}}[f(x_u,X_s)\,\vert\,X_u=x
 We therefore have the following result as an immediate consequence of our previous results.
 
 \begin{corollary}\label{cor:inf_works_for_single_future_var}
-Let $\rateset$ be an arbitrary non-empty bounded set of rate matrices that has separately specified rows, with corresponding lower transition rate operator $\lrate$, and let $\underline{\mathcal{T}}_{\lrate}$ be the family of lower transition operators corresponding to $\lrate$. Then, for all $s\in\realsnonneg$, all $u\in\mathcal{U}_{<s}$, all $x_u\in\states^u$, and all $f\in\gambles(\states^{u\cup\{s\}})$,
+Let $\rateset$ be an arbitrary non-empty bounded set of rate matrices that has separately specified rows, with corresponding lower transition rate operator $\lrate$, and let $\underline{\mathcal{T}}_{\lrate}$ be the family of lower transition operators corresponding to $\lrate$. Then, for all $s\in\realsnonneg$, all $u\in\mathcal{U}_{<s}$ such that $u\neq\emptyset$, all $x_u\in\states^u$, and all $f\in\gambles(\states^{u\cup\{s\}})$,
 \begin{equation*}
 \left[L_{t_n}^s f\right](x_u) = \underline{\mathbb{E}}^{\mathrm{WM}}_{\,\rateset}[f(x_u,X_s)\,\vert\,X_u=x_u]\,,
 \end{equation*}
