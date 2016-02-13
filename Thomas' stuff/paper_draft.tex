@@ -1018,15 +1018,14 @@ Trivial consequence of Propositions~\ref{prop:systemQ} and~\ref{prop:concat_rest
 \section{Imprecise Continuous-Time Markov chains}
 \label{sec:iCTMC}
 
-In Sections~\ref{sec:stochastic_processes} and~\ref{sec:cont_time_markov_chains}, we formalized stochastic processes, and provided tools for describing them. We now turn to the field of \emph{imprecise probability} {\bf CITE CITE}, and will formalize in this section the notion of \emph{imprecise continuous-time Markov chains}. Here, rather than look at a single stochastic process $P\in\processes$, we instead consider jointly some \emph{set} of processes $\mathcal{P}\subseteq\processes$. 
-
-**** blabla,lower exp
+In Sections~\ref{sec:stochastic_processes} and~\ref{sec:cont_time_markov_chains}, we formalized stochastic processes, and provided tools for describing them. We now turn to the field of \emph{imprecise probability} {\bf CITE CITE}, and will formalize in this section the notion of \emph{imprecise continuous-time Markov chains}. Here, rather than look at a single stochastic process $P\in\processes$, we instead consider jointly some \emph{set} of processes $\mathcal{P}\subseteq\processes$. Our main object of consideration will be the \emph{lower expectation} with respect to such a set $\mathcal{P}$.
 
 \begin{definition}[Lower Expectation]\label{def:lower_exp}
 For any set of stochastic processes $\mathcal{P}\subseteq\processes$, the \emph{(conditional) lower expectation with respect to $\mathcal{P}$} is defined as
 \begin{equation*}
 \underline{\mathbb{E}}[\cdot\,\vert\,\cdot] \coloneqq \inf\left\{\mathbb{E}[\cdot\,\vert\,\cdot]\,:\,P\in\mathcal{P}\right\}\,.
 \end{equation*}
+\vspace{0pt}
 \end{definition}
 
 \noindent It is well known {\bf CITE} that the corresponding \emph{upper expectation},
@@ -1173,7 +1172,9 @@ Consider any bounded set of rate matrices $\rateset$. Then,
 This is immediate from Definition~\ref{def:lower_exp} and Proposition \ref{prop:markov_set_subset_of_nonmarkov_set}.
 \end{proof}
 
-Ironically, it turns out that computing lower expectations for the set $\whmprocesses_\rateset$ is in general much harder than for the sets $\wmprocesses_\rateset$ or $\wprocesses_\rateset$. In fact, we will later find in Section~\ref{sec:funcs_multi_time_points} that $\wprocesses_\rateset$ is in some sense the easiest set to do this for, for arbitrary functions.
+Now, ironically, it turns out that computing lower expectations for the set $\whmprocesses_\rateset$ is in general much harder than for the sets $\wmprocesses_\rateset$ or $\wprocesses_\rateset$. In fact, we will later find in Section~\ref{sec:funcs_multi_time_points} that $\wprocesses_\rateset$ is in some sense the easiest set to do this for, for arbitrary functions. Therefore, we will in the sequel focus on the sets $\wmprocesses_\rateset$ and $\wprocesses_\rateset$.
+
+Note that Proposition~\ref{prop:lower_exp_markov_bounded_by_nonmarkov} guarantees that the lower expectation for either $\wmprocesses_\rateset$ or $\wprocesses_\rateset$ suffices to compute a lower bound for $\underline{\mathbb{E}}_\rateset^\mathrm{WHM}$. However, this bound will in general not be tight if one insists that any analysis should be done with respect to the set $\whmprocesses_\rateset$.
 
 The problem is, essentially, that while homogeneous Markov chains are easy to work with numerically, the set $\whmprocesses_\rateset$ does not provide enough ``degrees of freedom'' to make the optimization problem involved in computing $\underline{\mathbb{E}}^\mathrm{WHM}_\rateset$ tractable. The following example serves as an illustration.
 
@@ -1181,8 +1182,6 @@ The problem is, essentially, that while homogeneous Markov chains are easy to wo
 **** example that homogeneous case is harder than non-homogeneous case.
 \exampleend
 \end{exmp}
-
-Because of this, we will in the sequel focus on the sets $\wmprocesses_\rateset$ and $\wprocesses_\rateset$. Note that Proposition~\ref{prop:lower_exp_markov_bounded_by_nonmarkov} guarantees that either of these suffice to compute a lower bound for $\underline{\mathbb{E}}_\rateset^\mathrm{WHM}$. However, this bound will in general not be tight if one insists that any analysis should be done with respect to the set $\whmprocesses_\rateset$. We now move on to state some properties for these different sets of processes.
 
 \subsection{Closure Properties for Sets of Consistent Processes}
 
