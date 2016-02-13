@@ -1240,7 +1240,7 @@ We focus in this section on introducing the relevant concepts, and deriving this
 
 \subsection{Lower Transition (Rate) Operators}
 
-It is clear from Section~\ref{sec:trans_rate_matrices} that there is a strong connection between transition rate matrices and transition matrices. We here generalize these two concepts to \emph{lower transition rate operators} and \emph{lower transition operators}, respectively.
+We start in this section by generalizing transition matrices $T$ to lower transition operators $\lt$, as follows.
 
 \begin{definition}[Lower Transition Operator]\label{def:coh_low_trans}
 We will call a map $\lt$ from $\gamblesX$ to $\gamblesX$ a \emph{lower transition operator} if, for all $f,g\in\gamblesX$, all $\lambda\in\realsnonneg$, and all $x\in\states$:
@@ -1248,18 +1248,33 @@ We will call a map $\lt$ from $\gamblesX$ to $\gamblesX$ a \emph{lower transitio
 %\vspace{5pt}
 \begin{enumerate}[label=LT\arabic*:,ref=LT\arabic*]
 \item
-$\left[\lt\,f\right](x)\geq\min\left\{f(y)\,\vert\,y\in\states\right\}$
+$\left[\lt\,f\right](x)\geq\min\left\{f(y)\,\vert\,y\in\states\right\}$ \label{LT:bounded_min}
 \item
-$\left[\lt(f+g)\right](x)\geq \left[\lt\,f\right](x)+\left[\lt\,g\right](x)$;
+$\left[\lt(f+g)\right](x)\geq \left[\lt\,f\right](x)+\left[\lt\,g\right](x)$; \label{LT:super_additive}
 \item
-$\left[\lt(\lambda f)\right](x)=\lambda\left[\lt\,f\right](x)$.
+$\left[\lt(\lambda f)\right](x)=\lambda\left[\lt\,f\right](x)$. \label{LT:homo}
 \end{enumerate}
 %\vspace{5pt}
 \noindent We use $\underline{\mathcal{T}}$ to denote the set of all lower transition operators.
 \vspace{5pt}
 \end{definition}
-**** some motivation and links to lower previsions.
+The first thing to note is that any transition matrix $T$ will also satisfy properties~\ref{LT:bounded_min}-\ref{LT:homo}, and hence is also a lower transition operator. It is therefore clear that lower transition operators are a proper generalization of transition matrices.
 
+A first way to motivate this specific generalization is to note the following. For any lower transition operator $\lt$ and any $x\in\states$, consider the map $\lt_x:\gamblesX\to\reals$, defined for all $f\in\gamblesX$ as
+\begin{equation*}
+\lt_xf \coloneqq \left[\lt f\right](x)\,.
+\end{equation*}
+Due to properties~\ref{LT:bounded_min}-\ref{LT:homo}, it follows that $\lt_x$ is a map from $\gamblesX$ to $\reals$ that is super-additive, non-negatively homogeneous, and bounded below by the minimum operator. By definition~\cite[Definition~2.3.3]{Walley:1991vk}, that means that $\lt_x$ is a \emph{coherent lower prevision} on $\gamblesX$. Because this holds for any $x\in\states$, it follows that the lower transition operator $\lt$ is essentially a vector of coherent lower previsions.
+
+For the unfamiliar reader, this notion of coherent lower previsions is perhaps best clarified as follows. Consider some arbitrary set $\mathcal{M}$ of probability mass functions on $\states$, and consider a map $\underline{\mathbb{E}}:\gamblesX\to\reals$, defined for all $f\in\gamblesX$ as
+\begin{equation*}
+\underline{\mathbb{E}}f \coloneqq \inf\left\{\sum_{x\in\states} p(x)f(x)\,:\,p\in\mathcal{M}\right\}\,.
+\end{equation*}
+It should be clear that this map $\underline{\mathbb{E}}$ essentially computes a lower expectation with respect to the set $\mathcal{M}$. Furthermore, note that for any $p\in\mathcal{M}$, the quantity $\sum_{x\in\states}p(x)f(x)$ is bounded from below by $\min\{f(y):y\in\states\}$. Because this holds for any $p\in\mathcal{M}$, it follows that $\underline{\mathbb{E}}$ is also bounded below by this minimum operator. Furthermore, it is easily verified that $\underline{\mathbb{E}}$ is super-additive and non-negatively homogeneous. Hence, by the definition cited above, this lower expectation operator corresponding to $\mathcal{M}$ is a coherent lower prevision on $\gamblesX$. 
+
+Our consideration of the coherent lower prevision $\lt_x$  above is essentially the same idea, but \emph{without} considering explicitly any link to sets $\mathcal{M}$ of probability mass functions. Suffice it to note that, for any coherent lower prevision, such a set $\mathcal{M}$ will always exist. We refer to {\bf CITE CITE CITE} for further discussion on this.
+
+It should be clear from the above that lower transition operators $\lt$ are a good starting point for alternative representations of lower expectations for imprecise continuous-time Markov chains. We next focus on the generalization of transition rate matrices $Q$ to lower transition rate operators $\lrate$, as follows.
 \begin{definition}[Lower Transition Rate Operator]\label{def:coh_low_trans_rate}
 We will call a map $\lrate$ from $\gamblesX$ to $\gamblesX$ a \emph{lower transition rate operator} if, for all $f,g\in\gamblesX$, all $\lambda\in\realsnonneg$, all constant functions $\mu\in\gamblesX$, and all $x\in\states$:
 
@@ -1277,7 +1292,7 @@ $\left[\lrate(\lambda f)\right](x)= \lambda\left[\lrate f\right](x)$.
 %\vspace{5pt}
 \end{definition}
 
-Note that properties~\ref{LR:constantzero} and~\ref{LR:nondiagpos} essentially preserve properties~\ref{def:Q:sumzero} and~\ref{def:Q:nonnegoffdiagonal} from Definition~\ref{def:rate_matrix}. However, where any rate matrix $Q$ represents a linear map, properties~\ref{LR:subadditive} and~\ref{LR:homo} merely require that a lower transition rate operator $\lrate$ is \emph{super-}additive and \emph{non-negatively} homogeneous. Hence, any rate matrix is in fact also a lower transition rate operator, with the latter concept providing a proper generalization of the former.
+Note that properties~\ref{LR:constantzero} and~\ref{LR:nondiagpos} essentially preserve properties~\ref{def:Q:sumzero} and~\ref{def:Q:nonnegoffdiagonal} from Definition~\ref{def:rate_matrix}. However, where any rate matrix $Q$ represents a linear map, properties~\ref{LR:subadditive} and~\ref{LR:homo} merely require that a lower transition rate operator $\lrate$ is super-additive and non-negatively homogeneous. Hence, any rate matrix is in fact also a lower transition rate operator, with the latter concept providing a proper generalization of the former.
 
 %\begin{proposition}\label{lem:normlratefinite}
 %For any lower transition rate operator $\lrate$, we have that $0\leq\norm{\lrate}<+\infty$.
@@ -1286,8 +1301,9 @@ Note that properties~\ref{LR:constantzero} and~\ref{LR:nondiagpos} essentially p
 %\begin{proposition}\label{lemma:normofcoherenttrans}
 %For any lower transition operator $\lt$, we have that $0\leq \norm{\lt}\leq 1$.
 %\end{proposition}
+The reason that this specific generalization is of interest, is that it preserves the relation between transition matrices and rate matrices, as stated by Propositions~\ref{prop:stochastic_from_rate_matrix} and~\ref{prop:rate_from_stochastic_matrix}. The following two propositions make this explicit in our current setting.
 
-**** We next establish that there is a correspondence between lower transition rate operators and lower transition operators that is analogous to the one found in Section~\ref{sec:trans_rate_matrices}.
+%**** We next establish that there is a correspondence between lower transition rate operators and lower transition operators that is analogous to the one found in Section~\ref{sec:trans_rate_matrices}.
 
 \begin{proposition}[Reference \cite{DeBock:2016}]\label{lemma:normQsmallenough}
 Consider any lower transition rate operator $\lrate$, and any $\Delta\in\realsnonneg$ such that $\Delta\norm{\lrate}\leq 1$. Then, the operator $(I+\Delta\lrate)$ is a lower transition operator.
