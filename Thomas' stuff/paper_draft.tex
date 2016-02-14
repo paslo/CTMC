@@ -371,7 +371,7 @@ Finally, we will want to use operators as defined in Section~\ref{sec:func_oper_
 
 \subsection{Transition (Rate) Matrices}\label{sec:trans_rate_matrices}
 
-*** blaba, transitie matrices zijn handig
+\emph{Transition matrices} are a convenient tool in describing both discrete-time and continuous-time Markov chains. A transition matrix $T$ is simply a matrix that is row-stochastic, meaning that, for each $x\in\states$, the row $T(x,\cdot)$ is a probability mass function on $\states$.
 \begin{definition}[Transition Matrix]\label{def:stoch_matrix}
 A real-valued matrix $T$ is said to be a \emph{transition matrix} if
 \vspace{5pt}
@@ -384,8 +384,9 @@ $T(x,y)\geq0$ for all $x,y\in\states$.
 \vspace{5pt}
 \noindent
 \end{definition}
+The interpretation in the context of Markov chains is as follows. The elements $T(x,y)$ of a transition matrix $T$ describe the probability of the Markov chain ending up in state $y$ at the next time point, given that it is currently in state $x$. In other words, the row $T(x,\cdot)$ contains the state-transition probabilities, conditional on currently being in state $x$.
 
-***** tralala, rate matrices zijn ook handig
+In the case of continuous-time Markov chains, this notion of ``next'' time-point is less obvious than in the discrete-time setting. Here, these state-transition probabilities are continuously dependent on the evolution of time. To describe this connection, the notion of \emph{transition rate matrices} is used.
 \begin{definition}[Transition Rate Matrix]\label{def:rate_matrix}
 A real-valued matrix $Q$ is said to be a \emph{transition rate matrix}, or sometimes simply \emph{rate matrix}, if
 
@@ -396,22 +397,25 @@ $\sum_{y\in\states}Q(x,y)=0$ for all $x\in\states$;
 \item\label{def:Q:nonnegoffdiagonal}
 $Q(x,y)\geq0$ for all $x,y\in\states$ such that $x\neq y$.
 \end{enumerate}
-\vspace{5pt}
 \noindent
 We use $\mathcal{R}$ to denote the set of all transition rate matrices. 
+\vspace{5pt}
 \end{definition}
 
-\noindent Clearly, $\mathcal{R}$ is closed under finite sums and multiplication with non-negative scalars. 
+The connection between transition matrices and rate matrices is perhaps best illustrated as follows. Suppose that at some time point $t$, we want to describe for any state $x$ the probability of ending up in state $y$ at some time $s\geq t$. Let $T_t^s$ denote the transition matrix that contains all these probabilities. Note first of all that it is reasonable to assume that, if time does not evolve, then the system should not change. That is, if we are in state $x$ at time $t$, then the probability of still being in state $x$ at time $s=t$, should be one. Hence, we should have $T_t^t=I$, with $I$ the identity matrix. 
 
-*** tralala, rate matrices and transition matrices zijn sterk gelinkt.  intuitief geven rate matrices aan hoe snel een transitie kans veranderd, in termen van $\Delta$.
+A rate matrix $Q$ is then used to describe the transition matrix $T_t^{t+\Delta}$ after a small period of time, $\Delta$, has elapsed. Specifically, the scaled matrix $\Delta\cdot Q$ serves as a linear representation for the change from $T_t^t$ to $T_t^{t+\Delta}$. The following proposition states that, for small enough $\Delta$, this linear change still results in a transition matrix.
 
 \begin{proposition}\label{prop:stochastic_from_rate_matrix}
 Consider any transition rate matrix $Q\in\mathcal{R}$, and any $\Delta\in\realsnonneg$ such that $\Delta \norm{Q}\leq 1$. Then, the matrix $(I+\Delta Q)$ is a transition matrix.
 \end{proposition}
+This also explains the terminology used; a rate matrix describes the ``rate of change'' of a (continuously) time-dependent transition matrix over a small period of time.
 
+Of course, this notion can also be reversed; given a transition matrix $T_t^{t+\Delta}$, what is the change that it underwent compared to $T_t^t=I$? The following proposition states that such a change can always be described using a rate matrix.
 \begin{proposition}\label{prop:rate_from_stochastic_matrix}
 Consider any transition matrix $T$, and any $\Delta\in\realspos$. Then, the matrix $\nicefrac{1}{\Delta}(T-I)$ is a transition rate matrix.
 \end{proposition}
+Note that Proposition~\ref{prop:rate_from_stochastic_matrix} essentially states that the finite-difference $\nicefrac{1}{\Delta}(T_t^{t+\Delta} - T_t^t)$ is a rate matrix. Intuitively, if we now take the limit as this $\Delta$ goes to zero, this states that the derivative of a continuously time-dependent transition matrix is given by some rate matrix $Q\in\mathcal{R}$---assuming that this limit exists, of course. We will make this connection more explicit when we formalize continuous-time stochastic processes in Section~\ref{sec:stochastic_processes}.
 
 % \noindent We start by establishing some properties of the norm of these matrices. Both propositions follow trivially from the definitions.
 
@@ -423,7 +427,7 @@ Consider any transition matrix $T$, and any $\Delta\in\realspos$. Then, the matr
 % Let $T$ be an arbitrary transition matrix. Then, $\norm{T}=1$.
 % \end{proposition}
 
-Consider now any set $\rateset\subseteq\mathcal{R}$ of rate matrices. Then $\rateset$ is said to be \emph{non-empty} if $\rateset\neq\emptyset$ and $\rateset$ is said to be \emph{bounded} if $\norm{\rateset}<+\infty$. The following proposition provides a simple alternative characterisation of boundedness.
+We conclude this section with some comments about \emph{sets} of rate matrices. First, note that the set of \emph{all} rate matrices, $\mathcal{R}$, is closed under finite sums and multiplication with non-negative scalars. Next, consider any set $\rateset\subseteq\mathcal{R}$ of rate matrices. Then $\rateset$ is said to be \emph{non-empty} if $\rateset\neq\emptyset$ and $\rateset$ is said to be \emph{bounded} if $\norm{\rateset}<+\infty$. The following proposition provides a simple alternative characterization of boundedness.
 
 \begin{proposition}\label{prop:alternativedefforbounded}
 A set of rate matrices $\rateset\subseteq\mathcal{R}$ is bounded if and only if
