@@ -238,34 +238,40 @@ We will denote the reals as $\reals$, the non-negative reals as $\realsnonneg$, 
 
 Throughout this work, we will consider some fixed finite \emph{state space} $\states=\{1,\dots,m\}$. Let $\gamblesX$ denote the set of all real-valued functions on $\states$. Because $\states$ is finite, we can also interpret any function $f\in\gamblesX$ as a vector in $\reals^m$. Hence, we will in the sequel use the terms `function' and `vector' interchangeably when referring to elements of $\gamblesX$.
 
-An important type of map from $\gamblesX$ to $\gamblesX$ will be matrices. Because the domain and range of these maps is always fixed, we will simply refer to them as `matrices', with which we then always mean `square, $m\times m$, real-valued matrices'. If $A$ is a matrix, we will index its elements as $A(x,y)$ for all $x,y\in\states$, where the indexing is understood to be row-major. Furthermore, $A(x,\cdot)$ will denote the $x$-th row of $A$, and $A(\cdot,y)$ will denote its $y$-th column. The symbol $I$ will be reserved throughout to refer to the $m\times m$ identity matrix.
+Linear maps from $\gamblesX$ to $\gamblesX$ will play an important role in this work, and will be represented by matrices. Because the state space $\states$ is fixed throughout, we will always consider square, $m\times m$, real-valued matrices. As such, we will for the sake of brevity simply refer to them as `matrices'. If $A$ is a matrix, we will index its elements as $A(x,y)$ for all $x,y\in\states$, where the indexing is understood to be row-major. Furthermore, $A(x,\cdot)$ will denote the $x$-th row of $A$, and $A(\cdot,y)$ will denote its $y$-th column. The symbol $I$ will be reserved throughout to refer to the $m\times m$ identity matrix.
 
-Infinite sequences of quantities will be denoted $\{a_i\}_{i\in\nats}$, possibly with limit statements of the form $\{a_i\}_{i\in\nats}\to c$. If this sequence is in a space endowed with an ordering relation, we may write $\{a_i\}_{i\in\nats}\to c^+$ or $\{a_i\}_{i\in\nats}\to c^-$ if the limit is approached from above or below, respectively.
+Infinite sequences of quantities will be denoted $\{a_i\}_{i\in\nats}$, possibly with limit statements of the form $\{a_i\}_{i\in\nats}\to c$, which should be interpreted as $\lim_{i\to\infty}a_i=c$. If this sequence is in a space endowed with an ordering relation, we may write $\{a_i\}_{i\in\nats}\to c^+$ or $\{a_i\}_{i\in\nats}\to c^-$ if the limit is approached from above or below, respectively.
 
-Finally, we will make extensive use of finite sequences of time points. For any such sequence $u\coloneqq t_0,t_1,\ldots,t_n$, with $n\in\nats$ and $t_i\in\realsnonneg$, $i\in\{0,\ldots,n\}$, we will write $u<t$ if $\max\left\{t_i:i\in\{0,\ldots,n\}\right\}<t$ for some $t\in\realsnonneg$. For all $t\in\realsnonneg$, we will denote the set of such sequences as $\mathcal{U}_{<t}$. We will sometimes allow $u$ to be an empty sequence, to prevent having to constantly consider several cases separately. However, we will be explicit when doing so. As a special case, for any $t,s\in\realsnonneg$ such that $t<s$, we consider ordered sequences $u$ that partition the interval $[t,s]$, and include the end-points of this interval. Thus, we then have that $u$ is such that $t=t_0 < t_1 <\ldots < t_n = s$, and we will use $\mathcal{U}_{[t,s]}$ to denote the set of all such sequences. Furthermore, given any $u\in\mathcal{U}_{[t,s]}$, we define for all $i\in\{1,\ldots,n\}$ the terms $\Delta_i\coloneqq (t_i-t_{i-1})$ that denote the distance between consecutive time points in $u$, and use $\sigma(u) \coloneqq \max\bigl\{\Delta_i\,:\,i\in\{1,\ldots,n\}\bigr\}$ to denote the maximum such distance.
+We will make extensive use of finite sequences of time points. Such a sequence is of the form $u\coloneqq t_0,t_1,\ldots,t_n$, with $n\in\nats$ and, for all $i\in\{0,\ldots,n\}$, $t_i\in\realsnonneg$. Let $\mathcal{U}$ denote the set of all such finite sequences that are \emph{non-degenerate}, meaning that for all $u\in\mathcal{U}$ with $u=t_0,\ldots,t_n$, it holds that $t_i\neq t_j$ for all $i,j\in\{0,\ldots,n\}$ such that $i\neq j$. Note that this does not prohibit \emph{empty} sequences. We therefore let $\mathcal{U}_\emptyset\coloneqq \mathcal{U}\setminus\{\emptyset\}$.
 
-*** SOME NEW NOTATION AND CONVENTIONS THAT I NEEDED ***
+For any finite sequence $u$ of time points, let $\max u\coloneqq \max\{t_i:i\in\{0,\ldots,n\}\}$. For any time point $t\in\realsnonneg$, we then write $t>u$ if $t>\max u$, and similarly for other inequalities. If $u=\emptyset$, then $t>u$ is taken to be trivially true, regardless of the value of $t$. We denote with $\mathcal{U}_{<t}\subset\mathcal{U}$ the set of all sequences $u\in\mathcal{U}$ for which $u<t$, and, again, similarly for other inequalities.
 
-We let $\mathcal{U}$ be the set of all (possibly empty) sequences of time points. For any $u\in\mathcal{U}$, we let $\max u$ be the largest time point in $u$. If $u=\emptyset$, then $t>u$ is taken to be trivially true, regardless of the value of $t$.
+Finally, as a special case, we consider finite sequences of time points that partition a given time interval $[t,s]$, with $t,s\in\realsnonneg$ such that $t\leq s$. Such a sequence is taken to be ordered, and includes the end-points of this interval. In this specific case, we do \emph{not} require the sequence to be non-degenerate. Thus, the sequence is of the form $t=t_0\leq t_1\leq\cdots\leq t_n=s$. We denote the set of all such sequences by $\mathcal{U}_{[t,s]}$. For any $u\in\mathcal{U}_{[t,s]}$ with $u=t_0,\ldots,t_n$, we define the sequential differences $\Delta_i^u\coloneqq t_i-t_{i-1}$, for all $i\in\{1,\ldots,n\}$. We then use $\sigma(u)\coloneqq \max\{\Delta_i^u:i\in\{1,\ldots,n\}\}$ to denote the maximum such difference.
 
-******
-
-The sets $\mathcal{U}$ and $\mathcal{U}_{<t}$ (and so on) can no longer contain non-empty degenerate sequences (all time points must be unique). The exception is $\mathcal{U}_{[t,s]}$, which can contain degenerate sequences.
-
-If you're aware of any issues this might cause, please let me know. (I checked, but couldnt find any).
-
-******
+%Finally, we will make extensive use of finite sequences of time points. For any such sequence $u\coloneqq t_0,t_1,\ldots,t_n$, with $n\in\nats$ and $t_i\in\realsnonneg$, $i\in\{0,\ldots,n\}$, we will write $u<t$ if $\max\left\{t_i:i\in\{0,\ldots,n\}\right\}<t$ for some $t\in\realsnonneg$. For all $t\in\realsnonneg$, we will denote the set of such sequences as $\mathcal{U}_{<t}$. We will sometimes allow $u$ to be an empty sequence, to prevent having to constantly consider several cases separately. However, we will be explicit when doing so. As a special case, for any $t,s\in\realsnonneg$ such that $t<s$, we consider ordered sequences $u$ that partition the interval $[t,s]$, and include the end-points of this interval. Thus, we then have that $u$ is such that $t=t_0 < t_1 <\ldots < t_n = s$, and we will use $\mathcal{U}_{[t,s]}$ to denote the set of all such sequences. Furthermore, given any $u\in\mathcal{U}_{[t,s]}$, we define for all $i\in\{1,\ldots,n\}$ the terms $\Delta_i\coloneqq (t_i-t_{i-1})$ that denote the distance between consecutive time points in $u$, and use $\sigma(u) \coloneqq \max\bigl\{\Delta_i\,:\,i\in\{1,\ldots,n\}\bigr\}$ to denote the maximum such distance.
+%
+%*** SOME NEW NOTATION AND CONVENTIONS THAT I NEEDED ***
+%
+%We let $\mathcal{U}$ be the set of all (possibly empty) sequences of time points. For any $u\in\mathcal{U}$, we let $\max u$ be the largest time point in $u$. If $u=\emptyset$, then $t>u$ is taken to be trivially true, regardless of the value of $t$.
+%
+%******
+%
+%The sets $\mathcal{U}$ and $\mathcal{U}_{<t}$ (and so on) can no longer contain non-empty degenerate sequences (all time points must be unique). The exception is $\mathcal{U}_{[t,s]}$, which can contain degenerate sequences.
+%
+%If you're aware of any issues this might cause, please let me know. (I checked, but couldnt find any).
+%
+%******
 
 \subsection{Operators and Norms}\label{sec:func_oper_norm}
 For any vector $f\in\gamblesX$, we let
 \begin{equation*}
 \norm{f}\coloneqq\norm{f}_{\infty}\coloneqq\max\{\abs {f(x)}\colon x\in\states\}
 \end{equation*}
-be the maximum norm. For any operator $A$ from $\gamblesX$ to $\gamblesX$ that is non-negatively homogeneous, meaning that $A(\lambda f)=\lambda A(f)$ for all $f\in\gamblesX$ and all $\lambda\geq0$, we consider the induced operator norm
+be the maximum norm. For any operator $A$ from $\gamblesX$ to $\gamblesX$ that is non-negatively homogeneous, meaning that $A(\lambda f)=\lambda A(f)$ for all $f\in\gamblesX$ and all $\lambda\in\realsnonneg$, we consider the induced operator norm
 \begin{equation*}
 \norm{A}\coloneqq\sup\left\{\norm{Af}\colon f\in\gamblesX,\norm{f}=1\right\}.
 \end{equation*}
-If $A$ is a matrix, we then have that
+If $A$ is a matrix, it is easily verified that then
 \begin{equation*}
 \norm{A}
 =
