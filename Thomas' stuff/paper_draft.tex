@@ -250,7 +250,7 @@ When working with finite sequences of time points, we use set-theoretic notation
 
 As a special case, we consider finite sequences of time points that partition a given time interval $[t,s]$, with $t,s\in\realsnonneg$ such that $t\leq s$. Such a sequence is taken to be ordered, and includes the end-points of this interval. In this specific case, we do \emph{not} require the sequence to be non-degenerate. Thus, the sequence is of the form $t=t_0\leq t_1\leq\cdots\leq t_n=s$. We denote the set of all such sequences by $\mathcal{U}_{[t,s]}$. For any $u\in\mathcal{U}_{[t,s]}$ with $u=t_0,\ldots,t_n$, we define the sequential differences $\Delta_i^u\coloneqq t_i-t_{i-1}$, for all $i\in\{1,\ldots,n\}$. We then use $\sigma(u)\coloneqq \max\{\Delta_i^u:i\in\{1,\ldots,n\}\}$ to denote the maximum such difference.
 
-Finally, we use the notation $\ind{C}$ for the indicator function on any subset $C$ of a set $A$, meaning that, for all $a\in A$, $\ind{C}(a)=1$ if $a\in C\subseteq A$, and $\ind{C}(a)=0$, otherwise. If $C$ is a singleton $C=\{c\}$, we may instead write $\ind{c}\coloneqq\ind{\{c\}}$ for ease of notation.
+Finally, as some notes on notational conventions, we typically use $t,r,s\in\realsnonneg$ to denote time points, $u,v,w\in\mathcal{U}$ to denote sequences of time points, and $x,y,z\in\states$ to denote state assignments. We use the notation $\ind{C}$ for the indicator function on a subset $C$ of any set $A$, meaning that, for all $a\in A$, $\ind{C}(a)=1$ if $a\in C\subseteq A$, and $\ind{C}(a)=0$, otherwise. If $C$ is a singleton $C=\{c\}$, we may instead write $\ind{c}\coloneqq\ind{\{c\}}$.
 
 %Finally, we will make extensive use of finite sequences of time points. For any such sequence $u\coloneqq t_0,t_1,\ldots,t_n$, with $n\in\nats$ and $t_i\in\realsnonneg$, $i\in\{0,\ldots,n\}$, we will write $u<t$ if $\max\left\{t_i:i\in\{0,\ldots,n\}\right\}<t$ for some $t\in\realsnonneg$. For all $t\in\realsnonneg$, we will denote the set of such sequences as $\mathcal{U}_{<t}$. We will sometimes allow $u$ to be an empty sequence, to prevent having to constantly consider several cases separately. However, we will be explicit when doing so. As a special case, for any $t,s\in\realsnonneg$ such that $t<s$, we consider ordered sequences $u$ that partition the interval $[t,s]$, and include the end-points of this interval. Thus, we then have that $u$ is such that $t=t_0 < t_1 <\ldots < t_n = s$, and we will use $\mathcal{U}_{[t,s]}$ to denote the set of all such sequences. Furthermore, given any $u\in\mathcal{U}_{[t,s]}$, we define for all $i\in\{1,\ldots,n\}$ the terms $\Delta_i\coloneqq (t_i-t_{i-1})$ that denote the distance between consecutive time points in $u$, and use $\sigma(u) \coloneqq \max\bigl\{\Delta_i\,:\,i\in\{1,\ldots,n\}\bigr\}$ to denote the maximum such distance.
 %
@@ -451,7 +451,7 @@ A set of rate matrices $\rateset\subseteq\mathcal{R}$ is bounded if and only if
 
 \subsection{Full Conditional Probabilities}\label{sec:cond_prob}
 
-We will in Section~\ref{sec:stochastic_processes} define continuous-time stochastic processes using the framework of full conditional probabilities, which we describe here. 
+We will in Section~\ref{sec:stochastic_processes} define continuous-time stochastic processes using the framework of full conditional probabilities {\bf CITE}, which we describe here. 
 
 Consider some arbitrary random experiment, with some (non-empty, possibly infinite) \emph{outcome space} $\Omega$. An element $\omega\in\Omega$ of this set is then interpreted as one possible outcome of the random experiment. In order to describe multiple possible outcomes simultaneously, we use the notion of \emph{events}. Such an event $E$ is a subset of $\Omega$. We use $\power$ to denote the set of all events, and let $\nonemptypower\coloneqq\power\setminus\{\emptyset\}$. An element $(A,C)\in\power\times\nonemptypower$ is called \emph{the event $A$ conditional on the event $C$}, and the set $\power\times\nonemptypower$ is called the set of all \emph{conditional} events. 
 
@@ -493,8 +493,12 @@ $P(\Omega\vert C)=1$.\label{def:coh_prob_5}
 \vspace{5pt}
 \end{definition}
 
+Note first of all that this definition takes conditional probabilities as the basic entity; $P(A\vert C)$ is well-defined even if $P(C)=0$. Furthermore, by property~\ref{def:coh_prob_3}, it only requires that the probability is finitely-additive; specifically, $\sigma$-additivity is not imposed by the axiomatization, regardless of the size of $\power$. We will later see that this is not problematic for our current work. We refer to {\bf CITE CITE} for philosophical motivations behind this.
 
-The following notion of coherent conditional probabilities will be useful whenever we want to check if a given map $P$ from a set of events to $\reals$ is a well-defined conditional probability.
+However, note that because $\power$ is the set of all events---the power set of $\Omega$---it is somewhat unwieldy to work with for arbitrary $\Omega$. Specifically, if for a given map $P$ from $\power\times\nonemptypower$ to $\reals$ we want to check if $P$ is a full conditional probability, this is difficult to do from the definition alone.
+
+Therefore, we next introduce the notion of \emph{coherent conditional probabilities}~{\bf CITE}. This notion was developed from DeFinetti's work on coherent (unconditional) probabilities~{\bf CITE}. We refer to {\bf CITE CITE CITE} for philosophical discussions on its merits. From a practical point of view, suffice it to say that the following definition provides us with a convenient alternative characterization of properties~\ref{def:coh_prob_2}-\ref{def:coh_prob_6} above.
+%The following notion of coherent conditional probabilities will be useful whenever we want to check if a given map $P$ from a set of events to $\reals$ is a well-defined conditional probability.
 
 \begin{definition}[Coherent conditional probability]\label{def:coherence}
 Let $P$ be a real-valued map from $\mathcal{C}\subseteq\power\times\nonemptypower$ to $\reals$. Then $P$ is said to be a \emph{coherent conditional probability} on $\mathcal{C}$ if, for all $n\in\mathbb{N}$ and every choice of $(A_i,C_i)\in\mathcal{C}$ and $\lambda_i\in\reals$, $i\in\{1,\dots,n\}$,
@@ -977,11 +981,17 @@ For any interval $\mathbf{I}\subseteq\realsnonneg$, a family $\mathcal{T}^{\math
 Trivial consequence of Definition~\ref{def:trans_mat_system}.
 \end{proof}
 
-*** I needed this in the proofs: ***
-Let $\mathbb{T}^{\mathbf{I}}$ be the set of all restricted transition matrix systems $\mathcal{T}^{\mathbf{I}}$ on $\mathbf{I}$.
-**********************
-
 We will henceforth adopt the same terminology for restricted transition matrix systems that we use for (normal) transition matrix systems. In particular, we will call $\mathcal{T}^{\mathbf{I}}$ well-behaved if it satisfies Equation~\eqref{eq:wellbehavedtransitionmatrixsystem} on the interval $\mathbf{I}$.
+
+We now first give a powerful theoretical result that we will return to later. For any interval $\mathbf{I}\subseteq\realsnonneg$, let $\mathbb{T}^{\mathbf{I}}$ denote the set of \emph{all} restricted transition matrix systems defined on $\mathbf{I}$. Then, for any two restricted transition matrix systems $\mathcal{T}^\mathbf{I}$ and $\mathcal{S}^\mathbf{I}$ defined on the same interval, we define a metric $d$ as
+\begin{equation}\label{eq:trans_mat_system_metric}
+d(\mathcal{T}^{\mathbf{I}},\mathcal{S}^{\mathbf{I}}) \coloneqq \sup\left\{\norm{T_t^s - S_t^s}\,:\,t,s\in\mathbf{I}, t\leq s\right\}\,,
+\end{equation}
+where, for all $t,s\in\mathbf{I}$, it is understood that $T_t^s$ corresponds to $\mathcal{T}^{\mathbf{I}}$ and $S_t^s$ to $\mathcal{S}^{\mathbf{I}}$.
+\begin{proposition}\label{lemma:restricted_trans_mat_system_cauchy_converges}
+Consider any interval $\mathbf{I}\subseteq\realsnonneg$, let $\mathbb{T}^{\mathbf{I}}$ be the set of all restricted transition matrix systems on $\mathbf{I}$ and let $d$ be the metric that is defined in Equation~\eqref{eq:trans_mat_system_metric}. The metric space $\smash{(\mathbb{T}^{\mathbf{I}},d)}$ is then complete.
+\end{proposition}
+Note that this result includes as a special case completeness of the set $\mathbb{T}^{\realsnonneg}$ of all (unrestricted) transition matrix systems. We will later return to this result in Section~\ref{sec:iCTMC}.
 
 Now, because these restricted transition matrix systems are only defined on some given interval, it will be useful to define a concatenation operator between two such systems defined on adjacent intervals. We will say that two intervals $\mathbf{I},\mathbf{J}\subseteq\realsnonneg$ are \emph{adjacent} if, without loss of generality, $\mathbf{I}$ is closed on the right and $\mathbf{J}$ is closed on the left, and $\max\mathbf{I}=\min\mathbf{J}$. 
 
@@ -1229,26 +1239,26 @@ Let $\rateset$ be an arbitrary non-empty, bounded, and convex set of rate matric
 \underline{\mathbb{E}}^{\mathrm{W}}_\rateset\left[f(X_u,X_v)\,\vert\,X_u\right] = \underline{\mathbb{E}}^{\mathrm{W}}_\rateset\Bigl[\underline{\mathbb{E}}^{\mathrm{W}}_\rateset\left[f(X_u,X_v)\,\vert\,X_u,X_{v\setminus w}\right] \,\Big\vert\,X_u\Bigr]\,. 
 \end{equation}
 \end{theorem}
-*** some remarks that this is useful, and will return to this result later
+The reason that this result is useful, is that it essentially allows us to compute the lower expectation of such functions recursively. In particular, instead of computing the lower expectation on all time-points simultaneously, we can focus on subsets of the time-points separately. We will revisit this idea in Section~\ref{sec:funcs_multi_time_points}.
 
 We next consider the case where $\rateset$ is both convex and closed, and consider the set $\wmprocesses_\rateset$. Recall from Section~\ref{sec:dynamics} that for any function $f\in\gamblesX$, its expectation with respect to a process $P\in\wmprocesses_\rateset$ can alternatively be expressed using the transition matrix corresponding to this process. Specifically, it holds that $\mathbb{E}[f(X_s)\,\vert\,X_t]=T_t^sf$. Note furthermore that a lower expectation $\underline{\mathbb{E}}_{\,\rateset}^{\mathrm{WM}}$ is an infimum over the set of expectations $\mathbb{E}$ corresponding to all $P\in\wmprocesses_\rateset$. It should therefore be clear that the set of transition matrices $T_t^s$ corresponding to all $P\in\wmprocesses_\rateset$ is also of interest to us.
 
-Recall from Section~\ref{sec:cont_time_markov_chains} that for each $P\in\wmprocesses_\rateset$, there is a transition matrix system $\mathcal{T}_P$ specifying all transition matrices corresponding to $P$. Furthermore, this $\mathcal{T}_P$ has a restriction $\mathcal{T}_P^{[t,s]}$ to the interval $[t,s]$, and this restriction also specifies $T_t^s$. We will now look at the space of the restricted transition matrix systems corresponding to all $P\in\wmprocesses_\rateset$. To this end, for any non-empty bounded set of rate matrices $\rateset$ and any $t,s\in\realsnonneg$ such that $t\leq s$, let
+Recall from Section~\ref{sec:cont_time_markov_chains} that for each $P\in\wmprocesses_\rateset$, there is a transition matrix system $\mathcal{T}_P$ specifying all transition matrices corresponding to $P$. Furthermore, this $\mathcal{T}_P$ has a restriction $\mathcal{T}_P^{[t,s]}$ to the interval $[t,s]$, and this restriction also specifies $T_t^s$. 
+
+We have already seen in Section~\ref{sec:cont_time_markov_chains} that the space $\mathbb{T}^{[t,s]}$ of \emph{all} restricted transition matrix systems on $[t,s]$ is complete. We will now look at the subspace of $\mathbb{T}^{[t,s]}$ corresponding to all $P\in\wmprocesses_\rateset$. To this end, for any non-empty bounded set of rate matrices $\rateset$ and any $t,s\in\realsnonneg$ such that $t\leq s$, let
 \begin{equation*}
 \mathbb{T}_\rateset^{[t,s]} \coloneqq \left\{\mathcal{T}_P^{[t,s]}\,:\,P\in\wmprocesses_\rateset\right\}\,.
 \end{equation*}
-Furthermore, for any two restricted transition matrix systems $\mathcal{T}^{[t,s]}$ and $\mathcal{S}^{[t,s]}$ defined on the same interval $[t,s]$, we define a metric $d$ as
-\begin{equation}\label{eq:trans_mat_system_metric}
-d(\mathcal{T}^{[t,s]},\mathcal{S}^{[t,s]}) \coloneqq \sup\left\{\norm{T_q^r - S_q^r}\,:\,q,r\in[t,s], q\leq r\right\}\,,
-\end{equation}
-where, for all $q,r\in[t,s]$, it is understood that $T_q^r\in\mathcal{T}^{[t,s]}$ and $S_q^r\in\mathcal{S}^{[t,s]}$.
 
 Then, if $\rateset$ is closed and convex, we obtain the following result.
 
 \begin{theorem}\label{theorem:restricted_transmatsystem_space_compact_if_Q_closed}
 Consider a non-empty, bounded, convex and closed set of rate matrices $\rateset$ and any $t,s\in\realsnonneg$ such that $t\leq s$. Let $d$ be the metric that is defined in Equation~\eqref{eq:trans_mat_system_metric}. The metric space $\smash{(\mathbb{T}_\rateset^{[t,s]},d)}$ is then compact.
 \end{theorem}
-The reason that this result is of interest to us, is that it allows us to prove the existence of certain processes $P\in\wmprocesses_\rateset$. In particular, it allows us to establish the existence of limits of sequences $\left\{P_i\right\}_{i\in\nats}$ in $\wmprocesses_\rateset$ that satisfy certain behavior on a specified interval $[t,s]$. For instance, the next result follows immediately from Theorem~\ref{theorem:restricted_transmatsystem_space_compact_if_Q_closed}. This result establishes that, if $\rateset$ is closed and convex, the lower expectation $\underline{\mathbb{E}}_{\,\rateset}^{\mathrm{WM}}$ is always reached by some $P\in\wmprocesses_\rateset$, and hence is in fact a minimum.
+
+The reason that this result is of interest to us, is that it allows us to prove the existence of certain processes $P\in\wmprocesses_\rateset$. In particular, it allows us to establish the existence of limits of sequences $\left\{P_i\right\}_{i\in\nats}$ in $\wmprocesses_\rateset$ that satisfy certain behavior on a specified interval $[t,s]$. This works because, since the space $\mathbb{T}^{[t,s]}$ is compact, not only do convergent sequences converge within this set, any sequence in this set will always have a convergent subsequence.
+
+For instance, the next result follows immediately from Theorem~\ref{theorem:restricted_transmatsystem_space_compact_if_Q_closed}. This result establishes that, if $\rateset$ is closed and convex, the lower expectation $\underline{\mathbb{E}}_{\,\rateset}^{\mathrm{WM}}$ is always reached by some $P\in\wmprocesses_\rateset$, and hence is in fact a minimum.
 \begin{proposition}\label{prop:lower_expectation_reached_if_Q_closed}
 Let $\rateset$ be an arbitrary non-empty, bounded, convex and closed set of rate matrices. Then, for all $t,s\in\realsnonneg$ such that $t\leq s$, all $f\in\gamblesX$, and all $x\in\states$, there is some $P\in\wmprocesses_\rateset$ with expectation operator $\mathbb{E}$, such that
 \begin{equation*}
@@ -2551,6 +2561,51 @@ This is a special case of Lemma~\ref{lemma:recursive_lower_trans}, which states 
 %Here, in the second-to-last inequality, we used the fact that $\norm{A_i}\leq 1$ and $\norm{B_i}\leq 1$ for all $i\in\{1,\ldots,n\}$. In the final inequality, we used the induction hypothesis.
 \end{proof}
 
+\begin{proof}[Proof of Proposition~\ref{lemma:restricted_trans_mat_system_cauchy_converges}]
+Consider any sequence $\{\mathcal{T}_i^{\mathbf{I}}\}_{i\in\nats}$ in $\mathbb{T}^{\mathbf{I}}$ that is Cauchy. We will prove that this sequence converges to a limit that belongs to $\mathbb{T}^{\mathbf{I}}$. For all $i\in\nats$ and any $t,s\in\mathbf{I}$ such that $t\leq s$, we will use $\presuper{i}T_t^s$ to denote the transition matrix that corresponds to $\mathcal{T}_i^{\mathbf{I}}$. 
+
+Since $\{\mathcal{T}_i^{\mathbf{I}}\}_{i\in\nats}$ is cauchy, %we know that
+% \begin{equation*}
+% (\forall\epsilon\in\realspos)\,(\exists n\in\nats)\,(\forall k,\ell > n)~d(\mathcal{T}_k^{\mathbf{I}},\mathcal{T}_\ell^{\mathbf{I}}) < \epsilon,
+% \end{equation*}
+%and therefore, 
+it follows from Equation~\eqref{eq:trans_mat_system_metric} that
+\begin{equation}\label{eq:lemma:restricted_trans_mat_system_cauchy_converges:consequenceofCauchy}
+(\forall\epsilon\in\realspos)\,(\exists n_\epsilon\in\nats)\,(\forall k,\ell > n_\epsilon)\,(\forall t,s\in\mathbf{I}\colon t\leq s)
+~\norm{\presuper{k}T_t^s-\presuper{\ell}T_t^s} < \epsilon.
+\end{equation}
+Clearly, for any $t,s\in\mathbf{I}$ such that $t\leq s$, this implies that the sequence $\{\presuper{i}T_t^s\}_{i\in\nats}$ is Cauchy. Since the set of all transition matrices---of the same finite dimension---is trivially complete, this implies that the sequence $\{\presuper{i}T_t^s\}_{i\in\nats}$ has a limit $\presuper{*}T_t^s$, and that this limit is a transition matrix. We use $\mathcal{T}_*^{\mathbf{I}}$ to denote the family of transition matrices that consists of these limits. %We will now prove that $\mathcal{T}_*^{\mathbf{I}}$ is a restricted transition matrix system.
+
+Fix any $t,r,s\in I$ such that $t\leq r\leq s$. Then for any $i\in\nats$, because $\mathcal{T}_i^{\mathbf{I}}$ is a restricted transition matrix system, we know  that $\presuper{i}T_t^t=I$ and $\presuper{i}T_t^s=\presuper{i}T_t^r\presuper{i}T_r^s$, which implies that $\norm{\presuper{*}T_t^t-I}=\norm{\presuper{*}T_t^t-\presuper{i}T_t^t}$ and, due to Lemma~\ref{lemma:recursive}, that
+\begin{align*}
+\norm{\presuper{*}T_t^s-\presuper{*}T_t^r\presuper{*}T_r^s}
+&\leq
+\norm{\presuper{*}T_t^s-\presuper{i}T_t^s}+\norm{\presuper{i}T_t^r\presuper{i}T_r^s-\presuper{*}T_t^r\presuper{*}T_r^s}\\
+&\leq
+\norm{\presuper{*}T_t^s-\presuper{i}T_t^s}
++
+\norm{\presuper{i}T_t^r-\presuper{*}T_t^r}
++
+\norm{\presuper{i}T_r^s-\presuper{*}T_r^s}.
+\end{align*}
+Since we know that $\lim_{i\to+\infty}\presuper{i}T_t^t=\presuper{*}T_t^t$, $\lim_{i\to+\infty}\presuper{i}T_t^s=\presuper{*}T_t^s$, $\lim_{i\to+\infty}\presuper{i}T_t^r=\presuper{*}T_t^r$ and $\lim_{i\to+\infty}\presuper{i}T_r^s=\presuper{*}T_r^s$, this implies that $\norm{\presuper{*}T_t^t-I}=0$ and $\norm{\presuper{*}T_t^s-\presuper{*}T_t^r\presuper{*}T_r^s}=0$, or equivalently, that $\presuper{*}T_t^t=I$ and $\presuper{*}T_t^s=\presuper{*}T_t^r\presuper{*}T_r^s$. Since this is true for any $t,r,s\in I$ such that $t\leq r\leq s$, and because we already know that that the family $\mathcal{T}_*^{\mathbf{I}}$ consists of transition matrix systems, it follows from Proposition~\ref{prop:restr_trans_mat_system_if_semigroup} that $\mathcal{T}_*^{\mathbf{I}}$ is a restricted transition matrix system.
+In the remainder of this proof, we will show that $\mathcal{T}_*^{\mathbf{I}}=\lim_{i\to\infty}\mathcal{T}_i^{\mathbf{I}}$. 
+
+Fix any $\epsilon>0$ and consider the corresponding $n_\epsilon\in\nats$ whose existence is guaranteed by Equation~\eqref{eq:lemma:restricted_trans_mat_system_cauchy_converges:consequenceofCauchy}. Fix any $k>n_\epsilon$. For any $t,s\in\mathbf{I}$ such that $t\leq s$, it then follows from Equation~\eqref{eq:lemma:restricted_trans_mat_system_cauchy_converges:consequenceofCauchy} that, for all $\ell>n_\epsilon$:
+\begin{equation*}
+\norm{\presuper{k}T_t^s-\presuper{*}T_t^s}
+\leq
+\norm{\presuper{k}T_t^s-\presuper{\ell}T_t^s}
++
+\norm{\presuper{\ell}T_t^s-\presuper{*}T_t^s} < \epsilon+\norm{\presuper{\ell}T_t^s-\presuper{*}T_t^s}.
+\end{equation*}
+Since $\lim_{\ell\to+\infty}\presuper{\ell}T_t^s=\presuper{*}T_t^s$, this implies that $\norm{\presuper{k}T_t^s-\presuper{*}T_t^s}\leq\epsilon$. Since this is true for all $t,s\in\mathbf{I}$ such that $t\leq s$, it follows from Equation~\eqref{eq:trans_mat_system_metric} that $d(\mathcal{T}_k^{\mathbf{I}},\mathcal{T}_*^{\mathbf{I}})\leq\epsilon$. Since $\epsilon>0$ was arbitrary, we conclude that
+\begin{equation*}
+(\forall\epsilon\in\realspos)\,(\exists n_\epsilon\in\nats)\,(\forall k > n_\epsilon)~d(\mathcal{T}_k^{\mathbf{I}},\mathcal{T}_*^{\mathbf{I}})\leq\epsilon,
+\end{equation*}
+which implies that $\mathcal{T}_*^{\mathbf{I}}=\lim_{i\to\infty}\mathcal{T}_i^{\mathbf{I}}$.
+\end{proof}
+
 \begin{proof}[Proof of Proposition~\ref{prop:concat_restr_trans_mat_systems_is_system}]
 Clearly, $\mathcal{T}^{\mathbf{I}\cup\mathbf{J}}$ is a family of transition matrices, and in particular, for all $t,s\in\mathbf{I}\cup\mathbf{J}$ such that $t\leq s$, there is a transition matrix $T_t^s$ corresponding to $\mathcal{T}^{\mathbf{I}\cup\mathbf{J}}$. Furthermore, for all $t\in\mathbf{I}\cup\mathbf{J}$, we have that either $t\in\mathbf{I}$ or $t\in\mathbf{J}$. In either case, we have that $T_t^t=I$, because either $T_t^t=\presuper{i}T_t^t=I$ or $T_t^t=\presuper{j}T_t^t=I$, with $\presuper{i}T_t^t$ and $\presuper{j}T_t^t$ corresponding to $\mathcal{T}^{\mathbf{I}}$ and $\mathcal{T}^{\mathbf{J}}$, respectively. It remains to show that for all $t,q,s\in\mathbf{I}\cup\mathbf{J}$ with $t\leq q\leq s$, it holds that
 \begin{equation*}
@@ -2897,55 +2952,6 @@ with $\Delta_i\coloneqq t_{i}-t_{i-1}$. Since it follows from Proposition~\ref{p
 =(s-t)(\epsilon+\norm{\rateset}).
 \end{align*}
 Since $\epsilon>0$ is arbitrary, it follows that $\norm{T_t^s-I}\leq(s-t)\norm{\rateset}$.
-\end{proof}
-
-\begin{lemma}\label{lemma:restricted_trans_mat_system_cauchy_converges}
-Consider any interval $\mathbf{I}\subseteq\realsnonneg$, let $\mathbb{T}^{\mathbf{I}}$ be the set of all restricted transition matrix systems on $\mathbf{I}$ and let $d$ be the metric that is defined in Equation~\eqref{eq:trans_mat_system_metric}. The metric space $\smash{(\mathbb{T}^{\mathbf{I}},d)}$ is then complete.
-\end{lemma}
-
-\begin{proof}
-Consider any sequence $\{\mathcal{T}_i^{\mathbf{I}}\}_{i\in\nats}$ in $\mathbb{T}^{\mathbf{I}}$ that is Cauchy. We will prove that this sequence converges to a limit that belongs to $\mathbb{T}^{\mathbf{I}}$. For all $i\in\nats$ and any $t,s\in\mathbf{I}$ such that $t\leq s$, we will use $\presuper{i}T_t^s$ to denote the transition matrix that corresponds to $\mathcal{T}_i^{\mathbf{I}}$. 
-
-Since $\{\mathcal{T}_i^{\mathbf{I}}\}_{i\in\nats}$ is cauchy, %we know that
-% \begin{equation*}
-% (\forall\epsilon\in\realspos)\,(\exists n\in\nats)\,(\forall k,\ell > n)~d(\mathcal{T}_k^{\mathbf{I}},\mathcal{T}_\ell^{\mathbf{I}}) < \epsilon,
-% \end{equation*}
-%and therefore, 
-it follows from Equation~\eqref{eq:trans_mat_system_metric} that
-\begin{equation}\label{eq:lemma:restricted_trans_mat_system_cauchy_converges:consequenceofCauchy}
-(\forall\epsilon\in\realspos)\,(\exists n_\epsilon\in\nats)\,(\forall k,\ell > n_\epsilon)\,(\forall t,s\in\mathbf{I}\colon t\leq s)
-~\norm{\presuper{k}T_t^s-\presuper{\ell}T_t^s} < \epsilon.
-\end{equation}
-Clearly, for any $t,s\in\mathbf{I}$ such that $t\leq s$, this implies that the sequence $\{\presuper{i}T_t^s\}_{i\in\nats}$ is Cauchy. Since the set of all transition matrices---of the same finite dimension---is trivially complete, this implies that the sequence $\{\presuper{i}T_t^s\}_{i\in\nats}$ has a limit $\presuper{*}T_t^s$, and that this limit is a transition matrix. We use $\mathcal{T}_*^{\mathbf{I}}$ to denote the family of transition matrices that consists of these limits. %We will now prove that $\mathcal{T}_*^{\mathbf{I}}$ is a restricted transition matrix system.
-
-Fix any $t,r,s\in I$ such that $t\leq r\leq s$. Then for any $i\in\nats$, because $\mathcal{T}_i^{\mathbf{I}}$ is a restricted transition matrix system, we know  that $\presuper{i}T_t^t=I$ and $\presuper{i}T_t^s=\presuper{i}T_t^r\presuper{i}T_r^s$, which implies that $\norm{\presuper{*}T_t^t-I}=\norm{\presuper{*}T_t^t-\presuper{i}T_t^t}$ and, due to Lemma~\ref{lemma:recursive}, that
-\begin{align*}
-\norm{\presuper{*}T_t^s-\presuper{*}T_t^r\presuper{*}T_r^s}
-&\leq
-\norm{\presuper{*}T_t^s-\presuper{i}T_t^s}+\norm{\presuper{i}T_t^r\presuper{i}T_r^s-\presuper{*}T_t^r\presuper{*}T_r^s}\\
-&\leq
-\norm{\presuper{*}T_t^s-\presuper{i}T_t^s}
-+
-\norm{\presuper{i}T_t^r-\presuper{*}T_t^r}
-+
-\norm{\presuper{i}T_r^s-\presuper{*}T_r^s}.
-\end{align*}
-Since we know that $\lim_{i\to+\infty}\presuper{i}T_t^t=\presuper{*}T_t^t$, $\lim_{i\to+\infty}\presuper{i}T_t^s=\presuper{*}T_t^s$, $\lim_{i\to+\infty}\presuper{i}T_t^r=\presuper{*}T_t^r$ and $\lim_{i\to+\infty}\presuper{i}T_r^s=\presuper{*}T_r^s$, this implies that $\norm{\presuper{*}T_t^t-I}=0$ and $\norm{\presuper{*}T_t^s-\presuper{*}T_t^r\presuper{*}T_r^s}=0$, or equivalently, that $\presuper{*}T_t^t=I$ and $\presuper{*}T_t^s=\presuper{*}T_t^r\presuper{*}T_r^s$. Since this is true for any $t,r,s\in I$ such that $t\leq r\leq s$, and because we already know that that the family $\mathcal{T}_*^{\mathbf{I}}$ consists of transition matrix systems, it follows from Proposition~\ref{prop:restr_trans_mat_system_if_semigroup} that $\mathcal{T}_*^{\mathbf{I}}$ is a restricted transition matrix system.
-In the remainder of this proof, we will show that $\mathcal{T}_*^{\mathbf{I}}=\lim_{i\to\infty}\mathcal{T}_i^{\mathbf{I}}$. 
-
-Fix any $\epsilon>0$ and consider the corresponding $n_\epsilon\in\nats$ whose existence is guaranteed by Equation~\eqref{eq:lemma:restricted_trans_mat_system_cauchy_converges:consequenceofCauchy}. Fix any $k>n_\epsilon$. For any $t,s\in\mathbf{I}$ such that $t\leq s$, it then follows from Equation~\eqref{eq:lemma:restricted_trans_mat_system_cauchy_converges:consequenceofCauchy} that, for all $\ell>n_\epsilon$:
-\begin{equation*}
-\norm{\presuper{k}T_t^s-\presuper{*}T_t^s}
-\leq
-\norm{\presuper{k}T_t^s-\presuper{\ell}T_t^s}
-+
-\norm{\presuper{\ell}T_t^s-\presuper{*}T_t^s} < \epsilon+\norm{\presuper{\ell}T_t^s-\presuper{*}T_t^s}.
-\end{equation*}
-Since $\lim_{\ell\to+\infty}\presuper{\ell}T_t^s=\presuper{*}T_t^s$, this implies that $\norm{\presuper{k}T_t^s-\presuper{*}T_t^s}\leq\epsilon$. Since this is true for all $t,s\in\mathbf{I}$ such that $t\leq s$, it follows from Equation~\eqref{eq:trans_mat_system_metric} that $d(\mathcal{T}_k^{\mathbf{I}},\mathcal{T}_*^{\mathbf{I}})\leq\epsilon$. Since $\epsilon>0$ was arbitrary, we conclude that
-\begin{equation*}
-(\forall\epsilon\in\realspos)\,(\exists n_\epsilon\in\nats)\,(\forall k > n_\epsilon)~d(\mathcal{T}_k^{\mathbf{I}},\mathcal{T}_*^{\mathbf{I}})\leq\epsilon,
-\end{equation*}
-which implies that $\mathcal{T}_*^{\mathbf{I}}=\lim_{i\to\infty}\mathcal{T}_i^{\mathbf{I}}$.
 \end{proof}
 
 \begin{lemma}\label{lemma:restricted_trans_mat_system_complete_if_Q_closed}
