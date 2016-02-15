@@ -493,11 +493,11 @@ $P(\Omega\vert C)=1$.\label{def:coh_prob_5}
 \vspace{5pt}
 \end{definition}
 
-Note first of all that this definition takes conditional probabilities as the basic entity; $P(A\vert C)$ is well-defined even if $P(C)=0$. Furthermore, by property~\ref{def:coh_prob_3}, it only requires that the probability is finitely-additive; specifically, $\sigma$-additivity is not imposed by the axiomatization, regardless of the size of $\power$. We will later see that this is not problematic for our current work. We refer to {\bf CITE CITE} for philosophical motivations behind this.
+Note first of all that this definition takes conditional probabilities as the basic entity; $P(A\vert C)$ is well-defined even if $P(C)=0$. Furthermore, such a map $P$ is defined on the entire set $\power\times\nonemptypower$, and in particular not on a subset thereof that forms a (``conditional'') $\sigma$-algebra. Also, by property~\ref{def:coh_prob_3}, it only requires that the probability is finitely-additive; similar to the above, $\sigma$-additivity is not imposed by the axiomatization, regardless of the size of $\power$.  We refer to {\bf CITE CITE} for philosophical motivations behind this.
 
 However, note that because $\power$ is the set of all events---the power set of $\Omega$---it is somewhat unwieldy to work with for arbitrary $\Omega$. Specifically, if for a given map $P$ from $\power\times\nonemptypower$ to $\reals$ we want to check if $P$ is a full conditional probability, this is difficult to do from the definition alone.
 
-Therefore, we next introduce the notion of \emph{coherent conditional probabilities}~{\bf CITE}. This notion was developed from DeFinetti's work on coherent (unconditional) probabilities~{\bf CITE}. We refer to {\bf CITE CITE CITE} for philosophical discussions on its merits. From a practical point of view, suffice it to say that the following definition provides us with a convenient alternative characterization of properties~\ref{def:coh_prob_2}-\ref{def:coh_prob_6} above.
+Therefore, we next introduce the notion of \emph{coherent conditional probabilities}~{\bf CITE}. This notion was developed from DeFinetti's work on coherent (unconditional) probabilities~{\bf CITE}. We refer to {\bf CITE CITE CITE} for philosophical discussions on its merits, but will give some interpretation below. From a practical point of view, suffice it to say that the following definition provides us with a convenient alternative characterization of properties~\ref{def:coh_prob_2}-\ref{def:coh_prob_6} above.
 %The following notion of coherent conditional probabilities will be useful whenever we want to check if a given map $P$ from a set of events to $\reals$ is a well-defined conditional probability.
 
 \begin{definition}[Coherent conditional probability]\label{def:coherence}
@@ -509,6 +509,16 @@ with $C_0\coloneqq\cup_{i=1}^nC_i$.
 \end{definition}
 
 *** Explain that most authors consider a supremum. However, since $n$ is finite and because, for every $i\in\{1,\dots,n\}$, $\ind{A_i}$ and $\ind{C_i}$ can only take two values---$0$ or $1$---it follows that this supremum is taken over a finite set of real numbers, which implies that it is actually a maximum. Also explain that some authors also require this with $\min$ and $\leq0$; this is not necessary because it is implied. ***
+
+This notion of coherence is perhaps easiest to understand in a gambling framework. In this framework, we first consider a set $\mathcal{C}\subseteq\power\times\nonemptypower$ of possible events. Gambles---lottery tickets, if you will---are then bought and sold prior to observing the outcome $\omega$ of a random experiment. 
+
+In particular, a bettor will specify a price $P(A\vert C)$ for which she is willing to both buy and sell the gamble---with a reward of one currency unit---that event $A$ will come true, given that event $C$ comes true. These gambles are then bought and sold under the proviso that, should event $C$ not happen, then all parties involved are refunded. 
+
+Suppose now that the outcome is $\omega$. For each ticket the bettor bought, she will receive one unit of currency if event $A$ came true. Her profit is then $(\ind{A}(\omega) - P(A\vert C))$, per ticket. However, she only receives this profit if event $C$ also came to pass. Hence, her actual profit is $\ind{C}(\omega)(\ind{A}(\omega) - P(A\vert C))$. Allowing for fractional tickets, if she has bought a total of $\lambda\in\realsnonneg$ such tickets, her total profit is $\lambda \ind{C}(\omega)(\ind{A}(\omega) - P(A\vert C))$.
+
+Similarly, for each such ticket that she sold, she has received $P(A\vert C)$ amount of currency in advance, and must pay $\ind{A}(\omega)$ to its buyer. Because this is conditional on event $C$ coming true, her profit after paying is $\ind{C}(\omega)(P(A\vert C) - \ind{A}(\omega))$, per ticket sold. Comparing to the above, it follows that her profit from buying is equal to her loss from selling, and vice versa.
+
+Now, because the bettor quoted prices $P(A\vert C)$ for each $(A,C)\in\mathcal{C}$, we also have to consider combinations of gambles. Specifically, after quoting her prices, the bettor can be forced to buy and/or sell any number of gambles in any combination. Her prices $P$ are then said to be \emph{coherent}, as in the definition above, if there exists an outcome $\omega$ for which she does not make a loss. The well-known result from coherent probability theory is then that her prices $P$ are coherent if and only if they satisfy the axioms of probability, i.e., properties~\ref{def:coh_prob_2}-\ref{def:coh_prob_6} above.
 
 \begin{theorem}{\cite[Theorem 3]{regazzini1985finitely}}\label{theo:fullcoherent}
 Let $P$ be a real-valued map from $\power\times\nonemptypower$ to $\reals$. Then $P$ is a coherent conditional probability if and only if it is a full conditional probability.
@@ -1256,7 +1266,7 @@ Then, if $\rateset$ is closed and convex, we obtain the following result.
 Consider a non-empty, bounded, convex and closed set of rate matrices $\rateset$ and any $t,s\in\realsnonneg$ such that $t\leq s$. Let $d$ be the metric that is defined in Equation~\eqref{eq:trans_mat_system_metric}. The metric space $\smash{(\mathbb{T}_\rateset^{[t,s]},d)}$ is then compact.
 \end{theorem}
 
-The reason that this result is of interest to us, is that it allows us to prove the existence of certain processes $P\in\wmprocesses_\rateset$. In particular, it allows us to establish the existence of limits of sequences $\left\{P_i\right\}_{i\in\nats}$ in $\wmprocesses_\rateset$ that satisfy certain behavior on a specified interval $[t,s]$. This works because, since the space $\mathbb{T}^{[t,s]}$ is compact, not only do convergent sequences converge within this set, any sequence in this set will always have a convergent subsequence.
+The reason that this result is of interest to us, is that it allows us to prove the existence of certain processes $P\in\wmprocesses_\rateset$. In particular, it allows us to establish the existence of limits of sequences $\left\{P_i\right\}_{i\in\nats}$ in $\wmprocesses_\rateset$ that satisfy certain behavior on a specified interval $[t,s]$. This works because, since the space $\mathbb{T}^{[t,s]}_\rateset$ is compact, not only do convergent sequences converge within this set, but furthermore, any sequence in this set will always have a convergent subsequence.
 
 For instance, the next result follows immediately from Theorem~\ref{theorem:restricted_transmatsystem_space_compact_if_Q_closed}. This result establishes that, if $\rateset$ is closed and convex, the lower expectation $\underline{\mathbb{E}}_{\,\rateset}^{\mathrm{WM}}$ is always reached by some $P\in\wmprocesses_\rateset$, and hence is in fact a minimum.
 \begin{proposition}\label{prop:lower_expectation_reached_if_Q_closed}
@@ -1305,7 +1315,7 @@ A first way to motivate this specific generalization is to note the following. F
 \begin{equation*}
 \lt_xf \coloneqq \left[\lt f\right](x)\,.
 \end{equation*}
-Due to properties~\ref{LT:bounded_min}-\ref{LT:homo}, it follows that $\lt_x$ is a map from $\gamblesX$ to $\reals$ that is super-additive, non-negatively homogeneous, and bounded below by the minimum operator. By definition~\cite[Definition~2.3.3]{Walley:1991vk}, that means that $\lt_x$ is a \emph{coherent lower prevision} on $\gamblesX$. Because this holds for any $x\in\states$, it follows that the lower transition operator $\lt$ is essentially a vector of coherent lower previsions.
+Due to properties~\ref{LT:bounded_min}-\ref{LT:homo}, it follows that $\lt_x$ is a map from $\gamblesX$ to $\reals$ that is super-additive, non-negatively homogeneous, and bounded below by the minimum operator. By definition~\cite[Definition~2.3.3]{Walley:1991vk}, that means that $\lt_x$ is a \emph{coherent lower prevision} on $\gamblesX$. 
 
 For the unfamiliar reader, this notion of coherent lower previsions is perhaps best clarified as follows. Consider some arbitrary set $\mathcal{M}$ of probability mass functions on $\states$, and consider a map $\underline{\mathbb{E}}:\gamblesX\to\reals$, defined for all $f\in\gamblesX$ as
 \begin{equation*}
@@ -1315,7 +1325,7 @@ It should be clear that this map $\underline{\mathbb{E}}$ essentially computes a
 
 Our consideration of the coherent lower prevision $\lt_x$  above is essentially the same idea, but \emph{without} considering explicitly any link to sets $\mathcal{M}$ of probability mass functions. Suffice it to note that, for any coherent lower prevision, such a set $\mathcal{M}$ will always exist. We refer to {\bf CITE CITE CITE} for further discussion on this.
 
-It should be clear from the above that lower transition operators $\lt$ are a good starting point for alternative representations of lower expectations for imprecise continuous-time Markov chains. We next focus on the generalization of transition rate matrices $Q$ to lower transition rate operators $\lrate$, as follows.
+Because for any lower transition operator $\lt$ and any $x\in\states$, the map $\lt_x$ is a coherent lower prevision, it follows that the lower transition operator $\lt$ is essentially a vector of coherent lower previsions. It should be clear from the above that such operators $\lt$ are an intuitive starting point for alternative representations of lower expectations. We next focus on the generalization of transition rate matrices $Q$ to lower transition rate operators $\lrate$, as follows.
 \begin{definition}[Lower Transition Rate Operator]\label{def:coh_low_trans_rate}
 We will call a map $\lrate$ from $\gamblesX$ to $\gamblesX$ a \emph{lower transition rate operator} if, for all $f,g\in\gamblesX$, all $\lambda\in\realsnonneg$, all constant functions $\mu\in\gamblesX$, and all $x\in\states$:
 
