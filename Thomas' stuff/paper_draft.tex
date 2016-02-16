@@ -361,9 +361,21 @@ T_t^s=T_t^r T_r^s
 and $T_t^t=I$ for all $t\geq0$.
 \end{definition}
 
+*** blabla
+
+\begin{definition}[Well-Behaved Transition Matrix System]\label{def:well_behaved_trans_mat_system}
+A \emph{transition matrix system} $\mathcal{T}$ is called \emph{well-behaved} if 
+\begin{equation}\label{eq:wellbehavedtransitionmatrixsystem}%\label{eq:wellbehavedhistorictransitionmatrix}
+\limsup_{\Delta\to 0^{+}}\frac{1}{\Delta}\norm{T_{t}^{t+\Delta}-I}<+\infty
+\text{~~~~and~~~~}
+\limsup_{\Delta\to 0^{+}}\frac{1}{\Delta}\norm{T_{t-\Delta}^t-I}<+\infty.
+\end{equation}
+for all $t\in\reals_{\geq0}$.
+\end{definition}
+
 \subsection{Restricted Transition Matrix Systems}
 
-
+**** blabla
 To this end, we now consider restrictions of transition matrix systems to some specified interval of $\realsnonneg$. In particular, for any transition matrix system $\mathcal{T}$ and any interval $\mathbf{I}\subseteq\realsnonneg$, let $\mathcal{T}^\mathbf{I}$ denote the family of transition matrices $T_t^s$ corresponding to $\mathcal{T}$, for all $t,s\in\mathbf{I}$ such that $t\leq s$.
 %\begin{equation*}
 %\mathcal{T}^{\mathbf{I}} \coloneqq \left\{T_t^s\in\mathcal{T}\,:\,\forall t,s\in\mathbf{I},\, t\leq s\right\}\,.
@@ -378,6 +390,7 @@ For any interval $\mathbf{I}\subseteq\realsnonneg$, a family $\mathcal{T}^{\math
 \begin{proof}
 Trivial consequence of Definition~\ref{def:trans_mat_system}.
 \end{proof}
+We will henceforth adopt the same terminology for restricted transition matrix systems that we use for (normal) transition matrix systems. In particular, we will call $\mathcal{T}^{\mathbf{I}}$ well-behaved if it satisfies Equation~\eqref{eq:wellbehavedtransitionmatrixsystem} on the interval $\mathbf{I}$.
 
 We now first give a powerful theoretical result that we will return to later. For any interval $\mathbf{I}\subseteq\realsnonneg$, let $\mathbb{T}^{\mathbf{I}}$ denote the set of \emph{all} restricted transition matrix systems defined on $\mathbf{I}$. Then, for any two restricted transition matrix systems $\mathcal{T}^\mathbf{I}$ and $\mathcal{S}^\mathbf{I}$ defined on the same interval, we define a metric $d$ as
 \begin{equation}\label{eq:trans_mat_system_metric}
@@ -468,7 +481,7 @@ Here, the right-hand side denotes the \emph{matrix exponential} of $Q(s-t)$ {\bf
 
 \begin{proposition}
 \label{prop:systemQ}
-For any $Q\in\mathcal{R}$, $\mathcal{T}_Q$ is a transition matrix system.
+For any $Q\in\mathcal{R}$, $\mathcal{T}_Q$ is a well-behaved transition matrix system.
 \end{proposition}
 \begin{proof}
 *** trivial ***
@@ -951,15 +964,7 @@ A stochastic process that satisfies this property is called a \emph{Markov chain
 **** rewrite
 We know from Proposition~\ref{prop:stochasticprocess:simpleproperties} that the transition matrices of a stochastic process---and therefore also, in particular, of a Markov chain---satisfy a number of simple properties. For the specific case of a Markov chain $P\in\mprocesses$, the family of transition matrices $\mathcal{T}_P$ also satisfies an additional property---see Equation~\eqref{eq:transmatrixproduct} below. This property is known as the Chapman-Kolmogorov equation~{\bf CITE}, or alternatively as the \emph{semi-group} property~{\bf CITE}. Whenever this is the case, we will call such a family of transition matrices a transition matrix system.
 
-\begin{definition}[Well-Behaved Transition Matrix System]\label{def:well_behaved_trans_mat_system}
-A \emph{transition matrix system} $\mathcal{T}$ is called \emph{well-behaved} if 
-\begin{equation}\label{eq:wellbehavedtransitionmatrixsystem}%\label{eq:wellbehavedhistorictransitionmatrix}
-\limsup_{\Delta\to 0^{+}}\frac{1}{\Delta}\norm{T_{t}^{t+\Delta}-I}<+\infty
-\text{~~~~and~~~~}
-\limsup_{\Delta\to 0^{+}}\frac{1}{\Delta}\norm{T_{t-\Delta}^t-I}<+\infty.
-\end{equation}
-for all $t\in\reals_{\geq0}$.
-\end{definition}
+*** blabla
 
 \begin{proposition}\label{prop:Markovhassystem}
 Consider a Markov chain $P\in\mprocesses$ and let $\mathcal{T}_P$ be the corresponding family of transition matrices. Then $\mathcal{T}_P$ is a transition matrix system. Furthermore, $\mathcal{T}_P$ is well-behaved if and only if $P$ is well-behaved.
@@ -984,14 +989,6 @@ T_t^s=T_{t+\Delta}^{s+\Delta}
 \end{equation}
 We denote the set of all homogeneous Markov chains by $\hmprocesses$ and use $\whmprocesses$ to refer to the subset that consists of the well-behaved homogeneous Markov chains.
 \end{definition}
-
-\begin{proposition}
-\label{prop:systemQ_well_behaved}
-For any $Q\in\mathcal{R}$, the transition matrix system $\mathcal{T}_Q$ is well-behaved.
-\end{proposition}
-\begin{proof}
-*** trivial ***
-\end{proof}
 
 \begin{corollary}\label{cor:rate_has_unique_homogen_markov_process}
 Consider any rate matrix $Q\in\mathcal{R}$ and let $p$ be an arbitrary mass function on $\states$. Then there is a unique Markov chain $P\in\mprocesses$ such that $\mathcal{T}_P=\mathcal{T}_Q$ and $P(X_0)=p(X_0)$ and, furthermore, this unique Markov chain is well-behaved and homogeneous.
@@ -1019,7 +1016,7 @@ Also for our present work, we will require some tools to describe non-homogeneou
 
 %Recall from Section~\ref{sec:trans_mat_systems} that a transition matrix system $\mathcal{T}$ is a family of transition matrices $T_t^s$, defined for all $t,s\in\realsnonneg$ for which $t\leq s$. In particular, such a family of matrices satisfies $T_t^t=I$ for all $t\in\realsnonneg$, and $T_t^s=T_t^rT_r^s$ for all $t,r,s\in\realsnonneg$ with $t\leq r\leq s$.
 
-**** We will henceforth adopt the same terminology for restricted transition matrix systems that we use for (normal) transition matrix systems. In particular, we will call $\mathcal{T}^{\mathbf{I}}$ well-behaved if it satisfies Equation~\eqref{eq:wellbehavedtransitionmatrixsystem} on the interval $\mathbf{I}$.
+**** blabla
 
 We now have the required tools for the construction of the non-homogeneous Markov chains in which we will be mostly interested. In particular, if for any rate matrix $Q\in\mathcal{R}$ we now let $\mathcal{T}_Q^{\mathbf{I}}$ be the restriction of $\mathcal{T}_Q$, defined as in Definition~\ref{def:systemfromQ}, we have the following result.
 
@@ -1957,6 +1954,89 @@ Finally, previous work only focused on functions $f\in\gamblesX$ defined at a si
 
 \section{Proofs of results in Section~\ref{sec:systems}}\label{app:systems}
 
+\begin{lemma}\label{lemma:recursive}
+Consider two finite sequences $T_1,\ldots,T_n$ and $S_1,\ldots,S_n$ of transition matrices. Then,
+\begin{equation*}
+\norm{\prod_{i=1}^nT_i - \prod_{i=1}^nS_i} \leq \sum_{i=1}^n \norm{T_i - S_i}\,.
+\end{equation*}
+\end{lemma}
+\begin{proof}
+This is a special case of Lemma~\ref{lemma:recursive_lower_trans}, which states a more general version.
+%We provide a proof by induction. Clearly, Equation~\eqref{eq:lemma_recursive_inequality} holds for $n=1$. Suppose that it holds for $n=k-1$. We show that it then also holds for $n=k$.
+%\begin{align*}
+%\norm{\prod_{i=1}^nA_i - \prod_{i=1}^nB_i} &= \norm{\prod_{i=1}^nA_i - \left(\prod_{i=1}^{n-1}A_i\right)B_n + \left(\prod_{i=1}^{n-1}A_i\right)B_n - \prod_{i=1}^nB_i} \\
+% &\leq \norm{\prod_{i=1}^nA_i - \left(\prod_{i=1}^{n-1}A_i\right)B_n} + \norm{\left(\prod_{i=1}^{n-1}A_i\right)B_n - \prod_{i=1}^nB_i} \\
+% &= \norm{\left(\prod_{i=1}^{n-1}A_i\right)(A_n - B_n)} + \norm{\left(\prod_{i=1}^{n-1}A_i - \prod_{i=1}^{n-1}B_i\right)B_n} \\
+% &\leq \norm{\prod_{i=1}^{n-1}A_i}\norm{A_n - B_n} + \norm{\prod_{i=1}^{n-1}A_i - \prod_{i=1}^{n-1}B_i}\norm{B_n} \\
+% &\leq \norm{A_n - B_n} + \norm{\prod_{i=1}^{n-1}A_i - \prod_{i=1}^{n-1}B_i} \\
+% &\leq \norm{A_n - B_n} + \sum_{i=1}^{n-1}\norm{A_i - B_i} = \sum_{i=1}^{n}\norm{A_i - B_i}\,.
+%\end{align*}
+%Here, in the second-to-last inequality, we used the fact that $\norm{A_i}\leq 1$ and $\norm{B_i}\leq 1$ for all $i\in\{1,\ldots,n\}$. In the final inequality, we used the induction hypothesis.
+\end{proof}
+
+\begin{proof}[Proof of Proposition~\ref{lemma:restricted_trans_mat_system_cauchy_converges}]
+Consider any sequence $\{\mathcal{T}_i^{\mathbf{I}}\}_{i\in\nats}$ in $\mathbb{T}^{\mathbf{I}}$ that is Cauchy. We will prove that this sequence converges to a limit that belongs to $\mathbb{T}^{\mathbf{I}}$. For all $i\in\nats$ and any $t,s\in\mathbf{I}$ such that $t\leq s$, we will use $\presuper{i}T_t^s$ to denote the transition matrix that corresponds to $\mathcal{T}_i^{\mathbf{I}}$. 
+
+Since $\{\mathcal{T}_i^{\mathbf{I}}\}_{i\in\nats}$ is cauchy, %we know that
+% \begin{equation*}
+% (\forall\epsilon\in\realspos)\,(\exists n\in\nats)\,(\forall k,\ell > n)~d(\mathcal{T}_k^{\mathbf{I}},\mathcal{T}_\ell^{\mathbf{I}}) < \epsilon,
+% \end{equation*}
+%and therefore, 
+it follows from Equation~\eqref{eq:trans_mat_system_metric} that
+\begin{equation}\label{eq:lemma:restricted_trans_mat_system_cauchy_converges:consequenceofCauchy}
+(\forall\epsilon\in\realspos)\,(\exists n_\epsilon\in\nats)\,(\forall k,\ell > n_\epsilon)\,(\forall t,s\in\mathbf{I}\colon t\leq s)
+~\norm{\presuper{k}T_t^s-\presuper{\ell}T_t^s} < \epsilon.
+\end{equation}
+Clearly, for any $t,s\in\mathbf{I}$ such that $t\leq s$, this implies that the sequence $\{\presuper{i}T_t^s\}_{i\in\nats}$ is Cauchy. Since the set of all transition matrices---of the same finite dimension---is trivially complete, this implies that the sequence $\{\presuper{i}T_t^s\}_{i\in\nats}$ has a limit $\presuper{*}T_t^s$, and that this limit is a transition matrix. We use $\mathcal{T}_*^{\mathbf{I}}$ to denote the family of transition matrices that consists of these limits. %We will now prove that $\mathcal{T}_*^{\mathbf{I}}$ is a restricted transition matrix system.
+
+Fix any $t,r,s\in I$ such that $t\leq r\leq s$. Then for any $i\in\nats$, because $\mathcal{T}_i^{\mathbf{I}}$ is a restricted transition matrix system, we know  that $\presuper{i}T_t^t=I$ and $\presuper{i}T_t^s=\presuper{i}T_t^r\presuper{i}T_r^s$, which implies that $\norm{\presuper{*}T_t^t-I}=\norm{\presuper{*}T_t^t-\presuper{i}T_t^t}$ and, due to Lemma~\ref{lemma:recursive}, that
+\begin{align*}
+\norm{\presuper{*}T_t^s-\presuper{*}T_t^r\presuper{*}T_r^s}
+&\leq
+\norm{\presuper{*}T_t^s-\presuper{i}T_t^s}+\norm{\presuper{i}T_t^r\presuper{i}T_r^s-\presuper{*}T_t^r\presuper{*}T_r^s}\\
+&\leq
+\norm{\presuper{*}T_t^s-\presuper{i}T_t^s}
++
+\norm{\presuper{i}T_t^r-\presuper{*}T_t^r}
++
+\norm{\presuper{i}T_r^s-\presuper{*}T_r^s}.
+\end{align*}
+Since we know that $\lim_{i\to+\infty}\presuper{i}T_t^t=\presuper{*}T_t^t$, $\lim_{i\to+\infty}\presuper{i}T_t^s=\presuper{*}T_t^s$, $\lim_{i\to+\infty}\presuper{i}T_t^r=\presuper{*}T_t^r$ and $\lim_{i\to+\infty}\presuper{i}T_r^s=\presuper{*}T_r^s$, this implies that $\norm{\presuper{*}T_t^t-I}=0$ and $\norm{\presuper{*}T_t^s-\presuper{*}T_t^r\presuper{*}T_r^s}=0$, or equivalently, that $\presuper{*}T_t^t=I$ and $\presuper{*}T_t^s=\presuper{*}T_t^r\presuper{*}T_r^s$. Since this is true for any $t,r,s\in I$ such that $t\leq r\leq s$, and because we already know that that the family $\mathcal{T}_*^{\mathbf{I}}$ consists of transition matrix systems, it follows from Proposition~\ref{prop:restr_trans_mat_system_if_semigroup} that $\mathcal{T}_*^{\mathbf{I}}$ is a restricted transition matrix system.
+In the remainder of this proof, we will show that $\mathcal{T}_*^{\mathbf{I}}=\lim_{i\to\infty}\mathcal{T}_i^{\mathbf{I}}$. 
+
+Fix any $\epsilon>0$ and consider the corresponding $n_\epsilon\in\nats$ whose existence is guaranteed by Equation~\eqref{eq:lemma:restricted_trans_mat_system_cauchy_converges:consequenceofCauchy}. Fix any $k>n_\epsilon$. For any $t,s\in\mathbf{I}$ such that $t\leq s$, it then follows from Equation~\eqref{eq:lemma:restricted_trans_mat_system_cauchy_converges:consequenceofCauchy} that, for all $\ell>n_\epsilon$:
+\begin{equation*}
+\norm{\presuper{k}T_t^s-\presuper{*}T_t^s}
+\leq
+\norm{\presuper{k}T_t^s-\presuper{\ell}T_t^s}
++
+\norm{\presuper{\ell}T_t^s-\presuper{*}T_t^s} < \epsilon+\norm{\presuper{\ell}T_t^s-\presuper{*}T_t^s}.
+\end{equation*}
+Since $\lim_{\ell\to+\infty}\presuper{\ell}T_t^s=\presuper{*}T_t^s$, this implies that $\norm{\presuper{k}T_t^s-\presuper{*}T_t^s}\leq\epsilon$. Since this is true for all $t,s\in\mathbf{I}$ such that $t\leq s$, it follows from Equation~\eqref{eq:trans_mat_system_metric} that $d(\mathcal{T}_k^{\mathbf{I}},\mathcal{T}_*^{\mathbf{I}})\leq\epsilon$. Since $\epsilon>0$ was arbitrary, we conclude that
+\begin{equation*}
+(\forall\epsilon\in\realspos)\,(\exists n_\epsilon\in\nats)\,(\forall k > n_\epsilon)~d(\mathcal{T}_k^{\mathbf{I}},\mathcal{T}_*^{\mathbf{I}})\leq\epsilon,
+\end{equation*}
+which implies that $\mathcal{T}_*^{\mathbf{I}}=\lim_{i\to\infty}\mathcal{T}_i^{\mathbf{I}}$.
+\end{proof}
+
+\begin{proof}[Proof of Proposition~\ref{prop:concat_restr_trans_mat_systems_is_system}]
+Clearly, $\mathcal{T}^{\mathbf{I}\cup\mathbf{J}}$ is a family of transition matrices, and in particular, for all $t,s\in\mathbf{I}\cup\mathbf{J}$ such that $t\leq s$, there is a transition matrix $T_t^s$ corresponding to $\mathcal{T}^{\mathbf{I}\cup\mathbf{J}}$. Furthermore, for all $t\in\mathbf{I}\cup\mathbf{J}$, we have that either $t\in\mathbf{I}$ or $t\in\mathbf{J}$. In either case, we have that $T_t^t=I$, because either $T_t^t=\presuper{i}T_t^t=I$ or $T_t^t=\presuper{j}T_t^t=I$, with $\presuper{i}T_t^t$ and $\presuper{j}T_t^t$ corresponding to $\mathcal{T}^{\mathbf{I}}$ and $\mathcal{T}^{\mathbf{J}}$, respectively. It remains to show that for all $t,q,s\in\mathbf{I}\cup\mathbf{J}$ with $t\leq q\leq s$, it holds that
+\begin{equation*}
+T_t^s = T_t^qT_q^s\,.
+\end{equation*}
+If both $t,s\in\mathbf{I}$ or if both $t,s\in\mathbf{J}$, this clearly holds. Therefore, suppose that $t\in\mathbf{I}$ and $s\in\mathbf{J}$. Suppose furthermore that $q\in\mathbf{I}$. Then, from the definition of the concatenation operator, we have that $T_q^s=T_q^rT_r^s$, with $r=\max\mathbf{I}=\min\mathbf{J}$. Because $t,q,r\in\mathbf{I}$, we know that $T_t^qT_q^r=T_t^r$, and hence, by the definition of the concatenation operator,
+\begin{equation*}
+T_t^qT_q^s = T_t^qT_q^rT_r^s = T_t^rT_r^s = T_t^s\,.
+\end{equation*}
+An exactly analogous argument proves the case for $q\in\mathbf{J}$. Therefore, and using Proposition~\ref{prop:restr_trans_mat_system_if_semigroup}, we conclude that $\mathcal{T}^{\mathbf{I}\cup\mathbf{J}}$ is a restricted transition matrix system.
+
+It remains to show that if $\mathcal{T}^{\mathbf{I}}$ and $\mathcal{T}^{\mathbf{J}}$ are both well-behaved, that then $\mathcal{T}^{\mathbf{I}\cup\mathbf{J}}$ is also well-behaved. We need to show that for all $t\in\mathbf{I}\cup\mathbf{J}$, it holds that
+\begin{equation*}
+\limsup_{\Delta\to0^+}\norm{\frac{1}{\Delta}\left(T_t^{t+\Delta} - I\right)} < +\infty,\quad\text{and,}\quad \limsup_{\Delta\to0^+}\norm{\frac{1}{\Delta}\left(T_{t-\Delta}^{t} - I\right)} < +\infty\,.
+\end{equation*}
+Because this clearly holds for all $t\in\mathbf{I}\setminus\{r\}$ and all $t\in\mathbf{J}\setminus\{r\}$, the interesting case is to show that this holds for $t=r$. However, for all $\Delta\in\realspos$ we have that $T_r^{r+\Delta}$ corresponds to $\mathcal{T}^{\mathbf{J}}$, and $T_{r-\Delta}^{r}$ corresponds to $\mathcal{T}^{\mathbf{I}}$. Because both $\mathcal{T}^{\mathbf{I}}$ and $\mathcal{T}^{\mathbf{J}}$ are well-behaved, we find that $\mathcal{T}^{\mathbf{I}\cup\mathbf{J}}$ is also well-behaved at $t=r$. Hence, $\mathcal{T}^{\mathbf{I}\cup\mathbf{J}}$ is well-behaved.
+\end{proof}
+
 \begin{proof}[Proof of Proposition~\ref{prop:stochastic_from_rate_matrix}]
 \ref{def:T:sumone} follows from \ref{def:Q:sumzero}: for all $x\in\states$, \ref{def:Q:sumzero} implies that
 \begin{equation*}
@@ -2549,89 +2629,6 @@ T_t^s=T_0^{s-t}=e^{Q(s-t)}
 or equivalently, that $\mathcal{T}_P=\mathcal{T}_Q$.
 
 Finally, we prove that $Q$ is unique. Assume \emph{ex absurdo} that this is not the case, or equivalently, that there are rate matrices $Q_1$ and $Q_2$, with $Q_1\neq Q_2$, such that $\mathcal{T}_P=\mathcal{T}_{Q_1}$ and $\mathcal{T}_P=\mathcal{T}_{Q_2}$. It then follows from Definition~\ref{def:systemfromQ} that $\partial_{+}{T^0_{0}}=Q_1$ and $\partial_{+}{T^0_{0}}=Q_2$, which implies that $Q_1=Q_2$. From this contradiction, it follows $Q$ is indeed unique.
-\end{proof}
-
-\begin{lemma}\label{lemma:recursive}
-Consider two finite sequences $T_1,\ldots,T_n$ and $S_1,\ldots,S_n$ of transition matrices. Then,
-\begin{equation*}
-\norm{\prod_{i=1}^nT_i - \prod_{i=1}^nS_i} \leq \sum_{i=1}^n \norm{T_i - S_i}\,.
-\end{equation*}
-\end{lemma}
-\begin{proof}
-This is a special case of Lemma~\ref{lemma:recursive_lower_trans}, which states a more general version.
-%We provide a proof by induction. Clearly, Equation~\eqref{eq:lemma_recursive_inequality} holds for $n=1$. Suppose that it holds for $n=k-1$. We show that it then also holds for $n=k$.
-%\begin{align*}
-%\norm{\prod_{i=1}^nA_i - \prod_{i=1}^nB_i} &= \norm{\prod_{i=1}^nA_i - \left(\prod_{i=1}^{n-1}A_i\right)B_n + \left(\prod_{i=1}^{n-1}A_i\right)B_n - \prod_{i=1}^nB_i} \\
-% &\leq \norm{\prod_{i=1}^nA_i - \left(\prod_{i=1}^{n-1}A_i\right)B_n} + \norm{\left(\prod_{i=1}^{n-1}A_i\right)B_n - \prod_{i=1}^nB_i} \\
-% &= \norm{\left(\prod_{i=1}^{n-1}A_i\right)(A_n - B_n)} + \norm{\left(\prod_{i=1}^{n-1}A_i - \prod_{i=1}^{n-1}B_i\right)B_n} \\
-% &\leq \norm{\prod_{i=1}^{n-1}A_i}\norm{A_n - B_n} + \norm{\prod_{i=1}^{n-1}A_i - \prod_{i=1}^{n-1}B_i}\norm{B_n} \\
-% &\leq \norm{A_n - B_n} + \norm{\prod_{i=1}^{n-1}A_i - \prod_{i=1}^{n-1}B_i} \\
-% &\leq \norm{A_n - B_n} + \sum_{i=1}^{n-1}\norm{A_i - B_i} = \sum_{i=1}^{n}\norm{A_i - B_i}\,.
-%\end{align*}
-%Here, in the second-to-last inequality, we used the fact that $\norm{A_i}\leq 1$ and $\norm{B_i}\leq 1$ for all $i\in\{1,\ldots,n\}$. In the final inequality, we used the induction hypothesis.
-\end{proof}
-
-\begin{proof}[Proof of Proposition~\ref{lemma:restricted_trans_mat_system_cauchy_converges}]
-Consider any sequence $\{\mathcal{T}_i^{\mathbf{I}}\}_{i\in\nats}$ in $\mathbb{T}^{\mathbf{I}}$ that is Cauchy. We will prove that this sequence converges to a limit that belongs to $\mathbb{T}^{\mathbf{I}}$. For all $i\in\nats$ and any $t,s\in\mathbf{I}$ such that $t\leq s$, we will use $\presuper{i}T_t^s$ to denote the transition matrix that corresponds to $\mathcal{T}_i^{\mathbf{I}}$. 
-
-Since $\{\mathcal{T}_i^{\mathbf{I}}\}_{i\in\nats}$ is cauchy, %we know that
-% \begin{equation*}
-% (\forall\epsilon\in\realspos)\,(\exists n\in\nats)\,(\forall k,\ell > n)~d(\mathcal{T}_k^{\mathbf{I}},\mathcal{T}_\ell^{\mathbf{I}}) < \epsilon,
-% \end{equation*}
-%and therefore, 
-it follows from Equation~\eqref{eq:trans_mat_system_metric} that
-\begin{equation}\label{eq:lemma:restricted_trans_mat_system_cauchy_converges:consequenceofCauchy}
-(\forall\epsilon\in\realspos)\,(\exists n_\epsilon\in\nats)\,(\forall k,\ell > n_\epsilon)\,(\forall t,s\in\mathbf{I}\colon t\leq s)
-~\norm{\presuper{k}T_t^s-\presuper{\ell}T_t^s} < \epsilon.
-\end{equation}
-Clearly, for any $t,s\in\mathbf{I}$ such that $t\leq s$, this implies that the sequence $\{\presuper{i}T_t^s\}_{i\in\nats}$ is Cauchy. Since the set of all transition matrices---of the same finite dimension---is trivially complete, this implies that the sequence $\{\presuper{i}T_t^s\}_{i\in\nats}$ has a limit $\presuper{*}T_t^s$, and that this limit is a transition matrix. We use $\mathcal{T}_*^{\mathbf{I}}$ to denote the family of transition matrices that consists of these limits. %We will now prove that $\mathcal{T}_*^{\mathbf{I}}$ is a restricted transition matrix system.
-
-Fix any $t,r,s\in I$ such that $t\leq r\leq s$. Then for any $i\in\nats$, because $\mathcal{T}_i^{\mathbf{I}}$ is a restricted transition matrix system, we know  that $\presuper{i}T_t^t=I$ and $\presuper{i}T_t^s=\presuper{i}T_t^r\presuper{i}T_r^s$, which implies that $\norm{\presuper{*}T_t^t-I}=\norm{\presuper{*}T_t^t-\presuper{i}T_t^t}$ and, due to Lemma~\ref{lemma:recursive}, that
-\begin{align*}
-\norm{\presuper{*}T_t^s-\presuper{*}T_t^r\presuper{*}T_r^s}
-&\leq
-\norm{\presuper{*}T_t^s-\presuper{i}T_t^s}+\norm{\presuper{i}T_t^r\presuper{i}T_r^s-\presuper{*}T_t^r\presuper{*}T_r^s}\\
-&\leq
-\norm{\presuper{*}T_t^s-\presuper{i}T_t^s}
-+
-\norm{\presuper{i}T_t^r-\presuper{*}T_t^r}
-+
-\norm{\presuper{i}T_r^s-\presuper{*}T_r^s}.
-\end{align*}
-Since we know that $\lim_{i\to+\infty}\presuper{i}T_t^t=\presuper{*}T_t^t$, $\lim_{i\to+\infty}\presuper{i}T_t^s=\presuper{*}T_t^s$, $\lim_{i\to+\infty}\presuper{i}T_t^r=\presuper{*}T_t^r$ and $\lim_{i\to+\infty}\presuper{i}T_r^s=\presuper{*}T_r^s$, this implies that $\norm{\presuper{*}T_t^t-I}=0$ and $\norm{\presuper{*}T_t^s-\presuper{*}T_t^r\presuper{*}T_r^s}=0$, or equivalently, that $\presuper{*}T_t^t=I$ and $\presuper{*}T_t^s=\presuper{*}T_t^r\presuper{*}T_r^s$. Since this is true for any $t,r,s\in I$ such that $t\leq r\leq s$, and because we already know that that the family $\mathcal{T}_*^{\mathbf{I}}$ consists of transition matrix systems, it follows from Proposition~\ref{prop:restr_trans_mat_system_if_semigroup} that $\mathcal{T}_*^{\mathbf{I}}$ is a restricted transition matrix system.
-In the remainder of this proof, we will show that $\mathcal{T}_*^{\mathbf{I}}=\lim_{i\to\infty}\mathcal{T}_i^{\mathbf{I}}$. 
-
-Fix any $\epsilon>0$ and consider the corresponding $n_\epsilon\in\nats$ whose existence is guaranteed by Equation~\eqref{eq:lemma:restricted_trans_mat_system_cauchy_converges:consequenceofCauchy}. Fix any $k>n_\epsilon$. For any $t,s\in\mathbf{I}$ such that $t\leq s$, it then follows from Equation~\eqref{eq:lemma:restricted_trans_mat_system_cauchy_converges:consequenceofCauchy} that, for all $\ell>n_\epsilon$:
-\begin{equation*}
-\norm{\presuper{k}T_t^s-\presuper{*}T_t^s}
-\leq
-\norm{\presuper{k}T_t^s-\presuper{\ell}T_t^s}
-+
-\norm{\presuper{\ell}T_t^s-\presuper{*}T_t^s} < \epsilon+\norm{\presuper{\ell}T_t^s-\presuper{*}T_t^s}.
-\end{equation*}
-Since $\lim_{\ell\to+\infty}\presuper{\ell}T_t^s=\presuper{*}T_t^s$, this implies that $\norm{\presuper{k}T_t^s-\presuper{*}T_t^s}\leq\epsilon$. Since this is true for all $t,s\in\mathbf{I}$ such that $t\leq s$, it follows from Equation~\eqref{eq:trans_mat_system_metric} that $d(\mathcal{T}_k^{\mathbf{I}},\mathcal{T}_*^{\mathbf{I}})\leq\epsilon$. Since $\epsilon>0$ was arbitrary, we conclude that
-\begin{equation*}
-(\forall\epsilon\in\realspos)\,(\exists n_\epsilon\in\nats)\,(\forall k > n_\epsilon)~d(\mathcal{T}_k^{\mathbf{I}},\mathcal{T}_*^{\mathbf{I}})\leq\epsilon,
-\end{equation*}
-which implies that $\mathcal{T}_*^{\mathbf{I}}=\lim_{i\to\infty}\mathcal{T}_i^{\mathbf{I}}$.
-\end{proof}
-
-\begin{proof}[Proof of Proposition~\ref{prop:concat_restr_trans_mat_systems_is_system}]
-Clearly, $\mathcal{T}^{\mathbf{I}\cup\mathbf{J}}$ is a family of transition matrices, and in particular, for all $t,s\in\mathbf{I}\cup\mathbf{J}$ such that $t\leq s$, there is a transition matrix $T_t^s$ corresponding to $\mathcal{T}^{\mathbf{I}\cup\mathbf{J}}$. Furthermore, for all $t\in\mathbf{I}\cup\mathbf{J}$, we have that either $t\in\mathbf{I}$ or $t\in\mathbf{J}$. In either case, we have that $T_t^t=I$, because either $T_t^t=\presuper{i}T_t^t=I$ or $T_t^t=\presuper{j}T_t^t=I$, with $\presuper{i}T_t^t$ and $\presuper{j}T_t^t$ corresponding to $\mathcal{T}^{\mathbf{I}}$ and $\mathcal{T}^{\mathbf{J}}$, respectively. It remains to show that for all $t,q,s\in\mathbf{I}\cup\mathbf{J}$ with $t\leq q\leq s$, it holds that
-\begin{equation*}
-T_t^s = T_t^qT_q^s\,.
-\end{equation*}
-If both $t,s\in\mathbf{I}$ or if both $t,s\in\mathbf{J}$, this clearly holds. Therefore, suppose that $t\in\mathbf{I}$ and $s\in\mathbf{J}$. Suppose furthermore that $q\in\mathbf{I}$. Then, from the definition of the concatenation operator, we have that $T_q^s=T_q^rT_r^s$, with $r=\max\mathbf{I}=\min\mathbf{J}$. Because $t,q,r\in\mathbf{I}$, we know that $T_t^qT_q^r=T_t^r$, and hence, by the definition of the concatenation operator,
-\begin{equation*}
-T_t^qT_q^s = T_t^qT_q^rT_r^s = T_t^rT_r^s = T_t^s\,.
-\end{equation*}
-An exactly analogous argument proves the case for $q\in\mathbf{J}$. Therefore, and using Proposition~\ref{prop:restr_trans_mat_system_if_semigroup}, we conclude that $\mathcal{T}^{\mathbf{I}\cup\mathbf{J}}$ is a restricted transition matrix system.
-
-It remains to show that if $\mathcal{T}^{\mathbf{I}}$ and $\mathcal{T}^{\mathbf{J}}$ are both well-behaved, that then $\mathcal{T}^{\mathbf{I}\cup\mathbf{J}}$ is also well-behaved. We need to show that for all $t\in\mathbf{I}\cup\mathbf{J}$, it holds that
-\begin{equation*}
-\limsup_{\Delta\to0^+}\norm{\frac{1}{\Delta}\left(T_t^{t+\Delta} - I\right)} < +\infty,\quad\text{and,}\quad \limsup_{\Delta\to0^+}\norm{\frac{1}{\Delta}\left(T_{t-\Delta}^{t} - I\right)} < +\infty\,.
-\end{equation*}
-Because this clearly holds for all $t\in\mathbf{I}\setminus\{r\}$ and all $t\in\mathbf{J}\setminus\{r\}$, the interesting case is to show that this holds for $t=r$. However, for all $\Delta\in\realspos$ we have that $T_r^{r+\Delta}$ corresponds to $\mathcal{T}^{\mathbf{J}}$, and $T_{r-\Delta}^{r}$ corresponds to $\mathcal{T}^{\mathbf{I}}$. Because both $\mathcal{T}^{\mathbf{I}}$ and $\mathcal{T}^{\mathbf{J}}$ are well-behaved, we find that $\mathcal{T}^{\mathbf{I}\cup\mathbf{J}}$ is also well-behaved at $t=r$. Hence, $\mathcal{T}^{\mathbf{I}\cup\mathbf{J}}$ is well-behaved.
 \end{proof}
 
 \section{Proofs and Lemmas for Section~\ref{sec:iCTMC}}
