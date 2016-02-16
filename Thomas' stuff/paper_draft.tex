@@ -333,7 +333,7 @@ $\norm{Af}\leq\norm{A}\norm{f}$
 
 **** blabla
 
-\subsection{Transition Matrices and Systems}\label{sec:trans_rate_matrices}
+\subsection{Transition (Rate) Matrices}\label{sec:trans_rate_matrices}
 
 \emph{Transition matrices} are a convenient tool in describing both discrete-time and continuous-time Markov chains. A transition matrix $T$ is simply a matrix that is row-stochastic, meaning that, for each $x\in\states$, the row $T(x,\cdot)$ is a probability mass function on $\states$.
 \begin{definition}[Transition Matrix]\label{def:stoch_matrix}
@@ -350,28 +350,93 @@ $T(x,y)\geq0$ for all $x,y\in\states$.
 \end{definition}
 The interpretation in the context of Markov chains is as follows. The elements $T(x,y)$ of a transition matrix $T$ describe the probability of the Markov chain ending up in state $y$ at the next time point, given that it is currently in state $x$. In other words, the row $T(x,\cdot)$ contains the state-transition probabilities, conditional on currently being in state $x$. We will make this connection more explicit when we formalize continuous-time stochastic processes in Section~\ref{sec:stochastic_processes}.
 
-**** blabla
+For now, we note that in a continuous-time setting, this notion of ``next'' time-point is less obvious than in a discrete-time setting. Here, these state-transition probabilities are continuously dependent on the evolution of time. To describe this connection, the notion of \emph{transition rate matrices} is used.
+\begin{definition}[Transition Rate Matrix]\label{def:rate_matrix}
+A real-valued matrix $Q$ is said to be a \emph{transition rate matrix}, or sometimes simply \emph{rate matrix}, if
+
+\vspace{5pt}
+\begin{enumerate}[label=R\arabic*:,ref=R\arabic*]
+\item\label{def:Q:sumzero}
+$\sum_{y\in\states}Q(x,y)=0$ for all $x\in\states$;
+\item\label{def:Q:nonnegoffdiagonal}
+$Q(x,y)\geq0$ for all $x,y\in\states$ such that $x\neq y$.
+\end{enumerate}
+\noindent
+We use $\mathcal{R}$ to denote the set of all transition rate matrices. 
+\vspace{5pt}
+\end{definition}
+
+The connection between transition matrices and rate matrices is perhaps best illustrated as follows. Suppose that at some time point $t$, we want to describe for any state $x$ the probability of ending up in state $y$ at some time $s\geq t$. Let $T_t^s$ denote the transition matrix that contains all these probabilities. Note first of all that it is reasonable to assume that, if time does not evolve, then the system should not change. That is, if we are in state $x$ at time $t$, then the probability of still being in state $x$ at time $s=t$, should be one. Hence, we should have $T_t^t=I$, with $I$ the identity matrix. 
+
+A rate matrix $Q$ is then used to describe the transition matrix $T_t^{t+\Delta}$ after a small period of time, $\Delta$, has elapsed. Specifically, the scaled matrix $\Delta\cdot Q$ serves as a linear representation for the change from $T_t^t$ to $T_t^{t+\Delta}$. The following proposition states that, for small enough $\Delta$, this linear change still results in a transition matrix.
+
+\begin{proposition}\label{prop:stochastic_from_rate_matrix}
+Consider any transition rate matrix $Q\in\mathcal{R}$, and any $\Delta\in\realsnonneg$ such that $\Delta \norm{Q}\leq 1$. Then, the matrix $(I+\Delta Q)$ is a transition matrix.
+\end{proposition}
+This also explains the terminology used; a rate matrix describes the ``rate of change'' of a (continuously) time-dependent transition matrix over a small period of time.
+
+Of course, this notion can also be reversed; given a transition matrix $T_t^{t+\Delta}$, what is the change that it underwent compared to $T_t^t=I$? The following proposition states that such a change can always be described using a rate matrix.
+\begin{proposition}\label{prop:rate_from_stochastic_matrix}
+Consider any transition matrix $T$, and any $\Delta\in\realspos$. Then, the matrix $\nicefrac{1}{\Delta}(T-I)$ is a transition rate matrix.
+\end{proposition}
+Note that Proposition~\ref{prop:rate_from_stochastic_matrix} essentially states that the finite-difference $\nicefrac{1}{\Delta}(T_t^{t+\Delta} - T_t^t)$ is a rate matrix. Intuitively, if we now take the limit as this $\Delta$ goes to zero, this states that the derivative of a continuously time-dependent transition matrix is given by some rate matrix $Q\in\mathcal{R}$---assuming that this limit exists, of course. We will make this connection more explicit Section~\ref{sec:stochastic_processes}.
+
+
+We conclude this section with some comments about \emph{sets} of rate matrices. First, note that the set of \emph{all} rate matrices, $\mathcal{R}$, is closed under finite sums and multiplication with non-negative scalars. Next, consider any set $\rateset\subseteq\mathcal{R}$ of rate matrices. Then $\rateset$ is said to be \emph{non-empty} if $\rateset\neq\emptyset$ and $\rateset$ is said to be \emph{bounded} if $\norm{\rateset}<+\infty$. The following proposition provides a simple alternative characterization of boundedness.
+
+\begin{proposition}\label{prop:alternativedefforbounded}
+A set of rate matrices $\rateset\subseteq\mathcal{R}$ is bounded if and only if
+\begin{equation*}
+\inf\left\{Q(x,x)\colon Q\in\rateset\right\}>-\infty\text{~~for all $x\in\states$.}
+\end{equation*}
+\end{proposition}
+\begin{proof}
+*** {\bf TODO}
+\end{proof}
+
+\subsection{Transition Matrix Systems}
+
+In the previous section, we used the notation $T_t^s$ for the transition matrix containing the probabilities of moving from a state at time $t$, to a different state at time $s$. We here consider \emph{families} of these transition matrices. In particular, such a family $\mathcal{T}$ has transition matrices $T_t^s$ defined for all $t,s\in\realsnonneg$ such that $t\leq s$. 
+
+We already mentioned in the previous section that it is reasonable to assume that $T_t^t=I$. If the transition matrices of the family $\mathcal{T}$ satisfy this property, and furthermore the \emph{semi-group} {\bf CITE} property given by Equation~\ref{eq:transmatrixproduct} below, we call this family a \emph{transition matrix system}.
 
 \begin{definition}[Transition Matrix System]\label{def:trans_mat_system}
-A \emph{transition matrix system} $\mathcal{T}$ is a family of transition matrices $T_t^s$, defined for all $0\leq t\leq s$, such that
+A \emph{transition matrix system} $\mathcal{T}$ is a family of transition matrices $T_t^s$, defined for all $t,s\in\realsnonneg$ with $t\leq s$, such that
 \begin{equation}\label{eq:transmatrixproduct}
 T_t^s=T_t^r T_r^s
-\text{~~for all $0\leq t\leq r\leq s$}
+\text{~~for all $t\leq r\leq s$,}
 \end{equation}
-and $T_t^t=I$ for all $t\geq0$.
+and $T_t^t=I$ for all $t\in\realsnonneg$.
 \end{definition}
 
 *** blabla
 
 \begin{definition}[Well-Behaved Transition Matrix System]\label{def:well_behaved_trans_mat_system}
-A \emph{transition matrix system} $\mathcal{T}$ is called \emph{well-behaved} if 
+A transition matrix system $\mathcal{T}$ is called \emph{well-behaved} if 
 \begin{equation}\label{eq:wellbehavedtransitionmatrixsystem}%\label{eq:wellbehavedhistorictransitionmatrix}
-\limsup_{\Delta\to 0^{+}}\frac{1}{\Delta}\norm{T_{t}^{t+\Delta}-I}<+\infty
-\text{~~~~and~~~~}
-\limsup_{\Delta\to 0^{+}}\frac{1}{\Delta}\norm{T_{t-\Delta}^t-I}<+\infty.
+(\forall t\in\realsnonneg)~\limsup_{\Delta\to 0^{+}}\frac{1}{\Delta}\norm{T_{t}^{t+\Delta}-I}<+\infty\,,
+\text{~and,~}
+(\forall t\in\realspos)~\limsup_{\Delta\to 0^{+}}\frac{1}{\Delta}\norm{T_{t-\Delta}^t-I}<+\infty\,.
 \end{equation}
-for all $t\in\reals_{\geq0}$.
 \end{definition}
+
+**** blabla
+
+\begin{definition}\label{def:systemfromQ}For any rate matrix $Q\in\mathcal{R}$, we use $\mathcal{T}_Q$ to denote the family of stochastic matrices that is defined by
+\begin{equation*}
+T_t^s=e^{Q(s-t)}
+\text{~~for all $t,s\in\realsnonneg$ such that $t\leq s$.}
+\end{equation*}
+Here, the right-hand side denotes the \emph{matrix exponential} of $Q(s-t)$ {\bf REF}. *** we verwijzen voor nu gewoon naar de literatuur, en komen later nog terug op wat details
+\end{definition}
+
+\begin{proposition}
+\label{prop:systemQ}
+For any $Q\in\mathcal{R}$, $\mathcal{T}_Q$ is a well-behaved transition matrix system.
+\end{proposition}
+\begin{proof}
+*** trivial ***
+\end{proof}
 
 \subsection{Restricted Transition Matrix Systems}
 
@@ -426,98 +491,23 @@ Consider two adjacent intervals $\mathbf{I},\mathbf{J}\subseteq\realsnonneg$, an
 is a restricted transition matrix system defined on $\mathbf{I}\cup\mathbf{J}$. Furthermore, if both $\mathcal{T}^{\mathbf{I}}$ and $\mathcal{T}^{\mathbf{J}}$ are well behaved, then $\mathcal{T}^{\mathbf{I}\cup\mathbf{J}}$ is also well-behaved.
 \end{proposition}
 
-\subsection{Rate Matrices}
-
-For now, we note that in a continuous-time setting, this notion of ``next'' time-point is less obvious than in a discrete-time setting. Here, these state-transition probabilities are continuously dependent on the evolution of time. To describe this connection, the notion of \emph{transition rate matrices} is used.
-\begin{definition}[Transition Rate Matrix]\label{def:rate_matrix}
-A real-valued matrix $Q$ is said to be a \emph{transition rate matrix}, or sometimes simply \emph{rate matrix}, if
-
-\vspace{5pt}
-\begin{enumerate}[label=R\arabic*:,ref=R\arabic*]
-\item\label{def:Q:sumzero}
-$\sum_{y\in\states}Q(x,y)=0$ for all $x\in\states$;
-\item\label{def:Q:nonnegoffdiagonal}
-$Q(x,y)\geq0$ for all $x,y\in\states$ such that $x\neq y$.
-\end{enumerate}
-\noindent
-We use $\mathcal{R}$ to denote the set of all transition rate matrices. 
-\vspace{5pt}
-\end{definition}
-
-The connection between transition matrices and rate matrices is perhaps best illustrated as follows. Suppose that at some time point $t$, we want to describe for any state $x$ the probability of ending up in state $y$ at some time $s\geq t$. Let $T_t^s$ denote the transition matrix that contains all these probabilities. Note first of all that it is reasonable to assume that, if time does not evolve, then the system should not change. That is, if we are in state $x$ at time $t$, then the probability of still being in state $x$ at time $s=t$, should be one. Hence, we should have $T_t^t=I$, with $I$ the identity matrix. 
-
-A rate matrix $Q$ is then used to describe the transition matrix $T_t^{t+\Delta}$ after a small period of time, $\Delta$, has elapsed. Specifically, the scaled matrix $\Delta\cdot Q$ serves as a linear representation for the change from $T_t^t$ to $T_t^{t+\Delta}$. The following proposition states that, for small enough $\Delta$, this linear change still results in a transition matrix.
-
-\begin{proposition}\label{prop:stochastic_from_rate_matrix}
-Consider any transition rate matrix $Q\in\mathcal{R}$, and any $\Delta\in\realsnonneg$ such that $\Delta \norm{Q}\leq 1$. Then, the matrix $(I+\Delta Q)$ is a transition matrix.
-\end{proposition}
-This also explains the terminology used; a rate matrix describes the ``rate of change'' of a (continuously) time-dependent transition matrix over a small period of time.
-
-Of course, this notion can also be reversed; given a transition matrix $T_t^{t+\Delta}$, what is the change that it underwent compared to $T_t^t=I$? The following proposition states that such a change can always be described using a rate matrix.
-\begin{proposition}\label{prop:rate_from_stochastic_matrix}
-Consider any transition matrix $T$, and any $\Delta\in\realspos$. Then, the matrix $\nicefrac{1}{\Delta}(T-I)$ is a transition rate matrix.
-\end{proposition}
-Note that Proposition~\ref{prop:rate_from_stochastic_matrix} essentially states that the finite-difference $\nicefrac{1}{\Delta}(T_t^{t+\Delta} - T_t^t)$ is a rate matrix. Intuitively, if we now take the limit as this $\Delta$ goes to zero, this states that the derivative of a continuously time-dependent transition matrix is given by some rate matrix $Q\in\mathcal{R}$---assuming that this limit exists, of course. We will make this connection more explicit Section~\ref{sec:stochastic_processes}.
-
-% \noindent We start by establishing some properties of the norm of these matrices. Both propositions follow trivially from the definitions.
-
-% \begin{proposition}
-% Let $Q$ be an arbitrary transition rate matrix. Then, $\norm{Q}<+\infty$.
-% \end{proposition}
-
-% \begin{proposition}\label{prop:normoftransisone}
-% Let $T$ be an arbitrary transition matrix. Then, $\norm{T}=1$.
-% \end{proposition}
-
-**** blabla
-
-\begin{definition}\label{def:systemfromQ}For any rate matrix $Q\in\mathcal{R}$, we use $\mathcal{T}_Q$ to denote the family of stochastic matrices that is defined by
-\begin{equation*}
-T_t^s=e^{Q(s-t)}
-\text{~~for all $t,s\in\realsnonneg$ such that $t\leq s$.}
-\end{equation*}
-Here, the right-hand side denotes the \emph{matrix exponential} of $Q(s-t)$ {\bf REF}. *** we verwijzen voor nu gewoon naar de literatuur, en komen later nog terug op wat details
-\end{definition}
-
-\begin{proposition}
-\label{prop:systemQ}
-For any $Q\in\mathcal{R}$, $\mathcal{T}_Q$ is a well-behaved transition matrix system.
-\end{proposition}
-\begin{proof}
-*** trivial ***
-\end{proof}
-
-
-We conclude this section with some comments about \emph{sets} of rate matrices. First, note that the set of \emph{all} rate matrices, $\mathcal{R}$, is closed under finite sums and multiplication with non-negative scalars. Next, consider any set $\rateset\subseteq\mathcal{R}$ of rate matrices. Then $\rateset$ is said to be \emph{non-empty} if $\rateset\neq\emptyset$ and $\rateset$ is said to be \emph{bounded} if $\norm{\rateset}<+\infty$. The following proposition provides a simple alternative characterization of boundedness.
-
-\begin{proposition}\label{prop:alternativedefforbounded}
-A set of rate matrices $\rateset\subseteq\mathcal{R}$ is bounded if and only if
-\begin{equation*}
-\inf\left\{Q(x,x)\colon Q\in\rateset\right\}>-\infty\text{~~for all $x\in\states$.}
-\end{equation*}
-\end{proposition}
-\begin{proof}
-*** {\bf TODO}
-\end{proof}
-
-
 \section{Continuous-Time Stochastic Processes}\label{sec:stochastic_processes}
 
-*** rewrite
+We will in this section formalize the notion of continuous-time stochastic processes, using the framework of full conditional probabilities. This approach differs somewhat from the traditional one, which is motivated below.
 
-We will in this section formalize the notion of continuous-time stochastic processes, using the framework of full conditional probabilities that we have just introduced. This approach differs somewhat from the traditional one, and is motivated below.
+In a classical---Kolmogorovian, measure-theoretic---setting, such a stochastic process is typically defined as a collection of random variables $\{X_t\}_{t\in\realsnonneg}$ taking values in the space $\states$. These random variables $X_t$ are then defined with respect to some probability space $(\Omega,\mathcal{F},P)$, with $P$ a probability measure on a measurable set of events $\mathcal{F}$, typically a $\sigma$-algebra on an outcome space $\Omega$. Under certain independence assumptions, this leads to the special case of continuous-time Markov chains. We refer to {\bf CITE CITE CITE} for examples of this approach.
 
-In a classical---Kolmogorovian, measure-theoretic---setting, such a stochastic process is typically defined as a collection of random variables $\{X_t\}_{t\in\realsnonneg}$ taking values in the space $\states$. These random variables $X_t$ are then defined with respect to some probability space $(\Omega,\mathcal{F},P)$, with $P$ a probability measure on a set of events $\mathcal{F}$, typically a $\sigma$-algebra generated by subsets of an outcome space $\Omega$. Under certain independence assumptions, this leads to the special case of continuous-time Markov chains. We refer to {\bf CITE CITE CITE} for examples of this approach.
+There are several reasons why we deviate from this approach here. First, as far as we can tell, very little work has been done on considering general stochastic processes \emph{without} the Markov assumption. As such, although straightforward, we have to formalize this notion here anyway, regardless of the framework used. Second, we will simplify considerably our analysis by focusing only on algebras that are closed under finitely many operations. Hence, we do not require special considerations for $P$ to be $\sigma$-additive on our domain of interest. On the other hand, we would like for these results to also extend to larger domains, specifically to $\sigma$-algebras. 
 
-There are several reasons why we deviate from this approach here. First, as far as we can tell, very little work has been done on considering general stochastic processes \emph{without} the Markov assumption. As such, although straightforward, we have to formalize this notion here anyway, regardless of the framework used. Second, we will simplify considerably our analysis by focusing on finitely-generated algebras of events, and hence do not require special considerations for $P$ to be $\sigma$-additive on our domain of interest. On the other hand, we would like these results to also extend to larger domains, specifically $\sigma$-algebras of events. Finally, and most importantly, most authors appear to simply assume the existence of such a probability space $(\Omega,\mathcal{F},P)$, and others even leave it implicit without making mention of it. While valid---because under some weak assumptions such a space can always be shown to exist---it does pose some problems for our present work. Specifically, we require for some existence results a rather exact characterization of stochastic processes and the structure of the space on which they are defined. Full conditional probabilities and the notion of coherence, defined in Section~\ref{sec:cond_prob}, provide a convenient framework for working around these issues and providing this characterization.
+Finally, and most importantly, most authors appear to simply assume the existence of such a probability space $(\Omega,\mathcal{F},P)$, and others even leave it implicit without making mention of it. While valid---because under some weak assumptions such a space can always be shown to exist---it does pose some problems for our present work. Specifically, we require for some existence results a rather exact characterization of stochastic processes and the structure of the space on which they are defined. Full conditional probabilities provide a convenient framework for working around these issues and providing this characterization.
 
-We will in Section~\ref{sec:def_stochastic_processes} start by formalizing the notion of continuous-time stochastic processes. Next, in Section~\ref{sec:well_behaved}, we describe a specific subclass of stochastic processes, which we call well-behaved, and on which we will largely focus throughout this work. Finally, Section~\ref{sec:dynamics} provides some tools with which we can describe the dynamics of stochastic processes.
+We will therefore in Section~\ref{sec:cond_prob} start by introducing full conditional probabilities, and the notion of \emph{coherence}. In Section~\ref{sec:def_stochastic_processes}, we then formalize continuous-time stochastic processes. Next, in Section~\ref{sec:well_behaved}, we describe a specific subclass of stochastic processes, which we call well-behaved, and on which we will largely focus throughout this work. Finally, Section~\ref{sec:dynamics} provides some tools with which we can describe the dynamics of stochastic processes.
 
 \subsection{Full Conditional Probabilities}\label{sec:cond_prob}
 
-We will in Section~\ref{sec:stochastic_processes} define continuous-time stochastic processes using the framework of full conditional probabilities {\bf CITE}, which we describe here. 
+%We will in Section~\ref{sec:def_stochastic_processes} define continuous-time stochastic processes using the framework of full conditional probabilities {\bf CITE}, which we describe here. 
 
-Therefore, consider some arbitrary random experiment, with some (non-empty, possibly infinite) \emph{outcome space} $\Omega$. An element $\omega\in\Omega$ of this set is then interpreted as one possible outcome of the random experiment. In order to describe multiple possible outcomes simultaneously, we use the notion of \emph{events}. Such an event $E$ is a subset of $\Omega$. We use $\power$ to denote the set of all events, and let $\nonemptypower\coloneqq\power\setminus\{\emptyset\}$. An element $(A,C)\in\power\times\nonemptypower$ is called \emph{the event $A$ conditional on the event $C$}, and the set $\power\times\nonemptypower$ is called the set of all \emph{conditional} events. 
+Consider some arbitrary random experiment, with some (non-empty, possibly infinite) \emph{outcome space} $\Omega$. An element $\omega\in\Omega$ of this set is then interpreted as one possible outcome of the random experiment. In order to describe multiple possible outcomes simultaneously, we use the notion of \emph{events}. Such an event $E$ is a subset of $\Omega$. We use $\power$ to denote the set of all events, and let $\nonemptypower\coloneqq\power\setminus\{\emptyset\}$. An element $(A,C)\in\power\times\nonemptypower$ is called \emph{the event $A$ conditional on the event $C$}, and the set $\power\times\nonemptypower$ is called the set of all \emph{conditional} events. 
 
 A full conditional probability $P$ is then a map from the set $\power\times\nonemptypower$ to $\reals$ that quantifies the uncertainty of the outcomes of the random experiment, as follows.
 
@@ -571,7 +561,7 @@ Suppose now that the outcome is $\omega$. For each ticket that the bettor sold, 
 
 Similarly, for each ticket that she bought, she will receive one unit of currency if event $A$ came true. Her profit is then $(\ind{A}(\omega) - P(A\vert C))$ per ticket. However, she only receives this profit if event $C$ also came to pass, and otherwise gets refunded. Hence, her actual profit is $\ind{C}(\omega)(\ind{A}(\omega) - P(A\vert C))$. Comparing to the above, it follows that for any given outcome $\omega$, her resulting profit from buying is equal to her loss from selling, and vice versa.
 
-Now, note that the bettor quoted prices for which she is \emph{always} willing to buy or sell these gambles. Therefore, the bettor can be forced---by an adversarial gambler---to buy and/or sell any number of gambles in any combination. That is, for any $n\in\nats$ and any $i\in\{1,\ldots,n\}$, she can be forced to sell him $\lambda_i\in\reals$ gambles on any event $(A_i,C_i)\in\mathcal{C}$ (which is equivalent to buying these gambles from him, if $\lambda_i$ is negative). After being forced into this combined gamble, her profit in case of the outcome $\omega$ is then
+Now, note that the bettor quoted prices for which she is \emph{always} willing to buy or sell these gambles. Therefore, the bettor can be forced---by an adversarial gambler---to buy and/or sell any number of gambles in any combination. That is, for any $n\in\nats$ and any $i\in\{1,\ldots,n\}$, she can be forced to sell him $\lambda_i\in\reals$ gambles on any event $(A_i,C_i)\in\mathcal{C}$ (which is equivalent to buying these gambles from him, if $\lambda_i$ is negative). After being forced into this combined gamble, her (possibly negative) profit on the outcome $\omega$ is
 \begin{equation*}
 \sum_{i=1}^n\lambda_i\ind{C_i}(\omega)\left(P(A_i\vert C_i) - \ind{A_i}(\omega)\right)\,.
 \end{equation*}
@@ -612,7 +602,7 @@ Note, therefore, that if $P$ is a coherent conditional probability on $\mathcal{
 
 \subsection{Stochastic Processes}\label{sec:def_stochastic_processes}
 
-We start by defining continuous-time stochastic processes. Such a stochastic process is a construct that moves through the state space $\states$ over a continuous time line $\realsnonneg$. A specific realization of this behavior will be called a path or a trajectory. The stochasticity of the process is quantified using a full conditional probability on a set of events, which describe specific (combinations of) states in which the process can be at certain time points. These ideas are formalized as follows.
+We are now ready to define continuous-time stochastic processes. Such a stochastic process is a construct that moves through the state space $\states$ over a continuous time line $\realsnonneg$. A specific realization of this behavior will be called a path or a trajectory. The stochasticity of the process is quantified using a full conditional probability on a set of events, which describe specific (combinations of) states in which the process can be at certain time points. These ideas are formalized as follows.
 
 %*** Section 1.1 of ``Continuous-Time Markov Chains: An Applications-Oriented Approach'' has made me doubt (but only slightly) whether using cadlag paths is always possible. I still think they are, but we should check. If not, then we can use the set of all possible functions from $\realsnonneg$ to $\states$, but that would make the whole unique extension to $\sigma$-algebra story less elegant. (see page 15 and onwards in that book as well!!!) ***
 
@@ -703,7 +693,7 @@ Trivial consequence of Corollary~\ref{corol:coherentextendable}.
 
 \subsection{Well-behaved stochastic processes}\label{sec:well_behaved}
 
-Stochastic processes, as they are defined in the previous section, can behave in rather extreme ways. For example, the transition probabilities can jump instantaneously. While we do not want to impose any differentiability assumptions on these processes, we do want this rate of change to be bounded, so that it can be described using real numbers. We call a stochastic process for which this holds \emph{well-behaved}, as follows.
+Stochastic processes, as they are defined in the previous section, can behave in rather extreme ways. For example, the transition probabilities can jump instantaneously. While we do not want to impose any differentiability assumptions on these processes, we do want this rate of change to be bounded. We call a stochastic process for which this holds \emph{well-behaved}, as follows.
 
 %*** explain that stochastic process can behave in rather extreme ways. For example, the transition probabilities can jump instantaneously. In order to avoid this behavior, we restrict our attention to a subclass of stochastic processes, which we call well-behaved. ***
 
@@ -1954,6 +1944,19 @@ Finally, previous work only focused on functions $f\in\gamblesX$ defined at a si
 
 \section{Proofs of results in Section~\ref{sec:systems}}\label{app:systems}
 
+
+\begin{proof}[Proof of Proposition~\ref{prop:stochastic_from_rate_matrix}]
+\ref{def:T:sumone} follows from \ref{def:Q:sumzero}: for all $x\in\states$, \ref{def:Q:sumzero} implies that
+\begin{equation*}
+\sum_{y\in\states} T(x,y) = \sum_{y\in\states} [I + \Delta Q](x,y) = \sum_{y\in\states}I(x,y) + \Delta \sum_{y\in\states}Q(x,y) = 1+\Delta 0=1.
+\end{equation*}
+\ref{def:T:nonneg} follows from~\ref{def:Q:nonnegoffdiagonal} and because $0\leq \Delta \leq \nicefrac{1}{\norm{Q}}$: for all $x,y\in\states$ such that $x\neq y$, $0\leq \Delta \leq \nicefrac{1}{\norm{Q}}$ implies that $[I+\Delta Q](x,x)=1+\Delta Q(x,x)\geq 1-\Delta\norm{Q}\geq0$, and \ref{def:Q:nonnegoffdiagonal} and $\Delta\geq0$ implies that $[I+\Delta Q](x,y)=\Delta Q(x,y)\geq0$.
+\end{proof}
+
+\begin{proof}[Proof of Proposition~\ref{prop:rate_from_stochastic_matrix}]
+This proof is analogous to that of Proposition~\ref{prop:stochastic_from_rate_matrix}; simply verify each of the properties in Definition~\ref{def:rate_matrix}.
+\end{proof}
+
 \begin{lemma}\label{lemma:recursive}
 Consider two finite sequences $T_1,\ldots,T_n$ and $S_1,\ldots,S_n$ of transition matrices. Then,
 \begin{equation*}
@@ -2036,20 +2039,6 @@ It remains to show that if $\mathcal{T}^{\mathbf{I}}$ and $\mathcal{T}^{\mathbf{
 \end{equation*}
 Because this clearly holds for all $t\in\mathbf{I}\setminus\{r\}$ and all $t\in\mathbf{J}\setminus\{r\}$, the interesting case is to show that this holds for $t=r$. However, for all $\Delta\in\realspos$ we have that $T_r^{r+\Delta}$ corresponds to $\mathcal{T}^{\mathbf{J}}$, and $T_{r-\Delta}^{r}$ corresponds to $\mathcal{T}^{\mathbf{I}}$. Because both $\mathcal{T}^{\mathbf{I}}$ and $\mathcal{T}^{\mathbf{J}}$ are well-behaved, we find that $\mathcal{T}^{\mathbf{I}\cup\mathbf{J}}$ is also well-behaved at $t=r$. Hence, $\mathcal{T}^{\mathbf{I}\cup\mathbf{J}}$ is well-behaved.
 \end{proof}
-
-\begin{proof}[Proof of Proposition~\ref{prop:stochastic_from_rate_matrix}]
-\ref{def:T:sumone} follows from \ref{def:Q:sumzero}: for all $x\in\states$, \ref{def:Q:sumzero} implies that
-\begin{equation*}
-\sum_{y\in\states} T(x,y) = \sum_{y\in\states} [I + \Delta Q](x,y) = \sum_{y\in\states}I(x,y) + \Delta \sum_{y\in\states}Q(x,y) = 1+\Delta 0=1.
-\end{equation*}
-\ref{def:T:nonneg} follows from~\ref{def:Q:nonnegoffdiagonal} and because $0\leq \Delta \leq \nicefrac{1}{\norm{Q}}$: for all $x,y\in\states$ such that $x\neq y$, $0\leq \Delta \leq \nicefrac{1}{\norm{Q}}$ implies that $[I+\Delta Q](x,x)=1+\Delta Q(x,x)\geq 1-\Delta\norm{Q}\geq0$, and \ref{def:Q:nonnegoffdiagonal} and $\Delta\geq0$ implies that $[I+\Delta Q](x,y)=\Delta Q(x,y)\geq0$.
-\end{proof}
-
-\begin{proof}[Proof of Proposition~\ref{prop:rate_from_stochastic_matrix}]
-This proof is analogous to that of Proposition~\ref{prop:stochastic_from_rate_matrix}; simply verify each of the properties in Definition~\ref{def:rate_matrix}.
-\end{proof}
-
-
 
 
 % \begin{proof}[Proof of Proposition~\ref{prop:fullcoherent}]
