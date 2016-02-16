@@ -497,12 +497,11 @@ Note first of all that this definition takes conditional probabilities as the ba
 
 However, note that because $\power$ is the set of all events---the power set of $\Omega$---it is somewhat unwieldy to work with for arbitrary $\Omega$. Specifically, if for a given map $P$ from $\power\times\nonemptypower$ to $\reals$ we want to check if $P$ is a full conditional probability, this is difficult to do from the definition alone.
 
-Therefore, we next introduce the notion of \emph{coherent conditional probabilities}~{\bf CITE}. This notion was developed from DeFinetti's work on coherent (unconditional) probabilities~{\bf CITE}. We refer to {\bf CITE CITE CITE} for philosophical discussions on its merits, but will give some interpretation below.
+Therefore, we next introduce the notion of \emph{coherent conditional probabilities}~{\bf CITE}. %This notion was developed from DeFinetti's work on coherent (unconditional) probabilities~{\bf CITE}. We refer to {\bf CITE CITE CITE} for philosophical discussions on its merits, but will give some interpretation below.
 %The following notion of coherent conditional probabilities will be useful whenever we want to check if a given map $P$ from a set of events to $\reals$ is a well-defined conditional probability.
+This notion of coherence is perhaps easiest to understand in a gambling framework. In this framework, we first consider a set $\mathcal{C}\subseteq\power\times\nonemptypower$ of possible events. Gambles---lottery tickets, if you will---are then bought and sold prior to observing the outcome $\omega$ of a random experiment. 
 
-The notion of coherence is perhaps easiest to understand in a gambling framework. In this framework, we first consider a set $\mathcal{C}\subseteq\power\times\nonemptypower$ of possible events. Gambles---lottery tickets, if you will---are then bought and sold prior to observing the outcome $\omega$ of a random experiment. 
-
-In particular, for each event $(A,C)\in\mathcal{C}$ a bettor will specify a price $P(A\vert C)$ for which she is always willing to either buy or sell the gamble that event $A$ will come true, given that event $C$ comes true. Such a gamble yields a reward of one currency unit to its holder---paid by the seller---if the event $A$ occurs. These gambles are then bought and sold under the proviso that, should event $C$ not happen, then all parties involved are refunded. 
+In particular, for each event $(A,C)\in\mathcal{C}$, a bettor will specify a price $P(A\vert C)$ for which she is always willing to either buy or sell the gamble that event $A$ will come true, given that event $C$ comes true. Such a gamble yields a reward of one currency unit to its holder---paid by the seller---if the event $A$ occurs. These gambles are then bought and sold under the proviso that, should event $C$ not happen, then all parties involved are refunded. 
 
 Suppose now that the outcome is $\omega$. For each ticket that the bettor sold, she has received $P(A\vert C)$ currency units in advance, but she must now pay one currency unit to the buyer if event $A$ came true. Hence, she must pay $\ind{A}(\omega)$ per ticket sold. Because this is conditional on event $C$ coming true, her remaining profit after paying is $\ind{C}(\omega)(P(A\vert C) - \ind{A}(\omega))$, with negative profit being loss. Note that if $\ind{C}(\omega)=0$, she neither gains nor loses anything. Allowing for fractional tickets, if she has sold a total of $\lambda\in\realsnonneg$ such tickets, her total profit is $\lambda \ind{C}(\omega)(P(A\vert C) - \ind{A}(\omega))$.
 
@@ -530,11 +529,12 @@ The reason that these prices $P$ are called \emph{probabilities} is due to the f
 \begin{theorem}{\cite[Theorem 3]{regazzini1985finitely}}\label{theo:fullcoherent}
 Let $P$ be a real-valued map from $\power\times\nonemptypower$ to $\reals$. Then $P$ is a coherent conditional probability if and only if it is a full conditional probability.
 \end{theorem}
+Note that the result above assumes that the bettor quoted price for the entire domain $\power\times\nonemptypower$. Contrariwise, our explanation above started by considering a subset $\mathcal{C}$ of this domain. The reason for this is the following well-known result: if the prices $P$ are coherent on some subset $\mathcal{C}$ of $\power\times\nonemptypower$, it is always possible to extend the domain of these prices to some superset $\mathcal{C}^*\supseteq \mathcal{C}$, while maintaining coherence.
 
 \begin{theorem}{\cite[Theorem 4]{regazzini1985finitely}}\label{theo:largerdomain}
 Let $P$ be a coherent conditional probability on $\mathcal{C}\subseteq\power\times\nonemptypower$. Then for any $\mathcal{C}\subseteq\mathcal{C}^*\subseteq\power\times\nonemptypower$, $P$ can be extended to a coherent conditional probability on $\mathcal{C}^*$.
 \end{theorem}
-
+In particular, it is therefore always possible to extend a coherent conditional probability $P$ on $\mathcal{C}$, to a coherent conditional probability on $\power\times\nonemptypower$. Due to Theorem~\ref{theo:fullcoherent}, this extension is a full conditional probability. The following makes this explicit.
 
 \begin{corollary}\label{corol:coherentextendable}
 Let $P$ be a real-valued map from $\mathcal{C}\subseteq\power\times\nonemptypower$ to $\reals$. Then $P$ is a coherent conditional probability if and only if it can be extended to a full conditional probability.
@@ -544,6 +544,7 @@ First assume that $P$ can be extended to a full conditional probability $P^*$. T
 
 Conversely, if $P$ is a coherent conditional probability on $\mathcal{C}$, it follows from Theorem~\ref{theo:largerdomain} that $P$ can be extended to a coherent conditional probability $P^*$ on $\power\times\nonemptypower$, which, because of Theorem~\ref{theo:fullcoherent}, is a full conditional probability.
 \end{proof}
+Note, therefore, that if $P$ is a coherent conditional probability on $\mathcal{C}$, we can equivalently say that it is the restriction of a full conditional probability. One only needs to check Definition~\ref{def:cond_prob} to see that $P$ will therefore satisfy properties~\ref{def:coh_prob_2}-\ref{def:coh_prob_6}.
 
 \section{Continuous-Time Stochastic Processes}\label{sec:stochastic_processes}
 
@@ -551,7 +552,7 @@ We will in this section formalize the notion of continuous-time stochastic proce
 
 In a classical---Kolmogorovian, measure-theoretic---setting, such a stochastic process is typically defined as a collection of random variables $\{X_t\}_{t\in\realsnonneg}$ taking values in the space $\states$. These random variables $X_t$ are then defined with respect to some probability space $(\Omega,\mathcal{F},P)$, with $P$ a probability measure on a set of events $\mathcal{F}$, typically a $\sigma$-algebra generated by subsets of an outcome space $\Omega$. Under certain independence assumptions, this leads to the special case of continuous-time Markov chains. We refer to {\bf CITE CITE CITE} for examples of this approach.
 
-There are several reasons why we deviate from this approach here. First, as far as we can tell, very little work has been done on considering general stochastic processes \emph{without} the Markov assumption. As such, although straightforward, we have to formalize this notion here anyway, regardless of the framework used. Second, we will simplify considerably our analysis by focusing on finitely-generated algebras of events, and hence do not require special considerations for $P$ to be $\sigma$-additive on our domain of interest. On the other hand, we would like these results to also extend to larger domains, specifically $\sigma$-algebras of events. Finally, and most importantly, most authors simply assume the existence of such a probability space $(\Omega,\mathcal{F},P)$, and others even leave it implicit without making mention of it. While valid---because under some weak assumptions such a space can always be shown to exist---it does pose some problems for our present work. Specifically, we require for some existence results a rather exact characterization of stochastic processes and the structure of the space on which they are defined. Full conditional probabilities and the notion of coherence, defined in Section~\ref{sec:cond_prob}, provide a convenient framework for working around these issues and providing this characterization.
+There are several reasons why we deviate from this approach here. First, as far as we can tell, very little work has been done on considering general stochastic processes \emph{without} the Markov assumption. As such, although straightforward, we have to formalize this notion here anyway, regardless of the framework used. Second, we will simplify considerably our analysis by focusing on finitely-generated algebras of events, and hence do not require special considerations for $P$ to be $\sigma$-additive on our domain of interest. On the other hand, we would like these results to also extend to larger domains, specifically $\sigma$-algebras of events. Finally, and most importantly, most authors appear to simply assume the existence of such a probability space $(\Omega,\mathcal{F},P)$, and others even leave it implicit without making mention of it. While valid---because under some weak assumptions such a space can always be shown to exist---it does pose some problems for our present work. Specifically, we require for some existence results a rather exact characterization of stochastic processes and the structure of the space on which they are defined. Full conditional probabilities and the notion of coherence, defined in Section~\ref{sec:cond_prob}, provide a convenient framework for working around these issues and providing this characterization.
 
 We will in Section~\ref{sec:def_stochastic_processes} start by formalizing the notion of continuous-time stochastic processes. Next, in Section~\ref{sec:well_behaved}, we describe a specific subclass of stochastic processes, which we call well-behaved, and on which we will largely focus throughout this work. Finally, Section~\ref{sec:dynamics} provides some tools with which we can describe the dynamics of stochastic processes.
 
@@ -648,7 +649,9 @@ Trivial consequence of Corollary~\ref{corol:coherentextendable}.
 
 \subsection{Well-behaved stochastic processes}\label{sec:well_behaved}
 
-*** explain that stochastic process can behave in rather extreme ways. For example, the transition probabilities can jump instantaneously. In order to avoid this behavior, we restrict our attention to a subclass of stochastic processes, which we call well-behaved. ***
+Stochastic processes, as they are defined in the previous section, can behave in rather extreme ways. For example, the transition probabilities can jump instantaneously. While we do not want to impose any differentiability assumptions on these processes, we do want this rate of change to be bounded, so that it can be described using real numbers. We call a stochastic process for which this holds \emph{well-behaved}, as follows.
+
+%*** explain that stochastic process can behave in rather extreme ways. For example, the transition probabilities can jump instantaneously. In order to avoid this behavior, we restrict our attention to a subclass of stochastic processes, which we call well-behaved. ***
 
 \begin{definition}[Well-Behaved Stochastic Process]
 \label{def:well-behaved}
@@ -656,13 +659,13 @@ A stochastic process $P\in\processes$ is said to be \emph{well-behaved} if, for 
 \begin{equation}\label{eq:def:well-behaved:right}
 (\forall t\in\reals_{\geq0}
 \colon t> u)~~
-\limsup_{\Delta\to 0^{+}}\frac{1}{\Delta}\abs{P(X_{t+\Delta}=y\vert X_t=x, X_u=x_u)-\delta_{xy}}<+\infty
+\limsup_{\Delta\to 0^{+}}\frac{1}{\Delta}\abs{P(X_{t+\Delta}=y\vert X_t=x, X_u=x_u)-\ind{x}(y)}<+\infty
 \end{equation}
 and
 \begin{equation}\label{eq:def:well-behaved:left}
 (\forall t\in\reals_{>0}
 \colon t> u)~~
-\limsup_{\Delta\to 0^{+}}\frac{1}{\Delta}\abs{P(X_{t}=y\vert X_{t-\Delta}=x, X_u=x_u)-\delta_{xy}}<+\infty.
+\limsup_{\Delta\to 0^{+}}\frac{1}{\Delta}\abs{P(X_{t}=y\vert X_{t-\Delta}=x, X_u=x_u)-\ind{x}(y)}<+\infty.
 \end{equation}
 The set of all well-behaved stochastic processes is denoted by $\wprocesses$.
 \end{definition}
@@ -676,7 +679,7 @@ P(X_{t+\Delta}=x\,\vert\,X_{t}=x,X_u=x_u) = 1-\sqrt{\Delta}\,.
 \end{equation*}
 This is a probability that is continuous in $\Delta$, and $P(X_{t}=x\,\vert\,X_{t}=x,X_u=x_u) = 1$. However, we clearly have that
 \begin{equation*}
-\frac{1}{\Delta}\abs{P(X_{t+\Delta}=x\,\vert\,X_{t}=x,X_u=x_u) - \delta_{xx}} \to +\infty\,,\quad\text{as}\quad \Delta\to0^+\,,
+\frac{1}{\Delta}\abs{P(X_{t+\Delta}=x\,\vert\,X_{t}=x,X_u=x_u) - \ind{x}(x)} \to +\infty\,,\quad\text{as}\quad \Delta\to0^+\,,
 \end{equation*}
 and hence $P$ is not well-behaved.
 \exampleend
@@ -697,7 +700,7 @@ We denote this family of matrices by $\mathcal{T}_P$.%, and call it the \emph{sy
 Because we will also want to work with conditioning events that contain more than a single time point, we furthermore introduce the following generalization.
 
 \begin{definition}[History-Dependent Corresponding Transition Matrix]
-Let $P\in\processes$ be any stochastic process. Then, for any $t,s\in\realsnonneg$ such that $t\leq s$, any sequence of time points $u<t$, and any state assignment $x_u\in\states^u$, the corresponding \emph{history-dependent} transition matrix $T_{t,\,x_u}^s$ is a matrix that is defined by
+Let $P\in\processes$ be any stochastic process. Then, for any $t,s\in\realsnonneg$ such that $t\leq s$, any sequence of time points $u\in\mathcal{U}_{<t}$, and any state assignment $x_u\in\states^u$, the corresponding \emph{history-dependent} transition matrix $T_{t,\,x_u}^s$ is a matrix that is defined by
 \begin{equation*}
 T^s_{t,\,x_u}(x_t,x_s)
 \coloneqq
@@ -716,7 +719,7 @@ Let $P\in\processes$ be a stochastic process.  %Then for any $t,s\in\realsnonneg
 %\lim_{\Delta\to 0^{+}}\frac{1}{\Delta}\norm{T_{t-\Delta}^t-I}<+\infty.
 %\end{equation}
 %Similarly, 
-Then, for any $t,s\in\realsnonneg$ such that $t\leq s$, any sequence of time points $u<t$, and any state assignment $x_u\in\states^u$, the corresponding (history dependent) transition matrix $T_{t,\,x_u}^s$ is---as its name suggests---a transition matrix, and $T_{t,\,x_u}^t=I$. Furthermore, $P$ is well-behaved if and only if
+Then, for any $t,s\in\realsnonneg$ such that $t\leq s$, any sequence of time points $u\in\mathcal{U}_{<t}$, and any state assignment $x_u\in\states^u$, the corresponding (history dependent) transition matrix $T_{t,\,x_u}^s$ is---as its name suggests---a transition matrix, and $T_{t,\,x_u}^t=I$. Furthermore, $P$ is well-behaved if and only if
 \begin{equation}\label{eq:wellbehavedtransitionmatrix}%\label{eq:wellbehavedhistorictransitionmatrix}
 \limsup_{\Delta\to 0^{+}}\frac{1}{\Delta}\norm{T_{t,x_u}^{t+\Delta}-I}<+\infty
 \text{~~~~and~~~~}
@@ -737,7 +740,7 @@ Note that for any $P\in\processes$, a corresponding transition matrix $T_{t, x_u
 \begin{align*}
 \left[T_{t,x_u}^sf\right](x_t) &= \sum_{x_s\in\states}f(x_s)P(X_s=x_s\,\vert\,X_t=x_t,X_u=x_u)= \mathbb{E}\left[f(X_s)\,\vert\,X_t=x_t, X_u=x_u\right]\,,
 \end{align*}
-where the expectation is taken with respect to $P$. %Similarly, for any history-dependent transition matrix $T_{t,x_u}^s$, we have that
+where the expectation is taken with respect to $P$. This result is useful when we later focus on expectations with respect to stochastic processes; for functions $f\in\gamblesX$, their corresponding transition matrices serve as an alternative representation for the expectation operator.  %Similarly, for any history-dependent transition matrix $T_{t,x_u}^s$, we have that
 \exampleend
 \end{remark*}
 
