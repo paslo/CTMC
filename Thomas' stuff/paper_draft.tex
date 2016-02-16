@@ -236,42 +236,53 @@ Throughout, most proofs and technical lemmas related to our results can be found
 
 We will denote the reals as $\reals$, the non-negative reals as $\realsnonneg$, and the positive reals as $\realspos$. The natural numbers will be written as $\nats$, and we will denote $\nats_0\coloneqq\nats\cup\{0\}$. The rationals will be denoted by $\mathbb{Q}$.
 
-Throughout this work, we will consider some fixed finite \emph{state space} $\states=\{1,\dots,m\}$. Let $\gamblesX$ denote the set of all real-valued functions on $\states$. Because $\states$ is finite, we can also interpret any function $f\in\gamblesX$ as a vector in $\reals^m$. Hence, we will in the sequel use the terms `function' and `vector' interchangeably when referring to elements of $\gamblesX$.
-
-Linear maps from $\gamblesX$ to $\gamblesX$ will play an important role in this work, and will be represented by matrices. Because the state space $\states$ is fixed throughout, we will always consider square, $m\times m$, real-valued matrices. As such, we will for the sake of brevity simply refer to them as `matrices'. If $A$ is a matrix, we will index its elements as $A(x,y)$ for all $x,y\in\states$, where the indexing is understood to be row-major. Furthermore, $A(x,\cdot)$ will denote the $x$-th row of $A$, and $A(\cdot,y)$ will denote its $y$-th column. The symbol $I$ will be reserved throughout to refer to the $m\times m$ identity matrix.
-
 Infinite sequences of quantities will be denoted $\{a_i\}_{i\in\nats}$, possibly with limit statements of the form $\{a_i\}_{i\in\nats}\to c$, which should be interpreted as $\lim_{i\to\infty}a_i=c$. If this sequence is in a space endowed with an ordering relation, we may write $\{a_i\}_{i\in\nats}\to c^+$ or $\{a_i\}_{i\in\nats}\to c^-$ if the limit is approached from above or below, respectively.
 
-We will also make extensive use of finite sequences of time points. Such a sequence is of the form $u\coloneqq t_0,t_1,\ldots,t_n$, with $n\in\nats$ and, for all $i\in\{0,\ldots,n\}$, $t_i\in\realsnonneg$. Let $\mathcal{U}$ denote the set of all such finite sequences that are \emph{non-degenerate}, meaning that for all $u\in\mathcal{U}$ with $u=t_0,\ldots,t_n$, it holds that $t_i\neq t_j$ for all $i,j\in\{0,\ldots,n\}$ such that $i\neq j$. Note that this does not prohibit \emph{empty} sequences. We therefore let $\mathcal{U}_\emptyset\coloneqq \mathcal{U}\setminus\{\emptyset\}$.
+We use the notation $\ind{C}$ for the indicator function on a subset $C$ of any set $A$, meaning that, for all $a\in A$, $\ind{C}(a)=1$ if $a\in C\subseteq A$, and $\ind{C}(a)=0$, otherwise. If $C$ is a singleton $C=\{c\}$, we may instead write $\ind{c}\coloneqq\ind{\{c\}}$.
+
+\subsection{Sequences of Time Points}
+
+We will make extensive use of finite sequences of time points. Such a sequence is of the form $u\coloneqq t_0,t_1,\ldots,t_n$, with $n\in\nats$ and, for all $i\in\{0,\ldots,n\}$, $t_i\in\realsnonneg$. Let $\mathcal{U}$ denote the set of all such finite sequences that are \emph{non-degenerate}, meaning that for all $u\in\mathcal{U}$ with $u=t_0,\ldots,t_n$, it holds that $t_i\neq t_j$ for all $i,j\in\{0,\ldots,n\}$ such that $i\neq j$. Note that this does not prohibit \emph{empty} sequences. We therefore let $\mathcal{U}_\emptyset\coloneqq \mathcal{U}\setminus\{\emptyset\}$.
 
 For any finite sequence $u$ of time points, let $\max u\coloneqq \max\{t_i:i\in\{0,\ldots,n\}\}$. For any time point $t\in\realsnonneg$, we then write $t>u$ if $t>\max u$, and similarly for other inequalities. If $u=\emptyset$, then $t>u$ is taken to be trivially true, regardless of the value of $t$. We denote with $\mathcal{U}_{<t}\subset\mathcal{U}$ the set of all sequences $u\in\mathcal{U}$ for which $u<t$, and, again, similarly for other inequalities.
 
 When working with finite sequences of time points, we use set-theoretic notation to operate on them. For example, for any $u,v\in\mathcal{U}$, we let $u\cup v$ denote the concatenation of $u$ and $v$. Similarly, for any $s\in\realsnonneg$ and any $u\in\mathcal{U}_{<s}$ with $u=t_0,\ldots,t_n$, we denote with $u\cup\{s\}$ the sequence $t_0,\ldots,t_n,s$.
 
-As a special case, we consider finite sequences of time points that partition a given time interval $[t,s]$, with $t,s\in\realsnonneg$ such that $t\leq s$. Such a sequence is taken to be ordered, and includes the end-points of this interval. In this specific case, we do \emph{not} require the sequence to be non-degenerate. Thus, the sequence is of the form $t=t_0\leq t_1\leq\cdots\leq t_n=s$. We denote the set of all such sequences by $\mathcal{U}_{[t,s]}$. For any $u\in\mathcal{U}_{[t,s]}$ with $u=t_0,\ldots,t_n$, we define the sequential differences $\Delta_i^u\coloneqq t_i-t_{i-1}$, for all $i\in\{1,\ldots,n\}$. We then use $\sigma(u)\coloneqq \max\{\Delta_i^u:i\in\{1,\ldots,n\}\}$ to denote the maximum such difference.
+As a special case, we consider finite sequences of time points that partition a given time interval $[t,s]$, with $t,s\in\realsnonneg$ such that $t\leq s$. Such a sequence is taken to be ordered, and includes the end-points of this interval.  Thus, the sequence is of the form $t=t_0< t_1<\cdots< t_n=s$. We denote the set of all such sequences by $\mathcal{U}_{[t,s]}$. Because these sequences are non-degenerate, we must have for any $u\in\mathcal{U}_{[t,t]}$ that $u=t$. For any $u\in\mathcal{U}_{[t,s]}$ with $u=t_0,\ldots,t_n$, we define the sequential differences $\Delta_i^u\coloneqq t_i-t_{i-1}$, for all $i\in\{1,\ldots,n\}$. We then use $\sigma(u)\coloneqq \max\{\Delta_i^u:i\in\{1,\ldots,n\}\}$ to denote the maximum such difference.
 
-Finally, as some notes on notational conventions, we typically use $t,r,s\in\realsnonneg$ to denote time points, $u,v,w\in\mathcal{U}$ to denote sequences of time points, and $x,y,z\in\states$ to denote state assignments. We use the notation $\ind{C}$ for the indicator function on a subset $C$ of any set $A$, meaning that, for all $a\in A$, $\ind{C}(a)=1$ if $a\in C\subseteq A$, and $\ind{C}(a)=0$, otherwise. If $C$ is a singleton $C=\{c\}$, we may instead write $\ind{c}\coloneqq\ind{\{c\}}$.
+\subsection{State Space and Functions}\label{sec:multivar_notation}
 
-%Finally, we will make extensive use of finite sequences of time points. For any such sequence $u\coloneqq t_0,t_1,\ldots,t_n$, with $n\in\nats$ and $t_i\in\realsnonneg$, $i\in\{0,\ldots,n\}$, we will write $u<t$ if $\max\left\{t_i:i\in\{0,\ldots,n\}\right\}<t$ for some $t\in\realsnonneg$. For all $t\in\realsnonneg$, we will denote the set of such sequences as $\mathcal{U}_{<t}$. We will sometimes allow $u$ to be an empty sequence, to prevent having to constantly consider several cases separately. However, we will be explicit when doing so. As a special case, for any $t,s\in\realsnonneg$ such that $t<s$, we consider ordered sequences $u$ that partition the interval $[t,s]$, and include the end-points of this interval. Thus, we then have that $u$ is such that $t=t_0 < t_1 <\ldots < t_n = s$, and we will use $\mathcal{U}_{[t,s]}$ to denote the set of all such sequences. Furthermore, given any $u\in\mathcal{U}_{[t,s]}$, we define for all $i\in\{1,\ldots,n\}$ the terms $\Delta_i\coloneqq (t_i-t_{i-1})$ that denote the distance between consecutive time points in $u$, and use $\sigma(u) \coloneqq \max\bigl\{\Delta_i\,:\,i\in\{1,\ldots,n\}\bigr\}$ to denote the maximum such distance.
-%
-%*** SOME NEW NOTATION AND CONVENTIONS THAT I NEEDED ***
-%
-%We let $\mathcal{U}$ be the set of all (possibly empty) sequences of time points. For any $u\in\mathcal{U}$, we let $\max u$ be the largest time point in $u$. If $u=\emptyset$, then $t>u$ is taken to be trivially true, regardless of the value of $t$.
-%
-%******
-%
-%The sets $\mathcal{U}$ and $\mathcal{U}_{<t}$ (and so on) can no longer contain non-empty degenerate sequences (all time points must be unique). The exception is $\mathcal{U}_{[t,s]}$, which can contain degenerate sequences.
-%
-%If you're aware of any issues this might cause, please let me know. (I checked, but couldnt find any).
-%
-%******
+Throughout this work, we will consider some fixed finite \emph{state space} $\states=\{1,\dots,m\}$. Let $\gamblesX$ denote the set of all real-valued functions on $\states$. Because $\states$ is finite, we can also interpret any function $f\in\gamblesX$ as a vector in $\reals^m$. Hence, we will in the sequel use the terms `function' and `vector' interchangeably when referring to elements of $\gamblesX$.
+
+We will also find it convenient to have notation for the state space at (multiple) explicit time points. To this end, for any finite sequence of time points $u\in\mathcal{U}$ such that $u=t_0,\ldots,t_n$, we let
+\begin{equation*}
+\states^u \coloneqq \prod_{i=0}^n \states
+\end{equation*}
+denote the joint state space at the time points in $u$. Note that if $u$ only contains a single time point $t$, then we simply have that $\states^u=\states^{\{t\}}=\states$. The corresponding joint state assignment will be written as $x_u\in\states^u$, with which we then mean the state assignment $(x_{t_0},\ldots,x_{t_n})\in\states^{\{t_0\}}\times\cdots\times\states^{\{t_n\}}$. If $u=\emptyset$, then the notation $x_\emptyset\in\states^\emptyset$ may be used as a ``dummy'' placeholder, typically leading to statements that are vacuously true.
+
+For any $u\in\mathcal{U}_\emptyset$, we use $\gambles(\states^u)$ to denote the set of real-valued functions on $\states^u$. For a function $f\in\gambles(\states^{u\cup\{s\}})$, we will write $f(x_u,X_s)$ for the restriction of $f$ to $\states^{\{s\}}$ specific to the joint state assignment $x_u\in\states^u$. Thus, $f(x_u,X_s)$ corresponds to a $g\in\gambles(\states^{\{s\}})$ such that $g(x_s) = f(x_u,x_s)$ for all $x_s\in\states^{\{s\}}$.
+
+%Finally, we will want to use operators as defined in Section~\ref{sec:func_oper_norm} for functions defined on (multiple) explicit time points. To this end, for any $f\in\gambles(\states^{u\cup\{s\}})$, with $u<s$, and any non-negatively homogeneous operator $A$ from $\gamblesX$ to $\gamblesX$, we stipulate the following convention. If $A$ is applied to $f$, it will be applied to the restriction of $f$ to the \emph{latest} time point at which it is defined---the time point $s$, in this case. Because this restriction depends on the specific state assignment $x_u$ corresponding to the other time points $u=t_0,\ldots,t_n$, the result is a function $[Af]\in\gambles(\states^u)$. In other words, we stipulate that
+%\begin{equation*}
+%[Af](x_u) \coloneqq [Af(x_u,X_s)](x_{t_n})\,.
+%\end{equation*}
+
+
+%Finally, as some notes on notational conventions, we typically use $t,r,s\in\realsnonneg$ to denote time points, $u,v,w\in\mathcal{U}$ to denote sequences of time points, and $x,y,z\in\states$ to denote state assignments. 
 
 \subsection{Operators and Norms}\label{sec:func_oper_norm}
-For any vector $f\in\gamblesX$, we let
+
+For any $u\in\mathcal{U}_\emptyset$ and any $f\in\gambles(\states^u)$, let the norm $\norm{f}$ be defined as
 \begin{equation*}
-\norm{f}\coloneqq\norm{f}_{\infty}\coloneqq\max\{\abs {f(x)}\colon x\in\states\}
+\norm{f} \coloneqq \norm{f}_{\infty} \coloneqq \max\{\abs{f(x_u)}\,:\,x_u\in\states^u\}\,.
 \end{equation*}
-be the maximum norm. For any operator $A$ from $\gamblesX$ to $\gamblesX$ that is non-negatively homogeneous, meaning that $A(\lambda f)=\lambda A(f)$ for all $f\in\gamblesX$ and all $\lambda\in\realsnonneg$, we consider the induced operator norm
+As a special case, we then have for any $f\in\gamblesX$ that $\norm{f}=\max\{\abs{f(x)}\,:\,x\in\states\}$.
+
+Linear maps from $\gamblesX$ to $\gamblesX$ will play an important role in this work, and will be represented by matrices. Because the state space $\states$ is fixed throughout, we will always consider square, $m\times m$, real-valued matrices, where $m$ is the size of $\states$. As such, we will for the sake of brevity simply refer to them as `matrices'. If $A$ is a matrix, we will index its elements as $A(x,y)$ for all $x,y\in\states$, where the indexing is understood to be row-major. Furthermore, $A(x,\cdot)$ will denote the $x$-th row of $A$, and $A(\cdot,y)$ will denote its $y$-th column. The symbol $I$ will be reserved throughout to refer to the $m\times m$ identity matrix.
+
+Because we will also be interested in non-linear maps, we consider as a more general case operators that are \emph{non-negatively homogeneous}. An operator $A$ from $\gamblesX$ to $\gamblesX$ is non-negatively homogeneous if $A(\lambda f)=\lambda \left[Af\right]$ for all $f\in\gamblesX$ and all $\lambda\in\realsnonneg$. Note that this includes matrices as a special case.
+
+For any non-negatively homogeneous operator $A$ from $\gamblesX$ to $\gamblesX$, we consider the induced operator norm
 \begin{equation*}
 \norm{A}\coloneqq\sup\left\{\norm{Af}\colon f\in\gamblesX,\norm{f}=1\right\}.
 \end{equation*}
@@ -283,7 +294,6 @@ If $A$ is a matrix, it is easily verified that then
 \end{equation*}
 \noindent
 Finally, for any set $\mathcal{A}$ of matrices, we define $\norm{\mathcal{A}}\coloneqq\sup\{\norm{A}\colon A\in\mathcal{A}\}$.
-
 
 \noindent These norms satisfy the following properties; Reference~\cite{DeBock:2016} provides a proof for the non-trivial ones.
 
@@ -319,67 +329,11 @@ $\norm{Af}\leq\norm{A}\norm{f}$
 \end{multicols}
 \end{proposition}
 
-\subsection{Notation for the Time-Indexed State Space}\label{sec:multivar_notation}
+\section{Transition Matrix Systems}\label{sec:systems}
 
-We will also find it convenient to have notation for functions defined on the state space at (multiple) explicit time points. To this end, for any finite sequence of time points $u\in\mathcal{U}$ such that $u=t_0,\ldots,t_n$, we let
-\begin{equation*}
-\states^u \coloneqq \prod_{i=0}^n \states
-\end{equation*}
-denote the joint state space at the time points in $u$. Note that if $u$ only contains a single time point $t$, then we simply have that $\states^u=\states^{\{t\}}=\states$. In that case, all our previous conventions apply, but the explicit use of the time point is at times convenient. The corresponding joint state assignment will be written as $x_u\in\states^u$, with which we then mean the state assignment $(x_{t_0},\ldots,x_{t_n})\in\states^{\{t_0\}}\times\cdots\times\states^{\{t_n\}}$. If $u=\emptyset$, then the notation $x_\emptyset\in\states^\emptyset$ may be used as a ``dummy'' placeholder, typically leading to statements that are vacuously true.
+**** blabla
 
-For any $u\in\mathcal{U}_\emptyset$, we use $\gambles(\states^u)$ to denote the set of real-valued functions on $\states^u$. For any $f\in\gambles(\states^u)$, let the norm $\norm{f}$ be defined as
-\begin{equation*}
-\norm{f} \coloneqq \norm{f}_{\infty} \coloneqq \max\{\abs{f(x_u)}\,:\,x_u\in\states^u\}\,.
-\end{equation*}
-
-For a function $f\in\gambles(\states^{u\cup\{s\}})$, we will write $f(x_u,X_s)$ for the restriction of $f$ to $\states^{\{s\}}$ specific to the joint state assignment $x_u\in\states^u$. Thus, $f(x_u,X_s)$ corresponds to a $g\in\gambles(\states^{\{s\}})$ such that $g(x_s) = f(x_u,x_s)$ for all $x_s\in\states^{\{s\}}$.
-
-Finally, we will want to use operators as defined in Section~\ref{sec:func_oper_norm} for functions defined on (multiple) explicit time points. To this end, for any $f\in\gambles(\states^{u\cup\{s\}})$, with $u<s$, and any non-negatively homogeneous operator $A$ from $\gamblesX$ to $\gamblesX$, we stipulate the following convention. If $A$ is applied to $f$, it will be applied to the restriction of $f$ to the \emph{latest} time point at which it is defined---the time point $s$, in this case. Because this restriction depends on the specific state assignment $x_u$ corresponding to the other time points $u=t_0,\ldots,t_n$, the result is a function $[Af]\in\gambles(\states^u)$. In other words, we stipulate that
-\begin{equation*}
-[Af](x_u) \coloneqq [Af(x_u,X_s)](x_{t_n})\,.
-\end{equation*}
-
-%*** dit kan opzich wel korter denk ik, maar kunnen we bij oppoetsen straks nog wel even checken ***
-%
-%We will also find it convenient to have notation for functions defined on the state space at multiple time points.
-%To this end, consider any $t,s\in\realsnonneg$ such that $t<s$, and any $u\in\mathcal{U}_{[t,s]}$. We will now define
-%\begin{equation*}
-%\states^u\coloneqq \prod_{i=0}^n\states
-%\end{equation*}
-%to be the joint state space at times $t_0,\ldots,t_n$. Let $\gambles(\states^u)$ denote the set of functions on $(X_{t_0},\ldots,X_{t_n})$.
-%
-%For any $t,t',s\in\realsnonneg$ such that $t<t'<s$ and any $u\in\mathcal{U}_{[t,t']}$, let $\states^{\{s\}}$ denote the state space at time $s$, and let
-%\begin{equation*}
-%\states^{u\cup\{s\}} \coloneqq \states^u\times\states^{\{s\}}
-%\end{equation*}
-%denote the joint state space at times $t_0,\ldots,t_n,s$. Similarly, for any $t,t',s,s'\in\realsnonneg$ such that $t<t'<s<s'$, any $u\in\mathcal{U}_{[t,t']}$ and $v\in\mathcal{U}_{[s,s']}$, let
-%\begin{equation*}
-%\states^{u\cup v}\coloneqq\states^u\times\states^v\,.
-%\end{equation*}
-%Let the sets of functions $\gambles(\states^{u\cup\{s\}})$ and $\gambles(\states^{u\cup v})$ be defined in the obvious manner.
-%
-%For any function $f\in\gambles(\states^{\{t_0\}}\times\cdots\times\states^{\{t_n\}})$, let the norm $\norm{f}$ be defined as
-%\begin{equation*}
-%\norm{f} \coloneqq \max\left\{ \abs{f(x_{t_0},\ldots,x_{t_n})}\,:\,(x_{t_0},\ldots,x_{t_n})\in \states^{\{t_0\}}\times\cdots\times\states^{\{t_n\}}\right\}\,.
-%\end{equation*}
-%
-%For the sake of brevity, we will also write a joint state assignment as
-%\begin{equation*}
-%\left(X_{t_0,\ldots,t_n}=x_{t_0,\ldots,t_n}\right)\equiv (X_{t_0}=x_{t_0},\ldots,X_{t_n}=x_{t_n})\,.
-%\end{equation*}
-%
-%**** {\bf ATTN:} We started using $x_u\in\states^u$ as shorthand notation for the state assignment $(x_{t_0},\ldots,x_{t_n})\in\states^{\{t_0\}}\times\cdots\times\states^{\{t_n\}}$. Still need to properly introduce that somewhere.
-%
-%For a function $f\in\gambles(\states^{u\cup\{s\}})$, we will write $f(x_{t_0},\ldots,x_{t_n},X_s)$ for the restriction of $f$ to $\states^{\{s\}}$ specific to the joint state assignment $(x_{t_0},\ldots,x_{t_n})$. Thus, $f(x_{t_0},\ldots,x_{t_n},X_s)$ corresponds to a $g\in\gambles(\states^{\{s\}})$ such that $g(x_s) = f(x_{t_0},\ldots,x_{t_n},x_s)$ for all $x_s\in\states^{\{s\}}$.
-%
-%Finally, we will want to use operators as defined in Section~\ref{sec:func_oper_norm} for functions defined on (multiple) explicit time points. It is clear that an operator $A$ defined on $\gamblesX$ can be applied to any element of a set of functions $\gambles(\states^{\{s\}})$ that depend on the state at just a single point in time. It remains to determine how to cope with functions defined on multiple time points. 
-%
-%To avoid introducing overly complex notation, we will stipulate the following convention. If $f\in\gambles(\states^u)$ is a function defined on an ordered sequence $u$ of time points $t_0<t_1<\cdots<t_n$, and if $A$ is a non-negatively homogeneous operator from $\gamblesX$ to $\gamblesX$, we allow $A$ to be applied to $f$ by applying it to the restriction of $f$ to the state $\states^{\{t_n\}}$ at the \emph{latest} time point $t_n$ in $u$. Because such a restriction is dependent on the specific state assignment $(x_{t_0},\ldots,x_{t_{n-1}})$, the result is a function $[Af]\in\gambles(\states^{\{t_0,\ldots,t_{n-1}\}})$. In other words, we then have
-%\begin{equation*}
-%\left[Af\right](x_{t_0},\ldots,x_{t_{n-1}}) \equiv \left[A f(x_{t_0},\ldots,x_{t_{n-1}},X_{t_n})\right](x_{t_{n-1}})\,.
-%\end{equation*}
-
-\subsection{Transition (Rate) Matrices}\label{sec:trans_rate_matrices}
+\subsection{Transition Matrices and Systems}\label{sec:trans_rate_matrices}
 
 \emph{Transition matrices} are a convenient tool in describing both discrete-time and continuous-time Markov chains. A transition matrix $T$ is simply a matrix that is row-stochastic, meaning that, for each $x\in\states$, the row $T(x,\cdot)$ is a probability mass function on $\states$.
 \begin{definition}[Transition Matrix]\label{def:stoch_matrix}
@@ -395,6 +349,71 @@ $T(x,y)\geq0$ for all $x,y\in\states$.
 \noindent
 \end{definition}
 The interpretation in the context of Markov chains is as follows. The elements $T(x,y)$ of a transition matrix $T$ describe the probability of the Markov chain ending up in state $y$ at the next time point, given that it is currently in state $x$. In other words, the row $T(x,\cdot)$ contains the state-transition probabilities, conditional on currently being in state $x$. We will make this connection more explicit when we formalize continuous-time stochastic processes in Section~\ref{sec:stochastic_processes}.
+
+**** blabla
+
+\begin{definition}[Transition Matrix System]\label{def:trans_mat_system}
+A \emph{transition matrix system} $\mathcal{T}$ is a family of transition matrices $T_t^s$, defined for all $0\leq t\leq s$, such that
+\begin{equation}\label{eq:transmatrixproduct}
+T_t^s=T_t^r T_r^s
+\text{~~for all $0\leq t\leq r\leq s$}
+\end{equation}
+and $T_t^t=I$ for all $t\geq0$.
+\end{definition}
+
+\subsection{Restricted Transition Matrix Systems}
+
+
+To this end, we now consider restrictions of transition matrix systems to some specified interval of $\realsnonneg$. In particular, for any transition matrix system $\mathcal{T}$ and any interval $\mathbf{I}\subseteq\realsnonneg$, let $\mathcal{T}^\mathbf{I}$ denote the family of transition matrices $T_t^s$ corresponding to $\mathcal{T}$, for all $t,s\in\mathbf{I}$ such that $t\leq s$.
+%\begin{equation*}
+%\mathcal{T}^{\mathbf{I}} \coloneqq \left\{T_t^s\in\mathcal{T}\,:\,\forall t,s\in\mathbf{I},\, t\leq s\right\}\,.
+%\end{equation*}
+We call such a family $\mathcal{T}^{\mathbf{I}}$ a \emph{restricted transition matrix system} defined on $\mathbf{I}$.
+
+%**** misschien iets zeggen dat we ook open intervallen toelaten; in het bijzonder heb ik $\mathcal{T}^{[t,\infty)}$ nodig.
+
+\begin{proposition}\label{prop:restr_trans_mat_system_if_semigroup}
+For any interval $\mathbf{I}\subseteq\realsnonneg$, a family $\mathcal{T}^{\mathbf{I}}$ is a restricted transition matrix system defined on $\mathbf{I}$ if and only if it is a family of transition matrices $T_t^s$ defined for all $t,s\in\mathbf{I}$ with $t\leq s$, and, for all $t,r,s\in\mathbf{I}$ such that $t\leq r\leq s$, it holds that $T_t^s = T_t^rT_r^s$, and $T_t^t=I$.
+\end{proposition}
+\begin{proof}
+Trivial consequence of Definition~\ref{def:trans_mat_system}.
+\end{proof}
+
+We now first give a powerful theoretical result that we will return to later. For any interval $\mathbf{I}\subseteq\realsnonneg$, let $\mathbb{T}^{\mathbf{I}}$ denote the set of \emph{all} restricted transition matrix systems defined on $\mathbf{I}$. Then, for any two restricted transition matrix systems $\mathcal{T}^\mathbf{I}$ and $\mathcal{S}^\mathbf{I}$ defined on the same interval, we define a metric $d$ as
+\begin{equation}\label{eq:trans_mat_system_metric}
+d(\mathcal{T}^{\mathbf{I}},\mathcal{S}^{\mathbf{I}}) \coloneqq \sup\left\{\norm{T_t^s - S_t^s}\,:\,t,s\in\mathbf{I}, t\leq s\right\}\,,
+\end{equation}
+where, for all $t,s\in\mathbf{I}$, it is understood that $T_t^s$ corresponds to $\mathcal{T}^{\mathbf{I}}$ and $S_t^s$ to $\mathcal{S}^{\mathbf{I}}$.
+\begin{proposition}\label{lemma:restricted_trans_mat_system_cauchy_converges}
+Consider any interval $\mathbf{I}\subseteq\realsnonneg$, let $\mathbb{T}^{\mathbf{I}}$ be the set of all restricted transition matrix systems on $\mathbf{I}$ and let $d$ be the metric that is defined in Equation~\eqref{eq:trans_mat_system_metric}. The metric space $\smash{(\mathbb{T}^{\mathbf{I}},d)}$ is then complete.
+\end{proposition}
+Note that this result includes as a special case completeness of the set $\mathbb{T}^{\realsnonneg}$ of all (unrestricted) transition matrix systems. We will later return to this result in Section~\ref{sec:iCTMC}.
+
+Now, because these restricted transition matrix systems are only defined on some given interval, it will be useful to define a concatenation operator between two such systems defined on adjacent intervals. We will say that two intervals $\mathbf{I},\mathbf{J}\subseteq\realsnonneg$ are \emph{adjacent} if, without loss of generality, $\mathbf{I}$ is closed on the right and $\mathbf{J}$ is closed on the left, and $\max\mathbf{I}=\min\mathbf{J}$. 
+
+Then, for any two adjacent intervals $\mathbf{I},\mathbf{J}\subseteq\realsnonneg$, and any two restricted transition matrix systems $\mathcal{T}^{\mathbf{I}}$ and $\mathcal{T}^{\mathbf{J}}$, let $r\coloneqq\max\mathbf{I}=\min\mathbf{J}$, and let $\presuper{i}T_t^s$ and $\presuper{j}T_t^s$ denote the transition matrices corresponding to $\mathcal{T}^{\mathbf{I}}$ and $\mathcal{T}^{\mathbf{J}}$, respectively. Consider the family of transition matrices $T_t^s$, defined by
+\begin{equation*}
+T_t^s \coloneqq \begin{cases}
+\presuper{i}T_t^s & \text{if $t,s\in\mathbf{I}$} \\
+\presuper{j}T_t^s & \text{if $t,s\in\mathbf{J}$} \\
+\presuper{i}T_t^r\presuper{j}T_r^s & \text{if $t\in\mathbf{I}$ and $s\in\mathbf{J}$}
+\end{cases}\text{~~~for all $t,s\in\mathbf{I}\cup\mathbf{J}$ such that $t\leq s$.}
+\end{equation*}
+We denote this family of transition matrices by $\mathcal{T}^\mathbf{I}\otimes\mathcal{T}^\mathbf{J}$.
+
+%\begin{align*}
+%\mathcal{T}^{\mathbf{I}} \otimes \mathcal{T}^{\mathbf{J}} \coloneqq &\mathcal{T}^{\mathbf{I}} \cup \mathcal{T}^{\mathbf{J}} 
+% \cup \left\{T_t^s\coloneqq T_t^rT_r^{s}\,\Big\vert\,T_{t}^r\in\mathcal{T}^{\mathbf{I}},\,T_r^{s}\in\mathcal{T}^{\mathbf{J}},\,\forall t\in\mathbf{I},\,\forall s\in\mathbf{J}\right\}\,.
+%\end{align*}
+\begin{proposition}\label{prop:concat_restr_trans_mat_systems_is_system}
+Consider two adjacent intervals $\mathbf{I},\mathbf{J}\subseteq\realsnonneg$, and any two restricted transition matrix systems $\mathcal{T}^{\mathbf{I}}$ and $\mathcal{T}^{\mathbf{J}}$. Then,
+\begin{equation*}
+\mathcal{T}^{\mathbf{I}\cup \mathbf{J}} \coloneqq \mathcal{T}^{\mathbf{I}}\otimes \mathcal{T}^{\mathbf{J}}
+\end{equation*}
+is a restricted transition matrix system defined on $\mathbf{I}\cup\mathbf{J}$. Furthermore, if both $\mathcal{T}^{\mathbf{I}}$ and $\mathcal{T}^{\mathbf{J}}$ are well behaved, then $\mathcal{T}^{\mathbf{I}\cup\mathbf{J}}$ is also well-behaved.
+\end{proposition}
+
+\subsection{Rate Matrices}
 
 For now, we note that in a continuous-time setting, this notion of ``next'' time-point is less obvious than in a discrete-time setting. Here, these state-transition probabilities are continuously dependent on the evolution of time. To describe this connection, the notion of \emph{transition rate matrices} is used.
 \begin{definition}[Transition Rate Matrix]\label{def:rate_matrix}
@@ -437,6 +456,25 @@ Note that Proposition~\ref{prop:rate_from_stochastic_matrix} essentially states 
 % Let $T$ be an arbitrary transition matrix. Then, $\norm{T}=1$.
 % \end{proposition}
 
+**** blabla
+
+\begin{definition}\label{def:systemfromQ}For any rate matrix $Q\in\mathcal{R}$, we use $\mathcal{T}_Q$ to denote the family of stochastic matrices that is defined by
+\begin{equation*}
+T_t^s=e^{Q(s-t)}
+\text{~~for all $t,s\in\realsnonneg$ such that $t\leq s$.}
+\end{equation*}
+Here, the right-hand side denotes the \emph{matrix exponential} of $Q(s-t)$ {\bf REF}. *** we verwijzen voor nu gewoon naar de literatuur, en komen later nog terug op wat details
+\end{definition}
+
+\begin{proposition}
+\label{prop:systemQ}
+For any $Q\in\mathcal{R}$, $\mathcal{T}_Q$ is a transition matrix system.
+\end{proposition}
+\begin{proof}
+*** trivial ***
+\end{proof}
+
+
 We conclude this section with some comments about \emph{sets} of rate matrices. First, note that the set of \emph{all} rate matrices, $\mathcal{R}$, is closed under finite sums and multiplication with non-negative scalars. Next, consider any set $\rateset\subseteq\mathcal{R}$ of rate matrices. Then $\rateset$ is said to be \emph{non-empty} if $\rateset\neq\emptyset$ and $\rateset$ is said to be \emph{bounded} if $\norm{\rateset}<+\infty$. The following proposition provides a simple alternative characterization of boundedness.
 
 \begin{proposition}\label{prop:alternativedefforbounded}
@@ -448,6 +486,19 @@ A set of rate matrices $\rateset\subseteq\mathcal{R}$ is bounded if and only if
 \begin{proof}
 *** {\bf TODO}
 \end{proof}
+
+
+\section{Continuous-Time Stochastic Processes}\label{sec:stochastic_processes}
+
+*** rewrite
+
+We will in this section formalize the notion of continuous-time stochastic processes, using the framework of full conditional probabilities that we have just introduced. This approach differs somewhat from the traditional one, and is motivated below.
+
+In a classical---Kolmogorovian, measure-theoretic---setting, such a stochastic process is typically defined as a collection of random variables $\{X_t\}_{t\in\realsnonneg}$ taking values in the space $\states$. These random variables $X_t$ are then defined with respect to some probability space $(\Omega,\mathcal{F},P)$, with $P$ a probability measure on a set of events $\mathcal{F}$, typically a $\sigma$-algebra generated by subsets of an outcome space $\Omega$. Under certain independence assumptions, this leads to the special case of continuous-time Markov chains. We refer to {\bf CITE CITE CITE} for examples of this approach.
+
+There are several reasons why we deviate from this approach here. First, as far as we can tell, very little work has been done on considering general stochastic processes \emph{without} the Markov assumption. As such, although straightforward, we have to formalize this notion here anyway, regardless of the framework used. Second, we will simplify considerably our analysis by focusing on finitely-generated algebras of events, and hence do not require special considerations for $P$ to be $\sigma$-additive on our domain of interest. On the other hand, we would like these results to also extend to larger domains, specifically $\sigma$-algebras of events. Finally, and most importantly, most authors appear to simply assume the existence of such a probability space $(\Omega,\mathcal{F},P)$, and others even leave it implicit without making mention of it. While valid---because under some weak assumptions such a space can always be shown to exist---it does pose some problems for our present work. Specifically, we require for some existence results a rather exact characterization of stochastic processes and the structure of the space on which they are defined. Full conditional probabilities and the notion of coherence, defined in Section~\ref{sec:cond_prob}, provide a convenient framework for working around these issues and providing this characterization.
+
+We will in Section~\ref{sec:def_stochastic_processes} start by formalizing the notion of continuous-time stochastic processes. Next, in Section~\ref{sec:well_behaved}, we describe a specific subclass of stochastic processes, which we call well-behaved, and on which we will largely focus throughout this work. Finally, Section~\ref{sec:dynamics} provides some tools with which we can describe the dynamics of stochastic processes.
 
 \subsection{Full Conditional Probabilities}\label{sec:cond_prob}
 
@@ -545,16 +596,6 @@ First assume that $P$ can be extended to a full conditional probability $P^*$. T
 Conversely, if $P$ is a coherent conditional probability on $\mathcal{C}$, it follows from Theorem~\ref{theo:largerdomain} that $P$ can be extended to a coherent conditional probability $P^*$ on $\power\times\nonemptypower$, which, because of Theorem~\ref{theo:fullcoherent}, is a full conditional probability.
 \end{proof}
 Note, therefore, that if $P$ is a coherent conditional probability on $\mathcal{C}$, we can equivalently say that it is the restriction of a full conditional probability. One only needs to check Definition~\ref{def:cond_prob} to see that $P$ will therefore satisfy properties~\ref{def:coh_prob_2}-\ref{def:coh_prob_6}.
-
-\section{Continuous-Time Stochastic Processes}\label{sec:stochastic_processes}
-
-We will in this section formalize the notion of continuous-time stochastic processes, using the framework of full conditional probabilities that we have just introduced. This approach differs somewhat from the traditional one, and is motivated below.
-
-In a classical---Kolmogorovian, measure-theoretic---setting, such a stochastic process is typically defined as a collection of random variables $\{X_t\}_{t\in\realsnonneg}$ taking values in the space $\states$. These random variables $X_t$ are then defined with respect to some probability space $(\Omega,\mathcal{F},P)$, with $P$ a probability measure on a set of events $\mathcal{F}$, typically a $\sigma$-algebra generated by subsets of an outcome space $\Omega$. Under certain independence assumptions, this leads to the special case of continuous-time Markov chains. We refer to {\bf CITE CITE CITE} for examples of this approach.
-
-There are several reasons why we deviate from this approach here. First, as far as we can tell, very little work has been done on considering general stochastic processes \emph{without} the Markov assumption. As such, although straightforward, we have to formalize this notion here anyway, regardless of the framework used. Second, we will simplify considerably our analysis by focusing on finitely-generated algebras of events, and hence do not require special considerations for $P$ to be $\sigma$-additive on our domain of interest. On the other hand, we would like these results to also extend to larger domains, specifically $\sigma$-algebras of events. Finally, and most importantly, most authors appear to simply assume the existence of such a probability space $(\Omega,\mathcal{F},P)$, and others even leave it implicit without making mention of it. While valid---because under some weak assumptions such a space can always be shown to exist---it does pose some problems for our present work. Specifically, we require for some existence results a rather exact characterization of stochastic processes and the structure of the space on which they are defined. Full conditional probabilities and the notion of coherence, defined in Section~\ref{sec:cond_prob}, provide a convenient framework for working around these issues and providing this characterization.
-
-We will in Section~\ref{sec:def_stochastic_processes} start by formalizing the notion of continuous-time stochastic processes. Next, in Section~\ref{sec:well_behaved}, we describe a specific subclass of stochastic processes, which we call well-behaved, and on which we will largely focus throughout this work. Finally, Section~\ref{sec:dynamics} provides some tools with which we can describe the dynamics of stochastic processes.
 
 \subsection{Stochastic Processes}\label{sec:def_stochastic_processes}
 
@@ -907,15 +948,11 @@ A stochastic process that satisfies this property is called a \emph{Markov chain
 
 \subsection{Transition Matrix Systems}\label{sec:trans_mat_systems}
 
+**** rewrite
 We know from Proposition~\ref{prop:stochasticprocess:simpleproperties} that the transition matrices of a stochastic process---and therefore also, in particular, of a Markov chain---satisfy a number of simple properties. For the specific case of a Markov chain $P\in\mprocesses$, the family of transition matrices $\mathcal{T}_P$ also satisfies an additional property---see Equation~\eqref{eq:transmatrixproduct} below. This property is known as the Chapman-Kolmogorov equation~{\bf CITE}, or alternatively as the \emph{semi-group} property~{\bf CITE}. Whenever this is the case, we will call such a family of transition matrices a transition matrix system.
 
-\begin{definition}[Transition matrix system]\label{def:trans_mat_system}
-A \emph{transition matrix system} $\mathcal{T}$ is a family of transition matrices $T_t^s$, defined for all $0\leq t\leq s$, such that
-\begin{equation}\label{eq:transmatrixproduct}
-T_t^s=T_t^r T_r^s
-\text{~~for all $0\leq t\leq r\leq s$}
-\end{equation}
-and $T_t^t=I$ for all $t\geq0$. A transition matrix system  $\mathcal{T}$ is called \emph{well-behaved} if 
+\begin{definition}[Well-Behaved Transition Matrix System]\label{def:well_behaved_trans_mat_system}
+A \emph{transition matrix system} $\mathcal{T}$ is called \emph{well-behaved} if 
 \begin{equation}\label{eq:wellbehavedtransitionmatrixsystem}%\label{eq:wellbehavedhistorictransitionmatrix}
 \limsup_{\Delta\to 0^{+}}\frac{1}{\Delta}\norm{T_{t}^{t+\Delta}-I}<+\infty
 \text{~~~~and~~~~}
@@ -948,18 +985,9 @@ T_t^s=T_{t+\Delta}^{s+\Delta}
 We denote the set of all homogeneous Markov chains by $\hmprocesses$ and use $\whmprocesses$ to refer to the subset that consists of the well-behaved homogeneous Markov chains.
 \end{definition}
 
-
-\begin{definition}\label{def:systemfromQ}For any rate matrix $Q\in\mathcal{R}$, we use $\mathcal{T}_Q$ to denote the family of stochastic matrices that is defined by
-\begin{equation*}
-T_t^s=e^{Q(s-t)}
-\text{~~for all $t,s\in\realsnonneg$ such that $t\leq s$.}
-\end{equation*}
-Here, the right-hand side denotes the \emph{matrix exponential} of $Q(s-t)$ {\bf REF}. *** we verwijzen voor nu gewoon naar de literatuur, en komen later nog terug op wat details
-\end{definition}
-
 \begin{proposition}
-\label{prop:systemQ}
-For any $Q\in\mathcal{R}$, $\mathcal{T}_Q$ is a well-behaved transition matrix system.
+\label{prop:systemQ_well_behaved}
+For any $Q\in\mathcal{R}$, the transition matrix system $\mathcal{T}_Q$ is well-behaved.
 \end{proposition}
 \begin{proof}
 *** trivial ***
@@ -991,56 +1019,7 @@ Also for our present work, we will require some tools to describe non-homogeneou
 
 %Recall from Section~\ref{sec:trans_mat_systems} that a transition matrix system $\mathcal{T}$ is a family of transition matrices $T_t^s$, defined for all $t,s\in\realsnonneg$ for which $t\leq s$. In particular, such a family of matrices satisfies $T_t^t=I$ for all $t\in\realsnonneg$, and $T_t^s=T_t^rT_r^s$ for all $t,r,s\in\realsnonneg$ with $t\leq r\leq s$.
 
-To this end, we now consider restrictions of transition matrix systems to some specified interval of $\realsnonneg$. In particular, for any transition matrix system $\mathcal{T}$ and any interval $\mathbf{I}\subseteq\realsnonneg$, let $\mathcal{T}^\mathbf{I}$ denote the family of transition matrices $T_t^s$ corresponding to $\mathcal{T}$, for all $t,s\in\mathbf{I}$ such that $t\leq s$.
-%\begin{equation*}
-%\mathcal{T}^{\mathbf{I}} \coloneqq \left\{T_t^s\in\mathcal{T}\,:\,\forall t,s\in\mathbf{I},\, t\leq s\right\}\,.
-%\end{equation*}
-We call such a family $\mathcal{T}^{\mathbf{I}}$ a \emph{restricted transition matrix system} defined on $\mathbf{I}$.
-
-%**** misschien iets zeggen dat we ook open intervallen toelaten; in het bijzonder heb ik $\mathcal{T}^{[t,\infty)}$ nodig.
-
-\begin{proposition}\label{prop:restr_trans_mat_system_if_semigroup}
-For any interval $\mathbf{I}\subseteq\realsnonneg$, a family $\mathcal{T}^{\mathbf{I}}$ is a restricted transition matrix system defined on $\mathbf{I}$ if and only if it is a family of transition matrices $T_t^s$ defined for all $t,s\in\mathbf{I}$ with $t\leq s$, and, for all $t,r,s\in\mathbf{I}$ such that $t\leq r\leq s$, it holds that $T_t^s = T_t^rT_r^s$, and $T_t^t=I$.
-\end{proposition}
-\begin{proof}
-Trivial consequence of Definition~\ref{def:trans_mat_system}.
-\end{proof}
-
-We will henceforth adopt the same terminology for restricted transition matrix systems that we use for (normal) transition matrix systems. In particular, we will call $\mathcal{T}^{\mathbf{I}}$ well-behaved if it satisfies Equation~\eqref{eq:wellbehavedtransitionmatrixsystem} on the interval $\mathbf{I}$.
-
-We now first give a powerful theoretical result that we will return to later. For any interval $\mathbf{I}\subseteq\realsnonneg$, let $\mathbb{T}^{\mathbf{I}}$ denote the set of \emph{all} restricted transition matrix systems defined on $\mathbf{I}$. Then, for any two restricted transition matrix systems $\mathcal{T}^\mathbf{I}$ and $\mathcal{S}^\mathbf{I}$ defined on the same interval, we define a metric $d$ as
-\begin{equation}\label{eq:trans_mat_system_metric}
-d(\mathcal{T}^{\mathbf{I}},\mathcal{S}^{\mathbf{I}}) \coloneqq \sup\left\{\norm{T_t^s - S_t^s}\,:\,t,s\in\mathbf{I}, t\leq s\right\}\,,
-\end{equation}
-where, for all $t,s\in\mathbf{I}$, it is understood that $T_t^s$ corresponds to $\mathcal{T}^{\mathbf{I}}$ and $S_t^s$ to $\mathcal{S}^{\mathbf{I}}$.
-\begin{proposition}\label{lemma:restricted_trans_mat_system_cauchy_converges}
-Consider any interval $\mathbf{I}\subseteq\realsnonneg$, let $\mathbb{T}^{\mathbf{I}}$ be the set of all restricted transition matrix systems on $\mathbf{I}$ and let $d$ be the metric that is defined in Equation~\eqref{eq:trans_mat_system_metric}. The metric space $\smash{(\mathbb{T}^{\mathbf{I}},d)}$ is then complete.
-\end{proposition}
-Note that this result includes as a special case completeness of the set $\mathbb{T}^{\realsnonneg}$ of all (unrestricted) transition matrix systems. We will later return to this result in Section~\ref{sec:iCTMC}.
-
-Now, because these restricted transition matrix systems are only defined on some given interval, it will be useful to define a concatenation operator between two such systems defined on adjacent intervals. We will say that two intervals $\mathbf{I},\mathbf{J}\subseteq\realsnonneg$ are \emph{adjacent} if, without loss of generality, $\mathbf{I}$ is closed on the right and $\mathbf{J}$ is closed on the left, and $\max\mathbf{I}=\min\mathbf{J}$. 
-
-Then, for any two adjacent intervals $\mathbf{I},\mathbf{J}\subseteq\realsnonneg$, and any two restricted transition matrix systems $\mathcal{T}^{\mathbf{I}}$ and $\mathcal{T}^{\mathbf{J}}$, let $r\coloneqq\max\mathbf{I}=\min\mathbf{J}$, and let $\presuper{i}T_t^s$ and $\presuper{j}T_t^s$ denote the transition matrices corresponding to $\mathcal{T}^{\mathbf{I}}$ and $\mathcal{T}^{\mathbf{J}}$, respectively. Consider the family of transition matrices $T_t^s$, defined by
-\begin{equation*}
-T_t^s \coloneqq \begin{cases}
-\presuper{i}T_t^s & \text{if $t,s\in\mathbf{I}$} \\
-\presuper{j}T_t^s & \text{if $t,s\in\mathbf{J}$} \\
-\presuper{i}T_t^r\presuper{j}T_r^s & \text{if $t\in\mathbf{I}$ and $s\in\mathbf{J}$}
-\end{cases}\text{~~~for all $t,s\in\mathbf{I}\cup\mathbf{J}$ such that $t\leq s$.}
-\end{equation*}
-We denote this family of transition matrices by $\mathcal{T}^\mathbf{I}\otimes\mathcal{T}^\mathbf{J}$.
-
-%\begin{align*}
-%\mathcal{T}^{\mathbf{I}} \otimes \mathcal{T}^{\mathbf{J}} \coloneqq &\mathcal{T}^{\mathbf{I}} \cup \mathcal{T}^{\mathbf{J}} 
-% \cup \left\{T_t^s\coloneqq T_t^rT_r^{s}\,\Big\vert\,T_{t}^r\in\mathcal{T}^{\mathbf{I}},\,T_r^{s}\in\mathcal{T}^{\mathbf{J}},\,\forall t\in\mathbf{I},\,\forall s\in\mathbf{J}\right\}\,.
-%\end{align*}
-\begin{proposition}\label{prop:concat_restr_trans_mat_systems_is_system}
-Consider two adjacent intervals $\mathbf{I},\mathbf{J}\subseteq\realsnonneg$, and any two restricted transition matrix systems $\mathcal{T}^{\mathbf{I}}$ and $\mathcal{T}^{\mathbf{J}}$. Then,
-\begin{equation*}
-\mathcal{T}^{\mathbf{I}\cup \mathbf{J}} \coloneqq \mathcal{T}^{\mathbf{I}}\otimes \mathcal{T}^{\mathbf{J}}
-\end{equation*}
-is a restricted transition matrix system defined on $\mathbf{I}\cup\mathbf{J}$. Furthermore, if both $\mathcal{T}^{\mathbf{I}}$ and $\mathcal{T}^{\mathbf{J}}$ are well behaved, then $\mathcal{T}^{\mathbf{I}\cup\mathbf{J}}$ is also well-behaved.
-\end{proposition}
+**** We will henceforth adopt the same terminology for restricted transition matrix systems that we use for (normal) transition matrix systems. In particular, we will call $\mathcal{T}^{\mathbf{I}}$ well-behaved if it satisfies Equation~\eqref{eq:wellbehavedtransitionmatrixsystem} on the interval $\mathbf{I}$.
 
 We now have the required tools for the construction of the non-homogeneous Markov chains in which we will be mostly interested. In particular, if for any rate matrix $Q\in\mathcal{R}$ we now let $\mathcal{T}_Q^{\mathbf{I}}$ be the restriction of $\mathcal{T}_Q$, defined as in Definition~\ref{def:systemfromQ}, we have the following result.
 
@@ -1976,6 +1955,8 @@ Finally, previous work only focused on functions $f\in\gamblesX$ defined at a si
 
 \section{Proofs of results in Section~\ref{sec:prelim}}\label{app:prelim}
 
+\section{Proofs of results in Section~\ref{sec:systems}}\label{app:systems}
+
 \begin{proof}[Proof of Proposition~\ref{prop:stochastic_from_rate_matrix}]
 \ref{def:T:sumone} follows from \ref{def:Q:sumzero}: for all $x\in\states$, \ref{def:Q:sumzero} implies that
 \begin{equation*}
@@ -1988,23 +1969,8 @@ Finally, previous work only focused on functions $f\in\gamblesX$ defined at a si
 This proof is analogous to that of Proposition~\ref{prop:stochastic_from_rate_matrix}; simply verify each of the properties in Definition~\ref{def:rate_matrix}.
 \end{proof}
 
-\begin{proof}[Proof of \ref{def:coh_prob_2b}-\ref{def:coh_prob_5}]
-Consider any $A\in\power$ and $C\in\nonemptypower$. It then follows from \ref{def:coh_prob_1} and \ref{def:coh_prob_3} that
-\vspace{-7pt}
-\begin{equation}\label{eq:extracohprop1}
-P(A\vert C)
-=P(A\cup C\vert C)-P(C\setminus A\vert C)
-=1-P(C\setminus A\vert C)
-\end{equation}\\[-20pt]
-and
-\begin{equation}\label{eq:extracohprop2}
-P(A\cap C\vert C)
-=P(C\vert C)-P(C\setminus A\vert C)
-=1-P(C\setminus A\vert C).
-\vspace{6pt}
-\end{equation}
-\ref{def:coh_prob_2b} follows from Equation~\eqref{eq:extracohprop1} and~\ref{def:coh_prob_2}. \ref{def:coh_prob_7} follows from Equations~\eqref{eq:extracohprop1} and~\eqref{eq:extracohprop2}. \ref{def:coh_prob_5} follows from \ref{def:coh_prob_8}, by letting $B\coloneqq\emptyset$. \ref{def:coh_prob_5} follows trivially from \ref{def:coh_prob_1}.
-\end{proof}
+
+
 
 % \begin{proof}[Proof of Proposition~\ref{prop:fullcoherent}]
 % Since $\power$ is clearly an algebra of events, it follows from Reference~\cite{berti1991coherent} that $P$ is a coherent conditional probability if and only if it satisfies the conditions~\ref{lem:alt_axiom_prob_1}-\ref{lem:alt_axiom_prob_3} in Lemma~\ref{lemma:alt_axiom_prob}. The result now follows directly from Lemma~\ref{lemma:alt_axiom_prob}.
@@ -2061,6 +2027,25 @@ P(A\cap C\vert C)
 % \end{proof}
 
 \section{Proofs and Lemmas for Section~\ref{sec:stochastic_processes}}
+
+\begin{proof}[Proof of \ref{def:coh_prob_2b}-\ref{def:coh_prob_5}]
+Consider any $A\in\power$ and $C\in\nonemptypower$. It then follows from \ref{def:coh_prob_1} and \ref{def:coh_prob_3} that
+\vspace{-7pt}
+\begin{equation}\label{eq:extracohprop1}
+P(A\vert C)
+=P(A\cup C\vert C)-P(C\setminus A\vert C)
+=1-P(C\setminus A\vert C)
+\end{equation}\\[-20pt]
+and
+\begin{equation}\label{eq:extracohprop2}
+P(A\cap C\vert C)
+=P(C\vert C)-P(C\setminus A\vert C)
+=1-P(C\setminus A\vert C).
+\vspace{6pt}
+\end{equation}
+\ref{def:coh_prob_2b} follows from Equation~\eqref{eq:extracohprop1} and~\ref{def:coh_prob_2}. \ref{def:coh_prob_7} follows from Equations~\eqref{eq:extracohprop1} and~\eqref{eq:extracohprop2}. \ref{def:coh_prob_5} follows from \ref{def:coh_prob_8}, by letting $B\coloneqq\emptyset$. \ref{def:coh_prob_5} follows trivially from \ref{def:coh_prob_1}.
+\end{proof}
+
 
 %*** Next 2 Lemmas use old definitions, ignore for now please
 %
