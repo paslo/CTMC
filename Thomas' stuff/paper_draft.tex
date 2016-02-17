@@ -331,7 +331,9 @@ $\norm{Af}\leq\norm{A}\norm{f}$
 
 \section{Transition Matrix Systems}\label{sec:systems}
 
-**** blabla
+We provide in this section some tools that will later be useful for characterizing continuous-time Markov chains. Because we have not formally defined this notion yet, the definitions below can be taken to be purely algebraic constructs. However, whenever possible, we attempt to provide some intuition on the context in which they will be used.
+
+In what follows, suffice it to say that a continuous-time Markov chain is a construct that, as time elapsed, moves through the state space $\states$ in some stochastic fashion. We here define tools with which this stochastic behavior can be conveniently represented at each point in time.
 
 \subsection{Transition (Rate) Matrices}\label{sec:trans_rate_matrices}
 
@@ -381,6 +383,14 @@ Consider any transition matrix $T$, and any $\Delta\in\realspos$. Then, the matr
 \end{proposition}
 Note that Proposition~\ref{prop:rate_from_stochastic_matrix} essentially states that the finite-difference $\nicefrac{1}{\Delta}(T_t^{t+\Delta} - T_t^t)$ is a rate matrix. Intuitively, if we now take the limit as this $\Delta$ goes to zero, this states that the derivative of a continuously time-dependent transition matrix is given by some rate matrix $Q\in\mathcal{R}$---assuming that this limit exists, of course. We will make this connection more explicit Section~\ref{sec:stochastic_processes}.
 
+We next introduce a tool that is often seen in the context of continuous-time Markov chains: the \emph{matrix exponential}~{\bf CITE} of a rate matrix $Q$. This matrix exponential is denoted $e^A$ for any matrix $A$. There are various ways in which the matrix exponential can be defined. We refer to {\bf CITE CITE} for examples, and will consider some specific definitions later in this work.
+We here simply state the following well-known result.
+\begin{proposition}\label{prop:stochastic_from_exponential}
+Consider any rate matrix $Q\in\mathcal{R}$, and any $\Delta\in\realsnonneg$. Then, $e^{Q\Delta}$ is a transition matrix.
+\end{proposition}
+\begin{proof}
+*** {\bf TODO}
+\end{proof}
 
 We conclude this section with some comments about \emph{sets} of rate matrices. First, note that the set of \emph{all} rate matrices, $\mathcal{R}$, is closed under finite sums and multiplication with non-negative scalars. Next, consider any set $\rateset\subseteq\mathcal{R}$ of rate matrices. Then $\rateset$ is said to be \emph{non-empty} if $\rateset\neq\emptyset$ and $\rateset$ is said to be \emph{bounded} if $\norm{\rateset}<+\infty$. The following proposition provides a simple alternative characterization of boundedness.
 
@@ -396,9 +406,9 @@ A set of rate matrices $\rateset\subseteq\mathcal{R}$ is bounded if and only if
 
 \subsection{Transition Matrix Systems}
 
-In the previous section, we used the notation $T_t^s$ for the transition matrix containing the probabilities of moving from a state at time $t$, to a different state at time $s$. We here consider \emph{families} of these transition matrices. In particular, such a family $\mathcal{T}$ has transition matrices $T_t^s$ defined for all $t,s\in\realsnonneg$ such that $t\leq s$. 
+In the previous section, we used the notation $T_t^s$ for the transition matrix containing the probabilities of moving from a state at time $t$, to a state at time $s$. We here consider \emph{families} of these transition matrices. In particular, such a family $\mathcal{T}$ has transition matrices $T_t^s$ defined for all $t,s\in\realsnonneg$ such that $t\leq s$. 
 
-We already mentioned in the previous section that it is reasonable to assume that $T_t^t=I$. If the transition matrices of the family $\mathcal{T}$ satisfy this property, and furthermore the \emph{semi-group} {\bf CITE} property given by Equation~\ref{eq:transmatrixproduct} below, we call this family a \emph{transition matrix system}.
+We already mentioned in the previous section that it is reasonable to assume that $T_t^t=I$. If the transition matrices of a family $\mathcal{T}$ satisfy this property, and furthermore the \emph{semi-group} {\bf CITE} property given by Equation~\ref{eq:transmatrixproduct} below, we call this family a \emph{transition matrix system}.
 
 \begin{definition}[Transition Matrix System]\label{def:trans_mat_system}
 A \emph{transition matrix system} $\mathcal{T}$ is a family of transition matrices $T_t^s$, defined for all $t,s\in\realsnonneg$ with $t\leq s$, such that
@@ -408,8 +418,11 @@ T_t^s=T_t^r T_r^s
 \end{equation}
 and $T_t^t=I$ for all $t\in\realsnonneg$.
 \end{definition}
+It will turn out that there is a strong connection between transition matrix systems and continuous-time Markov chains. We will return to this in Section~\ref{sec:cont_time_markov_chains}.
 
-*** blabla
+We have seen in the previous section that the quantity $\nicefrac{1}{\Delta}(T - I)$ can be expressed as a rate matrix $Q$, for any transition matrix $T$ and any $\Delta\in\realspos$. We then related this to the finite difference $\nicefrac{1}{\Delta}(T_t^{t+\Delta} - I)$, and here note that this can equivalently be done for the term $\nicefrac{1}{\Delta}(T_{t-\Delta}^t - I)$ whenever $t\in\realspos$.
+
+We now consider this relation in the context of transition matrix systems $\mathcal{T}$. For all $\Delta\in\realspos$, this family specifies the transition matrices $T_t^{t+\Delta}$  for all $t\in\realsnonneg$, and $T_{t-\Delta}^t$ for all  $t\in\realspos$. Hence, this allows us to jointly consider the behavior of these matrices for various values of $\Delta$. In particular, we consider what happens to the finite differences expressed above, if we take $\Delta$ to be increasingly smaller. For each such $\Delta$, there will be a rate matrix corresponding to these finite differences. If the norm of these resultant rate matrices never diverges to $+\infty$ as we take $\Delta$ to $0$, we call the family $\mathcal{T}$ \emph{well-behaved}.
 
 \begin{definition}[Well-Behaved Transition Matrix System]\label{def:well_behaved_trans_mat_system}
 A transition matrix system $\mathcal{T}$ is called \emph{well-behaved} if 
@@ -420,15 +433,18 @@ A transition matrix system $\mathcal{T}$ is called \emph{well-behaved} if
 \end{equation}
 \end{definition}
 
-**** blabla
+Observe that this notion of well-behavedness does not imply differentiability; the limit $\lim_{\Delta\to0^+}\nicefrac{1}{\Delta}(T_t^{t+\Delta}-I)$ need to exist. Rather, it implies that the rate of change of all transition matrices in $\mathcal{T}$ is bounded at all times and on any given interval.
 
-\begin{definition}\label{def:systemfromQ}For any rate matrix $Q\in\mathcal{R}$, we use $\mathcal{T}_Q$ to denote the family of stochastic matrices that is defined by
+We finally consider an important special case of transition matrix systems. We have seen in the previous section that for any $Q\in\mathcal{R}$ and any $\Delta\in\realsnonneg$, the matrix exponential $e^{Q\Delta}$ is a transition matrix. We here consider for any $Q\in\mathcal{R}$ the family $\mathcal{T}_Q$ that is generated by such transition matrices.
+\begin{definition}\label{def:systemfromQ}For any rate matrix $Q\in\mathcal{R}$, we use $\mathcal{T}_Q$ to denote the family of transition matrices that is defined by
 \begin{equation*}
 T_t^s=e^{Q(s-t)}
 \text{~~for all $t,s\in\realsnonneg$ such that $t\leq s$.}
 \end{equation*}
-Here, the right-hand side denotes the \emph{matrix exponential} of $Q(s-t)$ {\bf REF}. *** we verwijzen voor nu gewoon naar de literatuur, en komen later nog terug op wat details
+We call this family $\mathcal{T}_Q$ the \emph{exponential transition matrix system} corresponding to $Q$.
 \end{definition}
+
+%The following result explains this use of terminology.
 
 \begin{proposition}
 \label{prop:systemQ}
@@ -437,11 +453,11 @@ For any $Q\in\mathcal{R}$, $\mathcal{T}_Q$ is a well-behaved transition matrix s
 \begin{proof}
 *** trivial ***
 \end{proof}
+This exponential transition matrix system corresponding to a $Q\in\mathcal{R}$ will turn out to play a large role in the context of continuous-time Markov chains. We return to this in Section~\ref{sec:cont_time_markov_chains}.
 
 \subsection{Restricted Transition Matrix Systems}
 
-**** blabla
-To this end, we now consider restrictions of transition matrix systems to some specified interval of $\realsnonneg$. In particular, for any transition matrix system $\mathcal{T}$ and any interval $\mathbf{I}\subseteq\realsnonneg$, let $\mathcal{T}^\mathbf{I}$ denote the family of transition matrices $T_t^s$ corresponding to $\mathcal{T}$, for all $t,s\in\mathbf{I}$ such that $t\leq s$.
+We finally consider another tool that will be useful later; restrictions of transition matrix systems to some specified interval of the time-line $\realsnonneg$. To this end, for any transition matrix system $\mathcal{T}$ and any interval $\mathbf{I}\subseteq\realsnonneg$, let $\mathcal{T}^\mathbf{I}$ denote the family of transition matrices $T_t^s$ corresponding to $\mathcal{T}$, for all $t,s\in\mathbf{I}$ such that $t\leq s$.
 %\begin{equation*}
 %\mathcal{T}^{\mathbf{I}} \coloneqq \left\{T_t^s\in\mathcal{T}\,:\,\forall t,s\in\mathbf{I},\, t\leq s\right\}\,.
 %\end{equation*}
@@ -450,24 +466,24 @@ We call such a family $\mathcal{T}^{\mathbf{I}}$ a \emph{restricted transition m
 %**** misschien iets zeggen dat we ook open intervallen toelaten; in het bijzonder heb ik $\mathcal{T}^{[t,\infty)}$ nodig.
 
 \begin{proposition}\label{prop:restr_trans_mat_system_if_semigroup}
-For any interval $\mathbf{I}\subseteq\realsnonneg$, a family $\mathcal{T}^{\mathbf{I}}$ is a restricted transition matrix system defined on $\mathbf{I}$ if and only if it is a family of transition matrices $T_t^s$ defined for all $t,s\in\mathbf{I}$ with $t\leq s$, and, for all $t,r,s\in\mathbf{I}$ such that $t\leq r\leq s$, it holds that $T_t^s = T_t^rT_r^s$, and $T_t^t=I$.
+For any interval $\mathbf{I}\subseteq\realsnonneg$, a family $\mathcal{T}^{\mathbf{I}}$ is a restricted transition matrix system defined on $\mathbf{I}$ if and only if it is a family of transition matrices $T_t^s$ defined for all $t,s\in\mathbf{I}$ with $t\leq s$, such that for all $t,r,s\in\mathbf{I}$ with $t\leq r\leq s$, it holds that $T_t^s = T_t^rT_r^s$, and $T_t^t=I$.
 \end{proposition}
 \begin{proof}
 Trivial consequence of Definition~\ref{def:trans_mat_system}.
 \end{proof}
-We will henceforth adopt the same terminology for restricted transition matrix systems that we use for (normal) transition matrix systems. In particular, we will call $\mathcal{T}^{\mathbf{I}}$ well-behaved if it satisfies Equation~\eqref{eq:wellbehavedtransitionmatrixsystem} on the interval $\mathbf{I}$.
+We will henceforth call $\mathcal{T}^{\mathbf{I}}$ well-behaved if it satisfies Equation~\eqref{eq:wellbehavedtransitionmatrixsystem} on $\mathbf{I}$, instead of on the entirety of $\realsnonneg$.
 
 We now first give a powerful theoretical result that we will return to later. For any interval $\mathbf{I}\subseteq\realsnonneg$, let $\mathbb{T}^{\mathbf{I}}$ denote the set of \emph{all} restricted transition matrix systems defined on $\mathbf{I}$. Then, for any two restricted transition matrix systems $\mathcal{T}^\mathbf{I}$ and $\mathcal{S}^\mathbf{I}$ defined on the same interval, we define a metric $d$ as
 \begin{equation}\label{eq:trans_mat_system_metric}
-d(\mathcal{T}^{\mathbf{I}},\mathcal{S}^{\mathbf{I}}) \coloneqq \sup\left\{\norm{T_t^s - S_t^s}\,:\,t,s\in\mathbf{I}, t\leq s\right\}\,,
+d(\mathcal{T}^{\mathbf{I}},\mathcal{S}^{\mathbf{I}}) \coloneqq \sup\left\{\norm{T_t^s - S_t^s}\,:\,t,s\in\mathbf{I},\,t\leq s\right\}\,,
 \end{equation}
 where, for all $t,s\in\mathbf{I}$, it is understood that $T_t^s$ corresponds to $\mathcal{T}^{\mathbf{I}}$ and $S_t^s$ to $\mathcal{S}^{\mathbf{I}}$.
 \begin{proposition}\label{lemma:restricted_trans_mat_system_cauchy_converges}
 Consider any interval $\mathbf{I}\subseteq\realsnonneg$, let $\mathbb{T}^{\mathbf{I}}$ be the set of all restricted transition matrix systems on $\mathbf{I}$ and let $d$ be the metric that is defined in Equation~\eqref{eq:trans_mat_system_metric}. The metric space $\smash{(\mathbb{T}^{\mathbf{I}},d)}$ is then complete.
 \end{proposition}
-Note that this result includes as a special case completeness of the set $\mathbb{T}^{\realsnonneg}$ of all (unrestricted) transition matrix systems. We will later return to this result in Section~\ref{sec:iCTMC}.
+Note that this result includes as a special case completeness of the set $\mathbb{T}^{\realsnonneg}$ of all (unrestricted) transition matrix systems. 
 
-Now, because these restricted transition matrix systems are only defined on some given interval, it will be useful to define a concatenation operator between two such systems defined on adjacent intervals. We will say that two intervals $\mathbf{I},\mathbf{J}\subseteq\realsnonneg$ are \emph{adjacent} if, without loss of generality, $\mathbf{I}$ is closed on the right and $\mathbf{J}$ is closed on the left, and $\max\mathbf{I}=\min\mathbf{J}$. 
+Finally, because these restricted transition matrix systems are only defined on some given interval, it will be useful to define a concatenation operator between two such systems defined on adjacent intervals. We will say that two intervals $\mathbf{I},\mathbf{J}\subseteq\realsnonneg$ are \emph{adjacent} if, without loss of generality, $\mathbf{I}$ is closed on the right and $\mathbf{J}$ is closed on the left, and $\max\mathbf{I}=\min\mathbf{J}$. 
 
 Then, for any two adjacent intervals $\mathbf{I},\mathbf{J}\subseteq\realsnonneg$, and any two restricted transition matrix systems $\mathcal{T}^{\mathbf{I}}$ and $\mathcal{T}^{\mathbf{J}}$, let $r\coloneqq\max\mathbf{I}=\min\mathbf{J}$, and let $\presuper{i}T_t^s$ and $\presuper{j}T_t^s$ denote the transition matrices corresponding to $\mathcal{T}^{\mathbf{I}}$ and $\mathcal{T}^{\mathbf{J}}$, respectively. Consider the family of transition matrices $T_t^s$, defined by
 \begin{equation*}
