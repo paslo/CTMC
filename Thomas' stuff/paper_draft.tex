@@ -960,57 +960,71 @@ This follows trivially from Proposition~\ref{prop:outerderivativebehaveslikelimi
 Having introduced continuous-time stochastic processes in Section~\ref{sec:stochastic_processes}, we will in this section focus on a specific class of such processes: the \emph{continuous-time Markov chains}.
 
 \begin{definition}[Markov Property, Markov Chain]\label{def:markov_property}
-A stochastic process $P\in\processes$ satisfies the \emph{Markov property} if, for any time sequence $u\in\mathcal{U}$, any $x_u\in\states^u$, any $t,s\in\realsnonneg$ such that $u< t\leq s$, and any states $x,y\in\states$:
+A stochastic process $P\in\processes$ satisfies the \emph{Markov property} if for any $t,s\in\realsnonneg$ such that $t\leq s$, any time sequence $u\in\mathcal{U}_{<t}$, any $x_u\in\states^u$, and any states $x,y\in\states$:
 \begin{equation*}
 P(X_s=y\,\vert\,X_t=x,X_u=x_u) = P(X_s=y\,\vert\, X_{t}=x)\,.
 \end{equation*}
 A stochastic process that satisfies this property is called a \emph{Markov chain}. We denote the set of all Markov chains by $\mprocesses$ and use $\wmprocesses$ to refer to the subset that only contains the well-behaved Markov chains.
 \end{definition}
 
-\subsection{Transition Matrix Systems}\label{sec:trans_mat_systems}
+%\subsection{Transition Matrix Systems}\label{sec:trans_mat_systems}
 
-**** rewrite
-We know from Proposition~\ref{prop:stochasticprocess:simpleproperties} that the transition matrices of a stochastic process---and therefore also, in particular, of a Markov chain---satisfy a number of simple properties. For the specific case of a Markov chain $P\in\mprocesses$, the family of transition matrices $\mathcal{T}_P$ also satisfies an additional property---see Equation~\eqref{eq:transmatrixproduct} below. This property is known as the Chapman-Kolmogorov equation~{\bf CITE}, or alternatively as the \emph{semi-group} property~{\bf CITE}. Whenever this is the case, we will call such a family of transition matrices a transition matrix system.
-
-*** blabla
+We already know from Proposition~\ref{prop:stochasticprocess:simpleproperties} that the transition matrices of a stochastic process---and therefore also, in particular, of a Markov chain---satisfy a number of simple properties. For the specific case of a Markov chain $P\in\mprocesses$, the family of transition matrices $\mathcal{T}_P$ also satisfies an additional property. In particular, for any $t,r,s\in\realsnonneg$ such that $t\leq r\leq s$, these transition matrices satisfy
+\begin{equation*}
+T_t^s = T_t^rT_r^s\,.
+\end{equation*}
+In this context, this property is known as the \emph{Chapman-Kolmogorov equation}~{\bf CITE}, or alternatively as the semi-group property~{\bf CITE}. Indeed, this is the same semi-group property that we defined in Section~\ref{sec:systems} to hold for transition matrix systems $\mathcal{T}$. We therefore have the following result.
 
 \begin{proposition}\label{prop:Markovhassystem}
 Consider a Markov chain $P\in\mprocesses$ and let $\mathcal{T}_P$ be the corresponding family of transition matrices. Then $\mathcal{T}_P$ is a transition matrix system. Furthermore, $\mathcal{T}_P$ is well-behaved if and only if $P$ is well-behaved.
 \end{proposition}
 
-At this point, we already know that every (well-behaved) Markov chain has a corresponding (well-behaved) transition matrix system. Our next result establishes that the converse is true as well: every (well-behaved) transition matrix system has a corresponding (well-behaved) Markov chain, and for a given initial distribution, this Markov chain is even unique.
+Hence, at this point we know that every (well-behaved) Markov chain has a corresponding (well-behaved) transition matrix system. Our next result establishes that the converse is true as well: every (well-behaved) transition matrix system has a corresponding (well-behaved) Markov chain, and for a given initial distribution, this Markov chain is even unique.
 
 \begin{theorem}\label{theo:uniqueMarkovchain}
- Let $p$ be an arbitrary mass function on $\states$ and let $\mathcal{T}$ be a transition matrix system. Then there is a unique Markov chain $P\in\mprocesses$ such that $\mathcal{T}_P=\mathcal{T}$ and, for all $y\in\states$, $P(X_0=y)=p(y)$. Furthermore, if $\mathcal{T}$ is well-behaved, then $P$ is also well-behaved.
+ Let $p$ be an arbitrary probability mass function on $\states$ and let $\mathcal{T}$ be a transition matrix system. Then there is a unique Markov chain $P\in\mprocesses$ such that $\mathcal{T}_P=\mathcal{T}$ and, for all $y\in\states$, $P(X_0=y)=p(y)$. Furthermore, if $\mathcal{T}$ is well-behaved, then $P$ is also well-behaved.
 \end{theorem}
 
-Hence, Markov chains---and well-behaved Markov chains in particular---are completely characterised by their transition matrices and their initial distribution. 
-We now focus on a number of special cases.
+Hence, Markov chains---and well-behaved Markov chains in particular---are completely characterized by their transition matrices and their initial distribution. 
+
+As a final note, observe that not only does the Markov property simplify the conditional probabilities of Markov chains, it also simplifies their dynamics. In particular, for any $t\in\realsnonneg$, any $u\in\mathcal{U}_{<t}$, and any $x_u\in\states^u$, it holds that $\smash{\overline{\partial}}T_{t,x_u}^t=\smash{\overline{\partial}}T_{t}^t$. We now focus on a number of special cases.
 
 \subsection{Homogeneous Markov chains}\label{sec:homogen_markov_chain}
 
 \begin{definition}[Homogeneous Markov chain]\label{def:homogeneousMarkov}
 A Markov chain $P\in\mprocesses$ is called \emph{homogeneous} if its transition matrices $T_t^s$ do not depend on the absolute value of $t$ and $s$, but only on the time-difference $s-t$:
 \begin{equation}\label{eq:homogeneousMarkov}
-T_t^s=T_{t+\Delta}^{s+\Delta}
-\text{~~for all $0\leq t\leq s$ and $\Delta\geq0$.}
+T_t^s=T_0^{s-t}
+\text{~~for all $t,s\in\realsnonneg$ such that $t\leq s$.}
 \end{equation}
 We denote the set of all homogeneous Markov chains by $\hmprocesses$ and use $\whmprocesses$ to refer to the subset that consists of the well-behaved homogeneous Markov chains.
 \end{definition}
 
+Recall now from Section~\ref{sec:systems} the exponential transition matrix system $\mathcal{T}_Q$ corresponding to some $Q\in\mathcal{R}$. In particular, the transition matrices of such a system were defined by $T_t^s = e^{Q(s-t)}$. This family $\mathcal{T}_Q$ therefore clearly satisfies Equation~\ref{eq:homogeneousMarkov}. Furthermore, by Proposition~\ref{prop:systemQ}, $\mathcal{T}_Q$ is well-behaved. Hence, we have the following result.
+
 \begin{corollary}\label{cor:rate_has_unique_homogen_markov_process}
-Consider any rate matrix $Q\in\mathcal{R}$ and let $p$ be an arbitrary mass function on $\states$. Then there is a unique Markov chain $P\in\mprocesses$ such that $\mathcal{T}_P=\mathcal{T}_Q$ and $P(X_0)=p(X_0)$ and, furthermore, this unique Markov chain is well-behaved and homogeneous.
+Consider any rate matrix $Q\in\mathcal{R}$ and let $p$ be an arbitrary probability mass function on $\states$. Then there is a unique Markov chain $P\in\mprocesses$ such that $\mathcal{T}_P=\mathcal{T}_Q$ and $P(X_0)=p(X_0)$ and, furthermore, this unique Markov chain is well-behaved and homogeneous.
 \end{corollary}
 
-%As our next result shows, the converse is true as well: every well-behaved transition matrix system of a well-behaved homogeneous Markov chain can be uniquely characterised by a single transition rate matrix.
+%As our next result shows, the converse is true as well: not only does each $\mathcal{T}_Q$ characterize%: every well-behaved homogeneous Markov chain can be characterized---up to its initial distribution---by the family $\mathcal{T}_Q$, for some unique $Q\in\mathcal{R}$.
+The next result strengthens this connection between well-behaved homogeneous Markov chains and exponential transition matrix systems.
 
 \begin{theorem}\label{theo:homogeneoushasQ}
 For any well-behaved homogeneous Markov chain $P\in\whmprocesses$, there is a unique rate matrix $Q\in\mathcal{R}$ such that $\mathcal{T}_P=\mathcal{T}_Q$.
 \end{theorem}
 
-*** I think this also follows from Theorem II.4 and II.5 in Chung's book on Markov chains ***
+Hence, any well-behaved homogeneous Markov chain $P\in\whmprocesses$ is completely characterized by its initial distribution and a rate matrix $Q\in\mathcal{R}$. We will denote this rate matrix by $Q_P$.
 
-Hence, any well-behaved homogenous Markov chain $P\in\whmprocesses$ is completely characterised by its initial distribution and a rate matrix $Q\in\mathcal{R}$. We will denote this rate matrix by $Q_P$.
+*** I think this also follows from Theorem II.4 and II.5 in Chung's book on Markov chains ***
+**** maybe some notes that this result is known, and that in that sense our definition of stochastic processes overlaps/agrees with the normal characterizations in the literature. ****
+
+The dynamic behavior of well-behaved homogeneous Markov chains is furthermore particularly easy to describe, as shown by the next result.
+\begin{proposition}\label{prop:Q_is_singleton_deriv_for_homogen}
+Consider any well-behaved homogeneous Markov chain $P\in\whmprocesses$, and let $Q_P\in\mathcal{R}$ be its corresponding rate matrix. Then, for all $t\in\realsnonneg$, it holds that the outer partial derivative satisfies $\smash{\overline{\partial}}T_t^t=\{Q_P\}$.
+\end{proposition}
+\begin{proof}
+**** {\bf TODO}
+\end{proof}
 
 \subsection{Non-homogeneous Markov chains}
 
@@ -1020,16 +1034,20 @@ Instead, such systems are typically described by a function $Q_t$ that gives for
 
 Typically, some kind of continuity of $Q_t$ in terms of $t$ is assumed. The specifics of these assumptions may then depend on the intended generality of the results, computational considerations, the domain of application, and so forth. For example,~\cite{aalen1978empirical} assumes that $Q_t$ is left-continuous and has bounded right-hand limits. As a stronger restriction,~\cite{johnson1989nonhomogeneous} uses a collection $Q_1,\ldots,Q_n$ of commuting rate matrices, and defines $Q_t$ as a weighted linear combination of these component rate matrices wherein the weights vary continuously with $t$. In~\cite{rindos1995exact}, a right-continuous and piecewise-constant $Q_t$ is used, meaning that $Q_t$ takes different values on various (half-open) intervals of $\realsnonneg$, but fixed values within those intervals.
 
-Also for our present work, we will require some tools to describe non-homogeneous Markov chains for which the function $Q_t$ differs on at most a finite number of intervals. However, it will be convenient to define these tools in a slightly more general way, so that we can re-use them later. The basic idea in what follows is to construct a transition matrix system $\mathcal{T}$ out of various ``restricted transition matrix systems'' defined on given intervals. Theorem~\ref{theo:uniqueMarkovchain} then guarantees that there is a Markov chain that corresponds to such a $\mathcal{T}$.
+Also for our present work, we will require some tools to describe non-homogeneous Markov chains for which the function $Q_t$ differs on at most a finite number of intervals. We use to this end the \emph{restricted} transition matrix systems defined in Section~\ref{sec:systems}.
+
+%However, it will be convenient to define these tools in a slightly more general way, so that we can re-use them later. The basic idea in what follows is to construct a transition matrix system $\mathcal{T}$ out of various ``restricted transition matrix systems'' defined on given intervals. Theorem~\ref{theo:uniqueMarkovchain} then guarantees that there is a Markov chain that corresponds to such a $\mathcal{T}$.
 
 %Recall from Section~\ref{sec:trans_mat_systems} that a transition matrix system $\mathcal{T}$ is a family of transition matrices $T_t^s$, defined for all $t,s\in\realsnonneg$ for which $t\leq s$. In particular, such a family of matrices satisfies $T_t^t=I$ for all $t\in\realsnonneg$, and $T_t^s=T_t^rT_r^s$ for all $t,r,s\in\realsnonneg$ with $t\leq r\leq s$.
 
-**** blabla
+%**** blabla
 
-We now have the required tools for the construction of the non-homogeneous Markov chains in which we will be mostly interested. In particular, if for any rate matrix $Q\in\mathcal{R}$ we now let $\mathcal{T}_Q^{\mathbf{I}}$ be the restriction of $\mathcal{T}_Q$, defined as in Definition~\ref{def:systemfromQ}, we have the following result.
+%We now have the required tools for the construction of the non-homogeneous Markov chains in which we will be mostly interested. 
+
+In particular, if for any interval $\mathbf{I}\subseteq\realsnonneg$ and any rate matrix $Q\in\mathcal{R}$ we now let $\mathcal{T}_Q^{\mathbf{I}}$ be the restriction of $\mathcal{T}_Q$ to $\mathbf{I}$, we immediately obtain the following result.
 
 \begin{proposition}\label{prop:finite_different_rate_matrix_has_process}
-Consider any finite sequence of time points $u=t_0,\ldots,t_n$, and a corresponding collection of rate matrices $Q_0,\ldots,Q_{n+1}\in\mathcal{R}$. Then, there exists a well-behaved continuous-time Markov chain $P\in\wmprocesses$ with transition matrix system $\mathcal{T}_P$, such that
+Consider any non-empty finite sequence of time points $u=t_0,\ldots,t_n$, and a corresponding collection of rate matrices $Q_0,\ldots,Q_{n+1}\in\mathcal{R}$. Then, there exists a well-behaved continuous-time Markov chain $P\in\wmprocesses$ with transition matrix system $\mathcal{T}_P$, such that
 \begin{equation*}
 \mathcal{T}_P = \mathcal{T}_{Q_0}^{[0,t_0]}\otimes \mathcal{T}_{Q_1}^{[t_0,t_1]} \otimes \cdots \otimes \mathcal{T}_{Q_n}^{[t_{n-1},t_n]} \otimes \mathcal{T}_{Q_{n+1}}^{[t_n,\infty)}\,.
 \end{equation*}
@@ -1037,6 +1055,14 @@ Consider any finite sequence of time points $u=t_0,\ldots,t_n$, and a correspond
 \begin{proof}
 Trivial consequence of Propositions~\ref{prop:systemQ} and~\ref{prop:concat_restr_trans_mat_systems_is_system}, and Theorem~\ref{theo:uniqueMarkovchain}.
 \end{proof}
+
+The dynamic behavior of Markov chains constructed as in Proposition~\ref{prop:finite_different_rate_matrix_has_process} is conveniently described as follows. Taking some small liberties with the index notation, the outer partial derivatives of such a process will satisfy, for all $t\in\realsnonneg$,
+\begin{equation*}
+\smash{\overline{\partial}} T_t^t = \{Q_i\}\quad\text{if $t\in(t_{i-1},t_i)$,~~~~and}\quad \smash{\overline{\partial}} T_t^t = \{Q_i,Q_{i+1}\}\quad\text{if $t=t_i$.}
+\end{equation*}
+The first equality, where $t\in(t_{i-1},t_i)$, is explained by Proposition~\ref{prop:Q_is_singleton_deriv_for_homogen}. In particular, the behavior on the interval $[t_{i-1},t_i]$ is homogeneous, and fully characterized by $\mathcal{T}_{Q_i}^{[t_{i-1},t_i]}$.
+
+The second equality, where $t=t_i$, is due to the definition $\smash{\overline{\partial}}T_t^t\coloneqq \smash{\overline{\partial}}_-T_t^t\cup \smash{\overline{\partial}}_+T_t^t$. To see this, note that $\smash{\overline{\partial}}_-T_t^t$ will here correspond to the interval $[t_{i-1}, t_i]$, and hence satisfies $\smash{\overline{\partial}}_-T_t^t=\{Q_i\}$. On the other hand, $\smash{\overline{\partial}}_+T_t^t$ corresponds to $[t_i,t_{i+1}]$, and is therefore given by $\smash{\overline{\partial}}_+T_t^t=\{Q_{i+1}\}$.
 
 \begin{exmp}
 **** Misschien voorbeeld dat we hiermee het bestaan van het tegenvoorbeeld in Example~\ref{exmp:well-behaved-no-deriv} kunnen bewijzen?
@@ -1061,11 +1087,7 @@ For any set of stochastic processes $\mathcal{P}\subseteq\processes$, the \emph{
 \vspace{0pt}
 \end{definition}
 
-\noindent It is well known {\bf CITE} that the corresponding \emph{upper expectation},
-\begin{equation*}
-\overline{\mathbb{E}}[\cdot\,\vert\,\cdot]\coloneqq \sup\{\mathbb{E}[\cdot\,\vert\,\cdot]\,:\,P\in\mathcal{P}\}\,,
-\end{equation*}
-can always be defined through the conjugacy relation $\overline{\mathbb{E}}[\cdot\,\vert\,\cdot]=-\underline{\mathbb{E}}[-\cdot\,\vert\,\cdot]$. Therefore, we will in the remainder of this work focus only on the lower expectation with respect to some set $\mathcal{P}$.
+\noindent The corresponding \emph{upper expectation}, $\overline{\mathbb{E}}[\cdot\,\vert\,\cdot]\coloneqq \sup\{\mathbb{E}[\cdot\,\vert\,\cdot]\,:\,P\in\mathcal{P}\}$ can, as is well-known~{\bf CITE}, always be defined through the conjugacy relation $\overline{\mathbb{E}}[\cdot\,\vert\,\cdot]=-\underline{\mathbb{E}}[-\cdot\,\vert\,\cdot]$. Therefore, we will in the remainder of this work focus only on the lower expectation with respect to some set $\mathcal{P}$.
 
 Because these lower expectations are linked to a given set $\mathcal{P}\subseteq\processes$ of stochastic processes, we will next look at how we can describe such a set $\mathcal{P}$.
 Recall from Section~\ref{sec:dynamics} that for a given stochastic process $P\in\processes$, its behavior can be described using the outer partial derivatives $\smash{\overline{\partial}}T_{t,\,x_u}^t$ of its transition matrices $T_{t,\,x_u}^t$ at each time $t\in\realsnonneg$ and for each history $x_u\in\states^u$. There, we found that---at least for well-behaved processes---these outer partial derivatives are non-empty bounded sets of rate matrices. Hence, because individual stochastic processes can be described using sets of rate matrices, this is also a natural starting point for describing sets of processes.
@@ -1086,7 +1108,7 @@ If $P$ is consistent with $\rateset$, we will write $P\sim\rateset$.
 Thus, when a process $P\in\processes$ is consistent with some $\rateset\subset\mathcal{R}$, we know that its behavior over time can always be described using the elements of $\rateset$. However, we do not know which of these elements $Q\in\rateset$ describe this behavior at any given time  $t\in\realsnonneg$ or for any given history $x_u\in\states^u$. Furthermore, consistency of a process with some set $\rateset$ only asserts ``consistency in behavior"; in particular, it does not tell us anything about the initial distribution of the process. It should therefore be clear that there will be many processes consistent with any non-empty bounded set $\rateset\subset\mathcal{R}$. The next example shows that this is already the case when $\rateset$ is singleton.
 
 \begin{exmp}\label{example:singleton_infinite_consistent}
-Suppose that $\rateset=\{Q\}$ for some $Q\in\mathcal{R}$. Then, there are an infinite number of stochastic processes consistent with $\rateset$. In particular, recall from Section~\ref{sec:homogen_markov_chain} that there exists a well-behaved homogeneous Markov chain that is characterized uniquely by the rate matrix $Q$, \emph{up to} its initial distribution $P(X_0)$. Therefore, for each choice of probability mass function $p$ on $\states$, there is a well-behaved homogeneous Markov chain $P$ that is consistent with $\rateset$, and for which $P(X_0=x)=p(x)$ for all $x\in\states$.
+Suppose that $\rateset=\{Q\}$ for some $Q\in\mathcal{R}$. Then, there are an infinite number of stochastic processes consistent with $\rateset$. In particular, recall from Section~\ref{sec:homogen_markov_chain} that there exists a well-behaved homogeneous Markov chain that is characterized uniquely by the rate matrix $Q$, \emph{up to} its initial distribution $P(X_0)$. Therefore, and due to Proposition~\ref{prop:Q_is_singleton_deriv_for_homogen}, for each choice of probability mass function $p$ on $\states$, there is a well-behaved homogeneous Markov chain $P$ that is consistent with $\rateset$, and for which $P(X_0=x)=p(x)$ for all $x\in\states$.
 \exampleend
 \end{exmp}
 
