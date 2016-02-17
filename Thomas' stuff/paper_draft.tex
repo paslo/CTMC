@@ -619,11 +619,6 @@ In particular, it is therefore always possible to extend a coherent conditional 
 \begin{corollary}\label{corol:coherentextendable}
 Let $P$ be a real-valued map from $\mathcal{C}\subseteq\power\times\nonemptypower$ to $\reals$. Then $P$ is a coherent conditional probability if and only if it can be extended to a full conditional probability.
 \end{corollary}
-\begin{proof}
-First assume that $P$ can be extended to a full conditional probability $P^*$. Theorem~\ref{theo:fullcoherent} then implies that $P^*$ is a coherent conditional probability, and therefore, since $P$ is the restriction of $P^*$ to $\mathcal{C}$, it clearly follows from Definition~\ref{def:coherence} that $P$ is a coherent conditional probability.
-
-Conversely, if $P$ is a coherent conditional probability on $\mathcal{C}$, it follows from Theorem~\ref{theo:largerdomain} that $P$ can be extended to a coherent conditional probability $P^*$ on $\power\times\nonemptypower$, which, because of Theorem~\ref{theo:fullcoherent}, is a full conditional probability.
-\end{proof}
 Note, therefore, that if $P$ is a coherent conditional probability on $\mathcal{C}$, we can equivalently say that it is the restriction of a full conditional probability. One only needs to check Definition~\ref{def:cond_prob} to see that $P$ will therefore satisfy properties~\ref{def:coh_prob_2}-\ref{def:coh_prob_6}.
 
 \subsection{Stochastic Processes}\label{sec:def_stochastic_processes}
@@ -694,9 +689,8 @@ We denote the set of all such stochastic processes by $\processes$.
 \begin{corollary}\label{corol:processiffcoherent}
 Let $P$ be a real-valued map from $\mathcal{C}^\mathrm{SP}$ to $\reals$. Then $P$ is a stochastic process if and only if it is a coherent conditional probability.
 \end{corollary}
-\begin{proof}
-Trivial consequence of Corollary~\ref{corol:coherentextendable}.
-\end{proof}
+
+
 
 %Because Definition~\ref{def:cond_prob} only covered finitely additive full conditional probability measures, this also restricts our definition of stochastic processes to finitely additive stochastic processes. The advantage is that this simplifies considerably the subsequent analysis, and, as shown below, the extension to a $\sigma$-additive stochastic process can always be made when this is required.
 %
@@ -797,9 +791,6 @@ Then, for any $t,s\in\realsnonneg$ such that $t\leq s$, any sequence of time poi
 \end{equation}
 for all $u\in\mathcal{U}$, $x_u\in\states^u$ and $t\in\reals_{\geq0}$ such that $t>u$.
 \end{proposition}
-\begin{proof}
-Trivial consequence of Definitions~\ref{def:stoch_matrix}, \ref{def:cond_prob}, and \ref{def:well-behaved}.
-\end{proof}
 
 \begin{remark*}
 Note that for any $P\in\processes$, a corresponding transition matrix $T_{t, x_u}^s$ is a map from $\gamblesX$ to $\gamblesX$, that can therefore be applied to any $f\in\gamblesX$. Observe that for all $x_t\in\states$, we have that
@@ -959,9 +950,7 @@ Consider any $P\in\wprocesses$. Then $\smash{\overline{\partial}_{+}
 {T^t_{t,\,x_u}}}$ and $\smash{\partial
 {T^t_{t,\,x_u}}}$.
 \end{corollary}
-\begin{proof}
-This follows trivially from Proposition~\ref{prop:outerderivativebehaveslikelimit}.
-\end{proof}
+
 
 \section{Continuous-Time Markov Chains}\label{sec:cont_time_markov_chains}
 
@@ -2218,6 +2207,18 @@ P(A\cap C\vert C)
 %**** Maybe expand this last argument a bit by linking it to~\ref{def:coh_prob_3}.
 %\end{proof}
 
+\begin{proof}[Proof of Corollary~\ref{corol:coherentextendable}]
+First assume that $P$ can be extended to a full conditional probability $P^*$. Theorem~\ref{theo:fullcoherent} then implies that $P^*$ is a coherent conditional probability, and therefore, since $P$ is the restriction of $P^*$ to $\mathcal{C}$, it clearly follows from Definition~\ref{def:coherence} that $P$ is a coherent conditional probability.
+
+Conversely, if $P$ is a coherent conditional probability on $\mathcal{C}$, it follows from Theorem~\ref{theo:largerdomain} that $P$ can be extended to a coherent conditional probability $P^*$ on $\power\times\nonemptypower$, which, because of Theorem~\ref{theo:fullcoherent}, is a full conditional probability.
+\end{proof}
+\begin{proof}[Proof of Corollary~\ref{corol:processiffcoherent}]
+Trivial consequence of Corollary~\ref{corol:coherentextendable}.
+\end{proof}
+\begin{proof}[Proof of Proposition~\ref{prop:stochasticprocess:simpleproperties}]
+Trivial consequence of Definitions~\ref{def:stoch_matrix}, \ref{def:cond_prob}, and \ref{def:well-behaved}.
+\end{proof}
+
 
 \begin{proof}[Proof of Proposition~\ref{prop:boundednon-emptyandclosed}]
 We only give the proof for $\smash{\overline{\partial}_{+}
@@ -2234,7 +2235,7 @@ We start by establishing the boundedness of $\smash{\overline{\partial}_{+}
 (T^{t+\Delta}_{t,\,x_u}-I)}\leq B.
 \end{equation}
 Consider now any $Q\in\smash{\overline{\partial}_{+}
-{T^t_{t,\,x_u}}}$. Because of Equation~\eqref{eq:rightouterderivative}, $Q$ is the limit of a sequence of matrices $Q_k$, $k\in\nats$, defined by
+{T^t_{t,\,x_u}}}$. Because of Equation~\eqref{eq:rightouterderivative}, $Q$ is the limit of a sequence of matrices $\{Q_k\}_{k\in\nats}$, defined by
 \begin{equation}\label{eq:sequenceofQsinproof}
 Q_k\coloneqq\frac{1}{\Delta_k}
 (T^{t+\Delta_k}_{t,\,x_u}-I)
@@ -2246,8 +2247,8 @@ Because of Equation~\eqref{eq:boundedbyB}, the norms $\norm{Q_k}$ of these matri
 
 
 In order to prove that $\smash{\overline{\partial}_{+}
-{T^t_{t,\,x_u}}}$ is non-empty, we consider any sequence $\Delta_k\to0^+$, $k\in\nats$. The corresponding sequence of matrices $Q_k$, $k\in\nats$, as defined by Equation~\eqref{eq:sequenceofQsinproof}, is then bounded because $P$ is well-behaved---see Definition~\ref{def:well-behaved}---and therefore, it follows from the Bolzano-Weierstrass theorem that it has a convergent subsequence $Q_{k_i}$, $i\in\nats$, of which we denote the limit by $Q^*$. Hence, we have found a sequence $\Delta_{k_i}\to0^+$, $i\in\nats$, such that $Q_{k_i}\to Q^*$.
-Since we know from Lemma~\ref{prop:rate_from_stochastic_matrix} that each of the matrices $Q_{k_i}$, $i\in\nats$, is a rate matrix, the limit $Q^*$ is also a rate matrix, which therefore clearly belongs to $\smash{\overline{\partial}_{+}
+{T^t_{t,\,x_u}}}$ is non-empty, we consider any sequence ${\Delta_k}_{k\in\nats}\to0^+$. The corresponding sequence of matrices $\{Q_k\}_{k\in\nats}$, as defined by Equation~\eqref{eq:sequenceofQsinproof}, is then bounded because $P$ is well-behaved---see Definition~\ref{def:well-behaved}---and therefore, it follows from the Bolzano-Weierstrass theorem that it has a convergent subsequence $\{Q_{k_i}\}_{i\in\nats}$ of which we denote the limit by $Q^*$. Hence, we have found a sequence $\{\Delta_{k_i}\}_{i\in\nats}\to0^+$ such that $\{Q_{k_i}\}_{i\in\nats}\to Q^*$.
+Since we know from Lemma~\ref{prop:rate_from_stochastic_matrix} that each of the matrices in $\{Q_{k_i}\}_{i\in\nats}$ is a rate matrix, the limit $Q^*$ is also a rate matrix, which therefore clearly belongs to $\smash{\overline{\partial}_{+}
 {T^t_{t,\,x_u}}}$.
 
 We end by showing that $\smash{\overline{\partial}_{+}
@@ -2259,7 +2260,7 @@ Since
 \begin{equation*}
 0\leq\lim_{k\to+\infty}\norm{Q^*-Q_k}\leq\lim_{k\to+\infty}\norm{Q^*-Q^*_k}+\lim_{k\to+\infty}\norm{Q^*_k-Q_k}=0,
 \end{equation*}
-we find that the sequence $Q_k$, $k\in\nats$, converges to $Q^*$: $\lim_{k\to+\infty}Q_k=Q^*$. Hence, because $\lim_{k\to+\infty}\Delta_k=0$, we conclude that $Q^*\in\smash{\overline{\partial}_{+}
+we find that the sequence $\{Q_k\}_{k\in\nats}$ converges to $Q^*$. Hence, because $\lim_{k\to+\infty}\Delta_k=0$, we conclude that $Q^*\in\smash{\overline{\partial}_{+}
 {T^t_{t,\,x_u}}}$.
 \end{proof}
 
@@ -2273,15 +2274,19 @@ Assume \emph{ex absurdo} that
 \norm{\frac{1}{\Delta}
 (T^{t+\Delta}_{t,\,x_u}-I)-Q}\geq\epsilon.
 \end{equation*}
-Clearly, this implies the existence of a sequence $\Delta_k\to0^+$, $k\in\nats$, such that
+Clearly, this implies the existence of a sequence $\{\Delta_k\}_{k\in\nats}\to0^+$ such that
 \begin{equation}\label{eq:boundednonelement}
 \norm{Q_k-Q}\geq\epsilon
 \text{~~for all $k\in\nats$ and all $Q\in\overline{\partial}_{+}
 {T^t_{t,\,x_u}}$},
 \end{equation}
-with $Q_k$ defined as in Equation~\eqref{eq:sequenceofQsinproof}. As we know from the proof of Proposition~\ref{prop:boundednon-emptyandclosed}, the sequence $Q_k$, $k\in\nats$, has a convergent subsequence $Q_{k_i}$, $i\in\nats$, of which the limit $Q^*$ belongs to $\overline{\partial}_{+}
+with $Q_k$ defined as in Equation~\eqref{eq:sequenceofQsinproof}. As we know from the proof of Proposition~\ref{prop:boundednon-emptyandclosed}, the sequence $\{Q_k\}_{k\in\nats}$ has a convergent subsequence $\{Q_{k_i}\}_{i\in\nats}$ of which the limit $Q^*$ belongs to $\overline{\partial}_{+}
 {T^t_{t,\,x_u}}$. Hence, since Equation~\eqref{eq:boundednonelement} implies that $\norm{Q^*-Q}\geq\epsilon$ for all $Q\in\overline{\partial}_{+}
 {T^t_{t,\,x_u}}$, we find that $0=\norm{Q^*-Q^*}\geq\epsilon$. From this contradiction, it follows that there must be some $\delta_1>0$ such that Equation~\eqref{eq:outerderivativebehaveslikelimit1} holds for all $0<\Delta<\delta_1$. Similarly, using a completely analogous argument, we infer that there must be some $\delta_2>0$ such that Equation~\eqref{eq:outerderivativebehaveslikelimit2} holds for all $0<\Delta<\delta_1$. Now let $\delta\coloneqq\min\{\delta_1,\delta_2\}$.
+\end{proof}
+
+\begin{proof}[Proof of Corollary~\ref{corol:outersingleton}]
+This follows trivially from Proposition~\ref{prop:outerderivativebehaveslikelimit}.
 \end{proof}
 
 \section{Proofs and Lemmas for Section~\ref{sec:cont_time_markov_chains}}
