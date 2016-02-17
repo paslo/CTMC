@@ -350,6 +350,14 @@ $T(x,y)\geq0$ for all $x,y\in\states$.
 \vspace{5pt}
 \noindent
 \end{definition}
+
+\begin{proposition}\label{lemma:compositiontransitionmatrix}
+For any two transition matrices $T_1$ and $T_2$, their composition $T_1T_2$ is also a transition matrix
+\end{proposition}
+\begin{proof}
+Simply check each of the properties.
+\end{proof}
+
 The interpretation in the context of Markov chains is as follows. The elements $T(x,y)$ of a transition matrix $T$ describe the probability of the Markov chain ending up in state $y$ at the next time point, given that it is currently in state $x$. In other words, the row $T(x,\cdot)$ contains the state-transition probabilities, conditional on currently being in state $x$. We will make this connection more explicit when we formalize continuous-time stochastic processes in Section~\ref{sec:stochastic_processes}.
 
 For now, we note that in a continuous-time setting, this notion of ``next'' time-point is less obvious than in a discrete-time setting. Here, these state-transition probabilities are continuously dependent on the evolution of time. To describe this connection, the notion of \emph{transition rate matrices} is used.
@@ -2024,9 +2032,9 @@ This proof is analogous to that of Proposition~\ref{prop:stochastic_from_rate_ma
 \end{proof}
 
 \begin{lemma}\label{lemma:recursive}
-Consider two finite sequences $T_1,\ldots,T_n$ and $S_1,\ldots,S_n$ of transition matrices. Then,
+Consider two finite sequences $T_1,\ldots,T_n$ and $S_1,\ldots,S_n$ of transition matrices. Then
 \begin{equation*}
-\norm{\prod_{i=1}^nT_i - \prod_{i=1}^nS_i} \leq \sum_{i=1}^n \norm{T_i - S_i}\,.
+\norm{\prod_{i=1}^nT_i - \prod_{i=1}^nS_i} \leq \sum_{i=1}^n \norm{T_i - S_i}.
 \end{equation*}
 \end{lemma}
 \begin{proof}
@@ -2089,15 +2097,15 @@ which implies that $\mathcal{T}_*^{\mathbf{I}}=\lim_{i\to\infty}\mathcal{T}_i^{\
 \end{proof}
 
 \begin{proof}[Proof of Proposition~\ref{prop:concat_restr_trans_mat_systems_is_system}]
-Clearly, $\mathcal{T}^{\mathbf{I}\cup\mathbf{J}}$ is a family of transition matrices, and in particular, for all $t,s\in\mathbf{I}\cup\mathbf{J}$ such that $t\leq s$, there is a transition matrix $T_t^s$ corresponding to $\mathcal{T}^{\mathbf{I}\cup\mathbf{J}}$. Furthermore, for all $t\in\mathbf{I}\cup\mathbf{J}$, we have that either $t\in\mathbf{I}$ or $t\in\mathbf{J}$. In either case, we have that $T_t^t=I$, because either $T_t^t=\presuper{i}T_t^t=I$ or $T_t^t=\presuper{j}T_t^t=I$, with $\presuper{i}T_t^t$ and $\presuper{j}T_t^t$ corresponding to $\mathcal{T}^{\mathbf{I}}$ and $\mathcal{T}^{\mathbf{J}}$, respectively. It remains to show that for all $t,q,s\in\mathbf{I}\cup\mathbf{J}$ with $t\leq q\leq s$, it holds that
+For all $t,s\in\mathbf{I}\cup\mathbf{J}$ such that $t\leq s$, it follows from Proposition~\ref{lemma:compositiontransitionmatrix} that the matrix $T_t^s$ that corresponds to $\mathcal{T}^{\mathbf{I}\cup\mathbf{J}}$ is a transition matrix.Furthermore, for all $t\in\mathbf{I}\cup\mathbf{J}$, we have that either $t\in\mathbf{I}$ or $t\in\mathbf{J}$. In either case, we have that $T_t^t=I$, because either $T_t^t=\presuper{i}T_t^t=I$ or $T_t^t=\presuper{j}T_t^t=I$, with $\presuper{i}T_t^t$ and $\presuper{j}T_t^t$ corresponding to $\mathcal{T}^{\mathbf{I}}$ and $\mathcal{T}^{\mathbf{J}}$, respectively. It remains to show that for all $t,q,s\in\mathbf{I}\cup\mathbf{J}$ with $t\leq q\leq s$, it holds that
 \begin{equation*}
 T_t^s = T_t^qT_q^s\,.
 \end{equation*}
-If both $t,s\in\mathbf{I}$ or if both $t,s\in\mathbf{J}$, this clearly holds. Therefore, suppose that $t\in\mathbf{I}$ and $s\in\mathbf{J}$. Suppose furthermore that $q\in\mathbf{I}$. Then, from the definition of the concatenation operator, we have that $T_q^s=T_q^rT_r^s$, with $r=\max\mathbf{I}=\min\mathbf{J}$. Because $t,q,r\in\mathbf{I}$, we know that $T_t^qT_q^r=T_t^r$, and hence, by the definition of the concatenation operator,
+If both $t,s\in\mathbf{I}$ or if both $t,s\in\mathbf{J}$, this clearly holds. Therefore, suppose that $t\in\mathbf{I}$ and $s\in\mathbf{J}$. Suppose furthermore that $q\in\mathbf{I}$. Then, from the definition of the concatenation operator $\otimes$, we have that $T_q^s=T_q^rT_r^s$, with $r=\max\mathbf{I}=\min\mathbf{J}$. Because $t,q,r\in\mathbf{I}$, we know that $T_t^qT_q^r=T_t^r$, and hence, by the definition of the concatenation operator,
 \begin{equation*}
 T_t^qT_q^s = T_t^qT_q^rT_r^s = T_t^rT_r^s = T_t^s\,.
 \end{equation*}
-An exactly analogous argument proves the case for $q\in\mathbf{J}$. Therefore, and using Proposition~\ref{prop:restr_trans_mat_system_if_semigroup}, we conclude that $\mathcal{T}^{\mathbf{I}\cup\mathbf{J}}$ is a restricted transition matrix system.
+An exactly analogous argument proves the case for $q\in\mathbf{J}$. Therefore, it follows from Proposition~\ref{prop:restr_trans_mat_system_if_semigroup} that $\mathcal{T}^{\mathbf{I}\cup\mathbf{J}}$ is a restricted transition matrix system.
 
 It remains to show that if $\mathcal{T}^{\mathbf{I}}$ and $\mathcal{T}^{\mathbf{J}}$ are both well-behaved, that then $\mathcal{T}^{\mathbf{I}\cup\mathbf{J}}$ is also well-behaved. We need to show that for all $t\in\mathbf{I}\cup\mathbf{J}$, it holds that
 \begin{equation*}
@@ -3785,9 +3793,9 @@ Thus, $d$ is conserving with respect to $d_1^*,\ldots,d_m^*$, and hence $(\under
 % \end{proof}
 
 \begin{lemma}\label{lemma:recursive_lower_trans}
-Consider two finite sequences $\underline{T}_1,\ldots,\underline{T}_n$ and $\underline{S}_1,\ldots,\underline{S}_n$ of lower transition operators. Then,
+Consider two finite sequences $\underline{T}_1,\ldots,\underline{T}_n$ and $\underline{S}_1,\ldots,\underline{S}_n$ of lower transition operators. Then
 \begin{equation}\label{eq:lemma_recursive_inequality}
-\norm{\prod_{i=1}^n\underline{T}_i - \prod_{i=1}^n\underline{S}_i} \leq \sum_{i=1}^n \norm{\underline{T}_i - \underline{S}_i}\,.
+\norm{\prod_{i=1}^n\underline{T}_i - \prod_{i=1}^n\underline{S}_i} \leq \sum_{i=1}^n \norm{\underline{T}_i - \underline{S}_i}.
 \end{equation}
 \end{lemma}
 \begin{proof}
