@@ -2579,7 +2579,7 @@ Since we know from Proposition~\ref{prop:systemQ} that $\mathcal{T}_Q$ is a well
 \begin{proof}[Proof of Theorem~\ref{theo:homogeneoushasQ}]
 Because of Proposition~\ref{prop:boundednon-emptyandclosed}, we know that $\overline{\partial}_{+}
 {T^0_{0}}$ is a non-empty bounded set of rate matrices, which implies that there is some real $B>0$ such that $\norm{Q'}\leq B$ for all $Q'\in\overline{\partial}_{+}
-{T^0_{0}}$. Let $Q$ be any of element of $\overline{\partial}_{+}
+{T^0_{0}}$. Let $Q$ be any element of $\overline{\partial}_{+}
 {T^0_{0}}$.
 
 
@@ -2696,7 +2696,35 @@ T_t^s=T_0^{s-t}=e^{Q(s-t)}
 \end{equation}
 or equivalently, that $\mathcal{T}_P=\mathcal{T}_Q$.
 
-Finally, we prove that $Q$ is unique. Assume \emph{ex absurdo} that this is not the case, or equivalently, that there are rate matrices $Q_1$ and $Q_2$, with $Q_1\neq Q_2$, such that $\mathcal{T}_P=\mathcal{T}_{Q_1}$ and $\mathcal{T}_P=\mathcal{T}_{Q_2}$. It then follows from Definition~\ref{def:systemfromQ} that $\partial_{+}{T^0_{0}}=Q_1$ and $\partial_{+}{T^0_{0}}=Q_2$, which implies that $Q_1=Q_2$. From this contradiction, it follows $Q$ is indeed unique.
+Finally, we prove that $Q$ is unique. Assume \emph{ex absurdo} that this is not the case, or equivalently, that there are rate matrices $Q_1$ and $Q_2$, with $Q_1\neq Q_2$, such that $\mathcal{T}_P=\mathcal{T}_{Q_1}$ and $\mathcal{T}_P=\mathcal{T}_{Q_2}$. It then follows from Definition~\ref{def:systemfromQ} that $\partial_{+}{T^0_{0}}=Q_1$ and $\partial_{+}{T^0_{0}}=Q_2$, which implies that $Q_1=Q_2$. From this contradiction, it follows that $Q$ is indeed unique.
+\end{proof}
+
+
+\begin{lemma}\label{lemma:linearpartofexponential}
+Consider any $Q\in\mathcal{R}$ and any $\Delta\geq0$. Then,
+\begin{equation*}
+\norm{e^{Q\Delta}-(I+\Delta Q)}\leq
+\Delta^2\norm{Q}^2.
+\end{equation*}
+\end{lemma}
+\begin{proof}
+This is a special case of a more general lemma that we prove later. To see this, refer to our comments in Section~\ref{sec:properties_lower_trans}, where we note that the rate matrix $Q$ is also a lower transition rate operator $\lrate=Q$, for which the corresponding lower transition operator $L_0^{\Delta}$ satisfies $L_0^{\Delta}=e^{Q\Delta}$. This lemma then follows by combining Theorem~\ref{theo:convergencelowerbound} with Lemma~\ref{lemma:justthelinearpart}.
+%To avoid trivialities, we assume that $\Delta\neq 0$ and $\norm{Q}\neq 0$. 
+%
+%Recall the $\epsilon-\delta$ limit expression for the matrix exponential, given by Equation~\eqref{eq:matrix_exp_limit}. Now, consider any $\epsilon\in\realspos$, and let $\delta^*\coloneqq\min\{\nicefrac{1}{\norm{Q}},\delta\}$, where $\delta$ satisfies Equation~\eqref{eq:matrix_exp_limit}. Take any $u\in\mathcal{U}_{[0,\Delta]}$ such that $\sigma(u)<\delta^*$. Then, clearly,
+%\begin{align*}
+%\norm{e^{Q\Delta}-(I+\Delta Q)} &\leq \norm{e^{Q\Delta} - \prod_{i=1}^n(I+\Delta_iQ)} + \norm{\prod_{i=1}^n(I+\Delta_iQ) - (I+\Delta Q)} \\
+% &< \norm{\prod_{i=1}^n(I+\Delta_iQ) - (I+\Delta Q)} + \epsilon\,.
+%\end{align*}
+%Furthermore, because $Q$ is a rate matrix, it is easily verified that $Q$ satisfies~\ref{LR:constantzero}--\ref{LR:nondiagpos}. Hence, $Q$ is also a lower transition rate operator. Therefore, and because $\sigma(u)<\delta^*\leq\nicefrac{1}{\norm{Q}}$, it follows from Lemma~\ref{lemma:justthelinearpart} that
+%\begin{equation*}
+%\norm{\prod_{i=1}^n(I+\Delta_iQ) - (I+\Delta Q)} \leq \Delta^2\norm{Q}^2\,.
+%\end{equation*}
+%Hence, we find
+%\begin{equation*}
+%\norm{e^{Q\Delta}-(I+\Delta Q)} < \Delta^2\norm{Q}^2 + \epsilon\,.
+%\end{equation*}
+%Because this holds for any $\epsilon\in\realspos$, the statement in the lemma  follows.
 \end{proof}
 
 \section{Proofs and Lemmas for Section~\ref{sec:iCTMC}}
@@ -2824,32 +2852,6 @@ The remaining cases are when $t=t_i$ for some $i\in\{0,\ldots,n\}$. In this case
 Because this covers all the possible cases, in summary, we have found that $\smash{\overline{\partial}}T_t^t\subseteq\rateset$ for all $t\in\realsnonneg$, and hence $P\in\wmprocesses_\rateset$.
 \end{proof}
 
-\begin{lemma}\label{lemma:linearpartofexponential}
-Consider any $Q\in\mathcal{R}$ and any $\Delta\geq0$. Then,
-\begin{equation*}
-\norm{e^{Q\Delta}-(I+\Delta Q)}\leq
-\Delta^2\norm{Q}^2.
-\end{equation*}
-\end{lemma}
-\begin{proof}
-This is a special case of a more general lemma that we prove later. To see this, refer to our comments in Section~\ref{sec:properties_lower_trans}, where we note that the rate matrix $Q$ is also a lower transition rate operator $\lrate=Q$, for which the corresponding lower transition operator $L_0^{\Delta}$ satisfies $L_0^{\Delta}=e^{Q\Delta}$. This lemma then follows by combining Theorem~\ref{theo:convergencelowerbound} with Lemma~\ref{lemma:justthelinearpart}.
-%To avoid trivialities, we assume that $\Delta\neq 0$ and $\norm{Q}\neq 0$. 
-%
-%Recall the $\epsilon-\delta$ limit expression for the matrix exponential, given by Equation~\eqref{eq:matrix_exp_limit}. Now, consider any $\epsilon\in\realspos$, and let $\delta^*\coloneqq\min\{\nicefrac{1}{\norm{Q}},\delta\}$, where $\delta$ satisfies Equation~\eqref{eq:matrix_exp_limit}. Take any $u\in\mathcal{U}_{[0,\Delta]}$ such that $\sigma(u)<\delta^*$. Then, clearly,
-%\begin{align*}
-%\norm{e^{Q\Delta}-(I+\Delta Q)} &\leq \norm{e^{Q\Delta} - \prod_{i=1}^n(I+\Delta_iQ)} + \norm{\prod_{i=1}^n(I+\Delta_iQ) - (I+\Delta Q)} \\
-% &< \norm{\prod_{i=1}^n(I+\Delta_iQ) - (I+\Delta Q)} + \epsilon\,.
-%\end{align*}
-%Furthermore, because $Q$ is a rate matrix, it is easily verified that $Q$ satisfies~\ref{LR:constantzero}--\ref{LR:nondiagpos}. Hence, $Q$ is also a lower transition rate operator. Therefore, and because $\sigma(u)<\delta^*\leq\nicefrac{1}{\norm{Q}}$, it follows from Lemma~\ref{lemma:justthelinearpart} that
-%\begin{equation*}
-%\norm{\prod_{i=1}^n(I+\Delta_iQ) - (I+\Delta Q)} \leq \Delta^2\norm{Q}^2\,.
-%\end{equation*}
-%Hence, we find
-%\begin{equation*}
-%\norm{e^{Q\Delta}-(I+\Delta Q)} < \Delta^2\norm{Q}^2 + \epsilon\,.
-%\end{equation*}
-%Because this holds for any $\epsilon\in\realspos$, the statement in the lemma  follows.
-\end{proof}
 
 \begin{lemma}\label{lemma:convex_rate_set_contains_approximation}
 Consider a non-empty, bounded, convex set of rate matrices $\rateset$ and, for all $i\in\{1,\ldots,n\}$, some $\Delta_i\geq0$ and $Q_i\in\rateset$ such that $\Delta_i\norm{Q_i}\leq1$. Let $\Delta\coloneqq\sum_{i=1}^n\Delta_i$. Then
