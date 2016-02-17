@@ -1585,17 +1585,16 @@ Inspired by this result, we will also refer to the lower envelope of $\rateset$ 
 However, this correspondence is not one-to-one. As the following example establishes, different non-empty bounded sets of rate matrices may have the same corresponding lower transition rate operator.
 
 \begin{exmp}\label{example:different_sets_same_lower_rate}
-For the sake of simplicity, we will assume that the state space $\states$ has only two elements, so that we can work with $2\times 2$ matrices. Consider two rate matrices $A,B\in\mathcal{R}$ defined as
+For the sake of simplicity, we assume that the state space $\states\coloneqq\{1,2\}$ has only two elements, which allows us to work with $2\times 2$ matrices. Consider now two rate matrices
 \begin{equation*}
-A\coloneqq\left[\begin{array}{rr}-1 & 1 \\2 & -2\end{array}\right]\,,\quad\text{and}\quad
-B\coloneqq\left[\begin{array}{rr}-3 & 3 \\1 & -1\end{array}\right]\,.
+A\coloneqq\left[\begin{array}{rr}-1 & 1 \\2 & -2\end{array}\right]\quad\text{and}\quad
+B\coloneqq\left[\begin{array}{rr}-3 & 3 \\1 & -1\end{array}\right]\,,
+\vspace{7pt}
 \end{equation*}
-Define a third rate matrix $C\coloneqq \nicefrac{1}{2}(A+B)$. We will now construct two different non-empty bounded sets of rate matrices; let $\rateset^1\coloneqq\{A,B\}$, and let $\rateset^2\coloneqq\{A,B,C\}$. Then, clearly, $\rateset^1\neq\rateset^2$. 
-Let now, respectively, $\lrate_1$ and $\lrate_2$ be the lower transition rate operators corresponding to $\rateset^1$ and $\rateset^2$, as defined by Equation~\eqref{eq:correspondinglowertrans}. We will show that $\lrate_1=\lrate_2$.
+let $C\coloneqq \nicefrac{1}{2}(A+B)$ be their convex mixture, which is clearly also a rate matrix, and use these matrices to define the sets $\rateset_1\coloneqq\{A,B\}$ and $\rateset_2\coloneqq\{A,B,C\}$. Then clearly, $\rateset_1$ and $\rateset_2$ are two different, non-empty and bounded sets of rate matrices. Nevertheless, as we are about to show, the corresponding lower transition rate operators are identical.
 
-Consider any $f\in\gamblesX$. It is easily verified that if $f(1)\leq f(2)$, it holds that $[Af](1)\leq[Bf](1)$ and $[Af](2)\leq[Bf](2)$. Hence, if $f(1)\leq f(2)$, we have $Af\leq Bf$. Contrariwise, if $f(2)\leq f(1)$, we have $[Bf](1)\leq [Af](1)$ and $[Bf](2)\leq[Af](2)$, and hence also $Bf\leq Af$. Note also that by the construction of $C$, it holds that if $Af\leq Bf$, we have $Af\leq Cf$, and if $Bf\leq Af$, we have $Bf\leq Cf$.
-
-Now, because clearly either $f(1)\leq f(2)$ or $f(2)\leq f(1)$, it follows from Equation~\eqref{eq:correspondinglowertrans} and the inequalities above that either $\lrate_1f=Af$, if $Af\leq Bf$, or $\lrate_1f=Bf$, if $Bf\leq Af$. Furthermore, as noted, if $Af\leq Bf$ then also $Af\leq Cf$, and if $Bf\leq Af$ then $Bf\leq Cf$. Therefore, we find that also either $\lrate_2f=Af$, or $\lrate_2f=Bf$. Hence, $\lrate_1f=\lrate_2f$, and because the $f\in\gamblesX$ was arbitrary, we have that $\lrate_1=\lrate_2$.
+Let $\lrate_1$ and $\lrate_2$ be the lower transition rate operator that corresponds to $\rateset_1$ and $\rateset_2$, respectively, %We will show that $\lrate_1=\lrate_2$.
+and consider any $f\in\gamblesX$. Equation~\eqref{eq:correspondinglowertrans} then implies that $\lrate_1f\leq Af$ and $\lrate_1f\leq Bf$, which in turn implies that $\lrate_1f\leq Cf$. Therefore, by applying Equation~\eqref{eq:correspondinglowertrans} once more, we find that $\lrate_1 f\leq\lrate_2 f$. Hence, since Equation~\eqref{eq:correspondinglowertrans} also trivially implies that $\lrate_2 f\leq\lrate_1 f$, we find that $\lrate_1 f=\lrate_2 f$. Since this is true for any $f\in\gamblesX$, we conclude that $\lrate_1=\lrate_2$.
 \exampleend
 \end{exmp}
 
@@ -1642,7 +1641,15 @@ Consider any non-empty, bounded, closed and convex set of rate matrices $\ratese
 \end{proposition}
 
 \begin{exmp}
-Let $\rateset^1$ and $\rateset^2$ be constructed as in Example~\ref{example:different_sets_same_lower_rate}, and let $\lrate\coloneqq\lrate_1=\lrate_2$ be their common lower transition rate operator. We will construct the set $\rateset_{\lrate}$ of rate matrices that dominate $\lrate$. Note that this construction is specific to the example, and will not work in general.
+Let $\rateset_1$ and $\rateset_2$ be constructed as in Example~\ref{example:different_sets_same_lower_rate}, and let $\lrate\coloneqq\lrate_1=\lrate_2$ be their common lower transition rate operator. We will show in this example that the corresponding set of dominating rate matrices $\rateset_{\lrate}$ is equal to
+\begin{equation*}
+\rateset \coloneqq \{Q\in\mathcal{R}\,:\,(\forall x\in\states)\, Q(x,\cdot)\in\rateset_x\},
+\end{equation*}
+where, for all $x\in\states$, $\rateset_x$ is given by
+\begin{equation*}
+\rateset_x \coloneqq \left\{\lambda A(x,\cdot)+(1-\lambda)B(x,\cdot)\,:\,\lambda\in[0,1]\right\}.
+\end{equation*}
+
 
 Recall from Example~\ref{example:different_sets_same_lower_rate} that for all $f\in\gamblesX$, it holds that either $\lrate f=Af$, or $\lrate f=Bf$. Using a similar argument as we used there for the rate matrix $C$, it is clear that any convex combination $Q_\lambda\coloneqq \lambda A+(1-\lambda)B$, with $\lambda\in[0,1]$, is a rate matrix that dominates $\lrate$. Furthermore, because we there found that $[Af](1)\leq [Bf](1)$ if and only if $[Af](2)\leq[Bf](2)$, any matrix constructed by combining rows from $A$ and $B$ will dominate $\lrate$. For example, let $D$ be a rate matrix such that $D(1,\cdot)\coloneqq A(1,\cdot)$ and $D(2,\cdot)\coloneqq B(2,\cdot)$. Then, if $Af\leq Bf$, it also holds that $Af\leq Df$. Similarly, if $Bf\leq Af$, then also $Bf\leq Df$. A similar argument shows that the same is true for any matrix constructed by combining rows from different convex combinations of $A$ and $B$.
 
