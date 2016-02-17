@@ -1640,30 +1640,39 @@ These additional properties characterize $\rateset_{\lrate}$ completely, in the 
 Consider any non-empty, bounded, closed and convex set of rate matrices $\rateset\subseteq\mathcal{R}$ with separately specified rows that has $\lrate$ as its lower envelope. Then $\rateset=\rateset_{\lrate}$.
 \end{proposition}
 
-\begin{exmp}
-Let $\rateset_1$ and $\rateset_2$ be constructed as in Example~\ref{example:different_sets_same_lower_rate}, and let $\lrate\coloneqq\lrate_1=\lrate_2$ be their common lower transition rate operator. We will show in this example that the corresponding set of dominating rate matrices $\rateset_{\lrate}$ is equal to
-\begin{equation*}
-\rateset \coloneqq \{Q\in\mathcal{R}\,:\,(\forall x\in\states)\, Q(x,\cdot)\in\rateset_x\},
-\end{equation*}
+\begin{exmp}\label{ex:dominatingset}
+Let $\rateset_1$ and $\rateset_2$ be constructed as in Example~\ref{example:different_sets_same_lower_rate}, and let $\lrate\coloneqq\lrate_1=\lrate_2$ be their common lower transition rate operator. As we are about to show, the corresponding set of dominating rate matrices $\rateset_{\lrate}$ is then equal to
+\begin{equation}\label{eq:ex:dominatingset:globaldef}
+\rateset^* \coloneqq \{Q\in\mathcal{R}\,:\,(\forall x\in\states)\, Q(x,\cdot)\in\rateset_x\},
+\end{equation}
 where, for all $x\in\states$, $\rateset_x$ is given by
 \begin{equation*}
 \rateset_x \coloneqq \left\{\lambda A(x,\cdot)+(1-\lambda)B(x,\cdot)\,:\,\lambda\in[0,1]\right\}.
 \end{equation*}
 
-
-Recall from Example~\ref{example:different_sets_same_lower_rate} that for all $f\in\gamblesX$, it holds that either $\lrate f=Af$, or $\lrate f=Bf$. Using a similar argument as we used there for the rate matrix $C$, it is clear that any convex combination $Q_\lambda\coloneqq \lambda A+(1-\lambda)B$, with $\lambda\in[0,1]$, is a rate matrix that dominates $\lrate$. Furthermore, because we there found that $[Af](1)\leq [Bf](1)$ if and only if $[Af](2)\leq[Bf](2)$, any matrix constructed by combining rows from $A$ and $B$ will dominate $\lrate$. For example, let $D$ be a rate matrix such that $D(1,\cdot)\coloneqq A(1,\cdot)$ and $D(2,\cdot)\coloneqq B(2,\cdot)$. Then, if $Af\leq Bf$, it also holds that $Af\leq Df$. Similarly, if $Bf\leq Af$, then also $Bf\leq Df$. A similar argument shows that the same is true for any matrix constructed by combining rows from different convex combinations of $A$ and $B$.
-
-From these ideas, we first construct two sets of rows. For all $x\in\states$, let
+First of all, for any $Q\in\rateset^*$, $f\in\gamblesX$ and $x\in\states$, it follows from Equation~\eqref{eq:ex:dominatingset:globaldef} that there is some $\lambda\in[0,1]$ such that
 \begin{equation*}
-\rateset_x \coloneqq \left\{\lambda A(x,\cdot)+(1-\lambda)B(x,\cdot)\,:\,\lambda\in[0,1]\right\}\,.
+[Qf](x)=\lambda[Af](x)+(1-\lambda)[Bf](x)
+\geq\lambda[\lrate f](x)+(1-\lambda)[\lrate f](x)
+=[\lrate f](x),
 \end{equation*}
-Let now $\rateset \coloneqq \{Q\in\mathcal{R}\,:\,(\forall x\in\states)\, Q(x,\cdot)\in\rateset_x\}$. Then, for all $Q\in\rateset$, $Q$ is such that
-\begin{equation*}
-Q=\left[\begin{array}{rr}-a & a \\ b& -b\end{array}\right]\,,\quad\text{where $a\in[1,3]$ and $b\in[1,2]$.}
-\end{equation*}
-The converse also holds; for all $a\in[1,3]$ and $b\in[1,2]$, there is a $Q\in\rateset$ that takes the above form. From this, it is clear that for all $Q\in\rateset$, it holds that $\lrate f\leq Qf$, for all $f\in\gamblesX$. Furthermore, $\rateset^1\subset\rateset$ and $\rateset^2\subset\rateset$. Hence, $\rateset$ has $\lrate$ as its corresponding lower transition rate operator. 
+where the inequality holds because $\lrate$ is the lower envelope of $\rateset_1$. Since this is true for all $x\in\states$, we find that $Qf\geq\lrate f$. Since this is true for all $f\in\gamblesX$, we find that $Q\geq\lrate$. Since this is true for all $Q\in\rateset^*$, it follows that $\rateset^*\subseteq\rateset_{\lrate}$. Hence, if we let $\lrate^*$ be the lower transition rate operator that corresponds to $\rateset^*$, we find that $\lrate^*\geq\lrate$. Similarly, since $\rateset_1$ is clearly a subset of $\rateset^*$, we find that $\lrate^*\leq\lrate_1$. Since $\lrate_1=\lrate$, we conclude that $\lrate^*=\lrate$.
 
-It remains to determine that $\rateset=\rateset_{\lrate}$. One way to verify this is to consider any $Q'\notin\rateset$, and show that there is then some $f\in\gamblesX$ and some $x\in\states$ such that $[Q'f](x)<[\lrate f](x)$. We leave this method as an exercise for the reader, and note instead the following. $\rateset$ is clearly non-empty, bounded, closed, convex, has separately specified rows, and has $\lrate$ as its lower transition rate operator. Therefore, by Proposition~\ref{prop:dominating_unique_characterization}, we find that indeed $\rateset=\rateset_{\lrate}$.
+
+% Recall from Example~\ref{example:different_sets_same_lower_rate} that for all $f\in\gamblesX$, it holds that either $\lrate f=Af$, or $\lrate f=Bf$. Using a similar argument as we used there for the rate matrix $C$, it is clear that any convex combination $Q_\lambda\coloneqq \lambda A+(1-\lambda)B$, with $\lambda\in[0,1]$, is a rate matrix that dominates $\lrate$. Furthermore, because we there found that $[Af](1)\leq [Bf](1)$ if and only if $[Af](2)\leq[Bf](2)$, any matrix constructed by combining rows from $A$ and $B$ will dominate $\lrate$. For example, let $D$ be a rate matrix such that $D(1,\cdot)\coloneqq A(1,\cdot)$ and $D(2,\cdot)\coloneqq B(2,\cdot)$. Then, if $Af\leq Bf$, it also holds that $Af\leq Df$. Similarly, if $Bf\leq Af$, then also $Bf\leq Df$. A similar argument shows that the same is true for any matrix constructed by combining rows from different convex combinations of $A$ and $B$.
+
+% From these ideas, we first construct two sets of rows. For all $x\in\states$, let
+% \begin{equation*}
+% \rateset_x \coloneqq \left\{\lambda A(x,\cdot)+(1-\lambda)B(x,\cdot)\,:\,\lambda\in[0,1]\right\}\,.
+% \end{equation*}
+% Let now $\rateset \coloneqq \{Q\in\mathcal{R}\,:\,(\forall x\in\states)\, Q(x,\cdot)\in\rateset_x\}$. Then, for all $Q\in\rateset$, $Q$ is such that
+% \begin{equation*}
+% Q=\left[\begin{array}{rr}-a & a \\ b& -b\end{array}\right]\,,\quad\text{where $a\in[1,3]$ and $b\in[1,2]$.}
+% \end{equation*}
+% The converse also holds; for all $a\in[1,3]$ and $b\in[1,2]$, there is a $Q\in\rateset$ that takes the above form. From this, it is clear that for all $Q\in\rateset$, it holds that $\lrate f\leq Qf$, for all $f\in\gamblesX$. 
+%Furthermore, $\rateset^1\subset\rateset$ and $\rateset^2\subset\rateset$. Hence, $\rateset$ has $\lrate$ as its corresponding lower transition rate operator. 
+
+It remains to determine that $\rateset^*=\rateset_{\lrate}$. One way to verify this is to consider any $Q'\notin\rateset^*$ and show that there is some $f\in\gamblesX$ and some $x\in\states$ such that $[Q'f](x)<[\lrate f](x)$. We leave this method as an exercise for the reader, and note instead the following. $\rateset^*$ is clearly non-empty, bounded, closed, convex, has separately specified rows and, as we have just shown, has $\lrate$ as its lower transition rate operator. Therefore, by Proposition~\ref{prop:dominating_unique_characterization}, we find that indeed $\rateset=\rateset_{\lrate}$.
 \exampleend
 \end{exmp}
 
