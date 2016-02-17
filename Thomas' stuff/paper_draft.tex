@@ -226,7 +226,7 @@ Our main contributions are the following:
 \item We introduce a ``lower transition operator'' for imprecise continuous-time Markov chains, and show that this operator satisfies convenient algebraic properties like time-homogeneity, differentiability, and Markovian-like factorization---even if the underlying set of processes does not. We show that we can use this operator to compute lower expectations for arbitrary functions on the state space, and provide an exact characterization of the largest set of processes for which a given such operator does this.
 \end{enumerate}
 
-The remainder of this paper is organized as follows. In Section~\ref{sec:prelim}, we introduce notation and some basic concepts that will be used throughout. Section~\ref{sec:stochastic_processes} formally introduces stochastic processes, and provides tools for describing their dynamics. Section~\ref{sec:cont_time_markov_chains} focuses on the special case of continuous-time Markov chains. 
+The remainder of this paper is organized as follows. In Section~\ref{sec:prelim}, we introduce notation and some basic concepts that will be used throughout. In Section~\ref{sec:systems}, we define some tools for representing the behavior of stochastic processes. Section~\ref{sec:stochastic_processes} formally introduces stochastic processes, and formalizes the tools for describing their dynamics. Section~\ref{sec:cont_time_markov_chains} focuses on the special case of continuous-time Markov chains. 
 
 In Section~\ref{sec:iCTMC}, we formalize the notion of imprecise continuous-time Markov chains, and state some powerful properties that can aid in their analysis. Section~\ref{sec:lowertrans} introduces a lower transition operator for imprecise continuous-time Markov chains, and we show in Sections~\ref{sec:connections} and~\ref{sec:funcs_multi_time_points} that this operator can be used to compute lower expectations of arbitrary functions on the state space. In Section~\ref{sec:prev_work}, we relate and compare our results to previous work from the literature. Section~\ref{sec:conclusions} finally contains some conclusions, along with pointers to possible future work.
 
@@ -333,11 +333,11 @@ $\norm{Af}\leq\norm{A}\norm{f}$
 
 We provide in this section some tools that will later be useful for characterizing continuous-time Markov chains. Because we have not formally defined this notion yet, the definitions below can be taken to be purely algebraic constructs. However, whenever possible, we attempt to provide some intuition on the context in which they will be used.
 
-In what follows, suffice it to say that a continuous-time Markov chain is a construct that, as time elapsed, moves through the state space $\states$ in some stochastic fashion. We here define tools with which this stochastic behavior can be conveniently represented at each point in time.
+In what follows, suffice it to say that a continuous-time Markov chain is a construct that at each time $t$ is said to be in a state $x\in\states$ and, as time elapsed, moves through this state space $\states$ in some stochastic fashion. We here define tools with which this stochastic behavior can be conveniently represented at each point in time.
 
 \subsection{Transition (Rate) Matrices}\label{sec:trans_rate_matrices}
 
-\emph{Transition matrices} are a convenient tool in describing both discrete-time and continuous-time Markov chains. A transition matrix $T$ is simply a matrix that is row-stochastic, meaning that, for each $x\in\states$, the row $T(x,\cdot)$ is a probability mass function on $\states$.
+\emph{Transition matrices} are convenient tools in describing both discrete-time and continuous-time Markov chains. A transition matrix $T$ is simply a matrix that is row-stochastic, meaning that, for each $x\in\states$, the row $T(x,\cdot)$ is a probability mass function on $\states$.
 \begin{definition}[Transition Matrix]\label{def:stoch_matrix}
 A real-valued matrix $T$ is said to be a \emph{transition matrix} if
 \vspace{5pt}
@@ -420,9 +420,11 @@ and $T_t^t=I$ for all $t\in\realsnonneg$.
 \end{definition}
 It will turn out that there is a strong connection between transition matrix systems and continuous-time Markov chains. We will return to this in Section~\ref{sec:cont_time_markov_chains}.
 
-We have seen in the previous section that the quantity $\nicefrac{1}{\Delta}(T - I)$ can be expressed as a rate matrix $Q$, for any transition matrix $T$ and any $\Delta\in\realspos$. We then related this to the finite difference $\nicefrac{1}{\Delta}(T_t^{t+\Delta} - I)$, and here note that this can equivalently be done for the term $\nicefrac{1}{\Delta}(T_{t-\Delta}^t - I)$ whenever $t\in\realspos$.
+We have seen in the previous section that the quantity $\nicefrac{1}{\Delta}(T - I)$ can be expressed as a rate matrix $Q$, for any transition matrix $T$ and any $\Delta\in\realspos$. We then related this to the finite difference $\nicefrac{1}{\Delta}(T_t^{t+\Delta} - I)$, and here note that this can equivalently be done for the term $\nicefrac{1}{\Delta}(T_{t-\Delta}^t - I)$ whenever $(t-\Delta)>0$.
 
-We now consider this relation in the context of transition matrix systems $\mathcal{T}$. For all $\Delta\in\realspos$, this family specifies the transition matrices $T_t^{t+\Delta}$  for all $t\in\realsnonneg$, and $T_{t-\Delta}^t$ for all  $t\in\realspos$. Hence, this allows us to jointly consider the behavior of these matrices for various values of $\Delta$. In particular, we consider what happens to the finite differences expressed above, if we take $\Delta$ to be increasingly smaller. For each such $\Delta$, there will be a rate matrix corresponding to these finite differences. If the norm of these resultant rate matrices never diverges to $+\infty$ as we take $\Delta$ to $0$, we call the family $\mathcal{T}$ \emph{well-behaved}.
+We now consider this relation in the context of transition matrix systems $\mathcal{T}$. For all $\Delta\in\realspos$, this family specifies the transition matrices $T_t^{t+\Delta}$  for all $t\in\realsnonneg$, and $T_{t-\Delta}^t$ for all  $t\in\reals_{>\Delta}$. Hence, this allows us to jointly consider the behavior of these matrices for various values of $\Delta$. In particular, we consider what happens to the finite differences expressed above, if we take $\Delta$ to be increasingly smaller. 
+
+For each such $\Delta$, there will be a rate matrix corresponding to these finite differences. If the norm of these resultant rate matrices never diverges to $+\infty$ as we take $\Delta$ to $0$, we call the family $\mathcal{T}$ \emph{well-behaved}.
 
 \begin{definition}[Well-Behaved Transition Matrix System]\label{def:well_behaved_trans_mat_system}
 A transition matrix system $\mathcal{T}$ is called \emph{well-behaved} if 
@@ -781,9 +783,9 @@ Let $P\in\processes$ be a stochastic process.  %Then for any $t,s\in\realsnonneg
 %Similarly, 
 Then, for any $t,s\in\realsnonneg$ such that $t\leq s$, any sequence of time points $u\in\mathcal{U}_{<t}$, and any state assignment $x_u\in\states^u$, the corresponding (history dependent) transition matrix $T_{t,\,x_u}^s$ is---as its name suggests---a transition matrix, and $T_{t,\,x_u}^t=I$. Furthermore, $P$ is well-behaved if and only if
 \begin{equation}\label{eq:wellbehavedtransitionmatrix}%\label{eq:wellbehavedhistorictransitionmatrix}
-\limsup_{\Delta\to 0^{+}}\frac{1}{\Delta}\norm{T_{t,x_u}^{t+\Delta}-I}<+\infty
-\text{~~~~and~~~~}
-\limsup_{\Delta\to 0^{+}}\frac{1}{\Delta}\norm{T_{t-\Delta,x_u}^t-I}<+\infty.
+\limsup_{\Delta\to 0^{+}}\frac{1}{\Delta}\norm{T_{t,x_u}^{t+\Delta}-I}<+\infty\,,
+\text{~~~~and,~~~~}
+\limsup_{\Delta\to 0^{+}}\frac{1}{\Delta}\norm{T_{t-\Delta,x_u}^t-I}<+\infty\,,
 \end{equation}
 for all $u\in\mathcal{U}$, $x_u\in\states^u$ and $t\in\reals_{\geq0}$ such that $t>u$.
 \end{proposition}
@@ -855,7 +857,7 @@ Of course, although this construction does not interfere with well-behavedness, 
 \exampleend
 \end{exmp}
 
-Because these directional partial derivatives do not necessarily exist, it will be more convenient to instead work with \emph{outer partial derivatives} {\bf (REF)}. Intuitively, these can be seen as a kind of set-valued derivatives, containing all accumulation points of the difference equations in Definition~\ref{def:direc_partial_deriv}, obtained as $\Delta\to0^+$.
+Because these directional partial derivatives do not necessarily exist, it will be more convenient to instead work with \emph{outer partial derivatives} {\bf (REF)}. Intuitively, these can be seen as a kind of set-valued derivatives, containing all accumulation points of the finite-difference expressions in Definition~\ref{def:direc_partial_deriv}, obtained as $\Delta\to0^+$.
 
 \begin{definition}[Outer Partial Derivatives]
 For any stochastic process $P\in\processes$, any $t\in\realsnonneg$, any sequence of time points $u<t$, and any state assignment $x_u\in\states^u$, the \emph{right-} and \emph{left-sided} \emph{outer partial derivatives} of $T_{t,x_u}^t$ are defined, respectively, as
