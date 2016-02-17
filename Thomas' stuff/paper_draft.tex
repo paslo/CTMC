@@ -1791,12 +1791,22 @@ Therefore, and because a lower expectation is an infimum over such expectations,
 \end{equation*}
 
 Now, recall our notation from Section~\ref{sec:multivar_notation}; the function $f(x_u,X_s)$ is the restriction of a function $f\in\gambles(\states^{u\cup\{s\}})$ to the state $\states^{\{s\}}$, specific to the state assignment $x_u\in\states^u$. In other words, for all $x_u\in\states^u$, there is some function $g_{x_u}\in\gambles(\states^{\{s\}})$, such that $g_{x_u}(x_s)=f(x_u,x_s)$ for all $x_s\in\states^{\{s\}}$.
+Hence, the problem of computing $\underline{\mathbb{E}}[f(x_u,X_s)\,\vert\,X_u=x_u]$ is in fact equivalent to computing $\underline{\mathbb{E}}[g_{x_u}(X_s)\,\vert\,X_u=x_u]$. 
 
-Hence, the problem of computing $\underline{\mathbb{E}}[f(x_u,X_s)\,\vert\,X_u=x_u]$ is in fact equivalent to computing $\underline{\mathbb{E}}[g_{x_u}(X_s)\,\vert\,X_u=x_u]$. Furthermore, because $g_{x_u}\in\gambles(\states^{\{s\}})=\gamblesX$, we already know from Section~\ref{sec:single_var_lower_exp} how to do this! In particular, recall from Section~\ref{sec:multivar_notation} that for operators from $\gamblesX$ to $\gamblesX$, and functions $f\in\gambles(\states^{u\cup\{s\}})$, we write
+Furthermore, because $g_{x_u}\in\gambles(\states^{\{s\}})=\gamblesX$, we already know from Section~\ref{sec:single_var_lower_exp} how to do this! In particular, we can do this by computing 
 \begin{equation*}
-\left[L_{t_n}^sf\right](x_u) \equiv \left[L_{t_n}^sf(x_u,X_s)\right](x_{t_n}) = \left[L_{t_n}^sg_{x_u}(X_s)\right](x_{t_n})\,.
+\left[L_{t_n}^sg_{x_u}\right](x_{t_n}) = \underline{\mathbb{E}}_\rateset^{\mathrm{WM}}[g_{x_u}(X_s)\,\vert\,X_{t_n}=x_{t_n}] = \underline{\mathbb{E}}_\rateset^{\mathrm{W}}[g_{x_u}(X_s)\,\vert\,X_u=x_u]\,.
 \end{equation*}
-We therefore have the following result as an immediate consequence of our previous results.
+%recall from Section~\ref{sec:multivar_notation} that for operators from $\gamblesX$ to $\gamblesX$, and functions $f\in\gambles(\states^{u\cup\{s\}})$, we write
+%\begin{equation*}
+%\left[L_{t_n}^sf\right](x_u) \equiv \left[L_{t_n}^sf(x_u,X_s)\right](x_{t_n}) = \left[L_{t_n}^sg_{x_u}(X_s)\right](x_{t_n})\,.
+%\end{equation*}
+In order to unify our notation, we therefore stipulate the following convention. For any $s\in\realspos$ and any $u\in\mathcal{U}_{<s}$ with $u\neq\emptyset$ such that $u=t_0,\ldots,t_n$, we allow $L_{t_n}^s$ to be applied to any $f\in\gambles(\states^{u\cup\{s\}})$, by applying it to the restriction of $f$ to the \emph{latest} time point at which it is defined---the time point $s$, in this case. Because this restriction depends on the state assignment $x_u$ at the other time points, the result is a function $[L_{t_n}^sf]\in\gambles(\states^u)$. In short, we stipulate for any $f\in\gambles(\states^{u\cup\{s\}})$ and any $x_u\in\states^u$, that
+\begin{equation*}
+[L_{t_n}^sf](x_u) \coloneqq [L_{t_n}^sg_{x_u}](x_{t_n}) \coloneqq [L_{t_n}^sf(x_u,X_s)](x_{t_n})\,.
+\end{equation*}
+
+The following now formalizes the fact that our previous results also apply to functions in $\gambles(\states^{u\cup\{s\}})$.
 
 \begin{corollary}\label{cor:inf_works_for_single_future_var}
 Let $\rateset$ be an arbitrary non-empty bounded set of rate matrices that has separately specified rows, with corresponding lower transition rate operator $\lrate$, and let $\underline{\mathcal{T}}_{\lrate}$ be the family of lower transition operators corresponding to $\lrate$. Then, for all $s\in\realsnonneg$, all $u\in\mathcal{U}_{<s}$ such that $u\neq\emptyset$, all $x_u\in\states^u$, and all $f\in\gambles(\states^{u\cup\{s\}})$,
@@ -1990,7 +2000,7 @@ Finally, previous work only focused on functions $f\in\gamblesX$ defined at a si
 \begin{equation*}
 \sum_{y\in\states} T(x,y) = \sum_{y\in\states} [I + \Delta Q](x,y) = \sum_{y\in\states}I(x,y) + \Delta \sum_{y\in\states}Q(x,y) = 1+\Delta 0=1.
 \end{equation*}
-\ref{def:T:nonneg} follows from~\ref{def:Q:nonnegoffdiagonal} and because $0\leq \Delta \leq \nicefrac{1}{\norm{Q}}$: for all $x,y\in\states$ such that $x\neq y$, $0\leq \Delta \leq \nicefrac{1}{\norm{Q}}$ implies that $[I+\Delta Q](x,x)=1+\Delta Q(x,x)\geq 1-\Delta\norm{Q}\geq0$, and \ref{def:Q:nonnegoffdiagonal} and $\Delta\geq0$ implies that $[I+\Delta Q](x,y)=\Delta Q(x,y)\geq0$.
+\ref{def:T:nonneg} follows from~\ref{def:Q:nonnegoffdiagonal} and because $0\leq \Delta\norm{Q} \leq 1$: for all $x,y\in\states$ such that $x\neq y$, $0\leq\Delta\norm{Q} \leq 1$ implies that $[I+\Delta Q](x,x)=1+\Delta Q(x,x)\geq 1-\Delta\norm{Q}\geq0$, and \ref{def:Q:nonnegoffdiagonal} and $\Delta\geq0$ implies that $[I+\Delta Q](x,y)=\Delta Q(x,y)\geq0$.
 \end{proof}
 
 \begin{proof}[Proof of Proposition~\ref{prop:rate_from_stochastic_matrix}]
@@ -2020,7 +2030,7 @@ This is a special case of Lemma~\ref{lemma:recursive_lower_trans}, which states 
 \begin{proof}[Proof of Proposition~\ref{lemma:restricted_trans_mat_system_cauchy_converges}]
 Consider any sequence $\{\mathcal{T}_i^{\mathbf{I}}\}_{i\in\nats}$ in $\mathbb{T}^{\mathbf{I}}$ that is Cauchy. We will prove that this sequence converges to a limit that belongs to $\mathbb{T}^{\mathbf{I}}$. For all $i\in\nats$ and any $t,s\in\mathbf{I}$ such that $t\leq s$, we will use $\presuper{i}T_t^s$ to denote the transition matrix that corresponds to $\mathcal{T}_i^{\mathbf{I}}$. 
 
-Since $\{\mathcal{T}_i^{\mathbf{I}}\}_{i\in\nats}$ is cauchy, %we know that
+Since $\{\mathcal{T}_i^{\mathbf{I}}\}_{i\in\nats}$ is Cauchy, %we know that
 % \begin{equation*}
 % (\forall\epsilon\in\realspos)\,(\exists n\in\nats)\,(\forall k,\ell > n)~d(\mathcal{T}_k^{\mathbf{I}},\mathcal{T}_\ell^{\mathbf{I}}) < \epsilon,
 % \end{equation*}
