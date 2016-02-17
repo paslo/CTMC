@@ -2832,26 +2832,6 @@ If $s_1\neq t$ and $s_{2m-1}=s$, the result follows by letting $n\coloneqq 2m-1$
 If $s_1\neq t$ and $s_{2m-1}\neq s$, the result follows by letting $n\coloneqq 2m$ and defining $t_i\coloneqq s_{i}$ for all $i\in\{0,\dots,n\}$.
 \end{proof}
 
-\begin{lemma}\label{lemma:nonhomogeneous_in_process_set}
-Consider any non-empty bounded set of rate matrices $\rateset$, any finite sequence of time points $u=t_0,\ldots,t_n$, and a corresponding collection of rate matrices $Q_0,\ldots,Q_{n+1}\in\rateset$. Then, there exists a well-behaved continuous-time Markov chain $P\in\wmprocesses_\rateset$ with transition matrix system $\mathcal{T}_P$, such that
-\begin{equation}\label{eq:nonhomogen_in_process_set_system_composition}
-\mathcal{T}_P = \mathcal{T}_{Q_0}^{[0,t_0]}\otimes \mathcal{T}_{Q_1}^{[t_0,t_1]} \otimes \cdots \otimes \mathcal{T}_{Q_n}^{[t_{n-1},t_n]} \otimes \mathcal{T}_{Q_{n+1}}^{[t_n,\infty)}\,.
-\end{equation}
-\end{lemma}
-\begin{proof}
-Because $\rateset\subset\mathcal{R}$, it follows immediately from Proposition~\ref{prop:finite_different_rate_matrix_has_process} that there is a $P\in\wmprocesses$ with transition matrix system $\mathcal{T}_P$, such that Equation~\eqref{eq:nonhomogen_in_process_set_system_composition} holds. It remains to show that $P\in\wmprocesses_\rateset$.
-
-To prove this, we have to show that $\smash{\overline{\partial}}T_t^t\subseteq\rateset$ for all $t\in\realsnonneg$. To this end, consider any $t\in\realsnonneg$.
-
-We will consider several cases. If $t<t_0$, we have that $\smash{\overline{\partial}}T_t^t$ corresponds to $\mathcal{T}_{Q_0}^{[0,t_0]}$, and hence $\smash{\overline{\partial}}T_t^t=\{Q_0\}\subseteq\rateset$. If $t>t_n$, then $\smash{\overline{\partial}}T_t^t$ corresponds to $\mathcal{T}_{Q_{n+1}}^{[t_n,\infty)}$, in which case $\smash{\overline{\partial}}T_t^t=\{Q_{n+1}\}\subseteq\rateset$. Similarly, if $t\in(t_{i-1},t_i)$ for some $i\in\{1,\ldots,n\}$, then $\smash{\overline{\partial}}T_t^t$ corresponds to $\mathcal{T}_{Q_i}^{[t_{i-1},t_i]}$, and hence $\smash{\overline{\partial}}T_t^t=\{Q_i\}\subseteq\rateset$.
-
-The remaining cases are when $t=t_i$ for some $i\in\{0,\ldots,n\}$. In this case, we have that $\smash{\overline{\partial}}_-T_t^t=\{Q_i\}$ and $\smash{\overline{\partial}}_+T_t^t=\{Q_{i+1}\}$. Hence,
-\begin{equation*}
-\smash{\overline{\partial}}T_t^t = \smash{\overline{\partial}}_-T_t^t\cup\smash{\overline{\partial}}_+T_t^t=\{Q_{i},Q_{i+1}\}\subseteq\rateset\,.
-\end{equation*}
-Because this covers all the possible cases, in summary, we have found that $\smash{\overline{\partial}}T_t^t\subseteq\rateset$ for all $t\in\realsnonneg$, and hence $P\in\wmprocesses_\rateset$.
-\end{proof}
-
 
 \begin{lemma}\label{lemma:convex_rate_set_contains_approximation}
 Consider a non-empty, bounded, convex set of rate matrices $\rateset$ and, for all $i\in\{1,\ldots,n\}$, some $\Delta_i\geq0$ and $Q_i\in\rateset$ such that $\Delta_i\norm{Q_i}\leq1$. Let $\Delta\coloneqq\sum_{i=1}^n\Delta_i$. Then
@@ -4408,6 +4388,27 @@ Because the $\epsilon\in\realspos$ was arbitrary, this completes the proof.
 %\end{equation*}
 %Because the $\epsilon\in\realspos$ was arbitrary, this concludes the proof.
 %\end{proof}
+
+
+\begin{lemma}\label{lemma:nonhomogeneous_in_process_set}
+Consider any non-empty bounded set of rate matrices $\rateset$, any finite sequence of time points $u=t_0,\ldots,t_n$, and a corresponding collection of rate matrices $Q_0,\ldots,Q_{n+1}\in\rateset$. Then, there exists a well-behaved continuous-time Markov chain $P\in\wmprocesses_\rateset$ with transition matrix system $\mathcal{T}_P$, such that
+\begin{equation}\label{eq:nonhomogen_in_process_set_system_composition}
+\mathcal{T}_P = \mathcal{T}_{Q_0}^{[0,t_0]}\otimes \mathcal{T}_{Q_1}^{[t_0,t_1]} \otimes \cdots \otimes \mathcal{T}_{Q_n}^{[t_{n-1},t_n]} \otimes \mathcal{T}_{Q_{n+1}}^{[t_n,\infty)}\,.
+\end{equation}
+\end{lemma}
+\begin{proof}
+Because $\rateset\subset\mathcal{R}$, it follows immediately from Proposition~\ref{prop:finite_different_rate_matrix_has_process} that there is a $P\in\wmprocesses$ with transition matrix system $\mathcal{T}_P$, such that Equation~\eqref{eq:nonhomogen_in_process_set_system_composition} holds. It remains to show that $P\in\wmprocesses_\rateset$.
+
+To prove this, we have to show that $\smash{\overline{\partial}}T_t^t\subseteq\rateset$ for all $t\in\realsnonneg$. To this end, consider any $t\in\realsnonneg$.
+
+We will consider several cases. If $t<t_0$, we have that $\smash{\overline{\partial}}T_t^t$ corresponds to $\mathcal{T}_{Q_0}^{[0,t_0]}$, and hence $\smash{\overline{\partial}}T_t^t=\{Q_0\}\subseteq\rateset$. If $t>t_n$, then $\smash{\overline{\partial}}T_t^t$ corresponds to $\mathcal{T}_{Q_{n+1}}^{[t_n,\infty)}$, in which case $\smash{\overline{\partial}}T_t^t=\{Q_{n+1}\}\subseteq\rateset$. Similarly, if $t\in(t_{i-1},t_i)$ for some $i\in\{1,\ldots,n\}$, then $\smash{\overline{\partial}}T_t^t$ corresponds to $\mathcal{T}_{Q_i}^{[t_{i-1},t_i]}$, and hence $\smash{\overline{\partial}}T_t^t=\{Q_i\}\subseteq\rateset$.
+
+The remaining cases are when $t=t_i$ for some $i\in\{0,\ldots,n\}$. In this case, we have that $\smash{\overline{\partial}}_-T_t^t=\{Q_i\}$ and $\smash{\overline{\partial}}_+T_t^t=\{Q_{i+1}\}$. Hence,
+\begin{equation*}
+\smash{\overline{\partial}}T_t^t = \smash{\overline{\partial}}_-T_t^t\cup\smash{\overline{\partial}}_+T_t^t=\{Q_{i},Q_{i+1}\}\subseteq\rateset\,.
+\end{equation*}
+Because this covers all the possible cases, in summary, we have found that $\smash{\overline{\partial}}T_t^t\subseteq\rateset$ for all $t\in\realsnonneg$, and hence $P\in\wmprocesses_\rateset$.
+\end{proof}
 
 \begin{proof}[Proof of Proposition~\ref{theorem:lower_markov_bound_is_tight}]
 Choose any $f\in\gamblesX$ and any $\epsilon\in\realspos$. Let $C\coloneqq (s-t)$, and define
