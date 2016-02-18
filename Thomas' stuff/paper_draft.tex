@@ -428,9 +428,9 @@ and $T_t^t=I$ for all $t\in\realsnonneg$.
 \end{definition}
 It will turn out that there is a strong connection between transition matrix systems and continuous-time Markov chains. We will return to this in Section~\ref{sec:cont_time_markov_chains}.
 
-We have seen in the previous section that the quantity $\nicefrac{1}{\Delta}(T - I)$ can be expressed as a rate matrix $Q$, for any transition matrix $T$ and any $\Delta\in\realspos$. We then related this to the finite difference $\nicefrac{1}{\Delta}(T_t^{t+\Delta} - I)$, and here note that this can equivalently be done for the term $\nicefrac{1}{\Delta}(T_{t-\Delta}^t - I)$ whenever $(t-\Delta)>0$.
+We have seen in the previous section that the quantity $\nicefrac{1}{\Delta}(T - I)$ can be expressed as a rate matrix $Q$, for any transition matrix $T$ and any $\Delta\in\realspos$. We then related this to the finite difference $\nicefrac{1}{\Delta}(T_t^{t+\Delta} - I)$, and here note that this can equivalently be done for the term $\nicefrac{1}{\Delta}(T_{t-\Delta}^t - I)$ whenever $(t-\Delta)\geq0$.
 
-We now consider this relation in the context of transition matrix systems $\mathcal{T}$. For all $\Delta\in\realspos$, this family specifies the transition matrices $T_t^{t+\Delta}$  for all $t\in\realsnonneg$, and $T_{t-\Delta}^t$ for all  $t\in\reals_{>\Delta}$. Hence, this allows us to jointly consider the behavior of these matrices for various values of $\Delta$. In particular, we consider what happens to the finite differences expressed above, if we take $\Delta$ to be increasingly smaller. 
+We now consider this relation in the context of transition matrix systems $\mathcal{T}$. For all $\Delta\in\realspos$, this family specifies the transition matrices $T_t^{t+\Delta}$  for all $t\in\realsnonneg$, and $T_{t-\Delta}^t$ for all  $t\in\reals_{\geq\Delta}$. Hence, this allows us to jointly consider the behavior of these matrices for various values of $\Delta$. In particular, we consider what happens to the finite differences expressed above, if we take $\Delta$ to be increasingly smaller. 
 
 For each such $\Delta$, there will be a rate matrix corresponding to these finite differences. If the norm of these resultant rate matrices never diverges to $+\infty$ as we take $\Delta$ to $0$, we call the family $\mathcal{T}$ \emph{well-behaved}.
 
@@ -555,7 +555,7 @@ $P(A\cap D\vert C)=P(A\vert D\cap C)P(D\vert C)$ if $D\cap C\neq\emptyset$.\labe
 
 \noindent
 For any $A\in\power$ and $C\in\nonemptypower$, we call $P(A\vert C)$ the probability of $A$ conditional on $C$. Also, for any $A\in\power$, we use the shorthand notation $P(A)\coloneqq P(A\vert\paths)$ and then call $P(A)$ the probability of $A$.
-The following additional properties can easily be shown to follow from \ref{def:coh_prob_2}--\ref{def:coh_prob_3}; see Appendix~\ref{app:prelim} for a proof. For all $A\in\power$ and all $C\in\nonemptypower$:
+The following additional properties can easily be shown to follow from \ref{def:coh_prob_2}--\ref{def:coh_prob_3}; see Appendix~\ref{app:stoch_proc} for a proof. For all $A\in\power$ and all $C\in\nonemptypower$:
 \vspace{5pt}
 \begin{enumerate}[label=F\arabic*:,ref=F\arabic*]
 \setcounter{enumi}{4}
@@ -609,7 +609,7 @@ The reason that these prices $P$ are called \emph{probabilities} is due to the f
 \begin{theorem}{\cite[Theorem 3]{regazzini1985finitely}}\label{theo:fullcoherent}
 Let $P$ be a real-valued map from $\power\times\nonemptypower$ to $\reals$. Then $P$ is a coherent conditional probability if and only if it is a full conditional probability.
 \end{theorem}
-Note that the result above assumes that the bettor quoted price for the entire domain $\power\times\nonemptypower$. Contrariwise, our explanation above started by considering a subset $\mathcal{C}$ of this domain. The reason for this is the following well-known result: if the prices $P$ are coherent on some subset $\mathcal{C}$ of $\power\times\nonemptypower$, it is always possible to extend the domain of these prices to some superset $\mathcal{C}^*\supseteq \mathcal{C}$, while maintaining coherence.
+Note that the result above assumes that the bettor quoted prices for the entire domain $\power\times\nonemptypower$. Contrariwise, our explanation started by considering a subset $\mathcal{C}$ of this domain. The reason for this is the following well-known result: if the prices $P$ are coherent on some subset $\mathcal{C}$ of $\power\times\nonemptypower$, it is always possible to extend the domain of these prices to some superset $\mathcal{C}^*\supseteq \mathcal{C}$, while maintaining coherence.
 
 \begin{theorem}{\cite[Theorem 4]{regazzini1985finitely}}\label{theo:largerdomain}
 Let $P$ be a coherent conditional probability on $\mathcal{C}\subseteq\power\times\nonemptypower$. Then for any $\mathcal{C}\subseteq\mathcal{C}^*\subseteq\power\times\nonemptypower$, $P$ can be extended to a coherent conditional probability on $\mathcal{C}^*$.
@@ -812,7 +812,7 @@ One seemingly obvious way to describe these dynamics is to use the derivatives o
 %Unfortunately, for general stochastic processes, these derivatives do not necessarily exist. In fact, also the slightly weaker directional derivatives---which we define below---are not guaranteed to exist. Worse still, they are not even guaranteed to exist for well-behaved processes.
 
 \begin{definition}[Directional Partial Derivatives]\label{def:direc_partial_deriv}
-For any stochastic process $P\in\processes$, any $t\in\realsnonneg$, any sequence of time points $u<t$, and any state assignment $x_u\in\states^u$, the \emph{right-} and \emph{left-sided partial derivatives} of $T_{t,x_u}^t$ are defined, respectively, as
+For any stochastic process $P\in\processes$, any $t\in\realsnonneg$, any sequence of time points $u\in\mathcal{U}_{<t}$, and any state assignment $x_u\in\states^u$, the \emph{right-} and \emph{left-sided partial derivatives} of $T_{t,x_u}^t$ are defined, respectively, as
 \begin{equation*}
 \partial_{+}{T_{t,\,x_u}^t}
 \coloneqq
@@ -859,7 +859,7 @@ Of course, although this construction does not interfere with well-behavedness, 
 Because these directional partial derivatives do not necessarily exist, it will be more convenient to instead work with \emph{outer partial derivatives} {\bf (REF)}. Intuitively, these can be seen as a kind of set-valued derivatives, containing all accumulation points of the finite-difference expressions in Definition~\ref{def:direc_partial_deriv}, obtained as $\Delta\to0^+$.
 
 \begin{definition}[Outer Partial Derivatives]
-For any stochastic process $P\in\processes$, any $t\in\realsnonneg$, any sequence of time points $u<t$, and any state assignment $x_u\in\states^u$, the \emph{right-} and \emph{left-sided} \emph{outer partial derivatives} of $T_{t,x_u}^t$ are defined, respectively, as
+For any stochastic process $P\in\processes$, any $t\in\realsnonneg$, any sequence of time points $u\in\mathcal{U}_{<t}$, and any state assignment $x_u\in\states^u$, the \emph{right-} and \emph{left-sided} \emph{outer partial derivatives} of $T_{t,x_u}^t$ are defined, respectively, as
 \begin{align}
 \overline{\partial}_{+}
 {T^t_{t,\,x_u}}
@@ -919,7 +919,7 @@ For any $P\in\wprocesses$, $\overline{\partial}_{+}
 \noindent Furthermore, these right- and left-sided outer partial derivatives are clearly related to the directional partial derivatives. The next statement makes this explicit for well-behaved stochastic processes, using an $\epsilon-\delta$ expression for the limits in Definition~\ref{def:direc_partial_deriv}.
 
 \begin{proposition}\label{prop:outerderivativebehaveslikelimit}
-Consider any well-behaved stochastic process $P\in\wprocesses$. Then, for any $t\in\realsnonneg$, any sequence of time points $u<t$, any state assignment $x_u\in\states^u$, and any $\epsilon>0$, there is some $\delta>0$ such that, for all $0<\Delta<\delta$:
+Consider any well-behaved stochastic process $P\in\wprocesses$. Then, for any $t\in\realsnonneg$, any sequence of time points $u\in\mathcal{U}_{<t}$, any state assignment $x_u\in\states^u$, and any $\epsilon>0$, there is some $\delta>0$ such that, for all $0<\Delta<\delta$:
 \begin{equation}
 \label{eq:outerderivativebehaveslikelimit1}
 (\exists Q\in\overline{\partial}_{+}
@@ -1198,7 +1198,7 @@ and
 \begin{equation*}
 \whmprocesses_\rateset = \left\{P\in\whmprocesses\,:\,Q_P\in\rateset\right\}\,.
 \end{equation*}
-This first equality follows from the Markov property of the elements in $\wmprocesses$, ensuring that $\smash{\overline{\partial}}T_{t,x_u}^t=\smash{\overline{\partial}}T_t^t$ for all $u\in\mathcal{U}_{<t}$ and all $x_u\in\states^u$. The second equality follows from the Markov property and the homogeneity of the elements of $P\in\whmprocesses$, which, by Proposition~\ref{prop:Q_is_singleton_deriv_for_homogen}, ensures that $\smash{\overline{\partial}}T_t^t=\{Q_P\}$ for all $t\in\realsnonneg$.
+This first equality follows from the Markov property of the elements of $\wmprocesses$, ensuring that $\smash{\overline{\partial}}T_{t,x_u}^t=\smash{\overline{\partial}}T_t^t$ for all $u\in\mathcal{U}_{<t}$ and all $x_u\in\states^u$. The second equality follows from the Markov property and the homogeneity of the elements $P\in\whmprocesses$, which, by Proposition~\ref{prop:Q_is_singleton_deriv_for_homogen}, ensures that $\smash{\overline{\partial}}T_t^t=\{Q_P\}$ for all $t\in\realsnonneg$.
 
 It should furthermore be clear that these different sets are nested, and, as an immediate result, that their corresponding lower expectations provide bounds on each other.
 
@@ -1526,10 +1526,10 @@ Furthermore, for all $t\in\realsnonneg$, we have that $L_t^t=I$.
 Our next result is that this family $\underline{\mathcal{T}}_{\lrate}$ is also time-homogeneous:
 
 \begin{proposition}\label{prop:lower_transition_is_homogeneous}
-Let $\lrate$ be an arbitrary lower transition rate operator, and let $\underline{\mathcal{T}}_{\lrate}$ be the corresponding lower transition operator system. Then, for all $t,s\in\realsnonneg$ such that $t\leq s$, and all $\Delta\in\realsnonneg$, we have that
-\begin{equation*}
-L_t^s = L_{t+\Delta}^{s+\Delta}\,.
-\end{equation*}
+Let $\lrate$ be an arbitrary lower transition rate operator, and let $\underline{\mathcal{T}}_{\lrate}$ be the corresponding lower transition operator system. Then, for all $t,s\in\realsnonneg$ such that $t\leq s$, we have that $L_t^s=L_0^{s-t}$.
+%\begin{equation*}
+%L_t^s = L_{t+\Delta}^{s+\Delta}\,.
+%\end{equation*}
 \end{proposition}
 
 Finally, we note that the derivatives of these lower transition operators always exist.
@@ -1590,13 +1590,14 @@ B\coloneqq\left[\begin{array}{rr}-3 & 3 \\1 & -1\end{array}\right]\,,
 \end{equation*}
 let $C\coloneqq \nicefrac{1}{2}(A+B)$ be their convex mixture, which is clearly also a rate matrix, and use these matrices to define the sets $\rateset_1\coloneqq\{A,B\}$ and $\rateset_2\coloneqq\{A,B,C\}$. Then clearly, $\rateset_1$ and $\rateset_2$ are two different, non-empty and bounded sets of rate matrices. Nevertheless, as we are about to show, the corresponding lower transition rate operators are identical.
 
-Let $\lrate_1$ and $\lrate_2$ be the lower transition rate operator that corresponds to $\rateset_1$ and $\rateset_2$, respectively, %We will show that $\lrate_1=\lrate_2$.
+Let $\lrate_1$ and $\lrate_2$ be the lower transition rate operators that correspond to $\rateset_1$ and $\rateset_2$, respectively, %We will show that $\lrate_1=\lrate_2$.
 and consider any $f\in\gamblesX$. Equation~\eqref{eq:correspondinglowertrans} then implies that $\lrate_1f\leq Af$ and $\lrate_1f\leq Bf$, which in turn implies that $\lrate_1f\leq Cf$. Therefore, by applying Equation~\eqref{eq:correspondinglowertrans} once more, we find that $\lrate_1 f\leq\lrate_2 f$. Hence, since Equation~\eqref{eq:correspondinglowertrans} also trivially implies that $\lrate_2 f\leq\lrate_1 f$, we find that $\lrate_1 f=\lrate_2 f$. Since this is true for any $f\in\gamblesX$, we conclude that $\lrate_1=\lrate_2$.
 \exampleend
 \end{exmp}
+Now, it is not necessarily problematic that different sets can have the same corresponding lower transition rate operator, but it does lead to a natural question: what do these different sets have in common?
 
-Next, we consider some fixed lower transition rate operator $\lrate$.
-All the non-empty bounded sets $\rateset$ of rate matrices that have $\lrate$ as their lower envelope then share a common property: they consist of rate matrices $Q$ that dominate $\lrate$, in the sense that $Qf\geq\lrate f$ for all $f\in\gamblesX$. Therefore, each of these sets $\rateset$ is contained in the following set of dominating rate matrices:
+Therefore, we next consider some fixed lower transition rate operator $\lrate$.
+All the non-empty bounded sets $\rateset$ of rate matrices that have $\lrate$ as their lower envelope then share this common property: they consist of rate matrices $Q$ that dominate $\lrate$, in the sense that $Qf\geq\lrate f$ for all $f\in\gamblesX$. Therefore, each of these sets $\rateset$ is contained in the following set of dominating rate matrices:
 \begin{equation}\label{eq:dominatingratematrices}
 \rateset_{\lrate}\coloneqq
 \left\{
@@ -1653,7 +1654,10 @@ First of all, for any $Q\in\rateset^*$, $f\in\gamblesX$ and $x\in\states$, it fo
 \geq\lambda[\lrate f](x)+(1-\lambda)[\lrate f](x)
 =[\lrate f](x),
 \end{equation*}
-where the inequality holds because $\lrate$ is the lower envelope of $\rateset_1$. Since this is true for all $x\in\states$, we find that $Qf\geq\lrate f$. Since this is true for all $f\in\gamblesX$, we find that $Q\geq\lrate$. Since this is true for all $Q\in\rateset^*$, it follows that $\rateset^*\subseteq\rateset_{\lrate}$. Hence, if we let $\lrate^*$ be the lower transition rate operator that corresponds to $\rateset^*$, we find that $\lrate^*\geq\lrate$. Similarly, since $\rateset_1$ is clearly a subset of $\rateset^*$, we find that $\lrate^*\leq\lrate_1$. Since $\lrate_1=\lrate$, we conclude that $\lrate^*=\lrate$.
+where the inequality holds because $\lrate$ is the lower envelope of $\rateset_1$. Since this is true for all $x\in\states$, we find that $Qf\geq\lrate f$. Since this is true for all $f\in\gamblesX$ and all $Q\in\rateset^*$, it follows that $\rateset^*\subseteq\rateset_{\lrate}$. 
+
+
+Let now $\lrate^*$ be the lower transition rate operator that corresponds to $\rateset^*$. Consider any $f\in\gamblesX$. Then, because $\rateset^*\subseteq\rateset_{\lrate}$, we find that $\lrate^*f\geq\lrate f$. Similarly, since $\rateset_1$ is clearly a subset of $\rateset^*$, we find that $\lrate^*f\leq\lrate_1f$. Since $\lrate_1=\lrate$, it follows that $\lrate f\leq \lrate^*f\leq \lrate f$, and because this holds for any $f\in\gamblesX$, we conclude that $\lrate^*=\lrate$.
 
 
 % Recall from Example~\ref{example:different_sets_same_lower_rate} that for all $f\in\gamblesX$, it holds that either $\lrate f=Af$, or $\lrate f=Bf$. Using a similar argument as we used there for the rate matrix $C$, it is clear that any convex combination $Q_\lambda\coloneqq \lambda A+(1-\lambda)B$, with $\lambda\in[0,1]$, is a rate matrix that dominates $\lrate$. Furthermore, because we there found that $[Af](1)\leq [Bf](1)$ if and only if $[Af](2)\leq[Bf](2)$, any matrix constructed by combining rows from $A$ and $B$ will dominate $\lrate$. For example, let $D$ be a rate matrix such that $D(1,\cdot)\coloneqq A(1,\cdot)$ and $D(2,\cdot)\coloneqq B(2,\cdot)$. Then, if $Af\leq Bf$, it also holds that $Af\leq Df$. Similarly, if $Bf\leq Af$, then also $Bf\leq Df$. A similar argument shows that the same is true for any matrix constructed by combining rows from different convex combinations of $A$ and $B$.
@@ -1717,7 +1721,7 @@ and furthermore,
 \end{equation*}
 \end{corollary}
 
-Thus, we find that there is a correspondence between the operator $L_t^s$ and lower expectations with respect to sets of stochastic processes. However, we also find that this correspondence is not one-to-one. Clearly, Corollary~\ref{cor:lower_operator_is_infimum} shows that $L_t^s$ computes the lower expectation for the different sets $\wmprocesses_\rateset$ and $\wprocesses_\rateset$. Furthermore, we know from Section~\ref{sec:connections_rate} that different sets $\rateset^1$ and $\rateset^2$ may have the same corresponding lower transition rate operator $\lrate$. Hence, whenever this is the case, $L_t^s$ would---assuming the conditions in Corollary~\ref{cor:lower_operator_is_infimum} are met by both $\rateset^1$ and $\rateset^2$---then compute the lower expectation with respect to both $\wmprocesses_{\rateset^1}$ and $\wmprocesses_{\rateset^2}$ (and also, furthermore, for $\wprocesses_{\rateset^1}$ and $\wprocesses_{\rateset^2}$). An obvious question, therefore, would be what the largest set of stochastic processes is for which $L_t^s$ computes the lower expectation.
+Thus, we find that there is a correspondence between the operator $L_t^s$ and lower expectations with respect to sets of stochastic processes. However, we also find that this correspondence is not one-to-one. Clearly, Corollary~\ref{cor:lower_operator_is_infimum} shows that $L_t^s$ computes the lower expectation for the different sets $\wmprocesses_\rateset$ and $\wprocesses_\rateset$. Furthermore, we know from Section~\ref{sec:connections_rate} that different sets $\rateset_1$ and $\rateset_2$ may have the same corresponding lower transition rate operator $\lrate$. Hence, whenever this is the case, $L_t^s$ would---assuming the conditions in Corollary~\ref{cor:lower_operator_is_infimum} are met by both $\rateset_1$ and $\rateset_2$---then compute the lower expectation with respect to both $\wmprocesses_{\rateset_1}$ and $\wmprocesses_{\rateset_2}$ (and also, furthermore, for $\wprocesses_{\rateset_1}$ and $\wprocesses_{\rateset_2}$). An obvious question, therefore, would be what the largest set of stochastic processes is for which $L_t^s$ computes the lower expectation.
 
 %*** This needs some rewording ***
 %
@@ -1822,7 +1826,7 @@ In order to unify our notation, we therefore stipulate the following convention.
 The following now formalizes the fact that our previous results also apply to functions in $\gambles(\states^{u\cup\{s\}})$.
 
 \begin{corollary}\label{cor:inf_works_for_single_future_var}
-Let $\rateset$ be an arbitrary non-empty bounded set of rate matrices that has separately specified rows, with corresponding lower transition rate operator $\lrate$, and let $\underline{\mathcal{T}}_{\lrate}$ be the family of lower transition operators corresponding to $\lrate$. Then, for all $s\in\realsnonneg$, all $u\in\mathcal{U}_{<s}$ such that $u\neq\emptyset$, all $x_u\in\states^u$, and all $f\in\gambles(\states^{u\cup\{s\}})$,
+Let $\rateset$ be an arbitrary non-empty bounded set of rate matrices that has separately specified rows, with corresponding lower transition rate operator $\lrate$, and let $\underline{\mathcal{T}}_{\lrate}$ be the family of lower transition operators corresponding to $\lrate$. Then, for all $s\in\realspos$, all $u\in\mathcal{U}_{<s}$ such that $u\neq\emptyset$, all $x_u\in\states^u$, and all $f\in\gambles(\states^{u\cup\{s\}})$,
 \begin{equation*}
 \left[L_{t_n}^s f\right](x_u) = \underline{\mathbb{E}}^{\mathrm{WM}}_{\,\rateset}[f(x_u,X_s)\,\vert\,X_u=x_u]\,,
 \end{equation*}
@@ -2158,7 +2162,7 @@ Because this clearly holds for all $t\in\mathbf{I}\setminus\{r\}$ and all $t\in\
 % which proves~\ref{lem:alt_axiom_prob_3}.
 % \end{proof}
 
-\section{Proofs and Lemmas for Section~\ref{sec:stochastic_processes}}
+\section{Proofs and Lemmas for Section~\ref{sec:stochastic_processes}}\label{app:stoch_proc}
 
 \begin{proof}[Proof of \ref{def:coh_prob_2b}-\ref{def:coh_prob_5}]
 Consider any $A\in\power$ and $C\in\nonemptypower$. It then follows from \ref{def:coh_prob_1} and \ref{def:coh_prob_3} that
