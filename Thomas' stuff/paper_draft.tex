@@ -1891,19 +1891,39 @@ Immediate consequence of Corollary~\ref{cor:lower_operator_is_infimum}.
 
 \subsection{Multi-Variable Functions on Multiple Points in the Future}\label{sec:decomposition}
 
-**** blabla
+We now consider functions $f\in\gambles(\states^{u\cup v})$, where $u=t_0,\ldots,t_n$ is a sequence of time points in a process' history, and $v=s_0,\ldots,s_m$ is a sequence of time points in a process' future; hence, we assume $s_0>t_n$. For functions of this kind, it---surprisingly---turns out that computing the lower expectation with respect to $\wprocesses_\rateset$ is easier than for $\wmprocesses_\rateset$. We will show in this section how to do this for the former set, and provide in the next section a counter example for the latter.
 
-We now consider functions $f\in\gambles(\states^{u\cup v})$, where $u=t_0,\ldots,t_n$ is a sequence of time points in a process' history, and $v=s_0,\ldots,s_m$ is a sequence of time points in a process' future; hence, we assume $s_0>t_n$. As the next example shows, the lower expectation of such functions, when taken with respect to a set $\wmprocesses_\rateset$ of Markov processes, no longer necessarily corresponds to the lower expectation taken with respect to a set $\wprocesses_\rateset$ of non-Markov processes.
+We have seen in the previous sections that we can use the operator $L_t^s$ to compute lower expectations of functions $f\in\gamblesX$ and $f\in\gambles(\states^{u\cup\{s\}})$, whenever $\rateset$ is non-empty, bounded, and has separately specified rows. We here show that if $\rateset$ is additionally convex, then we can do the same for functions $f\in\gambles(\states^{u\cup v})$.
 
-\begin{exmp}
-{\bf TODO} Example that sometimes $\underline{\mathbb{E}}^\mathrm{M}\neq \underline{\mathbb{E}}$ for functions $f\in\gambles(\states^{u\cup v})$.
-\exampleend
-\end{exmp}
+Hence, we are now interested in computing the quantity
+\begin{equation*}
+\underline{\mathbb{E}}_\rateset^{\mathrm{W}}[f(x_u,X_v)\,\vert\,X_u=x_u]\,.
+\end{equation*}
+Recall now from Theorem~\ref{theorem:decomposition_multivar} that if $\rateset$ is convex, we can decompose this lower expectation as
+\begin{equation}\label{eq:nested_lower_exp_single_step}
+\underline{\mathbb{E}}_\rateset^{\mathrm{W}}[f(x_u,X_v)\,\vert\,X_u=x_u] = \underline{\mathbb{E}}_\rateset^{\mathrm{W}}\bigl[ \underline{\mathbb{E}}_\rateset^{\mathrm{W}}[f(x_u,X_v)\,\vert\,X_u=x_u,X_{v\setminus\{s_m\}}] \,\big\vert\,X_u=x_u\bigr]\,,
+\end{equation}
+where we use the notation $v=s_0,\ldots,s_m$. Observe that the inner lower expectation on the right-hand side of this equality is conditioned on all the time points $u$ and $v\setminus\{s_m\}$. Therefore, this lower expectation is only taken at a single time $s_m$. It therefore follows from Corollary~\ref{cor:inf_works_for_single_future_var} that, for all $x_{v\setminus\{s_m\}}\in\states^{v\setminus\{s_m\}}$,
+\begin{equation*}
+\left[L_{s_{m-1}}^{s_m}f\right]\left(x_u,x_{v\setminus\{s_m\}}\right) = \underline{\mathbb{E}}_\rateset^{\mathrm{W}}[f(x_u,X_v)\,\vert\,X_u=x_u,X_{v\setminus\{s_m\}}=x_{v\setminus\{s_m\}}]\,.
+\end{equation*}
+Because this holds for all $x_{v\setminus\{s_m\}}\in\states^{v\setminus\{s_m\}}$, we can now replace the inner lower expectation in Equation~\eqref{eq:nested_lower_exp_single_step}, to obtain
+\begin{equation*}
+\underline{\mathbb{E}}_\rateset^{\mathrm{W}}[f(x_u,X_v)\,\vert\,X_u=x_u] = \underline{\mathbb{E}}_\rateset^{\mathrm{W}}\left[ \left[L_{s_{m-1}}^{s_m}f\right]\left(x_u,X_{v\setminus\{s_m\}}\right) \,\big\vert\,X_u=x_u\right]\,.
+\end{equation*}
+If we now recursively apply this process, we can repeatedly factor out the latest remaining time point $s_{m-1}, s_{m-2},\ldots,s_{0}$, and at each step replace the inner lower expectation with the operator $L_{s_{m-2}}^{s_{m-1}},L_{s_{m-3}}^{s_{m-2}},\ldots,L_{t_n}^{s_0}$. Because $v$ is finite, this process eventually stops, and we then obtain the following result.
+
+%As the next example shows, the lower expectation of such functions, when taken with respect to a set $\wmprocesses_\rateset$ of Markov processes, no longer necessarily corresponds to the lower expectation taken with respect to a set $\wprocesses_\rateset$ of non-Markov processes.
+%
+%\begin{exmp}
+%{\bf TODO} Example that sometimes $\underline{\mathbb{E}}^\mathrm{M}\neq \underline{\mathbb{E}}$ for functions $f\in\gambles(\states^{u\cup v})$.
+%\exampleend
+%\end{exmp}
 
 
-*** blabla, uitleg dat dit niet werkt over set van Markov chains
+%*** blabla, uitleg dat dit niet werkt over set van Markov chains
 
-*** blabla, dit kunnen we recursief doen totdat elke lower expectation nog maar een tijdpunt bevat. ergo, als $\rateset$ ook s.s.r. heeft, dan
+%*** blabla, dit kunnen we recursief doen totdat elke lower expectation nog maar een tijdpunt bevat. ergo, als $\rateset$ ook s.s.r. heeft, dan
 
 \begin{corollary}\label{cor:composition_lower_trans}
 Let $\rateset$ be an arbitrary non-empty, bounded, and convex set of rate matrices that has separately specified rows, with corresponding lower transition rate operator $\lrate$, and let $\underline{\mathcal{T}}_{\lrate}$ be the family of lower transition operators corresponding to $\lrate$. 
