@@ -891,7 +891,18 @@ For any stochastic process $P\in\processes$, any $t\in\realsnonneg$, any sequenc
 
 The following example established that these directional partial derivatives need not exist. In particular, they need not exist even for well-behaved processes.
 \begin{exmp}\label{exmp:well-behaved-no-deriv}
-**** verschillende $\{\Delta_i\}_{i\in\nats}\to0^+$ geven verschillende $Q$.
+Suppose that, for some well-behaved stochastic process $P\in\wprocesses$, for some time $t$ and for some history $x_u$ such that $u<t$, there exist two different sequences $\{\Delta_i^1\}_{i\in\nats}$ and $\{\Delta_i^2\}_{i\in\nats}$ such that $\{\Delta_i^1\}_{i\in\nats}\to0^+$ and $\{\Delta_i^2\}_{i\in\nats}\to0^+$, for which
+\begin{equation*}
+\lim_{i\to\infty}~~\frac{1}{\Delta_i^1}\left(T_{t,x_u}^{t+\Delta_i^1} - I\right) = Q_1\,,~~\text{and,}~~ \lim_{i\to\infty}~~ \frac{1}{\Delta_i^2}\left(T_{t,x_u}^{t+\Delta_i^2} - I\right) = Q_2\,,
+\end{equation*}
+with $Q_1,Q_2\in\mathcal{R}$ such that $Q_1\neq Q_2$. Then, clearly, the directional partial derivative $\partial_{+}{T_{t,\,x_u}^t}=\lim_{\Delta\to 0^{+}}
+\frac{1}{\Delta}
+(T^{t+\Delta}_{t,\,x_u}-I)$ does not exist. 
+
+However, $\lim_{i\to\infty}\nicefrac{1}{\Delta_i^1}\lVert T_{t,x_u}^{t+\Delta_i^1} - I\rVert = \norm{Q_1}$ and $\lim_{i\to\infty}\nicefrac{1}{\Delta_i^2}\lVert T_{t,x_u}^{t+\Delta_i^2} - I\rVert = \norm{Q_2}$, and because $\norm{Q_1},\norm{Q_2}<+\infty$, this is not problematic for the well-behavedness of $P$.
+
+Of course, one might wonder whether it is possible for such a $P\in\wprocesses$ to exist in the first place. Example~\ref{exmp:markov_with_no_deriv} in Section~\ref{sec:nonhomogen_markov} will show that this is indeed the case.
+%**** verschillende $\{\Delta_i\}_{i\in\nats}\to0^+$ geven verschillende $Q$.
 %***** Meh, werkt ook niet echt. Wil eigenlijk accumulatie punt van exponentiele, maar hebben we hier nogniet geintroduceerd.
 %
 %Consider a sequence $\{\Delta_i\}_{i\in\nats}$ in $\realspos$ such that $\Delta_i\coloneqq \nicefrac{1}{2^i}$, for all $i\in\nats$. Consider a well-behaved stochastic process $P\in\wmprocesses$ at some time $t\in\realsnonneg$ and for some history $x_u\in\states^u$, $u<t$. Suppose that the corresponding transition matrix $T_{t,x_u}^{t+\Delta}$ satisfies for all $\Delta\in\realspos$, that if $\Delta\in[\Delta_{i+1},\Delta_i)$ for some $i\in\nats$, then
@@ -966,6 +977,12 @@ For any $P\in\wprocesses$, $\overline{\partial}_{+}
 {T^t_{t,\,x_u}}$ and $\overline{\partial}
 {T^t_{t,\,x_u}}$ are non-empty, bounded and closed subsets of $\mathcal{R}$.
 \end{proposition}
+
+\begin{exmp}
+The process from Example~\ref{exmp:well-behaved-no-deriv} above will satisfy $\overline{\partial}_{+}
+{T^t_{t,\,x_u}}\supseteq \{Q_1,Q_2\}$.
+\exampleend
+\end{exmp}
 
 \noindent Furthermore, these right- and left-sided outer partial derivatives are clearly related to the directional partial derivatives. The next statement makes this explicit for well-behaved stochastic processes, using an $\epsilon-\delta$ expression for the limits in Definition~\ref{def:direc_partial_deriv}.
 
@@ -1074,7 +1091,7 @@ Consider any well-behaved homogeneous Markov chain $P\in\whmprocesses$, and let 
 **** {\bf TODO}
 \end{proof}
 
-\subsection{Non-homogeneous Markov chains}
+\subsection{Non-homogeneous Markov chains}\label{sec:nonhomogen_markov}
 
 In contrast to homogeneous Markov chains, a Markov chain for which Equation~\eqref{eq:homogeneousMarkov} does not hold is called---rather obviously---\emph{non-homogeneous}. While we know from Theorem~\ref{theo:homogeneoushasQ} that homogeneous Markov chains can be characterized (up to an initial distribution) by a fixed rate matrix $Q\in\mathcal{R}$, this does not hold for non-homogeneous Markov chains. 
 
@@ -1112,7 +1129,7 @@ The first equality, where $t\in(t_{i-1},t_i)$, is explained by Proposition~\ref{
 
 The second equality, where $t=t_i$, is due to the definition $\smash{\overline{\partial}}T_t^t\coloneqq \smash{\overline{\partial}}_-T_t^t\cup \smash{\overline{\partial}}_+T_t^t$. To see this, note that $\smash{\overline{\partial}}_-T_t^t$ will here correspond to the interval $[t_{i-1}, t_i]$, and hence satisfies $\smash{\overline{\partial}}_-T_t^t=\{Q_i\}$. On the other hand, $\smash{\overline{\partial}}_+T_t^t$ corresponds to $[t_i,t_{i+1}]$, and is therefore given by $\smash{\overline{\partial}}_+T_t^t=\{Q_{i+1}\}$.
 
-\begin{exmp}
+\begin{exmp}\label{exmp:markov_with_no_deriv}
 ***** laat outer partial deriv zien voor systeem met verdichtingspunt uit sectie 3. merk op dat dit bestaan van process uit sectie 4.4 bewijst.
 %**** Misschien voorbeeld dat we hiermee het bestaan van het tegenvoorbeeld in Example~\ref{exmp:well-behaved-no-deriv} kunnen bewijzen?
 \exampleend
