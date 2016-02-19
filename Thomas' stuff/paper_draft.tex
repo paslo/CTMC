@@ -1868,7 +1868,11 @@ Another way of putting this is that, if one is interested in the lower expectati
 
 Having shown in Section~\ref{sec:single_var_lower_exp} that the operator $L_t^s$ computes lower expectations for functions $f\in\gamblesX$ defined on a single point in time, we will now turn our attention to functions defined on multiple time points. Because we are considering \emph{conditional} expectations, where the conditioning is done with respect to states in a (non-)Markov chain's history, it makes sense to distinguish between two different classes of functions defined at multiple time points. 
 
-**** blabla
+In Section~\ref{sec:function_single_future_multiple_past}, we first consider functions $f\in\gambles(\states^{u\cup\{s\}})$, and lower expectations of the form $\underline{\mathbb{E}}[f(x_u,X_s)\,\vert\,X_u=x_u]$. Thus, although the function $f$ depends on multiple time points, all but one of these time points are taken to be fixed due to the conditioning of the lower expectation.
+
+This is then generalized in Section~\ref{sec:decomposition} to arbitrary functions $f\in\gambles(\states^{u\cup v})$ and lower expectations $\underline{\mathbb{E}}[f(x_u,X_v)\,\vert\,X_u=x_u]$, where the expectation is taken over an arbitrary number of time points.
+
+We finally apply these results with some worked examples in Section~\ref{sec:tractability}, where we also provide some comments on tractability and computational aspects.
 
 %First, in Section~\ref{sec:function_single_future_multiple_past}, we will consider functions defined on a single time point in a chain's future, and multiple time points in the chain's history. Thus, we will consider functions $f\in\gambles(\states^{u\cup\{s\}})$, and lower expectations of the form
 %\begin{equation*}
@@ -2061,6 +2065,11 @@ The difference between $\wprocesses_{\text{int}(\rateset_{\lrate})}$ and $\wproc
 
 \subsection{Computational Aspects}\label{sec:tractability}
 
+\begin{exmp}
+{\bf TODO} Example that sometimes $\underline{\mathbb{E}}^\mathrm{M}\neq \underline{\mathbb{E}}$ for functions $f\in\gambles(\states^{u\cup v})$.
+\exampleend
+\end{exmp}
+
 **** notes about computational aspects/tractability, observation that decomposition reduces the problem to discrete-time computations, reference earlier work containing algorithms to compute this
 
 **** computation can also be brute-forced if state space and number of time points allow for it.
@@ -2073,6 +2082,8 @@ The difference between $\wprocesses_{\text{int}(\rateset_{\lrate})}$ and $\wproc
 \end{exmp}
 
 \section{Relation to Previous Work}\label{sec:prev_work}
+
+**** other related work: Markov Decision Processes, controlled Markov processes, differential inclusions, ....
 
 To the best of our knowledge, the concept of imprecise continuous-time Markov chains was first introduced in the literature by the work of {\v{S}}kulj~\cite{Skulj:2015cq}. There, the idea was used to define $\lrate$ as a lower envelope of a set of rate matrices $\rateset$ that has separately specified rows. It was shown that then, for a given $f\in\gamblesX$, the differential equation
 \begin{align}\label{eq:damjans_diff}
@@ -2089,11 +2100,9 @@ Our work extends these results in several ways. First, as shown by Proposition~\
 
 Our present work furthermore adds to the literature in several ways. In~\cite{Skulj:2015cq}, the arguments were cast purely in terms of lower envelopes of expectation functionals; but side-stepped the question of which sets of processes these envelopes correspond to. In contrast, our work in Section~\ref{sec:iCTMC} makes explicit the sets of processes that we are dealing with, and Theorem~\ref{theo:dominating_rate_processes_max_set} exactly characterizes the largest set of processes for which our lower transition operator---and indeed the differential equation~\eqref{eq:damjans_diff}---computes a lower envelope.
 
-This earlier work also contains several results that are of significance to us. In particular, {\v{S}}kulj discusses several practical techniques to numerically compute, or approximate to arbitrary precision, the quantity $\underline{f}_{\,s}$ for a given $f\in\gamblesX$. Hence, because of the correspondence between $\underline{f}_{\,s}$ and $L_0^sf$, these results can be applied when numerically working with our lower transition operator.
+This earlier work also contains several results that are useful to us. In particular, {\v{S}}kulj discusses several practical techniques to numerically compute, or approximate to arbitrary precision, the quantity $\underline{f}_{\,s}$ for a given $f\in\gamblesX$. Hence, because of the correspondence between $\underline{f}_{\,s}$ and $L_0^sf$, these results can be applied when numerically working with our lower transition operator.
 
-*** onderstaande beetje herschrijven nog
-
-Finally, previous work only focused on functions $f\in\gamblesX$ defined at a single point in time. We will now turn to functions defined on multiple time points, where we will find that it is crucial to be aware of the set of processes with respect to which one is taking lower envelopes.
+Finally, this previous work only focused on functions $f\in\gamblesX$ defined at a single point in time. In contrast, our work in Section~\ref{sec:funcs_multi_time_points} extends these results to functions $f\in\gambles(\states^{u\cup v})$ defined at an arbitrary number of time points. We there also found that it was, in fact, crucial to be aware of the exact set of processes with respect to which one is taking the lower expectation.
 
 \section{Conclusions \& Future Work}\label{sec:conclusions}
 
