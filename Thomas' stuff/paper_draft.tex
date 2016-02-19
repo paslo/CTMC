@@ -526,7 +526,7 @@ Consider any interval $\mathbf{I}\subseteq\realsnonneg$, let $\mathbb{T}^{\mathb
 \end{proposition}
 Note that this result includes as a special case completeness of the set $\mathbb{T}^{\realsnonneg}$ of all (unrestricted) transition matrix systems. The following provides an example of how this result can be used. This example also prepares some results that will be used again in other examples later in this work.
 
-\begin{exmp}
+\begin{exmp}\label{exmp:limit_trans_mat_system}
 Consider any two commuting rate matrices $Q_1,Q_2\in\mathcal{R}$ such that $Q_1\neq Q_2$, and let $\mathcal{T}_{Q_1}$ and $\mathcal{T}_{Q_2}$ be their exponential transition matrix systems. Consider now the sequence $\{\Delta_i\}_{i\in\nats}\coloneqq \{\nicefrac{1}{2^i}\}_{i\in\nats}$, define $\mathcal{T}_0\coloneqq \mathcal{T}_{Q_1}$, and, for all $i\in\nats$, let
 \begin{equation*}
 \mathcal{T}_i \coloneqq \begin{cases}
@@ -891,15 +891,15 @@ For any stochastic process $P\in\processes$, any $t\in\realsnonneg$, any sequenc
 
 The following example established that these directional partial derivatives need not exist. In particular, they need not exist even for well-behaved processes.
 \begin{exmp}\label{exmp:well-behaved-no-deriv}
-Suppose that, for some well-behaved stochastic process $P\in\wprocesses$, for some time $t$ and for some history $x_u$ such that $u<t$, there exist two different sequences $\{\Delta_i^1\}_{i\in\nats}$ and $\{\Delta_i^2\}_{i\in\nats}$ such that $\{\Delta_i^1\}_{i\in\nats}\to0^+$ and $\{\Delta_i^2\}_{i\in\nats}\to0^+$, for which
+Suppose that, for some well-behaved stochastic process $P\in\wprocesses$, for some time $t$ and for some history $x_u$ such that $u<t$, there exist two different sequences $\{\Delta_i\}_{i\in\nats}$ and $\{\Delta_i'\}_{i\in\nats}$ such that $\{\Delta_i\}_{i\in\nats}\to0^+$ and $\{\Delta_i'\}_{i\in\nats}\to0^+$, for which
 \begin{equation*}
-\lim_{i\to\infty}~~\frac{1}{\Delta_i^1}\left(T_{t,x_u}^{t+\Delta_i^1} - I\right) = Q_1\,,~~\text{and,}~~ \lim_{i\to\infty}~~ \frac{1}{\Delta_i^2}\left(T_{t,x_u}^{t+\Delta_i^2} - I\right) = Q_2\,,
+\lim_{i\to\infty}~~\frac{1}{\Delta_i}\left(T_{t,x_u}^{t+\Delta_i} - I\right) = Q_1\,,~~\text{and,}~~ \lim_{i\to\infty}~~ \frac{1}{\Delta_i'}\left(T_{t,x_u}^{t+\Delta_i'} - I\right) = Q_2\,,
 \end{equation*}
 with $Q_1,Q_2\in\mathcal{R}$ such that $Q_1\neq Q_2$. Then, clearly, the directional partial derivative $\partial_{+}{T_{t,\,x_u}^t}=\lim_{\Delta\to 0^{+}}
 \frac{1}{\Delta}
 (T^{t+\Delta}_{t,\,x_u}-I)$ does not exist. 
 
-However, $\lim_{i\to\infty}\nicefrac{1}{\Delta_i^1}\lVert T_{t,x_u}^{t+\Delta_i^1} - I\rVert = \norm{Q_1}$ and $\lim_{i\to\infty}\nicefrac{1}{\Delta_i^2}\lVert T_{t,x_u}^{t+\Delta_i^2} - I\rVert = \norm{Q_2}$, and because $\norm{Q_1},\norm{Q_2}<+\infty$, this is not problematic for the well-behavedness of $P$.
+However, $\lim_{i\to\infty}\nicefrac{1}{\Delta_i}\lVert T_{t,x_u}^{t+\Delta_i} - I\rVert = \norm{Q_1}$ and $\lim_{i\to\infty}\nicefrac{1}{\Delta_i'}\lVert T_{t,x_u}^{t+\Delta_i'} - I\rVert = \norm{Q_2}$, and because $\norm{Q_1},\norm{Q_2}<+\infty$, this is not problematic for the well-behavedness of $P$.
 
 Of course, one might wonder whether it is possible for such a $P\in\wprocesses$ to exist in the first place. Example~\ref{exmp:markov_with_no_deriv} in Section~\ref{sec:nonhomogen_markov} will show that this is indeed the case.
 %**** verschillende $\{\Delta_i\}_{i\in\nats}\to0^+$ geven verschillende $Q$.
@@ -1047,7 +1047,7 @@ Consider a Markov chain $P\in\mprocesses$ and let $\mathcal{T}_P$ be the corresp
 Hence, at this point we know that every (well-behaved) Markov chain has a corresponding (well-behaved) transition matrix system. Our next result establishes that the converse is true as well: every (well-behaved) transition matrix system has a corresponding (well-behaved) Markov chain, and for a given initial distribution, this Markov chain is even unique.
 
 \begin{theorem}\label{theo:uniqueMarkovchain}
- Let $p$ be an arbitrary probability mass function on $\states$ and let $\mathcal{T}$ be a transition matrix system. Then there is a unique Markov chain $P\in\mprocesses$ such that $\mathcal{T}_P=\mathcal{T}$ and, for all $y\in\states$, $P(X_0=y)=p(y)$. Furthermore, if $\mathcal{T}$ is well-behaved, then $P$ is also well-behaved.
+Let $p$ be an arbitrary probability mass function on $\states$ and let $\mathcal{T}$ be a transition matrix system. Then there is a unique Markov chain $P\in\mprocesses$ such that $\mathcal{T}_P=\mathcal{T}$ and, for all $y\in\states$, $P(X_0=y)=p(y)$. Furthermore, if $\mathcal{T}$ is well-behaved, then $P$ is also well-behaved.
 \end{theorem}
 
 Hence, Markov chains---and well-behaved Markov chains in particular---are completely characterized by their transition matrices and their initial distribution. 
@@ -1132,7 +1132,24 @@ The second equality, where $t=t_i$, is due to the definition $\smash{\overline{\
 Note that in the above, the directional outer partial derivatives $\smash{\overline{\partial}}_-T_t^t$ and $\smash{\overline{\partial}}_+T_t^t$ are always singletons. Due to Corollary~\ref{corol:outersingleton}, this implies that the ordinary directional partial derivatives also exist. The next example shows that this is not the case in general.
 
 \begin{exmp}\label{exmp:markov_with_no_deriv}
-***** laat outer partial deriv zien voor systeem met verdichtingspunt uit sectie 3. merk op dat dit bestaan van process uit sectie 4.4 bewijst.
+Recall from Example~\ref{exmp:limit_trans_mat_system} the well-behaved transition matrix system $\mathcal{T}_*$ that was constructed as the limit of a sequence $\{\mathcal{T}_i\}_{i\in\nats}$ of (well-behaved) transition matrix systems. Theorem~\ref{theo:uniqueMarkovchain} now implies that there is some $P\in\wmprocesses$ such that $\mathcal{T}_P = \mathcal{T}_*$. Let $T_t^s$ denote the transition matrices corresponding to this $\mathcal{T}_P = \mathcal{T}_*$.
+
+Recall furthermore from Example~\ref{exmp:limit_trans_mat_system} that $\mathcal{T}_*$ was constructed using a sequence $\{\Delta_i\}_{i\in\nats}=\{\nicefrac{1}{2^i}\}_{i\in\nats}$, and that, for all $i\in\nats$,
+\begin{equation*}
+T_0^{\Delta_i} = \begin{cases}
+e^{\Delta_i(Q_1(\nicefrac{2}{3}) + Q_2(\nicefrac{1}{3}))} & \text{if $i$ is odd, and} \\
+e^{\Delta_i(Q_1(\nicefrac{1}{3}) + Q_2(\nicefrac{2}{3}))} & \text{otherwise,}
+\end{cases}
+\end{equation*}
+with $Q_1,Q_2\in\mathcal{R}$ and $Q_1\neq Q_2$. 
+
+Let now $Q_o\coloneqq Q_1(\nicefrac{2}{3}) + Q_2(\nicefrac{1}{3})$ and $Q_e\coloneqq Q_1(\nicefrac{1}{3}) + Q_2(\nicefrac{2}{3})$. Then, it clearly holds that $Q_o\neq Q_e$, and, for all $i\in\nats$, that $T_0^{\Delta_i}=e^{\Delta_i Q_o}$ if $i$ is odd, and $T_0^{\Delta_i}=e^{\Delta_iQ_e}$, otherwise.
+
+Let $\{\Delta_{i_j}\}_{j\in\nats}$ be the subsequence of $\{\Delta_i\}_{i\in\nats}$ corresponding to the odd terms. Then,
+\begin{equation*}
+\lim_{j\to\infty}\frac{1}{\Delta_{i_j}}\left(T_0^{\Delta_{i_j}}-I\right) = \lim_{j\to\infty}\frac{1}{\Delta_{i_j}}\left(e^{\Delta_{i_j}Q_o}-I\right) = Q_o\,.
+\end{equation*}
+Similarly, for the subsequence $\{\Delta_{i_k}\}_{k\in\nats}$ corresponding to the even terms, we have $\lim_{k\to\infty}\nicefrac{1}{\Delta_{i_k}}(T_0^{\Delta_{i_k}}-I)=Q_e$. It follows that for the directional partial derivative $\smash{\overline{\partial}}_+T_t^t$ corresponding to $P$, at $t=0$, it holds that $\{Q_o,Q_e\}\subseteq \smash{\overline{\partial}}_+T_t^t$.
 %**** Misschien voorbeeld dat we hiermee het bestaan van het tegenvoorbeeld in Example~\ref{exmp:well-behaved-no-deriv} kunnen bewijzen?
 \exampleend
 \end{exmp}
