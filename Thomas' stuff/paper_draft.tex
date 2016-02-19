@@ -483,17 +483,7 @@ Trivial consequence of Definition~\ref{def:trans_mat_system}.
 \end{proof}
 We will henceforth call $\mathcal{T}^{\mathbf{I}}$ well-behaved if it satisfies Equation~\eqref{eq:wellbehavedtransitionmatrixsystem} on $\mathbf{I}$, instead of on the entirety of $\realsnonneg$.
 
-We now first give a powerful theoretical result that we will return to later. For any interval $\mathbf{I}\subseteq\realsnonneg$, let $\mathbb{T}^{\mathbf{I}}$ denote the set of \emph{all} restricted transition matrix systems defined on $\mathbf{I}$. Then, for any two restricted transition matrix systems $\mathcal{T}^\mathbf{I}$ and $\mathcal{S}^\mathbf{I}$ defined on the same interval, we define a metric $d$ as
-\begin{equation}\label{eq:trans_mat_system_metric}
-d(\mathcal{T}^{\mathbf{I}},\mathcal{S}^{\mathbf{I}}) \coloneqq \sup\left\{\norm{T_t^s - S_t^s}\,:\,t,s\in\mathbf{I},\,t\leq s\right\}\,,
-\end{equation}
-where, for all $t,s\in\mathbf{I}$, it is understood that $T_t^s$ corresponds to $\mathcal{T}^{\mathbf{I}}$ and $S_t^s$ to $\mathcal{S}^{\mathbf{I}}$.
-\begin{proposition}\label{lemma:restricted_trans_mat_system_cauchy_converges}
-Consider any interval $\mathbf{I}\subseteq\realsnonneg$, let $\mathbb{T}^{\mathbf{I}}$ be the set of all restricted transition matrix systems on $\mathbf{I}$ and let $d$ be the metric that is defined in Equation~\eqref{eq:trans_mat_system_metric}. The metric space $\smash{(\mathbb{T}^{\mathbf{I}},d)}$ is then complete.
-\end{proposition}
-Note that this result includes as a special case completeness of the set $\mathbb{T}^{\realsnonneg}$ of all (unrestricted) transition matrix systems. 
-
-Finally, because these restricted transition matrix systems are only defined on some given interval, it will be useful to define a concatenation operator between two such systems defined on adjacent intervals. We will say that two intervals $\mathbf{I},\mathbf{J}\subseteq\realsnonneg$ are \emph{adjacent} if, without loss of generality, $\mathbf{I}$ is closed on the right and $\mathbf{J}$ is closed on the left, and $\max\mathbf{I}=\min\mathbf{J}$. 
+Now, because these restricted transition matrix systems are only defined on some given interval, it will be useful to define a concatenation operator between two such systems defined on adjacent intervals. We will say that two intervals $\mathbf{I},\mathbf{J}\subseteq\realsnonneg$ are \emph{adjacent} if, without loss of generality, $\mathbf{I}$ is closed on the right and $\mathbf{J}$ is closed on the left, and $\max\mathbf{I}=\min\mathbf{J}$. 
 
 Then, for any two adjacent intervals $\mathbf{I},\mathbf{J}\subseteq\realsnonneg$, and any two restricted transition matrix systems $\mathcal{T}^{\mathbf{I}}$ and $\mathcal{T}^{\mathbf{J}}$, let $r\coloneqq\max\mathbf{I}=\min\mathbf{J}$, and let $\presuper{i}T_t^s$ and $\presuper{j}T_t^s$ denote the transition matrices corresponding to $\mathcal{T}^{\mathbf{I}}$ and $\mathcal{T}^{\mathbf{J}}$, respectively. Consider the family of transition matrices $T_t^s$, defined by
 \begin{equation*}
@@ -516,6 +506,66 @@ Consider two adjacent intervals $\mathbf{I},\mathbf{J}\subseteq\realsnonneg$, an
 \end{equation*}
 is a restricted transition matrix system defined on $\mathbf{I}\cup\mathbf{J}$. Furthermore, if both $\mathcal{T}^{\mathbf{I}}$ and $\mathcal{T}^{\mathbf{J}}$ are well behaved, then $\mathcal{T}^{\mathbf{I}\cup\mathbf{J}}$ is also well-behaved.
 \end{proposition}
+
+\begin{exmp}
+Consider any two rate matrices $Q_1,Q_2\in\mathcal{R}$ such that $Q_1\neq Q_2$, and let $\mathcal{T}_{Q_1}$ and $\mathcal{T}_{Q_2}$ be their exponential transition matrix systems. Consider any $r\in\realsnonneg$, and define
+\begin{equation*}
+\mathcal{T} \coloneqq \mathcal{T}_{Q_1}^{[0,r]} \otimes \mathcal{T}_{Q_2}^{[r,+\infty)}\,.
+\end{equation*}
+Then, $\mathcal{T}$ is a transition matrix system, and because $\mathcal{T}_{Q_1}^{[0,r]}$ and $\mathcal{T}_{Q_2}^{[r,+\infty)}$ are well-behaved, so is $\mathcal{T}$. Furthermore, for any $t,s\in\realsnonneg$ such that $t\leq r\leq s$, the transition matrix $T_t^s$ corresponding to $\mathcal{T}$ satisfies $T_t^s = T_t^rT_r^s = e^{Q_1(r-t)}e^{Q_2(s-r)}$.
+\exampleend
+\end{exmp}
+
+We now finally give a powerful theoretical result that we will return to later. For any interval $\mathbf{I}\subseteq\realsnonneg$, let $\mathbb{T}^{\mathbf{I}}$ denote the set of \emph{all} restricted transition matrix systems defined on $\mathbf{I}$. Then, for any two restricted transition matrix systems $\mathcal{T}^\mathbf{I}$ and $\mathcal{S}^\mathbf{I}$ defined on the same interval, we define a metric $d$ as
+\begin{equation}\label{eq:trans_mat_system_metric}
+d(\mathcal{T}^{\mathbf{I}},\mathcal{S}^{\mathbf{I}}) \coloneqq \sup\left\{\norm{T_t^s - S_t^s}\,:\,t,s\in\mathbf{I},\,t\leq s\right\}\,,
+\end{equation}
+where, for all $t,s\in\mathbf{I}$, it is understood that $T_t^s$ corresponds to $\mathcal{T}^{\mathbf{I}}$ and $S_t^s$ to $\mathcal{S}^{\mathbf{I}}$.
+\begin{proposition}\label{lemma:restricted_trans_mat_system_cauchy_converges}
+Consider any interval $\mathbf{I}\subseteq\realsnonneg$, let $\mathbb{T}^{\mathbf{I}}$ be the set of all restricted transition matrix systems on $\mathbf{I}$ and let $d$ be the metric that is defined in Equation~\eqref{eq:trans_mat_system_metric}. The metric space $\smash{(\mathbb{T}^{\mathbf{I}},d)}$ is then complete.
+\end{proposition}
+Note that this result includes as a special case completeness of the set $\mathbb{T}^{\realsnonneg}$ of all (unrestricted) transition matrix systems. The following provides an example of how this result can be used. This example also prepares some results that will be used again in other examples later in this work.
+
+\begin{exmp}
+Consider any two commuting rate matrices $Q_1,Q_2\in\mathcal{R}$ such that $Q_1\neq Q_2$, and let $\mathcal{T}_{Q_1}$ and $\mathcal{T}_{Q_2}$ be their exponential transition matrix systems. Consider now the sequence $\{\Delta_i\}_{i\in\nats}\coloneqq \{\nicefrac{1}{2^i}\}_{i\in\nats}$, define $\mathcal{T}_0\coloneqq \mathcal{T}_{Q_1}$, and, for all $i\in\nats$, let
+\begin{equation*}
+\mathcal{T}_i \coloneqq \begin{cases}
+\mathcal{T}_{Q_1}^{[0,\Delta_i]}\otimes \mathcal{T}_{i-1}^{[\Delta_i,+\infty)} & \text{if $i$ is odd, and} \\
+\mathcal{T}_{Q_2}^{[0,\Delta_i]}\otimes \mathcal{T}_{i-1}^{[\Delta_i,+\infty)} & \text{otherwise.}
+\end{cases}
+\end{equation*}
+The sequence $\{\mathcal{T}_i\}_{i\in\nats}$ is then clearly in $\mathbb{T}^{\realsnonneg}$. Furthermore, for any $i\in\nats$, the systems $\mathcal{T}_{i-1}$ and $\mathcal{T}_i$ differ the ``most'' on the interval $[0,\Delta_i]$. It should therefore be intuitively clear that $d(\mathcal{T}_{i-1},\mathcal{T}_i)\propto \Delta_i$, which can also be formally shown by combining Equations~\eqref{eq:trans_mat_system_metric} and~\eqref{eq:transmatrixproduct} with Lemmas~\ref{lemma:recursive} and~\ref{lemma:linearpartofexponential}. 
+
+Therefore, and because $\{\Delta_i\}_{i\in\nats}\to0^+$, the limit $\mathcal{T}_*\coloneqq \lim_{i\to\infty}\mathcal{T}_i$ clearly exists and, by Proposition~\ref{lemma:restricted_trans_mat_system_cauchy_converges}, is a transition matrix system. It should also be intuitively clear that $\mathcal{T}_*$ is well-behaved, although a formal proof is rather lengthy and left as an exercise.
+
+We end with some comments about the transition matrices $\presuper{*}T_t^s$ corresponding to this limit $\mathcal{T}_*$. To this end, fix any $j\in\nats$, and consider first the $\presuper{i}T_0^{\Delta_j}$ corresponding to $\mathcal{T}_i$. Assume without loss of generality that $j$ is odd. Then, the sequence $\presuper{j}T_0^{\Delta_j},\presuper{j+1}T_0^{\Delta_j},\presuper{j+2}T_0^{\Delta_j},\ldots$ is clearly given by
+\begin{equation*}
+\left(\presuper{j}T_0^{\Delta_j}\right), ~~\left(\presuper{j+1}T_0^{\Delta_{j+1}}\right)\left(\presuper{j}T_{\Delta_{j+1}}^{\Delta_j}\right), ~~\left(\presuper{j+2}T_0^{\Delta_{j+2}}\right)\left(\presuper{j+1}T_{\Delta_{j+2}}^{\Delta_{j+1}}\right)\left(\presuper{j}T_{\Delta_{j+1}}^{\Delta_j}\right), \ldots
+\end{equation*}
+Because each of these component transition matrices corresponds to some exponential transition matrix system, this can equivalently be expressed as
+\begin{equation*}
+\left(e^{Q_1\Delta_j}\right), ~~\left(e^{Q_2\Delta_{j+1}}\right)\left(e^{Q_1(\Delta_j-\Delta_{j+1})}\right), ~~\left(e^{Q_1\Delta_{j+2}}\right)\left(e^{Q_2(\Delta_{j+1}-\Delta_{j+2})}\right)\left(e^{Q_1(\Delta_j-\Delta_{j+1})}\right), \ldots
+\end{equation*}
+Because $Q_1$ and $Q_2$ were taken to commute, meaning that $Q_1Q_2=Q_2Q_1$, the matrix exponential is well-known~{\bf CITE} to satisfy $e^{Q_1\Delta_1'}e^{Q_2\Delta_2'}=e^{Q_2\Delta_2'}e^{Q_1\Delta_1'}=e^{Q_1\Delta_1' + Q_2\Delta_2'}$, for any $\Delta_1',\Delta_2'\in\realsnonneg$. Therefore, the above sequence can equivalently be written
+\begin{align*}
+%& e^{Q_1\Delta_j}, ~~e^{Q_2\Delta_{j+1}}e^{Q_1(\Delta_j-\Delta_{j+1})}, ~~e^{Q_2(\Delta_{j+1}-\Delta_{j+2})}e^{Q_1(\Delta_j-\Delta_{j+1} + \Delta_{j+2})},\ldots \\
+& e^{Q_1\Delta_j}, ~~e^{Q_1(\Delta_j-\Delta_{j+1}) + Q_2\Delta_{j+1}}, ~~e^{Q_1(\Delta_j-\Delta_{j+1} + \Delta_{j+2}) + Q_2(\Delta_{j+1}-\Delta_{j+2})},\ldots
+\end{align*}
+Furthermore, because $\{\Delta_i\}_{i\in\nats}=\{\nicefrac{1}{2^i}\}_{i\in\nats}$, it follows that, in the exponents above, $(\Delta_j-\Delta_{j+1})=\Delta_j(1-\nicefrac{1}{2})=\Delta_j(\nicefrac{1}{2})$, that $(\Delta_{j}-\Delta_{j+1}+\Delta_{j+2})=\Delta_j(1 - \nicefrac{1}{2} + \nicefrac{1}{4}) = \Delta_j(\nicefrac{1}{2} + \nicefrac{1}{4})$, and that $(\Delta_{j+1} - \Delta_{j+2})=\Delta_j(\nicefrac{1}{2} - \nicefrac{1}{4})=\Delta_j(\nicefrac{1}{4})$. Hence, the sequence can be written as
+\begin{equation*}
+e^{\Delta_j\left(Q_1(1) + Q_2(0)\right)}, ~~e^{\Delta_j\left(Q_1(\nicefrac{1}{2}) + Q_2(\nicefrac{1}{2})\right)}, ~~e^{\Delta_j(Q_1\left(\nicefrac{1}{2} + \nicefrac{1}{4}) + Q_2(\nicefrac{1}{4})\right)}, \ldots
+\end{equation*}
+By focusing only on the subsequence $\presuper{j}T_0^{\Delta_j},\presuper{j+2}T_0^{\Delta_j},\presuper{j+4}T_0^{\Delta_j}$ containing the even elements, it can be seen that, for all $k\in\natswith$,
+\begin{equation*}
+\presuper{j+2k}T_0^{\Delta_j} = e^{\Delta_j\left(Q_1(1-s_k) + Q_2s_k\right)}\,,
+\end{equation*}
+with $s_k\coloneqq \sum_{\ell=0}^k \nicefrac{1}{4^\ell} - 1$. Clearly, the limiting behavior of the sequence is therefore governed by the limiting behavior of the above geometric power series, and some arithmetic will show that
+\begin{equation*}
+\presuper{*}T_0^{\Delta_j} = \lim_{i\to\infty} \presuper{i}T_0^{\Delta_j} = \lim_{k\to\infty} \presuper{j+2k}T_{0}^{\Delta_j} = \lim_{k\to\infty} e^{\Delta_j\left(Q_1(1-s_k) + Q_2s_k\right)} = e^{\Delta_j(Q_1(\nicefrac{2}{3}) + Q_2(\nicefrac{1}{3}))}\,,
+\end{equation*}
+where the first equality follows from the proof of Proposition~\ref{lemma:restricted_trans_mat_system_cauchy_converges}. Similarly, if $j$ was taken to be even instead of odd, then instead $\presuper{*}T_0^{\Delta_j}=e^{\Delta_j(Q_1(\nicefrac{1}{3}) + Q_2(\nicefrac{2}{3}))}$. Note that the mixing proportion between $Q_1$ and $Q_2$ is then reversed.
+\exampleend
+\end{exmp}
 
 \section{Continuous-Time Stochastic Processes}\label{sec:stochastic_processes}
 
@@ -841,18 +891,19 @@ For any stochastic process $P\in\processes$, any $t\in\realsnonneg$, any sequenc
 
 The following example established that these directional partial derivatives need not exist. In particular, they need not exist even for well-behaved processes.
 \begin{exmp}\label{exmp:well-behaved-no-deriv}
-***** Meh, werkt ook niet echt. Wil eigenlijk accumulatie punt van exponentiele, maar hebben we hier nogniet geintroduceerd.
-
-Consider a sequence $\{\Delta_i\}_{i\in\nats}$ in $\realspos$ such that $\Delta_i\coloneqq \nicefrac{1}{2^i}$, for all $i\in\nats$. Consider a well-behaved stochastic process $P\in\wmprocesses$ at some time $t\in\realsnonneg$ and for some history $x_u\in\states^u$, $u<t$. Suppose that the corresponding transition matrix $T_{t,x_u}^{t+\Delta}$ satisfies for all $\Delta\in\realspos$, that if $\Delta\in[\Delta_{i+1},\Delta_i)$ for some $i\in\nats$, then
-\begin{equation*}
-\frac{1}{\Delta}(T_{t,x_u}^{t+\Delta} - I) = \left\{\begin{array}{cl}
-Q_1 & \quad \text{if $i$ is odd, and} \\
-Q_2 & \quad \text{otherwise,}
-\end{array}\right.
-\end{equation*}
-for some rate matrices $Q_1,Q_2\in\mathcal{R}$ with $Q_1\neq Q_2$. Clearly, the norm of this quantity is uniformly bounded for all $\Delta\in\realspos$, and hence this does not pose a problem for the well-behavedness of $P$. On the other hand, $\partial_{+}{T_{t,\,x_u}^t}$ clearly does not exist.
-
-Of course, although this construction does not interfere with well-behavedness, one might wonder whether it is possible for such a $P$ to exist in the first place. We will find that this is indeed possible when we consider Example~{\bf REF} in Section~{\bf REF}.
+**** verschillende $\{\Delta_i\}_{i\in\nats}\to0^+$ geven verschillende $Q$.
+%***** Meh, werkt ook niet echt. Wil eigenlijk accumulatie punt van exponentiele, maar hebben we hier nogniet geintroduceerd.
+%
+%Consider a sequence $\{\Delta_i\}_{i\in\nats}$ in $\realspos$ such that $\Delta_i\coloneqq \nicefrac{1}{2^i}$, for all $i\in\nats$. Consider a well-behaved stochastic process $P\in\wmprocesses$ at some time $t\in\realsnonneg$ and for some history $x_u\in\states^u$, $u<t$. Suppose that the corresponding transition matrix $T_{t,x_u}^{t+\Delta}$ satisfies for all $\Delta\in\realspos$, that if $\Delta\in[\Delta_{i+1},\Delta_i)$ for some $i\in\nats$, then
+%\begin{equation*}
+%\frac{1}{\Delta}(T_{t,x_u}^{t+\Delta} - I) = \left\{\begin{array}{cl}
+%Q_1 & \quad \text{if $i$ is odd, and} \\
+%Q_2 & \quad \text{otherwise,}
+%\end{array}\right.
+%\end{equation*}
+%for some rate matrices $Q_1,Q_2\in\mathcal{R}$ with $Q_1\neq Q_2$. Clearly, the norm of this quantity is uniformly bounded for all $\Delta\in\realspos$, and hence this does not pose a problem for the well-behavedness of $P$. On the other hand, $\partial_{+}{T_{t,\,x_u}^t}$ clearly does not exist.
+%
+%Of course, although this construction does not interfere with well-behavedness, one might wonder whether it is possible for such a $P$ to exist in the first place. We will find that this is indeed possible when we consider Example~{\bf REF} in Section~{\bf REF}.
 \exampleend
 \end{exmp}
 
@@ -1062,7 +1113,8 @@ The first equality, where $t\in(t_{i-1},t_i)$, is explained by Proposition~\ref{
 The second equality, where $t=t_i$, is due to the definition $\smash{\overline{\partial}}T_t^t\coloneqq \smash{\overline{\partial}}_-T_t^t\cup \smash{\overline{\partial}}_+T_t^t$. To see this, note that $\smash{\overline{\partial}}_-T_t^t$ will here correspond to the interval $[t_{i-1}, t_i]$, and hence satisfies $\smash{\overline{\partial}}_-T_t^t=\{Q_i\}$. On the other hand, $\smash{\overline{\partial}}_+T_t^t$ corresponds to $[t_i,t_{i+1}]$, and is therefore given by $\smash{\overline{\partial}}_+T_t^t=\{Q_{i+1}\}$.
 
 \begin{exmp}
-**** Misschien voorbeeld dat we hiermee het bestaan van het tegenvoorbeeld in Example~\ref{exmp:well-behaved-no-deriv} kunnen bewijzen?
+***** laat outer partial deriv zien voor systeem met verdichtingspunt uit sectie 3. merk op dat dit bestaan van process uit sectie 4.4 bewijst.
+%**** Misschien voorbeeld dat we hiermee het bestaan van het tegenvoorbeeld in Example~\ref{exmp:well-behaved-no-deriv} kunnen bewijzen?
 \exampleend
 \end{exmp}
 
@@ -1930,7 +1982,7 @@ Let $\rateset$ be an arbitrary non-empty, bounded, and convex set of rate matric
 
 Consider any $t\in\realsnonneg$, any $u\in\mathcal{U}_{<t}$ and $v\in\mathcal{U}_{\geq t}$ with $u=t_0,\ldots,t_n$ and $v={s_0,\ldots,s_m}$. Then, for any $f\in\gambles(\states^{u\cup v})$ and any $x_u\in\states^u$,
 \begin{equation}\label{eq:composition_lower_trans}
-\left[L_{t_n}^{s_0}L_{s_0}^{s_1}\cdots L_{s_{m-1}}^{s_m}f\right](x_u) = \underline{\mathbb{E}}^{\mathrm{W}}_{\,\rateset}[f(x_u,X_v)\,\vert\,x_u]\,.
+\left[L_{t_n}^{s_0}L_{s_0}^{s_1}\cdots L_{s_{m-1}}^{s_m}f\right](x_u) = \underline{\mathbb{E}}^{\mathrm{W}}_{\,\rateset}[f(x_u,X_v)\,\vert\,X_u=x_u]\,.
 \end{equation}
 \end{corollary}
 \begin{proof}
@@ -2064,6 +2116,25 @@ This is a special case of Lemma~\ref{lemma:recursive_lower_trans}, which states 
 %Here, in the second-to-last inequality, we used the fact that $\norm{A_i}\leq 1$ and $\norm{B_i}\leq 1$ for all $i\in\{1,\ldots,n\}$. In the final inequality, we used the induction hypothesis.
 \end{proof}
 
+\begin{proof}[Proof of Proposition~\ref{prop:concat_restr_trans_mat_systems_is_system}]
+For all $t,s\in\mathbf{I}\cup\mathbf{J}$ such that $t\leq s$, it follows from Proposition~\ref{lemma:compositiontransitionmatrix} that the matrix $T_t^s$ that corresponds to $\mathcal{T}^{\mathbf{I}\cup\mathbf{J}}$ is a transition matrix.Furthermore, for all $t\in\mathbf{I}\cup\mathbf{J}$, we have that either $t\in\mathbf{I}$ or $t\in\mathbf{J}$. In either case, we have that $T_t^t=I$, because either $T_t^t=\presuper{i}T_t^t=I$ or $T_t^t=\presuper{j}T_t^t=I$, with $\presuper{i}T_t^t$ and $\presuper{j}T_t^t$ corresponding to $\mathcal{T}^{\mathbf{I}}$ and $\mathcal{T}^{\mathbf{J}}$, respectively. It remains to show that for all $t,q,s\in\mathbf{I}\cup\mathbf{J}$ with $t\leq q\leq s$, it holds that
+\begin{equation*}
+T_t^s = T_t^qT_q^s\,.
+\end{equation*}
+If both $t,s\in\mathbf{I}$ or if both $t,s\in\mathbf{J}$, this clearly holds. Therefore, suppose that $t\in\mathbf{I}$ and $s\in\mathbf{J}$. Suppose furthermore that $q\in\mathbf{I}$. Then, from the definition of the concatenation operator $\otimes$, we have that $T_q^s=T_q^rT_r^s$, with $r=\max\mathbf{I}=\min\mathbf{J}$. Because $t,q,r\in\mathbf{I}$, we know that $T_t^qT_q^r=T_t^r$, and hence, by the definition of the concatenation operator,
+\begin{equation*}
+T_t^qT_q^s = T_t^qT_q^rT_r^s = T_t^rT_r^s = T_t^s\,.
+\end{equation*}
+An exactly analogous argument proves the case for $q\in\mathbf{J}$. Therefore, it follows from Proposition~\ref{prop:restr_trans_mat_system_if_semigroup} that $\mathcal{T}^{\mathbf{I}\cup\mathbf{J}}$ is a restricted transition matrix system.
+
+It remains to show that if $\mathcal{T}^{\mathbf{I}}$ and $\mathcal{T}^{\mathbf{J}}$ are both well-behaved, that then $\mathcal{T}^{\mathbf{I}\cup\mathbf{J}}$ is also well-behaved. We need to show that for all $t\in\mathbf{I}\cup\mathbf{J}$, it holds that
+\begin{equation*}
+\limsup_{\Delta\to0^+}\norm{\frac{1}{\Delta}\left(T_t^{t+\Delta} - I\right)} < +\infty,\quad\text{and,}\quad \limsup_{\Delta\to0^+}\norm{\frac{1}{\Delta}\left(T_{t-\Delta}^{t} - I\right)} < +\infty\,.
+\end{equation*}
+Because this clearly holds for all $t\in\mathbf{I}\setminus\{r\}$ and all $t\in\mathbf{J}\setminus\{r\}$, the interesting case is to show that this holds for $t=r$. However, for all $\Delta\in\realspos$ we have that $T_r^{r+\Delta}$ corresponds to $\mathcal{T}^{\mathbf{J}}$, and $T_{r-\Delta}^{r}$ corresponds to $\mathcal{T}^{\mathbf{I}}$. Because both $\mathcal{T}^{\mathbf{I}}$ and $\mathcal{T}^{\mathbf{J}}$ are well-behaved, we find that $\mathcal{T}^{\mathbf{I}\cup\mathbf{J}}$ is also well-behaved at $t=r$. Hence, $\mathcal{T}^{\mathbf{I}\cup\mathbf{J}}$ is well-behaved.
+\end{proof}
+
+
 \begin{proof}[Proof of Proposition~\ref{lemma:restricted_trans_mat_system_cauchy_converges}]
 Consider any sequence $\{\mathcal{T}_i^{\mathbf{I}}\}_{i\in\nats}$ in $\mathbb{T}^{\mathbf{I}}$ that is Cauchy. We will prove that this sequence converges to a limit that belongs to $\mathbb{T}^{\mathbf{I}}$. For all $i\in\nats$ and any $t,s\in\mathbf{I}$ such that $t\leq s$, we will use $\presuper{i}T_t^s$ to denote the transition matrix that corresponds to $\mathcal{T}_i^{\mathbf{I}}$. 
 
@@ -2091,7 +2162,7 @@ Fix any $t,r,s\in I$ such that $t\leq r\leq s$. Then for any $i\in\nats$, becaus
 +
 \norm{\presuper{i}T_r^s-\presuper{*}T_r^s}.
 \end{align*}
-Since we know that $\lim_{i\to+\infty}\presuper{i}T_t^t=\presuper{*}T_t^t$, $\lim_{i\to+\infty}\presuper{i}T_t^s=\presuper{*}T_t^s$, $\lim_{i\to+\infty}\presuper{i}T_t^r=\presuper{*}T_t^r$ and $\lim_{i\to+\infty}\presuper{i}T_r^s=\presuper{*}T_r^s$, this implies that $\norm{\presuper{*}T_t^t-I}=0$ and $\norm{\presuper{*}T_t^s-\presuper{*}T_t^r\presuper{*}T_r^s}=0$, or equivalently, that $\presuper{*}T_t^t=I$ and $\presuper{*}T_t^s=\presuper{*}T_t^r\presuper{*}T_r^s$. Since this is true for any $t,r,s\in I$ such that $t\leq r\leq s$, and because we already know that that the family $\mathcal{T}_*^{\mathbf{I}}$ consists of transition matrix systems, it follows from Proposition~\ref{prop:restr_trans_mat_system_if_semigroup} that $\mathcal{T}_*^{\mathbf{I}}$ is a restricted transition matrix system.
+Since we know that $\lim_{i\to+\infty}\presuper{i}T_t^t=\presuper{*}T_t^t$, $\lim_{i\to+\infty}\presuper{i}T_t^s=\presuper{*}T_t^s$, $\lim_{i\to+\infty}\presuper{i}T_t^r=\presuper{*}T_t^r$ and $\lim_{i\to+\infty}\presuper{i}T_r^s=\presuper{*}T_r^s$, this implies that $\norm{\presuper{*}T_t^t-I}=0$ and $\norm{\presuper{*}T_t^s-\presuper{*}T_t^r\presuper{*}T_r^s}=0$, or equivalently, that $\presuper{*}T_t^t=I$ and $\presuper{*}T_t^s=\presuper{*}T_t^r\presuper{*}T_r^s$. Since this is true for any $t,r,s\in I$ such that $t\leq r\leq s$, and because we already know that that the family $\mathcal{T}_*^{\mathbf{I}}$ consists of transition matrices, it follows from Proposition~\ref{prop:restr_trans_mat_system_if_semigroup} that $\mathcal{T}_*^{\mathbf{I}}$ is a restricted transition matrix system.
 In the remainder of this proof, we will show that $\mathcal{T}_*^{\mathbf{I}}=\lim_{i\to\infty}\mathcal{T}_i^{\mathbf{I}}$. 
 
 Fix any $\epsilon>0$ and consider the corresponding $n_\epsilon\in\nats$ whose existence is guaranteed by Equation~\eqref{eq:lemma:restricted_trans_mat_system_cauchy_converges:consequenceofCauchy}. Fix any $k>n_\epsilon$. For any $t,s\in\mathbf{I}$ such that $t\leq s$, it then follows from Equation~\eqref{eq:lemma:restricted_trans_mat_system_cauchy_converges:consequenceofCauchy} that, for all $\ell>n_\epsilon$:
@@ -2108,25 +2179,6 @@ Since $\lim_{\ell\to+\infty}\presuper{\ell}T_t^s=\presuper{*}T_t^s$, this implie
 \end{equation*}
 which implies that $\mathcal{T}_*^{\mathbf{I}}=\lim_{i\to\infty}\mathcal{T}_i^{\mathbf{I}}$.
 \end{proof}
-
-\begin{proof}[Proof of Proposition~\ref{prop:concat_restr_trans_mat_systems_is_system}]
-For all $t,s\in\mathbf{I}\cup\mathbf{J}$ such that $t\leq s$, it follows from Proposition~\ref{lemma:compositiontransitionmatrix} that the matrix $T_t^s$ that corresponds to $\mathcal{T}^{\mathbf{I}\cup\mathbf{J}}$ is a transition matrix.Furthermore, for all $t\in\mathbf{I}\cup\mathbf{J}$, we have that either $t\in\mathbf{I}$ or $t\in\mathbf{J}$. In either case, we have that $T_t^t=I$, because either $T_t^t=\presuper{i}T_t^t=I$ or $T_t^t=\presuper{j}T_t^t=I$, with $\presuper{i}T_t^t$ and $\presuper{j}T_t^t$ corresponding to $\mathcal{T}^{\mathbf{I}}$ and $\mathcal{T}^{\mathbf{J}}$, respectively. It remains to show that for all $t,q,s\in\mathbf{I}\cup\mathbf{J}$ with $t\leq q\leq s$, it holds that
-\begin{equation*}
-T_t^s = T_t^qT_q^s\,.
-\end{equation*}
-If both $t,s\in\mathbf{I}$ or if both $t,s\in\mathbf{J}$, this clearly holds. Therefore, suppose that $t\in\mathbf{I}$ and $s\in\mathbf{J}$. Suppose furthermore that $q\in\mathbf{I}$. Then, from the definition of the concatenation operator $\otimes$, we have that $T_q^s=T_q^rT_r^s$, with $r=\max\mathbf{I}=\min\mathbf{J}$. Because $t,q,r\in\mathbf{I}$, we know that $T_t^qT_q^r=T_t^r$, and hence, by the definition of the concatenation operator,
-\begin{equation*}
-T_t^qT_q^s = T_t^qT_q^rT_r^s = T_t^rT_r^s = T_t^s\,.
-\end{equation*}
-An exactly analogous argument proves the case for $q\in\mathbf{J}$. Therefore, it follows from Proposition~\ref{prop:restr_trans_mat_system_if_semigroup} that $\mathcal{T}^{\mathbf{I}\cup\mathbf{J}}$ is a restricted transition matrix system.
-
-It remains to show that if $\mathcal{T}^{\mathbf{I}}$ and $\mathcal{T}^{\mathbf{J}}$ are both well-behaved, that then $\mathcal{T}^{\mathbf{I}\cup\mathbf{J}}$ is also well-behaved. We need to show that for all $t\in\mathbf{I}\cup\mathbf{J}$, it holds that
-\begin{equation*}
-\limsup_{\Delta\to0^+}\norm{\frac{1}{\Delta}\left(T_t^{t+\Delta} - I\right)} < +\infty,\quad\text{and,}\quad \limsup_{\Delta\to0^+}\norm{\frac{1}{\Delta}\left(T_{t-\Delta}^{t} - I\right)} < +\infty\,.
-\end{equation*}
-Because this clearly holds for all $t\in\mathbf{I}\setminus\{r\}$ and all $t\in\mathbf{J}\setminus\{r\}$, the interesting case is to show that this holds for $t=r$. However, for all $\Delta\in\realspos$ we have that $T_r^{r+\Delta}$ corresponds to $\mathcal{T}^{\mathbf{J}}$, and $T_{r-\Delta}^{r}$ corresponds to $\mathcal{T}^{\mathbf{I}}$. Because both $\mathcal{T}^{\mathbf{I}}$ and $\mathcal{T}^{\mathbf{J}}$ are well-behaved, we find that $\mathcal{T}^{\mathbf{I}\cup\mathbf{J}}$ is also well-behaved at $t=r$. Hence, $\mathcal{T}^{\mathbf{I}\cup\mathbf{J}}$ is well-behaved.
-\end{proof}
-
 
 % \begin{proof}[Proof of Proposition~\ref{prop:fullcoherent}]
 % Since $\power$ is clearly an algebra of events, it follows from Reference~\cite{berti1991coherent} that $P$ is a coherent conditional probability if and only if it satisfies the conditions~\ref{lem:alt_axiom_prob_1}-\ref{lem:alt_axiom_prob_3} in Lemma~\ref{lemma:alt_axiom_prob}. The result now follows directly from Lemma~\ref{lemma:alt_axiom_prob}.
