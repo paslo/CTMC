@@ -1350,9 +1350,9 @@ This result is particularly useful when we consider functions $f\in\gambles(\sta
 As shown by our next result, it follows from Theorem~\ref{theo:aanelkaarplakken} that, if $\rateset$ is convex, the same decomposition property holds for lower expectations $\underline{\mathbb{E}}^{\mathrm{W}}_\rateset$.
 
 \begin{theorem}\label{theorem:decomposition_multivar}
-Let $\rateset$ be an arbitrary non-empty, bounded, and convex set of rate matrices. Then, for any $t\in\realsnonneg$, any $u\in\mathcal{U}_{<t}$ and $v\in\mathcal{U}_{\geq t}$, any $f\in\gambles(\states^{u\cup v})$, and any $w\subseteq v$,
+Let $\rateset$ be an arbitrary non-empty, bounded, and convex set of rate matrices. Then for any $u,v,w\in\mathcal{U}$ such that $u<v<w$ and any $f\in\gambles(\states^{u\cup v\cup w})$:
 \begin{equation}\label{eq:lower_exp_factorizes}
-\underline{\mathbb{E}}^{\mathrm{W}}_\rateset\left[f(X_u,X_v)\,\vert\,X_u\right] = \underline{\mathbb{E}}^{\mathrm{W}}_\rateset\Bigl[\underline{\mathbb{E}}^{\mathrm{W}}_\rateset\left[f(X_u,X_v)\,\vert\,X_u,X_{v\setminus w}\right] \,\Big\vert\,X_u\Bigr]\,. 
+\underline{\mathbb{E}}^{\mathrm{W}}_\rateset\left[f(X_u,X_v,X_w)\,\vert\,X_u\right] = \underline{\mathbb{E}}^{\mathrm{W}}_\rateset\Bigl[\underline{\mathbb{E}}^{\mathrm{W}}_\rateset\left[f(X_u,X_v,X_w)\,\vert\,X_u,X_v\right] \Big\vert\,X_u\Bigr]\,. 
 \end{equation}
 \end{theorem}
 The reason that this result is useful, is that it essentially allows us to compute the lower expectation of such functions recursively. In particular, instead of computing the lower expectation on all time-points simultaneously, we can focus on subsets of the time-points separately. We will revisit this idea in Section~\ref{sec:funcs_multi_time_points}.
@@ -3193,96 +3193,129 @@ If $\smash{Q^*\in\overline{\partial}_{-}
 \end{proof}
 
 \begin{proof}[Proof of Theorem~\ref{theorem:decomposition_multivar}]
-Consider any $P\in\wprocesses_\rateset$. Then, clearly, due to the basic properties of expectation and the definition of $\underline{\mathbb{E}}^{\mathrm{W}}_\rateset$, it holds that
+Let $g(X_u,X_v)\coloneqq\underline{\mathbb{E}}^{\mathrm{W}}_\rateset\left[f(X_u,X_v,X_w)\vert\,X_u,X_v\right]$ and fix any $x_u\in\states^u$.
+For any $P\in\wprocesses_\rateset$, it then follows from the basic properties of expectation (which follow from~\ref{def:coh_prob_2}--\ref{def:coh_prob_6}) and Definition~\ref{def:lower_exp} that
 \begin{align*}
-\mathbb{E}\left[f(X_u,X_v)\,\vert\,X_u\right] &= \mathbb{E}\bigl[\mathbb{E}\left[f(X_u,X_v)\,\vert\,X_u,X_{v\setminus w}\right]\,\vert\,X_u\bigr] \\
- &\geq \mathbb{E}\bigl[\underline{\mathbb{E}}^{\mathrm{W}}_\rateset\left[f(X_u,X_v)\,\vert\,X_u,X_{v\setminus w}\right]\,\vert\,X_u\bigr] \\
- &\geq \underline{\mathbb{E}}^{\mathrm{W}}_\rateset\bigl[\underline{\mathbb{E}}^{\mathrm{W}}_\rateset\left[f(X_u,X_v)\,\vert\,X_u,X_{v\setminus w}\right]\,\vert\,X_u\bigr]\,,
-\end{align*}
-where in the second step we used the fact that the (outer) expectation computes a convex combination of values. Because this holds for any $P\in\wprocesses_\rateset$, it follows that
-\begin{equation*}
-\underline{\mathbb{E}}^{\mathrm{W}}_\rateset\left[f(X_u,X_v)\,\vert\,X_u\right] \geq \underline{\mathbb{E}}^{\mathrm{W}}_\rateset\bigl[\underline{\mathbb{E}}^{\mathrm{W}}_\rateset\left[f(X_u,X_v)\,\vert\,X_u,X_{v\setminus w}\right]\,\vert\,X_u\bigr]\,.
-\end{equation*}
+\mathbb{E}\left[f(X_u,X_v,X_w)\vert\,x_u\right] = \mathbb{E}\bigl[\mathbb{E}\left[f(X_u,X_v,X_w)\vert\,X_u,X_v\right]\vert\,x_u\bigr] 
+ &\geq \mathbb{E}\bigl[g(X_u,X_v)\vert\,x_u\bigr] \\
+ &\geq \underline{\mathbb{E}}^{\mathrm{W}}_\rateset\bigl[g(X_u,X_v)\vert\,x_u\bigr].
+\end{align*}\\[-20pt]
+Since $P\in\wprocesses_\rateset$ is arbitrary, this implies that
+\begin{equation}\label{eq:theorem:decomposition_multivar:easyinequality}
+\underline{\mathbb{E}}^{\mathrm{W}}_\rateset\left[f(X_u,X_v,X_w)\vert\,x_u\right] \geq \underline{\mathbb{E}}^{\mathrm{W}}_\rateset\bigl[g(X_u,X_v)\vert\,x_u\bigr].
+\end{equation}
 
-To prove Equation~\eqref{eq:lower_exp_factorizes}, it therefore remains to show that, for all $\epsilon\in\realspos$, there is some $P\in\wprocesses_\rateset$ such that
+% To prove Equation~\eqref{eq:lower_exp_factorizes}, it therefore remains to show that, for all $\epsilon\in\realspos$, there is some $P\in\wprocesses_\rateset$ such that
+% \begin{equation*}
+% \norm{\mathbb{E}\left[f(X_u,X_v)\,\vert\,X_u\right] - \underline{\mathbb{E}}^{\mathrm{W}}_\rateset\bigl[\underline{\mathbb{E}}^{\mathrm{W}}_\rateset\left[f(X_u,X_v)\,\vert\,X_u,X_{v\setminus w}\right]\,\vert\,X_u\bigr]} < \epsilon\,.
+% \end{equation*}
+Fix $\epsilon\in\realspos$.
+% Due to the definition of the norm, we have to show that
+% \begin{equation*}
+% \max\left\{\abs{\mathbb{E}\left[f(x_u,X_v)\,\vert\,x_u\right] - \underline{\mathbb{E}}^{\mathrm{W}}_\rateset\bigl[\underline{\mathbb{E}}^{\mathrm{W}}_\rateset\left[f(x_u,X_v)\,\vert\,x_u,X_{v\setminus w}\right]\,\vert\,x_u\bigr]}\,:\,x_u\in\states^u\right\} < \epsilon\,.
+% \end{equation*}
+% Let now $z\coloneqq v\setminus w$. For any $x_u\in\states^u$, consider
+% \begin{equation*}
+% \underline{\mathbb{E}}^{\mathrm{W}}_\rateset\bigl[\underline{\mathbb{E}}^{\mathrm{W}}_\rateset[f(x_u,X_z,X_w)\,\vert\,x_u,X_z]\,\big\vert\,x_u\bigr] = \inf\{\mathbb{E}\bigl[\underline{\mathbb{E}}^{\mathrm{W}}_\rateset[f(x_u,X_z,X_w)\,\vert\,x_u,X_z]\,\big\vert\,x_u\bigr]\,:\,P\in\wprocesses_\rateset\}\,.
+% \end{equation*}
+Because of Definition~\ref{def:lower_exp}, there is some $P_\emptyset\in\wprocesses_\rateset$ such that
+\begin{equation}\label{eq:theorem:decomposition_multivar:firsthalfprob}
+\mathbb{E}_\emptyset\bigl[g(x_u,X_v)\vert\,x_u\bigr]
+=\mathbb{E}_\emptyset\bigl[g(X_u,X_v)\vert\,x_u\bigr] < \underline{\mathbb{E}}^{\mathrm{W}}_\rateset\bigl[g(X_u,X_v)\big\vert\,x_u\bigr]
++\nicefrac{\epsilon}{2}
+\end{equation}
+and, for all $x_{v}\in\states^v$, there is some $P_{x_v}\in\wprocesses_\rateset$ such that
+\begin{equation}\label{eq:theorem:decomposition_multivar:secondhalfprob}
+\mathbb{E}_{x_v}\left[f(X_u,X_v,X_w)\vert\,x_u,x_v\right] < \underline{\mathbb{E}}^{\mathrm{W}}_\rateset\left[f(X_u,X_v,X_w)\vert\,x_u,x_v\right]+\nicefrac{\epsilon}{2}=g(x_u,x_v)+\nicefrac{\epsilon}{2}.
+\end{equation}
+Since $\rateset$ is non-empty, bounded, and convex, Theorem~\ref{theo:aanelkaarplakken} now implies the existence of a process $P\in\wprocesses_\rateset$ such that for all $x_v\in\states^v$ and $x_w\in\states^w$:
 \begin{equation*}
-\norm{\mathbb{E}\left[f(X_u,X_v)\,\vert\,X_u\right] - \underline{\mathbb{E}}^{\mathrm{W}}_\rateset\bigl[\underline{\mathbb{E}}^{\mathrm{W}}_\rateset\left[f(X_u,X_v)\,\vert\,X_u,X_{v\setminus w}\right]\,\vert\,X_u\bigr]} < \epsilon\,.
-\end{equation*}
-Fix any $\epsilon\in\realspos$. Due to the definition of the norm, we have to show that
+P(X_v=x_v\,\vert\,X_u=x_u) = P_\emptyset(X_v=x_v\,\vert\,X_u=x_u)
+\end{equation*}\\[-20pt]
+and
 \begin{equation*}
-\max\left\{\abs{\mathbb{E}\left[f(x_u,X_v)\,\vert\,x_u\right] - \underline{\mathbb{E}}^{\mathrm{W}}_\rateset\bigl[\underline{\mathbb{E}}^{\mathrm{W}}_\rateset\left[f(x_u,X_v)\,\vert\,x_u,X_{v\setminus w}\right]\,\vert\,x_u\bigr]}\,:\,x_u\in\states^u\right\} < \epsilon\,.
+P(X_w=x_w\,\vert\,X_u=x_u,X_v=x_v) = P_{x_v}(X_w=x_w\,\vert\,X_u=x_u,X_v=x_v)\vspace{6pt}
 \end{equation*}
-Let now $z\coloneqq v\setminus w$. For any $x_u\in\states^u$, consider
-\begin{equation*}
-\underline{\mathbb{E}}^{\mathrm{W}}_\rateset\bigl[\underline{\mathbb{E}}^{\mathrm{W}}_\rateset[f(x_u,X_z,X_w)\,\vert\,x_u,X_z]\,\big\vert\,x_u\bigr] = \inf\{\mathbb{E}\bigl[\underline{\mathbb{E}}^{\mathrm{W}}_\rateset[f(x_u,X_z,X_w)\,\vert\,x_u,X_z]\,\big\vert\,x_u\bigr]\,:\,P\in\wprocesses_\rateset\}\,.
+and therefore also, due to Equations~\eqref{eq:theorem:decomposition_multivar:firsthalfprob} and~\eqref{eq:theorem:decomposition_multivar:secondhalfprob},
+\begin{equation*}%\label{eq:theorem:decomposition_multivar:firsthalfexp}
+\mathbb{E}(g(x_u,X_v)\vert\,x_u)
+%&=\sum_{x_v\in\states^v}g(x_u,x_v)P(X_v=x_v\vert X_u=x_u)\\
+%&=\sum_{x_v\in\states^v}g(x_u,x_v)P_\emptyset(X_v=x_v\vert X_u=x_u)
+=\mathbb{E}_{\emptyset}(g(x_u,X_v)\vert\,x_u)
+< \underline{\mathbb{E}}^{\mathrm{W}}_\rateset\bigl[g(X_u,X_v)\big\vert\,x_u\bigr]
++\nicefrac{\epsilon}{2}
+\end{equation*}\\[-20pt]
+and
+\begin{equation*}%\label{theorem:decomposition_multivar:secondhalfexp}
+\mathbb{E}(f(X_u,X_v,X_w)\vert\,x_u,x_v)
+%&=\sum_{x_w\in\states^w}f(x_u,x_v,x_w)P(X_w=x_w\vert\,X_u=x_u, X_v=x_v)\\
+%&=\sum_{x_w\in\states^w}f(x_u,x_v,x_w)P_{x_v}(X_w=x_w\vert\, X_u=x_u, X_v=x_v)\\
+=\mathbb{E}_{x_v}(f(X_u,X_v,X_w)\vert\, x_u,x_v)
+<g(x_u,x_v)+\nicefrac{\epsilon}{2}.\vspace{6pt}
 \end{equation*}
-Because this is an infimum, this implies that there must be some stochastic process $P_{X_z,x_u}\in\wprocesses_\rateset$, with expectation operator $\mathbb{E}_{X_z,x_u}$, such that
-\begin{equation*}
-\mathbb{E}_{X_z,x_u}\bigl[\underline{\mathbb{E}}^{\mathrm{W}}_\rateset[f(x_u,X_z,X_w)\,\vert\,x_u,X_z]\,\big\vert\,x_u\bigr] - \frac{\epsilon}{2} < \underline{\mathbb{E}}^{\mathrm{W}}_\rateset\bigl[\underline{\mathbb{E}}^{\mathrm{W}}_\rateset[f(x_u,X_z,X_w)\,\vert\,x_u,X_z]\,\big\vert\,x_u\bigr]\,.
-\end{equation*}
-Next, for all $x_u\in\states^u$ and $x_{z}\in\states^z$, consider
-\begin{equation*}
-\underline{\mathbb{E}}^{\mathrm{W}}_\rateset\left[f(x_u,x_z,X_w)\,\vert\,x_u,x_z\right] = \inf\left\{\mathbb{E}\left[f(x_u,x_z,X_w)\,\vert\,x_u,x_z\right] \,:\, P\in\wprocesses_\rateset\right\}\,.
-\end{equation*}
-Because this is an infimum, there must be some $P_{X_w,x_z,x_u}\in\wprocesses_\rateset$, with expectation operator $\mathbb{E}_{X_w,x_z,x_u}$, such that
-\begin{equation*}
-\mathbb{E}_{X_w,x_z,x_u}\left[f(x_u,x_z,X_w)\,\vert\,x_u,x_z\right] - \frac{\epsilon}{2} < \underline{\mathbb{E}}^{\mathrm{W}}_\rateset\left[f(x_u,x_z,X_w)\,\vert\,x_u,x_z\right]\,.
-\end{equation*}
-In summary, for all $x_u\in\states^u$, we have found a process $P_{X_z,x_u}\in\wprocesses_\rateset$, and, for all $x_u\in\states^u$ and all $x_z\in\states^z$, we have found a process $P_{X_w,x_z,x_u}\in\wprocesses_\rateset$.
-
-Consider now any $x_u\in\states^u$, and the processes $P_{X_z,x_u}$ and $P_{X_w,x_z,x_u}$ for all $x_z\in\states^z$. Because $\rateset$ is non-empty, bounded, and convex, Theorem~{\bf REF} implies the existence of a process $P_{X_w,X_z,x_u}\in\wprocesses_\rateset$, such that for all $x_z\in\states^z$ and all $x_w\in\states^w$,
+Hence, we find that
 \begin{align*}
-P_{X_w,X_z,x_u}(X_z=x_z\,\vert\,X_u=x_u) &= P_{X_z,x_u}(X_z=x_z\,\vert\,X_u=x_u)\,, \\
-\text{and,} \\
-P_{X_w,X_z,x_u}(X_w=x_w\,\vert\,X_u=x_u,X_z=x_z) &= P_{X_w,x_z,x_u}(X_w=x_w\,\vert\,X_u=x_u,X_z=x_z)\,,
+\mathbb{E}\bigl[\mathbb{E}\left[f(X_u,X_v,X_w)\vert\,x_u,X_v\right]\vert\,x_u\bigr]
+%&\leq
+% \mathbb{E}\bigl[g(x_u,X_v)+\nicefrac{\epsilon}{2}\,\big\vert\,x_u\bigr]\\
+\leq
+\mathbb{E}\bigl[g(x_u,X_v)\,\big\vert\,x_u\bigr]+\nicefrac{\epsilon}{2}
+< \underline{\mathbb{E}}^{\mathrm{W}}_\rateset\bigl[g(X_u,X_v)\big\vert\,x_u\bigr]
++\epsilon.
 \end{align*}
-
-Finally, consider an arbitrary $P_{X_u}\in\wprocesses_\rateset$, and the processes $P_{X_w,X_z,x_u}$ for all $x_u\in\states^u$. Theorem~{\bf REF} then implies the existence of some $P_{X_w,X_z,X_u}$ such that, for all $x_u\in\states^u$, all $x_z\in\states^z$, and all $x_w\in\states^w$,
-\begin{align*}
-P_{X_w,X_z,X_u}(X_z=x_z\,\vert\,X_u=x_u) &= P_{X_w,X_z,x_u}(X_z=x_z\,\vert\,X_u=x_u) \\
- &= P_{X_z,x_u}(X_z=x_z\,\vert\,X_u=x_u)\,, \\
-\text{and,} \\
-P_{X_w,X_z,X_u}(X_w=x_w\,\vert\,X_u=x_u,X_z=x_z) &= P_{X_w,X_z,x_u}(X_w=x_w\,\vert\,X_u=x_u,X_z=x_z) \\
- &= P_{X_w,x_z,x_u}(X_w=x_w\,\vert\,X_u=x_u,X_z=x_z)\,.
-\end{align*}
-For notational convenience, denote $P\coloneqq P_{X_w,X_z,X_u}$.
-
-It remains to show that $P$ satisfies equation REF. To this end, assume \emph{ex absurdo} that it does not. This implies the existence of some $x_u\in\states^u$, for which
+Since $\epsilon$ was arbitrary, and because
 \begin{equation*}
-\epsilon \leq \abs{\mathbb{E}\left[f(x_u,X_v)\,\vert\,x_u\right] - \underline{\mathbb{E}}^{\mathrm{W}}_\rateset\bigl[\underline{\mathbb{E}}^{\mathrm{W}}_\rateset\left[f(x_u,X_v)\,\vert\,x_u,X_{v\setminus w}\right]\,\vert\,x_u\bigr]}\,.
+\underline{\mathbb{E}}^{\mathrm{W}}_\rateset\left[f(X_u,X_v,X_w)\vert\,x_u\right]
+\leq
+\mathbb{E}\left[f(X_u,X_v,X_w)\vert\,x_u\right] = \mathbb{E}\bigl[\mathbb{E}\left[f(X_u,X_v,X_w)\vert\,x_u,X_v\right]\vert\,x_u\bigr],
 \end{equation*}
-This implies that
-\begin{align*}
- &\quad \underline{\mathbb{E}}^{\mathrm{W}}_\rateset\bigl[\underline{\mathbb{E}}^{\mathrm{W}}_\rateset\left[f(x_u,X_v)\,\vert\,x_u,X_{v\setminus w}\right]\,\vert\,x_u\bigr] \\
- &\leq \mathbb{E}\left[f(X_u,X_v)\,\vert\,x_u\right] - \epsilon \\
- &= \mathbb{E}\bigl[\mathbb{E}[f(x_u,X_z,X_w)\,\vert\,x_u,X_z]\,\big\vert\,x_u\bigr] - \epsilon \\
- &= \sum_{x_z\in\states^z}P(X_z=x_z\,\vert\,X_u=x_u)\mathbb{E}[f(x_u,x_z,X_w)\,\vert\,x_u,x_z] - \epsilon \\
- &= \sum_{x_z\in\states^z}P_{X_z,x_u}(X_z=x_z\,\vert\,X_u=x_u)\mathbb{E}_{X_w,x_z,x_u}[f(x_u,x_z,X_w)\,\vert\,x_u,x_z] - \epsilon\,,
-\end{align*}
-where in the last step we applied Equation REF. Using Equation REF, we therefore find that
-\begin{align*}
- &\quad \underline{\mathbb{E}}^{\mathrm{W}}_\rateset\bigl[\underline{\mathbb{E}}^{\mathrm{W}}_\rateset\left[f(x_u,X_v)\,\vert\,x_u,X_{v\setminus w}\right]\,\vert\,x_u\bigr] \\
- &\leq \sum_{x_z\in\states^z}P_{X_z,x_u}(X_z=x_z\,\vert\,X_u=x_u)\mathbb{E}_{X_w,x_z,x_u}[f(x_u,x_z,X_w)\,\vert\,x_u,x_z] - \epsilon \\
- &= \sum_{x_z\in\states^z}P_{X_z,x_u}(X_z=x_z\,\vert\,X_u=x_u)\left(\mathbb{E}_{X_w,x_z,x_u}[f(x_u,x_z,X_w)\,\vert\,x_u,x_z] - \frac{\epsilon}{2}\right) - \frac{\epsilon}{2} \\
- &< \sum_{x_z\in\states^z}P_{X_z,x_u}(X_z=x_z\,\vert\,X_u=x_u)\underline{\mathbb{E}}^{\mathrm{W}}_\rateset\left[f(x_u,x_z,X_w)\,\vert\,x_u,x_z\right] - \frac{\epsilon}{2} \\
- &= \mathbb{E}_{X_z,x_u}\bigl[\underline{\mathbb{E}}^{\mathrm{W}}_\rateset\left[f(x_u,X_z,X_w)\,\vert\,x_u,X_z\right] \,\vert\,x_u\bigr] - \frac{\epsilon}{2}\,.
-\end{align*}
-Therefore, and due to Equation REF, we finally find
-\begin{align*}
-\underline{\mathbb{E}}^{\mathrm{W}}_\rateset\bigl[\underline{\mathbb{E}}^{\mathrm{W}}_\rateset\left[f(x_u,X_v)\,\vert\,x_u,X_{v\setminus w}\right]\,\vert\,x_u\bigr] &< \mathbb{E}_{X_z,x_u}\bigl[\underline{\mathbb{E}}^{\mathrm{W}}_\rateset\left[f(x_u,X_z,X_w)\,\vert\,x_u,X_z\right] \,\vert\,x_u\bigr] - \frac{\epsilon}{2} \\
- &< \underline{\mathbb{E}}^{\mathrm{W}}_\rateset\bigl[\underline{\mathbb{E}}^{\mathrm{W}}_\rateset\left[f(x_u,X_z,X_w)\,\vert\,x_u,X_z\right] \,\vert\,x_u\bigr] \\
- &= \underline{\mathbb{E}}^{\mathrm{W}}_\rateset\bigl[\underline{\mathbb{E}}^{\mathrm{W}}_\rateset\left[f(x_u,X_v)\,\vert\,x_u,X_{v\setminus w}\right]\,\vert\,x_u\bigr]\,,
-\end{align*}
-a contradiction. Hence, it follows that indeed
-\begin{equation*}
-\norm{\mathbb{E}\left[f(X_u,X_v)\,\vert\,X_u\right] - \underline{\mathbb{E}}^{\mathrm{W}}_\rateset\bigl[\underline{\mathbb{E}}^{\mathrm{W}}_\rateset\left[f(X_u,X_v)\,\vert\,X_u,X_{v\setminus w}\right]\,\vert\,X_u\bigr]} < \epsilon\,.
-\end{equation*}
-Because the $\epsilon$ was arbitrary, together with Equation REF, it then follows that
-\begin{align*}
-\underline{\mathbb{E}}^{\mathrm{W}}_\rateset[\underline{\mathbb{E}}^{\mathrm{W}}_\rateset [f(x_u,X_v)\,\vert\,x_u,X_{v\setminus w}]\,\vert\,x_u] %&= \inf\{\mathbb{E}\bigl[\mathbb{E}\left[f(X_u,X_v)\,\vert\,X_u,X_{v\setminus w}\right]\,\vert\,x_u\bigr]\,:\,P\in\wprocesses_\rateset\} \\
- &= \inf\{\mathbb{E}\left[f(X_u,X_v)\,\vert\,x_u\right]\,:\,P\in\wprocesses_\rateset\} \\
- &= \underline{\mathbb{E}}^{\mathrm{W}}_\rateset\left[f(X_u,X_v)\,\vert\,x_u\right]\,.
-\end{align*}
+this implies that
+$\underline{\mathbb{E}}^{\mathrm{W}}_\rateset\left[f(X_u,X_v,X_w)\vert\,x_u\right]\leq\underline{\mathbb{E}}^{\mathrm{W}}_\rateset\bigl[g(X_u,X_v)\big\vert\,x_u\bigr]$ and therefore, because of Equation~\eqref{eq:theorem:decomposition_multivar:easyinequality}, that $\underline{\mathbb{E}}^{\mathrm{W}}_\rateset\left[f(X_u,X_v,X_w)\vert\,x_u\right]=\underline{\mathbb{E}}^{\mathrm{W}}_\rateset\bigl[g(X_u,X_v)\big\vert\,x_u\bigr]$. Since $x_u$ was arbitrary, this implies that $\underline{\mathbb{E}}^{\mathrm{W}}_\rateset\left[f(X_u,X_v,X_w)\vert\,X_u\right]=\underline{\mathbb{E}}^{\mathrm{W}}_\rateset\bigl[g(X_u,X_v)\big\vert\,X_u\bigr]$. The result is now immediate because $g(X_u,X_v)=\underline{\mathbb{E}}^{\mathrm{W}}_\rateset\left[f(X_u,X_v,X_w)\vert\,X_u,X_v\right]$. 
+% Finally, consider an arbitrary $P_{X_u}\in\wprocesses_\rateset$, and the processes $P_{X_w,X_z,x_u}$ for all $x_u\in\states^u$. Theorem~{\bf REF} then implies the existence of some $P_{X_w,X_z,X_u}$ such that, for all $x_u\in\states^u$, all $x_z\in\states^z$, and all $x_w\in\states^w$,
+% \begin{align*}
+% P_{X_w,X_z,X_u}(X_z=x_z\,\vert\,X_u=x_u) &= P_{X_w,X_z,x_u}(X_z=x_z\,\vert\,X_u=x_u) \\
+%  &= P_{X_z,x_u}(X_z=x_z\,\vert\,X_u=x_u)\,, \\
+% \text{and,} \\
+% P_{X_w,X_z,X_u}(X_w=x_w\,\vert\,X_u=x_u,X_z=x_z) &= P_{X_w,X_z,x_u}(X_w=x_w\,\vert\,X_u=x_u,X_z=x_z) \\
+%  &= P_{X_w,x_z,x_u}(X_w=x_w\,\vert\,X_u=x_u,X_z=x_z)\,.
+% \end{align*}
+% For notational convenience, denote $P\coloneqq P_{X_w,X_z,X_u}$.
+% It remains to show that $P$ satisfies equation REF. To this end, assume \emph{ex absurdo} that it does not. This implies the existence of some $x_u\in\states^u$, for which
+% \begin{equation*}
+% \epsilon \leq \abs{\mathbb{E}\left[f(x_u,X_v)\,\vert\,x_u\right] - \underline{\mathbb{E}}^{\mathrm{W}}_\rateset\bigl[\underline{\mathbb{E}}^{\mathrm{W}}_\rateset\left[f(x_u,X_v)\,\vert\,x_u,X_{v\setminus w}\right]\,\vert\,x_u\bigr]}\,.
+% \end{equation*}
+% This implies that
+% \begin{align*}
+%  &\quad \underline{\mathbb{E}}^{\mathrm{W}}_\rateset\bigl[\underline{\mathbb{E}}^{\mathrm{W}}_\rateset\left[f(x_u,X_v)\,\vert\,x_u,X_{v\setminus w}\right]\,\vert\,x_u\bigr] \\
+%  &\leq \mathbb{E}\left[f(X_u,X_v)\,\vert\,x_u\right] - \epsilon \\
+%  &= \mathbb{E}\bigl[\mathbb{E}[f(x_u,X_z,X_w)\,\vert\,x_u,X_z]\,\big\vert\,x_u\bigr] - \epsilon \\
+%  &= \sum_{x_z\in\states^z}P(X_z=x_z\,\vert\,X_u=x_u)\mathbb{E}[f(x_u,x_z,X_w)\,\vert\,x_u,x_z] - \epsilon \\
+%  &= \sum_{x_z\in\states^z}P_{X_z,x_u}(X_z=x_z\,\vert\,X_u=x_u)\mathbb{E}_{X_w,x_z,x_u}[f(x_u,x_z,X_w)\,\vert\,x_u,x_z] - \epsilon\,,
+% \end{align*}
+% where in the last step we applied Equation REF. Using Equation REF, we therefore find that
+% \begin{align*}
+%  &\quad \underline{\mathbb{E}}^{\mathrm{W}}_\rateset\bigl[\underline{\mathbb{E}}^{\mathrm{W}}_\rateset\left[f(x_u,X_v)\,\vert\,x_u,X_{v\setminus w}\right]\,\vert\,x_u\bigr] \\
+%  &\leq \sum_{x_z\in\states^z}P_{X_z,x_u}(X_z=x_z\,\vert\,X_u=x_u)\mathbb{E}_{X_w,x_z,x_u}[f(x_u,x_z,X_w)\,\vert\,x_u,x_z] - \epsilon \\
+%  &= \sum_{x_z\in\states^z}P_{X_z,x_u}(X_z=x_z\,\vert\,X_u=x_u)\left(\mathbb{E}_{X_w,x_z,x_u}[f(x_u,x_z,X_w)\,\vert\,x_u,x_z] - \frac{\epsilon}{2}\right) - \frac{\epsilon}{2} \\
+%  &< \sum_{x_z\in\states^z}P_{X_z,x_u}(X_z=x_z\,\vert\,X_u=x_u)\underline{\mathbb{E}}^{\mathrm{W}}_\rateset\left[f(x_u,x_z,X_w)\,\vert\,x_u,x_z\right] - \frac{\epsilon}{2} \\
+%  &= \mathbb{E}_{X_z,x_u}\bigl[\underline{\mathbb{E}}^{\mathrm{W}}_\rateset\left[f(x_u,X_z,X_w)\,\vert\,x_u,X_z\right] \,\vert\,x_u\bigr] - \frac{\epsilon}{2}\,.
+% \end{align*}
+% Therefore, and due to Equation REF, we finally find
+% \begin{align*}
+% \underline{\mathbb{E}}^{\mathrm{W}}_\rateset\bigl[\underline{\mathbb{E}}^{\mathrm{W}}_\rateset\left[f(x_u,X_v)\,\vert\,x_u,X_{v\setminus w}\right]\,\vert\,x_u\bigr] &< \mathbb{E}_{X_z,x_u}\bigl[\underline{\mathbb{E}}^{\mathrm{W}}_\rateset\left[f(x_u,X_z,X_w)\,\vert\,x_u,X_z\right] \,\vert\,x_u\bigr] - \frac{\epsilon}{2} \\
+%  &< \underline{\mathbb{E}}^{\mathrm{W}}_\rateset\bigl[\underline{\mathbb{E}}^{\mathrm{W}}_\rateset\left[f(x_u,X_z,X_w)\,\vert\,x_u,X_z\right] \,\vert\,x_u\bigr] \\
+%  &= \underline{\mathbb{E}}^{\mathrm{W}}_\rateset\bigl[\underline{\mathbb{E}}^{\mathrm{W}}_\rateset\left[f(x_u,X_v)\,\vert\,x_u,X_{v\setminus w}\right]\,\vert\,x_u\bigr]\,,
+% \end{align*}
+% a contradiction. Hence, it follows that indeed
+% \begin{equation*}
+% \norm{\mathbb{E}\left[f(X_u,X_v)\,\vert\,X_u\right] - \underline{\mathbb{E}}^{\mathrm{W}}_\rateset\bigl[\underline{\mathbb{E}}^{\mathrm{W}}_\rateset\left[f(X_u,X_v)\,\vert\,X_u,X_{v\setminus w}\right]\,\vert\,X_u\bigr]} < \epsilon\,.
+% \end{equation*}
+% Because the $\epsilon$ was arbitrary, together with Equation REF, it then follows that
+% \begin{align*}
+% \underline{\mathbb{E}}^{\mathrm{W}}_\rateset[\underline{\mathbb{E}}^{\mathrm{W}}_\rateset [f(x_u,X_v)\,\vert\,x_u,X_{v\setminus w}]\,\vert\,x_u] %&= \inf\{\mathbb{E}\bigl[\mathbb{E}\left[f(X_u,X_v)\,\vert\,X_u,X_{v\setminus w}\right]\,\vert\,x_u\bigr]\,:\,P\in\wprocesses_\rateset\} \\
+%  &= \inf\{\mathbb{E}\left[f(X_u,X_v)\,\vert\,x_u\right]\,:\,P\in\wprocesses_\rateset\} \\
+%  &= \underline{\mathbb{E}}^{\mathrm{W}}_\rateset\left[f(X_u,X_v)\,\vert\,x_u\right]\,.
+% \end{align*}
 \end{proof}
 
 \begin{lemma}\label{lemma:bound_on_linear_approx_partition}
