@@ -3319,7 +3319,7 @@ $\underline{\mathbb{E}}^{\mathrm{W}}_\rateset\left[f(X_u,X_v,X_w)\vert\,x_u\righ
 \end{proof}
 
 \begin{lemma}\label{lemma:bound_on_linear_approx_partition}
-Consider any $P\in\wprocesses_\rateset$, any $0\leq t<s$ and any $x_u$. Then for all $\epsilon>0$ and $\delta>0$, there is some $v\in\mathcal{U}_{[t,s]}$ such that $\sigma(v)<\delta$ and, for all $i\in\{0,\dots,n-1\}$:
+Consider any $P\in\wprocesses_\rateset$, any $0\leq t<s$, any $u\in\mathcal{U}_{<t}$ and any $x_u\in\states^u$. Then for all $\epsilon>0$ and $\delta>0$, there is some $v\in\mathcal{U}_{[t,s]}$ such that $\sigma(v)<\delta$ and, for all $i\in\{0,\dots,n-1\}$:
 \begin{equation*}
 (\exists Q\in\rateset)
 ~
@@ -3329,8 +3329,18 @@ T^{t_{i+1}}_{t_i,\,x_u}-(I+\Delta_{i+1}Q)
 \end{equation*}
 \end{lemma}
 \begin{proof}
-Fix any $\epsilon>0$ and $\delta>0$.
-For any $r\in[t,s]$, it follows from Proposition~\ref{prop:outerderivativebehaveslikelimit} and Definition~\ref{def:consistent_process} that there is some $0<\delta_r<\delta$ such that, for all $0<\Delta<\delta_r$:
+Fix any $\epsilon>0$ and $\delta>0$. It then follows from Proposition~\ref{prop:outerderivativebehaveslikelimit} and Definition~\ref{def:consistent_process} that there is some $0<\delta^*<\min\{\delta,\nicefrac{1}{2}(s-t)\}$ such that, for all $0<\Delta<\delta^*$:
+\begin{equation}\label{eq:epsilonboundsforboundsinlemma}
+(\exists Q\in\rateset)
+\norm{\frac{1}{\Delta}
+(T^{t+\Delta}_{t,\,x_u}-I)-Q}<\epsilon
+\text{~~and~~}
+(\exists Q\in\rateset)
+\norm{\frac{1}{\Delta}
+(T^{s}_{s-\Delta,\,x_u}-I)-Q}<\epsilon.
+\end{equation}
+Let $t^*\coloneqq t+\epsilon^*$ and $s^*\coloneqq s-\epsilon^*$. Then clearly, $t<t^*<s^*<s$.
+For any $r\in[t^*,s^*]$, it follows from Proposition~\ref{prop:outerderivativebehaveslikelimit} and Definition~\ref{def:consistent_process} that there is some $0<\delta_r<\delta^*$ such that, for all $0<\Delta<\delta_r$:
 \begin{equation}\label{eq:epsilonboundsforlemma}
 (\exists Q\in\rateset)
 \norm{\frac{1}{\Delta}
@@ -3340,7 +3350,7 @@ For any $r\in[t,s]$, it follows from Proposition~\ref{prop:outerderivativebehave
 \norm{\frac{1}{\Delta}
 (T^{r}_{r-\Delta,\,x_u}-I)-Q}<\epsilon.
 \end{equation}
-Let $U_r\coloneqq(r-\delta_r,r+\delta_r)$. Then the set $C\coloneqq\{U_r\colon r\in[t,s]\}$ is an open cover of $[t,s]$. By the Heine-Borel theorem, $C$ contains a finite subcover $C^*$ of $[t,s]$. Without loss of generality, we can take this subcover to be minimal, in the sense that if we remove any of its elements, it is no longer a cover. Let $m$ be the cardinality of $C^*$ and let $r_1<r_2<\dots<r_m$ be the ordered sequence of the midpoints of the intervals in $C^*$.
+Let $U_r\coloneqq(r-\delta_r,r+\delta_r)$. Then the set $C\coloneqq\{U_r\colon r\in[t^*,s^*]\}$ is an open cover of $[t^*,s^*]$. By the Heine-Borel theorem, $C$ contains a finite subcover $C^*$ of $[t^*,s^*]$. Without loss of generality, we can take this subcover to be minimal, in the sense that if we remove any of its elements, it is no longer a cover. Let $m$ be the cardinality of $C^*$ and let $r_1<r_2<\dots<r_m$ be the ordered sequence of the midpoints of the intervals in $C^*$.
 
 We will now prove that
 \begin{equation}\label{eq:orderingofbounds}
@@ -3360,7 +3370,7 @@ r_{k+1}-\delta_{r_{k+1}}<r_k+\delta_{r_k}
 \end{equation}
 Assume \emph{ex absurdo} that this statement is not true or, equivalently, that there is some $k\in\{1,\dots,m-1\}$ such that $r_k+\delta_{r_k}\leq r_{k+1}-\delta_{r_{k+1}}$. For all $i\in\{k+1,\dots, m\}$, it then follows from Equation~\eqref{eq:orderingofbounds} that $r_k+\delta_{r_k}\leq r_i-\delta_{r_i}$, which implies that $r_k+\delta_{r_k}\notin U_{r_i}$. Similarly, for all $i\in\{1,\dots,k\}$, it follows from Equation~\eqref{eq:orderingofbounds} that $r_i+\delta_{r_i}\leq r_k+\delta_{r_k}$, which again implies that $r_k+\delta_{r_k}\notin U_{r_i}$. 
 Hence, for all $i\in\{1,\dots,m\}$, we have found that $r_k+\delta_{r_k}\notin U_{r_i}$. 
-Since $C^*$ is a cover of $[t,s]$, this implies that $r_k+\delta_{r_k}\notin[t,s]$, which, since $r_k\in[t,s]$, implies that $r_k+\delta_{r_k}>s$. Hence, since we know from Equation~\eqref{eq:orderingofbounds} that $r_k-\delta_{r_k}<r_m-\delta_{r_m}$, it follows that $U_{r_m}\cap[t,s]\subseteq U_{r_k}\cap[t,s]$. This contradicts the fact that $C^*$ was taken to be a minimal cover.
+Since $C^*$ is a cover of $[t^*,s^*]$, this implies that $r_k+\delta_{r_k}\notin[t^*,s^*]$, which, since $r_k\in[t^*,s^*]$, implies that $r_k+\delta_{r_k}>s^*$. Hence, since we know from Equation~\eqref{eq:orderingofbounds} that $r_k-\delta_{r_k}<r_m-\delta_{r_m}$, it follows that $U_{r_m}\cap[t^*,s^*]\subseteq U_{r_k}\cap[t^*,s^*]$. This contradicts the fact that $C^*$ was taken to be a minimal cover.
 
 For all $k\in\{1,\dots,m-1\}$, we now define $q_k\coloneqq\nicefrac{1}{2}(r_k+\delta_{r_k}+r_{k+1}-\delta_{r_{k+1}})$.
 Using Equation~\eqref{eq:orderingofbounds}, it then follows that
@@ -3375,7 +3385,7 @@ r_k<q_k<r_k+\delta_{r_k}
 \text{~~and~~}
 r_{k+1}-\delta_{r_{k+1}}<q_k<r_{k+1}.
 \end{equation*}
-Because of Equation~\eqref{eq:epsilonboundsforlemma}, and with $\Delta^*_k\coloneqq q_k-r_k$ and $\Delta^{**}_k\coloneqq r_{k+1}-q_k$, this implies that
+Due to Equation~\eqref{eq:epsilonboundsforlemma}, and with $\Delta^*_k\coloneqq q_k-r_k$ and $\Delta^{**}_k\coloneqq r_{k+1}-q_k$, this implies that
 \begin{equation}\label{eq:epsilonboundsforqk}
 (\exists Q\in\rateset)
 \norm{\frac{1}{\Delta^*_k}
@@ -3386,39 +3396,60 @@ Because of Equation~\eqref{eq:epsilonboundsforlemma}, and with $\Delta^*_k\colon
 (T^{r_{k+1}}_{q_k,\,x_u}-I)-Q}<\epsilon.
 \end{equation}
 
-For all $k\in\{1,\dots,m-1\}$, we now let $s_{2k}\coloneqq q_k$ and, for all $k\in\{1,\dots,m\}$, we let $s_{2k-1}\coloneqq r_k$. For the resulting sequence $s_1<s_2<\dots<s_{2m-2}<s_{2m-1}$, it then follows from Equation~\eqref{eq:epsilonboundsforqk} and~\ref{N:homogeneous} that, for all $i\in\{1,\dots,2m-2\}$:
-\begin{equation*}
+For all $k\in\{1,\dots,m\}$, we now let $t_{2k}\coloneqq r_k$ and, for all $k\in\{1,\dots,m-1\}$, we let $t_{2k+1}\coloneqq q_k$. For the resulting sequence $t_2<t_3<\dots<t_{2m-1}<t_{2m}$, it then follows from Equation~\eqref{eq:epsilonboundsforqk} and~\ref{N:homogeneous} that, for all $i\in\{2,\dots,2m-1\}$:
+\begin{equation}\label{eq:opencoverproofresult} 
 (\exists Q\in\rateset)
 ~
 \norm{
-T^{s_{i+1}}_{s_i,\,x_u}-(I+\Delta'_{i+1}Q)
-}<\Delta'_{i+1}\epsilon,
-\end{equation*}
-with $\Delta'_{i+1}\coloneqq s_{i+1}-s_i<\delta$. 
+T^{t_{i+1}}_{t_i,\,x_u}-(I+\Delta_{i+1}Q)
+}<\Delta_{i+1}\epsilon,
+\end{equation}
+with $\Delta_{i+1}\coloneqq t_{i+1}-t_i<\delta$.  
 
-If $s_1\neq t$, we also define $s_0\coloneqq t$ and $\Delta'_1\coloneqq s_1-s_0=r_1-t>0$. Since $C^*$ is a minimal cover, and because of Equation~\eqref{eq:orderingofbounds}, it follows that $r_1-\delta_{r_1}<t<r_1$, which, because of Equation~\eqref{eq:epsilonboundsforlemma} and~\ref{N:homogeneous}, implies that
-\begin{equation*}
-(\exists Q\in\rateset)
-~
-\norm{
-T^{s_{1}}_{s_0,\,x_u}-(I+\Delta'_{1}Q)
-}<\Delta'_{1}\epsilon.
-\end{equation*}
+Next, since $C^*$ is a minimal cover, and because of Equation~\eqref{eq:orderingofbounds}, we know that $r_1-\delta_{r_1}<t^*\leq r_1=t_2$ and, since $\delta_{r_1}<\delta^*$, we also know that $r_1-\delta_{r_1}>t$. Therefore, it follows that there is some $t_1\in\reals$ such that $t<r_1-\delta_{r_1}<t_1<t^*\leq r_1$. If we now let $t_0\coloneqq t$, then $\Delta_1\coloneqq t_1-t_0<\delta^*$ and $\Delta_2\coloneqq t_2-t_1=r_1-t_1<\delta_{r_1}$, and therefore, it follows from Equations~\eqref{eq:epsilonboundsforboundsinlemma} and~\eqref{eq:epsilonboundsforlemma} and~\ref{N:homogeneous} that Equation~\eqref{eq:opencoverproofresult} is also true for $i=0$ and $i=1$.
+% \begin{equation*}
+% (\exists Q\in\rateset)
+% ~
+% \norm{
+% T^{t_1}_{t_0,\,x_u}-(I+\Delta_{1}Q)
+% }<\Delta_{1}\epsilon
+% \text{~~and~~}
+% (\exists Q\in\rateset)
+% ~
+% \norm{
+% T^{t_2}_{t_1,\,x_u}-(I+\Delta_{2}Q)
+% }<\Delta_{2}\epsilon
+% \end{equation*}
 
-If $s_{2m-1}\neq s$, we also define $s_{2m}\coloneqq s$ and $\Delta'_{2m}\coloneqq s_{2m}-s_{2m-1}=s-r_m>0$. Since $C^*$ is a minimal cover, and because of Equation~\eqref{eq:orderingofbounds}, it follows that $r_m<s<r_m+\delta_{r_m}$, which, because of Equation~\eqref{eq:epsilonboundsforlemma} and~\ref{N:homogeneous}, implies that
-\begin{equation*}
-(\exists Q\in\rateset)
-~
-\norm{
-T^{s_{2m}}_{s_{2m-1},\,x_u}-(I+\Delta'_{2m}Q)
-}<\Delta'_{2m}\epsilon.
-\end{equation*}
+Finally, again since $C^*$ is a minimal cover and because of Equation~\eqref{eq:orderingofbounds}, we know that $t_{2m}=r_m\leq s^*<r_m+\delta_{r_m}$ and, since $\delta_{r_m}<\delta^*$, we also know that $r_m+\delta_{r_m}<s$. Therefore, it follows that there is some $t_{2m+1}\in\reals$ such that $t_{2m}=r_m\leq s^*<t_{2m+1}<r_m+\delta_{r_m}<s$. If we now let $t_{2m+2}\coloneqq s$, then $\Delta_{2m+2}\coloneqq t_{2m+2}-t_{2m+1}<\delta^*$ and $\Delta_{2m+1}\coloneqq t_{2m+1}-t_{2m}=t_{2m+1}-r_m<\delta_{r_m}$, and therefore, it follows from Equations~\eqref{eq:epsilonboundsforboundsinlemma} and~\eqref{eq:epsilonboundsforlemma} and~\ref{N:homogeneous} that Equation~\eqref{eq:opencoverproofresult} is also true for $i=2m$ and $i=2m+1$.
 
-We now consider four cases.
-If $s_1=t$ and $s_{2m-1}=s$, the result follows by letting $n\coloneqq 2m-2$ and defining $t_i\coloneqq s_{i+1}$ for all $i\in\{0,\dots,n\}$. 
-If $s_1=t$ and $s_{2m-1}\neq s$, the result follows by letting $n\coloneqq 2m-1$ and defining $t_i\coloneqq s_{i+1}$ for all $i\in\{0,\dots,n\}$.
-If $s_1\neq t$ and $s_{2m-1}=s$, the result follows by letting $n\coloneqq 2m-1$ and defining $t_i\coloneqq s_{i}$ for all $i\in\{0,\dots,n\}$.
-If $s_1\neq t$ and $s_{2m-1}\neq s$, the result follows by letting $n\coloneqq 2m$ and defining $t_i\coloneqq s_{i}$ for all $i\in\{0,\dots,n\}$.
+Hence, we conclude that Equation~\eqref{eq:opencoverproofresult} is holds for all $i\in\{0,1,\dots,2m,2m+1\}$. The result now follows by letting $n\coloneqq2m+2$.
+% \begin{equation*}
+% (\exists Q\in\rateset)
+% ~
+% \norm{
+% T^{t_1}_{t_0,\,x_u}-(I+\Delta_{1}Q)
+% }<\Delta_{1}\epsilon
+% \text{~~and~~}
+% (\exists Q\in\rateset)
+% ~
+% \norm{
+% T^{t_2}_{t_1,\,x_u}-(I+\Delta_{2}Q)
+% }<\Delta_{2}\epsilon
+% \end{equation*}
+% If $s_{2m-1}\neq s$, we also define $s_{2m}\coloneqq s$ and $\Delta'_{2m}\coloneqq s_{2m}-s_{2m-1}=s-r_m>0$. Since $C^*$ is a minimal cover, and because of Equation~\eqref{eq:orderingofbounds}, it follows that $r_m<s<r_m+\delta_{r_m}$, which, because of Equation~\eqref{eq:epsilonboundsforlemma} and~\ref{N:homogeneous}, implies that
+% \begin{equation*}
+% (\exists Q\in\rateset)
+% ~
+% \norm{
+% T^{s_{2m}}_{s_{2m-1},\,x_u}-(I+\Delta'_{2m}Q)
+% }<\Delta'_{2m}\epsilon.
+% \end{equation*}
+% We now consider four cases.
+% If $s_1=t$ and $s_{2m-1}=s$, the result follows by letting $n\coloneqq 2m-2$ and defining $t_i\coloneqq s_{i+1}$ for all $i\in\{0,\dots,n\}$. 
+% If $s_1=t$ and $s_{2m-1}\neq s$, the result follows by letting $n\coloneqq 2m-1$ and defining $t_i\coloneqq s_{i+1}$ for all $i\in\{0,\dots,n\}$.
+% If $s_1\neq t$ and $s_{2m-1}=s$, the result follows by letting $n\coloneqq 2m-1$ and defining $t_i\coloneqq s_{i}$ for all $i\in\{0,\dots,n\}$.
+% If $s_1\neq t$ and $s_{2m-1}\neq s$, the result follows by letting $n\coloneqq 2m$ and defining $t_i\coloneqq s_{i}$ for all $i\in\{0,\dots,n\}$.
 \end{proof}
 
 
