@@ -1543,7 +1543,7 @@ We will in this section introduce a specific lower transition operator on which 
 Before defining the operator of interest, we first give some preliminary results to provide intuition on how this operator will be constructed. We start with a bound on the distance between two operators $\Phi_u$ and $\Phi_{u*}$.
 
 \begin{proposition}\label{prop:differencebetweenu}
-Consider any $t,s\in\realsnonneg$ with $t\leq s$, any $\delta\in\realspos$ such that $\delta\leq\nicefrac{1}{\norm{\lrate}}$, and any $u,u^*\in\mathcal{U}_{[t,s]}$ such that $\sigma(u)<\delta$ and $\sigma(u^*)<\delta$. Let $C\coloneqq s-t$. Then,
+Consider any $t,s\in\realsnonneg$ with $t\leq s$, any $\delta\in\realspos$ such that $\delta\norm{\lrate}\leq1$, and any $u,u^*\in\mathcal{U}_{[t,s]}$ such that $\sigma(u)<\delta$ and $\sigma(u^*)<\delta$. Let $C\coloneqq s-t$. Then
 \begin{equation*}
 \norm{\Phi_u-\Phi_{u^*}}\leq 2\delta C\norm{\lrate}^2\,.
 \end{equation*}
@@ -4074,7 +4074,7 @@ where the second inequality follows from the induction hypothesis and property~\
 % \end{proof}
 
 \begin{lemma}\label{lemma:differencebetweennested}
-For any $k\in\{1,\dots,n\}$, consider a sequence $\Delta_{k,i}\geq 0$, $i\in\{1,\dots,n_k\}$, and let $\Delta_k\coloneqq\sum_{i=1}^{n_k}\Delta_{k,i}$. Let $C\coloneqq\sum_{k=1}^n\Delta_k$ and let $\delta\coloneqq\max_{k=1}^n\Delta_k$. Then for any lower transition rate operator $\lrate$ such that either $\norm{\lrate}=0$ or $\delta\leq\nicefrac{1}{\norm{\lrate}}$:
+For any $k\in\{1,\dots,n\}$, consider a sequence $\Delta_{k,i}\geq 0$, $i\in\{1,\dots,n_k\}$, and let $\Delta_k\coloneqq\sum_{i=1}^{n_k}\Delta_{k,i}$. Let $C\coloneqq\sum_{k=1}^n\Delta_k$ and let $\delta\coloneqq\max_{k=1}^n\Delta_k$. Then for any lower transition rate operator $\lrate$ such that $\delta\norm{\lrate}\leq1$:
 \begin{equation*}
 \norm{\prod_{k=1}^n\left(\prod_{i=1}^{n_k}(I+\Delta_{k,i}\lrate)\right)
 -
@@ -4084,8 +4084,7 @@ For any $k\in\{1,\dots,n\}$, consider a sequence $\Delta_{k,i}\geq 0$, $i\in\{1,
 \end{equation*}
 \end{lemma}
 \begin{proof}
-To avoid trivialities, we will assume that $\norm{\lrate}\neq 0$.
-Fix any $k\in\{1,\dots,n\}$. Then for all $i\in\{1,\dots,n_k\}$, since $\Delta_{k,i}\leq\Delta_k\leq\delta\leq\nicefrac{1}{\norm{\lrate}}$, it follows from Propositions~\ref{lemma:normQsmallenough} and~\ref{lemma:compositioncoherence} that $\prod_{i=1}^{n_k}(I+\Delta_{k,i}\lrate)$ and $(I+\Delta_k\lrate)$ are lower transition operators. Therefore,
+For any $k\in\{1,\dots,n\}$, we know that $\Delta_{k,i}\norm{\lrate}\leq\Delta_k\norm{\lrate}\leq\delta\norm{\lrate}\leq1$ for all $i\in\{1,\dots,n_k\}$, and therefore, it follows from Propositions~\ref{lemma:normQsmallenough} and~\ref{lemma:compositioncoherence} that $\prod_{i=1}^{n_k}(I+\Delta_{k,i}\lrate)$ and $(I+\Delta_k\lrate)$ are lower transition operators. Hence,
 \begin{align*}
 \norm{\prod_{k=1}^n\left(\prod_{i=1}^{n_k}(I+\Delta_{k,i}\lrate)\right)
 -
@@ -4113,23 +4112,23 @@ where the first inequality follows from Lemma~\ref{lemma:recursive_lower_trans} 
 \begin{proof}[Proof of Proposition~\ref{prop:differencebetweenu}]
 Consider any $u'\in\mathcal{U}_{[t,s]}$ that is finer than $u$ and $u^*$, meaning that the timepoints it consists of contain the timepoints in $u$ and the timepoints in $u^*$. For example, let $u'$ be the ordered union of the timepoints in $u$ and $u^*$.
 
-This implies that, for all $k\in\{1,\dots,n\}$, there is some sequence $\Delta_{k,i}\geq 0$, $i\in\{1,\dots,n_k\}$, such that $\Delta_k=\sum_{i=1}^{n_k}\Delta_{k,i}$ and
+Then, for all $k\in\{1,\dots,n\}$, there is some sequence $\Delta_{k,i}\geq 0$, $i\in\{1,\dots,n_k\}$, such that $\Delta_k=\sum_{i=1}^{n_k}\Delta_{k,i}$ and
 \begin{equation*}
-\Phi_{u'}\coloneqq\prod_{k=1}^n\left(\prod_{i=1}^{n_k}(I+\Delta_{k,i}\lrate)\right).
+\Phi_{u'}\coloneqq\prod_{k=1}^n\left(\prod_{i=1}^{n_k}(I+\Delta_{k,i}\lrate)\right)
+\text{~~and~~}
+\Phi_{u}\coloneqq\prod_{k=1}^n(I+\Delta_{k}\lrate).
 \end{equation*}
-It then follows from Lemma~\ref{lemma:differencebetweennested} that $\norm{\Phi_{u'}-\Phi_u}\leq\delta C\norm{\lrate}^2$. 
-
-Similarly, for all $k\in\{1,\dots,n^*\}$, there is some sequence $\Delta^*_{k,i}\geq 0$, $i\in\{1,\dots,n^*_k\}$, such that $\Delta^*_k=\sum_{i=1}^{n^*_k}\Delta^*_{k,i}$ and
-\begin{equation*}
-\Phi_{u'}\coloneqq\prod_{k=1}^{n^*}\left(\prod_{i=1}^{n^*_k}(I+\Delta^*_{k,i}\lrate)\right).
-\end{equation*}
-It then follows from Lemma~\ref{lemma:differencebetweennested} that $\norm{\Phi_{u'}-\Phi_{u^*}}\leq\delta C\norm{\lrate}^2$.
-
-Hence, we find that
+Because of Lemma~\ref{lemma:differencebetweennested}, this implies that $\norm{\Phi_{u'}-\Phi_u}\leq\delta C\norm{\lrate}^2$. 
+% Similarly, for all $k\in\{1,\dots,n^*\}$, there is some sequence $\Delta^*_{k,i}\geq 0$, $i\in\{1,\dots,n^*_k\}$, such that $\Delta^*_k=\sum_{i=1}^{n^*_k}\Delta^*_{k,i}$ and
+% \begin{equation*}
+% \Phi_{u'}\coloneqq\prod_{k=1}^{n^*}\left(\prod_{i=1}^{n^*_k}(I+\Delta^*_{k,i}\lrate)\right).
+% \end{equation*}
+% It then follows from Lemma~\ref{lemma:differencebetweennested} that 
+Using a completely analogous argument, we find that $\norm{\Phi_{u'}-\Phi_{u^*}}\leq\delta C\norm{\lrate}^2$. Hence, it follows that
 \begin{equation*}
 \norm{\Phi_{u}-\Phi_{u^*}}
-=
-\norm{\Phi_{u}-\Phi_{u'}+\Phi_{u'}-\Phi_{u^*}}
+%=
+%\norm{\Phi_{u}-\Phi_{u'}+\Phi_{u'}-\Phi_{u^*}}
 \leq
 \norm{\Phi_{u}-\Phi_{u'}}
 +
