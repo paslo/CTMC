@@ -3636,16 +3636,16 @@ Consider a non-empty, bounded, convex and closed set of rate matrices $\rateset$
 \end{lemma}
 \begin{proof}
 Consider any sequence $\{\mathcal{T}_i^{[t,s]}\}_{i\in\nats}$ in $\mathbb{T}_{\rateset}^{[t,s]}$ that is Cauchy. We need to prove that this sequence converges to a limit $\mathcal{T}_*^{[t,s]}$ that belongs to $\mathbb{T}_{\rateset}^{[t,s]}$. Since we already know from Lemma~\ref{lemma:restricted_trans_mat_system_cauchy_converges} this limit exists and belongs to $\mathbb{T}^{[t,s]}$, the only thing that remains to be shown is that $\mathcal{T}_*^{[t,s]}\in\mathbb{T}_{\rateset}^{[t,s]}$. 
-Throughout this proof, for any $q,r\in[t,s]$ such that $q\leq r$, we will use $\presuper{*}T_q^r$ to denote the transition matrix that corresponds to $\mathcal{T}_*^{[t,s]}$ and, for all $i\in\nats$, we will use $\presuper{i}T_q^r$ to denote the transition matrix that corresponds to $\mathcal{T}_i^{[t,s]}$. 
+Throughout this proof, for any $q,r\in[t,s]$ such that $q\leq r$, we will use $\smash{\presuper{*}T_q^r}$ to denote the transition matrix that corresponds to $\mathcal{T}_*^{[t,s]}$ and, for all $i\in\nats$, we will use $\presuper{i}T_q^r$ to denote the transition matrix that corresponds to $\mathcal{T}_i^{[t,s]}$. 
 
-Consider any $r\in[t,s]$ and fix $\Delta>0$. Then due to Lemma~\ref{lemma:uniformelywellbehaved}, for all $i\in\nats$:
+Fix any $r\in[t,s]$ and consider any $\Delta>0$. Then due to Lemma~\ref{lemma:uniformelywellbehaved}, for all $i\in\nats$:
 \begin{equation*}
 \norm{\presuper{*}T_r^{r+\Delta}-I}
 \leq\norm{\presuper{*}T_r^{r+\Delta}-\presuper{i}T_r^{r+\Delta}}+\norm{\presuper{i}T_r^{r+\Delta}-I}
 \leq
 \norm{\presuper{*}T_r^{r+\Delta}-\presuper{i}T_r^{r+\Delta}}+\Delta\norm{\rateset}.
 \end{equation*}
-Since $\lim_{i\to+\infty}\presuper{i}T_r^{r+\Delta}=\presuper{*}T_r^{r+\Delta}$, this implies that $\norm{\presuper{*}T_r^{r+\Delta}-I}\leq\Delta\norm{\rateset}$. Similarly, we also find that $\norm{\presuper{*}T_{r-\Delta}^{r}-I}\leq\Delta\norm{\rateset}$. Hence, since $\Delta>0$ is arbitrary, it follows that
+Since $\lim_{i\to+\infty}\presuper{i}T_r^{r+\Delta}=\presuper{*}T_r^{r+\Delta}$, this implies that $\norm{\presuper{*}T_r^{r+\Delta}-I}\leq\Delta\norm{\rateset}$. Similarly, if $r-\Delta\geq0$, we also find that $\norm{\presuper{*}T_{r-\Delta}^{r}-I}\leq\Delta\norm{\rateset}$. Hence, it follows that
 \begin{equation*}
 \limsup_{\Delta\to0^+}\norm{\frac{1}{\Delta}\left(\presuper{*}T_r^{r+\Delta}-I\right)}\leq\norm{\rateset}\text{~~~and~~~}
 \limsup_{\Delta\to0^+}\norm{\frac{1}{\Delta}\left(\presuper{*}T_{r-\Delta}^{r}-I\right)}\leq\norm{\rateset},
@@ -3659,7 +3659,8 @@ It remains to be show that $\mathcal{T}_*^{[t,s]}\in\mathbb{T}_\rateset^{[t,s]}$
 Then clearly, $\mathcal{T}_*$ is a transition matrix system and, since $\mathcal{T}_*^{[t,s]}$ is well-behaved, it follows from Proposition~\ref{prop:systemQ} and~\ref{prop:concat_restr_trans_mat_systems_is_system} that $\mathcal{T}_*$ is also well-behaved. Therefore, and because of Theorem~\ref{theo:uniqueMarkovchain}, there is some $P_*\in\wmprocesses$ such that $\mathcal{T}_{P_*}=\mathcal{T}_*$. In the remainder of this proof, we will show that $P_*\in\wmprocesses_\rateset$, which then implies that $\mathcal{T}_*^{[t,s]}\in\mathbb{T}_\rateset^{[t,s]}$.
 
 Fix any $r\in\realsnonneg$. We need to show that $\smash{\overline{\partial}}\presuper{*}T_r^r\subseteq\rateset$, or equivalently, that $\smash{\overline{\partial}_{+}}\hspace{-3pt}\presuper{*}T_r^r\subseteq\rateset$ and $\smash{\overline{\partial}_{-}}\hspace{-3pt}\presuper{*}T_r^r\subseteq\rateset$. We will only prove that $\smash{\overline{\partial}_{+}}\hspace{-3pt}\presuper{*}T_r^r\subseteq\rateset$. The proof for $\smash{\overline{\partial}_{-}}\hspace{-3pt}\presuper{*}T_r^r\subseteq\rateset$ is completely analogous. 
-So fix any $Q_*\in\smash{\overline{\partial}_{+}}\hspace{-3pt}\presuper{*}T_r^r$. We will show that $Q_*\in\rateset$. If $r<t$ or $s\leq r$, this holds trivially because in that case, we know that $\smash{\overline{\partial}}_+\presuper{*}T_r^r=\{Q\}\subseteq\rateset$ *** REF TO PROP ***. Therefore, without loss of generality, we may assume $r\in[t,s)$. 
+So fix any $Q_*\in\smash{\overline{\partial}_{+}}\hspace{-3pt}\presuper{*}T_r^r$. We will show that $Q_*\in\rateset$. If $r<t$ or $s\leq r$, this holds trivially because in that case, we know that $\smash{\partial}_+\presuper{*}T_r^r=Q$, which, because of Corollary~\ref{corol:outersingleton}, implies that $\smash{\overline{\partial}}_+\presuper{*}T_r^r=\{Q\}\subseteq\rateset$.
+Therefore, without loss of generality, we may assume that $r\in[t,s)$. 
 
 Fix any $m\in\nats$. Lemma~\ref{lemma:uniform_delta_for_convex_markov_set} then implies the existence of some $\delta\in\realspos$ such that
 \begin{equation}\label{eq:lemma:restricted_trans_mat_system_complete_if_Q_closed:uniformdelta}
