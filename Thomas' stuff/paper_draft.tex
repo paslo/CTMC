@@ -842,7 +842,7 @@ Then, for any $t,s\in\realsnonneg$ such that $t\leq s$, any sequence of time poi
 for all $u\in\mathcal{U}$, $x_u\in\states^u$ and $t\in\reals_{\geq0}$ such that $t>u$.
 \end{proposition}
 
-\begin{remark*}
+\begin{remark}\label{remark:expectationT}
 Note that for any $P\in\processes$, a corresponding transition matrix $T_{t, x_u}^s$ is a map from $\gamblesX$ to $\gamblesX$, that can therefore be applied to any $f\in\gamblesX$. Observe that for all $x_t\in\states$, we have that
 %\begin{align*}
 %\left[T_t^sf\right](x_t) &= \sum_{x_s\in\states}f(x_s)P(X_s=x_s\,\vert\,X_t=x_t)
@@ -853,7 +853,7 @@ Note that for any $P\in\processes$, a corresponding transition matrix $T_{t, x_u
 \end{align*}
 where the expectation is taken with respect to $P$. This result is useful when we later focus on expectations with respect to stochastic processes; for functions $f\in\gamblesX$, their corresponding transition matrices serve as an alternative representation for the expectation operator.  %Similarly, for any history-dependent transition matrix $T_{t,x_u}^s$, we have that
 \exampleend
-\end{remark*}
+\end{remark}
 
 Because a stochastic process is defined on a continuous time line, and because its corresponding transition matrices $T_{t,x_u}^s$ only describe the behavior of this process on a fixed point in time, we will furthermore require some tools to capture the dynamics of a given process. That is, we will be interested in how these transition matrices change over time.
 
@@ -3869,37 +3869,22 @@ Since a metric space is compact if and only if it is complete and totally bounde
 \end{proof}
 
 \begin{proof}[Proof of Proposition~\ref{prop:lower_expectation_reached_if_Q_closed}]
-Consider any sequence $\{\epsilon_i\}_{i\in\nats}$ in $\realspos$ such that $\{\epsilon_i\}_{i\in\nats}\to0^+$. Because $\underline{\mathbb{E}}^{\mathrm{WM}}_\rateset$ computes an infimum, for all $i\in\nats$, there is some $P_i\in\wmprocesses_\rateset$ such that
-\begin{equation*}
-\abs{\underline{\mathbb{E}}^{\mathrm{WM}}_\rateset[f(X_s)\,\vert\,X_t=x] - \mathbb{E}_{P_i}[f(X_s)\,\vert\,X_t=x]} < \epsilon_i\,,
-\end{equation*}
-where $\mathbb{E}_{P_i}$ is the expectation taken with respect to $P_i$. Recall from Remark~{\bf REF} that 
-\begin{equation*}
-\mathbb{E}_{P_i}[f(X_s)\,\vert\,X_t=x] = \left[\presuper{i}T_t^sf\right](x)\,,
-\end{equation*}
-where $\presuper{i}T_t^s$ is the transition matrix corresponding to $P_i$.
-
-Consider the sequence $\{P_i\}_{i\in\nats}$. Then, because $\{\epsilon_i\}_{i\in\nats}\to0^+$, the corresponding sequence $\{\presuper{i}T_t^s\}_{i\in\nats}$ clearly satisfies
-\begin{equation}\label{eq:prop_lower_is_reached_limit}
-\lim_{i\to\infty}\abs{\underline{\mathbb{E}}^{\mathrm{WM}}_\rateset[f(X_s)\,\vert\,X_t=x] - \left[\presuper{i}T_t^sf\right](x)} = 0\,.
+Since $\underline{\mathbb{E}}^{\mathrm{WM}}_\rateset$ computes an infimum, there is a sequence $\{P_i\}_{i\in\nats}$ in $\wmprocesses_\rateset$ such that
+\begin{equation}\label{eq:prop:lower_expectation_reached_if_Q_closed}
+\underline{\mathbb{E}}^{\mathrm{WM}}_\rateset[f(X_s)\vert\,X_t=x]
+=\lim_{i\to+\infty}\mathbb{E}_i[f(X_s)\vert\,X_t=x]
+=\lim_{i\to+\infty}\left[\presuper{i}T_t^sf\right](x),
 \end{equation}
+where we use $\mathbb{E}_i$ and $\presuper{i}T_t^s$ to denote the expectation operator and transition matrix that corresponds to $P_i$, respectively, and where the last equality follows from Remark~\ref{remark:expectationT}.
 
-For each $P_i$ in $\{P_i\}_{i\in\nats}$, consider the restricted transition matrix system $\mathcal{T}_i^{[t,s]}$. Because $P_i\in\wmprocesses_\rateset$, we clearly have that $\mathcal{T}_i^{[t,s]}\in\mathbb{T}_\rateset^{[t,s]}$, where $\mathbb{T}_\rateset^{[t,s]}$ is the space of all restricted transition matrix systems corresponding to $\wmprocesses_\rateset$, defined as in Section~{\bf REF}.
-
-Therefore, the sequence $\left\{\mathcal{T}_i^{[t,s]}\right\}_{i\in\nats}$ is clearly in $\mathbb{T}_\rateset^{[t,s]}$. Because $\rateset$ is non-empty, bounded, convex and closed, by Theorem~\ref{theorem:restricted_transmatsystem_space_compact_if_Q_closed}, the space $\mathbb{T}_\rateset^{[t,s]}$ is compact under the metric $d$ defined as in Equation~\eqref{eq:trans_mat_system_metric}. Therefore, the sequence $\left\{\mathcal{T}_i^{[t,s]}\right\}_{i\in\nats}$ contains a convergent subsequence $\left\{\mathcal{T}_{i_k}^{[t,s]}\right\}_{k\in\nats}$, of which the limit $\mathcal{T}_*^{[t,s]}\coloneqq \lim_{k\to\infty}\mathcal{T}_{i_k}^{[t,s]}$ belongs to $\mathbb{T}_\rateset^{[t,s]}$.
-
-Because $\mathcal{T}_*^{[t,s]}\in\mathbb{T}_\rateset^{[t,s]}$, there must be some $P_*\in\wmprocesses_\rateset$ such that $\mathcal{T}_{P_*}^{[t,s]}=\mathcal{T}_*^{[t,s]}$. Furthermore, this $P_*$ has a corresponding transition matrix $\presuper{*}T_t^s$ which, by Lemma~{\bf REF}, is given by
+For every $i\in\nats$, we now let $\mathcal{T}_i^{[t,s]}$ be the corresponding restricted transition matrix system, which, since $P_i$ belongs to $\wmprocesses_\rateset$, is clearly an element of $\mathbb{T}_\rateset^{[t,s]}$.
+Hence, since we know from Theorem~\ref{theorem:restricted_transmatsystem_space_compact_if_Q_closed} that the metric space $(\mathbb{T}_\rateset^{[t,s]},d)$ is compact, the sequence $\{\mathcal{T}_i^{[t,s]}\}_{i\in\nats}$ contains a convergent subsequence $\{\mathcal{T}_{i_k}^{[t,s]}\}_{k\in\nats}$ whose limit $\mathcal{T}^{[t,s]}$ belongs to $\mathbb{T}_\rateset^{[t,s]}$, which in turn implies that there is some $P\in\wmprocesses_\rateset$ such that $\mathcal{T}_{P}^{[t,s]}=\mathcal{T}^{[t,s]}$. Let $\mathbb{E}$ and $T_t^s$ be the expectation operator and transition matrix that corresponds to $P$, respectively. It then follows from Remark~\ref{remark:expectationT} and the fact that $\{\mathcal{T}_{i_k}^{[t,s]}\}_{k\in\nats}$ converges to $\mathcal{T}^{[t,s]}$ that
 \begin{equation*}
-\presuper{*}T_t^s = \lim_{k\to\infty}\presuper{i_k}T_t^s\,.
+\mathbb{E}[f(X_s)\,\vert\,X_t=x]
+=\left[T_t^sf\right](x)
+=\lim_{k\to+\infty}\left[\presuper{i_k}T_t^sf\right](x)
 \end{equation*}
-Therefore, and because the sequence $\left\{\presuper{i_k}T_t^s \right\}_{k\in\nats}$ is a subsequence of $\left\{\presuper{i}T_t^s\right\}_{i\in\nats}$, we find from Equation~\eqref{eq:prop_lower_is_reached_limit} that
-\begin{equation*}
-\abs{\underline{\mathbb{E}}^{\mathrm{WM}}_\rateset[f(X_s)\,\vert\,X_t=x] - \left[\presuper{*}T_t^sf\right](x)} = 0\,.
-\end{equation*}
-In summary, we have found a $P_*\in\wmprocesses_\rateset$ with a corresponding transition matrix $\presuper{*}T_t^s$, such that
-\begin{equation*}
-\underline{\mathbb{E}}^{\mathrm{WM}}_\rateset[f(X_s)\,\vert\,X_t=x] = \left[\presuper{*}T_t^sf\right](x) = \mathbb{E}_{P_*}[f(X_s)\,\vert\,X_t=x]\,.
-\end{equation*}
+By combining this expression with Equation~\eqref{eq:prop:lower_expectation_reached_if_Q_closed}, the result is now immediate.
 \end{proof}
 
 
