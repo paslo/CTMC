@@ -3999,20 +3999,20 @@ We provide a proof by induction. Clearly, Equation~\eqref{eq:lemma_recursive_ine
  &\leq \norm{\underline{T}_n - \underline{S}_n} + \norm{\prod_{i=1}^{n-1}\underline{T}_i - \prod_{i=1}^{n-1}\underline{S}_i} \\
  &\leq \norm{\underline{T}_n - \underline{S}_n} + \sum_{i=1}^{n-1}\norm{\underline{T}_i - \underline{S}_i} = \sum_{i=1}^{n}\norm{\underline{T}_i - \underline{S}_i}\,.
 \end{align*}
-Here, in the second inequality, we applied Proposition~\ref{lemma:compositioncoherence} and property~\ref{LT:differencenorm}. In the third inequality, we used property~\ref{LT:norm_at_most_one}. In the final inequality, we used the induction hypothesis.
+Here, in the second inequality, we applied Proposition~\ref{lemma:compositioncoherence} and properties \ref{LT:differencenorm} and~\ref{N:normAB}. In the third inequality, we used property~\ref{LT:norm_at_most_one}. In the final inequality, we used the induction hypothesis.
 \end{proof}
 
 \begin{lemma}\label{lemma:justthelinearpart}
-Consider a lower transition rate operator $\lrate$ and, for all $i\in\{1,\ldots,n\}$, some $0\leq\Delta_i\leq\nicefrac{1}{\norm{\lrate}}$ if $\norm{\lrate}\neq 0$, or any $\Delta_i\in\realsnonneg$ otherwise. Let $\Delta\coloneqq\sum_{i=1}^n\Delta_i$. Then
+Consider a lower transition rate operator $\lrate$ and, for all $i\in\{1,\ldots,n\}$, some $\Delta_i\geq0$ such that $\Delta_i\norm{\lrate}\leq1$. Let $\Delta\coloneqq\sum_{i=1}^n\Delta_i$. Then
 \begin{equation*}
 \norm{\prod_{i=1}^n(I+\Delta_i\lrate)-(I+\Delta\lrate)}\leq\Delta^2\norm{\lrate}^2.
 \end{equation*}
 \end{lemma}
 \begin{proof}
-To avoid trivialities, we will assume that $\norm{\lrate}\neq 0$.
+%To avoid trivialities, we will assume that $\norm{\lrate}\neq 0$.
 We provide a proof by induction. For $n=1$, the result is trivial. So consider the case $n\geq2$ and assume that the result is true for $n-1$. 
 
-For all $i\in\{2,\dots,n\}$, since $\Delta_i\leq\nicefrac{1}{\norm{\lrate}}$, it follows from Proposition~\ref{lemma:normQsmallenough} that $(I+\Delta_i\lrate)$ and $I$ are lower transition operators. Therefore,
+For all $i\in\{2,\dots,n\}$, since $\Delta_i\norm{\lrate}\leq1$, it follows from Proposition~\ref{lemma:normQsmallenough} that $(I+\Delta_i\lrate)$ and $I$ are lower transition operators. Therefore,
 \begin{multline*}
 \norm{\prod_{i=1}^n(I+\Delta_i\lrate)-(I+\Delta\lrate)}\\
 \begin{aligned}
