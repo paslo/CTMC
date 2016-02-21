@@ -1549,26 +1549,19 @@ Consider any $t,s\in\realsnonneg$ with $t\leq s$, any $\delta\in\realspos$ such 
 \end{equation*}
 \end{proposition}
 
-Using this bound established by Proposition~\ref{prop:differencebetweenu}, we find that for any sequence $\{u_i\}_{i\in\nats}$ in $\mathcal{U}_{[t,s]}$ such that $\lim_{i\to\infty}\sigma(u_i)=0$, the corresponding sequence $\{\Phi_{u_i}\}_{i\in\nats}$ is convergent.
+Using this bound established by Proposition~\ref{prop:differencebetweenu}, we find that for any sequence $\{u_i\}_{i\in\nats}$ in $\mathcal{U}_{[t,s]}$ such that $\lim_{i\to\infty}\sigma(u_i)=0$, the corresponding sequence $\{\Phi_{u_i}\}_{i\in\nats}$ is cauchy.
 
 \begin{corollary}\label{corol:cauchy}
-For every sequence $\{u_i\}_{i\in\nats}$ in $\mathcal{U}_{[t,s]}$ such that $\lim_{i\to\infty}\sigma(u_i)=0$, the corresponding sequence $\{\Phi_{u_i}\}_{i\in\nats}$ is a \emph{Cauchy sequence}, meaning that
-\begin{equation*}
-(\forall \epsilon>0)(\exists n\in\nats)(\forall i,j\geq n)
-\norm{\Phi_{u_i}-\Phi_{u_j}}<\epsilon.
-\end{equation*}
+For every sequence $\{u_i\}_{i\in\nats}$ in $\mathcal{U}_{[t,s]}$ such that $\lim_{i\to\infty}\sigma(u_i)=0$, the corresponding sequence $\{\Phi_{u_i}\}_{i\in\nats}$ is Cauchy.
 \end{corollary}
-\begin{proof}
-This follows directly from Proposition~\ref{prop:differencebetweenu} by noting that because $\lim_{i\to\infty}\sigma(u_i)=0$, we can decrease the $\delta$ in Proposition~\ref{prop:differencebetweenu} as we increase $n$.
-\end{proof}
 
-\noindent Due to Proposition~\ref{lemma:completemetricspace}, we therefore have the following result.
+Furthermore, because of Proposition~\ref{lemma:completemetricspace}, this Cauchy sequence converges to a limit, and this limit is a lower transition operator.
 
 \begin{corollary}\label{corol:limitexistsandiscoherent}
 For every sequence $\{u_i\}_{i\in\nats}$ in $\mathcal{U}_{[t,s]}$ such that $\lim_{i\to\infty}\sigma(u_i)=0$, the corresponding sequence $\{\Phi_{u_i}\}_{i\in\nats}$ converges to a lower transition operator.
 \end{corollary}
 
-Our next result establishes that this limit is also unique, i.e., that it is independent of the choice of $\{u_i\}_{i\in\nats}$.
+Finally, as our next result establishes, this limit is also unique, in the sense that it is independent of the choice of $\{u_i\}_{i\in\nats}$.
 
 \begin{theorem}\label{theo:convergencelowerbound}
 For any $t,s\in\realsnonneg$ such that $t\leq s$ and any lower transition rate operator $\lrate$, there is a lower transition operator $\lt\in\underline{\mathcal{T}}$ such that 
@@ -4133,12 +4126,22 @@ Using a completely analogous argument, we find that $\norm{\Phi_{u'}-\Phi_{u^*}}
 \norm{\Phi_{u}-\Phi_{u'}}
 +
 \norm{\Phi_{u'}-\Phi_{u^*}}
-\leq2\delta C\norm{\lrate}^2.
+\leq2\delta C\norm{\lrate}^2.\vspace{-10pt}
 \end{equation*}
 \end{proof}
 
+
+\begin{proof}[Proof of Corollory~\ref{corol:cauchy}]
+By definition of a Cauchy sequence, we need to show that
+\begin{equation*}
+(\forall \epsilon>0)(\exists n\in\nats)(\forall i,j\geq n)
+\norm{\Phi_{u_i}-\Phi_{u_j}}<\epsilon.
+\end{equation*}
+This follows directly from Proposition~\ref{prop:differencebetweenu} by noting that because $\lim_{i\to\infty}\sigma(u_i)=0$, we can decrease the $\delta$ in Proposition~\ref{prop:differencebetweenu} as we increase $n$.
+\end{proof}
+
 \begin{proof}[Proof of Corollary~\ref{corol:limitexistsandiscoherent}]
-Since $\lim_{i\to\infty}\sigma(u_i)=0$, and because of Propositions~\ref{lemma:normQsmallenough} and~\ref{lemma:compositioncoherence}, there is some index $n$ such that the sequence $\Phi_{u_n},\Phi_{u_{n+1}},\ldots$ consists of lower transition operators. Due to Corollary~\ref{corol:cauchy}, this sequence is Cauchy and therefore, because of Proposition~\ref{lemma:completemetricspace}, this sequence has a limit that is also a lower transition operator. Since the limit starting from $n$ and the limit starting from $1$ are identical (initial elements do not influence the limit), we find that the sequence $\left\{\Phi_{u_i}\right\}_{i\in\nats}$ has a limit, and that this limit is a lower transition operator.
+Since $\lim_{i\to\infty}\sigma(u_i)=0$, and because of Propositions~\ref{lemma:normQsmallenough} and~\ref{lemma:compositioncoherence} and~\ref{LR:normlratefinite}, there is some index $n$ such that the sequence $\Phi_{u_n},\Phi_{u_{n+1}},\ldots$ consists of lower transition operators. Due to Corollary~\ref{corol:cauchy}, this sequence is Cauchy and therefore, because of Proposition~\ref{lemma:completemetricspace}, this sequence has a limit that is also a lower transition operator. Since the limit starting from $n$ and the limit starting from $1$ are identical (initial elements do not influence the limit), we find that the sequence $\left\{\Phi_{u_i}\right\}_{i\in\nats}$ has a limit, and that this limit is a lower transition operator.
 \end{proof}
 
 \begin{proof}[Proof of Theorem~\ref{theo:convergencelowerbound}]
