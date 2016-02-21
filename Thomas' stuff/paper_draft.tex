@@ -4145,37 +4145,29 @@ Since $\lim_{i\to\infty}\sigma(u_i)=0$, and because of Propositions~\ref{lemma:n
 \end{proof}
 
 \begin{proof}[Proof of Theorem~\ref{theo:convergencelowerbound}]
-To avoid trivialities, we will assume that $t\neq s$ and $\norm{\lrate}\neq 0$.
-Start by considering any sequence $\{u_i\}_{i\in\nats}$ in $\mathcal{U}_{[t,s]}$ such that $\lim_{i\to\infty}\sigma(u_i)=0$. Due to Corollary~\ref{corol:limitexistsandiscoherent}, the sequence $\{\Phi_{u_i}\}_{i\in\nats}$ converges to a lower transition operator, which we denote by $\lt$. 
+Consider any sequence $\{u_i\}_{i\in\nats}$ in $\mathcal{U}_{[t,s]}$ such that $\lim_{i\to\infty}\sigma(u_i)=0$. Because of Corollary~\ref{corol:limitexistsandiscoherent}, the sequence $\{\Phi_{u_i}\}_{i\in\nats}$ then converges to a lower transition operator, which we denote by $\lt$. 
 
-Consider now any $\epsilon>0$ and let $C\coloneqq s-t$ and
+Fix any $\epsilon>0$, let $C\coloneqq s-t$ and choose any $\delta>0$ such that $4\delta C\norm{\lrate}^2<\epsilon$ and $\delta\norm{\lrate}\leq1$ [this is clearly always possible].
+% \begin{equation*}
+% \delta\coloneqq\min\left\{\frac{\epsilon}{4C\norm{\lrate}^2},\frac{1}{\norm{\lrate}}\right\}.
+% \end{equation*}
+Since $\lim_{i\to+\infty}\Phi_{u_i}=\lt$ and $\lim_{i\to\infty}\sigma(u_i)=0$, there is some $i^*\in\nats$ such that
+\begin{equation}\label{eq:theo:convergencelowerbound}
+\sigma(u_{i^*})<\delta\text{ and }\norm{\lt - \Phi_{u_{i^*}}}<\frac{\epsilon}{2}.
+\end{equation}
+Consider now any $u\in\mathcal{U}_{[t,s]}$ such that $\sigma(u)<\delta$. Then
 \begin{equation*}
-\delta\coloneqq\min\left\{\frac{\epsilon}{4C\norm{\lrate}^2},\frac{1}{\norm{\lrate}}\right\}.
-\end{equation*}
-
-\noindent Since $\{\Phi_{u_i}\}_{i\in\nats}$ converges to $\lt$, there is some $N\in\nats$ such that
-\begin{equation*}
-(\forall n\geq N)~\norm{\lt - \Phi_{u_n}}<\frac{\epsilon}{2}.
-\end{equation*}
-Therefore, since $\lim_{i\to\infty}\sigma(u_i)=0$, there is some $N^*\geq N$ such that
-\begin{equation*}
-\sigma(u_{N^*})<\delta\text{ and }\norm{\lt - \Phi_{u_{N^*}}}<\frac{\epsilon}{2}
-\end{equation*}
-
-\noindent Consider now any $u\in\mathcal{U}_{[t,s]}$ such that $\sigma(u)<\delta$. Then
-
-\begin{equation*}
-\norm{\lt - \Phi_u}\leq\norm{\lt-\Phi_{u_{N^*}}}
-+\norm{\Phi_{u_{N^*}}-\Phi_u}
+\norm{\lt - \Phi_u}\leq\norm{\lt-\Phi_{u_{i^*}}}
++\norm{\Phi_{u_{i^*}}-\Phi_u}
 <\frac{\epsilon}{2}+2\delta C\norm{\lrate}^2\leq\epsilon,
 \end{equation*}
-where the strict inequality follows from Proposition~\ref{prop:differencebetweenu}.
-In summary, we have shown that there is lower transition operator $\lt$ such that
-\begin{equation*}
-(\forall\epsilon>0)\,
-(\exists\delta>0)\,
-(\forall u\in\mathcal{U}_{[t,s]}\colon\sigma(u)<\delta)~\norm{\lt - \Phi_u}<\epsilon\,.
-\end{equation*}
+where the strict inequality follows from Equation~\eqref{eq:theo:convergencelowerbound} and Proposition~\ref{prop:differencebetweenu}.
+% In summary, we have shown that there is lower transition operator $\lt$ such that
+% \begin{equation*}
+% (\forall\epsilon>0)\,
+% (\exists\delta>0)\,
+% (\forall u\in\mathcal{U}_{[t,s]}\colon\sigma(u)<\delta)~\norm{\lt - \Phi_u}<\epsilon\,.
+% \end{equation*}
 \end{proof}
 
 \begin{proof}[Proof of Proposition~\ref{prop:lower_trans_system_is_system}]
