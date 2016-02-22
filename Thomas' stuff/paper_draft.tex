@@ -1618,9 +1618,9 @@ Let $\lrate$ be an arbitrary lower transition rate operator, and let $\underline
 Finally, we note that the derivatives of these lower transition operators always exist.
 
 \begin{proposition}\label{prop:lower_transition_has_deriv}
-Let $\lrate$ be an arbitrary lower transition rate operator, and let $\underline{\mathcal{T}}_{\lrate}$ be the corresponding lower transition operator system. Then, for all $t,s\in\realsnonneg$ such that $t<s$, it holds that
+Let $\lrate$ be an arbitrary lower transition rate operator, and let $\underline{\mathcal{T}}_{\lrate}$ be the corresponding lower transition operator system. Then, for all $t,s\in\realsnonneg$ such that $t\leq s$, it holds that\footnote{If $0=t<s$, the derivative with respect to $t$ is taken to be a right derivative. If $t=s$, the derivative with respect to $s$ is taken to be a right derivative and the derivative with respect to $t$ is taken to be a left derivative (or becomes meaningless if $t=0$).}
 \begin{equation*}
-\frac{\partial}{\partial t}\lbound_t^s=-\lrate\lbound_t^s\,,\quad\text{and,}\quad\frac{\partial}{\partial s}\lbound_t^s=\lrate\lbound_t^s\,.
+\frac{\partial}{\partial t}\lbound_t^s=-\lrate\lbound_t^s\,,\quad\text{and}\quad\frac{\partial}{\partial s}\lbound_t^s=\lrate\lbound_t^s.\vspace{7pt}
 \end{equation*}
 % Then $\frac{d}{dt}\lbound_t^s=-\lrate\lbound_t^s$ and $\frac{d}{ds}\lbound_t^s=\lbound_t^s\lrate$, meaning that
 \end{proposition}
@@ -4234,21 +4234,15 @@ where the first and last equality follow from Theorem~\ref{theo:convergencelower
 \end{proof}
 
 \begin{proof}[Proof of Proposition~\ref{prop:lower_transition_has_deriv}]
-We will prove that $\frac{\partial}{\partial t}L_t^s=-\lrate L_t^s$ and $\frac{\partial}{\partial s}L_t^s=\lrate L_t^s$, meaning that
+We first prove that $\frac{\partial}{\partial t}L_t^s=-\lrate L_t^s$, or equivalently, that
 \begin{equation}\label{eq:lower_deriv_backward}
 (\forall\epsilon>0)\,
 (\exists\delta>0)\,
-(\forall\Delta\,:\,0<\lvert\Delta\rvert <\delta)~
-\norm{\frac{L_{t+\Delta}^s-L_t^s}{\Delta}+\lrate L_t^s}<\epsilon
+(\forall\Delta\,:\,0<\lvert\Delta\rvert <\delta,\,0\leq t+\Delta\leq s)~
+\norm{\frac{L_{t+\Delta}^s-L_t^s}{\Delta}+\lrate L_t^s}<\epsilon.
 \end{equation}
-and
-\begin{equation}\label{eq:lower_deriv_forward}
-(\forall\epsilon>0)\,
-(\exists\delta>0)\,
-(\forall\Delta\,:\,0<\lvert\Delta\rvert<\delta)~
-\norm{\frac{L_{t}^{s+\Delta}-L_t^s}{\Delta}-\lrate\lbound_t^s }<\epsilon.
-\end{equation}
-We start by proving Equation~\eqref{eq:lower_deriv_backward}. Choose any $\epsilon\in\realspos$, and let
+%We start by proving Equation~\eqref{eq:lower_deriv_backward}.
+Choose any $\epsilon\in\realspos$, and let
 \begin{equation}\label{eq:derivative_max_delta}
 \delta \coloneqq \min\left\{\frac{\epsilon}{5\norm{\lrate}^2},\frac{1}{\norm{\lrate}}\right\}.
 \end{equation}
@@ -4298,6 +4292,14 @@ Again using $\Delta'\leq\abs{\Delta}$, we therefore find that
 % &< 3\delta\norm{\lrate}^2 = \epsilon\,,
 \end{align*}
 where the second-to-last inequality used $\abs{\Delta}<\delta$, and the final step used Equation~\eqref{eq:derivative_max_delta}. This concludes the proof of Equation~\eqref{eq:lower_deriv_backward}. 
+
+We first that $\frac{\partial}{\partial s}L_t^s=\lrate L_t^s$
+\begin{equation}\label{eq:lower_deriv_forward}
+(\forall\epsilon>0)\,
+(\exists\delta>0)\,
+(\forall\Delta\,:\,0<\lvert\Delta\rvert<\delta,\,t\leq s+\Delta)~
+\norm{\frac{L_{t}^{s+\Delta}-L_t^s}{\Delta}-\lrate\lbound_t^s }<\epsilon.
+\end{equation}
 
 To prove Equation~\eqref{eq:lower_deriv_forward}, note that for any $\Delta\neq 0$, it holds that
 \begin{align*}
