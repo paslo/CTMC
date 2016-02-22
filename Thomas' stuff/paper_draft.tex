@@ -1420,9 +1420,9 @@ $\left[\lt(\lambda f)\right](x)=\lambda\left[\lt\,f\right](x)$. \label{LT:homo}
 The first thing to note is that any transition matrix $T$ will also satisfy properties~\ref{LT:bounded_min}-\ref{LT:homo}, and hence is also a lower transition operator. It is therefore clear that lower transition operators are a proper generalization of transition matrices.
 
 A first way to motivate this specific generalization is to note the following. For any lower transition operator $\lt$ and any $x\in\states$, consider the map $\lt_x:\gamblesX\to\reals$, defined for all $f\in\gamblesX$ as
-\begin{equation*}
+\begin{equation}\label{eq:lowerprevisionfromlt}
 \lt_xf \coloneqq \left[\lt f\right](x)\,.
-\end{equation*}
+\end{equation}
 Due to properties~\ref{LT:bounded_min}-\ref{LT:homo}, it follows that $\lt_x$ is a map from $\gamblesX$ to $\reals$ that is super-additive, non-negatively homogeneous, and bounded below by the minimum operator. By definition~\cite[Definition~2.3.3]{Walley:1991vk}, that means that $\lt_x$ is a \emph{coherent lower prevision} on $\gamblesX$. 
 
 For the unfamiliar reader, this notion of coherent lower previsions is perhaps best clarified as follows. Consider some arbitrary set $\mathcal{M}$ of probability mass functions on $\states$, and consider a map $\underline{\mathbb{E}}:\gamblesX\to\reals$, defined for all $f\in\gamblesX$ as
@@ -4508,12 +4508,7 @@ Consider any $Q\in\rateset$. It then follows from Definition~\ref{def:rate_matri
 \end{proof}
 
 \begin{proof}[Proof of Proposition~\ref{prop:dominating_nonempty_bounded}]
-Fix any $f\in\gamblesX$. Choose $\Delta>0$ small enough such that $0\leq\Delta\norm{\lrate}\leq 1$ (this always possible because of property~\ref{LR:normlratefinite}). Define $\lt\coloneqq I+\Delta\lrate$. Since $\lrate$ is a lower transition rate operator, it follows from Proposition~\ref{lemma:normQsmallenough} that $\lt$ is a lower transition operator. For any $x\in\states$, we now let
-\begin{equation*}
-\lt_xg\coloneqq(\lt g)(x)
-\text{~~for all $g\in\gamblesX$.}
-\end{equation*}
-Since $\lt$ is a lower transition operator, it follows that $\lt_x\colon \gamblesX\to\reals$ is super-additive, positively homogeneous and bounded below by the minimum operator. Hence, by definition~\cite[Definition~2.3.3]{Walley:1991vk}, $\lt_x$ is a coherent lower prevision on $\gamblesX$. Because of \cite[Theorem~3.3.3(b)]{Walley:1991vk}, this implies the existence of an expectation operator $\mathbb{E}_x$ on $\gamblesX$---Reference~\cite{Walley:1991vk} calls this a linear prevision on $\gamblesX$---such that $\mathbb{E}_xg\geq\lt_xg$ for all $g\in\gamblesX$ and $\mathbb{E}_xf=\lt_xf$. Let $P_x$ be the unique probability mass function that corresponds to $\mathbb{E}_x$. For all $x,y\in\states$, we now let $T(x,y)\coloneqq P_x(y)\coloneqq \mathbb{E}_x(\ind{y})$. Then $T$ is clearly a transition matrix. Furthermore, for every $x\in\states$ and $g\in\gamblesX$, we have that $(Tg)(x)=\mathbb{E}_xg$. Hence, it follows that $Tg\geq\lt g$ for all $g\in\gamblesX$ and that $Tf=\lt f$. Now let $Q\coloneqq\nicefrac{1}{\Delta}(T-I)$, which, because of Proposition~\ref{prop:rate_from_stochastic_matrix}, is a rate matrix. Since $Tf=\lt f$, it then follows that
+Fix any $f\in\gamblesX$. Choose $\Delta>0$ small enough such that $0\leq\Delta\norm{\lrate}\leq 1$ (this always possible because of property~\ref{LR:normlratefinite}). Define $\lt\coloneqq I+\Delta\lrate$. Since $\lrate$ is a lower transition rate operator, it follows from Proposition~\ref{lemma:normQsmallenough} that $\lt$ is a lower transition operator. For any $x\in\states$, we now consider the operator $\lt_x\colon\gamblesX\to\reals$, as defined by Equation~\eqref{eq:lowerprevisionfromlt}, which is a coherent lower prevision. Because of \cite[Theorem~3.3.3(b)]{Walley:1991vk}, this implies the existence of an expectation operator $\mathbb{E}_x$ on $\gamblesX$---Reference~\cite{Walley:1991vk} calls this a linear prevision on $\gamblesX$---such that $\mathbb{E}_xg\geq\lt_xg$ for all $g\in\gamblesX$ and $\mathbb{E}_xf=\lt_xf$. Let $P_x$ be the unique probability mass function that corresponds to $\mathbb{E}_x$. For all $x,y\in\states$, we now let $T(x,y)\coloneqq P_x(y)\coloneqq \mathbb{E}_x(\ind{y})$. Then $T$ is clearly a transition matrix. Furthermore, for every $x\in\states$ and $g\in\gamblesX$, we have that $(Tg)(x)=\mathbb{E}_xg$. Hence, it follows that $Tg\geq\lt g$ for all $g\in\gamblesX$ and that $Tf=\lt f$. Now let $Q\coloneqq\nicefrac{1}{\Delta}(T-I)$, which, because of Proposition~\ref{prop:rate_from_stochastic_matrix}, is a rate matrix. Since $Tf=\lt f$, it then follows that
 \begin{equation*}
 Qf=\frac{1}{\Delta}(Tf-f)\geq\frac{1}{\Delta}(\lt f-f)=\lrate f.
 \end{equation*}
