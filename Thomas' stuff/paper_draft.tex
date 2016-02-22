@@ -4294,26 +4294,6 @@ where the second inequality follows from Lemma~\ref{lemma:recursive_lower_trans}
 % a contradiction. Hence, we find that indeed $L_t^s=L_t^rL_r^s$.
 \end{proof}
 
-\begin{lemma}\label{lemma:linearboundonL}
-Let $\lrate$ be a lower transition rate operator. Then for any $t,\Delta\in\realsnonneg$:
-\begin{equation*}
-\norm{L_t^{t+\Delta}-I}\leq\Delta\norm{\lrate}.\vspace{5pt}
-\end{equation*}
-\end{lemma}
-\begin{proof}
-*** Fix any $\epsilon>0$. Because of Definition~\ref{def:low_trans}, there is some $\smash{u\in\mathcal{U}_{[t,t+\Delta]}}$ such that $\sigma(u)\norm{\lrate}\leq1$ and $\norm{L_t^s-\Phi_{u}}<\epsilon$. By combining this with Lemma~\ref{lemma:justthelinearpart}, it follows that
-\begin{equation*}
-\norm{L_t^s-(I+\Delta\lrate)}
-\leq
-\norm{L_t^s-\Phi_{u}}
-+
-\norm{\Phi_{u}-(I+\Delta\lrate)}
-<\epsilon+
-\Delta^2\norm{\lrate}^2.
-\end{equation*}
-Since $\epsilon>0$ is arbitrary, the result is now immediate.
-\end{proof}
-
 
 \begin{proof}[Proof of Proposition~\ref{prop:lower_transition_is_homogeneous}]
 Consider any $t,s\in\realsnonneg$ such that $t\leq s$, any $\Delta\in\realsnonneg$, and any sequence $\{u_i\}_{i\in\nats}$ in $\mathcal{U}_{[t,s]}$ such that $\lim_{i\to\infty}\sigma(u_i)=0$. %Then, by Theorem~\ref{theo:convergencelowerbound}, $\lim_{i\to\infty}\Phi_{u_i}=L_t^s$.
@@ -4325,6 +4305,49 @@ We now have that
 L_t^s=\lim_{i\to\infty}\Phi_{u_i}=\lim_{i\to\infty}\Phi_{u_i^*}=L_{t+\Delta}^{s+\Delta},
 \end{equation*}
 where the first and last equality follow from Theorem~\ref{theo:convergencelowerbound}.
+\end{proof}
+
+\begin{lemma}\label{lemma:linearboundonL}
+Let $\lrate$ be a lower transition rate operator. Then for any $t,\Delta\in\realsnonneg$:
+\begin{equation*}
+\norm{L_t^{t+\Delta}-I}\leq\Delta\norm{\lrate}.\vspace{5pt}
+\end{equation*}
+\end{lemma}
+\begin{proof}
+Fix any $n\in\nats$ and let $\Delta_n\coloneqq\nicefrac{\Delta}{n}$. Propositions~\ref{prop:lower_trans_system_is_system} and~\ref{prop:lower_transition_is_homogeneous} then imply that
+\begin{equation*}
+L_t^{t+\Delta}
+=L_0^{\Delta}
+=L_0^{n\Delta_n}
+=L_0^{\Delta_n}
+L_{\Delta_n}^{2\Delta_n}
+\cdots
+L_{(n-2)\Delta_n}^{(n-1)\Delta_n}
+L_{(n-1)\Delta_n}^{n\Delta_n}
+=L_0^{\Delta_n}
+L_0^{\Delta_n}
+\cdots
+L_0^{\Delta_n}
+L_0^{\Delta_n}
+=(L_0^{\Delta_n})^n,
+\end{equation*}
+and therefore, it follows from Lemma~\ref{lemma:recursive_lower_trans} that
+\begin{equation*}
+\norm{L_t^{t+\Delta}-I}
+=
+\norm{(L_0^{\Delta_n})^n-I^n}
+%\leq\sum_{i=1}^n\norm{L_0^{\Delta_n}-I}
+\leq n\norm{L_0^{\Delta_n}-I}
+\leq n\Delta_n\norm{\lrate}+n\norm{L_0^{\Delta_n}-(I+\Delta_n\lrate)},
+\end{equation*}
+which, when combined with Lemma~\ref{lemma:quadraticboundonL}, implies that
+\begin{equation*}
+\norm{L_t^{t+\Delta}-I}
+\leq
+n\Delta_n\norm{\lrate}+n\Delta_n^2\norm{\lrate}^2
+=\Delta\norm{\lrate}+\frac{1}{n}\Delta^2\norm{\lrate}^2.
+\end{equation*}
+Since $n\in\nats$ is arbitrary, the result is now immediate.
 \end{proof}
 
 \begin{proof}[Proof of Proposition~\ref{prop:lower_transition_has_deriv}]
