@@ -4897,19 +4897,21 @@ It remains to show that this $P$ has a corresponding transition matrix $T_t^s$ w
 
 We then factorize the interval $[t,s]$ according to $u$, using Proposition~\ref{prop:lower_trans_system_is_system} and the Markov property of $P$, to obtain
 \begin{align*}
-\norm{L_t^sf - T_t^sf} &= \norm{L_{t_0}^{t_n}f - T_{t_0}^{t_n}f} \\
- &\leq \norm{L_{t_0}^{t_n}f - T_{t_0}^{t_{n-1}}L_{t_{n-1}}^{t_n}f} + \norm{T_{t_0}^{t_{n-1}}L_{t_{n-1}}^{t_n}f - T_{t_0}^{t_n}f} \\
- &\leq \norm{L_{t_0}^{t_{n-1}}L_{t_{n-1}}^{t_n}f - T_{t_0}^{t_{n-1}}L_{t_{n-1}}^{t_n}f} + \norm{{T_{t_0}^{t_{n-1}}}}\cdot\norm{L_{t_{n-1}}^{t_n}f - T_{t_{n-1}}^{t_n}f} \\
- &= \norm{L_{t_0}^{t_{n-1}}\left[L_{t_{n-1}}^{t_n}f\right] - T_{t_0}^{t_{n-1}}\left[L_{t_{n-1}}^{t_n}f\right]} + \norm{L_{t_{n-1}}^{t_n}f - T_{t_{n-1}}^{t_n}f} \,.
+\norm{L_{t_0}^{t_n}g_n - T_{t_0}^{t_n}g_n} 
+ &\leq \norm{L_{t_0}^{t_{n-1}}L_{t_{n-1}}^{t_n}g_n - T_{t_0}^{t_{n-1}}L_{t_{n-1}}^{t_n}g_n} + \norm{T_{t_0}^{t_{n-1}}L_{t_{n-1}}^{t_n}g_n - T_{t_0}^{t_{n-1}}T_{t_{n-1}}^{t_n}g_n} \\
+ %&\leq \norm{L_{t_0}^{t_{n-1}}L_{t_{n-1}}^{t_n}f - T_{t_0}^{t_{n-1}}L_{t_{n-1}}^{t_n}f} + \norm{{T_{t_0}^{t_{n-1}}}}\cdot\norm{L_{t_{n-1}}^{t_n}g_n - T_{t_{n-1}}^{t_n}g_n} \\
+ &\leq \norm{L_{t_0}^{t_{n-1}}g_{n-1} - T_{t_0}^{t_{n-1}}g_{n-1}} + \norm{L_{t_{n-1}}^{t_n}g_n - T_{t_{n-1}}^{t_n}g_n}.
 \end{align*}
-Recursion on the first remaining summand yields
-\begin{align*}
-\norm{L_t^sf - T_t^sf} &\leq \norm{L_{t_0}^{t_{n-1}}\left[L_{t_{n-1}}^{t_n}f\right] - T_{t_0}^{t_{n-1}}\left[L_{t_{n-1}}^{t_n}f\right]} + \norm{L_{t_{n-1}}^{t_n}f - T_{t_{n-1}}^{t_n}f} \\
- &\leq \norm{L_{t_0}^{t_{n-2}}\left[L_{t_{n-2}}^{t_n}f\right] - T_{t_0}^{t_{n-2}}\left[L_{t_{n-2}}^{t_n}f\right]} \\
- &\quad\quad\quad+ \norm{L_{t_{n-2}}^{t_{n-1}}\left[L_{t_{n-1}}^{t_n}f\right] - T_{t_{n-2}}^{t_{n-1}}\left[L_{t_{n-1}}^{t_n}f\right]} + \norm{L_{t_{n-1}}^{t_n}f - T_{t_{n-1}}^{t_n}f} \\
-&\vdots \\
- &\leq \sum_{i=1}^{n} \norm{L_{t_{i-1}}^{t_i}\left[L_{t_i}^{t_n}f\right] - T_{t_{i-1}}^{t_i}\left[L_{t_i}^{t_n}f\right]}\,.
-\end{align*}
+Similarly, we also find that
+\begin{equation*}
+\norm{L_{t_0}^{t_{n-1}}g_{n-1} - T_{t_0}^{t_{n-1}}g_{n-1}}
+\leq \norm{L_{t_0}^{t_{n-2}}g_{n-2} - T_{t_0}^{t_{n-2}}g_{n-2}} + \norm{L_{t_{n-2}}^{t_{n-1}}g_{n-1} - T_{t_{n-2}}^{t_{n-1}}g_{n-1}}
+\end{equation*}
+and, by continuing in this way---applying induction---we eventually find that
+\begin{equation*}
+\norm{L_t^sf - T_t^sf}=\norm{L_{t_0}^{t_n}g_n - T_{t_0}^{t_n}g_n} 
+\leq \sum_{i=1}^{n} \norm{L_{t_{i-1}}^{t_i}g_i - T_{t_{i-1}}^{t_i}g_i}.
+\end{equation*}
 
 % Consider now any $i\in\{1,\ldots,n\}$. Then, we find from Lemma~\ref{lemma:justthelinearpart} that
 % \begin{align*}
@@ -4937,11 +4939,10 @@ Recursion on the first remaining summand yields
 % \end{align*}
 % where we used $\norm{Q_i}\leq\norm{\rateset}$, and in the final step applied $\Delta_i\leq\sigma(u)<\delta$.
 
-Because the $i$ was arbitrary, we find that
+
 \begin{align*}
 \norm{L_t^sf - T_t^sf} 
-&\leq \sum_{i=1}^n \norm{L_{t_{i-1}}^{t_i}\left[L_{t_i}^{t_n}f\right] - T_{t_{i-1}}^{t_i}\left[L_{t_i}^{t_n}f\right]}\\
-&= \sum_{i=1}^n \norm{L_{t_{i-1}}^{t_i}g_i - e^{Q_i\Delta_i}g_i}<\sum_{i=1}^n\Delta_i\epsilon
+&\leq \sum_{i=1}^n \norm{L_{t_{i-1}}^{t_i}g_i - T_{t_{i-1}}^{t_i}g_i}= \sum_{i=1}^n \norm{L_{t_{i-1}}^{t_i}g_i - e^{Q_i\Delta_i}g_i}<\sum_{i=1}^n\Delta_i\epsilon
 =C\epsilon.
 \end{align*}
 %***
