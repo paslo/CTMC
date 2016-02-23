@@ -354,9 +354,6 @@ $T(x,y)\geq0$ for all $x,y\in\states$.
 \begin{proposition}\label{lemma:compositiontransitionmatrix}
 For any two transition matrices $T_1$ and $T_2$, their composition $T_1T_2$ is also a transition matrix.
 \end{proposition}
-\begin{proof}
-Simply check each of the properties.
-\end{proof}
 
 The interpretation in the context of Markov chains is as follows. The elements $T(x,y)$ of a transition matrix $T$ describe the probability of the Markov chain ending up in state $y$ at the next time point, given that it is currently in state $x$. In other words, the row $T(x,\cdot)$ contains the state-transition probabilities, conditional on currently being in state $x$. We will make this connection more explicit when we formalize continuous-time stochastic processes in Section~\ref{sec:stochastic_processes}.
 
@@ -1823,9 +1820,9 @@ Thus, we find that there is a correspondence between the operator $L_t^s$ and lo
 Recall from Section~\ref{sec:connections_rate} that for a given lower transition rate operator $\lrate$, its set of dominating rate matrices $\rateset_{\lrate}$ is---by definition---the largest set of rate matrices which has $\lrate$ as its lower envelope. The following result shows that the set $\wprocesses_{\rateset_{\lrate}}$ of well-behaved stochastic processes consistent with $\rateset_{\lrate}$ is the largest set of stochastic processes for which $L_t^s$ computes the lower expectation.
 
 \begin{theorem}\label{theo:dominating_rate_processes_max_set}
-Let $\lrate$ be an arbitrary lower transition rate operator, with $\rateset_{\lrate}$ its set of dominating rate matrices, and let  $\underline{\mathcal{T}}_{\lrate}$ be the corresponding lower transition operator system. Then, the set $\wprocesses_{\rateset_{\lrate}}$ is the largest set of stochastic processes for which, for all $t,s\in\realsnonneg$ such that $t\leq s$, all $u\in\mathcal{U}_{<t}$, all $x\in\states$ and $x_u\in\states^u$, and all $f\in\gamblesX$,
+Let $\lrate$ be an arbitrary lower transition rate operator, with $\rateset_{\lrate}$ its set of dominating rate matrices, and let  $\underline{\mathcal{T}}_{\lrate}$ be the corresponding lower transition operator system. Then, the set $\wprocesses_{\rateset_{\lrate}}$ is the largest set of stochastic processes for which, for all $t,s\in\realsnonneg$ such that $t\leq s$, all $u\in\mathcal{U}_{<t}$, all $x_t\in\states$ and $x_u\in\states^u$, and all $f\in\gamblesX$,
 \begin{equation*}
-[L_t^sf](x) = \underline{\mathbb{E}}_{\,\rateset_{\lrate}}^{\mathrm{W}}[f(X_s)\,\vert\,X_t=x,X_u=x_u]\,.
+[L_t^sf](x_t) = \underline{\mathbb{E}}_{\,\rateset_{\lrate}}^{\mathrm{W}}[f(X_s)\,\vert\,X_t=x_t,X_u=x_u]\,.
 \end{equation*}
 \end{theorem}
 
@@ -2130,6 +2127,10 @@ Finally, previous work only focused on functions $f\in\gamblesX$ defined at a si
 %\section{Proofs of results in Section~\ref{sec:prelim}}\label{app:prelim}
 
 \section{Proofs of results in Section~\ref{sec:systems}}\label{app:systems}
+
+\begin{proof}[Proof of Proposition~\ref{lemma:compositiontransitionmatrix}]
+Simply check each of the properties.
+\end{proof}
 
 
 \begin{proof}[Proof of Proposition~\ref{prop:stochastic_from_rate_matrix}]
