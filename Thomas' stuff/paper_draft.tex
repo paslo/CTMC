@@ -1775,9 +1775,9 @@ Having established a strong connection between the operator $\lrate$ and non-emp
 As the following result shows, the operator $L_t^s$ corresponding to a lower transition rate operator $\lrate$ computes a lower bound on the expectation of a function $f\in\gamblesX$, with respect to the set $\wprocesses_\rateset$ of well-behaved stochastic processes consistent with any set $\rateset$ of which $\lrate$ is the lower envelope.
 
 \begin{proposition}\label{theorem:nonmarkov_single_var_lower_bounded}
-Let $\rateset$ be an arbitrary non-empty bounded set of rate matrices with corresponding lower transition rate operator $\lrate$, and let $\underline{\mathcal{T}}_{\lrate}$ be the corresponding lower transition operator system. Then, for any $P\in\wprocesses_\rateset$, any $t,s\in\realsnonneg$ such that $t\leq s$, any $u\in\mathcal{U}_{<t}$, any $x\in\states$ and $x_u\in\states^u$, and any $f\in\gamblesX$,
+Let $\rateset$ be an arbitrary non-empty bounded set of rate matrices with corresponding lower transition rate operator $\lrate$, and let $\smash{\underline{\mathcal{T}}_{\lrate}}$ be the corresponding lower transition operator system. Then, for any $P\in\wprocesses_\rateset$, any $t,s\in\realsnonneg$ such that $t\leq s$, any $u\in\mathcal{U}_{<t}$, any $x_t\in\states$ and $x_u\in\states^u$, and any $f\in\gamblesX$,
 \begin{equation*}
-[L_{t}^s f](x) \leq \mathbb{E}[f(X_s)\,\vert\,X_t=x,X_u=x_u]\,.
+[L_{t}^s f](x_t) \leq \mathbb{E}[f(X_s)\,\vert\,X_t=x_t,X_u=x_u]\,.
 \end{equation*}
 \end{proposition}
 
@@ -4574,7 +4574,7 @@ Consider any $P\in\wprocesses_\rateset$, any $t,s\in\realsnonneg$ such that $t<s
 Then for any $f\in\gamblesX$ and $x_t\in\states$:
 \begin{equation*}
 [T_{t,\,x_u}^sf](x_t)
-=\Big[T_{t_0,\,x_u}^{t_1}\Bigg(\prod_{i=1}^{n-1}T_{t_i,\,x_{u\cup\{t\}}}^{t_{i+1}}\Bigg)f\Big](x_t)
+=\Big[T_{t_0,\,x_u}^{t_1}\Bigg(\prod_{i=2}^{n}T_{t_{i-1},\,x_{u\cup\{t\}}}^{t_{i}}\Bigg)f\Big](x_t)
 \end{equation*}
 \end{lemma}
 \begin{proof}
@@ -4593,10 +4593,10 @@ T_{t_1,\,x_{u\cup\{t\}}}^{t_{2}}g](x_t),
 and therefore, it follows that
 \begin{equation*}
 [T_{t,\,x_u}^sf](x_t)
-=\Big[T_{t_0,\,x_u}^{t_2}\Bigg(\prod_{i=2}^{n-1}T_{t_i,\,x_{u\cup\{t\}}}^{t_{i+1}}\Bigg)f\Big](x_t)
+=\Big[T_{t_0,\,x_u}^{t_2}\Bigg(\prod_{i=3}^{n}T_{t_{i-1},\,x_{u\cup\{t\}}}^{t_{i}}\Bigg)f\Big](x_t)
 =\Big[T_{t_0,\,x_u}^{t_1}
 T_{t_1,\,x_{u\cup\{t\}}}^{t_{2}}
-\Bigg(\prod_{i=2}^{n-1}T_{t_i,\,x_{u\cup\{t\}}}^{t_{i+1}}\Bigg)f\Big](x_t),
+\Bigg(\prod_{i=3}^{n}T_{t_{i-1},\,x_{u\cup\{t\}}}^{t_{i}}\Bigg)f\Big](x_t),
 \end{equation*}
 using the induction hypothesis for the first equality.
 \end{proof}
@@ -4625,98 +4625,124 @@ where the first inequality follows from the induction hypothesis and the second 
 
 \begin{proof}[Proof of Proposition~\ref{theorem:nonmarkov_single_var_lower_bounded}]
 %Consider any $P\in\wprocesses_\rateset$, any $t,s\in\realsnonneg$ such that $t\leq s$, any $u\in\mathcal{U}_{<t}$, any $x\in\states$ and $x_u\in\states^u$, and any $f\in\gamblesX$. 
-We will show that for all $\epsilon\in\realspos$, it holds that 
-\begin{equation*}
-[L_{t}^s f](x) < \mathbb{E}[f(X_s)\,\vert\,X_t=x,X_u=x_u] + \epsilon\,,
-\end{equation*}
-which then implies that $[L_{t}^s f](x) \leq \mathbb{E}[f(X_s)\,\vert\,X_t=x,X_u=x_u]$. To avoid trivialities, we will assume that $s\neq t$. Start by choosing any $\epsilon\in\realspos$, and let $C\coloneqq(s-t)$. 
+This result is trivial if $t=s$. Hence, without loss of generality, we may assume that $t<s$. Fix any $\epsilon>0$ and let $C\coloneqq(s-t)$. Choose any $\epsilon_1>0$ such that $\epsilon_1\norm{f}<\nicefrac{\epsilon}{2}$ and any $\epsilon_2>0$ such that $\epsilon_2 C\norm{f}<\nicefrac{\epsilon}{2}$.
 
-Now, by Theorem~\ref{theo:convergencelowerbound}, there is some $\delta\in\realspos$ such that
+Due to Theorem~\ref{theo:convergencelowerbound}, there is some $\delta\in\realspos$ such that $\delta\norm{\lrate}\leq1$ and
 \begin{equation*}
-(\forall v\in\mathcal{U}_{[t,s]}\,:\,\sigma(v)<\delta) \norm{L_{t}^s - \Phi_v} < \frac{\epsilon}{2\norm{f}}\,,
+(\forall v\in\mathcal{U}_{[t,s]}\,:\,\sigma(v)<\delta) \norm{L_{t}^s - \Phi_v} < \epsilon_1,
 \end{equation*}
-with $\Phi_v$ as in Equation~\eqref{eq:aux_lower_trans}, which implies that for all $v\in\mathcal{U}_{[t,s]}$ with $\sigma(v)<\delta$,
-\begin{equation}\label{eq:lowerbound_proof_linear_approx_lbound}
-\left[L_{t}^sf\right](x) - \frac{\epsilon}{2} < \left[\Phi_vf\right](x)\,.
-\end{equation}
+with $\Phi_v$ as in Equation~\eqref{eq:aux_lower_trans}.
+%, which implies that for all $v\in\mathcal{U}_{[t,s]}$ with $\sigma(v)<\delta$,
+% \begin{equation}\label{eq:lowerbound_proof_linear_approx_lbound}
+% \left[L_{t}^sf\right](x) - \frac{\epsilon}{2} < \left[\Phi_vf\right](x)\,.
+% \end{equation}
+Since $\smash{P\in\wprocesses_\rateset}$, it now follows from Proposition~\ref{prop:outerderivativebehaveslikelimit} that there is some $0<\Delta_1<\min\{\delta,C\}$ such that
+\begin{equation*}
+(\exists Q_1\in\overline{\partial}_+T_{t,\,x_u}^{t+\Delta_1}\subseteq\rateset)~
+\norm{T_{t_0,\,x_u}^{t_1} - (I+\Delta_1 Q_1)}
+=
+\norm{T_{t,\,x_u}^{t+\Delta_1} - (I+\Delta_1 Q_1)} < \Delta_1\epsilon_2,
+\end{equation*}
+with $t_0\coloneqq t$ and $t_1\coloneqq t+\Delta_1$.
+% Choose any $\Delta_0$ such that $\Delta_0<\min\{\delta,\delta'\}$. This implies that for all $g\in\gamblesX$ with $\norm{g}\leq\norm{f}$, we have that
+% \begin{equation*}
+% \norm{T_{t,x_u}^{t+\Delta_0}g - (I+\Delta_0 Q_0)g} \leq \norm{T_{t,x_u}^{t+\Delta_0} - (I+\Delta_0 Q_0)}\norm{g} < \frac{\Delta_0\epsilon}{2C\norm{f}}\norm{g} \leq \frac{\Delta_0\epsilon}{2C}\,,
+% \end{equation*}
+% which in turn implies that for all $y\in\states$,
+% \begin{equation*}
+% \left[(I+\Delta_0 Q_0)g\right](y) - \frac{\Delta_0\epsilon}{2C} < \left[T_{t,x_u}^{t+\Delta_0}g\right](y)\,.
+% \end{equation*}
+% Because $Q_0\in\rateset$, we find using Equation~\eqref{eq:correspondinglowertrans} that $\lrate g\leq Q_0g$, and hence that for all $g\in\gamblesX$ with $\norm{g}\leq\norm{f}$, and all $y\in\states$,
+% \begin{equation}\label{eq:lowerbound_proof_linear_approx_last_part}
+% \left[(I+\Delta_0 \lrate)g\right](y) - \frac{\Delta_0\epsilon}{2C} < \left[T_{t,x_u}^{t+\Delta_0}g\right](y)\,.
+% \end{equation}
+%Next, we focus on the remaining interval $[t+\Delta_0,s]$. To this end, we fix the history $(X_t=x,X_u=x_u)$ by defining $x_{u\cup\{t\}}\in\states^{u\cup\{t\}}$ as $x_{u\cup\{t\}}\coloneqq (x_u,x)$.
+Furthermore, since $P\in\wprocesses_\rateset$, and because $\Delta_0<C$ implies that $t+\Delta_0<s$, it follows from Lemma~\ref{lemma:bound_on_linear_approx_partition} that there is some $v\in\mathcal{U}_{[t+\Delta_0,s]}$ such that $\sigma(v)<\delta$, with $v=t_1,\ldots,t_n$ and $t_n=s$, and such that for all $i\in\{2,\ldots,n\}$, with $\Delta_i\coloneqq t_i-t_{i-1}$:
+\begin{equation*}
+(\exists Q_i\in\rateset)\norm{T_{t_{i-1},x_{u\cup \{t\}}}^{t_{i}} - (I+\Delta_{i}Q_i)} < \Delta_{i}\epsilon.
+\end{equation*}
+% which implies that there exist rate matrices $Q_{1},\ldots,Q_{m}\in\rateset$ such that, for all functions $g\in\gamblesX$ with $\norm{g}\leq\norm{f}$ and all $i\in\{1,\ldots,m\}$,
+% \begin{equation*}
+% \norm{T_{\tau_{i-1},x_{u\cup\{t\}}}^{\tau_{i}}g - (I+\Delta_{i}Q_i)g} \leq \norm{T_{\tau_{i-1},x_{u\cup\{t\}}}^{\tau_{i}} - (I+\Delta_{i}Q_i)} \norm{g} < \frac{\Delta_{i}\epsilon}{2C\norm{f}}\norm{g} \leq \frac{\Delta_{i}\epsilon}{2C}\,.
+% \end{equation*}
+% This in turn implies that for all $i\in\{1,\ldots,m\}$, all $g\in\gamblesX$ with $\norm{g}\leq\norm{f}$, and all $y\in\states$,
+% \begin{equation*}
+% \left[(I+\Delta_{i}Q_{i})g\right](y) - \frac{\Delta_{i}\epsilon}{2C} < \left[T_{\tau_{i-1},x_{u\cup\{t\}}}^{\tau_{i}}g\right](y)\,.
+% \end{equation*}
+% Because for all $i\in\{1,\ldots,m\}$ it holds that $Q_i\in\rateset$, by Equation~\eqref{eq:correspondinglowertrans} we have $\lrate g\leq Q_ig$, and therefore, for all $g\in\gamblesX$ with $\norm{g}\leq\norm{f}$, and all $y\in\states$,
+% \begin{equation}\label{eq:lowerbound_proof_linear_approx_lrate}
+% \left[(I+\Delta_{i}\lrate)g\right](y) - \frac{\Delta_{i}\epsilon}{2C} < \left[T_{\tau_{i-1},x_{u\cup\{t\}}}^{\tau_{i}}g\right](y)\,.
+% \end{equation}
+***
+\begin{multline*}
+\abs{[T_{t,\,x_u}^sf](x_t)
+-\left[\left(\prod_{i=1}^n(I+\Delta_iQ_i)\right)f\right](x_t)}\\
+\begin{aligned}
+&=\abs{\Big[T_{t_0,\,x_u}^{t_1}\Bigg(\prod_{i=2}^{n}T_{t_{i-1},\,x_{u\cup\{t\}}}^{t_{i}}\Bigg)f\Big](x_t)
+-\left[\left(\prod_{i=1}^n(I+\Delta_iQ_i)\right)f\right](x_t)}\\
+&\leq\norm{T_{t_0,\,x_u}^{t_1}\Bigg(\prod_{i=2}^{n}T_{t_{i-1},\,x_{u\cup\{t\}}}^{t_{i}}\Bigg)
+-\prod_{i=1}^n(I+\Delta_iQ_i)}\norm{f}\\
+&\leq
+\norm{T_{t_0,\,x_u}^{t_1}-(I+\Delta_1Q_1)}\norm{f}
++\sum_{i=2}^{n}
+\norm{T_{t_{i-1},\,x_{u\cup\{t\}}}^{t_{i}}-(I+\Delta_iQ_i)}\norm{f}\\
+&<\sum_{i=1}^n\Delta_i\epsilon_2\norm{f}=C\epsilon_2\norm{f}<\frac{\epsilon}{2}
+\end{aligned}
+\end{multline*}
 
-Furthermore, because $P\in\wprocesses_\rateset$, by Proposition~\ref{prop:outerderivativebehaveslikelimit}, there is some $\delta'\in\realspos$ such that for all $\Delta\in\realspos$ with $\Delta<\delta'$, there is a $Q_0\in\rateset$ such that
-\begin{equation*}
-\norm{T_{t,x_u}^{t+\Delta} - (I+\Delta Q_0)} < \frac{\Delta\epsilon}{2C\norm{f}}\,.
-\end{equation*}
-Choose any $\Delta_0$ such that $\Delta_0<\min\{\delta,\delta'\}$. This implies that for all $g\in\gamblesX$ with $\norm{g}\leq\norm{f}$, we have that
-\begin{equation*}
-\norm{T_{t,x_u}^{t+\Delta_0}g - (I+\Delta_0 Q_0)g} \leq \norm{T_{t,x_u}^{t+\Delta_0} - (I+\Delta_0 Q_0)}\norm{g} < \frac{\Delta_0\epsilon}{2C\norm{f}}\norm{g} \leq \frac{\Delta_0\epsilon}{2C}\,,
-\end{equation*}
-which in turn implies that for all $y\in\states$,
-\begin{equation*}
-\left[(I+\Delta_0 Q_0)g\right](y) - \frac{\Delta_0\epsilon}{2C} < \left[T_{t,x_u}^{t+\Delta_0}g\right](y)\,.
-\end{equation*}
-Because $Q_0\in\rateset$, we find using Equation~\eqref{eq:correspondinglowertrans} that $\lrate g\leq Q_0g$, and hence that for all $g\in\gamblesX$ with $\norm{g}\leq\norm{f}$, and all $y\in\states$,
-\begin{equation}\label{eq:lowerbound_proof_linear_approx_last_part}
-\left[(I+\Delta_0 \lrate)g\right](y) - \frac{\Delta_0\epsilon}{2C} < \left[T_{t,x_u}^{t+\Delta_0}g\right](y)\,.
-\end{equation}
-
-We now first focus on the remaining interval $[t+\Delta_0,s]$. To this end, we fix the history $(X_t=x,X_u=x_u)$ by defining $x_{u\cup\{t\}}\in\states^{u\cup\{t\}}$ as $x_{u\cup\{t\}}\coloneqq (x_u,x)$.
-
-Next, let $\delta^*\coloneqq\min\{\delta,\nicefrac{1}{\norm{\lrate}}\}$. 
-Because $P\in\wprocesses_\rateset$, Lemma~\ref{lemma:bound_on_linear_approx_partition} implies that there is some $v\in\mathcal{U}_{[t+\Delta_0,s]}$ such that $\sigma(v)<\delta^*$, with $v=\tau_0,\ldots,\tau_m$, and $\tau_0=t+\Delta_0$, $\tau_m=s$, and, for all $i\in\{1,\ldots,m\}$,
-\begin{equation*}
-(\exists Q\in\rateset)\norm{T_{\tau_{i-1},x_{u\cup \{t\}}}^{\tau_{i}} - (I+\Delta_{i}Q)} < \frac{\Delta_{i}\epsilon}{2C\norm{f}}\,,
-\end{equation*}
-which implies that there exist rate matrices $Q_{1},\ldots,Q_{m}\in\rateset$ such that, for all functions $g\in\gamblesX$ with $\norm{g}\leq\norm{f}$ and all $i\in\{1,\ldots,m\}$,
-\begin{equation*}
-\norm{T_{\tau_{i-1},x_{u\cup\{t\}}}^{\tau_{i}}g - (I+\Delta_{i}Q_i)g} \leq \norm{T_{\tau_{i-1},x_{u\cup\{t\}}}^{\tau_{i}} - (I+\Delta_{i}Q_i)} \norm{g} < \frac{\Delta_{i}\epsilon}{2C\norm{f}}\norm{g} \leq \frac{\Delta_{i}\epsilon}{2C}\,.
-\end{equation*}
-This in turn implies that for all $i\in\{1,\ldots,m\}$, all $g\in\gamblesX$ with $\norm{g}\leq\norm{f}$, and all $y\in\states$,
-\begin{equation*}
-\left[(I+\Delta_{i}Q_{i})g\right](y) - \frac{\Delta_{i}\epsilon}{2C} < \left[T_{\tau_{i-1},x_{u\cup\{t\}}}^{\tau_{i}}g\right](y)\,.
-\end{equation*}
-Because for all $i\in\{1,\ldots,m\}$ it holds that $Q_i\in\rateset$, by Equation~\eqref{eq:correspondinglowertrans} we have $\lrate g\leq Q_ig$, and therefore, for all $g\in\gamblesX$ with $\norm{g}\leq\norm{f}$, and all $y\in\states$,
-\begin{equation}\label{eq:lowerbound_proof_linear_approx_lrate}
-\left[(I+\Delta_{i}\lrate)g\right](y) - \frac{\Delta_{i}\epsilon}{2C} < \left[T_{\tau_{i-1},x_{u\cup\{t\}}}^{\tau_{i}}g\right](y)\,.
-\end{equation}
-
-Now, observe that because $\tau_m=s$, it holds for all $y\in\states$ that
 \begin{align*}
-\left[T_{\tau_{m-1},x_{u\cup\{t\}}}^{\tau_{m}}f\right](y) &= \mathbb{E}[f(X_{\tau_m})\,\vert\,X_{\tau_{m-1}}=y,X_t=x,X_u=x_u]\\
- &= \mathbb{E}[f(X_{s})\,\vert\,X_{s-\Delta_m}=y,X_t=x,X_u=x_u]\,.
+\abs{[L_t^sf](x_t)-\left[\left(\prod_{i=1}^n(I+\Delta_i\lrate)\right)f\right](x_t)}
+&\leq
+\norm{L_t^s-\prod_{i=1}^n(I+\Delta_i\lrate)}\norm{f}\leq\epsilon_1\norm{f}<\frac{\epsilon}{2}
 \end{align*}
-Furthermore, by the basic properties of expectation, we have that
-\begin{equation*}
-\mathbb{E}[f(X_s)\,\vert\,X_t=x,X_u=x_u] = \mathbb{E}\bigl[\mathbb{E}[f(X_s)\,\vert\,X_{s-\Delta_m},X_t=x,X_u=x_u]\,\vert\,X_t=x,X_u=x_u\bigr]\,,
-\end{equation*}
-and because this (outer) expectation computes a convex combination of values, we find by substitution of Equation~\eqref{eq:lowerbound_proof_linear_approx_lrate}, that
-\begin{equation*}
-\mathbb{E}[f(X_s)\,\vert\,X_t=x,X_u=x_u] > \mathbb{E}\bigl[[(I+\Delta_m\lrate)f](X_{\tau_{m-1}})\,\vert\,X_t,X_u=x_u\bigr] - \frac{\Delta_{m}\epsilon}{2C}\,.
-\end{equation*}
 
-Because $\Delta_m\leq\sigma(v)<\delta^*\leq\nicefrac{1}{\norm{\lrate}}$, we find by Proposition~\ref{lemma:normQsmallenough} that $(I+\Delta_m\lrate)$ is a lower transition operator. Therefore, $[(I+\Delta_m\lrate)f]\in\gamblesX$, and by property~\ref{LT:norm_at_most_one}, we have that $\norm{(I+\Delta_m\lrate)f}\leq\norm{f}$. Hence, Equation~\eqref{eq:lowerbound_proof_linear_approx_lrate} applies, and we can use backward induction on $m$ to find
-\begin{align*}
-\mathbb{E}[&f(X_s)\,\vert\,X_t=x,X_u=x_u] \\
-& > \mathbb{E}\bigl[[(I+\Delta_m\lrate)f](X_{\tau_{m-1}})\,\vert\,X_t=x,X_u=x_u\bigr] - \frac{\Delta_{m}\epsilon}{2C} \\
- &> \mathbb{E}\bigl[[(I+\Delta_{m-1}\lrate)(I+\Delta_m\lrate)f](X_{\tau_{m-2}})\,\vert\,X_t=x,X_u=x_u\bigr] - \frac{\Delta_{m-1}\epsilon}{2C} - \frac{\Delta_{m}\epsilon}{2C} \\
-&\vdots \\
-%& > \mathbb{E}\left[\left[\left(\prod_{i=2}^m(I+\Delta_i\lrate)\right)f\right](X_{\tau_{1}})\,\Bigg\vert\,X_{t_0}=x_{t_0},\ldots,X_{t_n}=x_{t_n}\right] - \sum_{i=2}^m\frac{\Delta_{i}\epsilon}{2C} \\
-& > \mathbb{E}\left[\left[\left(\prod_{i=1}^m(I+\Delta_i\lrate)\right)f\right](X_{\tau_{0}})\,\Bigg\vert\,X_t=x,X_u=x_u\right] - \sum_{i=1}^m\frac{\Delta_{i}\epsilon}{2C} \\
-& = \mathbb{E}\left[\left[\left(\prod_{i=1}^m(I+\Delta_i\lrate)\right)f\right](X_{t+\Delta_0})\,\Bigg\vert\,X_t=x,X_u=x_u\right] - \sum_{i=1}^m\frac{\Delta_{i}\epsilon}{2C} \\
-&= \left[T_{t,x_u}^{t+\Delta_0}\left(\prod_{i=1}^m(I+\Delta_i\lrate)\right)f\right](x) - \sum_{i=1}^m\frac{\Delta_{i}\epsilon}{2C}\,.
-%& = \left[\left(\prod_{i=1}^m(I+\Delta_i\lrate)\right)f\right](x_{t_n}) - \sum_{i=1}^m\frac{\Delta_{i}\epsilon}{2C}\\
-%& = \left[\Phi_v f\right](x_{t_n}) - \frac{\epsilon}{2}\,,
-\end{align*}
-Because $\prod_{i=1}^m(I+\Delta_i\lrate)$ is a lower transition operator, we have that $[\prod_{i=1}^m(I+\Delta_i\lrate)f]\in\gamblesX$, and by property~\ref{LT:norm_at_most_one}, that $\norm{\prod_{i=1}^m(I+\Delta_i\lrate)f}\leq\norm{f}$. Therefore, Equation~\eqref{eq:lowerbound_proof_linear_approx_last_part} applies, and hence we find that
-\begin{equation*}
-\mathbb{E}[f(X_s)\,\vert\,X_t=x,X_u=x_u] > \left[\prod_{i=0}^m(I+\Delta_i\lrate)f\right](x) - \sum_{i=0}^m\frac{\Delta_{i}\epsilon}{2C}\,.
-\end{equation*}
-Let now $v^*\coloneqq (\{t\}\cup v)=t,\tau_0,\ldots,\tau_m$. Then clearly, $v^*\in\mathcal{U}_{[t,s]}$. Then, with $\Phi_{v^*}$ as in Equation~\eqref{eq:aux_lower_trans}, we find using $\sum_{i=0}^m\Delta_i=C$ that
-\begin{equation*}
-\mathbb{E}[f(X_s)\,\vert\,X_t=x,X_u=x_u] > \left[\Phi_{v^*}f\right](x) - \frac{\epsilon}{2}\,,
-\end{equation*}
-and because $\sigma(v^*)=\max\{\Delta_0,\sigma(v)\}<\delta$, we now find from Equation~\eqref{eq:lowerbound_proof_linear_approx_lbound} that
-\begin{equation*}
-\mathbb{E}[f(X_s)\,\vert\,X_t=x,X_u=x_u] > \left[L_{t}^sf\right](x) - \epsilon\,.
-\end{equation*}
-Because the $\epsilon\in\realspos$ was arbitrary, this completes the proof.
+\begin{multline*}
+[L_{t}^s f](x_t)
+<\left[\left(\prod_{i=1}^n(I+\Delta_i\lrate)\right)f\right](x_t)+\frac{\epsilon}{2}\\
+\leq
+\left[\left(\prod_{i=1}^n(I+\Delta_i Q_i)\right)f\right](x_t)+\frac{\epsilon}{2}
+<[T_{t,\,x_u}^sf](x_t)+\epsilon
+\end{multline*}
+Since $\epsilon>0$ was arbitrary, this implies that $[L_{t}^s f](x_t)\leq [T_{t,\,x_u}^sf](x_t)$. The result now follows from Remark~\ref{remark:expectationT}. ***
+% Now, observe that because $\tau_m=s$, it holds for all $y\in\states$ that
+% \begin{align*}
+% \left[T_{\tau_{m-1},x_{u\cup\{t\}}}^{\tau_{m}}f\right](y) &= \mathbb{E}[f(X_{\tau_m})\,\vert\,X_{\tau_{m-1}}=y,X_t=x,X_u=x_u]\\
+%  &= \mathbb{E}[f(X_{s})\,\vert\,X_{s-\Delta_m}=y,X_t=x,X_u=x_u]\,.
+% \end{align*}
+% Furthermore, by the basic properties of expectation, we have that
+% \begin{equation*}
+% \mathbb{E}[f(X_s)\,\vert\,X_t=x,X_u=x_u] = \mathbb{E}\bigl[\mathbb{E}[f(X_s)\,\vert\,X_{s-\Delta_m},X_t=x,X_u=x_u]\,\vert\,X_t=x,X_u=x_u\bigr]\,,
+% \end{equation*}
+% and because this (outer) expectation computes a convex combination of values, we find by substitution of Equation~\eqref{eq:lowerbound_proof_linear_approx_lrate}, that
+% \begin{equation*}
+% \mathbb{E}[f(X_s)\,\vert\,X_t=x,X_u=x_u] > \mathbb{E}\bigl[[(I+\Delta_m\lrate)f](X_{\tau_{m-1}})\,\vert\,X_t,X_u=x_u\bigr] - \frac{\Delta_{m}\epsilon}{2C}\,.
+% \end{equation*}
+% Because $\Delta_m\leq\sigma(v)<\delta^*\leq\nicefrac{1}{\norm{\lrate}}$, we find by Proposition~\ref{lemma:normQsmallenough} that $(I+\Delta_m\lrate)$ is a lower transition operator. Therefore, $[(I+\Delta_m\lrate)f]\in\gamblesX$, and by property~\ref{LT:norm_at_most_one}, we have that $\norm{(I+\Delta_m\lrate)f}\leq\norm{f}$. Hence, Equation~\eqref{eq:lowerbound_proof_linear_approx_lrate} applies, and we can use backward induction on $m$ to find
+% \begin{align*}
+% \mathbb{E}[&f(X_s)\,\vert\,X_t=x,X_u=x_u] \\
+% & > \mathbb{E}\bigl[[(I+\Delta_m\lrate)f](X_{\tau_{m-1}})\,\vert\,X_t=x,X_u=x_u\bigr] - \frac{\Delta_{m}\epsilon}{2C} \\
+%  &> \mathbb{E}\bigl[[(I+\Delta_{m-1}\lrate)(I+\Delta_m\lrate)f](X_{\tau_{m-2}})\,\vert\,X_t=x,X_u=x_u\bigr] - \frac{\Delta_{m-1}\epsilon}{2C} - \frac{\Delta_{m}\epsilon}{2C} \\
+% &\vdots \\
+% %& > \mathbb{E}\left[\left[\left(\prod_{i=2}^m(I+\Delta_i\lrate)\right)f\right](X_{\tau_{1}})\,\Bigg\vert\,X_{t_0}=x_{t_0},\ldots,X_{t_n}=x_{t_n}\right] - \sum_{i=2}^m\frac{\Delta_{i}\epsilon}{2C} \\
+% & > \mathbb{E}\left[\left[\left(\prod_{i=1}^m(I+\Delta_i\lrate)\right)f\right](X_{\tau_{0}})\,\Bigg\vert\,X_t=x,X_u=x_u\right] - \sum_{i=1}^m\frac{\Delta_{i}\epsilon}{2C} \\
+% & = \mathbb{E}\left[\left[\left(\prod_{i=1}^m(I+\Delta_i\lrate)\right)f\right](X_{t+\Delta_0})\,\Bigg\vert\,X_t=x,X_u=x_u\right] - \sum_{i=1}^m\frac{\Delta_{i}\epsilon}{2C} \\
+% &= \left[T_{t,x_u}^{t+\Delta_0}\left(\prod_{i=1}^m(I+\Delta_i\lrate)\right)f\right](x) - \sum_{i=1}^m\frac{\Delta_{i}\epsilon}{2C}\,.
+% %& = \left[\left(\prod_{i=1}^m(I+\Delta_i\lrate)\right)f\right](x_{t_n}) - \sum_{i=1}^m\frac{\Delta_{i}\epsilon}{2C}\\
+% %& = \left[\Phi_v f\right](x_{t_n}) - \frac{\epsilon}{2}\,,
+% \end{align*}
+% Because $\prod_{i=1}^m(I+\Delta_i\lrate)$ is a lower transition operator, we have that $[\prod_{i=1}^m(I+\Delta_i\lrate)f]\in\gamblesX$, and by property~\ref{LT:norm_at_most_one}, that $\norm{\prod_{i=1}^m(I+\Delta_i\lrate)f}\leq\norm{f}$. Therefore, Equation~\eqref{eq:lowerbound_proof_linear_approx_last_part} applies, and hence we find that
+% \begin{equation*}
+% \mathbb{E}[f(X_s)\,\vert\,X_t=x,X_u=x_u] > \left[\prod_{i=0}^m(I+\Delta_i\lrate)f\right](x) - \sum_{i=0}^m\frac{\Delta_{i}\epsilon}{2C}\,.
+% \end{equation*}
+% Let now $v^*\coloneqq (\{t\}\cup v)=t,\tau_0,\ldots,\tau_m$. Then clearly, $v^*\in\mathcal{U}_{[t,s]}$. Then, with $\Phi_{v^*}$ as in Equation~\eqref{eq:aux_lower_trans}, we find using $\sum_{i=0}^m\Delta_i=C$ that
+% \begin{equation*}
+% \mathbb{E}[f(X_s)\,\vert\,X_t=x,X_u=x_u] > \left[\Phi_{v^*}f\right](x) - \frac{\epsilon}{2}\,,
+% \end{equation*}
+% and because $\sigma(v^*)=\max\{\Delta_0,\sigma(v)\}<\delta$, we now find from Equation~\eqref{eq:lowerbound_proof_linear_approx_lbound} that
+% \begin{equation*}
+% \mathbb{E}[f(X_s)\,\vert\,X_t=x,X_u=x_u] > \left[L_{t}^sf\right](x) - \epsilon\,.
+% \end{equation*}
+% Because the $\epsilon\in\realspos$ was arbitrary, this completes the proof.
 \end{proof}
 
 %
