@@ -4846,14 +4846,43 @@ Because this covers all the possible cases, in summary, we have found that $\sma
 \end{proof}
 
 \begin{proof}[Proof of Proposition~\ref{theorem:lower_markov_bound_is_tight}]
-Choose any $f\in\gamblesX$ and any $\epsilon\in\realspos$. Let $C\coloneqq (s-t)$, and define
-\begin{equation}\label{eq:delta_required_for_tight_bound}
-\delta \coloneqq \frac{\epsilon}{4C\norm{\mathcal{Q}}^2\norm{f}}\,.
-\end{equation}
-Then, choose any $u\in\mathcal{U}_{[t,s]}$ such that $\sigma(u)<\delta$, with $u=t_0,\ldots,t_n$. Due to Lemma~\ref{lemma:rateset_has_arginf}, for all $i\in\{0,\ldots,n\}$, there is some $Q_i\in\rateset$ such that
-\begin{equation}\label{eq:prop_lower_markov_tight_rate_error}
-\norm{\lrate L_{t_i}^sf - Q_iL_{t_i}^sf} < \frac{\epsilon}{2C}\,.
-\end{equation}
+Fix any $t,s\in\realsnonneg$ such that $t\leq s$, any $f\in\gamblesX$ and any $\epsilon\in\realspos$. If $t=s$, the result is trivial. Hence, without loss of generality, we may assume that $t<s$. Let $C\coloneqq (s-t)$, choose any $\epsilon_1,\epsilon_2,\epsilon_3>0$ such that $\epsilon_1+\epsilon_2+\epsilon_3<\epsilon$, any $\delta>0$ such that $\delta\norm{\lrate}^2\norm{f}<\epsilon_1$ (this is always possible because of~\ref{LR:normlratefinite}) and $\delta\norm{\rateset}^2\norm{f}<\epsilon_3$, and consider any $u\in\mathcal{U}_{[t,s]}$ such that $\sigma(u)<\delta$, with $u=t_0,\ldots,t_n$ and $n\in\nats$. 
+
+Fix any $i\in\{1,\dots,n\}$ and let $g_i\coloneqq L_{t_i}^{t_n}f$. It then follows from Lemma~\ref{lemma:rateset_has_arginf} that there is some $Q_i\in\rateset$ such that $\norm{\lrate g_i-Q_i g_i}<\epsilon_2$ and, due to~\ref{N:normAf} and~\ref{LT:norm_at_most_one}, we also know that $\norm{g_i}=\norm{L_{t_i}^{t_n}f}\leq\norm{L_{t_i}^{t_n}}\norm{f}\leq\norm{f}$.
+% \begin{equation}\label{eq:prop_lower_markov_tight_rate_error}
+% \norm{\lrate L_{t_i}^sf - Q_iL_{t_i}^sf} < \frac{\epsilon}{2C}\,.
+% \end{equation}
+Hence, we find that 
+\begin{multline*}
+\norm{L_{t_{i-1}}^{t_i}g_i - e^{Q_i\Delta_i}g_i}\\
+\begin{aligned}
+&\leq \norm{L_{t_{i-1}}^{t_i}g_i - \left[I+\Delta_i\lrate\right]g_i} 
++\norm{\Delta_i\lrate g_i-\Delta_iQ_ig_i}
++ \norm{\left[I+\Delta_iQ_i\right]g_i - e^{Q_i\Delta_i}g_i} \\
+&\leq \norm{L_{t_{i-1}}^{t_i} - \left[I+\Delta_i\lrate\right]}\norm{g_i} 
++\Delta_i\norm{\lrate g_i-Q_ig_i}
++ \norm{I+\Delta_iQ_i - e^{Q_i\Delta_i}}\norm{g_i} \\
+&< \norm{L_{t_{i-1}}^{t_i} - \left[I+\Delta_i\lrate\right]}\norm{f} 
++\Delta_i\epsilon_2
++ \norm{I+\Delta_iQ_i - e^{Q_i\Delta_i}}\norm{f} \\
+&\leq
+\Delta_i^2\norm{\lrate}^2\norm{f}
++\Delta_i\epsilon_2
++
+\Delta_i^2\norm{Q_i}^2\norm{f}\\
+&\leq
+\Delta_i(
+\delta\norm{\lrate}^2\norm{f}
++\epsilon_2
++
+\delta\norm{\rateset}^2\norm{f})
+<\Delta_i(\epsilon_1+\epsilon_2+\epsilon_3)<\Delta_i\epsilon,
+\end{aligned}
+\end{multline*}
+where the second inequality holds because of~\ref{N:normAf}, the third inequality holds because $\norm{g_i}\leq\norm{f}$ and $\norm{\lrate g_i-Q_i g_i}<\epsilon_2$, the fourth inequality holds because of Lemmas~\ref{lemma:quadraticboundonL} and~\ref{lemma:linearpartofexponential} and where the fifth inequality holds because $\Delta_i\leq\sigma(u)<\delta$.
+
+
+
 For all $i\in\{0,\ldots,n\}$, let $\mathcal{T}_{Q_i}$ denote the transition matrix system corresponding to $Q_i$, as in Definition~\ref{def:systemfromQ}. Then, by Lemma~\ref{lemma:nonhomogeneous_in_process_set}, there is some $P\in\wmprocesses_\rateset$ with transition matrix system $\mathcal{T}_P$, such that
 \begin{equation*}
 \mathcal{T}_P = \mathcal{T}_{Q_0}^{[0,t_0]}\otimes \mathcal{T}_{Q_1}^{[t_0,t_1]}\otimes \cdots \otimes \mathcal{T}_{Q_n}^{[t_{n-1},t_n]} \otimes \mathcal{T}_{Q_n}^{[t_{n},\infty)}\,.
@@ -4875,39 +4904,39 @@ Recursion on the first remaining summand yields
 &\vdots \\
  &\leq \sum_{i=1}^{n} \norm{L_{t_{i-1}}^{t_i}\left[L_{t_i}^{t_n}f\right] - T_{t_{i-1}}^{t_i}\left[L_{t_i}^{t_n}f\right]}\,.
 \end{align*}
-Consider now any $i\in\{1,\ldots,n\}$. Then, we find from Lemma~\ref{lemma:justthelinearpart} that
-\begin{align*}
-&\quad \norm{L_{t_{i-1}}^{t_i}\left[L_{t_i}^{t_n}f\right] - T_{t_{i-1}}^{t_i}\left[L_{t_i}^{t_n}f\right]} \\
-&\leq \norm{L_{t_{i-1}}^{t_i}\left[L_{t_i}^{t_n}f\right] - \left[I+\Delta_i\lrate\right]L_{t_i}^{t_n}f} + \norm{\left[I+\Delta_i\lrate\right]L_{t_i}^{t_n}f - T_{t_{i-1}}^{t_i}\left[L_{t_i}^{t_n}f\right]} \\
-&\leq \norm{L_{t_{i-1}}^{t_i} - \left[I+\Delta_i\lrate\right]}\cdot\norm{f} + \norm{\left[I+\Delta_i\lrate\right]L_{t_i}^{t_n}f - T_{t_{i-1}}^{t_i}\left[L_{t_i}^{t_n}f\right]} \\
-&\leq \Delta_i^2\norm{\lrate}^2\norm{f} + \norm{\left[I+\Delta_i\lrate\right]L_{t_i}^{t_n}f - T_{t_{i-1}}^{t_i}\left[L_{t_i}^{t_n}f\right]} \\
-&\leq \Delta_i^2\norm{\mathcal{Q}}^2\norm{f} + \norm{\left[I+\Delta_i\lrate\right]L_{t_i}^{t_n}f - T_{t_{i-1}}^{t_i}\left[L_{t_i}^{t_n}f\right]}\,,
-\end{align*}
-where in the last step we used the fact that $\norm{\lrate}\leq\norm{\rateset}$. We now focus on the remaining second summand:
-\begin{align*}
- &\quad \norm{\left[I+\Delta_i\lrate\right]L_{t_i}^{t_n}f - T_{t_{i-1}}^{t_i}\left[L_{t_i}^{t_n}f\right]} \\
- &\leq \norm{\left[I+\Delta_i\lrate\right]L_{t_i}^{t_n}f - \left[I+\Delta_iQ_i\right]L_{t_i}^{t_n}f} + \norm{\left[I+\Delta_iQ_i\right]L_{t_i}^{t_n}f - T_{t_{i-1}}^{t_i}\left[L_{t_i}^{t_n}f\right]} \\
- &\leq \norm{\left[I+\Delta_i\lrate\right]L_{t_i}^{t_n}f - \left[I+\Delta_iQ_i\right]L_{t_i}^{t_n}f} + \norm{\left[I+\Delta_iQ_i\right] - T_{t_{i-1}}^{t_i}}\cdot\norm{f} \\
- &= \Delta_i\norm{\lrate L_{t_i}^{t_n}f - Q_iL_{t_i}^{t_n}f} + \norm{\left[I+\Delta_iQ_i\right] - e^{Q_i\cdot\Delta_i}}\cdot\norm{f} \\
- &< \frac{\Delta_i\epsilon}{2C} + \Delta_i^2\norm{Q_i}^2\norm{f}\,,
-\end{align*}
-where in the last step we applied Equation~\eqref{eq:prop_lower_markov_tight_rate_error} and Lemma~\ref{lemma:linearpartofexponential}. Hence, we have found that for any $i\in\{1,\ldots,n\}$, it holds that
-\begin{align*}
-&\quad \norm{L_{t_{i-1}}^{t_i}\left[L_{t_i}^{t_n}f\right] - T_{t_{i-1}}^{t_i}\left[L_{t_i}^{t_n}f\right]} \\
- &< \Delta_i^2\norm{\mathcal{Q}}^2\norm{f} + \norm{\left[I+\Delta_i\lrate\right]L_{t_i}^{t_n}f - T_{t_{i-1}}^{t_i}\left[L_{t_i}^{t_n}f\right]} \\
- &< \Delta_i^2\norm{\mathcal{Q}}^2\norm{f} + \Delta_i^2\norm{Q_i}^2\norm{f} + \frac{\Delta_i\epsilon}{2C} \\
- &\leq 2\Delta_i^2\norm{\mathcal{Q}}^2\norm{f} + \frac{\Delta_i\epsilon}{2C} \\
- &< 2\Delta_i\delta\norm{\mathcal{Q}}^2\norm{f} + \frac{\Delta_i\epsilon}{2C}\,,
-\end{align*}
-where we used $\norm{Q_i}\leq\norm{\rateset}$, and in the final step applied $\Delta_i\leq\sigma(u)<\delta$.
 
-Because the $i$ was arbitrary, we find using Equation~\eqref{eq:delta_required_for_tight_bound} that
+% Consider now any $i\in\{1,\ldots,n\}$. Then, we find from Lemma~\ref{lemma:justthelinearpart} that
+% \begin{align*}
+% &\quad \norm{L_{t_{i-1}}^{t_i}\left[L_{t_i}^{t_n}f\right] - T_{t_{i-1}}^{t_i}\left[L_{t_i}^{t_n}f\right]} \\
+% &\leq \norm{L_{t_{i-1}}^{t_i}\left[L_{t_i}^{t_n}f\right] - \left[I+\Delta_i\lrate\right]L_{t_i}^{t_n}f} + \norm{\left[I+\Delta_i\lrate\right]L_{t_i}^{t_n}f - T_{t_{i-1}}^{t_i}\left[L_{t_i}^{t_n}f\right]} \\
+% &\leq \norm{L_{t_{i-1}}^{t_i} - \left[I+\Delta_i\lrate\right]}\cdot\norm{f} + \norm{\left[I+\Delta_i\lrate\right]L_{t_i}^{t_n}f - T_{t_{i-1}}^{t_i}\left[L_{t_i}^{t_n}f\right]} \\
+% &\leq \Delta_i^2\norm{\lrate}^2\norm{f} + \norm{\left[I+\Delta_i\lrate\right]L_{t_i}^{t_n}f - T_{t_{i-1}}^{t_i}\left[L_{t_i}^{t_n}f\right]} \\
+% &\leq \Delta_i^2\norm{\mathcal{Q}}^2\norm{f} + \norm{\left[I+\Delta_i\lrate\right]L_{t_i}^{t_n}f - T_{t_{i-1}}^{t_i}\left[L_{t_i}^{t_n}f\right]}\,,
+% \end{align*}
+% where in the last step we used the fact that $\norm{\lrate}\leq\norm{\rateset}$. We now focus on the remaining second summand:
+% \begin{align*}
+%  &\quad \norm{\left[I+\Delta_i\lrate\right]L_{t_i}^{t_n}f - T_{t_{i-1}}^{t_i}\left[L_{t_i}^{t_n}f\right]} \\
+%  &\leq \norm{\left[I+\Delta_i\lrate\right]L_{t_i}^{t_n}f - \left[I+\Delta_iQ_i\right]L_{t_i}^{t_n}f} + \norm{\left[I+\Delta_iQ_i\right]L_{t_i}^{t_n}f - T_{t_{i-1}}^{t_i}\left[L_{t_i}^{t_n}f\right]} \\
+%  &\leq \norm{\left[I+\Delta_i\lrate\right]L_{t_i}^{t_n}f - \left[I+\Delta_iQ_i\right]L_{t_i}^{t_n}f} + \norm{\left[I+\Delta_iQ_i\right] - T_{t_{i-1}}^{t_i}}\cdot\norm{f} \\
+%  &= \Delta_i\norm{\lrate L_{t_i}^{t_n}f - Q_iL_{t_i}^{t_n}f} + \norm{\left[I+\Delta_iQ_i\right] - e^{Q_i\cdot\Delta_i}}\cdot\norm{f} \\
+%  &< \frac{\Delta_i\epsilon}{2C} + \Delta_i^2\norm{Q_i}^2\norm{f}\,,
+% \end{align*}
+% where in the last step we applied Equation~\eqref{eq:prop_lower_markov_tight_rate_error} and Lemma~\ref{lemma:linearpartofexponential}. Hence, we have found that for any $i\in\{1,\ldots,n\}$, it holds that
+% \begin{align*}
+% &\quad \norm{L_{t_{i-1}}^{t_i}\left[L_{t_i}^{t_n}f\right] - T_{t_{i-1}}^{t_i}\left[L_{t_i}^{t_n}f\right]} \\
+%  &< \Delta_i^2\norm{\mathcal{Q}}^2\norm{f} + \norm{\left[I+\Delta_i\lrate\right]L_{t_i}^{t_n}f - T_{t_{i-1}}^{t_i}\left[L_{t_i}^{t_n}f\right]} \\
+%  &< \Delta_i^2\norm{\mathcal{Q}}^2\norm{f} + \Delta_i^2\norm{Q_i}^2\norm{f} + \frac{\Delta_i\epsilon}{2C} \\
+%  &\leq 2\Delta_i^2\norm{\mathcal{Q}}^2\norm{f} + \frac{\Delta_i\epsilon}{2C} \\
+%  &< 2\Delta_i\delta\norm{\mathcal{Q}}^2\norm{f} + \frac{\Delta_i\epsilon}{2C}\,,
+% \end{align*}
+% where we used $\norm{Q_i}\leq\norm{\rateset}$, and in the final step applied $\Delta_i\leq\sigma(u)<\delta$.
+
+Because the $i$ was arbitrary, we find that
 \begin{align*}
-\norm{L_t^sf - T_t^sf} &\leq \sum_{i=1}^n \norm{L_{t_{i-1}}^{t_i}\left[L_{t_i}^{t_n}f\right] - T_{t_{i-1}}^{t_i}\left[L_{t_i}^{t_n}f\right]} \\
- &< \sum_{i=1}^n 2\Delta_i\delta\norm{\mathcal{Q}}^2\norm{f} + \frac{\Delta_i\epsilon}{2C} \\
- &= 2C\delta\norm{\mathcal{Q}}^2\norm{f} + \frac{C\epsilon}{2C} \\
- &= 2C\frac{\epsilon}{4C\norm{\rateset}^2\norm{f}}\norm{\mathcal{Q}}^2\norm{f} + \frac{C\epsilon}{2C} \\
- &= \frac{\epsilon}{2} + \frac{\epsilon}{2} = \epsilon\,.
+\norm{L_t^sf - T_t^sf} 
+&\leq \sum_{i=1}^n \norm{L_{t_{i-1}}^{t_i}\left[L_{t_i}^{t_n}f\right] - T_{t_{i-1}}^{t_i}\left[L_{t_i}^{t_n}f\right]}\\
+&= \sum_{i=1}^n \norm{L_{t_{i-1}}^{t_i}g_i - e^{Q_i\Delta_i}g_i}<\sum_{i=1}^n\Delta_i\epsilon
+=C\epsilon.
 \end{align*}
 %***
 %
