@@ -4569,6 +4569,60 @@ Let $\rateset$ be an arbitrary non-empty bounded set of rate matrices that has s
 This is immediate from the definition of the lower envelope of $\rateset$, as given by Equation~\eqref{eq:correspondinglowertrans}, and the fact that $\rateset$ has separately specified rows.
 \end{proof}
 
+\begin{lemma}\label{lemma:weirddecomposition}
+Consider any $P\in\wprocesses_\rateset$, any $t,s\in\realsnonneg$ such that $t<s$, any $u\in\mathcal{U}_{<t}$ and $x_u\in\states^u$ and any sequence $t=t_0<t_1<\cdots<t_n=s$, with $n\in\nats$.
+Then for any $f\in\gamblesX$ and $x_t\in\states$:
+\begin{equation*}
+[T_{t,\,x_u}^sf](x_t)
+=\Big[T_{t_0,\,x_u}^{t_1}\Bigg(\prod_{i=1}^{n-1}T_{t_i,\,x_{u\cup\{t\}}}^{t_{i+1}}\Bigg)f\Big](x_t)
+\end{equation*}
+\end{lemma}
+\begin{proof}
+We provide a proof by induction. For $n=1$, the result holds trivially. So consider now any $n>1$ and assume that the result is true for $n-1$.
+For any $g\in\gamblesX$, we then find that
+\begin{align*}
+[T_{t_0,\,x_u}^{t_2}g](x_t)
+%=[T_{t,\,x_u}^{t_2}g](x_t)
+&=\mathbb{E}(g(X_{t_2})\vert\,X_{t}=x_t,X_u=x_u)\\
+&=\sum_{x_{t_1}\in\states}\mathbb{E}(g(X_{t_2})\vert\,X_{t_1}=x_{t_1},X_{t}=x_t,X_u=x_u)P(X_{t_1}=x_{t_1}\vert\,X_{t}=x_t,X_u=x_u)\\[-8pt]
+&\quad\quad\quad\quad\quad=\sum_{x_{t_1}\in\states}
+[T_{t_1,\,x_{u\cup\{t\}}}^{t_{2}}g](x_{t_1})P(X_{t_1}=x_{t_1}\vert\,X_{t}=x_t,X_u=x_u)\\[-6pt]
+&\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad=[T_{t_0,\,x_u}^{t_1}
+T_{t_1,\,x_{u\cup\{t\}}}^{t_{2}}g](x_t),
+\end{align*}
+and therefore, it follows that
+\begin{equation*}
+[T_{t,\,x_u}^sf](x_t)
+=\Big[T_{t_0,\,x_u}^{t_2}\Bigg(\prod_{i=2}^{n-1}T_{t_i,\,x_{u\cup\{t\}}}^{t_{i+1}}\Bigg)f\Big](x_t)
+=\Big[T_{t_0,\,x_u}^{t_1}
+T_{t_1,\,x_{u\cup\{t\}}}^{t_{2}}
+\Bigg(\prod_{i=2}^{n-1}T_{t_i,\,x_{u\cup\{t\}}}^{t_{i+1}}\Bigg)f\Big](x_t),
+\end{equation*}
+using the induction hypothesis for the first equality.
+\end{proof}
+
+\begin{lemma}\label{lemma:productofQsdominatesproductoflrates}
+Consider a non-empty bounded set $\rateset$ of rate matrices and let $\lrate$ be the corresponding lower transition rate operator. Fix any $n\in\nats$ and, for all $i\in\{1,\dots,n\}$, consider some $\Delta_i\geq0$ and $Q_i\in\rateset$. Then for any $f\in\gamblesX$:
+\begin{equation*}
+\prod_{i=1}^n(I+\Delta_iQ_i)f
+\geq
+\prod_{i=1}^n(I+\Delta_i\lrate)f.
+\end{equation*}
+\end{lemma}
+\begin{proof}
+We provide a proof by induction. For $n=1$, the result follows trivially from Equation~\eqref{eq:correspondinglowertrans}. Consider now any $n>1$ and assume that the result is true for $n-1$. We then find that
+\begin{equation*}
+\prod_{i=1}^n(I+\Delta_iQ_i)f
+% =
+% (I+\Delta_1Q_1)\prod_{i=2}^n(I+\Delta_iQ_i)f
+\geq
+(I+\Delta_1Q_1)\prod_{i=2}^n(I+\Delta_i\lrate)f
+\geq
+\prod_{i=1}^n(I+\Delta_i\lrate)f,
+\end{equation*}
+where the first inequality follows from the induction hypothesis and the second inequality follows from Equation~\eqref{eq:correspondinglowertrans}.
+\end{proof}
+
 \begin{proof}[Proof of Proposition~\ref{theorem:nonmarkov_single_var_lower_bounded}]
 %Consider any $P\in\wprocesses_\rateset$, any $t,s\in\realsnonneg$ such that $t\leq s$, any $u\in\mathcal{U}_{<t}$, any $x\in\states$ and $x_u\in\states^u$, and any $f\in\gamblesX$. 
 We will show that for all $\epsilon\in\realspos$, it holds that 
