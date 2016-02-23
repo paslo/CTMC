@@ -4635,9 +4635,9 @@ where the first inequality follows from the induction hypothesis and the second 
 This result is trivial if $t=s$. Hence, without loss of generality, we may assume that $t<s$. Fix any $\epsilon>0$ and let $C\coloneqq(s-t)$. Choose any $\epsilon_1>0$ such that $\epsilon_1\norm{f}<\nicefrac{\epsilon}{2}$ and any $\epsilon_2>0$ such that $\epsilon_2 C\norm{f}<\nicefrac{\epsilon}{2}$.
 
 Due to Theorem~\ref{theo:convergencelowerbound}, there is some $\delta\in\realspos$ such that $\delta\norm{\lrate}\leq1$ and
-\begin{equation*}
+\begin{equation}\label{eq:theorem:nonmarkov_single_var_lower_bounded}
 (\forall v\in\mathcal{U}_{[t,s]}\,:\,\sigma(v)<\delta) \norm{L_{t}^s - \Phi_v} < \epsilon_1,
-\end{equation*}
+\end{equation}
 with $\Phi_v$ as in Equation~\eqref{eq:aux_lower_trans}.
 %, which implies that for all $v\in\mathcal{U}_{[t,s]}$ with $\sigma(v)<\delta$,
 % \begin{equation}\label{eq:lowerbound_proof_linear_approx_lbound}
@@ -4664,10 +4664,11 @@ with $t_0\coloneqq t$ and $t_1\coloneqq t+\Delta_1$.
 % \left[(I+\Delta_0 \lrate)g\right](y) - \frac{\Delta_0\epsilon}{2C} < \left[T_{t,x_u}^{t+\Delta_0}g\right](y)\,.
 % \end{equation}
 %Next, we focus on the remaining interval $[t+\Delta_0,s]$. To this end, we fix the history $(X_t=x,X_u=x_u)$ by defining $x_{u\cup\{t\}}\in\states^{u\cup\{t\}}$ as $x_{u\cup\{t\}}\coloneqq (x_u,x)$.
-Furthermore, since $P\in\wprocesses_\rateset$, and because $\Delta_0<C$ implies that $t+\Delta_0<s$, it follows from Lemma~\ref{lemma:bound_on_linear_approx_partition} that there is some $v\in\mathcal{U}_{[t+\Delta_0,s]}$ such that $\sigma(v)<\delta$, with $v=t_1,\ldots,t_n$ and $t_n=s$, and such that for all $i\in\{2,\ldots,n\}$, with $\Delta_i\coloneqq t_i-t_{i-1}$:
+Furthermore, since $P\in\wprocesses_\rateset$, and because $\Delta_1<C$ implies that $t+\Delta_1<s$, it follows from Lemma~\ref{lemma:bound_on_linear_approx_partition} that there is some $v\in\mathcal{U}_{[t+\Delta_1,s]}$ such that $\sigma(v)<\delta$, with $v=t_1,\ldots,t_n$ and $t_n=s$, and such that for all $i\in\{2,\ldots,n\}$, with $\Delta_i\coloneqq t_i-t_{i-1}$:
 \begin{equation*}
-(\exists Q_i\in\rateset)\norm{T_{t_{i-1},x_{u\cup \{t\}}}^{t_{i}} - (I+\Delta_{i}Q_i)} < \Delta_{i}\epsilon.
+(\exists Q_i\in\rateset)\norm{T_{t_{i-1},x_{u\cup \{t\}}}^{t_{i}} - (I+\Delta_{i}Q_i)} < \Delta_{i}\epsilon_2.\vspace{5pt}
 \end{equation*}
+Since $\Delta_1<\delta$ and, for all $i\in\{2,\dots,n\}$, $\Delta_i\leq\sigma(v)<\delta$, we know that, for all $i\in\{1,\dots,n\}$, $\Delta_i<\delta$ and therefore also $\Delta_i\norm{Q_i}\leq\delta\norm{\rateset}\leq1$.
 % which implies that there exist rate matrices $Q_{1},\ldots,Q_{m}\in\rateset$ such that, for all functions $g\in\gamblesX$ with $\norm{g}\leq\norm{f}$ and all $i\in\{1,\ldots,m\}$,
 % \begin{equation*}
 % \norm{T_{\tau_{i-1},x_{u\cup\{t\}}}^{\tau_{i}}g - (I+\Delta_{i}Q_i)g} \leq \norm{T_{\tau_{i-1},x_{u\cup\{t\}}}^{\tau_{i}} - (I+\Delta_{i}Q_i)} \norm{g} < \frac{\Delta_{i}\epsilon}{2C\norm{f}}\norm{g} \leq \frac{\Delta_{i}\epsilon}{2C}\,.
@@ -4680,7 +4681,7 @@ Furthermore, since $P\in\wprocesses_\rateset$, and because $\Delta_0<C$ implies 
 % \begin{equation}\label{eq:lowerbound_proof_linear_approx_lrate}
 % \left[(I+\Delta_{i}\lrate)g\right](y) - \frac{\Delta_{i}\epsilon}{2C} < \left[T_{\tau_{i-1},x_{u\cup\{t\}}}^{\tau_{i}}g\right](y)\,.
 % \end{equation}
-***
+Therefore, we find that
 \begin{multline*}
 \abs{[T_{t,\,x_u}^sf](x_t)
 -\left[\left(\prod_{i=1}^n(I+\Delta_iQ_i)\right)f\right](x_t)}\\
@@ -4693,24 +4694,24 @@ Furthermore, since $P\in\wprocesses_\rateset$, and because $\Delta_0<C$ implies 
 \norm{T_{t_0,\,x_u}^{t_1}-(I+\Delta_1Q_1)}\norm{f}
 +\sum_{i=2}^{n}
 \norm{T_{t_{i-1},\,x_{u\cup\{t\}}}^{t_{i}}-(I+\Delta_iQ_i)}\norm{f}\\
-&<\sum_{i=1}^n\Delta_i\epsilon_2\norm{f}=C\epsilon_2\norm{f}<\frac{\epsilon}{2}
+&<\sum_{i=1}^n\Delta_i\epsilon_2\norm{f}=C\epsilon_2\norm{f}<\frac{\epsilon}{2},
 \end{aligned}
 \end{multline*}
-
+where the equality follows from Lemma~\ref{lemma:weirddecomposition}, the first inequality follows from the properties of $\norm{\cdot}$, and the second inequality follows from Lemma~\ref{lemma:recursive} and Proposition~\ref{prop:stochastic_from_rate_matrix} and, we also find that
 \begin{align*}
 \abs{[L_t^sf](x_t)-\left[\left(\prod_{i=1}^n(I+\Delta_i\lrate)\right)f\right](x_t)}
 &\leq
-\norm{L_t^s-\prod_{i=1}^n(I+\Delta_i\lrate)}\norm{f}\leq\epsilon_1\norm{f}<\frac{\epsilon}{2}
+\norm{L_t^s-\prod_{i=1}^n(I+\Delta_i\lrate)}\norm{f}\leq\epsilon_1\norm{f}<\frac{\epsilon}{2},
 \end{align*}
-
+using Equation~\eqref{eq:theorem:nonmarkov_single_var_lower_bounded} to establish the second inequality. Hence, Lemma~\ref{lemma:productofQsdominatesproductoflrates} implies that
 \begin{multline*}
 [L_{t}^s f](x_t)
 <\left[\left(\prod_{i=1}^n(I+\Delta_i\lrate)\right)f\right](x_t)+\frac{\epsilon}{2}\\
 \leq
 \left[\left(\prod_{i=1}^n(I+\Delta_i Q_i)\right)f\right](x_t)+\frac{\epsilon}{2}
-<[T_{t,\,x_u}^sf](x_t)+\epsilon
-\end{multline*}
-Since $\epsilon>0$ was arbitrary, this implies that $[L_{t}^s f](x_t)\leq [T_{t,\,x_u}^sf](x_t)$. The result now follows from Remark~\ref{remark:expectationT}. ***
+<[T_{t,\,x_u}^sf](x_t)+\epsilon.
+\end{multline*}\\[-0pt]
+Since $\epsilon>0$ was arbitrary, this allows us to infer that $[L_{t}^s f](x_t)\leq [T_{t,\,x_u}^sf](x_t)$. The result now follows from Remark~\ref{remark:expectationT}.
 % Now, observe that because $\tau_m=s$, it holds for all $y\in\states$ that
 % \begin{align*}
 % \left[T_{\tau_{m-1},x_{u\cup\{t\}}}^{\tau_{m}}f\right](y) &= \mathbb{E}[f(X_{\tau_m})\,\vert\,X_{\tau_{m-1}}=y,X_t=x,X_u=x_u]\\
