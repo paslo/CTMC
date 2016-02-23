@@ -1799,15 +1799,17 @@ Let $\rateset$ be an arbitrary non-empty bounded set of rate matrices that has s
 Together, Propositions~\ref{theorem:nonmarkov_single_var_lower_bounded} and~\ref{theorem:lower_markov_bound_is_tight} establish a strong connection between $L_t^s$ and lower expectations $\underline{\mathbb{E}}$. In particular, for functions defined on a single point in time, they turn out to be equivalent, as shown by the result below.
 
 \begin{corollary}\label{cor:lower_operator_is_infimum}
-Let $\rateset$ be an arbitrary non-empty bounded set of rate matrices that has separately specified rows, with corresponding lower transition rate operator $\lrate$, and let $\underline{\mathcal{T}}_{\lrate}$ be the corresponding lower transition operator system. Then, for all $t,s\in\realsnonneg$ such that $t\leq s$, all $u\in\mathcal{U}_{<t}$, all $x\in\states$ and $x_u\in\states^u$, and all $f\in\gamblesX$,
+Let $\rateset$ be an arbitrary non-empty bounded set of rate matrices that has separately specified rows, with corresponding lower transition rate operator $\lrate$, and let $\underline{\mathcal{T}}_{\lrate}$ be the corresponding lower transition operator system. Then, for all $t,s\in\realsnonneg$ such that $t\leq s$, all $u\in\mathcal{U}_{<t}$, $x_u\in\states^u$ and $x_t\in\states$, and all $f\in\gamblesX$:
 \begin{align*}
-\left[L_t^sf\right](x) &= \underline{\mathbb{E}}^{\mathrm{WM}}_{\,\rateset}[f(X_s)\,\vert\,X_t=x,X_u=x_u] \\
- &= \underline{\mathbb{E}}^{\mathrm{WM}}_{\,\rateset}[f(X_s)\,\vert\,X_t=x]\,,
-\end{align*}
-and furthermore,
-\begin{equation*}
-\left[L_t^sf\right](x) = \underline{\mathbb{E}}^{\mathrm{W}}_{\,\rateset}[f(X_s)\,\vert\,X_t=x,X_u=x_u]\,.
-\end{equation*}
+\left[L_t^sf\right](x_t) = \underline{\mathbb{E}}^{\mathrm{WM}}_{\,\rateset}[f(X_s)\,\vert\,X_t=x_t,X_u=x_u] 
+=
+\underline{\mathbb{E}}^{\mathrm{W}}_{\,\rateset}[f(X_s)\,\vert\,X_t=x_t,X_u=x_u].
+ %&= \underline{\mathbb{E}}^{\mathrm{WM}}_{\,\rateset}[f(X_s)\,\vert\,X_t=x_t]\,,
+\end{align*}\\[-25pt]
+% and furthermore,
+% \begin{equation*}
+% \left[L_t^sf\right](x) = \underline{\mathbb{E}}^{\mathrm{W}}_{\,\rateset}[f(X_s)\,\vert\,X_t=x,X_u=x_u]\,.
+% \end{equation*}
 \end{corollary}
 
 Thus, we find that there is a correspondence between the operator $L_t^s$ and lower expectations with respect to sets of stochastic processes. However, we also find that this correspondence is not one-to-one. Clearly, Corollary~\ref{cor:lower_operator_is_infimum} shows that $L_t^s$ computes the lower expectation for the different sets $\wmprocesses_\rateset$ and $\wprocesses_\rateset$. Furthermore, we know from Section~\ref{sec:connections_rate} that different sets $\rateset_1$ and $\rateset_2$ may have the same corresponding lower transition rate operator $\lrate$. Hence, whenever this is the case, $L_t^s$ would---assuming the conditions in Corollary~\ref{cor:lower_operator_is_infimum} are met by both $\rateset_1$ and $\rateset_2$---then compute the lower expectation with respect to both $\wmprocesses_{\rateset_1}$ and $\wmprocesses_{\rateset_2}$ (and also, furthermore, for $\wprocesses_{\rateset_1}$ and $\wprocesses_{\rateset_2}$). An obvious question, therefore, would be what the largest set of stochastic processes is for which $L_t^s$ computes the lower expectation.
@@ -4977,19 +4979,37 @@ and, by continuing in this way---applying induction---we eventually find that
 \end{proof}
 
 \begin{proof}[Proof of Corollary~\ref{cor:lower_operator_is_infimum}]
-*** still need to check this ***
-We start by proving the first statement. By Proposition~\ref{theorem:nonmarkov_single_var_lower_bounded} and Proposition~\ref{prop:lower_exp_markov_bounded_by_nonmarkov}, we have that for all $P\in\wmprocesses_\rateset$ it holds that $\left[L_t^sf\right](x) \leq \mathbb{E}[f(X_s)\,\vert\,X_t=x]$. Furthermore, by Proposition~\ref{theorem:lower_markov_bound_is_tight}, for all $\epsilon\in\realspos$ there is some $P\in\wmprocesses_\rateset$ such that $\norm{L_t^sf - T_t^sf} < \epsilon$. Together this implies, using Definition~\ref{def:lower_exp}, that
-\begin{equation*}
-\left[L_t^sf\right](x) = \inf\left\{\left[T_t^sf\right](x)\,:\,P\in\wmprocesses_\rateset\right\} = \underline{\mathbb{E}}^{\mathrm{WM}}_\rateset\left[f(X_s)\,\vert\,X_t=x\right]\,.
-\end{equation*}
-
-We now move on to the second statement. By Proposition~\ref{theorem:nonmarkov_single_var_lower_bounded} we have that for all $P\in\wprocesses_\rateset$ it holds that $\left[L_t^sf\right](x) \leq \mathbb{E}[f(X_s)\,\vert\,X_t=x,X_u=x_u]$.
-Furthermore, by Proposition~\ref{theorem:lower_markov_bound_is_tight} and Proposition~\ref{prop:markov_set_subset_of_nonmarkov_set}, for all $\epsilon\in\realspos$ there is some $P\in\wprocesses_\rateset$, for which $T_{t,x_u}^s=T_t^s$, such that
-$\norm{L_t^sf - T_{t,x_u}^sf} < \epsilon$.
-Together this implies, using Definition~\ref{def:lower_exp}, that
-\begin{equation*}
-\left[L_t^sf\right](x) = \inf\left\{\left[T_{t,x_u}^sf\right](x)\,:\,P\in\wprocesses_\rateset\right\} = \underline{\mathbb{E}}^\mathrm{W}_\rateset\left[f(X_s)\,\vert\,X_t=x,X_u=x_u\right]\,.
-\end{equation*}
+%We start by proving the first statement. By Proposition~\ref{theorem:nonmarkov_single_var_lower_bounded} and Proposition~\ref{prop:lower_exp_markov_bounded_by_nonmarkov}, we have that for all $P\in\wmprocesses_\rateset$ it holds that $\left[L_t^sf\right](x) \leq \mathbb{E}[f(X_s)\,\vert\,X_t=x]$. Furthermore,
+Fix any $\epsilon>0$.
+It then follows from Proposition~\ref{theorem:lower_markov_bound_is_tight} that there is some $P\in\wmprocesses_\rateset$ such that $\mathbb{E}[f(X_s)\vert\,X_t=x_t] < [L_t^sf](x_t)+\epsilon$, which implies that
+\begin{align*}
+\underline{\mathbb{E}}^{\mathrm{WM}}_\rateset\left[f(X_s)\,\vert\,X_t=x_t,X_u=x_u\right]
+&\leq
+\mathbb{E}[f(X_s)\vert\,X_t=x_t,X_u=x_u]\\
+&=\mathbb{E}[f(X_s)\vert\,X_t=x_t]
+< [L_t^sf](x_t)+\epsilon,
+\end{align*}
+using Definition~\ref{def:process_sets} for the first inequality and the Markov property of $P$ for the equality. Hence, since $\epsilon>0$ is arbitrary, we find that  $\underline{\mathbb{E}}^{\mathrm{WM}}_\rateset\left[f(X_s)\,\vert\,X_t=x_t,X_u=x_u\right]\leq[L_t^sf](x_t)$.
+% Together this implies, using Definition~\ref{def:lower_exp}, that
+% \begin{equation*}
+% \left[L_t^sf\right](x) = \inf\left\{\left[T_t^sf\right](x)\,:\,P\in\wmprocesses_\rateset\right\} = \underline{\mathbb{E}}^{\mathrm{WM}}_\rateset\left[f(X_s)\,\vert\,X_t=x\right].
+% \end{equation*}
+% We now move on to the second statement. By Proposition~\ref{theorem:nonmarkov_single_var_lower_bounded} we have that for all $P\in\wprocesses_\rateset$ it holds that $\left[L_t^sf\right](x) \leq \mathbb{E}[f(X_s)\,\vert\,X_t=x,X_u=x_u]$.
+% Furthermore, by Proposition~\ref{theorem:lower_markov_bound_is_tight} and Proposition~\ref{prop:markov_set_subset_of_nonmarkov_set}, for all $\epsilon\in\realspos$ there is some $P\in\wprocesses_\rateset$, for which $T_{t,x_u}^s=T_t^s$, such that
+% $\norm{L_t^sf - T_{t,x_u}^sf} < \epsilon$.
+% Together this implies, using Definition~\ref{def:lower_exp}, that
+% \begin{equation*}
+% \left[L_t^sf\right](x) = \inf\left\{\left[T_{t,x_u}^sf\right](x)\,:\,P\in\wprocesses_\rateset\right\} = \underline{\mathbb{E}}^\mathrm{W}_\rateset\left[f(X_s)\,\vert\,X_t=x,X_u=x_u\right]\,.
+% \end{equation*}
+This implies the result because we also have that
+\begin{align*}
+\left[L_t^sf\right](x_t)
+&\leq\inf\left\{\mathbb{E}[f(X_s)\,\vert\,X_t=x_t,X_u=x_u]\colon P\in\wprocesses_{\rateset}\right\}\\
+&=\underline{\mathbb{E}}^{\mathrm{W}}_{\,\rateset}[f(X_s)\,\vert\,X_t=x_t,X_u=x_u] 
+\leq
+\underline{\mathbb{E}}^{\mathrm{WM}}_{\,\rateset}[f(X_s)\,\vert\,X_t=x_t,X_u=x_u],
+\end{align*}
+where the first inequality follows from Proposition~\ref{theorem:nonmarkov_single_var_lower_bounded} and the last inequality follows from Proposition~\ref{prop:lower_exp_markov_bounded_by_nonmarkov}.
 \end{proof}
 
 \begin{proof}[Proof of Theorem~\ref{theo:dominating_rate_processes_max_set}]
