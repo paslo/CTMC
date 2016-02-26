@@ -1032,9 +1032,9 @@ A stochastic process that satisfies this property is called a \emph{Markov chain
 %\subsection{Transition Matrix Systems}\label{sec:trans_mat_systems}
 
 We already know from Proposition~\ref{prop:stochasticprocess:simpleproperties} that the transition matrices of a stochastic process---and therefore also, in particular, of a Markov chain---satisfy a number of simple properties. For the specific case of a Markov chain $P\in\mprocesses$, the family of transition matrices $\mathcal{T}_P$ also satisfies an additional property. In particular, for any $t,r,s\in\realsnonneg$ such that $t\leq r\leq s$, these transition matrices satisfy
-\begin{equation*}
+\begin{equation}\label{eq:markovintermsofmatrices}
 T_t^s = T_t^rT_r^s\,.
-\end{equation*}
+\end{equation}
 In this context, this property is known as the \emph{Chapman-Kolmogorov equation}~{\bf CITE}, or alternatively as the semi-group property~{\bf CITE}. Indeed, this is the same semi-group property that we defined in Section~\ref{sec:systems} to hold for transition matrix systems $\mathcal{T}$. We therefore have the following result.
 
 \begin{proposition}\label{prop:Markovhassystem}
@@ -4857,7 +4857,6 @@ Because this covers all the possible cases, in summary, we have found that $\sma
 \end{proof}
 
 \begin{proof}[Proof of Proposition~\ref{theorem:lower_markov_bound_is_tight}]
-*** still need to finish this ***
 Fix any $t,s\in\realsnonneg$ such that $t\leq s$, any $f\in\gamblesX$ and any $\epsilon\in\realspos$. If $t=s$, the result is trivial. Hence, without loss of generality, we may assume that $t<s$. Let $C\coloneqq (s-t)$, choose any $\epsilon^*>0$ such that $\epsilon^*C<\epsilon$, choose any $\epsilon_1,\epsilon_2,\epsilon_3>0$ such that $\epsilon_1+\epsilon_2+\epsilon_3<\epsilon^*$, choose any $\delta>0$ such that $\delta\norm{\rateset}^2\norm{f}<\epsilon_3$ and $\smash{\delta\norm{\lrate}^2\norm{f}<\epsilon_1}$ (this is always possible because of~\ref{LR:normlratefinite}), and consider any $u\in\mathcal{U}_{[t,s]}$ such that $\sigma(u)<\delta$, with $u=t_0,\ldots,t_n$ and $n\in\nats$. 
 
 Fix any $i\in\{1,\dots,n\}$ and let $g_i\coloneqq L_{t_i}^{t_n}f$. It then follows from Lemma~\ref{lemma:rateset_has_arginf} that there is some $Q_i\in\rateset$ such that $\norm{\lrate g_i-Q_i g_i}<\epsilon_2$ and, due to~\ref{N:normAf} and~\ref{LT:norm_at_most_one}, we also know that $\norm{g_i}=\norm{L_{t_i}^{t_n}f}\leq\norm{L_{t_i}^{t_n}}\norm{f}\leq\norm{f}$.
@@ -4865,32 +4864,30 @@ Fix any $i\in\{1,\dots,n\}$ and let $g_i\coloneqq L_{t_i}^{t_n}f$. It then follo
 % \norm{\lrate L_{t_i}^sf - Q_iL_{t_i}^sf} < \frac{\epsilon}{2C}\,.
 % \end{equation}
 Hence, we find that 
-\begin{multline*}
-\norm{L_{t_{i-1}}^{t_i}g_i - e^{Q_i\Delta_i}g_i}\\
-\begin{aligned}
-&\leq \norm{L_{t_{i-1}}^{t_i}g_i - \left[I+\Delta_i\lrate\right]g_i} 
+\begin{align}
+&\norm{L_{t_{i-1}}^{t_i}g_i - e^{Q_i\Delta_i}g_i}\notag\\
+&\quad\quad\quad\leq \norm{L_{t_{i-1}}^{t_i}g_i - \left[I+\Delta_i\lrate\right]g_i} 
 +\norm{\Delta_i\lrate g_i-\Delta_iQ_ig_i}
-+ \norm{\left[I+\Delta_iQ_i\right]g_i - e^{Q_i\Delta_i}g_i} \\
-&\leq \norm{L_{t_{i-1}}^{t_i} - \left[I+\Delta_i\lrate\right]}\norm{g_i} 
++ \norm{\left[I+\Delta_iQ_i\right]g_i - e^{Q_i\Delta_i}g_i} \notag\\
+&\quad\quad\quad\leq \norm{L_{t_{i-1}}^{t_i} - \left[I+\Delta_i\lrate\right]}\norm{g_i} 
 +\Delta_i\norm{\lrate g_i-Q_ig_i}
-+ \norm{I+\Delta_iQ_i - e^{Q_i\Delta_i}}\norm{g_i} \\
-&< \norm{L_{t_{i-1}}^{t_i} - \left[I+\Delta_i\lrate\right]}\norm{f} 
++ \norm{I+\Delta_iQ_i - e^{Q_i\Delta_i}}\norm{g_i} \notag\\
+&\quad\quad\quad< \norm{L_{t_{i-1}}^{t_i} - \left[I+\Delta_i\lrate\right]}\norm{f} 
 +\Delta_i\epsilon_2
-+ \norm{I+\Delta_iQ_i - e^{Q_i\Delta_i}}\norm{f} \\
-&\leq
++ \norm{I+\Delta_iQ_i - e^{Q_i\Delta_i}}\norm{f} \notag\\
+&\quad\quad\quad\leq
 \Delta_i^2\norm{\lrate}^2\norm{f}
 +\Delta_i\epsilon_2
 +
-\Delta_i^2\norm{Q_i}^2\norm{f}\\
-&\leq
+\Delta_i^2\norm{Q_i}^2\norm{f}\notag\\
+&\quad\quad\quad\leq
 \Delta_i(
 \delta\norm{\lrate}^2\norm{f}
 +\epsilon_2
 +
 \delta\norm{\rateset}^2\norm{f})
-<\Delta_i(\epsilon_1+\epsilon_2+\epsilon_3)<\Delta_i\epsilon^*,
-\end{aligned}
-\end{multline*}\\[-0pt]
+<\Delta_i(\epsilon_1+\epsilon_2+\epsilon_3)<\Delta_i\epsilon^*,\label{eq:theorem:lower_markov_bound_is_tight:localbound}
+\end{align}\\[-8pt]
 where the second inequality holds because of~\ref{N:normAf}, the third inequality holds because $\norm{g_i}\leq\norm{f}$ and $\norm{\lrate g_i-Q_i g_i}<\epsilon_2$, the fourth inequality holds because of Lemmas~\ref{lemma:quadraticboundonL} and~\ref{lemma:linearpartofexponential} and where the fifth inequality holds because $\Delta_i\leq\sigma(u)<\delta$.
 
 
@@ -4899,26 +4896,30 @@ For all $i\in\{0,\ldots,n\}$, let $\mathcal{T}_{Q_i}$ denote the transition matr
 \begin{equation*}
 \mathcal{T}_P = \mathcal{T}_{Q_0}^{[0,t_0]}\otimes \mathcal{T}_{Q_1}^{[t_0,t_1]}\otimes \cdots \otimes \mathcal{T}_{Q_n}^{[t_{n-1},t_n]} \otimes \mathcal{T}_{Q_n}^{[t_{n},\infty)}\,.
 \end{equation*}
-It remains to show that this $P$ has a corresponding transition matrix $T_t^s$ which satisfies $\norm{L_t^sf - T_t^sf} < \epsilon$. We first note that, for all $i\in\{1,\ldots,n\}$, the transition matrix $T_{t_{i-1}}^{t_i}$ corresponding to $P$ satisfies $T_{t_{i-1}}^{t_i} = e^{Q_i\cdot\Delta_i}$.
-
-We then factorize the interval $[t,s]$ according to $u$, using Proposition~\ref{prop:lower_trans_system_is_system} and the Markov property of $P$, to obtain
+Due to Equation~\eqref{eq:theorem:lower_markov_bound_is_tight:localbound}, we know that the transition matrices of this process $P$ satisfy
+\begin{equation}\label{eq:theorem:lower_markov_bound_is_tight:localbounds}
+(\forall i\in\{1,\ldots,n\})~
+\norm{L_{t_{i-1}}^{t_i}g_i - T_{t_{i-1}}^{t_i}g_i}= \norm{L_{t_{i-1}}^{t_i}g_i - e^{Q_i\Delta_i}g_i}<\Delta_i\epsilon^*.
+\end{equation}
+Furthermore, we also know that
 \begin{align*}
 \norm{L_{t_0}^{t_n}g_n - T_{t_0}^{t_n}g_n} 
  &\leq \norm{L_{t_0}^{t_{n-1}}L_{t_{n-1}}^{t_n}g_n - T_{t_0}^{t_{n-1}}L_{t_{n-1}}^{t_n}g_n} + \norm{T_{t_0}^{t_{n-1}}L_{t_{n-1}}^{t_n}g_n - T_{t_0}^{t_{n-1}}T_{t_{n-1}}^{t_n}g_n} \\
  %&\leq \norm{L_{t_0}^{t_{n-1}}L_{t_{n-1}}^{t_n}f - T_{t_0}^{t_{n-1}}L_{t_{n-1}}^{t_n}f} + \norm{{T_{t_0}^{t_{n-1}}}}\cdot\norm{L_{t_{n-1}}^{t_n}g_n - T_{t_{n-1}}^{t_n}g_n} \\
- &\leq \norm{L_{t_0}^{t_{n-1}}g_{n-1} - T_{t_0}^{t_{n-1}}g_{n-1}} + \norm{L_{t_{n-1}}^{t_n}g_n - T_{t_{n-1}}^{t_n}g_n}.
+ &\leq \norm{L_{t_0}^{t_{n-1}}g_{n-1} - T_{t_0}^{t_{n-1}}g_{n-1}} + \norm{L_{t_{n-1}}^{t_n}g_n - T_{t_{n-1}}^{t_n}g_n},
 \end{align*}
+using Proposition~\ref{prop:lower_trans_system_is_system} and Equation~\eqref{eq:markovintermsofmatrices} for the first equality, and Proposition~\ref{prop:lower_trans_system_is_system} and \ref{LT:differencenorm} for the second one.
 Similarly, we also find that
 \begin{equation*}
 \norm{L_{t_0}^{t_{n-1}}g_{n-1} - T_{t_0}^{t_{n-1}}g_{n-1}}
-\leq \norm{L_{t_0}^{t_{n-2}}g_{n-2} - T_{t_0}^{t_{n-2}}g_{n-2}} + \norm{L_{t_{n-2}}^{t_{n-1}}g_{n-1} - T_{t_{n-2}}^{t_{n-1}}g_{n-1}}
+\leq \norm{L_{t_0}^{t_{n-2}}g_{n-2} - T_{t_0}^{t_{n-2}}g_{n-2}} + \norm{L_{t_{n-2}}^{t_{n-1}}g_{n-1} - T_{t_{n-2}}^{t_{n-1}}g_{n-1}}.
 \end{equation*}
-and, by continuing in this way---applying induction---we eventually find that
+By continuing in this way---applying induction---we eventually find that
 \begin{equation*}
 \norm{L_t^sf - T_t^sf}=\norm{L_{t_0}^{t_n}g_n - T_{t_0}^{t_n}g_n} 
-\leq \sum_{i=1}^{n} \norm{L_{t_{i-1}}^{t_i}g_i - T_{t_{i-1}}^{t_i}g_i}.
+\leq \sum_{i=1}^{n} \norm{L_{t_{i-1}}^{t_i}g_i - T_{t_{i-1}}^{t_i}g_i}\leq\sum_{i=1}^n\Delta_i\epsilon^*=C\epsilon^*<\epsilon,
 \end{equation*}
-
+using Equation~\eqref{eq:theorem:lower_markov_bound_is_tight:localbounds} to establish the second inequality. The result now follows directly from Remark~\ref{remark:expectationT}.
 % Consider now any $i\in\{1,\ldots,n\}$. Then, we find from Lemma~\ref{lemma:justthelinearpart} that
 % \begin{align*}
 % &\quad \norm{L_{t_{i-1}}^{t_i}\left[L_{t_i}^{t_n}f\right] - T_{t_{i-1}}^{t_i}\left[L_{t_i}^{t_n}f\right]} \\
@@ -4944,13 +4945,11 @@ and, by continuing in this way---applying induction---we eventually find that
 %  &< 2\Delta_i\delta\norm{\mathcal{Q}}^2\norm{f} + \frac{\Delta_i\epsilon}{2C}\,,
 % \end{align*}
 % where we used $\norm{Q_i}\leq\norm{\rateset}$, and in the final step applied $\Delta_i\leq\sigma(u)<\delta$.
-
-
-\begin{align*}
-\norm{L_t^sf - T_t^sf} 
-&\leq \sum_{i=1}^n \norm{L_{t_{i-1}}^{t_i}g_i - T_{t_{i-1}}^{t_i}g_i}= \sum_{i=1}^n \norm{L_{t_{i-1}}^{t_i}g_i - e^{Q_i\Delta_i}g_i}<\sum_{i=1}^n\Delta_i\epsilon^*
-=C\epsilon^*<\epsilon.
-\end{align*}
+% \begin{align*}
+% \norm{L_t^sf - T_t^sf} 
+% &\leq \sum_{i=1}^n \norm{L_{t_{i-1}}^{t_i}g_i - T_{t_{i-1}}^{t_i}g_i}= \sum_{i=1}^n \norm{L_{t_{i-1}}^{t_i}g_i - e^{Q_i\Delta_i}g_i}<\sum_{i=1}^n\Delta_i\epsilon^*
+% =C\epsilon^*<\epsilon.
+% \end{align*}
 %***
 %
 %By Equation~\eqref{eq:lower_char_rate_matrix}, we have $\norm{Q_{t_i}L_{t_i}^{t_n}f - \lrate L_{t_i}^{t_n}f} < \nicefrac{\epsilon}{2C}$. Furthermore, by Equation~\eqref{eq:lower_char_matrix_linear_approx}, we have $Q_{t_i}^u=Q_{t_i}$, so that
