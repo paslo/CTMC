@@ -4543,15 +4543,15 @@ We finally show that $\rateset_{\lrate}$ has separately specified rows. For all 
 \end{proof}
 
 \begin{lemma}\label{lemma:rows_nonempty_bounded_closed_convex}
-Let $\rateset$ be any non-empty, bounded, closed and convex set of rate matrices that has separately specified rows. Then, for all $x\in\states$, the set $\rateset_x\coloneqq\{Q(x,\cdot)\,:\,Q\in\rateset\}$ is non-empty, bounded, closed, and convex.
+Let $\rateset$ be a non-empty, bounded, closed and convex set of rate matrices. Then, for all $x\in\states$, $\rateset_x\coloneqq\{Q(x,\cdot)\,:\,Q\in\rateset\}$ is a non-empty, bounded, closed, and convex subset of $\gamblesX$.
 \end{lemma}
 \begin{proof}
-*** still need to check this ***
-Take any $x\in\states$. Non-emptiness, boundedness, and convexity of $\rateset_x$ follows trivially from the fact that $\rateset$ is non-empty, bounded, and convex. It remains to show that $\rateset_x$ is closed, or, equivalently, that for any converging sequence $\{Q_i(x,\cdot)\}_{i\in\nats}$ in $\rateset_x$, the limit $Q^*(x,\cdot)\coloneqq\lim_{i\to+\infty}Q_i(x,\cdot)$ also satisfies $Q^*(x,\cdot)\in\rateset_x$.
+Fix any $x\in\states$. The non-emptiness, boundedness and convexity of $\rateset_x$ then follows trivially from the fact that $\rateset$ is non-empty, bounded and convex. It remains to show that $\rateset_x$ is closed. Consider therefore any sequence $\{Q_i\}_{i\in\nats}$ in $\rateset$ such that $\{Q_i(x,\cdot)\}_{i\in\nats}$ converges to a limit $Q_{\infty}(x,\cdot)$. We need to prove that $Q_{\infty}(x,\cdot)\in\rateset_x$.
 
-For all $x'\in\states$ such that $x'\neq x$, choose some $Q(x',\cdot)\in\rateset_{x'}$. Construct a sequence of matrices $\{\hat{Q}_i\}_{i\in\nats}$ such that, for all $i\in\nats$ and all $x'\in\states$, $x'\neq x$, $\hat{Q}_i(x',\cdot)=Q(x',\cdot)$, and such that $\hat{Q}_i(x,\cdot)=Q_i(x,\cdot)$ for all $i\in\nats$. Because $\rateset$ has separately specified rows, and because $\hat{Q}_i(y,\cdot)\in\rateset_y$ for all $y\in\states$ and all $i\in\nats$, we then have that $\hat{Q}_i\in\rateset$, for all $i\in\nats$.
-
-Furthermore, in the sequence $\{\hat{Q}_i\}_{i\in\nats}$, only the $x$-th row is changing. Therefore, because $\{Q_i(x,\cdot)\}_{i\in\nats}$ is converging, so is $\{\hat{Q}_i\}_{i\in\nats}$. In particular, $\{\hat{Q}_i(x,\cdot)\}_{i\in\nats}\to Q^*(x,\cdot)$. Let $Q^*\coloneqq\lim_{i\to+\infty}\hat{Q}_i$. Because $\rateset$ is closed, and $\{\hat{Q}_i\}_{i\in\nats}$ is in $\rateset$, it follows that $Q^*\in\rateset$. Therefore, we find that $Q^*(x,\cdot)\in\rateset_x$.
+Since $\{Q_i\}_{i\in\nats}$ belongs to the---closed and bounded and therefore---compact set $\rateset$, it has a convergent subsequence $\{Q_{i_k}\}_{k\in\nats}$ whose limit $Q^*$ belongs to $\rateset$. Since $\{Q_i(x,\cdot)\}_{i\in\nats}$ converges to $Q_{\infty}(x,\cdot)$, it follows that $Q^*(x,\cdot)=Q_{\infty}(x,\cdot)$, which, since $Q^*\in\rateset$, implies that $Q_{\infty}(x,\cdot)\in\rateset_x$.
+% First, for any $y\in\states$ such that $y\neq x$, choose some $Q(y,\cdot)\in\rateset_{y}$. Next, for any $i\in\nats$, let $\hat{Q}_i$ be the unique rate matrix such that $\hat{Q}_i(x,\cdot)=Q_i(x,\cdot)$ and, for all $y\in\states$ such that $y\neq x$, $\hat{Q}_i(y,\cdot)=Q(y,\cdot)$. Since $\rateset$ has separately specified rows, the sequence $\{\hat{Q}_i\}_{i\in\nats}$ belongs to $\rateset$, and therefore, since $\rateset$ is closed, 
+%  Since $\rateset$ has separately specified rows, and because $\hat{Q}_i(y,\cdot)\in\rateset_y$ for all $y\in\states$ and all $i\in\nats$, we then have that $\hat{Q}_i\in\rateset$, for all $i\in\nats$.
+% Furthermore, in the sequence $\{\hat{Q}_i\}_{i\in\nats}$, only the $x$-th row is changing. Therefore, because $\{Q_i(x,\cdot)\}_{i\in\nats}$ is converging, so is $\{\hat{Q}_i\}_{i\in\nats}$. In particular, $\{\hat{Q}_i(x,\cdot)\}_{i\in\nats}\to Q^*(x,\cdot)$. Let $Q^*\coloneqq\lim_{i\to+\infty}\hat{Q}_i$. Because $\rateset$ is closed, and $\{\hat{Q}_i\}_{i\in\nats}$ is in $\rateset$, it follows that $Q^*\in\rateset$. Therefore, we find that $Q^*(x,\cdot)\in\rateset_x$.
 \end{proof}
 
 \begin{proof}[Proof of Proposition~\ref{prop:dominating_unique_characterization}]
