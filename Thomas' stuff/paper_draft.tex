@@ -4836,24 +4836,19 @@ Since $\epsilon>0$ was arbitrary, this allows us to infer that $[L_{t}^s f](x_t)
 
 
 \begin{lemma}\label{lemma:nonhomogeneous_in_process_set}
-*** still need to check this ***
-Consider any non-empty bounded set of rate matrices $\rateset$, any finite sequence of time points $u=t_0,\ldots,t_n$, and a corresponding collection of rate matrices $Q_0,\ldots,Q_{n+1}\in\rateset$. Then, there exists a well-behaved continuous-time Markov chain $P\in\wmprocesses_\rateset$ with transition matrix system $\mathcal{T}_P$, such that
+Let $\rateset$ be a non-empty bounded set of rate matrices. Then for any finite sequence of time points $u=t_0,\ldots,t_n$ and corresponding collection of rate matrices $Q_0,\ldots,Q_{n+1}\in\rateset$, there is a process $P\in\wmprocesses_\rateset$ such that
 \begin{equation}\label{eq:nonhomogen_in_process_set_system_composition}
 \mathcal{T}_P = \mathcal{T}_{Q_0}^{[0,t_0]}\otimes \mathcal{T}_{Q_1}^{[t_0,t_1]} \otimes \cdots \otimes \mathcal{T}_{Q_n}^{[t_{n-1},t_n]} \otimes \mathcal{T}_{Q_{n+1}}^{[t_n,\infty)}\,.
 \end{equation}
 \end{lemma}
 \begin{proof}
-Because $\rateset\subset\mathcal{R}$, it follows immediately from Proposition~\ref{prop:finite_different_rate_matrix_has_process} that there is a $P\in\wmprocesses$ with transition matrix system $\mathcal{T}_P$, such that Equation~\eqref{eq:nonhomogen_in_process_set_system_composition} holds. It remains to show that $P\in\wmprocesses_\rateset$.
+Proposition~\ref{prop:finite_different_rate_matrix_has_process} implies the existence of a process $P\in\wmprocesses$ that satisfies Equation~\eqref{eq:nonhomogen_in_process_set_system_composition}. It remains to show that $P\in\wmprocesses_\rateset$, or equivalently, that $\smash{\overline{\partial}}T_t^t\subseteq\rateset$ for all $t\in\realsnonneg$. To this end, consider any $t\in\realsnonneg$.
 
-To prove this, we have to show that $\smash{\overline{\partial}}T_t^t\subseteq\rateset$ for all $t\in\realsnonneg$. To this end, consider any $t\in\realsnonneg$.
-
-We will consider several cases. If $t<t_0$, we have that $\smash{\overline{\partial}}T_t^t$ corresponds to $\mathcal{T}_{Q_0}^{[0,t_0]}$, and hence $\smash{\overline{\partial}}T_t^t=\{Q_0\}\subseteq\rateset$. If $t>t_n$, then $\smash{\overline{\partial}}T_t^t$ corresponds to $\mathcal{T}_{Q_{n+1}}^{[t_n,\infty)}$, in which case $\smash{\overline{\partial}}T_t^t=\{Q_{n+1}\}\subseteq\rateset$. Similarly, if $t\in(t_{i-1},t_i)$ for some $i\in\{1,\ldots,n\}$, then $\smash{\overline{\partial}}T_t^t$ corresponds to $\mathcal{T}_{Q_i}^{[t_{i-1},t_i]}$, and hence $\smash{\overline{\partial}}T_t^t=\{Q_i\}\subseteq\rateset$.
-
-The remaining cases are when $t=t_i$ for some $i\in\{0,\ldots,n\}$. In this case, we have that $\smash{\overline{\partial}}_-T_t^t=\{Q_i\}$ and $\smash{\overline{\partial}}_+T_t^t=\{Q_{i+1}\}$. Hence,
+We consider several cases. If $t<t_0$, then $\smash{\overline{\partial}}T_t^t$ corresponds to $\mathcal{T}_{Q_0}^{[0,t_0]}$, and hence $\smash{\overline{\partial}}T_t^t=\{Q_0\}\subseteq\rateset$. If $t>t_n$, then $\smash{\overline{\partial}}T_t^t$ corresponds to $\smash{\mathcal{T}_{Q_{n+1}}^{[t_n,\infty)}}$, in which case $\smash{\overline{\partial}}T_t^t=\{Q_{n+1}\}\subseteq\rateset$. Similarly, if $t\in(t_{i-1},t_i)$ for some $i\in\{1,\ldots,n\}$, then $\smash{\overline{\partial}}T_t^t$ corresponds to $\mathcal{T}_{Q_i}^{[t_{i-1},t_i]}$, and therefore $\smash{\overline{\partial}}T_t^t=\{Q_i\}\subseteq\rateset$. The only remaining case is when $t=t_i$ for some $i\in\{0,\ldots,n\}$. In this case, we have that $\smash{\overline{\partial}}_-T_t^t=\{Q_i\}$ and $\smash{\overline{\partial}}_+T_t^t=\{Q_{i+1}\}$, and therefore
 \begin{equation*}
-\smash{\overline{\partial}}T_t^t = \smash{\overline{\partial}}_-T_t^t\cup\smash{\overline{\partial}}_+T_t^t=\{Q_{i},Q_{i+1}\}\subseteq\rateset\,.
+\smash{\overline{\partial}}T_t^t = \smash{\overline{\partial}}_-T_t^t\cup\smash{\overline{\partial}}_+T_t^t=\{Q_{i},Q_{i+1}\}\subseteq\rateset.
 \end{equation*}
-Because this covers all the possible cases, in summary, we have found that $\smash{\overline{\partial}}T_t^t\subseteq\rateset$ for all $t\in\realsnonneg$, and hence $P\in\wmprocesses_\rateset$.
+% Because this covers all the possible cases, in summary, we have found that $\smash{\overline{\partial}}T_t^t\subseteq\rateset$ for all $t\in\realsnonneg$, and hence $P\in\wmprocesses_\rateset$.
 \end{proof}
 
 \begin{proof}[Proof of Proposition~\ref{theorem:lower_markov_bound_is_tight}]
