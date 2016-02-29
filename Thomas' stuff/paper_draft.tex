@@ -1034,9 +1034,9 @@ A stochastic process that satisfies this property is called a \emph{Markov chain
 %\subsection{Transition Matrix Systems}\label{sec:trans_mat_systems}
 
 We already know from Proposition~\ref{prop:stochasticprocess:simpleproperties} that the transition matrices of a stochastic process---and therefore also, in particular, of a Markov chain---satisfy a number of simple properties. For the specific case of a Markov chain $P\in\mprocesses$, the family of transition matrices $\mathcal{T}_P$ also satisfies an additional property. In particular, for any $t,r,s\in\realsnonneg$ such that $t\leq r\leq s$, these transition matrices satisfy
-\begin{equation*}
+\begin{equation}\label{eq:markovintermsofmatrices}
 T_t^s = T_t^rT_r^s\,.
-\end{equation*}
+\end{equation}
 In this context, this property is known as the \emph{Chapman-Kolmogorov equation}~{\bf CITE}, or alternatively as the semi-group property~{\bf CITE}. Indeed, this is the same semi-group property that we defined in Section~\ref{sec:systems} to hold for transition matrix systems $\mathcal{T}$. We therefore have the following result.
 
 \begin{proposition}\label{prop:Markovhassystem}
@@ -4545,30 +4545,45 @@ We finally show that $\rateset_{\lrate}$ has separately specified rows. For all 
 \end{proof}
 
 \begin{lemma}\label{lemma:rows_nonempty_bounded_closed_convex}
-Let $\rateset$ be any non-empty, bounded, closed and convex set of rate matrices that has separately specified rows. Then, for all $x\in\states$, the set $\rateset_x\coloneqq\{Q(x,\cdot)\,:\,Q\in\rateset\}$ is non-empty, bounded, closed, and convex.
+Let $\rateset$ be a non-empty, bounded, closed and convex set of rate matrices. Then, for all $x\in\states$, $\rateset_x\coloneqq\{Q(x,\cdot)\,:\,Q\in\rateset\}$ is a non-empty, bounded, closed, and convex subset of $\gamblesX$.
 \end{lemma}
 \begin{proof}
-*** still need to check this ***
-Take any $x\in\states$. Non-emptiness, boundedness, and convexity of $\rateset_x$ follows trivially from the fact that $\rateset$ is non-empty, bounded, and convex. It remains to show that $\rateset_x$ is closed, or, equivalently, that for any converging sequence $\{Q_i(x,\cdot)\}_{i\in\nats}$ in $\rateset_x$, the limit $Q^*(x,\cdot)\coloneqq\lim_{i\to+\infty}Q_i(x,\cdot)$ also satisfies $Q^*(x,\cdot)\in\rateset_x$.
+Fix any $x\in\states$. The non-emptiness, boundedness and convexity of $\rateset_x$ then follows trivially from the fact that $\rateset$ is non-empty, bounded and convex. It remains to show that $\rateset_x$ is closed. Consider therefore any sequence $\{Q_i\}_{i\in\nats}$ in $\rateset$ such that $\{Q_i(x,\cdot)\}_{i\in\nats}$ converges to a limit $Q_{\infty}(x,\cdot)$. We need to prove that $Q_{\infty}(x,\cdot)\in\rateset_x$.
 
-For all $x'\in\states$ such that $x'\neq x$, choose some $Q(x',\cdot)\in\rateset_{x'}$. Construct a sequence of matrices $\{\hat{Q}_i\}_{i\in\nats}$ such that, for all $i\in\nats$ and all $x'\in\states$, $x'\neq x$, $\hat{Q}_i(x',\cdot)=Q(x',\cdot)$, and such that $\hat{Q}_i(x,\cdot)=Q_i(x,\cdot)$ for all $i\in\nats$. Because $\rateset$ has separately specified rows, and because $\hat{Q}_i(y,\cdot)\in\rateset_y$ for all $y\in\states$ and all $i\in\nats$, we then have that $\hat{Q}_i\in\rateset$, for all $i\in\nats$.
-
-Furthermore, in the sequence $\{\hat{Q}_i\}_{i\in\nats}$, only the $x$-th row is changing. Therefore, because $\{Q_i(x,\cdot)\}_{i\in\nats}$ is converging, so is $\{\hat{Q}_i\}_{i\in\nats}$. In particular, $\{\hat{Q}_i(x,\cdot)\}_{i\in\nats}\to Q^*(x,\cdot)$. Let $Q^*\coloneqq\lim_{i\to+\infty}\hat{Q}_i$. Because $\rateset$ is closed, and $\{\hat{Q}_i\}_{i\in\nats}$ is in $\rateset$, it follows that $Q^*\in\rateset$. Therefore, we find that $Q^*(x,\cdot)\in\rateset_x$.
+Since $\{Q_i\}_{i\in\nats}$ belongs to the---closed and bounded and therefore---compact set $\rateset$, it has a convergent subsequence $\{Q_{i_k}\}_{k\in\nats}$ whose limit $Q^*$ belongs to $\rateset$. Since $\{Q_i(x,\cdot)\}_{i\in\nats}$ converges to $Q_{\infty}(x,\cdot)$, it follows that $Q^*(x,\cdot)=Q_{\infty}(x,\cdot)$, which, since $Q^*\in\rateset$, implies that $Q_{\infty}(x,\cdot)\in\rateset_x$.
+% First, for any $y\in\states$ such that $y\neq x$, choose some $Q(y,\cdot)\in\rateset_{y}$. Next, for any $i\in\nats$, let $\hat{Q}_i$ be the unique rate matrix such that $\hat{Q}_i(x,\cdot)=Q_i(x,\cdot)$ and, for all $y\in\states$ such that $y\neq x$, $\hat{Q}_i(y,\cdot)=Q(y,\cdot)$. Since $\rateset$ has separately specified rows, the sequence $\{\hat{Q}_i\}_{i\in\nats}$ belongs to $\rateset$, and therefore, since $\rateset$ is closed, 
+%  Since $\rateset$ has separately specified rows, and because $\hat{Q}_i(y,\cdot)\in\rateset_y$ for all $y\in\states$ and all $i\in\nats$, we then have that $\hat{Q}_i\in\rateset$, for all $i\in\nats$.
+% Furthermore, in the sequence $\{\hat{Q}_i\}_{i\in\nats}$, only the $x$-th row is changing. Therefore, because $\{Q_i(x,\cdot)\}_{i\in\nats}$ is converging, so is $\{\hat{Q}_i\}_{i\in\nats}$. In particular, $\{\hat{Q}_i(x,\cdot)\}_{i\in\nats}\to Q^*(x,\cdot)$. Let $Q^*\coloneqq\lim_{i\to+\infty}\hat{Q}_i$. Because $\rateset$ is closed, and $\{\hat{Q}_i\}_{i\in\nats}$ is in $\rateset$, it follows that $Q^*\in\rateset$. Therefore, we find that $Q^*(x,\cdot)\in\rateset_x$.
 \end{proof}
 
 \begin{proof}[Proof of Proposition~\ref{prop:dominating_unique_characterization}]
-*** still need to check this ***
-Let $\rateset$ be any non-empty, bounded, closed and convex set of rate matrices with separately specified rows, with corresponding lower transition rate operator $\lrate$. Assume \emph{ex absurdo} that $\rateset\neq\rateset_{\lrate}$.
+Since $\rateset$ has $\lrate$ as its lower envelope, it follows from Equation~\eqref{eq:dominatingratematrices} that $\rateset\subseteq\rateset_{\lrate}$. Assume \emph{ex absurdo} that $\rateset\subset\rateset_{\lrate}$, or equivalently, that there is some $Q\in\rateset_{\lrate}$ such that $Q\notin\rateset$. Consider any such $Q$.
 
-Then, we must have that either $\rateset\subset\rateset_{\lrate}$ or, because $\rateset$ is non-empty, there must be some $Q\in\rateset$ such that $Q\notin\rateset_{\lrate}$. In the latter case, because $\rateset$ has $\lrate$ as its lower envelope, we immediately obtain a contradiction with Equation~\eqref{eq:dominatingratematrices}. Hence, it follows that $\rateset\subset\rateset_{\lrate}$. Therefore, and because $\rateset_{\lrate}$ is non-empty, there must be some $Q\in\rateset_{\lrate}$ such that $Q\notin\rateset$.
-
-Because $\rateset$ has separately specified rows, there must therefore be some $x\in\states$ such that $Q(x,\cdot)\notin\rateset_x$, with $\rateset_x\coloneqq\{Q'(x,\cdot)\,:\,Q'\in\rateset\}$. Furthermore, because $\rateset$ is non-empty, bounded, closed, convex, and has separately specified rows, it follows from Lemma~\ref{lemma:rows_nonempty_bounded_closed_convex} that $\rateset_x$ is non-empty, bounded, closed, and convex. 
-
-Note that we can interpret $\rateset_x\subset\reals^m$ as a subset of the vector space $\reals^m$, where $m$ is the size of $\states$. Furthermore, because $\rateset_x$ is closed and bounded, we have that $\rateset_x$ is compact. Because $Q(x,\cdot)\notin\rateset_x$, the (non-empty, closed, convex) singleton set $\{Q(x,\cdot)\}$ is clearly disjoint from $\rateset_x$.
-
-Therefore, by the hyperplane separation theorem\footnote{That is, by one of them.} ({\bf REF}), there must be some $f\in\gamblesX$ and some $c_1,c_2\in\reals$, with $c_1<c_2$, such that $Q(x,\cdot)f = [Qf](x) \leq c_1$, and such that, for all $Q'(x,\cdot)\in\rateset_x$, $Q'(x,\cdot)f = [Q'f](x) \geq c_2$.
-
-This clearly implies that, for all $Q'\in\rateset$, it holds that $[Qf](x) \leq c_1 < c_2 \leq [Q'f](x)$. In turn, this implies the existence of some $\epsilon\in\realspos$ for which $[Qf](x) + \epsilon < [Q'f](x)$, for all $Q'\in\rateset$. Because $\lrate$ is the lower envelope of $\rateset$, by Equation~\eqref{eq:correspondinglowertrans}, we therefore find that $[Qf](x) < [\lrate f](x)$. Hence, we have found a $f\in\gamblesX$ and a $x\in\states$, such that for some $Q\in\rateset_{\lrate}$, it holds that $[Qf](x) < [\lrate f](x)$. By Equation~\eqref{eq:dominatingratematrices}, this is a contradiction, and hence $\rateset=\rateset_{\lrate}$.
+Because $\rateset$ has separately specified rows, it follows from $Q\notin\rateset$ that there is some $x\in\states$ such that $Q(x,\cdot)\notin\rateset_x\coloneqq\{Q'(x,\cdot)\,:\,Q'\in\rateset\}$. Since $\rateset$ is non-empty, bounded, closed and convex, it then follows from Lemma~\ref{lemma:rows_nonempty_bounded_closed_convex} that $\rateset_x$ is a non-empty, bounded, closed and convex subset of $\gamblesX$, and therefore, since $\gamblesX$ is a normed linear space, it follows from the separating hyperplane theorem~\cite[Chapter 14, Corollary 25]{Royden:2010vn} that there is a linear operator $\psi\colon\gamblesX\to\reals$ such that
+\begin{equation}\label{eq:prop:dominating_unique_characterization:C}
+\psi(Q(x,\cdot))<\inf\{\psi(q)\colon q\in\rateset_x\}=\colon C.
+\end{equation}
+Now let $f\in\gamblesX$ be defined by $f(y)\coloneqq\psi(\ind{y})$ for all $y\in\states$. Then for any $\epsilon>0$, since $\rateset$ has $\lrate$ as its lower envelope, and because of Equation~\eqref{eq:correspondinglowertrans}, there is some $Q^*\in\rateset$ such that $[Q^*f](x)\leq[\lrate f](x)+\epsilon$, and therefore also
+\begin{equation*}
+C
+\leq\psi(Q^*(x,\cdot))
+%=\psi\left(\sum_{y\in\states}Q_q(x,y)\ind{y}\right)
+=\sum_{y\in\states}Q^*(x,y)\psi(\ind{y})
+=\sum_{y\in\states}Q^*(x,y)f(y)
+=[Q^* f](x)\leq[\lrate f](x)+\epsilon.
+\end{equation*}
+Since $\epsilon>0$ is arbitrary, this implies that $C\leq[\lrate f](x)$ and, by combining this with Equation~\eqref{eq:prop:dominating_unique_characterization:C}, it follows that
+\begin{equation*}
+[Qf](x)
+=\sum_{y\in\states}Q(x,y)f(y)
+=\sum_{y\in\states}Q(x,y)\psi(\ind{y})
+=\psi(Q(x,\cdot))
+<C\leq[\lrate f](x).
+\end{equation*}
+This implies that $Qf\not\geq\lrate f$, and therefore, that $Q\notin\rateset_{\lrate}$, a contradiction.
+% Note that we can interpret $\rateset_x\subset\reals^m$ as a subset of the vector space $\reals^m$, where $m$ is the size of $\states$. Furthermore, because $\rateset_x$ is closed and bounded, we have that $\rateset_x$ is compact. Because $Q(x,\cdot)\notin\rateset_x$, the (non-empty, closed, convex) singleton set $\{Q(x,\cdot)\}$ is clearly disjoint from $\rateset_x$.
+% Therefore, by the hyperplane separation theorem\footnote{That is, by one of them.} ({\bf REF}), there must be some $f\in\gamblesX$ and some $c_1,c_2\in\reals$, with $c_1<c_2$, such that $Q(x,\cdot)f = [Qf](x) \leq c_1$, and such that, for all $Q'(x,\cdot)\in\rateset_x$, $Q'(x,\cdot)f = [Q'f](x) \geq c_2$.
+% This clearly implies that, for all $Q'\in\rateset$, it holds that $[Qf](x) \leq c_1 < c_2 \leq [Q'f](x)$. In turn, this implies the existence of some $\epsilon\in\realspos$ for which $[Qf](x) + \epsilon < [Q'f](x)$, for all $Q'\in\rateset$. Because $\lrate$ is the lower envelope of $\rateset$, by Equation~\eqref{eq:correspondinglowertrans}, we therefore find that $[Qf](x) < [\lrate f](x)$. Hence, we have found a $f\in\gamblesX$ and a $x\in\states$, such that for some $Q\in\rateset_{\lrate}$, it holds that $[Qf](x) < [\lrate f](x)$. By Equation~\eqref{eq:dominatingratematrices}, this is a contradiction, and hence $\rateset=\rateset_{\lrate}$.
 \end{proof}
 
 \begin{lemma}\label{lemma:rateset_has_arginf}
@@ -4838,28 +4853,22 @@ Since $\epsilon>0$ was arbitrary, this allows us to infer that $[L_{t}^s f](x_t)
 
 
 \begin{lemma}\label{lemma:nonhomogeneous_in_process_set}
-*** still need to check this ***
-Consider any non-empty bounded set of rate matrices $\rateset$, any finite sequence of time points $u=t_0,\ldots,t_n$, and a corresponding collection of rate matrices $Q_0,\ldots,Q_{n+1}\in\rateset$. Then, there exists a well-behaved continuous-time Markov chain $P\in\wmprocesses_\rateset$ with transition matrix system $\mathcal{T}_P$, such that
+Let $\rateset$ be a non-empty bounded set of rate matrices. Then for any finite sequence of time points $u=t_0,\ldots,t_n$ and corresponding collection of rate matrices $Q_0,\ldots,Q_{n+1}\in\rateset$, there is a process $P\in\wmprocesses_\rateset$ such that
 \begin{equation}\label{eq:nonhomogen_in_process_set_system_composition}
 \mathcal{T}_P = \mathcal{T}_{Q_0}^{[0,t_0]}\otimes \mathcal{T}_{Q_1}^{[t_0,t_1]} \otimes \cdots \otimes \mathcal{T}_{Q_n}^{[t_{n-1},t_n]} \otimes \mathcal{T}_{Q_{n+1}}^{[t_n,\infty)}\,.
 \end{equation}
 \end{lemma}
 \begin{proof}
-Because $\rateset\subset\mathcal{R}$, it follows immediately from Proposition~\ref{prop:finite_different_rate_matrix_has_process} that there is a $P\in\wmprocesses$ with transition matrix system $\mathcal{T}_P$, such that Equation~\eqref{eq:nonhomogen_in_process_set_system_composition} holds. It remains to show that $P\in\wmprocesses_\rateset$.
+Proposition~\ref{prop:finite_different_rate_matrix_has_process} implies the existence of a process $P\in\wmprocesses$ that satisfies Equation~\eqref{eq:nonhomogen_in_process_set_system_composition}. It remains to show that $P\in\wmprocesses_\rateset$, or equivalently, that $\smash{\overline{\partial}}T_t^t\subseteq\rateset$ for all $t\in\realsnonneg$. To this end, consider any $t\in\realsnonneg$.
 
-To prove this, we have to show that $\smash{\overline{\partial}}T_t^t\subseteq\rateset$ for all $t\in\realsnonneg$. To this end, consider any $t\in\realsnonneg$.
-
-We will consider several cases. If $t<t_0$, we have that $\smash{\overline{\partial}}T_t^t$ corresponds to $\mathcal{T}_{Q_0}^{[0,t_0]}$, and hence $\smash{\overline{\partial}}T_t^t=\{Q_0\}\subseteq\rateset$. If $t>t_n$, then $\smash{\overline{\partial}}T_t^t$ corresponds to $\mathcal{T}_{Q_{n+1}}^{[t_n,\infty)}$, in which case $\smash{\overline{\partial}}T_t^t=\{Q_{n+1}\}\subseteq\rateset$. Similarly, if $t\in(t_{i-1},t_i)$ for some $i\in\{1,\ldots,n\}$, then $\smash{\overline{\partial}}T_t^t$ corresponds to $\mathcal{T}_{Q_i}^{[t_{i-1},t_i]}$, and hence $\smash{\overline{\partial}}T_t^t=\{Q_i\}\subseteq\rateset$.
-
-The remaining cases are when $t=t_i$ for some $i\in\{0,\ldots,n\}$. In this case, we have that $\smash{\overline{\partial}}_-T_t^t=\{Q_i\}$ and $\smash{\overline{\partial}}_+T_t^t=\{Q_{i+1}\}$. Hence,
+We consider several cases. If $t<t_0$, then $\smash{\overline{\partial}}T_t^t$ corresponds to $\mathcal{T}_{Q_0}^{[0,t_0]}$, and hence $\smash{\overline{\partial}}T_t^t=\{Q_0\}\subseteq\rateset$. If $t>t_n$, then $\smash{\overline{\partial}}T_t^t$ corresponds to $\smash{\mathcal{T}_{Q_{n+1}}^{[t_n,\infty)}}$, in which case $\smash{\overline{\partial}}T_t^t=\{Q_{n+1}\}\subseteq\rateset$. Similarly, if $t\in(t_{i-1},t_i)$ for some $i\in\{1,\ldots,n\}$, then $\smash{\overline{\partial}}T_t^t$ corresponds to $\mathcal{T}_{Q_i}^{[t_{i-1},t_i]}$, and therefore $\smash{\overline{\partial}}T_t^t=\{Q_i\}\subseteq\rateset$. The only remaining case is when $t=t_i$ for some $i\in\{0,\ldots,n\}$. In this case, we have that $\smash{\overline{\partial}}_-T_t^t=\{Q_i\}$ and $\smash{\overline{\partial}}_+T_t^t=\{Q_{i+1}\}$, and therefore
 \begin{equation*}
-\smash{\overline{\partial}}T_t^t = \smash{\overline{\partial}}_-T_t^t\cup\smash{\overline{\partial}}_+T_t^t=\{Q_{i},Q_{i+1}\}\subseteq\rateset\,.
+\smash{\overline{\partial}}T_t^t = \smash{\overline{\partial}}_-T_t^t\cup\smash{\overline{\partial}}_+T_t^t=\{Q_{i},Q_{i+1}\}\subseteq\rateset.
 \end{equation*}
-Because this covers all the possible cases, in summary, we have found that $\smash{\overline{\partial}}T_t^t\subseteq\rateset$ for all $t\in\realsnonneg$, and hence $P\in\wmprocesses_\rateset$.
+% Because this covers all the possible cases, in summary, we have found that $\smash{\overline{\partial}}T_t^t\subseteq\rateset$ for all $t\in\realsnonneg$, and hence $P\in\wmprocesses_\rateset$.
 \end{proof}
 
 \begin{proof}[Proof of Proposition~\ref{theorem:lower_markov_bound_is_tight}]
-*** still need to finish this ***
 Fix any $t,s\in\realsnonneg$ such that $t\leq s$, any $f\in\gamblesX$ and any $\epsilon\in\realspos$. If $t=s$, the result is trivial. Hence, without loss of generality, we may assume that $t<s$. Let $C\coloneqq (s-t)$, choose any $\epsilon^*>0$ such that $\epsilon^*C<\epsilon$, choose any $\epsilon_1,\epsilon_2,\epsilon_3>0$ such that $\epsilon_1+\epsilon_2+\epsilon_3<\epsilon^*$, choose any $\delta>0$ such that $\delta\norm{\rateset}^2\norm{f}<\epsilon_3$ and $\smash{\delta\norm{\lrate}^2\norm{f}<\epsilon_1}$ (this is always possible because of~\ref{LR:normlratefinite}), and consider any $u\in\mathcal{U}_{[t,s]}$ such that $\sigma(u)<\delta$, with $u=t_0,\ldots,t_n$ and $n\in\nats$. 
 
 Fix any $i\in\{1,\dots,n\}$ and let $g_i\coloneqq L_{t_i}^{t_n}f$. It then follows from Lemma~\ref{lemma:rateset_has_arginf} that there is some $Q_i\in\rateset$ such that $\norm{\lrate g_i-Q_i g_i}<\epsilon_2$ and, due to~\ref{N:normAf} and~\ref{LT:norm_at_most_one}, we also know that $\norm{g_i}=\norm{L_{t_i}^{t_n}f}\leq\norm{L_{t_i}^{t_n}}\norm{f}\leq\norm{f}$.
@@ -4867,32 +4876,30 @@ Fix any $i\in\{1,\dots,n\}$ and let $g_i\coloneqq L_{t_i}^{t_n}f$. It then follo
 % \norm{\lrate L_{t_i}^sf - Q_iL_{t_i}^sf} < \frac{\epsilon}{2C}\,.
 % \end{equation}
 Hence, we find that 
-\begin{multline*}
-\norm{L_{t_{i-1}}^{t_i}g_i - e^{Q_i\Delta_i}g_i}\\
-\begin{aligned}
-&\leq \norm{L_{t_{i-1}}^{t_i}g_i - \left[I+\Delta_i\lrate\right]g_i} 
+\begin{align}
+&\norm{L_{t_{i-1}}^{t_i}g_i - e^{Q_i\Delta_i}g_i}\notag\\
+&\quad\quad\quad\leq \norm{L_{t_{i-1}}^{t_i}g_i - \left[I+\Delta_i\lrate\right]g_i} 
 +\norm{\Delta_i\lrate g_i-\Delta_iQ_ig_i}
-+ \norm{\left[I+\Delta_iQ_i\right]g_i - e^{Q_i\Delta_i}g_i} \\
-&\leq \norm{L_{t_{i-1}}^{t_i} - \left[I+\Delta_i\lrate\right]}\norm{g_i} 
++ \norm{\left[I+\Delta_iQ_i\right]g_i - e^{Q_i\Delta_i}g_i} \notag\\
+&\quad\quad\quad\leq \norm{L_{t_{i-1}}^{t_i} - \left[I+\Delta_i\lrate\right]}\norm{g_i} 
 +\Delta_i\norm{\lrate g_i-Q_ig_i}
-+ \norm{I+\Delta_iQ_i - e^{Q_i\Delta_i}}\norm{g_i} \\
-&< \norm{L_{t_{i-1}}^{t_i} - \left[I+\Delta_i\lrate\right]}\norm{f} 
++ \norm{I+\Delta_iQ_i - e^{Q_i\Delta_i}}\norm{g_i} \notag\\
+&\quad\quad\quad< \norm{L_{t_{i-1}}^{t_i} - \left[I+\Delta_i\lrate\right]}\norm{f} 
 +\Delta_i\epsilon_2
-+ \norm{I+\Delta_iQ_i - e^{Q_i\Delta_i}}\norm{f} \\
-&\leq
++ \norm{I+\Delta_iQ_i - e^{Q_i\Delta_i}}\norm{f} \notag\\
+&\quad\quad\quad\leq
 \Delta_i^2\norm{\lrate}^2\norm{f}
 +\Delta_i\epsilon_2
 +
-\Delta_i^2\norm{Q_i}^2\norm{f}\\
-&\leq
+\Delta_i^2\norm{Q_i}^2\norm{f}\notag\\
+&\quad\quad\quad\leq
 \Delta_i(
 \delta\norm{\lrate}^2\norm{f}
 +\epsilon_2
 +
 \delta\norm{\rateset}^2\norm{f})
-<\Delta_i(\epsilon_1+\epsilon_2+\epsilon_3)<\Delta_i\epsilon^*,
-\end{aligned}
-\end{multline*}\\[-0pt]
+<\Delta_i(\epsilon_1+\epsilon_2+\epsilon_3)<\Delta_i\epsilon^*,\label{eq:theorem:lower_markov_bound_is_tight:localbound}
+\end{align}\\[-8pt]
 where the second inequality holds because of~\ref{N:normAf}, the third inequality holds because $\norm{g_i}\leq\norm{f}$ and $\norm{\lrate g_i-Q_i g_i}<\epsilon_2$, the fourth inequality holds because of Lemmas~\ref{lemma:quadraticboundonL} and~\ref{lemma:linearpartofexponential} and where the fifth inequality holds because $\Delta_i\leq\sigma(u)<\delta$.
 
 
@@ -4901,26 +4908,30 @@ For all $i\in\{0,\ldots,n\}$, let $\mathcal{T}_{Q_i}$ denote the transition matr
 \begin{equation*}
 \mathcal{T}_P = \mathcal{T}_{Q_0}^{[0,t_0]}\otimes \mathcal{T}_{Q_1}^{[t_0,t_1]}\otimes \cdots \otimes \mathcal{T}_{Q_n}^{[t_{n-1},t_n]} \otimes \mathcal{T}_{Q_n}^{[t_{n},\infty)}\,.
 \end{equation*}
-It remains to show that this $P$ has a corresponding transition matrix $T_t^s$ which satisfies $\norm{L_t^sf - T_t^sf} < \epsilon$. We first note that, for all $i\in\{1,\ldots,n\}$, the transition matrix $T_{t_{i-1}}^{t_i}$ corresponding to $P$ satisfies $T_{t_{i-1}}^{t_i} = e^{Q_i\cdot\Delta_i}$.
-
-We then factorize the interval $[t,s]$ according to $u$, using Proposition~\ref{prop:lower_trans_system_is_system} and the Markov property of $P$, to obtain
+Due to Equation~\eqref{eq:theorem:lower_markov_bound_is_tight:localbound}, we know that the transition matrices of this process $P$ satisfy
+\begin{equation}\label{eq:theorem:lower_markov_bound_is_tight:localbounds}
+(\forall i\in\{1,\ldots,n\})~
+\norm{L_{t_{i-1}}^{t_i}g_i - T_{t_{i-1}}^{t_i}g_i}= \norm{L_{t_{i-1}}^{t_i}g_i - e^{Q_i\Delta_i}g_i}<\Delta_i\epsilon^*.
+\end{equation}
+Furthermore, we also know that
 \begin{align*}
 \norm{L_{t_0}^{t_n}g_n - T_{t_0}^{t_n}g_n} 
  &\leq \norm{L_{t_0}^{t_{n-1}}L_{t_{n-1}}^{t_n}g_n - T_{t_0}^{t_{n-1}}L_{t_{n-1}}^{t_n}g_n} + \norm{T_{t_0}^{t_{n-1}}L_{t_{n-1}}^{t_n}g_n - T_{t_0}^{t_{n-1}}T_{t_{n-1}}^{t_n}g_n} \\
  %&\leq \norm{L_{t_0}^{t_{n-1}}L_{t_{n-1}}^{t_n}f - T_{t_0}^{t_{n-1}}L_{t_{n-1}}^{t_n}f} + \norm{{T_{t_0}^{t_{n-1}}}}\cdot\norm{L_{t_{n-1}}^{t_n}g_n - T_{t_{n-1}}^{t_n}g_n} \\
- &\leq \norm{L_{t_0}^{t_{n-1}}g_{n-1} - T_{t_0}^{t_{n-1}}g_{n-1}} + \norm{L_{t_{n-1}}^{t_n}g_n - T_{t_{n-1}}^{t_n}g_n}.
+ &\leq \norm{L_{t_0}^{t_{n-1}}g_{n-1} - T_{t_0}^{t_{n-1}}g_{n-1}} + \norm{L_{t_{n-1}}^{t_n}g_n - T_{t_{n-1}}^{t_n}g_n},
 \end{align*}
+using Proposition~\ref{prop:lower_trans_system_is_system} and Equation~\eqref{eq:markovintermsofmatrices} for the first equality, and Proposition~\ref{prop:lower_trans_system_is_system} and \ref{LT:differencenorm} for the second one.
 Similarly, we also find that
 \begin{equation*}
 \norm{L_{t_0}^{t_{n-1}}g_{n-1} - T_{t_0}^{t_{n-1}}g_{n-1}}
-\leq \norm{L_{t_0}^{t_{n-2}}g_{n-2} - T_{t_0}^{t_{n-2}}g_{n-2}} + \norm{L_{t_{n-2}}^{t_{n-1}}g_{n-1} - T_{t_{n-2}}^{t_{n-1}}g_{n-1}}
+\leq \norm{L_{t_0}^{t_{n-2}}g_{n-2} - T_{t_0}^{t_{n-2}}g_{n-2}} + \norm{L_{t_{n-2}}^{t_{n-1}}g_{n-1} - T_{t_{n-2}}^{t_{n-1}}g_{n-1}}.
 \end{equation*}
-and, by continuing in this way---applying induction---we eventually find that
+By continuing in this way---applying induction---we eventually find that
 \begin{equation*}
 \norm{L_t^sf - T_t^sf}=\norm{L_{t_0}^{t_n}g_n - T_{t_0}^{t_n}g_n} 
-\leq \sum_{i=1}^{n} \norm{L_{t_{i-1}}^{t_i}g_i - T_{t_{i-1}}^{t_i}g_i}.
+\leq \sum_{i=1}^{n} \norm{L_{t_{i-1}}^{t_i}g_i - T_{t_{i-1}}^{t_i}g_i}\leq\sum_{i=1}^n\Delta_i\epsilon^*=C\epsilon^*<\epsilon,
 \end{equation*}
-
+using Equation~\eqref{eq:theorem:lower_markov_bound_is_tight:localbounds} to establish the second inequality. The result now follows directly from Remark~\ref{remark:expectationT}.
 % Consider now any $i\in\{1,\ldots,n\}$. Then, we find from Lemma~\ref{lemma:justthelinearpart} that
 % \begin{align*}
 % &\quad \norm{L_{t_{i-1}}^{t_i}\left[L_{t_i}^{t_n}f\right] - T_{t_{i-1}}^{t_i}\left[L_{t_i}^{t_n}f\right]} \\
@@ -4946,13 +4957,11 @@ and, by continuing in this way---applying induction---we eventually find that
 %  &< 2\Delta_i\delta\norm{\mathcal{Q}}^2\norm{f} + \frac{\Delta_i\epsilon}{2C}\,,
 % \end{align*}
 % where we used $\norm{Q_i}\leq\norm{\rateset}$, and in the final step applied $\Delta_i\leq\sigma(u)<\delta$.
-
-
-\begin{align*}
-\norm{L_t^sf - T_t^sf} 
-&\leq \sum_{i=1}^n \norm{L_{t_{i-1}}^{t_i}g_i - T_{t_{i-1}}^{t_i}g_i}= \sum_{i=1}^n \norm{L_{t_{i-1}}^{t_i}g_i - e^{Q_i\Delta_i}g_i}<\sum_{i=1}^n\Delta_i\epsilon^*
-=C\epsilon^*<\epsilon.
-\end{align*}
+% \begin{align*}
+% \norm{L_t^sf - T_t^sf} 
+% &\leq \sum_{i=1}^n \norm{L_{t_{i-1}}^{t_i}g_i - T_{t_{i-1}}^{t_i}g_i}= \sum_{i=1}^n \norm{L_{t_{i-1}}^{t_i}g_i - e^{Q_i\Delta_i}g_i}<\sum_{i=1}^n\Delta_i\epsilon^*
+% =C\epsilon^*<\epsilon.
+% \end{align*}
 %***
 %
 %By Equation~\eqref{eq:lower_char_rate_matrix}, we have $\norm{Q_{t_i}L_{t_i}^{t_n}f - \lrate L_{t_i}^{t_n}f} < \nicefrac{\epsilon}{2C}$. Furthermore, by Equation~\eqref{eq:lower_char_matrix_linear_approx}, we have $Q_{t_i}^u=Q_{t_i}$, so that
