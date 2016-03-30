@@ -162,10 +162,10 @@ We here consider \emph{imprecise continuous-time Markov chains}, which can be us
 %Therefore, we consider in this paper \emph{imprecise continuous-time Markov chains}, which can be used to robustly model systems for which the above assumptions need not hold. 
 
 The following provides a motivating toy example that will return throughout this work. Although the model in this example is clearly too simple to be of practical use, it does already illustrate that the simplifying assumptions above are often unrealistic.
-\begin{exmp}
+\begin{exmp}\label{ex:health_sick_exmp}
 **** Simple binary-state disease model:
 \begin{equation*}
-(\text{Healthy}) \leftrightarrows (\text{Sick})
+(\text{Healthy}) \rightleftarrows (\text{Sick})
 \end{equation*}
 This models a person periodically getting sick, and recovering after some time. *** time-homogeneity -$>$ nope, seasonal dependence. markov -$>$ nope, being sick more often could make you more (or less, through immunity) likely for future. differentiability -$>$ nope, if exposed to someone carrying a virus.
 
@@ -2067,8 +2067,70 @@ The difference between $\wprocesses_{\text{int}(\rateset_{\lrate})}$ and $\wproc
 
 \subsection{Computational Aspects}\label{sec:tractability}
 
+We will in this section provide some results on computational aspects, along with a number of worked numerical examples. To this end, we consider again the two-state model from Example~\ref{ex:health_sick_exmp} in Section~\ref{sec:introduction}, describing how a person periodically becomes ill. We start by setting some (arbitrarily chosen) numerical parameters that we will use throughout this section.
 \begin{exmp}
-{\bf TODO} Example that sometimes $\underline{\mathbb{E}}^\mathrm{M}\neq \underline{\mathbb{E}}$ for functions $f\in\gambles(\states^{u\cup v})$.
+Consider again the binary-state disease model from Example~\ref{ex:health_sick_exmp}, given by
+\begin{equation*}
+(\text{Healthy}) \rightleftarrows (\text{Sick})
+\end{equation*}
+Thus, the state-space here is of the form $\states=\{\text{Healthy},\text{Sick}\}$. This models a person periodically becoming sick and recovering after some time. 
+
+We now need to assign numerical values to the rate with which the process modeling this behavior moves between these states. If we were using a precise, time-homogeneous Markov chain $P\in\whmprocesses$, it would suffice to select a single rate matrix $Q\in\mathcal{R}$. If we---arbitrarily---assume that the person becomes sick once a year, with illness lasting for one week, this rate matrix could be of the form
+\begin{equation*}
+Q = \left[ \begin{array}{rr}
+-\frac{1}{52} & \frac{1}{52} \\
+1 & -1
+\end{array}\right]\,,
+\end{equation*}
+with the unit-time being one week. That is, the person on average becomes sick once every 52 weeks, and becomes better after one week on average.
+
+However, instead of using a precise model, we now wish to use an imprecise continuous-time Markov chain to model this behavior. Hence, we need to select a set of rate matrices $\rateset$. Suppose therefore that we feel confident in saying that the person becomes sick anywhere between one and three times per year, with sickness lasting anywhere from half a week to two weeks on average. This set of rate matrices can then be expressed as
+\begin{equation}\label{eq:num_example_rateset_params}
+\rateset = \left\{\left[\begin{array}{rr}
+-a & a \\
+b & -b
+\end{array}\right]\,:\,a\in\left[\frac{1}{52},\frac{3}{52}\right], b\in\left[\frac{1}{2},2\right]\right\}\,,
+\end{equation}
+with the unit-time again being one week. Note that $\rateset$ here is clearly non-empty, bounded, closed, convex, and has separately specified rows. As such, this set will satisfy all the preconditions necessary to be used in the examples that follow.
+\exampleend
+\end{exmp}
+
+We will now focus on how to compute lower expectations with respect to imprecise continuous-time Markov chains induced by the set $\rateset$ from Example {\bf REF}. To this end, consider the lower transition rate operator $\lrate$ corresponding to this $\rateset$. It should be clear that, for any function $f\in\gamblesX$, computing the quantity $\lrate f$ is relatively easy.
+
+In general, computing $\lrate f$ is a linear optimization problem. *** some notes about (lack of) difficulty of solving this
+
+In the specific case of the set $\rateset$ from Example {\bf REF}, it is readily seen that $\lrate f$ is always given by some $Q f$, with $Q\in\rateset$ such that $a\in\{\nicefrac{1}{52}, \nicefrac{3}{52}\}$ and $b\in\{\nicefrac{1}{2},2\}$, using the notation from Equation~\eqref{eq:num_example_rateset_params}. Hence, we only need to consider four possible rate matrices $Q\in\rateset$ to find $\lrate f$ for any given $f\in\gamblesX$. As such, this optimization problem is particularly easy to solve in this case.
+
+The reason that this is of interest to us, is the following result. This result states how we can approximate the quantity $L_t^sf$ to an arbitrary precision $\epsilon$, using a fine enough partition of the interval $[t,s]$.
+%*** het is duidelijk dat, gegeven $\rateset$, we voor elke $f\in\gamblesX$ de vector $\lrate f$ makkelijk kunnen uitrekenen.
+
+%*** we beginnen met een approximatie methode van de $L$ operator.
+
+\begin{proposition}\label{prop:approximation_error_bound}
+Let $\lrate$ be an arbitrary lower transition rate operator. Choose any $t,s\in\realsnonneg$ such that $t\leq s$, any $f\in\gamblesX$, and any $\epsilon\in\realspos$. Let $L_t^s$ be the lower transition operator corresponding to $\lrate$. Choose any $n\in\nats$ such that $n>\nicefrac{\left((s-t)^2\norm{\lrate}^2\norm{f}\right)}{\epsilon}$,
+%\begin{equation*}
+%n > \frac{(s-t)^2\norm{\lrate}^2\norm{f}}{\epsilon}\,,
+%\end{equation*}
+and let $\Delta\coloneqq \nicefrac{(s-t)}{n}$. Then,
+\begin{equation*}
+\norm{L_t^sf - \prod_{i=1}^n(I + \Delta\lrate)f} < \epsilon\,.
+\end{equation*}
+\end{proposition}
+
+Simply put, this result tells us that if we can compute the quantity $\lrate f$, we can always approximate the quantity $L_t^sf$ to an arbitrary precision. Due to the correspondence between $L_t^sf$ and lower expectations $\underline{\mathbb{E}}_\rateset^\mathrm{WM}[f(X_s)\vert X_t]$ and $\underline{\mathbb{E}}_\rateset^\mathrm{W}[f(X_s)\vert X_t]$, this also tells us how to compute---or at least approximate to arbitrary precision---these latter quantities. The following provides a worked numerical example.
+
+\begin{exmp}
+{\bf TODO} numeriek voorbeeld voor simpele $f\in\gamblesX$.
+\exampleend
+\end{exmp}
+
+\begin{exmp}
+{\bf TODO} numeriek voorbeeld voor complexere $f\in\gambles(\states^{u\cup v})$, voor de set $\wprocesses_\rateset$.
+\exampleend
+\end{exmp}
+
+\begin{exmp}
+{\bf TODO} tegenvoorbeeld van vorige functie voor de set $\wmprocesses_\rateset$.
 \exampleend
 \end{exmp}
 
@@ -5137,6 +5199,23 @@ using Lemma~\ref{lemma:quadraticboundonL} to establish the first inequality, it 
 which, because of Remark~\ref{remark:expectationT}, implies that Equation~\eqref{eq:theo:dominating_rate_processes_max_set:toprove} holds.
 
 Next, we consider the case that $P$ is well behaved, but not consistent with $\rateset_{\lrate}$. In that case, it follows from Definition~\ref{def:consistent_process} that there are $t^*\in\realsnonneg$, $u\in\mathcal{U}_{<t}$ and $x_u\in\states^u$ such that $\smash{\overline{\partial}T_{t^*,\,x_u}^{t^*} \not\subseteq \rateset_{\lrate}}$. Since we know that $\smash{\overline{\partial}T_{t^*,\,x_u}^{t^*}}$ is a non-empty set of rate matrices because of Proposition~\ref{prop:boundednon-emptyandclosed}, this implies the existence of a rate matrix $Q^*\in\smash{\overline{\partial}}T_{t^*,x_u}^{t^*}$ such that $Q^*\notin\rateset_{\lrate}$. Furthermore, since $Q^*\notin\rateset_{\lrate}$, Equation~\eqref{eq:dominatingratematrices} implies that there are $f\in\gamblesX$ and $x_t\in\states$ such that $[Q^*f](x_t)<[\lrate f](x_t)$. Consider now any $\epsilon>0$ such that $[Q^*f](x_t)\leq[\lrate f](x_t)-2\epsilon$ (this is clearly possible). Since $Q^*\in\smash{\overline{\partial}}T_{t^*,x_u}^{t^*}$, it then follows from Definition~\ref{def:outerpartialderivatives} that thare are $t,s\in\realsnonneg$ such that $u<t<s$, $\norm{\nicefrac{1}{\Delta}(T_{t,\,x_u}^s-I)-Q^*}\leq\epsilon$ and $\smash{\Delta\norm{\lrate}^2<\epsilon}$, with $\Delta\coloneqq s-t>0$. Let $Q\coloneqq\nicefrac{1}{\Delta}(T_{t,\,x_u}^s-I)$. Since $\norm{Q-Q^*}\leq\epsilon$, it then follows that $[Qf](x_t)\leq[Q^*f](x_t)+\epsilon\leq[\lrate f](x_t)-\epsilon$. Hence, using the exact same argument as in the first part of this proof, we find that Equation~\eqref{eq:theo:dominating_rate_processes_max_set:toprove} holds.
+\end{proof}
+
+\begin{proof}[Proof of Proposition~\ref{prop:approximation_error_bound}]
+Let $u\in\mathcal{U}_{[t,s]}$ be such that $u=t_0,t_1,\ldots,t_n$, where, for all $i\in\{0,1,\ldots,n\}$, $t_i\coloneqq t + i\cdot\Delta$. Then, clearly, $t_0=t$, $t_n=s$, and $\sigma(u)=\Delta$. Let
+\begin{equation*}
+\Phi_u\coloneqq \prod_{i=1}^n (I + \Delta_i^u\lrate) = \prod_{i=1}^n(I+\Delta\lrate).
+\end{equation*}
+We have that
+\begin{align*}
+\Delta &= \frac{(s-t)}{n} < (s-t)\frac{\epsilon}{(s-t)^2\norm{\lrate}^2\norm{f}}  = \frac{\epsilon}{(s-t)\norm{\lrate}^2\norm{f}}.
+\end{align*}
+It now follows from Property~\ref{N:normAf} and Lemma~\ref{lemma:limitboundonL} that
+\begin{align*}
+\norm{L_t^sf - \prod_{i=1}^n(I+\Delta\lrate)f} &= \norm{L_t^sf - \Phi_uf} \leq \norm{L_t^s - \Phi_u}\norm{f} \\
+ &\leq \sigma(u)(s-t)\norm{\lrate}^2\norm{f} = \Delta(s-t)\norm{\lrate}^2\norm{f} \\
+ &< \frac{\epsilon}{(s-t)\norm{\lrate}^2\norm{f}} (s-t)\norm{\lrate}^2\norm{f} = \epsilon\,.
+\end{align*}
 \end{proof}
 
 %\section{Proofs and Lemmas for Section~\ref{sec:funcs_multi_time_points}}
