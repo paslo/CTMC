@@ -2068,21 +2068,21 @@ The difference between $\wprocesses_{\text{int}(\rateset_{\lrate})}$ and $\wproc
 \subsection{Computational Aspects}\label{sec:tractability}
 
 We will in this section provide some results on computational aspects, along with a number of worked numerical examples. To this end, we consider again the two-state model from Example~\ref{ex:health_sick_exmp} in Section~\ref{sec:introduction}, describing how a person periodically becomes ill. We start by setting some (arbitrarily chosen) numerical parameters that we will use throughout this section.
-\begin{exmp}
+\begin{exmp}\label{exmp:example_rateset_simple_model}
 Consider again the binary-state disease model from Example~\ref{ex:health_sick_exmp}, given by
 \begin{equation*}
 (\text{Healthy}) \rightleftarrows (\text{Sick})
 \end{equation*}
 Thus, the state-space here is of the form $\states=\{\text{Healthy},\text{Sick}\}$. This models a person periodically becoming sick and recovering after some time. 
 
-We now need to assign numerical values to the rate with which the process modeling this behavior moves between these states. If we were using a precise, time-homogeneous Markov chain $P\in\whmprocesses$, it would suffice to select a single rate matrix $Q\in\mathcal{R}$. If we---arbitrarily---assume that the person becomes sick once a year, with illness lasting for one week, this rate matrix could be of the form
+We now need to assign numerical values to the rate with which the process modeling this behavior moves between these states. If we were using a precise, time-homogeneous Markov chain $P\in\whmprocesses$, it would suffice to select a single rate matrix $Q\in\mathcal{R}$. In that case, and if we---arbitrarily---assume that the person becomes sick once a year, with illness lasting for one week, this rate matrix would be of the form
 \begin{equation*}
 Q = \left[ \begin{array}{rr}
 -\frac{1}{52} & \frac{1}{52} \\
 1 & -1
 \end{array}\right]\,,
 \end{equation*}
-with the unit-time being one week. That is, the person on average becomes sick once every 52 weeks, and becomes better after one week on average.
+with the unit-time being one week. That is, the person on average becomes sick once every 52 weeks, and recovers after one week on average.
 
 However, instead of using a precise model, we now wish to use an imprecise continuous-time Markov chain to model this behavior. Hence, we need to select a set of rate matrices $\rateset$. Suppose therefore that we feel confident in saying that the person becomes sick anywhere between one and three times per year, with sickness lasting anywhere from half a week to two weeks on average. This set of rate matrices can then be expressed as
 \begin{equation}\label{eq:num_example_rateset_params}
@@ -2095,37 +2095,81 @@ with the unit-time again being one week. Note that $\rateset$ here is clearly no
 \exampleend
 \end{exmp}
 
-We will now focus on how to compute lower expectations with respect to imprecise continuous-time Markov chains induced by the set $\rateset$ from Example {\bf REF}. To this end, consider the lower transition rate operator $\lrate$ corresponding to this $\rateset$. It should be clear that, for any function $f\in\gamblesX$, computing the quantity $\lrate f$ is relatively easy.
+We will now focus on how to compute lower expectations with respect to imprecise continuous-time Markov chains induced by the set $\rateset$ from Example~\ref{exmp:example_rateset_simple_model}. To this end, consider the lower transition rate operator $\lrate$ corresponding to this $\rateset$. It should be clear that, for any function $f\in\gamblesX$, computing the quantity $\lrate f$ is relatively easy.
 
 In general, computing $\lrate f$ is a linear optimization problem. *** some notes about (lack of) difficulty of solving this
 
-In the specific case of the set $\rateset$ from Example {\bf REF}, it is readily seen that $\lrate f$ is always given by some $Q f$, with $Q\in\rateset$ such that $a\in\{\nicefrac{1}{52}, \nicefrac{3}{52}\}$ and $b\in\{\nicefrac{1}{2},2\}$, using the notation from Equation~\eqref{eq:num_example_rateset_params}. Hence, we only need to consider four possible rate matrices $Q\in\rateset$ to find $\lrate f$ for any given $f\in\gamblesX$. As such, this optimization problem is particularly easy to solve in this case.
+\begin{exmp}\label{exmp:numerical_lrate}
+**** small example here somewhere
 
+In the specific case of the set $\rateset$ from Example {\bf REF}, it is readily seen that $\lrate f$ is always given by some $Q f$, with $Q\in\rateset$ such that $a\in\{\nicefrac{1}{52}, \nicefrac{3}{52}\}$ and $b\in\{\nicefrac{1}{2},2\}$, using the notation from Equation~\eqref{eq:num_example_rateset_params}. Hence, we only need to consider four possible rate matrices $Q\in\rateset$ to find $\lrate f$ for any given $f\in\gamblesX$. As such, this optimization problem is particularly easy to solve in this case.
+\exampleend
+\end{exmp}
+
+*** herschrijf bruggetje een beetje
 The reason that this is of interest to us, is the following result. This result states how we can approximate the quantity $L_t^sf$ to an arbitrary precision $\epsilon$, using a fine enough partition of the interval $[t,s]$.
 %*** het is duidelijk dat, gegeven $\rateset$, we voor elke $f\in\gamblesX$ de vector $\lrate f$ makkelijk kunnen uitrekenen.
 
 %*** we beginnen met een approximatie methode van de $L$ operator.
 
 \begin{proposition}\label{prop:approximation_error_bound}
-Let $\lrate$ be an arbitrary lower transition rate operator. Choose any $t,s\in\realsnonneg$ such that $t\leq s$, any $f\in\gamblesX$, and any $\epsilon\in\realspos$. Let $L_t^s$ be the lower transition operator corresponding to $\lrate$. Choose any $n\in\nats$ such that $n>\nicefrac{\left((s-t)^2\norm{\lrate}^2\norm{f}\right)}{\epsilon}$,
+Let $\lrate$ be an arbitrary lower transition rate operator. Choose any $t,s\in\realsnonneg$ such that $t\leq s$, any $f\in\gamblesX$, and any $\epsilon\in\realspos$. Let $L_t^s$ be the lower transition operator corresponding to $\lrate$. Choose any $n\in\nats$ such that $n\geq\nicefrac{\left((s-t)^2\norm{\lrate}^2\norm{f}\right)}{\epsilon}$,
 %\begin{equation*}
 %n > \frac{(s-t)^2\norm{\lrate}^2\norm{f}}{\epsilon}\,,
 %\end{equation*}
 and let $\Delta\coloneqq \nicefrac{(s-t)}{n}$. Then,
 \begin{equation*}
-\norm{L_t^sf - \prod_{i=1}^n(I + \Delta\lrate)f} < \epsilon\,.
+\norm{L_t^sf - \prod_{i=1}^n(I + \Delta\lrate)f} \leq \epsilon\,.
 \end{equation*}
 \end{proposition}
 
-Simply put, this result tells us that if we can compute the quantity $\lrate f$, we can always approximate the quantity $L_t^sf$ to an arbitrary precision. Due to the correspondence between $L_t^sf$ and lower expectations $\underline{\mathbb{E}}_\rateset^\mathrm{WM}[f(X_s)\vert X_t]$ and $\underline{\mathbb{E}}_\rateset^\mathrm{W}[f(X_s)\vert X_t]$, this also tells us how to compute---or at least approximate to arbitrary precision---these latter quantities. The following provides a worked numerical example.
+Simply put, this result tells us that if we can compute the quantity $\lrate g$ for any $g\in\gamblesX$, then we can also approximate the quantity $L_t^sf$ to an arbitrary precision for any given $f\in\gamblesX$. Due to the correspondence between $L_t^sf$ and lower expectations $\underline{\mathbb{E}}_\rateset^\mathrm{WM}[f(X_s)\vert X_t]$ and $\underline{\mathbb{E}}_\rateset^\mathrm{W}[f(X_s)\vert X_t]$, this therefore tells us how to compute---or at least approximate to arbitrary precision---these latter quantities. The following provides a worked numerical example.
 
 \begin{exmp}
-{\bf TODO} numeriek voorbeeld voor simpele $f\in\gamblesX$.
+Consider again the model and the set of rate matrices $\rateset$ from Example~\ref{exmp:example_rateset_simple_model}. We will here compute the lower probability of a person being sick one week from now, given that they are currently also sick. That is, we will be computing
+\begin{equation*}
+\underline{P}(X_1 = \text{Sick}\,\vert\,X_0=\text{Sick}) \equiv \underline{\mathbb{E}}[\ind{\text{Sick}}(X_1)\,\vert\,X_0=\text{Sick}] \equiv \left[L_0^1\ind{\text{Sick}}\right](\text{Sick})\,.
+\end{equation*}
+Proposition~\ref{prop:approximation_error_bound} tells us that we can compute this quantity using a fine enough partition of the time interval $[0,1]$. We will be using a maximum error for this computation of $\epsilon\coloneqq 10^{-3}$. Furthermore, the length of the time interval $(s-t)=1$, the function norm $\norm{\ind{\text{Sick}}}=1$, and due to our choice of $\rateset$, we have $\norm{\lrate} = 1$. In order to reach the desired maximum error, we therefore need to subdivide the time interval into at least $n$ steps, where
+\begin{equation*}
+n = \frac{(s-t)^2\norm{\lrate}^2\norm{\ind{\text{Sick}}}}{\epsilon} = \frac{1^2\cdot 1^2\cdot 1}{10^{-3}} = 10^3\,,
+\end{equation*}
+resulting in a step size of $\Delta=\nicefrac{(s-t)}{n}=10^{-3}$. We now compute the quantity
+\begin{equation*}
+\prod_{i=1}^n(I + \Delta\lrate)\ind{\text{Sick}} = \prod_{i=1}^{1000}(I + \Delta\lrate)\ind{\text{Sick}} = \left(\prod_{i=1}^{999}(I + \Delta\lrate)\right)\left((I+\Delta\lrate)\ind{\text{Sick}}\right)\,.
+\end{equation*}
+We start by computing the right-most factor on the right-hand side of this equation. First compute $\lrate\ind{\text{Sick}}$, as in Example~\ref{exmp:numerical_lrate}:
+\begin{align*}
+\lrate\ind{\text{Sick}} &= \inf\left\{ Q\ind{\text{Sick}}\,:\,Q\in\rateset \right\} = \inf\left\{ Q \left[\begin{array}{c} 0\\ 1 \end{array}\right]\,:\,Q\in\rateset \right\} \\
+ &= \inf\left\{ \left[\begin{array}{rr}-a&a\\b&-b \end{array}\right] \left[\begin{array}{c} 0\\ 1 \end{array}\right]\,:\, a\in[\nicefrac{1}{52},\nicefrac{3}{52}],\,b\in[\nicefrac{1}{2},2]\right\} = \left[\begin{array}{c}\nicefrac{1}{52}\\2\end{array}\right]\,.
+\end{align*}
+Let now
+\begin{equation*}
+g_1 \coloneqq (I + \Delta\lrate)\ind{\text{Sick}} = \ind{\text{Sick}} + \Delta\lrate\ind{\text{Sick}} = \left[\begin{array}{c}0\\1\end{array}\right] + 10^{-3}\cdot\left[\begin{array}{c}\nicefrac{1}{52}\\2\end{array}\right] = \left[\begin{array}{l} 0 + \nicefrac{1}{52}\cdot 10^{-3}\\ 1 + 2\cdot 10^{-3}\end{array}\right]\,.
+\end{equation*}
+Having completed this first step, we have
+\begin{equation*}
+\prod_{i=1}^n(I + \Delta\lrate)\ind{\text{Sick}} = \prod_{i=1}^{999}(I + \Delta\lrate)g_1 = \left(\prod_{i=1}^{998}(I + \Delta\lrate)\right)\left((I+\Delta\lrate)g_1\right)\,.
+\end{equation*}
+We now repeat this process, computing the term $g_2\coloneqq(I+\Delta\lrate)g_1$. After $j$ steps, we then have
+\begin{equation*}
+\prod_{i=1}^n(I + \Delta\lrate)\ind{\text{Sick}} = \prod_{i=1}^{1000-j}(I + \Delta\lrate)g_j\,.
+\end{equation*}
+After repeating this process for $n$ steps, we have computed the term
+\begin{equation*}
+\prod_{i=1}^n(I + \Delta\lrate)\ind{\text{Sick}} = g_{1000} \approx \left[\begin{array}{c}0.008262 \\ 0.140749\end{array}\right]\,,
+\end{equation*}
+from which we conclude that
+\begin{align*}
+\underline{P}(X_1 = \text{Sick}\,\vert\,X_0=\text{Sick}) &\equiv \left[L_0^1\ind{\text{Sick}}\right](\text{Sick})
+= g_{1000}(\text{Sick}) \pm \epsilon \approx 0.140749 \pm 10^{-3}\,,
+\end{align*}
+where the second equality is due to the error bound guaranteed by Proposition~\ref{prop:approximation_error_bound}.
 \exampleend
 \end{exmp}
 
 \begin{exmp}
-{\bf TODO} numeriek voorbeeld voor complexere $f\in\gambles(\states^{u\cup v})$, voor de set $\wprocesses_\rateset$.
+{\bf TODO} numeriek voorbeeld voor lower probability van zelfde state op twee tijdpunten.
 \exampleend
 \end{exmp}
 
@@ -2137,8 +2181,6 @@ Simply put, this result tells us that if we can compute the quantity $\lrate f$,
 **** notes about computational aspects/tractability, observation that decomposition reduces the problem to discrete-time computations, reference earlier work containing algorithms to compute this
 
 **** computation can also be brute-forced if state space and number of time points allow for it.
-
-**** our proof in Section~\ref{sec:lowertrans} shows that we can numerically approximate to arbitrary precision using a fine enough partition of the intervals *** (Lemma~\ref{lemma:limitboundonL} makes this precision specific) (we should mention that this bound is better than the one that is provided by Damjan! For example, for the numerical example at the end of Section 4.1 in his paper, he finds that $N$ should be more than $6000$, whereas our bound only needs $N=100$)
 
 \begin{exmp}
 **** result for motivating toy example from introduction
@@ -2163,6 +2205,8 @@ has a unique solution, and that this solution satisfies
 Our work extends these results in several ways. First, as shown by Proposition~\ref{prop:lower_transition_has_deriv}, the differential equation~\eqref{eq:damjans_diff} has a uniform solution, i.e. one that is independent of $f$, and this solution is given by the operator $L_0^s$ corresponding to $\lrate$. Second, Corollary~\ref{cor:lower_operator_is_infimum} confirms Equation~\eqref{eq:damjans_lower}, but furthermore shows that the solution $\underline{f}_{\,s}$ also corresponds to the lower expectation with respect to a set of non-Markov processes.
 
 This earlier work also contains several results that are useful to us. In particular, {\v{S}}kulj discusses several practical techniques to numerically compute, or approximate to arbitrary precision, the quantity $\underline{f}_{\,s}$ for a given $f\in\gamblesX$. Hence, because of the correspondence between $\underline{f}_{\,s}$ and $L_0^sf$, these results can be applied when numerically working with our lower transition operator.
+
+**** our proof in Section~\ref{sec:lowertrans} shows that we can numerically approximate to arbitrary precision using a fine enough partition of the intervals *** (Lemma~\ref{lemma:limitboundonL} and Proposition~\ref{prop:approximation_error_bound} make this precision specific) (we should mention that this bound is better than the one that is provided by Damjan! For example, for the numerical example at the end of Section 4.1 in his paper, he finds that $N$ should be more than $6000$, whereas our bound only needs $N=100$)
 
 Our present work furthermore adds to the literature in several ways. In~\cite{Skulj:2015cq}, the arguments were cast purely in terms of lower envelopes of expectation functionals; but side-stepped the question of which sets of processes these envelopes correspond to. In contrast, our work in Section~\ref{sec:iCTMC} makes explicit the sets of processes that we are dealing with, and Theorem~\ref{theo:dominating_rate_processes_max_set} exactly characterizes the largest set of processes for which our lower transition operator---and indeed the differential equation~\eqref{eq:damjans_diff}---computes a lower envelope.
 
@@ -5208,13 +5252,13 @@ Let $u\in\mathcal{U}_{[t,s]}$ be such that $u=t_0,t_1,\ldots,t_n$, where, for al
 \end{equation*}
 We have that
 \begin{align*}
-\Delta &= \frac{(s-t)}{n} < (s-t)\frac{\epsilon}{(s-t)^2\norm{\lrate}^2\norm{f}}  = \frac{\epsilon}{(s-t)\norm{\lrate}^2\norm{f}}.
+\Delta &= \frac{(s-t)}{n} \leq (s-t)\frac{\epsilon}{(s-t)^2\norm{\lrate}^2\norm{f}}  = \frac{\epsilon}{(s-t)\norm{\lrate}^2\norm{f}}.
 \end{align*}
 It now follows from Property~\ref{N:normAf} and Lemma~\ref{lemma:limitboundonL} that
 \begin{align*}
 \norm{L_t^sf - \prod_{i=1}^n(I+\Delta\lrate)f} &= \norm{L_t^sf - \Phi_uf} \leq \norm{L_t^s - \Phi_u}\norm{f} \\
  &\leq \sigma(u)(s-t)\norm{\lrate}^2\norm{f} = \Delta(s-t)\norm{\lrate}^2\norm{f} \\
- &< \frac{\epsilon}{(s-t)\norm{\lrate}^2\norm{f}} (s-t)\norm{\lrate}^2\norm{f} = \epsilon\,.
+ &\leq \frac{\epsilon}{(s-t)\norm{\lrate}^2\norm{f}} (s-t)\norm{\lrate}^2\norm{f} = \epsilon\,.
 \end{align*}
 \end{proof}
 
