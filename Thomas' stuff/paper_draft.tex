@@ -17,9 +17,9 @@
 \usepackage{tikz}
 \usepackage{nicefrac}
 \usepackage{bm}
-%\usepackage{algorithm}
-%\usepackage{algorithmicx}
-%\usepackage{algpseudocode}
+\usepackage{algorithm}
+\usepackage{algorithmicx}
+\usepackage{algpseudocode}
 
 %\usepackage{hyperref}
 %\usepackage{pdfsync}
@@ -40,8 +40,8 @@
 \newtheorem{claim}{Claim}[theorem]
 \newtheorem*{claim*}{Claim}
 
-%\algrenewcommand\algorithmicrequire{\textbf{Input:}}
-%\algrenewcommand\algorithmicensure{\textbf{Output:}}
+\algrenewcommand\algorithmicrequire{\textbf{Input:}}
+\algrenewcommand\algorithmicensure{\textbf{Output:}}
 
 % - macros
 
@@ -2068,6 +2068,7 @@ The difference between $\wprocesses_{\text{int}(\rateset_{\lrate})}$ and $\wproc
 \subsection{Computational Aspects}\label{sec:tractability}
 
 We will in this section provide some results on computational aspects, along with a number of worked numerical examples. To this end, we consider again the two-state model from Example~\ref{ex:health_sick_exmp} in Section~\ref{sec:introduction}, describing how a person periodically becomes ill. We start by setting some (arbitrarily chosen) numerical parameters that we will use throughout this section.
+
 \begin{exmp}\label{exmp:example_rateset_simple_model}
 Consider again the binary-state disease model from Example~\ref{ex:health_sick_exmp}, given by
 \begin{equation*}
@@ -2125,7 +2126,7 @@ and let $\Delta\coloneqq \nicefrac{(s-t)}{n}$. Then,
 
 Simply put, this result tells us that if we can compute the quantity $\lrate g$ for any $g\in\gamblesX$, then we can also approximate the quantity $L_t^sf$ to an arbitrary precision for any given $f\in\gamblesX$. Due to the correspondence between $L_t^sf$ and lower expectations $\underline{\mathbb{E}}_\rateset^\mathrm{WM}[f(X_s)\vert X_t]$ and $\underline{\mathbb{E}}_\rateset^\mathrm{W}[f(X_s)\vert X_t]$, this therefore tells us how to compute---or at least approximate to arbitrary precision---these latter quantities. The following provides a worked numerical example.
 
-\begin{exmp}
+\begin{exmp}\label{exmp:single_time_numerical}
 Consider again the model and the set of rate matrices $\rateset$ from Example~\ref{exmp:example_rateset_simple_model}. We will here compute the lower probability of a person being sick one week from now, given that they are currently also sick. That is, we will be computing
 \begin{equation*}
 \underline{P}(X_1 = \text{Sick}\,\vert\,X_0=\text{Sick}) \equiv \underline{\mathbb{E}}[\ind{\text{Sick}}(X_1)\,\vert\,X_0=\text{Sick}] \equiv \left[L_0^1\ind{\text{Sick}}\right](\text{Sick})\,.
@@ -2157,35 +2158,160 @@ We now repeat this process, computing the term $g_2\coloneqq(I+\Delta\lrate)g_1$
 \end{equation*}
 After repeating this process for $n$ steps, we have computed the term
 \begin{equation*}
-\prod_{i=1}^n(I + \Delta\lrate)\ind{\text{Sick}} = g_{1000} \approx \left[\begin{array}{c}0.008262 \\ 0.140749\end{array}\right]\,,
+\prod_{i=1}^n(I + \Delta\lrate)\ind{\text{Sick}} = g_{1000} \approx \left[\begin{array}{c}0.0083 \\ 0.1408\end{array}\right]\,,
 \end{equation*}
 from which we conclude that
 \begin{align*}
 \underline{P}(X_1 = \text{Sick}\,\vert\,X_0=\text{Sick}) &\equiv \left[L_0^1\ind{\text{Sick}}\right](\text{Sick})
-= g_{1000}(\text{Sick}) \pm \epsilon \approx 0.140749 \pm 10^{-3}\,,
+= g_{1000}(\text{Sick}) \pm \epsilon \approx 0.141 \pm 10^{-3}\,,
 \end{align*}
 where the second equality is due to the error bound guaranteed by Proposition~\ref{prop:approximation_error_bound}.
 \exampleend
 \end{exmp}
 
-\begin{exmp}
-{\bf TODO} numeriek voorbeeld voor lower probability van zelfde state op twee tijdpunten.
+\begin{algorithm}[H]
+  \caption{Numerically compute $L_t^sf$ for any $f\in\gamblesX$.}
+    \label{alg:compute_singlevar}
+  \begin{algorithmic}[1]
+    \Require{A non-empty, bounded set of rate matrices $\rateset$ with separately specified rows, two time points $t,s\in\realsnonneg$ such that $t\leq s$, a function $f\in\gamblesX$, and a maximum numerical error $\epsilon\in\realspos$.}    
+\Ensure{A function $L_t^sf\pm \epsilon$ in $\gamblesX$.}
+    \Statex
+    \Function{ComputeLf}{$\rateset, t,s, f,\epsilon$}
+      \State $n\gets \lceil\nicefrac{((s-t)^2\norm{\lrate}^2\norm{f})}{\epsilon}\rceil$
+		\State $\Delta\gets \nicefrac{(s-t)}{n}$
+		\State $g_0 \gets f$
+		\For{$i\in\{1,\ldots,n\}$}
+		\State $g_i\gets g_{(i-1)} + \Delta\lrate g_{(i-1)}$
+		\EndFor
+      \State \Return{$g_n$}
+    \EndFunction
+  \end{algorithmic}
+\end{algorithm}
+{\bf TODO:} some explanation for algorithm.
+
+Observe that in the previous example, we computed the term $\left[L_0^1\ind{\text{Sick}}\right](\text{Sick})$ which, due to Corollary~\ref{cor:lower_operator_is_infimum}, corresponds to the lower expectation taken with respect to both $\wmprocesses_\rateset$ and $\wprocesses_\rateset$. In Section~\ref{sec:decomposition}, we noted that we can also compute lower expectations of more complex functions with respect to the set $\wprocesses_\rateset$. The following provides a worked numerical example, which is followed by Example~\ref{exmp:num_counterexample_markov} below which shows that this approach does not work for the set of Markov models $\wmprocesses_\rateset$.
+
+\begin{exmp}\label{exmp:num_multivar_func_nonmarkov}
+Consider again the model and set of rate matrices $\rateset$ from Example~\ref{exmp:example_rateset_simple_model}. Suppose that we are now interested in the lower probability of the model being in the same state at two different time points. That is, we will be computing
+\begin{equation*}
+\underline{P}_{\rateset}^{\mathrm{W}}(X_1 = X_2\,\vert\, X_0) \equiv \underline{\mathbb{E}}_{\rateset}^{\mathrm{W}}[f(X_1,X_2)\,\vert\,X_0]\,,
+\end{equation*}
+where,
+\begin{equation*}
+f(X_1,X_2) \coloneqq \left\{\begin{array}{ll}
+1 & \text{if $X_1 = X_2$, and} \\
+0 & \text{otherwise.}
+\end{array}\right.
+\end{equation*}
+Corollary~\ref{cor:composition_lower_trans} tells us that we can compute this lower expectation as
+\begin{equation}\label{eq:num_example_composition}
+\underline{\mathbb{E}}_{\rateset}^\mathrm{W}[f(X_1,X_2)\,\vert\,X_0] \equiv \left[L_0^1L_1^2f\right](X_0)\,.
+\end{equation}
+In order to compute this quantity, we now resolve this composition of operators $L_0^1L_1^2$ by starting from the latest time point, and working back to the earliest time point. Hence, we start by looking at the quantity $L_1^2f$. 
+
+Note that $f$ is here a function defined on multiple time points. Due to our convention stipulated in Section~\ref{sec:function_single_future_multiple_past}, the resulting function $L_1^2f$ will be a function in $\gambles(\states^{\{1\}})$, which is given by looking at all restrictions of $f$ to the state $X_2$, dependent on the corresponding values at $X_1$. Due to the definition of $f$, we therefore have that
+\begin{align*}
+\left[L_1^2f\right](\text{Healthy}) &= \left[L_1^2f(\text{Healthy}, X_2)\right](\text{Healthy}) \\
+ &= \left[L_1^2\ind{\text{Healthy}}(X_2)\right](\text{Healthy})\,,\\
+ &\text{and,} \\
+\left[L_1^2f\right](\text{Sick}) &= \left[L_1^2f(\text{Sick}, X_2)\right](\text{Sick}) \\ 
+ &= \left[L_1^2\ind{\text{Sick}}(X_2)\right](\text{Sick})\,.
+\end{align*}
+Using Proposition~\ref{prop:approximation_error_bound}, the quantities $L_1^2\ind{\text{Healthy}}$ and $L_1^2\ind{\text{Sick}}$ can now be computed using the same procedure outlined in Example~\ref{exmp:single_time_numerical}. We then find that
+\begin{equation*}
+L_1^2 f = \left[\begin{array}{l}
+\left[L_1^2\ind{\text{Healthy}}(X_2)\right](\text{Healthy}) \\
+\left[L_1^2\ind{\text{Sick}}(X_2)\right](\text{Sick})
+\end{array}\right] 
+\approx \left[\begin{array}{c}
+0.956 \\
+0.141
+\end{array}\right]\,.
+\end{equation*}
+Substituting this result into Equation~\eqref{eq:num_example_composition}, we have
+\begin{equation*}
+\underline{\mathbb{E}}_{\rateset}^\mathrm{W}[f(X_1,X_2)\,\vert\,X_0] \equiv \left[L_0^1L_1^2f\right](X_0) \approx \left[L_0^1 \left[\begin{array}{c}
+0.956 \\
+0.141
+\end{array}\right]\right](X_0)\,.
+\end{equation*}
+In order to compute the lower expectation of interest, we once more apply Proposition~\ref{prop:approximation_error_bound} and the procedure from Example~\ref{exmp:single_time_numerical}, finding that
+\begin{equation*}
+L_0^1\left[\begin{array}{c}
+0.956 \\
+0.141
+\end{array}\right] \approx \left[\begin{array}{c}
+0.920 \\
+0.453
+\end{array}\right]\,.
+\end{equation*}
+We therefore conclude that
+\begin{align*}
+\underline{P}_{\rateset}^{\mathrm{W}}(X_1 = X_2\,\vert\,X_0=\text{Healthy}) \approx 0.920,\quad\text{and,}\quad \underline{P}_{\rateset}^{\mathrm{W}}(X_1 = X_2\,\vert\,X_0=\text{Sick}) \approx 0.453\,.
+\end{align*}
 \exampleend
 \end{exmp}
 
-\begin{exmp}
+\begin{algorithm}[H]
+  \caption{Numerically compute $\underline{\mathbb{E}}_\rateset^\mathrm{W}[f(X_u,X_v)\,\vert\,X_u]$ for any $f\in\gambles(\states^{u\cup v})$.}
+    \label{alg:compute_multivar}
+  \begin{algorithmic}[1]
+    \Require{A non-empty, bounded, and convex set of rate matrices $\rateset$ with separately specified rows, two sets of time points $u,v\in\mathcal{U}_\emptyset$ such that $u\leq v$, a function $f\in\gambles(\states^{u\cup v})$, and a maximum numerical error per step of $\epsilon\in\realspos$.}
+\Ensure{An approximation of the function $\underline{\mathbb{E}}_\rateset^\mathrm{W}[f(X_u,X_v)\,\vert\,X_u]$ in $\gambles(\states^u)$.}
+	 \Statex
+    \Function{ComputeLowerExp}{$\rateset, u,v, f,\epsilon$}
+		\State $m\gets \vert v\vert$ \Comment{We use the notation $v=s_0,s_1,\ldots,s_m$, and $\vert v\vert \coloneqq m$.}
+%		\If{$m=0$} \Comment{End recursion when just one time point remains.}
+%			\State $g\gets g\in\gambles(\states^u)$ \Comment{Create new function $g$ in $\gambles(\states^u)$}
+%			\For{$x_u\in\states^u$}
+%				\State $g(x_u) \gets$ {\tt ComputeLf}$(\rateset, t_n, s_0, f(x_u,X_{s_0}),\epsilon)$
+%			\EndFor
+%			\State \Return{$g$} \Comment{Return $g=\left[L_{t_n}^{s_0}f(X_u,X_{s_0})\right](X_u)$\,.}
+%		\EndIf
+%		\State $w\gets v\setminus {s_m}$ \Comment{Define $w\coloneqq s_0,s_1,\ldots,s_{m-1}$\,.}
+%		\For{$x_w\in\states^w$}
+%		\EndFor
+		\State $w \gets v \setminus s_m$	\Comment{Create $w\coloneqq s_0,s_1,\ldots,s_{m-1}$. If $m=0$ then $w=\emptyset$.}
+		\State $r \gets s_{m-1}$ \Comment{Latest time point before $s_m$.}
+		\If{$m=0$}
+			\State $r \gets t_n$ \Comment{We use the notation $u=t_0,t_1,\ldots,t_n$.}
+		\EndIf
+		\Statex
+		\State $g \gets g \in \gambles(\states^{u\cup w})$ \Comment{Create new function $g\in\gambles(\states^{u\cup w})$.}
+		\For{$x_{u\cup w}\in\states^{u\cup w}$} \Comment{Compute all values for $g$.}
+			\State $h \gets$ {\tt ComputeLf}$\bigl(\rateset, r, s_m, f(x_{u\cup w}, X_{s_m}),\epsilon\bigr)$ \Comment{Compute $L_r^sf(x_{u\cup w},X_s)\pm\epsilon$.}
+			\State $g(x_{u\cup w}) \gets h(x_r)$\Comment{Set $g(x_{u\cup w})\coloneqq \left[L_r^{s_m}f(x_{u\cup w},X_s)\right](x_r)$, where $x_r\in x_{u\cup w}$.}
+		\EndFor
+		\Statex
+		\If{$m=0$} \Comment{Check if no other time points in $v$ remain.}
+			\State \Return{$g$} \Comment{If this is the case, we are done. Result is a function in $\gambles(\states^u)$.}
+		\Else \Comment{Otherwise, we recurse on the remaining time points.}
+			\State \Return{{\tt ComputeLowerExp}$(\rateset, u, w, g, \epsilon)$}
+		\EndIf      
+    \EndFunction
+  \end{algorithmic}
+\end{algorithm}
+
+{\bf TODO:} some explanation for algorithm. Maybe rewrite middle part into more general version of {\tt ComputeLf}. Also, the total computational error is not entirely trivial to compute (and rather outside the scope of this paper).
+
+As noted above, the procedure outlined in Example~\ref{exmp:num_multivar_func_nonmarkov} does not work for computing lower expectations with respect to a set of Markov chains $\wmprocesses_\rateset$.
+
+** some intuition first.
+
+The example below shows that, indeed, the lower expectation of the function from Example~\ref{exmp:num_multivar_func_nonmarkov}, with respect to $\wmprocesses_\rateset$, is different from the one that was found for $\wprocesses_\rateset$. This therefore proves by counterexample that Algorithm~\ref{alg:compute_multivar} is not applicable when working with sets of Markov chains. Put differently, a composition of lower transition operators does not in general correspond to the lower expectation for such a set, i.e.,
+\begin{equation*}
+\left[L_{t_n}^{s_0}L_{s_0}^{s_1}\cdots L_{s_{m-1}}^{s_m}f\right](x_u) \neq \underline{\mathbb{E}}_\rateset^{\mathrm{WM}}[f(X_u,X_v)\,\vert\,X_u=x_u]\,,
+\end{equation*}
+in contrast to our results from Section~\ref{sec:decomposition} for the set $\wprocesses_\rateset$.
+
+\begin{exmp} \label{exmp:num_counterexample_markov}
 {\bf TODO} tegenvoorbeeld van vorige functie voor de set $\wmprocesses_\rateset$.
 \exampleend
 \end{exmp}
 
 **** notes about computational aspects/tractability, observation that decomposition reduces the problem to discrete-time computations, reference earlier work containing algorithms to compute this
 
-**** computation can also be brute-forced if state space and number of time points allow for it.
-
-\begin{exmp}
-**** result for motivating toy example from introduction
-\exampleend
-\end{exmp}
+**** computation can also be brute-forced if state space and number of time points allow for it. Algorithm~\ref{alg:compute_multivar} does this, but this approach is exponential in the size of $v$; specifically the runtime is $O\left(m{\vert\states\vert}^m(s_m-t_0)^2\norm{\lrate}^2\norm{f}\epsilon^{-1}\right)$, with $u=t_0,t_1,\ldots,t_n$ and $v=s_0,s_1,\ldots,s_m$.
 
 \section{Relation to Previous Work}\label{sec:prev_work}
 
