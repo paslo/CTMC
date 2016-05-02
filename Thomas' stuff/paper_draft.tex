@@ -2262,25 +2262,26 @@ We therefore conclude that
     \Function{ComputeLowerExp}{$\rateset, u,v, f,\epsilon$}
 		\State $m\gets \vert v\vert$ \Comment{We use the notation $v=s_0,s_1,\ldots,s_m$, and $\vert v\vert \coloneqq m$.}
 		\State $w \gets v$ \Comment{Buffer for remaining time points.}
+		\State $g_{m}\gets f$ \Comment{Buffer for function.}
 		\Statex
 		\For{$i\in\{m,m-1,\ldots,0\}$}	\Comment{Running index of latest remaining time point.}
-			\State $w \gets w\setminus s_i$ \Comment{Update remaining time points. If $i=0$ then $w=\emptyset$.}
+			\State $w \gets w\setminus s_i$ \Comment{Remove latest time point $s_i$ from $w$. If $i=0$ then $w=\emptyset$.}
 		
-			\State $r \gets s_{i-1}$ \Comment{Latest time point before $s_i$.}
+			\State $r \gets s_{(i-1)}$ \Comment{Latest time point before $s_i$.}
 			\If{$i=0$} \Comment{If only $s_0$ remains, get latest time before that.}
 				\State $r \gets t_n$ \Comment{We use the notation $u=t_0,t_1,\ldots,t_n$.}
 			\EndIf
 			\Statex
-			\State $g_i \gets g_i \in \gambles(\states^{u\cup w})$ \Comment{Create new function $g_i\in\gambles(\states^{u\cup w})$.}
-			\For{$x_{u\cup w}\in\states^{u\cup w}$} \Comment{Compute all values for $g_i$.}
-				\Statex \Comment{Set $g_i(x_{u\cup w})\coloneqq \left[L_r^{s_i}f(x_{u\cup w},X_{s_i})\right](x_r)$, where $x_r\in x_{u\cup w}$.}
-				\State $h \gets$ {\tt ComputeLf}$\bigl(\rateset, r, s_i, f(x_{u\cup w}, X_{s_i}),\epsilon\bigr)$ %\Comment{Compute $L_r^sf(x_{u\cup w},X_s)\pm\epsilon$.}
-				\State $g_i(x_{u\cup w}) \gets h(x_r)$ 
+			\State $g_{(i-1)} \gets g_{(i-1)} \in \gambles(\states^{u\cup w})$ \Comment{Create new function $g_{(i-1)}\in\gambles(\states^{u\cup w})$.}
+			\For{$x_{u\cup w}\in\states^{u\cup w}$} \Comment{Compute all values for $g_{(i-1)}$.}
+				\Statex \Comment{Set $g_{(i-1)}(x_{u\cup w})\coloneqq \left[L_r^{s_i}g_i(x_{u\cup w},X_{s_i})\right](x_r)$, where $x_r\in x_{u\cup w}$.}
+				\State $h \gets$ {\tt ComputeLf}$\bigl(\rateset, r, s_i, g_i(x_{u\cup w}, X_{s_i}),\epsilon\bigr)$ %\Comment{Compute $L_r^sf(x_{u\cup w},X_s)\pm\epsilon$.}
+				\State $g_{(i-1)}(x_{u\cup w}) \gets h(x_r)$ 
 			\EndFor
 %			\Statex
 		\EndFor
 		\Statex
-		\State \Return{$g_0$}\Comment{Result is a function in $\gambles(\states^u)$.}
+		\State \Return{$g_{(-1)}$}\Comment{Result is a function in $\gambles(\states^u)$.}
     \EndFunction
   \end{algorithmic}
 \end{algorithm}
@@ -2325,7 +2326,7 @@ Comparing to the lower expectation for the set $\wprocesses_\rateset$ that was f
 
 **** notes about computational aspects/tractability, observation that decomposition reduces the problem to discrete-time computations, reference earlier work containing algorithms to compute this
 
-**** computation can also be brute-forced if state space and number of time points allow for it. Algorithm~\ref{alg:compute_multivar} does this, but this approach is exponential in the size of $v$; specifically the runtime is $O\left(m{\vert\states\vert}^m(s_m-t_0)^2\norm{\lrate}^2\norm{f}\epsilon^{-1}\right)$, with $u=t_0,t_1,\ldots,t_n$ and $v=s_0,s_1,\ldots,s_m$.
+**** computation can also be brute-forced if state space and number of time points allow for it. Algorithm~\ref{alg:compute_multivar} does this, but this approach is exponential in the size of $v$; specifically the runtime is $O\left({\vert\states\vert}^{m+1}(s_m-t_0)^2\norm{\lrate}^2\norm{f}\epsilon^{-1}\right)$, with $u=t_0,t_1,\ldots,t_n$ and $v=s_0,s_1,\ldots,s_m$.
 
 \section{Relation to Previous Work}\label{sec:prev_work}
 
