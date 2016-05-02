@@ -2261,38 +2261,31 @@ We therefore conclude that
 	 \Statex
     \Function{ComputeLowerExp}{$\rateset, u,v, f,\epsilon$}
 		\State $m\gets \vert v\vert$ \Comment{We use the notation $v=s_0,s_1,\ldots,s_m$, and $\vert v\vert \coloneqq m$.}
-%		\If{$m=0$} \Comment{End recursion when just one time point remains.}
-%			\State $g\gets g\in\gambles(\states^u)$ \Comment{Create new function $g$ in $\gambles(\states^u)$}
-%			\For{$x_u\in\states^u$}
-%				\State $g(x_u) \gets$ {\tt ComputeLf}$(\rateset, t_n, s_0, f(x_u,X_{s_0}),\epsilon)$
-%			\EndFor
-%			\State \Return{$g$} \Comment{Return $g=\left[L_{t_n}^{s_0}f(X_u,X_{s_0})\right](X_u)$\,.}
-%		\EndIf
-%		\State $w\gets v\setminus {s_m}$ \Comment{Define $w\coloneqq s_0,s_1,\ldots,s_{m-1}$\,.}
-%		\For{$x_w\in\states^w$}
-%		\EndFor
-		\State $w \gets v \setminus s_m$	\Comment{Create $w\coloneqq s_0,s_1,\ldots,s_{m-1}$. If $m=0$ then $w=\emptyset$.}
-		\State $r \gets s_{m-1}$ \Comment{Latest time point before $s_m$.}
-		\If{$m=0$}
-			\State $r \gets t_n$ \Comment{We use the notation $u=t_0,t_1,\ldots,t_n$.}
-		\EndIf
+		\State $w \gets v$ \Comment{Buffer for remaining time points.}
 		\Statex
-		\State $g \gets g \in \gambles(\states^{u\cup w})$ \Comment{Create new function $g\in\gambles(\states^{u\cup w})$.}
-		\For{$x_{u\cup w}\in\states^{u\cup w}$} \Comment{Compute all values for $g$.}
-			\State $h \gets$ {\tt ComputeLf}$\bigl(\rateset, r, s_m, f(x_{u\cup w}, X_{s_m}),\epsilon\bigr)$ \Comment{Compute $L_r^sf(x_{u\cup w},X_s)\pm\epsilon$.}
-			\State $g(x_{u\cup w}) \gets h(x_r)$\Comment{Set $g(x_{u\cup w})\coloneqq \left[L_r^{s_m}f(x_{u\cup w},X_s)\right](x_r)$, where $x_r\in x_{u\cup w}$.}
+		\For{$i\in\{m,m-1,\ldots,0\}$}	\Comment{Running index of latest remaining time point.}
+			\State $w \gets w\setminus s_i$ \Comment{Update remaining time points. If $i=0$ then $w=\emptyset$.}
+		
+			\State $r \gets s_{i-1}$ \Comment{Latest time point before $s_i$.}
+			\If{$i=0$} \Comment{If only $s_0$ remains, get latest time before that.}
+				\State $r \gets t_n$ \Comment{We use the notation $u=t_0,t_1,\ldots,t_n$.}
+			\EndIf
+			\Statex
+			\State $g_i \gets g_i \in \gambles(\states^{u\cup w})$ \Comment{Create new function $g_i\in\gambles(\states^{u\cup w})$.}
+			\For{$x_{u\cup w}\in\states^{u\cup w}$} \Comment{Compute all values for $g_i$.}
+				\Statex \Comment{Set $g_i(x_{u\cup w})\coloneqq \left[L_r^{s_i}f(x_{u\cup w},X_{s_i})\right](x_r)$, where $x_r\in x_{u\cup w}$.}
+				\State $h \gets$ {\tt ComputeLf}$\bigl(\rateset, r, s_i, f(x_{u\cup w}, X_{s_i}),\epsilon\bigr)$ %\Comment{Compute $L_r^sf(x_{u\cup w},X_s)\pm\epsilon$.}
+				\State $g_i(x_{u\cup w}) \gets h(x_r)$ 
+			\EndFor
+%			\Statex
 		\EndFor
 		\Statex
-		\If{$m=0$} \Comment{Check if no other time points in $v$ remain.}
-			\State \Return{$g$} \Comment{If this is the case, we are done. Result is a function in $\gambles(\states^u)$.}
-		\Else \Comment{Otherwise, we recurse on the remaining time points.}
-			\State \Return{{\tt ComputeLowerExp}$(\rateset, u, w, g, \epsilon)$}
-		\EndIf      
+		\State \Return{$g_0$}\Comment{Result is a function in $\gambles(\states^u)$.}
     \EndFunction
   \end{algorithmic}
 \end{algorithm}
 
-{\bf TODO:} some explanation for algorithm. Maybe rewrite middle part into more general version of {\tt ComputeLf}. Also, the total computational error is not entirely trivial to compute (and rather outside the scope of this paper). Maybe also rewrite to non-recursive function, is probably clearer.
+{\bf TODO:} some explanation for algorithm. Maybe rewrite middle part into more general version of {\tt ComputeLf}. Also, the total computational error is not entirely trivial to compute (and rather outside the scope of this paper).
 
 As noted above, the procedure outlined in Example~\ref{exmp:num_multivar_func_nonmarkov} does not work for computing lower expectations with respect to a set of Markov chains $\wmprocesses_\rateset$.
 
