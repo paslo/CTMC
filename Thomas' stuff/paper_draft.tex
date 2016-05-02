@@ -2072,9 +2072,9 @@ We will in this section provide some results on computational aspects, along wit
 \begin{exmp}\label{exmp:example_rateset_simple_model}
 Consider again the binary-state disease model from Example~\ref{ex:health_sick_exmp}, given by
 \begin{equation*}
-(\text{Healthy}) \rightleftarrows (\text{Sick})
+(\text{{\tt healthy}}) \rightleftarrows (\text{{\tt sick}})
 \end{equation*}
-Thus, the state-space here is of the form $\states=\{\text{Healthy},\text{Sick}\}$. This models a person periodically becoming sick and recovering after some time. 
+Thus, the state-space here is of the form $\states=\{\text{{\tt healthy}},\text{{\tt sick}}\}$. This models a person periodically becoming sick and recovering after some time. 
 
 We now need to assign numerical values to the rate with which the process modeling this behavior moves between these states. If we were using a precise, time-homogeneous Markov chain $P\in\whmprocesses$, it would suffice to select a single rate matrix $Q\in\mathcal{R}$. In that case, and if we---arbitrarily---assume that the person becomes sick once a year, with illness lasting for one week, this rate matrix would be of the form
 \begin{equation*}
@@ -2129,7 +2129,7 @@ Simply put, this result tells us that if we can compute the quantity $\lrate g$ 
 \begin{exmp}\label{exmp:single_time_numerical}
 Consider again the model and the set of rate matrices $\rateset$ from Example~\ref{exmp:example_rateset_simple_model}. We will here compute the lower probability of a person being sick one week from now, given that they are currently also sick. That is, we will be computing
 \begin{equation*}
-\underline{P}(X_1 = \text{Sick}\,\vert\,X_0=\text{Sick}) \equiv \underline{\mathbb{E}}[\ind{\text{Sick}}(X_1)\,\vert\,X_0=\text{Sick}] \equiv \left[L_0^1\ind{\text{Sick}}\right](\text{Sick})\,.
+\underline{P}(X_1 = \text{{\tt sick}}\,\vert\,X_0=\text{{\tt sick}}) \equiv \underline{\mathbb{E}}[\ind{\text{{\tt sick}}}(X_1)\,\vert\,X_0=\text{{\tt sick}}] \equiv \left[L_0^1\ind{\text{{\tt sick}}}\right](\text{{\tt sick}})\,.
 \end{equation*}
 Proposition~\ref{prop:approximation_error_bound} tells us that we can compute this quantity using a fine enough partition of the time interval $[0,1]$. We will be using a maximum error for this computation of $\epsilon\coloneqq 10^{-3}$. Furthermore, the length of the time interval $(s-t)=1$, the function norm $\norm{\ind{\text{Sick}}}=1$, and due to our choice of $\rateset$, we have $\norm{\lrate} = 1$. In order to reach the desired maximum error, we therefore need to subdivide the time interval into at least $n$ steps, where
 \begin{equation*}
@@ -2137,33 +2137,33 @@ n = \frac{(s-t)^2\norm{\lrate}^2\norm{\ind{\text{Sick}}}}{\epsilon} = \frac{1^2\
 \end{equation*}
 resulting in a step size of $\Delta=\nicefrac{(s-t)}{n}=10^{-3}$. We now compute the quantity
 \begin{equation*}
-\prod_{i=1}^n(I + \Delta\lrate)\ind{\text{Sick}} = \prod_{i=1}^{1000}(I + \Delta\lrate)\ind{\text{Sick}} = \left(\prod_{i=1}^{999}(I + \Delta\lrate)\right)\left((I+\Delta\lrate)\ind{\text{Sick}}\right)\,.
+\prod_{i=1}^n(I + \Delta\lrate)\ind{\text{{\tt sick}}} = \prod_{i=1}^{1000}(I + \Delta\lrate)\ind{\text{{\tt sick}}} = \left(\prod_{i=1}^{999}(I + \Delta\lrate)\right)\left((I+\Delta\lrate)\ind{\text{{\tt sick}}}\right)\,.
 \end{equation*}
-We start by computing the right-most factor on the right-hand side of this equation. First compute $\lrate\ind{\text{Sick}}$, as in Example~\ref{exmp:numerical_lrate}:
+We start by computing the right-most factor on the right-hand side of this equation. First compute $\lrate\ind{\text{{\tt sick}}}$, as in Example~\ref{exmp:numerical_lrate}:
 \begin{align*}
-\lrate\ind{\text{Sick}} &= \inf\left\{ Q\ind{\text{Sick}}\,:\,Q\in\rateset \right\} = \inf\left\{ Q \left[\begin{array}{c} 0\\ 1 \end{array}\right]\,:\,Q\in\rateset \right\} \\
+\lrate\ind{\text{{\tt sick}}} &= \inf\left\{ Q\ind{\text{{\tt sick}}}\,:\,Q\in\rateset \right\} = \inf\left\{ Q \left[\begin{array}{c} 0\\ 1 \end{array}\right]\,:\,Q\in\rateset \right\} \\
  &= \inf\left\{ \left[\begin{array}{rr}-a&a\\b&-b \end{array}\right] \left[\begin{array}{c} 0\\ 1 \end{array}\right]\,:\, a\in[\nicefrac{1}{52},\nicefrac{3}{52}],\,b\in[\nicefrac{1}{2},2]\right\} = \left[\begin{array}{c}\nicefrac{1}{52}\\2\end{array}\right]\,.
 \end{align*}
 Let now
 \begin{equation*}
-g_1 \coloneqq (I + \Delta\lrate)\ind{\text{Sick}} = \ind{\text{Sick}} + \Delta\lrate\ind{\text{Sick}} = \left[\begin{array}{c}0\\1\end{array}\right] + 10^{-3}\cdot\left[\begin{array}{c}\nicefrac{1}{52}\\2\end{array}\right] = \left[\begin{array}{l} 0 + \nicefrac{1}{52}\cdot 10^{-3}\\ 1 + 2\cdot 10^{-3}\end{array}\right]\,.
+g_1 \coloneqq (I + \Delta\lrate)\ind{\text{{\tt sick}}} = \ind{\text{{\tt sick}}} + \Delta\lrate\ind{\text{{\tt sick}}} = \left[\begin{array}{c}0\\1\end{array}\right] + 10^{-3}\cdot\left[\begin{array}{c}\nicefrac{1}{52}\\2\end{array}\right] = \left[\begin{array}{l} 0 + \nicefrac{1}{52}\cdot 10^{-3}\\ 1 + 2\cdot 10^{-3}\end{array}\right]\,.
 \end{equation*}
 Having completed this first step, we have
 \begin{equation*}
-\prod_{i=1}^n(I + \Delta\lrate)\ind{\text{Sick}} = \prod_{i=1}^{999}(I + \Delta\lrate)g_1 = \left(\prod_{i=1}^{998}(I + \Delta\lrate)\right)\left((I+\Delta\lrate)g_1\right)\,.
+\prod_{i=1}^n(I + \Delta\lrate)\ind{\text{{\tt sick}}} = \prod_{i=1}^{999}(I + \Delta\lrate)g_1 = \left(\prod_{i=1}^{998}(I + \Delta\lrate)\right)\left((I+\Delta\lrate)g_1\right)\,.
 \end{equation*}
 We now repeat this process, computing the term $g_2\coloneqq(I+\Delta\lrate)g_1$. After $j$ steps, we then have
 \begin{equation*}
-\prod_{i=1}^n(I + \Delta\lrate)\ind{\text{Sick}} = \prod_{i=1}^{1000-j}(I + \Delta\lrate)g_j\,.
+\prod_{i=1}^n(I + \Delta\lrate)\ind{\text{{\tt sick}}} = \prod_{i=1}^{1000-j}(I + \Delta\lrate)g_j\,.
 \end{equation*}
 After repeating this process for $n$ steps, we have computed the term
 \begin{equation*}
-\prod_{i=1}^n(I + \Delta\lrate)\ind{\text{Sick}} = g_{1000} \approx \left[\begin{array}{c}0.0083 \\ 0.1408\end{array}\right]\,,
+\prod_{i=1}^n(I + \Delta\lrate)\ind{\text{{\tt sick}}} = g_{1000} \approx \left[\begin{array}{c}0.0083 \\ 0.1408\end{array}\right]\,,
 \end{equation*}
 from which we conclude that
 \begin{align*}
-\underline{P}(X_1 = \text{Sick}\,\vert\,X_0=\text{Sick}) &\equiv \left[L_0^1\ind{\text{Sick}}\right](\text{Sick})
-= g_{1000}(\text{Sick}) \pm \epsilon \approx 0.141 \pm 10^{-3}\,,
+\underline{P}(X_1 = \text{{\tt sick}}\,\vert\,X_0=\text{{\tt sick}}) &\equiv \left[L_0^1\ind{\text{{\tt sick}}}\right](\text{{\tt sick}})
+= g_{1000}(\text{{\tt sick}}) \pm \epsilon \approx 0.141 \pm 10^{-3}\,,
 \end{align*}
 where the second equality is due to the error bound guaranteed by Proposition~\ref{prop:approximation_error_bound}.
 \exampleend
@@ -2189,7 +2189,7 @@ where the second equality is due to the error bound guaranteed by Proposition~\r
 \end{algorithm}
 {\bf TODO:} some explanation for algorithm.
 
-Observe that in the previous example, we computed the term $\left[L_0^1\ind{\text{Sick}}\right](\text{Sick})$ which, due to Corollary~\ref{cor:lower_operator_is_infimum}, corresponds to the lower expectation taken with respect to both $\wmprocesses_\rateset$ and $\wprocesses_\rateset$. In Section~\ref{sec:decomposition}, we noted that we can also compute lower expectations of more complex functions with respect to the set $\wprocesses_\rateset$. The following provides a worked numerical example, which is followed by Example~\ref{exmp:num_counterexample_markov} below which shows that this approach does not work for the set of Markov models $\wmprocesses_\rateset$.
+Observe that in the previous example, we computed the term $\left[L_0^1\ind{\text{{\tt sick}}}\right](\text{{\tt sick}})$ which, due to Corollary~\ref{cor:lower_operator_is_infimum}, corresponds to the lower expectation taken with respect to both $\wmprocesses_\rateset$ and $\wprocesses_\rateset$. In Section~\ref{sec:decomposition}, we noted that we can also compute lower expectations of more complex functions with respect to the set $\wprocesses_\rateset$. The following provides a worked numerical example, which is followed by Example~\ref{exmp:num_counterexample_markov} below which shows that this approach does not work for the set of Markov models $\wmprocesses_\rateset$.
 
 \begin{exmp}\label{exmp:num_multivar_func_nonmarkov}
 Consider again the model and set of rate matrices $\rateset$ from Example~\ref{exmp:example_rateset_simple_model}. Suppose that we are now interested in the lower probability of the model being in the same state at two different time points. That is, we will be computing
@@ -2211,17 +2211,17 @@ In order to compute this quantity, we now resolve this composition of operators 
 
 Note that $f$ is here a function defined on multiple time points. Due to our convention stipulated in Section~\ref{sec:function_single_future_multiple_past}, the resulting function $L_1^2f$ will be a function in $\gambles(\states^{\{1\}})$, which is given by looking at all restrictions of $f$ to the state $X_2$, dependent on the corresponding values at $X_1$. Due to the definition of $f$, we therefore have that
 \begin{align*}
-\left[L_1^2f\right](\text{Healthy}) &= \left[L_1^2f(\text{Healthy}, X_2)\right](\text{Healthy}) \\
- &= \left[L_1^2\ind{\text{Healthy}}(X_2)\right](\text{Healthy})\,,\\
+\left[L_1^2f\right](\text{{\tt healthy}}) &= \left[L_1^2f(\text{{\tt healthy}}, X_2)\right](\text{{\tt healthy}}) \\
+ &= \left[L_1^2\ind{\text{{\tt healthy}}}(X_2)\right](\text{{\tt healthy}})\,,\\
  &\text{and,} \\
-\left[L_1^2f\right](\text{Sick}) &= \left[L_1^2f(\text{Sick}, X_2)\right](\text{Sick}) \\ 
- &= \left[L_1^2\ind{\text{Sick}}(X_2)\right](\text{Sick})\,.
+\left[L_1^2f\right](\text{{\tt sick}}) &= \left[L_1^2f(\text{{\tt sick}}, X_2)\right](\text{{\tt sick}}) \\ 
+ &= \left[L_1^2\ind{\text{{\tt sick}}}(X_2)\right](\text{{\tt sick}})\,.
 \end{align*}
-Using Proposition~\ref{prop:approximation_error_bound}, the quantities $L_1^2\ind{\text{Healthy}}$ and $L_1^2\ind{\text{Sick}}$ can now be computed using the same procedure outlined in Example~\ref{exmp:single_time_numerical}. We then find that
+Using Proposition~\ref{prop:approximation_error_bound}, the quantities $L_1^2\ind{\text{{\tt healthy}}}$ and $L_1^2\ind{\text{{\tt sick}}}$ can now be computed using the same procedure outlined in Example~\ref{exmp:single_time_numerical}, i.e., using Algorithm~\ref{alg:compute_singlevar}. We find that
 \begin{equation*}
 L_1^2 f = \left[\begin{array}{l}
-\left[L_1^2\ind{\text{Healthy}}(X_2)\right](\text{Healthy}) \\
-\left[L_1^2\ind{\text{Sick}}(X_2)\right](\text{Sick})
+\left[L_1^2\ind{\text{{\tt healthy}}}(X_2)\right](\text{{\tt healthy}}) \\
+\left[L_1^2\ind{\text{{\tt sick}}}(X_2)\right](\text{{\tt sick}})
 \end{array}\right] 
 \approx \left[\begin{array}{c}
 0.956 \\
@@ -2235,7 +2235,7 @@ Substituting this result into Equation~\eqref{eq:num_example_composition}, we ha
 0.141
 \end{array}\right]\right](X_0)\,.
 \end{equation*}
-In order to compute the lower expectation of interest, we once more apply Proposition~\ref{prop:approximation_error_bound} and the procedure from Example~\ref{exmp:single_time_numerical}, finding that
+In order to compute the lower expectation of interest, we apply Algorithm~\ref{alg:compute_singlevar} once more, finding that
 \begin{equation*}
 L_0^1\left[\begin{array}{c}
 0.956 \\
@@ -2247,7 +2247,7 @@ L_0^1\left[\begin{array}{c}
 \end{equation*}
 We therefore conclude that
 \begin{align*}
-\underline{P}_{\rateset}^{\mathrm{W}}(X_1 = X_2\,\vert\,X_0=\text{Healthy}) \approx 0.920,\quad\text{and,}\quad \underline{P}_{\rateset}^{\mathrm{W}}(X_1 = X_2\,\vert\,X_0=\text{Sick}) \approx 0.453\,.
+\underline{P}_{\rateset}^{\mathrm{W}}(X_1 = X_2\,\vert\,X_0=\text{{\tt healthy}}) \approx 0.920,\quad\text{and,}\quad \underline{P}_{\rateset}^{\mathrm{W}}(X_1 = X_2\,\vert\,X_0=\text{{\tt sick}}) \approx 0.453\,.
 \end{align*}
 \exampleend
 \end{exmp}
@@ -2292,20 +2292,41 @@ We therefore conclude that
   \end{algorithmic}
 \end{algorithm}
 
-{\bf TODO:} some explanation for algorithm. Maybe rewrite middle part into more general version of {\tt ComputeLf}. Also, the total computational error is not entirely trivial to compute (and rather outside the scope of this paper).
+{\bf TODO:} some explanation for algorithm. Maybe rewrite middle part into more general version of {\tt ComputeLf}. Also, the total computational error is not entirely trivial to compute (and rather outside the scope of this paper). Maybe also rewrite to non-recursive function, is probably clearer.
 
 As noted above, the procedure outlined in Example~\ref{exmp:num_multivar_func_nonmarkov} does not work for computing lower expectations with respect to a set of Markov chains $\wmprocesses_\rateset$.
 
 ** some intuition first.
 
-The example below shows that, indeed, the lower expectation of the function from Example~\ref{exmp:num_multivar_func_nonmarkov}, with respect to $\wmprocesses_\rateset$, is different from the one that was found for $\wprocesses_\rateset$. This therefore proves by counterexample that Algorithm~\ref{alg:compute_multivar} is not applicable when working with sets of Markov chains. Put differently, a composition of lower transition operators does not in general correspond to the lower expectation for such a set, i.e.,
+The example below will show that, indeed, the lower expectation of the function from Example~\ref{exmp:num_multivar_func_nonmarkov}, with respect to $\wmprocesses_\rateset$, is different from the one that was found for $\wprocesses_\rateset$. This therefore proves by counterexample that Algorithm~\ref{alg:compute_multivar} is not applicable when working with sets of Markov chains. Put differently, a composition of lower transition operators does not in general correspond to the lower expectation for such a set, i.e.,
 \begin{equation*}
 \left[L_{t_n}^{s_0}L_{s_0}^{s_1}\cdots L_{s_{m-1}}^{s_m}f\right](x_u) \neq \underline{\mathbb{E}}_\rateset^{\mathrm{WM}}[f(X_u,X_v)\,\vert\,X_u=x_u]\,,
 \end{equation*}
 in contrast to our results from Section~\ref{sec:decomposition} for the set $\wprocesses_\rateset$.
 
 \begin{exmp} \label{exmp:num_counterexample_markov}
-{\bf TODO} tegenvoorbeeld van vorige functie voor de set $\wmprocesses_\rateset$.
+Consider again the model and set of rate matrices $\rateset$ from Example~\ref{exmp:example_rateset_simple_model}, and the function $f\in\gambles(\states^{\{1,2\}})$ from Example~\ref{exmp:num_multivar_func_nonmarkov} given by
+\begin{equation*}
+f(X_1,X_2) \coloneqq \left\{\begin{array}{ll}
+1 & \text{if $X_1 = X_2$, and} \\
+0 & \text{otherwise.}
+\end{array}\right.
+\end{equation*}
+We will here compute the lower expectation $\underline{\mathbb{E}}_\rateset^{\mathrm{WM}}[f(X_1,X_2)\,\vert\,X_0]$ of this function with respect to the set $\wmprocesses_\rateset$ of Markov chains consistent with $\rateset$. We will then see that this lower expectation differs from the one found in Example~\ref{exmp:num_multivar_func_nonmarkov} for the set $\wprocesses_\rateset$.
+
+One problem in doing this, is that we do not have a general method for computing such lower expectations for sets of Markov chains. Fortunately, in the very specific case of a binary-state model, as we use here, we can actually numerically solve the optimization problem given by the right-hand side of
+\begin{equation*}
+\underline{\mathbb{E}}_\rateset^{\mathrm{WM}}[f(X_1,X_2)\,\vert\,X_0] = \inf\left\{ \mathbb{E}[f(X_1,X_2)\,\vert\,X_0]\,:\,P\in\wmprocesses_\rateset\right\}.
+\end{equation*}
+
+This numerical approach was verified to work for simple functions $g\in\gamblesX$, i.e. functions defined on a single time point, for which Corollary~\ref{cor:lower_operator_is_infimum} tells us that the lower expectation should correspond to the quantity $L_t^sg$. Because Algorithm~\ref{alg:compute_singlevar} tells us how to compute this latter quantity, we could verify the precision of the numerical optimization employed here. In doing so, we found a numerical correspondence between the ``brute-force'' optimization over $\wmprocesses_\rateset$ and the computation using $L_t^s$, with deviations less than the $\epsilon$ error-bound used to compute the quantity $L_t^sg$.
+
+Employing this ``brute-force'' optimization to the function $f$ that we are interested in here, we found that
+\begin{align*}
+\underline{P}_{\rateset}^{\mathrm{WM}}(X_1 = X_2\,\vert\,X_0=\text{{\tt healthy}}) \approx 0.939,\quad\text{and,}\quad \underline{P}_{\rateset}^{\mathrm{WM}}(X_1 = X_2\,\vert\,X_0=\text{{\tt sick}}) \approx 0.467\,.
+\end{align*}
+
+Comparing to the lower expectation for the set $\wprocesses_\rateset$ that was found in Example~\ref{exmp:num_multivar_func_nonmarkov}, we see that the lower expectations are indeed different for these two sets of processes. Furthermore, as guaranteed by Proposition~\ref{prop:lower_exp_markov_bounded_by_nonmarkov}, the lower expectation for $\wprocesses_\rateset$ provides a lower bound on the lower expectation for $\wmprocesses_\rateset$.
 \exampleend
 \end{exmp}
 
