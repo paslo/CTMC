@@ -2098,12 +2098,24 @@ with the unit-time again being one week. Note that $\rateset$ here is clearly no
 
 We will now focus on how to compute lower expectations with respect to imprecise continuous-time Markov chains induced by the set $\rateset$ from Example~\ref{exmp:example_rateset_simple_model}. To this end, consider the lower transition rate operator $\lrate$ corresponding to this $\rateset$. It should be clear that, for any function $f\in\gamblesX$, computing the quantity $\lrate f$ is relatively easy.
 
-In general, computing $\lrate f$ is a linear optimization problem. *** some notes about (lack of) difficulty of solving this
+In general, for any set $\rateset$ with corresponding lower transition rate operator $\lrate$, and any function $f\in\gamblesX$, computing $\lrate f$ is a constrained linear optimization problem. The exact form of these constraints---and hence the difficulty of solving this optimization problem---clearly depends on the set $\rateset$.
+
+In the case of the set $\rateset$ from Example~\ref{exmp:example_rateset_simple_model}, as given by Equation~\eqref{eq:num_example_rateset_params}, these constraints are simple box-constraints. Furthermore, because the state-space $\states$ contains only two states in this specific example model, computing $\lrate f$ is particularly easy, regardless of the choice of $f\in\gamblesX$. This is illustrated by the following example.
 
 \begin{exmp}\label{exmp:numerical_lrate}
-**** small example here somewhere
+Consider the set $\rateset$ from Example~\ref{exmp:example_rateset_simple_model}, given by Equation~\eqref{eq:num_example_rateset_params}. Let $\lrate$ be the lower transition rate operator corresponding to $\rateset$, and consider any $f\in\gamblesX$. We now want to solve
+\begin{align*}
+\lrate f &= \inf\{Qf\,:\,Q\in\rateset\} \\
+ &= \inf\left\{\left[\begin{array}{rr}-a & a \\b & -b\end{array}\right]\left[\begin{array}{r} f(0) \\ f(1) \end{array}\right]\,:\,a\in\left[\frac{1}{52}, \frac{3}{52} \right],\,b\in\left[\frac{1}{2}, 2 \right]\right\} \\
+ &= \inf\left\{ \left[\begin{array}{r} a\bigl(f(1) - f(0)\bigr) \\ b\bigl(f(0) - f(1) \bigr)\end{array} \right]\,:\,a\in\left[\frac{1}{52}, \frac{3}{52} \right],\,b\in\left[\frac{1}{2}, 2 \right]\right\}\,.
+\end{align*}
+From the above, it is readily seen that $\lrate f$ is always given by some $Q f$, with $Q\in\rateset$ such that $a\in\{\nicefrac{1}{52}, \nicefrac{3}{52}\}$ and $b\in\{\nicefrac{1}{2},2\}$. Hence, we only need to consider four possible rate matrices $Q\in\rateset$ to find $\lrate f$ for any given $f\in\gamblesX$.
 
-In the specific case of the set $\rateset$ from Example {\bf REF}, it is readily seen that $\lrate f$ is always given by some $Q f$, with $Q\in\rateset$ such that $a\in\{\nicefrac{1}{52}, \nicefrac{3}{52}\}$ and $b\in\{\nicefrac{1}{2},2\}$, using the notation from Equation~\eqref{eq:num_example_rateset_params}. Hence, we only need to consider four possible rate matrices $Q\in\rateset$ to find $\lrate f$ for any given $f\in\gamblesX$. As such, this optimization problem is particularly easy to solve in this case.
+Using these observations, we will next compute $\norm{\lrate}$. We have that
+\begin{align*}
+\norm{\lrate} &= \sup\left\{ \norm{\lrate f}\,:\,f\in\gamblesX,\, \norm{f}=1 \right\} \\
+ &= \sup\left\{ \max\left\{\abs{\left[\lrate f\right](x)}\,:\,x\in\states\right\}\,:\,f\in\gamblesX,\, \norm{f}=1 \right\}
+\end{align*}
 \exampleend
 \end{exmp}
 
