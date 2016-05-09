@@ -2143,13 +2143,13 @@ Consider again the model and the set of rate matrices $\rateset$ from Example~\r
 \begin{equation*}
 \underline{P}(X_1 = \text{{\tt sick}}\,\vert\,X_0=\text{{\tt sick}}) \equiv \underline{\mathbb{E}}[\ind{\text{{\tt sick}}}(X_1)\,\vert\,X_0=\text{{\tt sick}}] \equiv \left[L_0^1\ind{\text{{\tt sick}}}\right](\text{{\tt sick}})\,.
 \end{equation*}
-Proposition~\ref{prop:approximation_error_bound} tells us that we can compute this quantity using a fine enough partition of the time interval $[0,1]$. We will be using a maximum error for this computation of $\epsilon\coloneqq 10^{-3}$. Furthermore, the length of the time interval $(s-t)=1$, the function norm $\norm{\ind{\text{Sick}}}=1$, and due to our choice of $\rateset$, we have $\norm{\lrate} = 1$. In order to reach the desired maximum error, we therefore need to subdivide the time interval into at least $n$ steps, where
+Proposition~\ref{prop:approximation_error_bound} tells us that we can compute this quantity using a fine enough partition of the time interval $[0,1]$. We will be using a maximum error for this computation of $\epsilon\coloneqq 10^{-3}$. Furthermore, the length of the time interval $(s-t)=1$, the function norm $\norm{\ind{\text{Sick}}}=1$, and due to our choice of $\rateset$, we have $\norm{\lrate} = 4$, as in Example~\ref{exmp:numerical_lrate}. In order to reach the desired maximum error, we therefore need to subdivide the time interval into at least $n$ steps, where
 \begin{equation*}
-n = \frac{(s-t)^2\norm{\lrate}^2\norm{\ind{\text{Sick}}}}{\epsilon} = \frac{1^2\cdot 1^2\cdot 1}{10^{-3}} = 10^3\,,
+n = \frac{(s-t)^2\norm{\lrate}^2\norm{\ind{\text{Sick}}}}{\epsilon} = \frac{1^2\cdot 4^2\cdot 1}{10^{-3}} = 16\cdot 10^3\,,
 \end{equation*}
-resulting in a step size of $\Delta=\nicefrac{(s-t)}{n}=10^{-3}$. We now compute the quantity
+resulting in a step size of $\Delta=\nicefrac{(s-t)}{n}=\nicefrac{1}{(16\cdot 10^{-3})}$. We now compute the quantity
 \begin{equation*}
-\prod_{i=1}^n(I + \Delta\lrate)\ind{\text{{\tt sick}}} = \prod_{i=1}^{1000}(I + \Delta\lrate)\ind{\text{{\tt sick}}} = \left(\prod_{i=1}^{999}(I + \Delta\lrate)\right)\left((I+\Delta\lrate)\ind{\text{{\tt sick}}}\right)\,.
+\prod_{i=1}^n(I + \Delta\lrate)\ind{\text{{\tt sick}}} = \prod_{i=1}^{16000}(I + \Delta\lrate)\ind{\text{{\tt sick}}} = \left(\prod_{i=1}^{15999}(I + \Delta\lrate)\right)\left((I+\Delta\lrate)\ind{\text{{\tt sick}}}\right)\,.
 \end{equation*}
 We start by computing the right-most factor on the right-hand side of this equation. First compute $\lrate\ind{\text{{\tt sick}}}$, as in Example~\ref{exmp:numerical_lrate}:
 \begin{align*}
@@ -2158,24 +2158,24 @@ We start by computing the right-most factor on the right-hand side of this equat
 \end{align*}
 Let now
 \begin{equation*}
-g_1 \coloneqq (I + \Delta\lrate)\ind{\text{{\tt sick}}} = \ind{\text{{\tt sick}}} + \Delta\lrate\ind{\text{{\tt sick}}} = \left[\begin{array}{c}0\\1\end{array}\right] + 10^{-3}\cdot\left[\begin{array}{c}\nicefrac{1}{52}\\2\end{array}\right] = \left[\begin{array}{l} 0 + \nicefrac{1}{52}\cdot 10^{-3}\\ 1 + 2\cdot 10^{-3}\end{array}\right]\,.
+g_1 \coloneqq (I + \Delta\lrate)\ind{\text{{\tt sick}}} = \ind{\text{{\tt sick}}} + \Delta\lrate\ind{\text{{\tt sick}}} = \left[\begin{array}{c}0\\1\end{array}\right] + 16\cdot 10^{-3}\cdot\left[\begin{array}{c}\nicefrac{1}{52}\\2\end{array}\right] = \left[\begin{array}{l} 0 + \nicefrac{1}{52}\cdot 16\cdot 10^{-3}\\ 1 + 2\cdot 16\cdot 10^{-3}\end{array}\right]\,.
 \end{equation*}
 Having completed this first step, we have
 \begin{equation*}
-\prod_{i=1}^n(I + \Delta\lrate)\ind{\text{{\tt sick}}} = \prod_{i=1}^{999}(I + \Delta\lrate)g_1 = \left(\prod_{i=1}^{998}(I + \Delta\lrate)\right)\left((I+\Delta\lrate)g_1\right)\,.
+\prod_{i=1}^n(I + \Delta\lrate)\ind{\text{{\tt sick}}} = \prod_{i=1}^{15999}(I + \Delta\lrate)g_1 = \left(\prod_{i=1}^{15998}(I + \Delta\lrate)\right)\left((I+\Delta\lrate)g_1\right)\,.
 \end{equation*}
 We now repeat this process, computing the term $g_2\coloneqq(I+\Delta\lrate)g_1$. After $j$ steps, we then have
 \begin{equation*}
-\prod_{i=1}^n(I + \Delta\lrate)\ind{\text{{\tt sick}}} = \prod_{i=1}^{1000-j}(I + \Delta\lrate)g_j\,.
+\prod_{i=1}^n(I + \Delta\lrate)\ind{\text{{\tt sick}}} = \prod_{i=1}^{16000-j}(I + \Delta\lrate)g_j\,.
 \end{equation*}
 After repeating this process for $n$ steps, we have computed the term
 \begin{equation*}
-\prod_{i=1}^n(I + \Delta\lrate)\ind{\text{{\tt sick}}} = g_{1000} \approx \left[\begin{array}{c}0.0083 \\ 0.1408\end{array}\right]\,,
+\prod_{i=1}^n(I + \Delta\lrate)\ind{\text{{\tt sick}}} = g_{16000} \approx \left[\begin{array}{c}0.0083 \\ 0.1410\end{array}\right]\,,
 \end{equation*}
 from which we conclude that
 \begin{align*}
 \underline{P}(X_1 = \text{{\tt sick}}\,\vert\,X_0=\text{{\tt sick}}) &\equiv \left[L_0^1\ind{\text{{\tt sick}}}\right](\text{{\tt sick}})
-= g_{1000}(\text{{\tt sick}}) \pm \epsilon \approx 0.141 \pm 10^{-3}\,,
+= g_{16000}(\text{{\tt sick}}) \pm \epsilon \approx 0.141 \pm 10^{-3}\,,
 \end{align*}
 where the second equality is due to the error bound guaranteed by Proposition~\ref{prop:approximation_error_bound}.
 \exampleend
