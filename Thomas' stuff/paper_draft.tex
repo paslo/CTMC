@@ -163,44 +163,21 @@ We here consider \emph{imprecise continuous-time Markov chains}, which can be us
 
 The following provides a motivating toy example that will return throughout this work. Although the model in this example is clearly too simple to be of practical use, it does already illustrate that the simplifying assumptions above are often unrealistic.
 \begin{exmp}\label{ex:health_sick_exmp}
-**** Simple binary-state disease model:
+Suppose that we want to model a person periodically becoming sick, and recovering after some time. We model this behavior using a binary state space $\{\text{\tt healthy, sick}\}$, and denote with the following diagram the possible transitions between these states:
 \begin{equation*}
-(\text{Healthy}) \rightleftarrows (\text{Sick})
+(\text{\tt healthy}) \rightleftarrows (\text{\tt sick})
 \end{equation*}
-This models a person periodically getting sick, and recovering after some time. *** time-homogeneity -$>$ nope, seasonal dependence. markov -$>$ nope, being sick more often could make you more (or less, through immunity) likely for future. differentiability -$>$ nope, if exposed to someone carrying a virus.
+Thus, we consider two transitions: from {\tt healthy} to {\tt sick}, and from {\tt sick} to {\tt healthy}. A \emph{rate parameter} is then associated with each of these transitions, which quantifies the ``speed'' with which the model completes such a transition. A continuous-time Markov chain can then be used to answer probabilistic questions about this system.
 
-%\noindent * Pros:
-%\begin{itemize}
-%\item Intuitive to understand, doesn't require a lot of explanation 
-%\item Directly described using CTMCs
-%\item Homogeneity assumption easily challenged; might be seasonal changes, for example
-%\item Markov assumption easily challenged; a person that has been sick a lot, might be more likely to become sick again.
-%\end{itemize}
-%* Cons:
-%\begin{itemize}
-%\item Not entirely trivial to come up with a multiple-time points function which is plausible and intuitively interesting.
-%\begin{itemize}
-%\item Total treatment cost over multiple fixed time points?
-%\item B?
-%\item C?
-%\end{itemize}
-%\end{itemize}
-%
-%***** Simple ternary state disease model:
-%\begin{equation*}
-%(\text{Healthy}) \leftrightarrows (\text{Sick}) \rightarrow (\text{Dead})
-%\end{equation*}
-%Also easy to understand, somewhat easier to come up with interesting functions:
-%\begin{equation*}
-%P(X_{10}=\text{Dead},X_{9}=\text{Healthy}\,\vert\,X_{0}=\text{Sick})
-%\end{equation*}
-%
-%**** other idea
-%\begin{align*}
-%(\text{Healthy}) & \leftrightarrows (\text{Sick}) \rightarrow (\text{Complication}) \rightarrow (\text{Dead}) \\
-%\quad \uparrow \leftarrow & \quad\quad\leftarrow\quad\quad\leftarrow\quad\quad\leftarrow \downarrow
-%\end{align*}
+For instance, we might be interested in the probability $P(X_s={\tt sick}\,\vert\,X_t={\tt healthy})$ of the person being sick at time $s$, given that he or she is healthy at time $t$. Under an assumption of time-homogeneity, this probability would not depend on the absolute values of $t$ and $s$, but only on the relative difference $(s-t)$. This assumption might therefore be invalid if, e.g., there is a seasonal trend to the disease (it might be more likely to contract this disease during the winter).
 
+As another example, the Markov assumption states that, for time points $t< r< s$,
+\begin{equation*}
+P(X_s={\tt sick}\,\vert\, X_r={\tt healthy}, X_t={\tt sick}) = P(X_s={\tt sick}\,\vert\, X_r={\tt healthy})\,,
+\end{equation*}
+that is, the probability of being sick at time $s$ \emph{only} depends on the person's condition at time $r$, and not on whether he or she has ever been sick before time $r$. When it is for instance possible to develop immunity to the disease, the Markov assumption is thus clearly incorrect.
+
+As a final example, differentiability assumptions are often made about the probabilities involved. For instance, we might assume that $\nicefrac{\partial}{\partial s}\left[P(X_s\,\vert\,X_t)\right]$ exists. However, if the person that we are modeling is exposed to someone carrying a virus, the probability of becoming sick could suddenly and drastically change. More generally, this might be the case when our specified model fails to account for possible external perturbations.
 \exampleend
 \end{exmp}
 From a practical point of view, once such a model is formulated and numerical estimates for its parameters have been obtained, one is typically interested in computing the expected value of some function with respect to this model. Such a function might be the expected loss/utility of some strategy {\bf CITE}; or the expected time until some component in a system breaks down {\bf CITE}; or *** something else *** {\bf CITE}. It is of interest, therefore, to robustify such assessments not only against uncertain parameter estimates, but also against possibly incorrect assumptions like the ones discussed above. 
@@ -1321,7 +1298,9 @@ Now, ironically, it turns out that computing lower expectations for the set $\wh
 
 Note that Proposition~\ref{prop:lower_exp_markov_bounded_by_nonmarkov} guarantees that the lower expectation for either $\wmprocesses_\rateset$ or $\wprocesses_\rateset$ suffices to compute a lower bound for $\underline{\mathbb{E}}_\rateset^\mathrm{WHM}$. However, this bound will in general not be tight if one insists that any analysis should be done with respect to the set $\whmprocesses_\rateset$.
 
-The problem is, essentially, that while homogeneous Markov chains are easy to work with numerically, the set $\whmprocesses_\rateset$ does not provide enough ``degrees of freedom'' to make the optimization problem involved in computing $\underline{\mathbb{E}}^\mathrm{WHM}_\rateset$ tractable. The following example serves as an illustration.
+The problem is, essentially, that while homogeneous Markov chains are easy to work with numerically, the set $\whmprocesses_\rateset$ does not provide enough ``degrees of freedom'' to make the optimization problem involved in computing $\underline{\mathbb{E}}^\mathrm{WHM}_\rateset$ tractable. The following example serves as an illustration. 
+
+*** Known to be difficult: even finding an $\epsilon$-approximation takes at least exponential time~\cite[Theorem 20.1]{kreinovich2013computational}.
 
 \begin{exmp}
 **** example that homogeneous case is harder than non-homogeneous case.
@@ -2114,8 +2093,9 @@ From the above, it is readily seen that $\lrate f$ is always given by some $Q f$
 Using these observations, we will next compute $\norm{\lrate}$. We have that
 \begin{align*}
 \norm{\lrate} &= \sup\left\{ \norm{\lrate f}\,:\,f\in\gamblesX,\, \norm{f}=1 \right\} \\
- &= \sup\left\{ \max\left\{\abs{\left[\lrate f\right](x)}\,:\,x\in\states\right\}\,:\,f\in\gamblesX,\, \norm{f}=1 \right\}
+ &= \sup\left\{ \max\left\{\abs{\left[\lrate f\right](x)}\,:\,x\in\states\right\}\,:\,f\in\gamblesX,\, \norm{f}=1 \right\}\,.
 \end{align*}
+Combining with the above expression for $\lrate f$, it should be clear that the supremum is in this case always reached by an $f\in\gamblesX$ such that either $f=[-1\,\,1]^\top$ or $f=[1\,\,-1]^\top$. Some arithmetic then reveals that $\norm{\lrate}=4$.
 \exampleend
 \end{exmp}
 
