@@ -153,7 +153,7 @@ Lorem ipsum.
 
 \section{Introduction}\label{sec:introduction}
 
-Continuous-time Markov chains are models that are used to describe the behavior of dynamical systems under stochastic uncertainty. They describe the stochastic evolution of such a system through a discrete state-space and over a continuous time-dimension. This class of models has found widespread applications in such fields as queuing theory {\bf CITE}, mathematical finance {\bf CITE}, epidemiology {\bf CITE}, and system reliability analysis {\bf CITE}, among others {\bf CITE} {\bf CITE} {\bf CITE}.
+Continuous-time Markov chains are models that are used to describe the behavior of dynamical systems under stochastic uncertainty. They describe the stochastic evolution of such a system through a discrete state-space and over a continuous time-dimension. This class of models has found widespread applications in such fields as queuing theory~\cite{asmussen2008applied,bolch2006queueing}, mathematical finance~\cite{rolski2009stochastic, elliott2013default, sass2004optimizing}, epidemiology~\cite{jackson2003multistate, lemey2009reconstructing, duffy1995estimation}, and system reliability analysis~\cite{gokhale2004analysis, wang2007reliability, besnard2010approach}, among others~\cite{yin2012continuous} {\bf CITE} {\bf CITE}.
 
 We here consider \emph{imprecise continuous-time Markov chains}, which can be used to robustly model systems for which often-made assumptions need not hold. Such assumptions may include time-homogeneity, whereby the behavior of the system is independent of the absolute point in time at which it is considered. Other such assumptions are the Markov property or differentiability of the state-transition probabilities. The former means that the future behavior of the system is independent of its history, given the current state. The differentiability assumption leads to convenient analytic expressions but might not hold if, e.g., the system is exposed to external perturbations. 
 
@@ -180,7 +180,7 @@ that is, the probability of being sick at time $s$ \emph{only} depends on the pe
 As a final example, differentiability assumptions are often made about the probabilities involved. For instance, we might assume that $\nicefrac{\partial}{\partial s}\left[P(X_s\,\vert\,X_t)\right]$ exists. However, if the person that we are modeling is exposed to someone carrying a virus, the probability of becoming sick could suddenly and drastically change. More generally, this might be the case when our specified model fails to account for possible external perturbations.
 \exampleend
 \end{exmp}
-From a practical point of view, once such a model is formulated and numerical estimates for its parameters have been obtained, one is typically interested in computing the expected value of some function with respect to this model. Such a function might be the expected loss/utility of some strategy {\bf CITE}; or the expected time until some component in a system breaks down {\bf CITE}; or *** something else *** {\bf CITE}. It is of interest, therefore, to robustify such assessments not only against uncertain parameter estimates, but also against possibly incorrect assumptions like the ones discussed above. 
+From a practical point of view, once such a model is formulated and numerical estimates for its parameters have been obtained, one is typically interested in computing the expected value of some function with respect to this model. Such a function might be the expected utility of some financial strategy~\cite{sass2004optimizing}; the expected time until some component in a system breaks down~\cite{besnard2010approach}; or the expected speed with which clinical symptoms of a disease develop~\cite{duffy1995estimation}. It is of interest, therefore, to robustify such assessments not only against uncertain parameter estimates, but also against possibly incorrect assumptions like the ones discussed above. 
 
 In particular, it would be useful to have a framework that can jointly deal with these different types of uncertainty and model misspecifications. Indeed, methods for working with uncertain parameter estimates include for example Bayesian techniques~\cite{insua2012bayesian}, and plenty of work has been done on modeling non-homogeneous systems (see, e.g.,~\cite{rindos1995exact,aalen1978empirical,johnson1989nonhomogeneous}). However, as far as we can tell, much less work has been done on dropping the Markovian and differentiability assumptions.
 
@@ -334,7 +334,7 @@ For any two transition matrices $T_1$ and $T_2$, their composition $T_1T_2$ is a
 
 The interpretation in the context of Markov chains is as follows. The elements $T(x,y)$ of a transition matrix $T$ describe the probability of the Markov chain ending up in state $y$ at the next time point, given that it is currently in state $x$. In other words, the row $T(x,\cdot)$ contains the state-transition probabilities, conditional on currently being in state $x$. We will make this connection more explicit when we formalize continuous-time stochastic processes in Section~\ref{sec:stochastic_processes}.
 
-For now, we note that in a continuous-time setting, this notion of ``next'' time-point is less obvious than in a discrete-time setting. Here, these state-transition probabilities are continuously dependent on the evolution of time. To describe this connection, the notion of \emph{transition rate matrices} is used.
+For now, we note that in a continuous-time setting, this notion of ``next'' time-point is less obvious than in a discrete-time setting. Here, these state-transition probabilities are continuously dependent on the evolution of time. To describe this connection, the notion of \emph{transition rate matrices}~\cite{norris1998markov} is used.
 \begin{definition}[Transition Rate Matrix]\label{def:rate_matrix}
 A real-valued matrix $Q$ is said to be a \emph{transition rate matrix}, or sometimes simply \emph{rate matrix}, if
 
@@ -365,14 +365,11 @@ Consider any transition matrix $T$, and any $\Delta\in\realspos$. Then, the matr
 \end{proposition}
 Note that Proposition~\ref{prop:rate_from_stochastic_matrix} essentially states that the finite-difference $\nicefrac{1}{\Delta}(T_t^{t+\Delta} - T_t^t)$ is a rate matrix. Intuitively, if we now take the limit as this $\Delta$ goes to zero, this states that the derivative of a continuously time-dependent transition matrix is given by some rate matrix $Q\in\mathcal{R}$---assuming that this limit exists, of course. We will make this connection more explicit Section~\ref{sec:stochastic_processes}.
 
-We next introduce a tool that is often seen in the context of continuous-time Markov chains: the \emph{matrix exponential}~{\bf CITE} of a rate matrix $Q$. This matrix exponential is denoted $e^A$ for any matrix $A$. There are various ways in which the matrix exponential can be defined. We refer to {\bf CITE CITE} for examples, and will consider some specific definitions later in this work.
+We next introduce a tool that is often seen in the context of continuous-time Markov chains: the \emph{matrix exponential}~\cite{van2006study} of a rate matrix $Q$. This matrix exponential is denoted $e^A$ for any matrix $A$. There are various ways in which the matrix exponential can be defined. We refer to~\cite{van2006study} for examples, and will consider some specific definitions later in this work.
 We here simply state the following well-known result.
-\begin{proposition}\label{prop:stochastic_from_exponential}
+\begin{proposition}\cite[Theorem 2.1.2]{norris1998markov}\label{prop:stochastic_from_exponential}
 Consider any rate matrix $Q\in\mathcal{R}$, and any $\Delta\in\realsnonneg$. Then, $e^{Q\Delta}$ is a transition matrix.
 \end{proposition}
-\begin{proof}
-*** still need to check this *** {\bf TODO} Surely we can find a reference for this...
-\end{proof}
 
 We conclude this section with some comments about \emph{sets} of rate matrices. First, note that the set of \emph{all} rate matrices, $\mathcal{R}$, is closed under finite sums and multiplication with non-negative scalars. Next, consider any set $\rateset\subseteq\mathcal{R}$ of rate matrices. Then $\rateset$ is said to be \emph{non-empty} if $\rateset\neq\emptyset$ and $\rateset$ is said to be \emph{bounded} if $\norm{\rateset}<+\infty$. The following proposition provides a simple alternative characterization of boundedness.
 
@@ -390,7 +387,7 @@ A set of rate matrices $\rateset\subseteq\mathcal{R}$ is bounded if and only if
 
 In the previous section, we used the notation $T_t^s$ for the transition matrix containing the probabilities of moving from a state at time $t$, to a state at time $s$. We here consider \emph{families} of these transition matrices. In particular, such a family $\mathcal{T}$ has transition matrices $T_t^s$ defined for all $t,s\in\realsnonneg$ such that $t\leq s$. 
 
-We already mentioned in the previous section that it is reasonable to assume that $T_t^t=I$. If the transition matrices of a family $\mathcal{T}$ satisfy this property, and furthermore the \emph{semi-group} {\bf CITE} property given by Equation~\ref{eq:transmatrixproduct} below, we call this family a \emph{transition matrix system}.
+We already mentioned in the previous section that it is reasonable to assume that $T_t^t=I$. If the transition matrices of a family $\mathcal{T}$ satisfy this property, and furthermore the \emph{semi-group} property given by Equation~\ref{eq:transmatrixproduct} below, we call this family a \emph{transition matrix system}.
 
 \begin{definition}[Transition Matrix System]\label{def:trans_mat_system}
 A \emph{transition matrix system} $\mathcal{T}$ is a family of transition matrices $T_t^s$, defined for all $t,s\in\realsnonneg$ with $t\leq s$, such that
@@ -434,9 +431,7 @@ We call this family $\mathcal{T}_Q$ the \emph{exponential transition matrix syst
 \label{prop:systemQ}
 For any $Q\in\mathcal{R}$, $\mathcal{T}_Q$ is a well-behaved transition matrix system.
 \end{proposition}
-\begin{proof}
-*** still need to check this *** trivial ***
-\end{proof}
+
 This exponential transition matrix system corresponding to a $Q\in\mathcal{R}$ will turn out to play a large role in the context of continuous-time Markov chains. We return to this in Section~\ref{sec:cont_time_markov_chains}.
 
 \subsection{Restricted Transition Matrix Systems}
@@ -522,7 +517,7 @@ Because each of these component transition matrices corresponds to some exponent
 \begin{equation*}
 \left(e^{Q_1\Delta_j}\right), ~~\left(e^{Q_2\Delta_{j+1}}\right)\left(e^{Q_1(\Delta_j-\Delta_{j+1})}\right), ~~\left(e^{Q_1\Delta_{j+2}}\right)\left(e^{Q_2(\Delta_{j+1}-\Delta_{j+2})}\right)\left(e^{Q_1(\Delta_j-\Delta_{j+1})}\right), \ldots
 \end{equation*}
-Because $Q_1$ and $Q_2$ were taken to commute, meaning that $Q_1Q_2=Q_2Q_1$, the matrix exponential is well-known~{\bf CITE} to satisfy $e^{Q_1\Delta_1'}e^{Q_2\Delta_2'}=e^{Q_2\Delta_2'}e^{Q_1\Delta_1'}=e^{Q_1\Delta_1' + Q_2\Delta_2'}$, for any $\Delta_1',\Delta_2'\in\realsnonneg$. Therefore, the above sequence can equivalently be written
+Because $Q_1$ and $Q_2$ were taken to commute, meaning that $Q_1Q_2=Q_2Q_1$, the matrix exponential is well-known~\cite[Theorem 5]{van2006study} to satisfy $e^{Q_1\Delta_1'}e^{Q_2\Delta_2'}=e^{Q_2\Delta_2'}e^{Q_1\Delta_1'}=e^{Q_1\Delta_1' + Q_2\Delta_2'}$, for any $\Delta_1',\Delta_2'\in\realsnonneg$. Therefore, the above sequence can equivalently be written
 \begin{align*}
 %& e^{Q_1\Delta_j}, ~~e^{Q_2\Delta_{j+1}}e^{Q_1(\Delta_j-\Delta_{j+1})}, ~~e^{Q_2(\Delta_{j+1}-\Delta_{j+2})}e^{Q_1(\Delta_j-\Delta_{j+1} + \Delta_{j+2})},\ldots \\
 & e^{Q_1\Delta_j}, ~~e^{Q_1(\Delta_j-\Delta_{j+1}) + Q_2\Delta_{j+1}}, ~~e^{Q_1(\Delta_j-\Delta_{j+1} + \Delta_{j+2}) + Q_2(\Delta_{j+1}-\Delta_{j+2})},\ldots
@@ -2384,6 +2379,16 @@ Simply check each of the properties.
 
 \begin{proof}[Proof of Proposition~\ref{prop:rate_from_stochastic_matrix}]
 This proof is analogous to that of Proposition~\ref{prop:stochastic_from_rate_matrix}; simply verify each of the properties in Definition~\ref{def:rate_matrix}.
+\end{proof}
+
+\begin{proof}[Proof of Proposition~\ref{prop:systemQ}]
+We start by showing that $\mathcal{T}_Q$ is a transition matrix system. Consider any $t,r,s\in\realsnonneg$ such that $t\leq r\leq s$. It follows from~\cite[Theorem 2.1.1]{norris1998markov} that $T_t^s=T_t^rT_r^s$, and $T_t^t=I$. Because the $t,r,s$ are arbitrary, it follows from Definition~\ref{def:trans_mat_system} that $\mathcal{T}_Q$ is a transition matrix system.
+
+To prove that $\mathcal{T}_Q$ is well-behaved, note that for any $t\in\realsnonneg$, by Lemma~{\bf REF}, the quantity $\nicefrac{\partial}{\partial s}\left[T_t^s\right]\big\vert_{s=t}=Q$. Hence,
+\begin{equation*}
+\limsup_{\Delta\to 0^+}\frac{1}{\Delta}\norm{T_t^{t+\Delta}-I} = \norm{\frac{\partial}{\partial s}\left[T_t^s\right]\Big\vert_{s=t}} = \norm{Q} < \infty\,.
+\end{equation*}
+Because this holds for any $t\in\realsnonneg$, the first condition in Equation~\eqref{eq:wellbehavedtransitionmatrixsystem} is satisfied. A similar argument shows that also the second condition is satisfied for all $t\in\realspos$, and hence $\mathcal{T}_Q$ is well-behaved.
 \end{proof}
 
 \begin{lemma}\label{lemma:recursive}
