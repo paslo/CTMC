@@ -29,7 +29,7 @@
 \newtheorem{exmp}{Example}%[section]
  
 \renewcommand{\ttdefault}{cmtt}
-\newtheorem{theorem}{Theorem}
+\newtheorem{theorem}{Theorem}[section]
 \newtheorem{proposition}[theorem]{Proposition}
 \newtheorem{corollary}[theorem]{Corollary}
 \newtheorem{lemma}[theorem]{Lemma}
@@ -155,7 +155,7 @@ Lorem ipsum.
 
 Continuous-time Markov chains are models that are used to describe the behavior of dynamical systems under stochastic uncertainty. They describe the stochastic evolution of such a system through a discrete state-space and over a continuous time-dimension. This class of models has found widespread applications in such fields as queuing theory~\cite{asmussen2008applied,bolch2006queueing}, mathematical finance~\cite{rolski2009stochastic, elliott2013default, sass2004optimizing}, epidemiology~\cite{jackson2003multistate, lemey2009reconstructing, duffy1995estimation}, and system reliability analysis~\cite{gokhale2004analysis, wang2007reliability, besnard2010approach}, among others~\cite{yin2012continuous} {\bf CITE} {\bf CITE}.
 
-We here consider \emph{imprecise continuous-time Markov chains}, which can be used to robustly model systems for which often-made assumptions need not hold. Such assumptions may include time-homogeneity, whereby the behavior of the system is independent of the absolute point in time at which it is considered. Other such assumptions are the Markov property or differentiability of the state-transition probabilities. The former means that the future behavior of the system is independent of its history, given the current state. The differentiability assumption leads to convenient analytic expressions but might not hold if, e.g., the system is exposed to external perturbations. 
+We here consider \emph{imprecise continuous-time Markov chains}, which can be used to robustly model systems for which often-made assumptions need not hold. Such assumptions may include time-homogeneity, whereby the behavior of the system is independent of the absolute point in time at which it is considered. Other such assumptions are the Markov property and differentiability of the state-transition probabilities. The former means that the future behavior of the system is independent of its history, given the current state. The differentiability assumption leads to convenient analytic expressions but might not hold if, e.g., the system is exposed to external perturbations. 
 
 %As in any modeling task, simplifying assumptions tend to be made when working with these models. We would argue, however, that these assumptions are sometimes grounded more in pragmatism than in informed consideration of the underlying system. Such simplifying assumptions may include time-homogeneity, whereby the behavior of the system is independent of the absolute point in time at which it is considered; the Markov assumption, that the future behavior of the system only depends on its current state, and not on its history; or differentiability of the state-transition probabilities, which leads to convenient analytic expressions but which need not hold if, for example, the system is exposed to unknown external perturbations. 
 
@@ -163,11 +163,7 @@ We here consider \emph{imprecise continuous-time Markov chains}, which can be us
 
 The following provides a motivating toy example that will return throughout this work. Although the model in this example is clearly too simple to be of practical use, it does already illustrate that the simplifying assumptions above are often unrealistic.
 \begin{exmp}\label{ex:health_sick_exmp}
-Suppose that we want to model a person periodically becoming sick, and recovering after some time. We model this behavior using a binary state space $\{\text{\tt healthy, sick}\}$, and denote with the following diagram the possible transitions between these states:
-\begin{equation*}
-(\text{\tt healthy}) \rightleftarrows (\text{\tt sick})
-\end{equation*}
-Thus, we consider two transitions: from {\tt healthy} to {\tt sick}, and from {\tt sick} to {\tt healthy}. A \emph{rate parameter} is then associated with each of these transitions, which quantifies the ``speed'' with which the model completes such a transition. A continuous-time Markov chain can then be used to answer probabilistic questions about this system.
+Suppose that we want to model a person periodically becoming sick, and recovering after some time. We model this behavior using a binary state space $\{\text{\tt healthy, sick}\}$, and consider the two possible state-transitions: from {\tt healthy} to {\tt sick}, and from {\tt sick} to {\tt healthy}. A \emph{rate parameter} is then associated with each of these transitions, which quantifies the ``speed'' with which the model completes such a transition. A continuous-time Markov chain can then be used to answer probabilistic questions about this system.
 
 For instance, we might be interested in the probability $P(X_s={\tt sick}\,\vert\,X_t={\tt healthy})$ of the person being sick at time $s$, given that he or she is healthy at time $t$. Under an assumption of time-homogeneity, this probability would not depend on the absolute values of $t$ and $s$, but only on the relative difference $(s-t)$. This assumption might therefore be invalid if, e.g., there is a seasonal trend to the disease (it might be more likely to contract this disease during the winter).
 
@@ -182,9 +178,9 @@ As a final example, differentiability assumptions are often made about the proba
 \end{exmp}
 From a practical point of view, once such a model is formulated and numerical estimates for its parameters have been obtained, one is typically interested in computing the expected value of some function with respect to this model. Such a function might be the expected utility of some financial strategy~\cite{sass2004optimizing}; the expected time until some component in a system breaks down~\cite{besnard2010approach}; or the expected speed with which clinical symptoms of a disease develop~\cite{duffy1995estimation}. It is of interest, therefore, to robustify such assessments not only against uncertain parameter estimates, but also against possibly incorrect assumptions like the ones discussed above. 
 
-In particular, it would be useful to have a framework that can jointly deal with these different types of uncertainty and model misspecifications. Indeed, methods for working with uncertain parameter estimates include for example Bayesian techniques~\cite{insua2012bayesian}, and plenty of work has been done on modeling non-homogeneous systems (see, e.g.,~\cite{rindos1995exact,aalen1978empirical,johnson1989nonhomogeneous}). However, as far as we can tell, much less work has been done on dropping the Markovian and differentiability assumptions.
+In particular, it would be useful to have a framework that can jointly deal with these different types of uncertainty and model misspecifications. Indeed, methods for working with uncertain parameter estimates include for example Bayesian techniques~\cite{insua2012bayesian}, and plenty of work has been done on modeling non-homogeneous systems (see, e.g.,~\cite{rindos1995exact,aalen1978empirical,johnson1989nonhomogeneous}). However, as far as we can tell, much less work has been done on dropping the Markovian and differentiability assumptions. Frameworks for jointly dealing with these different types of uncertainty are also scarce, if not non-existent.
 
-Therefore, we turn in this work to the field of \emph{imprecise probability}~\cite{Walley:1991vk}. Here, rather than work with a single model, say $P$, we jointly consider some \emph{set} of models $\mathcal{P}$. And, instead of computing the expectation $\mathbb{E}_P[f(\cdot)]$ of some function $f$ with respect to a single model $P$, we are then interested in the \emph{lower-} and \emph{upper expectation} with respect to this set $\mathcal{P}$\footnote{We adopt in this work the ``sensitivity analysis'' interpretation of imprecise probability, by explicitly considering sets of stochastic models. Specifically, it is also possible to instead take the lower- and upper expectation as themselves being the elementary objects of interest. We refer to {\bf CITE} {\bf CITE} {\bf CITE} for further discussion on this.}. These quantities are defined, respectively, as
+In order to formulate such a framework here, we turn in this work to the field of \emph{imprecise probability}~\cite{Walley:1991vk}. Here, rather than work with a single model, say $P$, we jointly consider some \emph{set} of models $\mathcal{P}$. And, instead of computing the expectation $\mathbb{E}_P[f(\cdot)]$ of some function $f$ with respect to a single model $P$, we are then interested in the \emph{lower-} and \emph{upper expectation} with respect to this set $\mathcal{P}$\footnote{We adopt in this work the ``sensitivity analysis'' interpretation of imprecise probability, by explicitly considering sets of stochastic models. Specifically, it is also possible to instead take the lower- and upper expectation as themselves being the elementary objects of interest. We refer to {\bf CITE} {\bf CITE} {\bf CITE} for further discussion on this.}. These quantities are defined, respectively, as
 \begin{equation*}
 \underline{\mathbb{E}}[f(\cdot)] \coloneqq \inf\left\{\mathbb{E}_P[f(\cdot)]\,:\,P\in\mathcal{P}\right\}\,,\quad\text{and,}\quad\overline{\mathbb{E}}[f(\cdot)] \coloneqq \sup\left\{\mathbb{E}_P[f(\cdot)]\,:\,P\in\mathcal{P}\right\}\,.
 \end{equation*}
@@ -219,13 +215,13 @@ We use the notation $\ind{C}$ for the indicator function on a subset $C$ of any 
 
 \subsection{Sequences of Time Points}
 
-We will make extensive use of finite sequences of time points. Such a sequence is of the form $u\coloneqq t_0,t_1,\ldots,t_n$, with $n\in\nats$ and, for all $i\in\{0,\ldots,n\}$, $t_i\in\realsnonneg$. Let $\mathcal{U}$ denote the set of all such finite sequences that are \emph{non-degenerate}, meaning that for all $u\in\mathcal{U}$ with $u=t_0,\ldots,t_n$, it holds that $t_i\neq t_j$ for all $i,j\in\{0,\ldots,n\}$ such that $i\neq j$. Note that this does not prohibit \emph{empty} sequences. We therefore let $\mathcal{U}_\emptyset\coloneqq \mathcal{U}\setminus\{\emptyset\}$.
+We will make extensive use of finite sequences of time points. Such a sequence is of the form $u\coloneqq t_0,t_1,\ldots,t_n$, with $n\in\natswith$ and, for all $i\in\{0,\ldots,n\}$, $t_i\in\realsnonneg$. These sequences are taken to be ordered, meaning that for all $i,j\in\{0,\ldots,n\}$ with $i<j$, it holds that $t_i<t_j$. Let $\mathcal{U}$ denote the set of all such finite sequences that are \emph{non-degenerate}, meaning that for all $u\in\mathcal{U}$ with $u=t_0,\ldots,t_n$, it holds that $t_i\neq t_j$ for all $i,j\in\{0,\ldots,n\}$ such that $i\neq j$. Note that this does not prohibit \emph{empty} sequences. We therefore let $\mathcal{U}_\emptyset\coloneqq \mathcal{U}\setminus\{\emptyset\}$.
 
 For any finite sequence $u$ of time points, let $\max u\coloneqq \max\{t_i:i\in\{0,\ldots,n\}\}$. For any time point $t\in\realsnonneg$, we then write $t>u$ if $t>\max u$, and similarly for other inequalities. If $u=\emptyset$, then $t>u$ is taken to be trivially true, regardless of the value of $t$. We denote with $\mathcal{U}_{<t}\subset\mathcal{U}$ the set of all sequences $u\in\mathcal{U}$ for which $u<t$, and, again, similarly for other inequalities.
 
-When working with finite sequences of time points, we use set-theoretic notation to operate on them. For example, for any $u,v\in\mathcal{U}$, we let $u\cup v$ denote the concatenation of $u$ and $v$. Similarly, for any $s\in\realsnonneg$ and any $u\in\mathcal{U}_{<s}$ with $u=t_0,\ldots,t_n$, we denote with $u\cup\{s\}$ the sequence $t_0,\ldots,t_n,s$.
+Note that such a sequence $u$ is always a finite set of real-valued time points, meaning that $u\subset\realsnonneg$. As such, we use set-theoretic notation to operate on such sequences, where the preservation of the ordering is implied.  For example, for any $u,v\in\mathcal{U}$, we let $u\cup v$ denote the ordered union of $u$ and $v$. Similarly, for any $s\in\realsnonneg$ and any $u\in\mathcal{U}_{<s}$ with $u=t_0,\ldots,t_n$, we denote with $u\cup\{s\}$ the sequence $t_0,\ldots,t_n,s$.
 
-As a special case, we consider finite sequences of time points that partition a given time interval $[t,s]$, with $t,s\in\realsnonneg$ such that $t\leq s$. Such a sequence is taken to be ordered, and includes the end-points of this interval.  Thus, the sequence is of the form $t=t_0< t_1<\cdots< t_n=s$. We denote the set of all such sequences by $\mathcal{U}_{[t,s]}$. Because these sequences are non-degenerate, we must have for any $u\in\mathcal{U}_{[t,t]}$ that $u=t$. For any $u\in\mathcal{U}_{[t,s]}$ with $u=t_0,\ldots,t_n$, we define the sequential differences $\Delta_i^u\coloneqq t_i-t_{i-1}$, for all $i\in\{1,\ldots,n\}$. We then use $\sigma(u)\coloneqq \max\{\Delta_i^u:i\in\{1,\ldots,n\}\}$ to denote the maximum such difference.
+As a special case, we consider finite sequences of time points that partition a given time interval $[t,s]$, with $t,s\in\realsnonneg$ such that $t\leq s$. Such a sequence is taken to include the end-points of this interval.  Thus, the sequence is of the form $t=t_0< t_1<\cdots< t_n=s$. We denote the set of all such sequences by $\mathcal{U}_{[t,s]}$. Because these sequences are non-degenerate, we must have for any $u\in\mathcal{U}_{[t,t]}$ that $u=t$. For any $u\in\mathcal{U}_{[t,s]}$ with $u=t_0,\ldots,t_n$, we define the sequential differences $\Delta_i^u\coloneqq t_i-t_{i-1}$, for all $i\in\{1,\ldots,n\}$. We then use $\sigma(u)\coloneqq \max\{\Delta_i^u:i\in\{1,\ldots,n\}\}$ to denote the maximum such difference.
 
 \subsection{State Space and Functions}\label{sec:multivar_notation}
 
@@ -308,9 +304,11 @@ $\norm{Af}\leq\norm{A}\norm{f}$
 
 \section{Transition Matrix Systems}\label{sec:systems}
 
-We provide in this section some tools that will later be useful for characterizing continuous-time Markov chains. Because we have not formally defined this notion yet, the definitions below can be taken to be purely algebraic constructs. However, whenever possible, we attempt to provide some intuition on the context in which they will be used.
+We provide in this section some definitions that will later be useful for characterizing continuous-time Markov chains. Because we have not formally defined this notion yet, the definitions below can be taken to be purely algebraic constructs. 
 
-In what follows, suffice it to say that a continuous-time Markov chain is a construct that at each time $t$ is said to be in a state $x\in\states$ and, as time elapsed, moves through this state space $\states$ in some stochastic fashion. We here define tools with which this stochastic behavior can be conveniently represented at each point in time.
+The reason that we give them in advance, instead of where we first require them, is so as not to distort the line of reasoning in Sections~\ref{sec:stochastic_processes} and~\ref{sec:cont_time_markov_chains} with the representational definitions that we give here. However, whenever possible, we attempt to provide some intuition on the context in which these definitions will be used.
+
+In what follows, it suffices to say that a continuous-time Markov chain is a construct that at each time $t$ is said to be in a state $x\in\states$ and, as time elapsed, moves through this state space $\states$ in some stochastic fashion. We here define tools with which this stochastic behavior can be conveniently represented at each point in time.
 
 \subsection{Transition (Rate) Matrices}\label{sec:trans_rate_matrices}
 
@@ -365,7 +363,7 @@ Consider any transition matrix $T$, and any $\Delta\in\realspos$. Then, the matr
 \end{proposition}
 Note that Proposition~\ref{prop:rate_from_stochastic_matrix} essentially states that the finite-difference $\nicefrac{1}{\Delta}(T_t^{t+\Delta} - T_t^t)$ is a rate matrix. Intuitively, if we now take the limit as this $\Delta$ goes to zero, this states that the derivative of a continuously time-dependent transition matrix is given by some rate matrix $Q\in\mathcal{R}$---assuming that this limit exists, of course. We will make this connection more explicit Section~\ref{sec:stochastic_processes}.
 
-We next introduce a tool that is often seen in the context of continuous-time Markov chains: the \emph{matrix exponential}~\cite{van2006study} of a rate matrix $Q$. This matrix exponential is denoted $e^A$ for any matrix $A$. There are various ways in which the matrix exponential can be defined. We refer to~\cite{van2006study} for examples, and will consider some specific definitions later in this work.
+We next introduce a function that is often seen in the context of continuous-time Markov chains: the \emph{matrix exponential}~\cite{van2006study} of a rate matrix $Q$. This matrix exponential is denoted $e^A$ for any matrix $A$. There are various ways in which the matrix exponential can be defined. We refer to~\cite{van2006study} for examples, and will consider some specific definitions later in this work.
 We here simply state the following well-known result.
 \begin{proposition}\cite[Theorem 2.1.2]{norris1998markov}\label{prop:stochastic_from_exponential}
 Consider any rate matrix $Q\in\mathcal{R}$, and any $\Delta\in\realsnonneg$. Then, $e^{Q\Delta}$ is a transition matrix.
@@ -375,13 +373,11 @@ We conclude this section with some comments about \emph{sets} of rate matrices. 
 
 \begin{proposition}\label{prop:alternativedefforbounded}
 A set of rate matrices $\rateset\subseteq\mathcal{R}$ is bounded if and only if
-\begin{equation*}
+\begin{equation}\label{eq:alternative_bounded}
 \inf\left\{Q(x,x)\colon Q\in\rateset\right\}>-\infty\text{~~for all $x\in\states$.}
-\end{equation*}
+\end{equation}
 \end{proposition}
-\begin{proof}
-*** still need to check this *** {\bf TODO}
-\end{proof}
+
 
 \subsection{Transition Matrix Systems}
 
@@ -390,10 +386,9 @@ In the previous section, we used the notation $T_t^s$ for the transition matrix 
 We already mentioned in the previous section that it is reasonable to assume that $T_t^t=I$. If the transition matrices of a family $\mathcal{T}$ satisfy this property, and furthermore the \emph{semi-group} property given by Equation~\ref{eq:transmatrixproduct} below, we call this family a \emph{transition matrix system}.
 
 \begin{definition}[Transition Matrix System]\label{def:trans_mat_system}
-A \emph{transition matrix system} $\mathcal{T}$ is a family of transition matrices $T_t^s$, defined for all $t,s\in\realsnonneg$ with $t\leq s$, such that
+A \emph{transition matrix system} $\mathcal{T}$ is a family of transition matrices $T_t^s$, defined for all $t,s\in\realsnonneg$ with $t\leq s$, such that for all $t,r,s\in\realsnonneg$ with $t\leq r\leq s$, it holds that
 \begin{equation}\label{eq:transmatrixproduct}
-T_t^s=T_t^r T_r^s
-\text{~~for all $t\leq r\leq s$,}
+T_t^s=T_t^r T_r^s\,,
 \end{equation}
 and $T_t^t=I$ for all $t\in\realsnonneg$.
 \end{definition}
@@ -436,7 +431,7 @@ This exponential transition matrix system corresponding to a $Q\in\mathcal{R}$ w
 
 \subsection{Restricted Transition Matrix Systems}
 
-We finally consider another tool that will be useful later; restrictions of transition matrix systems to some specified interval of the time-line $\realsnonneg$. An interval $\mathbf{I}$ is simply any subset $\mathbf{I}\subseteq\realsnonneg$ that is connected, meaning that for any $t,s\in\mathbf{I}$ such that $t\leq s$, and any $r\in[t,s]$, it holds that $r\in\mathbf{I}$. 
+We finally consider another construct that will be useful later; restrictions of transition matrix systems to some specified interval of the time-line $\realsnonneg$. An interval $\mathbf{I}$ is simply any subset $\mathbf{I}\subseteq\realsnonneg$ that is connected, meaning that for any $t,s\in\mathbf{I}$ such that $t\leq s$, and any $r\in[t,s]$, it holds that $r\in\mathbf{I}$. 
 
 For any transition matrix system $\mathcal{T}$ and any interval $\mathbf{I}\subseteq\realsnonneg$, let $\mathcal{T}^\mathbf{I}$ denote the family of transition matrices $T_t^s$ corresponding to $\mathcal{T}$, for all $t,s\in\mathbf{I}$ such that $t\leq s$.
 %\begin{equation*}
@@ -456,26 +451,33 @@ We will henceforth call $\mathcal{T}^{\mathbf{I}}$ well-behaved if it satisfies 
 
 Now, because these restricted transition matrix systems are only defined on some given interval, it will be useful to define a concatenation operator between two such systems defined on adjacent intervals. We will say that two intervals $\mathbf{I},\mathbf{J}\subseteq\realsnonneg$ are \emph{adjacent} if, without loss of generality, $\mathbf{I}$ is closed on the right and $\mathbf{J}$ is closed on the left, and $\max\mathbf{I}=\min\mathbf{J}$. 
 
-Then, for any two adjacent intervals $\mathbf{I},\mathbf{J}\subseteq\realsnonneg$, and any two restricted transition matrix systems $\mathcal{T}^{\mathbf{I}}$ and $\mathcal{T}^{\mathbf{J}}$, let $r\coloneqq\max\mathbf{I}=\min\mathbf{J}$, and let $\presuper{i}T_t^s$ and $\presuper{j}T_t^s$ denote the transition matrices corresponding to $\mathcal{T}^{\mathbf{I}}$ and $\mathcal{T}^{\mathbf{J}}$, respectively. Consider the family of transition matrices $T_t^s$, defined by
+\begin{definition}[Concatenation Operator]
+For any two adjacent intervals $\mathbf{I},\mathbf{J}\subseteq\realsnonneg$ and any two restricted transition matrix systems $\mathcal{T}^{\mathbf{I}}$ and $\mathcal{T}^{\mathbf{J}}$, the concatenation of $\mathcal{T}^{\mathbf{I}}$ and $\mathcal{T}^{\mathbf{J}}$ is denoted $\mathcal{T}^\mathbf{I}\otimes\mathcal{T}^\mathbf{J}$, and defined as the family of transition matrices $T_t^s$ given by
 \begin{equation*}
 T_t^s \coloneqq \begin{cases}
 \presuper{i}T_t^s & \text{if $t,s\in\mathbf{I}$} \\
 \presuper{j}T_t^s & \text{if $t,s\in\mathbf{J}$} \\
 \presuper{i}T_t^r\presuper{j}T_r^s & \text{if $t\in\mathbf{I}$ and $s\in\mathbf{J}$}
-\end{cases}\text{~~~for all $t,s\in\mathbf{I}\cup\mathbf{J}$ such that $t\leq s$.}
+\end{cases}\text{~~~for all $t,s\in\mathbf{I}\cup\mathbf{J}$ such that $t\leq s$,}
 \end{equation*}
-We denote this family of transition matrices by $\mathcal{T}^\mathbf{I}\otimes\mathcal{T}^\mathbf{J}$.
+where $r\coloneqq\max\mathbf{I}=\min\mathbf{J}$, and $\presuper{i}T_t^s$ and $\presuper{j}T_t^s$ denote the transition matrices corresponding to $\mathcal{T}^{\mathbf{I}}$ and $\mathcal{T}^{\mathbf{J}}$, respectively.
+\end{definition}
+%Then, for any two adjacent intervals $\mathbf{I},\mathbf{J}\subseteq\realsnonneg$, and any two restricted transition matrix systems $\mathcal{T}^{\mathbf{I}}$ and $\mathcal{T}^{\mathbf{J}}$, let $r\coloneqq\max\mathbf{I}=\min\mathbf{J}$, and let $\presuper{i}T_t^s$ and $\presuper{j}T_t^s$ denote the transition matrices corresponding to $\mathcal{T}^{\mathbf{I}}$ and $\mathcal{T}^{\mathbf{J}}$, respectively. Consider the family of transition matrices $T_t^s$, defined by
+%\begin{equation*}
+%T_t^s \coloneqq \begin{cases}
+%\presuper{i}T_t^s & \text{if $t,s\in\mathbf{I}$} \\
+%\presuper{j}T_t^s & \text{if $t,s\in\mathbf{J}$} \\
+%\presuper{i}T_t^r\presuper{j}T_r^s & \text{if $t\in\mathbf{I}$ and $s\in\mathbf{J}$}
+%\end{cases}\text{~~~for all $t,s\in\mathbf{I}\cup\mathbf{J}$ such that $t\leq s$.}
+%\end{equation*}
+%We denote this family of transition matrices by $\mathcal{T}^\mathbf{I}\otimes\mathcal{T}^\mathbf{J}$.
 
 %\begin{align*}
 %\mathcal{T}^{\mathbf{I}} \otimes \mathcal{T}^{\mathbf{J}} \coloneqq &\mathcal{T}^{\mathbf{I}} \cup \mathcal{T}^{\mathbf{J}} 
 % \cup \left\{T_t^s\coloneqq T_t^rT_r^{s}\,\Big\vert\,T_{t}^r\in\mathcal{T}^{\mathbf{I}},\,T_r^{s}\in\mathcal{T}^{\mathbf{J}},\,\forall t\in\mathbf{I},\,\forall s\in\mathbf{J}\right\}\,.
 %\end{align*}
 \begin{proposition}\label{prop:concat_restr_trans_mat_systems_is_system}
-Consider two adjacent intervals $\mathbf{I},\mathbf{J}\subseteq\realsnonneg$, and any two restricted transition matrix systems $\mathcal{T}^{\mathbf{I}}$ and $\mathcal{T}^{\mathbf{J}}$. Then,
-\begin{equation*}
-\mathcal{T}^{\mathbf{I}\cup \mathbf{J}} \coloneqq \mathcal{T}^{\mathbf{I}}\otimes \mathcal{T}^{\mathbf{J}}
-\end{equation*}
-is a restricted transition matrix system defined on $\mathbf{I}\cup\mathbf{J}$. Furthermore, if both $\mathcal{T}^{\mathbf{I}}$ and $\mathcal{T}^{\mathbf{J}}$ are well behaved, then $\mathcal{T}^{\mathbf{I}\cup\mathbf{J}}$ is also well-behaved.
+Consider two adjacent intervals $\mathbf{I},\mathbf{J}\subseteq\realsnonneg$, and any two restricted transition matrix systems $\mathcal{T}^{\mathbf{I}}$ and $\mathcal{T}^{\mathbf{J}}$. Then, their concatenation $\mathcal{T}^{\mathbf{I}\cup \mathbf{J}} \coloneqq \mathcal{T}^{\mathbf{I}}\otimes \mathcal{T}^{\mathbf{J}}$ is a restricted transition matrix system defined on $\mathbf{I}\cup\mathbf{J}$. Furthermore, if both $\mathcal{T}^{\mathbf{I}}$ and $\mathcal{T}^{\mathbf{J}}$ are well behaved, then $\mathcal{T}^{\mathbf{I}\cup\mathbf{J}}$ is also well-behaved.
 \end{proposition}
 
 \begin{exmp}
@@ -487,15 +489,18 @@ Then, $\mathcal{T}$ is a transition matrix system, and because $\mathcal{T}_{Q_1
 \exampleend
 \end{exmp}
 
-We now finally give a powerful theoretical result that we will return to later. For any interval $\mathbf{I}\subseteq\realsnonneg$, let $\mathbb{T}^{\mathbf{I}}$ denote the set of \emph{all} restricted transition matrix systems defined on $\mathbf{I}$. Then, for any two restricted transition matrix systems $\mathcal{T}^\mathbf{I}$ and $\mathcal{S}^\mathbf{I}$ defined on the same interval, we define a metric $d$ as
+We will finally find it useful to define a metric between any two restricted transition matrix systems $\mathcal{T}^\mathbf{I}$ and $\mathcal{S}^\mathbf{I}$ defined on the same interval. We define this metric $d$ as
 \begin{equation}\label{eq:trans_mat_system_metric}
 d(\mathcal{T}^{\mathbf{I}},\mathcal{S}^{\mathbf{I}}) \coloneqq \sup\left\{\norm{T_t^s - S_t^s}\,:\,t,s\in\mathbf{I},\,t\leq s\right\}\,,
 \end{equation}
 where, for all $t,s\in\mathbf{I}$, it is understood that $T_t^s$ corresponds to $\mathcal{T}^{\mathbf{I}}$ and $S_t^s$ to $\mathcal{S}^{\mathbf{I}}$.
+
+We now give a powerful theoretical result that we will return to later. 
+
 \begin{proposition}\label{lemma:restricted_trans_mat_system_cauchy_converges}
 Consider any interval $\mathbf{I}\subseteq\realsnonneg$, let $\mathbb{T}^{\mathbf{I}}$ be the set of all restricted transition matrix systems on $\mathbf{I}$ and let $d$ be the metric that is defined in Equation~\eqref{eq:trans_mat_system_metric}. The metric space $\smash{(\mathbb{T}^{\mathbf{I}},d)}$ is then complete.
 \end{proposition}
-Note that this result includes as a special case completeness of the set $\mathbb{T}^{\realsnonneg}$ of all (unrestricted) transition matrix systems. The following provides an example of how this result can be used. This example also prepares some results that will be used again in other examples later in this work.
+Note that this result includes as a special case completeness of the set $\mathbb{T}^{\realsnonneg}$ of all (unrestricted) transition matrix systems. The following provides an example of how this result can be used. 
 
 \begin{exmp}\label{exmp:limit_trans_mat_system}
 Consider any two commuting rate matrices $Q_1,Q_2\in\mathcal{R}$ such that $Q_1\neq Q_2$, and let $\mathcal{T}_{Q_1}$ and $\mathcal{T}_{Q_2}$ be their exponential transition matrix systems. Consider now the sequence $\{\Delta_i\}_{i\in\nats}\coloneqq \{\nicefrac{1}{2^i}\}_{i\in\nats}$, define $\mathcal{T}_0\coloneqq \mathcal{T}_{Q_1}$, and, for all $i\in\nats$, let
@@ -505,19 +510,26 @@ Consider any two commuting rate matrices $Q_1,Q_2\in\mathcal{R}$ such that $Q_1\
 \mathcal{T}_{Q_2}^{[0,\Delta_i]}\otimes \mathcal{T}_{i-1}^{[\Delta_i,+\infty)} & \text{otherwise.}
 \end{cases}
 \end{equation*}
-The sequence $\{\mathcal{T}_i\}_{i\in\nats}$ is then clearly in $\mathbb{T}^{\realsnonneg}$. Furthermore, for any $i\in\nats$, the systems $\mathcal{T}_{i-1}$ and $\mathcal{T}_i$ differ the ``most'' on the interval $[0,\Delta_i]$. It should therefore be intuitively clear that $d(\mathcal{T}_{i-1},\mathcal{T}_i)\propto \Delta_i$, which can also be formally shown by combining Equations~\eqref{eq:trans_mat_system_metric} and~\eqref{eq:transmatrixproduct} with Lemmas~\ref{lemma:recursive} and~\ref{lemma:linearpartofexponential}. 
+The sequence $\{\mathcal{T}_i\}_{i\in\nats}$ is then clearly in $\mathbb{T}^{\realsnonneg}$. Furthermore, for any $i\in\nats$, the systems $\mathcal{T}_{i-1}$ and $\mathcal{T}_i$ differ the ``most'' on the interval $[0,\Delta_i]$. It should therefore be intuitively clear that $d(\mathcal{T}_{i-1},\mathcal{T}_i)\propto \Delta_i$, which can also be formally shown by combining Equations~\eqref{eq:trans_mat_system_metric} and~\eqref{eq:transmatrixproduct} with Lemmas~\ref{lemma:recursive} and~\ref{lemma:linearpartofexponential} in the appendix. 
 
-Therefore, and because $\{\Delta_i\}_{i\in\nats}\to0^+$, the limit $\mathcal{T}_*\coloneqq \lim_{i\to\infty}\mathcal{T}_i$ clearly exists and, by Proposition~\ref{lemma:restricted_trans_mat_system_cauchy_converges}, is a transition matrix system. It should also be intuitively clear that $\mathcal{T}_*$ is well-behaved, although a formal proof is rather lengthy and left as an exercise.
+Therefore, and because $\{\Delta_i\}_{i\in\nats}\to0^+$, the limit $\mathcal{T}_*\coloneqq \lim_{i\to\infty}\mathcal{T}_i$ clearly exists and, by Proposition~\ref{lemma:restricted_trans_mat_system_cauchy_converges}, is a transition matrix system. It should also be intuitively clear that $\mathcal{T}_*$ is well-behaved, however a formal proof is rather lengthy and left as an exercise.
+\end{exmp}
 
-We end with some comments about the transition matrices $\presuper{*}T_t^s$ corresponding to this limit $\mathcal{T}_*$. To this end, fix any $j\in\nats$, and consider first the $\presuper{i}T_0^{\Delta_j}$ corresponding to $\mathcal{T}_i$. Assume without loss of generality that $j$ is odd. Then, the sequence $\presuper{j}T_0^{\Delta_j},\presuper{j+1}T_0^{\Delta_j},\presuper{j+2}T_0^{\Delta_j},\ldots$ is clearly given by
+Thus, Proposition~\ref{lemma:restricted_trans_mat_system_cauchy_converges} allows us to prove the existence of limits of sequences of (restricted) transition matrix systems. Because this limit is then again a (restricted) transition matrix system, it will be a family $\mathcal{T}_*$ of transition matrices $\presuper{*}T_t^s$. In some cases, we will be interested in these matrices $\presuper{*}T_t^s$. The following example sketches how, for the particular case of the limit from Example~\ref{exmp:limit_trans_mat_system}, we may find closed-form expressions for these transition matrices. This example is included mostly in preparation of some other examples later in this work.
+\begin{exmp}
+Consider again the sequence $\{\mathcal{T}_i\}_{i\in\nats}$ from Example~\ref{exmp:limit_trans_mat_system}, with limit $\mathcal{T}_*\coloneqq \lim_{i\to\infty}\mathcal{T}_i$. We will be interested in the transition matrices $\presuper{*}T_t^s$ corresponding to this transition matrix system $\mathcal{T}_*$. 
+
+It follows from the proof of Proposition~\ref{lemma:restricted_trans_mat_system_cauchy_converges} that these transition matrices are given by $\presuper{*}T_t^s = \lim_{i\to\infty} \presuper{i}T_t^s$, where for all $i\in\nats$, $\presuper{i}T_t^s$ corresponds to $\mathcal{T}_i$. In what follows, we derive an explicit expression for the matrices $\presuper{*}T_t^{s}$, for the specific case where $t=0$ and $s\in\{\Delta_i\}_{i\in\nats}$.
+
+To this end, fix any $j\in\nats$, and consider first the $\presuper{i}T_0^{\Delta_j}$ corresponding to $\mathcal{T}_i$. Assume without loss of generality that $j$ is odd. Then, the sequence $\presuper{j}T_0^{\Delta_j},\presuper{j+1}T_0^{\Delta_j},\presuper{j+2}T_0^{\Delta_j},\ldots$ is clearly given by
 \begin{equation*}
 \left(\presuper{j}T_0^{\Delta_j}\right), ~~\left(\presuper{j+1}T_0^{\Delta_{j+1}}\right)\left(\presuper{j}T_{\Delta_{j+1}}^{\Delta_j}\right), ~~\left(\presuper{j+2}T_0^{\Delta_{j+2}}\right)\left(\presuper{j+1}T_{\Delta_{j+2}}^{\Delta_{j+1}}\right)\left(\presuper{j}T_{\Delta_{j+1}}^{\Delta_j}\right), \ldots
 \end{equation*}
-Because each of these component transition matrices corresponds to some exponential transition matrix system, this can equivalently be expressed as
+Because each of these component transition matrices corresponds to either $\mathcal{T}_{Q_1}$ or $\mathcal{T}_{Q_2}$, this can equivalently be expressed as
 \begin{equation*}
 \left(e^{Q_1\Delta_j}\right), ~~\left(e^{Q_2\Delta_{j+1}}\right)\left(e^{Q_1(\Delta_j-\Delta_{j+1})}\right), ~~\left(e^{Q_1\Delta_{j+2}}\right)\left(e^{Q_2(\Delta_{j+1}-\Delta_{j+2})}\right)\left(e^{Q_1(\Delta_j-\Delta_{j+1})}\right), \ldots
 \end{equation*}
-Because $Q_1$ and $Q_2$ were taken to commute, meaning that $Q_1Q_2=Q_2Q_1$, the matrix exponential is well-known~\cite[Theorem 5]{van2006study} to satisfy $e^{Q_1\Delta_1'}e^{Q_2\Delta_2'}=e^{Q_2\Delta_2'}e^{Q_1\Delta_1'}=e^{Q_1\Delta_1' + Q_2\Delta_2'}$, for any $\Delta_1',\Delta_2'\in\realsnonneg$. Therefore, the above sequence can equivalently be written
+Because $Q_1$ and $Q_2$ were taken to commute, meaning that $Q_1Q_2=Q_2Q_1$, the matrix exponential is well-known~\cite[Theorem 5]{van2006study} to satisfy $e^{Q_1\Delta_1'}e^{Q_2\Delta_2'}=e^{Q_1\Delta_1' + Q_2\Delta_2'}$, for any $\Delta_1',\Delta_2'\in\realsnonneg$. Therefore, the above sequence can equivalently be written
 \begin{align*}
 %& e^{Q_1\Delta_j}, ~~e^{Q_2\Delta_{j+1}}e^{Q_1(\Delta_j-\Delta_{j+1})}, ~~e^{Q_2(\Delta_{j+1}-\Delta_{j+2})}e^{Q_1(\Delta_j-\Delta_{j+1} + \Delta_{j+2})},\ldots \\
 & e^{Q_1\Delta_j}, ~~e^{Q_1(\Delta_j-\Delta_{j+1}) + Q_2\Delta_{j+1}}, ~~e^{Q_1(\Delta_j-\Delta_{j+1} + \Delta_{j+2}) + Q_2(\Delta_{j+1}-\Delta_{j+2})},\ldots
@@ -526,11 +538,11 @@ Because $Q_1$ and $Q_2$ were taken to commute, meaning that $Q_1Q_2=Q_2Q_1$, the
 %\begin{equation*}
 %e^{\Delta_j\left(Q_1(1) + Q_2(0)\right)}, ~~e^{\Delta_j\left(Q_1(\nicefrac{1}{2}) + Q_2(\nicefrac{1}{2})\right)}, ~~e^{\Delta_j(Q_1\left(\nicefrac{1}{2} + \nicefrac{1}{4}) + Q_2(\nicefrac{1}{4})\right)}, \ldots
 %\end{equation*}
-By focusing only on the subsequence $\presuper{j}T_0^{\Delta_j},\presuper{j+2}T_0^{\Delta_j},\presuper{j+4}T_0^{\Delta_j},\ldots$ containing the odd elements (note that $j$ is itself odd), it can rather easily---but not concisely---be shown that because $\{\Delta_i\}_{i\in\nats}=\{\nicefrac{1}{2^i}\}_{i\in\nats}$, it holds for all $k\in\natswith$ that, with $s_k\coloneqq \sum_{\ell=0}^k \nicefrac{1}{4^\ell} - 1$,
+By focusing only on the subsequence $\presuper{j}T_0^{\Delta_j},\presuper{j+2}T_0^{\Delta_j},\presuper{j+4}T_0^{\Delta_j},\ldots$ containing the odd elements (note that $j$ is itself odd), it can rather easily---but not concisely---be shown that because $\{\Delta_i\}_{i\in\nats}=\{\nicefrac{1}{2^i}\}_{i\in\nats}$, it holds for all $k\in\natswith$ that
 \begin{equation*}
-\presuper{j+2k}T_0^{\Delta_j} = e^{\Delta_j\left(Q_1(1-s_k) + Q_2s_k\right)}\,.
+\presuper{j+2k}T_0^{\Delta_j} = e^{\Delta_j\left(Q_1(1-s_k) + Q_2s_k\right)}\,,
 \end{equation*}
-Clearly, the limiting behavior of the sequence is therefore governed by the limiting behavior of the geometric power series $s_k$, and since $\lim_{k\to\infty}s_k=\nicefrac{1}{3}$, we find
+with $s_k\coloneqq \sum_{\ell=0}^k \nicefrac{1}{4^\ell} - 1$. Clearly, the limiting behavior of the sequence is therefore governed by the limiting behavior of the geometric power series $s_k$, and since $\lim_{k\to\infty}s_k=\nicefrac{1}{3}$, we find
 \begin{equation*}
 \presuper{*}T_0^{\Delta_j} = \lim_{i\to\infty} \presuper{i}T_0^{\Delta_j} = \lim_{k\to\infty} \presuper{j+2k}T_{0}^{\Delta_j} = \lim_{k\to\infty} e^{\Delta_j\left(Q_1(1-s_k) + Q_2s_k\right)} = e^{\Delta_j(Q_1(\nicefrac{2}{3}) + Q_2(\nicefrac{1}{3}))}\,,
 \end{equation*}
@@ -2381,38 +2393,56 @@ Simply check each of the properties.
 This proof is analogous to that of Proposition~\ref{prop:stochastic_from_rate_matrix}; simply verify each of the properties in Definition~\ref{def:rate_matrix}.
 \end{proof}
 
-\begin{proof}[Proof of Proposition~\ref{prop:systemQ}]
-We start by showing that $\mathcal{T}_Q$ is a transition matrix system. Consider any $t,r,s\in\realsnonneg$ such that $t\leq r\leq s$. It follows from~\cite[Theorem 2.1.1]{norris1998markov} that $T_t^s=T_t^rT_r^s$, and $T_t^t=I$. Because the $t,r,s$ are arbitrary, it follows from Definition~\ref{def:trans_mat_system} that $\mathcal{T}_Q$ is a transition matrix system.
-
-To prove that $\mathcal{T}_Q$ is well-behaved, note that for any $t\in\realsnonneg$, by Lemma~{\bf REF}, the quantity $\nicefrac{\partial}{\partial s}\left[T_t^s\right]\big\vert_{s=t}=Q$. Hence,
+\begin{proof}[Proof of Proposition~\ref{prop:alternativedefforbounded}]
+We start by proving that Equation~\eqref{eq:alternative_bounded} implies that $\rateset$ is bounded. To this end, assume that Equation~\eqref{eq:alternative_bounded} holds. Then,
+\begin{align*}
+\norm{\rateset} &= \sup\{\norm{Q}\,:\,Q\in\rateset\} \\
+ &= \sup\left\{\max\left\{\sum_{y\in\states}\abs{Q(x,y)}\,:\,x\in\states\right\}\,:\,Q\in\rateset\right\} \\
+ &= \max\left\{\sup\left\{\sum_{y\in\states}\abs{Q(x,y)}\,:\,Q\in\rateset\right\} \,:\,x\in\states\right\}\,.
+\end{align*}
+Because $\states$ is finite, this implies that there is some $x'\in\states$ such that
 \begin{equation*}
-\limsup_{\Delta\to 0^+}\frac{1}{\Delta}\norm{T_t^{t+\Delta}-I} = \norm{\frac{\partial}{\partial s}\left[T_t^s\right]\Big\vert_{s=t}} = \norm{Q} < \infty\,.
+\norm{\rateset} = \sup\left\{\sum_{y\in\states}\abs{Q(x',y)}\,:\,Q\in\rateset\right\}\,.
 \end{equation*}
-Because this holds for any $t\in\realsnonneg$, the first condition in Equation~\eqref{eq:wellbehavedtransitionmatrixsystem} is satisfied. A similar argument shows that also the second condition is satisfied for all $t\in\realspos$, and hence $\mathcal{T}_Q$ is well-behaved.
+Consider this $x'$. Then,
+\begin{align*}
+\norm{\rateset} = \sup\left\{\sum_{y\in\states}\abs{Q(x',y)}\,:\,Q\in\rateset\right\} &= \sup\left\{2\cdot\abs{Q(x',x')}\,:\,Q\in\rateset\right\} \\
+ &= 2\cdot\sup\left\{\abs{Q(x',x')}\,:\,Q\in\rateset\right\} \\
+ &= -2\cdot\inf\left\{-\abs{Q(x',x')}\,:\,Q\in\rateset\right\} \\
+ &= -2\cdot\inf\left\{Q(x',x')\,:\,Q\in\rateset\right\} < \infty\,,
+\end{align*}
+where the second and last equalities follow from Definition~\ref{def:rate_matrix}, and the final inequality follows from Equation~\eqref{eq:alternative_bounded}.
+
+We next show that if $\rateset$ is bounded, Equation~\eqref{eq:alternative_bounded} also holds. To this end, assume that $\norm{\rateset}<\infty$, and consider any $x\in\states$. Then,
+\begin{align*}
+\inf\{Q(x,x)\,:\,Q\in\rateset\} &\geq \inf\left\{ \min\{Q(y,y)\,:\,y\in\states \}\,:\,Q\in\rateset \right\} \\
+ &\geq \inf\left\{ \min\{2\cdot Q(y,y)\,:\,y\in\states \}\,:\,Q\in\rateset \right\} \\
+ &= \inf\left\{ -\max\{-2\cdot Q(y,y)\,:\,y\in\states \}\,:\,Q\in\rateset \right\} \\
+ &= \inf\left\{ -\max\{2\cdot \abs{Q(y,y)}\,:\,y\in\states \}\,:\,Q\in\rateset \right\} \\
+ &= \inf\left\{ -\max\left\{ \sum_{z\in\states}\abs{Q(y,z)}\,:\,y\in\states \right\}\,:\,Q\in\rateset \right\} \\
+ &= \inf\left\{ -\norm{Q}\,:\,Q\in\rateset \right\} \\
+ &= -\sup\left\{ \norm{Q}\,:\,Q\in\rateset \right\} \\
+ &= -\norm{\rateset} > -\infty\,,
+\end{align*}
+where the first and second inequalities follow from the fact that, by Definition~\ref{def:rate_matrix}, $Q(y,y)$ is non-positive, the third equality also follows from Definition~\ref{def:rate_matrix}, and the final inequality follows from the fact that $\rateset$ is bounded. Because the $x\in\states$ was arbitrary, Equation~\eqref{eq:alternative_bounded} now follows.
 \end{proof}
 
-\begin{lemma}\label{lemma:recursive}
-Consider two finite sequences $T_1,\ldots,T_n$ and $S_1,\ldots,S_n$ of transition matrices. Then
-\begin{equation*}
-\norm{\prod_{i=1}^nT_i - \prod_{i=1}^nS_i} \leq \sum_{i=1}^n \norm{T_i - S_i}.
-\end{equation*}
+\begin{lemma}{\cite[Theorem 2.1.1]{norris1998markov}}\label{lemma:deriv_exponential_trans}
+For any $Q\in\mathcal{R}$, the derivative of the matrix exponential $\nicefrac{d}{d \Delta}[e^{Q\Delta}]\big\vert_{\Delta=0} \coloneqq \lim_{\Delta\to 0^+}\nicefrac{1}{\Delta}(e^{Q\Delta}-I)$ exists, and satisfies $\nicefrac{d}{d \Delta}[e^{Q\Delta}]\big\vert_{\Delta=0} = Q$.
 \end{lemma}
-\begin{proof}
-This is a special case of Lemma~\ref{lemma:recursive_lower_trans}, which states a more general version.
-%We provide a proof by induction. Clearly, Equation~\eqref{eq:lemma_recursive_inequality} holds for $n=1$. Suppose that it holds for $n=k-1$. We show that it then also holds for $n=k$.
-%\begin{align*}
-%\norm{\prod_{i=1}^nA_i - \prod_{i=1}^nB_i} &= \norm{\prod_{i=1}^nA_i - \left(\prod_{i=1}^{n-1}A_i\right)B_n + \left(\prod_{i=1}^{n-1}A_i\right)B_n - \prod_{i=1}^nB_i} \\
-% &\leq \norm{\prod_{i=1}^nA_i - \left(\prod_{i=1}^{n-1}A_i\right)B_n} + \norm{\left(\prod_{i=1}^{n-1}A_i\right)B_n - \prod_{i=1}^nB_i} \\
-% &= \norm{\left(\prod_{i=1}^{n-1}A_i\right)(A_n - B_n)} + \norm{\left(\prod_{i=1}^{n-1}A_i - \prod_{i=1}^{n-1}B_i\right)B_n} \\
-% &\leq \norm{\prod_{i=1}^{n-1}A_i}\norm{A_n - B_n} + \norm{\prod_{i=1}^{n-1}A_i - \prod_{i=1}^{n-1}B_i}\norm{B_n} \\
-% &\leq \norm{A_n - B_n} + \norm{\prod_{i=1}^{n-1}A_i - \prod_{i=1}^{n-1}B_i} \\
-% &\leq \norm{A_n - B_n} + \sum_{i=1}^{n-1}\norm{A_i - B_i} = \sum_{i=1}^{n}\norm{A_i - B_i}\,.
-%\end{align*}
-%Here, in the second-to-last inequality, we used the fact that $\norm{A_i}\leq 1$ and $\norm{B_i}\leq 1$ for all $i\in\{1,\ldots,n\}$. In the final inequality, we used the induction hypothesis.
+
+\begin{proof}[Proof of Proposition~\ref{prop:systemQ}]
+We start by showing that $\mathcal{T}_Q$ is a transition matrix system. Consider any $t,r,s\in\realsnonneg$ such that $t\leq r\leq s$. It follows from the definition of $\mathcal{T}_Q$ and~\cite[Theorem 2.1.1]{norris1998markov} that $T_t^s=T_t^rT_r^s$, and $T_t^t=I$. Because the $t,r,s$ are arbitrary, it follows from Definition~\ref{def:trans_mat_system} that $\mathcal{T}_Q$ is a transition matrix system.
+
+To prove that $\mathcal{T}_Q$ is well-behaved, note that for any $t\in\realsnonneg$, by the definition of $\mathcal{T}_Q$ and Lemma~\ref{lemma:deriv_exponential_trans}, the quantity $\nicefrac{\partial}{\partial s}\left[T_t^s\right]\big\vert_{s=t}=Q$. Hence,
+\begin{equation*}
+\limsup_{\Delta\to 0^+}\frac{1}{\Delta}\norm{T_t^{t+\Delta}-I} = \norm{\frac{\partial}{\partial s}\left[T_t^s\right]\Big\vert_{s=t}} = \norm{Q} < \infty\,,
+\end{equation*}
+where the final inequality follows from the fact that $Q$ is real-valued. Because this holds for any $t\in\realsnonneg$, the first condition in Equation~\eqref{eq:wellbehavedtransitionmatrixsystem} is satisfied. A similar argument shows that also the second condition is satisfied for all $t\in\realspos$, and hence $\mathcal{T}_Q$ is well-behaved.
 \end{proof}
 
 \begin{proof}[Proof of Proposition~\ref{prop:concat_restr_trans_mat_systems_is_system}]
-For all $t,s\in\mathbf{I}\cup\mathbf{J}$ such that $t\leq s$, it follows from Proposition~\ref{lemma:compositiontransitionmatrix} that the matrix $T_t^s$ that corresponds to $\mathcal{T}^{\mathbf{I}\cup\mathbf{J}}$ is a transition matrix.Furthermore, for all $t\in\mathbf{I}\cup\mathbf{J}$, we have that either $t\in\mathbf{I}$ or $t\in\mathbf{J}$. In either case, we have that $T_t^t=I$, because either $T_t^t=\presuper{i}T_t^t=I$ or $T_t^t=\presuper{j}T_t^t=I$, with $\presuper{i}T_t^t$ and $\presuper{j}T_t^t$ corresponding to $\mathcal{T}^{\mathbf{I}}$ and $\mathcal{T}^{\mathbf{J}}$, respectively. It remains to show that for all $t,q,s\in\mathbf{I}\cup\mathbf{J}$ with $t\leq q\leq s$, it holds that
+For all $t,s\in\mathbf{I}\cup\mathbf{J}$ such that $t\leq s$, it follows from Proposition~\ref{lemma:compositiontransitionmatrix} that the matrix $T_t^s$ that corresponds to $\mathcal{T}^{\mathbf{I}\cup\mathbf{J}}$ is a transition matrix. Furthermore, for all $t\in\mathbf{I}\cup\mathbf{J}$, we have that either $t\in\mathbf{I}$ or $t\in\mathbf{J}$. In either case, we have that $T_t^t=I$, because either $T_t^t=\presuper{i}T_t^t=I$ or $T_t^t=\presuper{j}T_t^t=I$, with $\presuper{i}T_t^t$ and $\presuper{j}T_t^t$ corresponding to $\mathcal{T}^{\mathbf{I}}$ and $\mathcal{T}^{\mathbf{J}}$, respectively. It remains to show that for all $t,q,s\in\mathbf{I}\cup\mathbf{J}$ with $t\leq q\leq s$, it holds that
 \begin{equation*}
 T_t^s = T_t^qT_q^s\,.
 \end{equation*}
@@ -2429,6 +2459,25 @@ It remains to show that if $\mathcal{T}^{\mathbf{I}}$ and $\mathcal{T}^{\mathbf{
 Because this clearly holds for all $t\in\mathbf{I}\setminus\{r\}$ and all $t\in\mathbf{J}\setminus\{r\}$, the interesting case is to show that this holds for $t=r$. However, for all $\Delta\in\realspos$ we have that $T_r^{r+\Delta}$ corresponds to $\mathcal{T}^{\mathbf{J}}$, and $T_{r-\Delta}^{r}$ corresponds to $\mathcal{T}^{\mathbf{I}}$. Because both $\mathcal{T}^{\mathbf{I}}$ and $\mathcal{T}^{\mathbf{J}}$ are well-behaved, we find that $\mathcal{T}^{\mathbf{I}\cup\mathbf{J}}$ is also well-behaved at $t=r$. Hence, $\mathcal{T}^{\mathbf{I}\cup\mathbf{J}}$ is well-behaved.
 \end{proof}
 
+\begin{lemma}\label{lemma:recursive}
+Consider two finite sequences $T_1,\ldots,T_n$ and $S_1,\ldots,S_n$ of transition matrices. Then
+\begin{equation*}
+\norm{\prod_{i=1}^nT_i - \prod_{i=1}^nS_i} \leq \sum_{i=1}^n \norm{T_i - S_i}.
+\end{equation*}
+\end{lemma}
+\begin{proof}
+This is a special case of Lemma~\ref{lemma:recursive_lower_trans}, which states a more general version. We have included this version separately because Lemma~\ref{lemma:recursive_lower_trans} uses concepts that, on a chronological reading of this paper, would be undefined at this point.
+%We provide a proof by induction. Clearly, Equation~\eqref{eq:lemma_recursive_inequality} holds for $n=1$. Suppose that it holds for $n=k-1$. We show that it then also holds for $n=k$.
+%\begin{align*}
+%\norm{\prod_{i=1}^nA_i - \prod_{i=1}^nB_i} &= \norm{\prod_{i=1}^nA_i - \left(\prod_{i=1}^{n-1}A_i\right)B_n + \left(\prod_{i=1}^{n-1}A_i\right)B_n - \prod_{i=1}^nB_i} \\
+% &\leq \norm{\prod_{i=1}^nA_i - \left(\prod_{i=1}^{n-1}A_i\right)B_n} + \norm{\left(\prod_{i=1}^{n-1}A_i\right)B_n - \prod_{i=1}^nB_i} \\
+% &= \norm{\left(\prod_{i=1}^{n-1}A_i\right)(A_n - B_n)} + \norm{\left(\prod_{i=1}^{n-1}A_i - \prod_{i=1}^{n-1}B_i\right)B_n} \\
+% &\leq \norm{\prod_{i=1}^{n-1}A_i}\norm{A_n - B_n} + \norm{\prod_{i=1}^{n-1}A_i - \prod_{i=1}^{n-1}B_i}\norm{B_n} \\
+% &\leq \norm{A_n - B_n} + \norm{\prod_{i=1}^{n-1}A_i - \prod_{i=1}^{n-1}B_i} \\
+% &\leq \norm{A_n - B_n} + \sum_{i=1}^{n-1}\norm{A_i - B_i} = \sum_{i=1}^{n}\norm{A_i - B_i}\,.
+%\end{align*}
+%Here, in the second-to-last inequality, we used the fact that $\norm{A_i}\leq 1$ and $\norm{B_i}\leq 1$ for all $i\in\{1,\ldots,n\}$. In the final inequality, we used the induction hypothesis.
+\end{proof}
 
 \begin{proof}[Proof of Proposition~\ref{lemma:restricted_trans_mat_system_cauchy_converges}]
 Consider any sequence $\{\mathcal{T}_i^{\mathbf{I}}\}_{i\in\nats}$ in $\mathbb{T}^{\mathbf{I}}$ that is Cauchy. We will prove that this sequence converges to a limit that belongs to $\mathbb{T}^{\mathbf{I}}$. For all $i\in\nats$ and any $t,s\in\mathbf{I}$ such that $t\leq s$, we will use $\presuper{i}T_t^s$ to denote the transition matrix that corresponds to $\mathcal{T}_i^{\mathbf{I}}$. 
@@ -2445,7 +2494,7 @@ it follows from Equation~\eqref{eq:trans_mat_system_metric} that
 \end{equation}
 Clearly, for any $t,s\in\mathbf{I}$ such that $t\leq s$, this implies that the sequence $\{\presuper{i}T_t^s\}_{i\in\nats}$ is Cauchy. Since the set of all transition matrices---of the same finite dimension---is trivially complete, this implies that the sequence $\{\presuper{i}T_t^s\}_{i\in\nats}$ has a limit $\presuper{*}T_t^s$, and that this limit is a transition matrix. We use $\mathcal{T}_*^{\mathbf{I}}$ to denote the family of transition matrices that consists of these limits. %We will now prove that $\mathcal{T}_*^{\mathbf{I}}$ is a restricted transition matrix system.
 
-Fix any $t,r,s\in I$ such that $t\leq r\leq s$. Then for any $i\in\nats$, because $\mathcal{T}_i^{\mathbf{I}}$ is a restricted transition matrix system, we know  that $\presuper{i}T_t^t=I$ and $\presuper{i}T_t^s=\presuper{i}T_t^r\presuper{i}T_r^s$, which implies that $\norm{\presuper{*}T_t^t-I}=\norm{\presuper{*}T_t^t-\presuper{i}T_t^t}$ and, due to Lemma~\ref{lemma:recursive}, that
+Fix any $t,r,s\in \mathbf{I}$ such that $t\leq r\leq s$. Then for any $i\in\nats$, because $\mathcal{T}_i^{\mathbf{I}}$ is a restricted transition matrix system, we know  that $\presuper{i}T_t^t=I$ and $\presuper{i}T_t^s=\presuper{i}T_t^r\presuper{i}T_r^s$, which implies that $\norm{\presuper{*}T_t^t-I}=\norm{\presuper{*}T_t^t-\presuper{i}T_t^t}$ and, due to Lemma~\ref{lemma:recursive}, that
 \begin{align*}
 \norm{\presuper{*}T_t^s-\presuper{*}T_t^r\presuper{*}T_r^s}
 &\leq
