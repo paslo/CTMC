@@ -207,7 +207,7 @@ Throughout, most proofs and technical lemmas related to our results can be found
 
 \section{Preliminaries}\label{sec:prelim}
 
-We denote the reals as $\reals$, the non-negative reals as $\realsnonneg$, and the positive reals as $\realspos$. The natural numbers are denoted by $\nats$, and we also define $\nats_0\coloneqq\nats\cup\{0\}$. The rationals will be denoted by $\mathbb{Q}$.
+We denote the reals as $\reals$, the non-negative reals as $\realsnonneg$, and the positive reals as $\realspos$. For any $c\in\reals$, $\reals_{\geq c}$ and $\reals_{>c}$ have a similar meaning. The natural numbers are denoted by $\nats$, and we also define $\nats_0\coloneqq\nats\cup\{0\}$. The rationals will be denoted by $\mathbb{Q}$.
 
 Infinite sequences of quantities will be denoted $\{a_i\}_{i\in\nats}$, possibly with limit statements of the form $\{a_i\}_{i\in\nats}\to c$, which should be interpreted as $\lim_{i\to\infty}a_i=c$. If the elements of such a sequence belong to a space that is endowed with an ordering relation, we may write $\{a_i\}_{i\in\nats}\to c^+$ or $\{a_i\}_{i\in\nats}\to c^-$ if the limit is approached from above or below, respectively.
 
@@ -365,11 +365,11 @@ Consider any transition matrix $T$, and any $\Delta\in\realspos$. Then, the matr
 \end{proposition}
 Note that Proposition~\ref{prop:rate_from_stochastic_matrix} essentially states that the finite-difference $\nicefrac{1}{\Delta}(T_t^{t+\Delta} - T_t^t)$ is a rate matrix. Intuitively, if we now take the limit as this $\Delta$ goes to zero, this states that the derivative of a continuously time-dependent transition matrix is given by some rate matrix $Q\in\mathcal{R}$---assuming that this limit exists, of course. We will make this connection more explicit in Section~\ref{sec:stochastic_processes}.
 
-We next introduce a function that is often seen in the context of continuous-time Markov chains: the \emph{matrix exponential}~\cite{van2006study} $e^{Qt}$ of $Q t$, with $Q$ a rate matrix and $t\in\reals_{\geq0}$. %For any matrix $A$, its matrix exponential is denoted $e^A$. 
+We next introduce a function that is often seen in the context of continuous-time Markov chains: the \emph{matrix exponential}~\cite{van2006study} $e^{Q\Delta}$ of $Q \Delta$, with $Q$ a rate matrix and $\Delta\in\reals_{\geq0}$. %For any matrix $A$, its matrix exponential is denoted $e^A$. 
 There are various equivalent ways in which such a matrix exponential can be defined. We refer to~\cite{van2006study} for some examples, and will consider some specific definitions later on in this work.
 For now, we restrict ourselves to stating the following well-known result.
 \begin{proposition}\cite[Theorem 2.1.2]{norris1998markov}\label{prop:stochastic_from_exponential}
-Consider a rate matrix $Q\in\mathcal{R}$ and any $t\in\realsnonneg$. Then $e^{Qt}$ is a transition matrix.
+Consider a rate matrix $Q\in\mathcal{R}$ and any $\Delta\in\realsnonneg$. Then $e^{Q\Delta}$ is a transition matrix.
 \end{proposition}
 
 We conclude this section with some comments about \emph{sets} of rate matrices. First, note that the set of \emph{all} rate matrices, $\mathcal{R}$, is closed under finite sums and multiplication with non-negative scalars. Consider now any set $\rateset\subseteq\mathcal{R}$ of rate matrices. Then $\rateset$ is said to be \emph{non-empty} if $\rateset\neq\emptyset$ and $\rateset$ is said to be \emph{bounded} if $\norm{\rateset}<+\infty$. The following proposition provides a simple alternative characterization of boundedness.
@@ -384,24 +384,24 @@ A set of rate matrices $\rateset\subseteq\mathcal{R}$ is bounded if and only if
 
 \subsection{Transition Matrix Systems}
 
-In the previous section, we used the notation $T_t^s$ for the transition matrix containing the probabilities of moving from a state at time $t$, to a state at time $s$. We here consider \emph{families} of these transition matrices. In particular, such a family $\mathcal{T}$ has transition matrices $T_t^s$ defined for all $t,s\in\realsnonneg$ such that $t\leq s$. 
+In the previous section, we used the notation $T_t^s$ to refer to a transition matrix that contains the probabilities of moving from a state at time $t$, to a state at time $s$. We now consider \emph{families} of these transition matrices. Such a family $\mathcal{T}$ specifies a transition matrix $T_t^s$ for every $t,s\in\realsnonneg$ such that $t\leq s$. 
 
-We already mentioned in the previous section that it is reasonable to assume that $T_t^t=I$. If the transition matrices of a family $\mathcal{T}$ satisfy this property, and furthermore the \emph{semi-group} property given by Equation~\ref{eq:transmatrixproduct} below, we call this family a \emph{transition matrix system}.
+We already explained in the previous section that it is reasonable to assume that $T_t^t=I$. If the transition matrices of a family $\mathcal{T}$ satisfy this property, and if they furthermore satisfy the \emph{semi-group} property---see Equation~\ref{eq:transmatrixproduct} below---we call this family a \emph{transition matrix system}.
 
 \begin{definition}[Transition Matrix System]\label{def:trans_mat_system}
 A \emph{transition matrix system} $\mathcal{T}$ is a family of transition matrices $T_t^s$, defined for all $t,s\in\realsnonneg$ with $t\leq s$, such that for all $t,r,s\in\realsnonneg$ with $t\leq r\leq s$, it holds that
 \begin{equation}\label{eq:transmatrixproduct}
 T_t^s=T_t^r T_r^s\,,
 \end{equation}
-and $T_t^t=I$ for all $t\in\realsnonneg$.
+and for all $t\in\realsnonneg$, $T_t^t=I$.
 \end{definition}
 It will turn out that there is a strong connection between transition matrix systems and continuous-time Markov chains. We will return to this in Section~\ref{sec:cont_time_markov_chains}.
 
-We have seen in the previous section that the quantity $\nicefrac{1}{\Delta}(T - I)$ can be expressed as a rate matrix $Q$, for any transition matrix $T$ and any $\Delta\in\realspos$. We then related this to the finite difference $\nicefrac{1}{\Delta}(T_t^{t+\Delta} - I)$, and here note that this can equivalently be done for the term $\nicefrac{1}{\Delta}(T_{t-\Delta}^t - I)$ whenever $(t-\Delta)\geq0$.
+In the previous section, we have seen that for any transition matrix $T$ and any $\Delta\in\realspos$, the matrix $\nicefrac{1}{\Delta}(T - I)$ is a rate matrix, and therefore, in particular, that the finite difference $\nicefrac{1}{\Delta}(T_t^{t+\Delta} - I)$ is a rate matrix. We here note that this is also the case for the term $\nicefrac{1}{\Delta}(T_{t-\Delta}^t - I)$ whenever $(t-\Delta)\geq0$.
 
-We now consider this relation in the context of transition matrix systems $\mathcal{T}$. For all $\Delta\in\realspos$, this family specifies the transition matrices $T_t^{t+\Delta}$  for all $t\in\realsnonneg$, and $T_{t-\Delta}^t$ for all  $t\in\reals_{\geq\Delta}$. Hence, this allows us to jointly consider the behavior of these matrices for various values of $\Delta$. In particular, we consider what happens to the finite differences expressed above, if we take $\Delta$ to be increasingly smaller. 
+We now consider this property in the context of a transition matrix system $\mathcal{T}$. For all $t\in\realsnonneg$ and all $\Delta\in\realspos$, such a transition matrix system specifies a transition matrix $T_t^{t+\Delta}$ and---if $(t-\Delta)\geq0$---a transition matrix $T_{t-\Delta}^t$. We now consider the behavior of these matrices for various values of $\Delta$. In particular, we look what happens to these finite differences if we take $\Delta$ to be increasingly smaller. 
 
-For each such $\Delta$, there will be a rate matrix corresponding to these finite differences. If the norm of these resultant rate matrices never diverges to $+\infty$ as we take $\Delta$ to $0$, we call the family $\mathcal{T}$ \emph{well-behaved}.
+For each $\Delta\in\realspos$, due the property that we have just recalled, there will be a rate matrix that corresponds to these finite differences. If the norm of these rate matrices never diverges to $+\infty$ as we take $\Delta$ to zero, we call the family $\mathcal{T}$ \emph{well-behaved}.
 
 \begin{definition}[Well-Behaved Transition Matrix System]\label{def:well_behaved_trans_mat_system}
 A transition matrix system $\mathcal{T}$ is called \emph{well-behaved} if 
@@ -412,9 +412,9 @@ A transition matrix system $\mathcal{T}$ is called \emph{well-behaved} if
 \end{equation}
 \end{definition}
 
-Observe that this notion of well-behavedness does not imply differentiability; the limit $\lim_{\Delta\to0^+}\nicefrac{1}{\Delta}(T_t^{t+\Delta}-I)$ need not exist. Rather, it implies that the rate of change of all transition matrices in $\mathcal{T}$ is bounded at all times and on any given interval.
+Observe that this notion of well-behavedness does not imply differentiability; the limit $\lim_{\Delta\to0^+}\nicefrac{1}{\Delta}(T_t^{t+\Delta}-I)$ need not exist. Rather, it implies that the rate of change of the transition matrices in $\mathcal{T}$ is bounded at all times and on any given interval.
 
-We finally consider an important special case of transition matrix systems. We have seen in the previous section that for any $Q\in\mathcal{R}$ and any $\Delta\in\realsnonneg$, the matrix exponential $e^{Q\Delta}$ is a transition matrix. We here consider for any $Q\in\mathcal{R}$ the family $\mathcal{T}_Q$ that is generated by such transition matrices.
+We finally consider an important special type of transition matrix systems. We have seen in the previous section that for any $Q\in\mathcal{R}$ and any $\Delta\in\realsnonneg$, the matrix exponential $e^{Q\Delta}$ is a transition matrix. We here consider for any $Q\in\mathcal{R}$ the family $\mathcal{T}_Q$ that is generated by such transition matrices.
 \begin{definition}\label{def:systemfromQ}For any rate matrix $Q\in\mathcal{R}$, we use $\mathcal{T}_Q$ to denote the family of transition matrices that is defined by
 \begin{equation*}
 T_t^s=e^{Q(s-t)}
