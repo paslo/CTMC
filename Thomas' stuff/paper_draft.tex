@@ -233,7 +233,7 @@ We will often find it convenient to explicitely indicate the time point $t$ that
 \begin{equation*}
 \states_u \coloneqq \prod_{t\in u}\states_t
 \end{equation*}
-to denote the joint state space at the time points in $u$. A joint state $x_u\in\states_u$ is a tuple $(x_{t_0},\ldots,x_{t_n})\in\states_{t_0}\times\cdots\times\states_{t_n}$ that specifies a state $x_k$ for every time point $t_k$ in $u$. Note that if $u$ only contains a single time point $t$, then we simply have that $\states_u=\states_{\{t\}}=\states_t=\states$. If $u=\emptyset$, then $x_\emptyset\in\states_\emptyset$ is a ``dummy'' placeholder, which typically leads to statements that are vacuously true. 
+to denote the joint state space at the time points in $u$. A joint state $x_u\in\states_u$ is a tuple $(x_{t_0},\ldots,x_{t_n})\in\states_{t_0}\times\cdots\times\states_{t_n}$ that specifies a state $x_{t_k}$ for every time point $t_k$ in $u$. Note that if $u$ only contains a single time point $t$, then we simply have that $\states_u=\states_{\{t\}}=\states_t=\states$. If $u=\emptyset$, then $x_\emptyset\in\states_\emptyset$ is a ``dummy'' placeholder, which typically leads to statements that are vacuously true. 
 For any $u\in\mathcal{U}_\emptyset$, we use $\gambles(\states_u)$ to denote the set of all real-valued functions on $\states_u$. 
 
 %Finally, we will want to use operators as defined in Section~\ref{sec:func_oper_norm} for functions defined on (multiple) explicit time points. To this end, for any $f\in\gambles(\states^{u\cup\{s\}})$, with $u<s$, and any non-negatively homogeneous operator $A$ from $\gamblesX$ to $\gamblesX$, we stipulate the following convention. If $A$ is applied to $f$, it will be applied to the restriction of $f$ to the \emph{latest} time point at which it is defined---the time point $s$, in this case. Because this restriction depends on the specific state assignment $x_u$ corresponding to the other time points $u=t_0,\ldots,t_n$, the result is a function $[Af]\in\gambles(\states^u)$. In other words, we stipulate that
@@ -304,8 +304,6 @@ $\norm{Af}\leq\norm{A}\norm{f}$
 \end{proposition}
 
 \section{Transition Matrix Systems}\label{sec:systems}
-
-*** I removed this from Section~\ref{sec:multivar_notation} because $X_t$ was not yet defined at that point: "For any such function $f\in\gambles(\states^{u\cup\{s\}})$, we will write $f(x_u,X_s)$ for the restriction of $f$ to $\states^{\{s\}}$ specific to the joint state assignment $x_u\in\states^u$. Thus, $f(x_u,X_s)$ corresponds to a $g\in\gambles(\states^{\{s\}})$ such that $g(x_s) = f(x_u,x_s)$ for all $x_s\in\states^{\{s\}}$." It needs to be put somewhere else***
 
 We provide in this section some definitions that will later be useful for characterizing continuous-time Markov chains. Because we have not formally defined this notion yet, the definitions below can be taken to be purely algebraic constructs. 
 
@@ -1856,6 +1854,8 @@ Another way of putting this is that, if one is interested in the lower expectati
 %\end{align*}
 
 \section{Functions Defined on Multiple Time Points}\label{sec:funcs_multi_time_points}
+
+*** I removed this from Section~\ref{sec:multivar_notation} because $X_t$ was not yet defined at that point: ``For any such function $f\in\gambles(\states^{u\cup\{s\}})$, we will write $f(x_u,X_s)$ for the restriction of $f$ to $\states^{\{s\}}$ specific to the joint state assignment $x_u\in\states^u$. Thus, $f(x_u,X_s)$ corresponds to a $g\in\gambles(\states^{\{s\}})$ such that $g(x_s) = f(x_u,x_s)$ for all $x_s\in\states^{\{s\}}$.'' I guess that this section here would be a good place to incorporate it in... ***
 
 Having shown in Section~\ref{sec:single_var_lower_exp} that the operator $L_t^s$ computes lower expectations for functions $f\in\gamblesX$ defined on a single point in time, we will now turn our attention to functions defined on multiple time points. Because we are considering \emph{conditional} expectations, where the conditioning is done with respect to states in a (non-)Markov chain's history, it makes sense to distinguish between two different classes of functions defined at multiple time points. 
 
