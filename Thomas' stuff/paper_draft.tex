@@ -223,19 +223,18 @@ Since a sequence $u\in\mathcal{U}$ is a subset of $\realsnonneg$, we can use set
 
 As a special case, we consider finite sequences of time points that partition a given time interval $[t,s]$, with $t,s\in\realsnonneg$ such that $t\leq s$. Such a sequence is taken to include the end-points of this interval.  Thus, the sequence is of the form $t=t_0< t_1<\cdots< t_n=s$. We denote the set of all such sequences by $\mathcal{U}_{[t,s]}$. Since these sequences are non-degenerate, it follows that $\mathcal{U}_{[t,t]}$ consists of a single sequence $u=t$. For any $u\in\mathcal{U}_{[t,s]}$ with $u=t_0,\ldots,t_n$, we also define the sequential differences $\Delta_i^u\coloneqq t_i-t_{i-1}$, for all $i\in\{1,\ldots,n\}$. We then use $\sigma(u)\coloneqq \max\{\Delta_i^u:i\in\{1,\ldots,n\}\}$ to denote the maximum such difference.
 
-\subsection{State Space and Functions}\label{sec:multivar_notation}
+\subsection{States and Functions}\label{sec:multivar_notation}
 
-Throughout this work, we will consider some fixed finite \emph{state space} $\states=\{1,\dots,m\}$. A generic element of this set is called a state, and will be denoted by $x$.
+Throughout this work, we will consider some fixed finite \emph{state space} $\states=\{1,\dots,m\}$. A generic element of this set is called a state and will be denoted by $x$.
 
-We use $\gamblesX$ to denote the set of all real-valued functions on $\states$. Because $\states$ is finite, we can also interpret any function $f\in\gamblesX$ as a vector in $\reals^m$. Hence, we will in the sequel use the terms `function' and `vector' interchangeably when referring to elements of $\gamblesX$.
+We use $\gamblesX$ to denote the set of all real-valued functions on $\states$. Because $\states$ is finite, a function $f\in\gamblesX$ can be interpreted as a vector in $\reals^m$. Hence, we will in the sequel use the terms `function' and `vector' interchangeably when referring to elements of $\gamblesX$.
 
-We will also find it convenient to refer to the state space at (multiple) explicit time points. To this end, for any finite sequence of time points $u\in\mathcal{U}$ such that $u=t_0,\ldots,t_n$, we let
+We will often find it convenient to explicitely indicate the time point $t$ that is being considered, in which case we write $\states_t\coloneqq\states$ to denote the state space at time $t$, and $x_t$ to denote a state at time $t$. This notational trick also allows us to introduce some notation for the joint state at (multiple) explicit time points. For any finite sequence of time points $u\in\mathcal{U}$ such that $u=t_0,\ldots,t_n$, we use
 \begin{equation*}
-\states^u \coloneqq \prod_{i=0}^n \states
+\states_u \coloneqq \prod_{t\in u}\states_t
 \end{equation*}
-denote the joint state space at the time points in $u$. A joint state assignment is denoted by $x_u\in\states^u$, and should be interpreted as a tuple $(x_{t_0},\ldots,x_{t_n})\in\states^{\{t_0\}}\times\cdots\times\states^{\{t_n\}}$. Note that if $u$ only contains a single time point $t$, then we simply have that $\states^u=\states^{\{t\}}=\states$. If $u=\emptyset$, then $x_\emptyset\in\states^\emptyset$ is a ``dummy'' placeholder, which typically leads to statements that are vacuously true.
-
-For any $u\in\mathcal{U}_\emptyset$, we use $\gambles(\states^u)$ to denote the set of all real-valued functions on $\states^u$. For any such function $f\in\gambles(\states^{u\cup\{s\}})$, we will write $f(x_u,X_s)$ for the restriction of $f$ to $\states^{\{s\}}$ specific to the joint state assignment $x_u\in\states^u$. Thus, $f(x_u,X_s)$ corresponds to a $g\in\gambles(\states^{\{s\}})$ such that $g(x_s) = f(x_u,x_s)$ for all $x_s\in\states^{\{s\}}$.
+to denote the joint state space at the time points in $u$. A joint state $x_u\in\states_u$ is a tuple $(x_{t_0},\ldots,x_{t_n})\in\states_{t_0}\times\cdots\times\states_{t_n}$ that specifies a state $x_k$ for every time point $t_k$ in $u$. Note that if $u$ only contains a single time point $t$, then we simply have that $\states_u=\states_{\{t\}}=\states_t=\states$. If $u=\emptyset$, then $x_\emptyset\in\states_\emptyset$ is a ``dummy'' placeholder, which typically leads to statements that are vacuously true. 
+For any $u\in\mathcal{U}_\emptyset$, we use $\gambles(\states_u)$ to denote the set of all real-valued functions on $\states_u$. 
 
 %Finally, we will want to use operators as defined in Section~\ref{sec:func_oper_norm} for functions defined on (multiple) explicit time points. To this end, for any $f\in\gambles(\states^{u\cup\{s\}})$, with $u<s$, and any non-negatively homogeneous operator $A$ from $\gamblesX$ to $\gamblesX$, we stipulate the following convention. If $A$ is applied to $f$, it will be applied to the restriction of $f$ to the \emph{latest} time point at which it is defined---the time point $s$, in this case. Because this restriction depends on the specific state assignment $x_u$ corresponding to the other time points $u=t_0,\ldots,t_n$, the result is a function $[Af]\in\gambles(\states^u)$. In other words, we stipulate that
 %\begin{equation*}
@@ -245,11 +244,11 @@ For any $u\in\mathcal{U}_\emptyset$, we use $\gambles(\states^u)$ to denote the 
 
 %Finally, as some notes on notational conventions, we typically use $t,r,s\in\realsnonneg$ to denote time points, $u,v,w\in\mathcal{U}$ to denote sequences of time points, and $x,y,z\in\states$ to denote state assignments. 
 
-\subsection{Operators and Norms}\label{sec:func_oper_norm}
+\subsection{Norms and Operators}\label{sec:func_oper_norm}
 
-For any $u\in\mathcal{U}_\emptyset$ and any $f\in\gambles(\states^u)$, let the norm $\norm{f}$ be defined as
+For any $u\in\mathcal{U}_\emptyset$ and any $f\in\gambles(\states_u)$, let the norm $\norm{f}$ be defined as
 \begin{equation*}
-\norm{f} \coloneqq \norm{f}_{\infty} \coloneqq \max\{\abs{f(x_u)}\,:\,x_u\in\states^u\}\,.
+\norm{f} \coloneqq \norm{f}_{\infty} \coloneqq \max\{\abs{f(x_u)}\,:\,x_u\in\states_u\}\,.
 \end{equation*}
 As a special case, we then have for any $f\in\gamblesX$ that $\norm{f}=\max\{\abs{f(x)}\,:\,x\in\states\}$.
 
@@ -305,6 +304,8 @@ $\norm{Af}\leq\norm{A}\norm{f}$
 \end{proposition}
 
 \section{Transition Matrix Systems}\label{sec:systems}
+
+*** I removed this from Section~\ref{sec:multivar_notation} because $X_t$ was not yet defined at that point: "For any such function $f\in\gambles(\states^{u\cup\{s\}})$, we will write $f(x_u,X_s)$ for the restriction of $f$ to $\states^{\{s\}}$ specific to the joint state assignment $x_u\in\states^u$. Thus, $f(x_u,X_s)$ corresponds to a $g\in\gambles(\states^{\{s\}})$ such that $g(x_s) = f(x_u,x_s)$ for all $x_s\in\states^{\{s\}}$." It needs to be put somewhere else***
 
 We provide in this section some definitions that will later be useful for characterizing continuous-time Markov chains. Because we have not formally defined this notion yet, the definitions below can be taken to be purely algebraic constructs. 
 
