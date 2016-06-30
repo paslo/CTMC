@@ -261,11 +261,11 @@ For any non-negatively homogeneous operator $A$ from $\gamblesX$ to $\gamblesX$,
 \norm{A}\coloneqq\sup\left\{\norm{Af}\colon f\in\gamblesX,\norm{f}=1\right\}.
 \end{equation*}
 If $A$ is a matrix, it is easily verified that then
-\begin{equation*}
+\begin{equation}\label{eq:normofmatrix}
 \norm{A}
 =
 \max\left\{\sum_{y\in\states}\abs{A(x,y)}\colon x\in\states\right\}.
-\end{equation*}
+\end{equation}
 \noindent
 Finally, for any set $\mathcal{A}$ of matrices, we define $\norm{\mathcal{A}}\coloneqq\sup\{\norm{A}\colon A\in\mathcal{A}\}$.
 
@@ -305,15 +305,16 @@ $\norm{Af}\leq\norm{A}\norm{f}$
 
 \section{Transition Matrix Systems}\label{sec:systems}
 
-We provide in this section some definitions that will later be useful for characterizing continuous-time Markov chains. Because we have not formally defined this notion yet, the definitions below can be taken to be purely algebraic constructs. 
+We provide in this section some definitions that will later be useful for characterizing continuous-time Markov chains. Because we have not yet formally introduced the concept of a continuous-time Markov chain, for now, the definitions below can be taken to be purely algebraic constructs. Nevertheless, whenever possible, we will of course attempt to provide them with some intuition.
 
-The reason that we give them in advance, instead of where we first require them, is so as not to distort the line of reasoning in Sections~\ref{sec:stochastic_processes} and~\ref{sec:cont_time_markov_chains} with the representational definitions that we give here. However, whenever possible, we attempt to provide some intuition on the context in which these definitions will be used.
+%Our reason for providing these definitions here, instead of where we first require them, is because we do not whish to interrupt the line of reasoning in Sections~\ref{sec:stochastic_processes} and~\ref{sec:cont_time_markov_chains} with technical definitions. However, whenever possible, we attempt to provide some intuition on the context in which these definitions will be used.
 
-In what follows, it suffices to say that a continuous-time Markov chain is a construct that at each time $t$ is said to be in a state $x\in\states$ and, as time elapsed, moves through this state space $\states$ in some stochastic fashion. We here define tools with which this stochastic behavior can be conveniently represented at each point in time.
+For the purposes of this section, it suffices to say that a continuous-time Markov chain is a process which at each time $t$ is in some state $x\in\states$. As time elapses, the proces moves through the state space $\states$ in some stochastic fashion. We here define tools with which this stochastic behavior can be conveniently described.
 
 \subsection{Transition (Rate) Matrices}\label{sec:trans_rate_matrices}
 
-\emph{Transition matrices} are convenient tools in describing both discrete-time and continuous-time Markov chains. A transition matrix $T$ is simply a matrix that is row-stochastic, meaning that, for each $x\in\states$, the row $T(x,\cdot)$ is a probability mass function on $\states$.
+%\emph{Transition matrices} are convenient tools for describing both discrete-time and continuous-time Markov chains. 
+A \emph{transition matrix} $T$ is a matrix that is row-stochastic, meaning that, for each $x\in\states$, the row $T(x,\cdot)$ is a probability mass function on $\states$.
 \begin{definition}[Transition Matrix]\label{def:stoch_matrix}
 A real-valued matrix $T$ is said to be a \emph{transition matrix} if
 \vspace{5pt}
@@ -331,9 +332,9 @@ $T(x,y)\geq0$ for all $x,y\in\states$.
 For any two transition matrices $T_1$ and $T_2$, their composition $T_1T_2$ is also a transition matrix.
 \end{proposition}
 
-The interpretation in the context of Markov chains is as follows. The elements $T(x,y)$ of a transition matrix $T$ describe the probability of the Markov chain ending up in state $y$ at the next time point, given that it is currently in state $x$. In other words, the row $T(x,\cdot)$ contains the state-transition probabilities, conditional on currently being in state $x$. We will make this connection more explicit when we formalize continuous-time stochastic processes in Section~\ref{sec:stochastic_processes}.
+The interpretation in the context of Markov chains goes as follows. The elements $T(x,y)$ of a transition matrix $T$ describe the probability of the Markov chain ending up in state $y$ at the next time point, given that it is currently in state $x$. In other words, the row $T(x,\cdot)$ contains the state-transition probabilities, conditional on currently being in state $x$. We will make this connection more explicit when we formalize continuous-time stochastic processes in Section~\ref{sec:stochastic_processes}.
 
-For now, we note that in a continuous-time setting, this notion of ``next'' time-point is less obvious than in a discrete-time setting. Here, these state-transition probabilities are continuously dependent on the evolution of time. To describe this connection, the notion of \emph{transition rate matrices}~\cite{norris1998markov} is used.
+For now, we note that in a continuous-time setting, this notion of ``next'' time-point is less obvious than in a discrete-time setting, because the state-transition probabilities are then continuously dependent on the evolution of time. To capture this aspect, the notion of \emph{transition rate matrices}~\cite{norris1998markov} is used.
 \begin{definition}[Transition Rate Matrix]\label{def:rate_matrix}
 A real-valued matrix $Q$ is said to be a \emph{transition rate matrix}, or sometimes simply \emph{rate matrix}, if
 
@@ -351,10 +352,10 @@ We use $\mathcal{R}$ to denote the set of all transition rate matrices.
 
 The connection between transition matrices and rate matrices is perhaps best illustrated as follows. Suppose that at some time point $t$, we want to describe for any state $x$ the probability of ending up in state $y$ at some time $s\geq t$. Let $T_t^s$ denote the transition matrix that contains all these probabilities. Note first of all that it is reasonable to assume that, if time does not evolve, then the system should not change. That is, if we are in state $x$ at time $t$, then the probability of still being in state $x$ at time $s=t$, should be one. Hence, we should have $T_t^t=I$, with $I$ the identity matrix. 
 
-A rate matrix $Q$ is then used to describe the transition matrix $T_t^{t+\Delta}$ after a small period of time, $\Delta$, has elapsed. Specifically, the scaled matrix $\Delta\cdot Q$ serves as a linear representation for the change from $T_t^t$ to $T_t^{t+\Delta}$. The following proposition states that, for small enough $\Delta$, this linear change still results in a transition matrix.
+A rate matrix $Q$ is then used to describe the transition matrix $T_t^{t+\Delta}$ after a small period of time, $\Delta$, has elapsed. Specifically, the scaled matrix $\Delta Q$ serves as a linear approximation of the change from $T_t^t$ to $T_t^{t+\Delta}$. The following proposition states that, for small enough $\Delta$, this linear change still results in a transition matrix.
 
 \begin{proposition}\label{prop:stochastic_from_rate_matrix}
-Consider any transition rate matrix $Q\in\mathcal{R}$, and any $\Delta\in\realsnonneg$ such that $\Delta \norm{Q}\leq 1$. Then, the matrix $(I+\Delta Q)$ is a transition matrix.
+Consider any transition rate matrix $Q\in\mathcal{R}$, and any $\Delta\in\realsnonneg$ such that $\Delta \norm{Q}\leq 1$. Then the matrix $(I+\Delta Q)$ is a transition matrix.
 \end{proposition}
 This also explains the terminology used; a rate matrix describes the ``rate of change'' of a (continuously) time-dependent transition matrix over a small period of time.
 
@@ -362,15 +363,16 @@ Of course, this notion can also be reversed; given a transition matrix $T_t^{t+\
 \begin{proposition}\label{prop:rate_from_stochastic_matrix}
 Consider any transition matrix $T$, and any $\Delta\in\realspos$. Then, the matrix $\nicefrac{1}{\Delta}(T-I)$ is a transition rate matrix.
 \end{proposition}
-Note that Proposition~\ref{prop:rate_from_stochastic_matrix} essentially states that the finite-difference $\nicefrac{1}{\Delta}(T_t^{t+\Delta} - T_t^t)$ is a rate matrix. Intuitively, if we now take the limit as this $\Delta$ goes to zero, this states that the derivative of a continuously time-dependent transition matrix is given by some rate matrix $Q\in\mathcal{R}$---assuming that this limit exists, of course. We will make this connection more explicit Section~\ref{sec:stochastic_processes}.
+Note that Proposition~\ref{prop:rate_from_stochastic_matrix} essentially states that the finite-difference $\nicefrac{1}{\Delta}(T_t^{t+\Delta} - T_t^t)$ is a rate matrix. Intuitively, if we now take the limit as this $\Delta$ goes to zero, this states that the derivative of a continuously time-dependent transition matrix is given by some rate matrix $Q\in\mathcal{R}$---assuming that this limit exists, of course. We will make this connection more explicit in Section~\ref{sec:stochastic_processes}.
 
-We next introduce a function that is often seen in the context of continuous-time Markov chains: the \emph{matrix exponential}~\cite{van2006study} of a rate matrix $Q$. This matrix exponential is denoted $e^A$ for any matrix $A$. There are various ways in which the matrix exponential can be defined. We refer to~\cite{van2006study} for examples, and will consider some specific definitions later in this work.
-We here simply state the following well-known result.
+We next introduce a function that is often seen in the context of continuous-time Markov chains: the \emph{matrix exponential}~\cite{van2006study} $e^{Qt}$ of $Q t$, with $Q$ a rate matrix and $t\in\reals_{\geq0}$. %For any matrix $A$, its matrix exponential is denoted $e^A$. 
+There are various equivalent ways in which such a matrix exponential can be defined. We refer to~\cite{van2006study} for some examples, and will consider some specific definitions later on in this work.
+For now, we restrict ourselves to stating the following well-known result.
 \begin{proposition}\cite[Theorem 2.1.2]{norris1998markov}\label{prop:stochastic_from_exponential}
-Consider any rate matrix $Q\in\mathcal{R}$, and any $\Delta\in\realsnonneg$. Then, $e^{Q\Delta}$ is a transition matrix.
+Consider a rate matrix $Q\in\mathcal{R}$ and any $t\in\realsnonneg$. Then $e^{Qt}$ is a transition matrix.
 \end{proposition}
 
-We conclude this section with some comments about \emph{sets} of rate matrices. First, note that the set of \emph{all} rate matrices, $\mathcal{R}$, is closed under finite sums and multiplication with non-negative scalars. Next, consider any set $\rateset\subseteq\mathcal{R}$ of rate matrices. Then $\rateset$ is said to be \emph{non-empty} if $\rateset\neq\emptyset$ and $\rateset$ is said to be \emph{bounded} if $\norm{\rateset}<+\infty$. The following proposition provides a simple alternative characterization of boundedness.
+We conclude this section with some comments about \emph{sets} of rate matrices. First, note that the set of \emph{all} rate matrices, $\mathcal{R}$, is closed under finite sums and multiplication with non-negative scalars. Consider now any set $\rateset\subseteq\mathcal{R}$ of rate matrices. Then $\rateset$ is said to be \emph{non-empty} if $\rateset\neq\emptyset$ and $\rateset$ is said to be \emph{bounded} if $\norm{\rateset}<+\infty$. The following proposition provides a simple alternative characterization of boundedness.
 
 \begin{proposition}\label{prop:alternativedefforbounded}
 A set of rate matrices $\rateset\subseteq\mathcal{R}$ is bounded if and only if
@@ -2387,9 +2389,10 @@ Simply check each of the properties.
 \begin{proof}[Proof of Proposition~\ref{prop:stochastic_from_rate_matrix}]
 \ref{def:T:sumone} follows from \ref{def:Q:sumzero}: for all $x\in\states$, \ref{def:Q:sumzero} implies that
 \begin{equation*}
-\sum_{y\in\states} T(x,y) = \sum_{y\in\states} [I + \Delta Q](x,y) = \sum_{y\in\states}I(x,y) + \Delta \sum_{y\in\states}Q(x,y) = 1+\Delta 0=1.
+%\sum_{y\in\states} T(x,y) = 
+\sum_{y\in\states} [I + \Delta Q](x,y) = \sum_{y\in\states}I(x,y) + \Delta \sum_{y\in\states}Q(x,y) = 1+\Delta 0=1.
 \end{equation*}
-\ref{def:T:nonneg} follows from~\ref{def:Q:nonnegoffdiagonal} and because $0\leq \Delta\norm{Q} \leq 1$: for all $x,y\in\states$ such that $x\neq y$, $0\leq\Delta\norm{Q} \leq 1$ implies that $[I+\Delta Q](x,x)=1+\Delta Q(x,x)\geq 1-\Delta\norm{Q}\geq0$, and \ref{def:Q:nonnegoffdiagonal} and $\Delta\geq0$ implies that $[I+\Delta Q](x,y)=\Delta Q(x,y)\geq0$.
+\ref{def:T:nonneg} follows from~\ref{def:Q:nonnegoffdiagonal} and because $0\leq \Delta\norm{Q} \leq 1$: for all $x,y\in\states$ such that $x\neq y$, $0\leq\Delta\norm{Q} \leq 1$ implies that $[I+\Delta Q](x,x)=1+\Delta Q(x,x)\geq 1-\Delta\norm{Q}\geq0$, and \ref{def:Q:nonnegoffdiagonal} and $\Delta\geq0$ imply that $[I+\Delta Q](x,y)=\Delta Q(x,y)\geq0$.
 \end{proof}
 
 \begin{proof}[Proof of Proposition~\ref{prop:rate_from_stochastic_matrix}]
@@ -2397,37 +2400,52 @@ This proof is analogous to that of Proposition~\ref{prop:stochastic_from_rate_ma
 \end{proof}
 
 \begin{proof}[Proof of Proposition~\ref{prop:alternativedefforbounded}]
-We start by proving that Equation~\eqref{eq:alternative_bounded} implies that $\rateset$ is bounded. To this end, assume that Equation~\eqref{eq:alternative_bounded} holds. Then,
+We start by proving that Equation~\eqref{eq:alternative_bounded} implies $\norm{\rateset}<+\infty$. %To this end, we first observe that for all $x\in\states$, Equation~\eqref{eq:alternative_bounded} implies that
+% \begin{equation*}
+% c_x\coloneqq\inf
+% \end{equation*}
+% For any $x\in\states$ and $Q\in\rateset$, it follows from Definition~\ref{def:rate_matrix} that
+% \begin{equation*}
+% \sum_{y\in\states\setminus\{x\}}\abs{Q(x,y)}
+% =\sum_{y\in\states\setminus\{x\}}Q(x,y)
+% =-Q(x,x)=\abs{Q(x,x)},
+% \end{equation*}
+% which implies that
+% \begin{equation*}
+% \sum_{y\in\states}\abs{Q(x,y)}=2\abs{Q(x,x)}\leq 2c.
+% \end{equation*}
+ To this end, assume that Equation~\eqref{eq:alternative_bounded} holds. Since $\states$ is finite, it then follows that
 \begin{align*}
-\norm{\rateset} &= \sup\{\norm{Q}\,:\,Q\in\rateset\} \\
+\norm{\rateset} = \sup\{\norm{Q}\,:\,Q\in\rateset\}
  &= \sup\left\{\max\left\{\sum_{y\in\states}\abs{Q(x,y)}\,:\,x\in\states\right\}\,:\,Q\in\rateset\right\} \\
- &= \max\left\{\sup\left\{\sum_{y\in\states}\abs{Q(x,y)}\,:\,Q\in\rateset\right\} \,:\,x\in\states\right\}\,.
-\end{align*}
-Because $\states$ is finite, this implies that there is some $x'\in\states$ such that
-\begin{equation*}
-\norm{\rateset} = \sup\left\{\sum_{y\in\states}\abs{Q(x',y)}\,:\,Q\in\rateset\right\}\,.
-\end{equation*}
-Consider this $x'$. Then,
+ &= \max\left\{\sup\left\{\sum_{y\in\states}\abs{Q(x,y)}\,:\,Q\in\rateset\right\} \,:\,x\in\states\right\}.
+\end{align*}Hence, there is some $x'\in\states$ such that
+% \begin{equation*}
+% \norm{\rateset} = \sup\left\{\sum_{y\in\states}\abs{Q(x',y)}\,:\,Q\in\rateset\right\}\,.
+% \end{equation*}
+% Consider this $x'$. Then,
 \begin{align*}
-\norm{\rateset} = \sup\left\{\sum_{y\in\states}\abs{Q(x',y)}\,:\,Q\in\rateset\right\} &= \sup\left\{2\cdot\abs{Q(x',x')}\,:\,Q\in\rateset\right\} \\
- &= 2\cdot\sup\left\{\abs{Q(x',x')}\,:\,Q\in\rateset\right\} \\
- &= -2\cdot\inf\left\{-\abs{Q(x',x')}\,:\,Q\in\rateset\right\} \\
- &= -2\cdot\inf\left\{Q(x',x')\,:\,Q\in\rateset\right\} < \infty\,,
+\norm{\rateset} = \sup_{Q\in\rateset}\sum_{y\in\states}\abs{Q(x',y)}
+&=\sup_{Q\in\rateset}\left(2\abs{Q(x',x')}\right)
+ = 2\sup_{Q\in\rateset}\abs{Q(x',x')}\\
+ &= -2\inf_{Q\in\rateset}\left(-\abs{Q(x',x')}\right)
+ = -2\inf_{Q\in\rateset}Q(x',x')< +\infty\,,
 \end{align*}
-where the second and last equalities follow from Definition~\ref{def:rate_matrix}, and the final inequality follows from Equation~\eqref{eq:alternative_bounded}.
+where the second and last equality follows from Definition~\ref{def:rate_matrix}, and the final inequality follows from Equation~\eqref{eq:alternative_bounded}.
 
-We next show that if $\rateset$ is bounded, Equation~\eqref{eq:alternative_bounded} also holds. To this end, assume that $\norm{\rateset}<\infty$, and consider any $x\in\states$. Then,
-\begin{align*}
-\inf\{Q(x,x)\,:\,Q\in\rateset\} &\geq \inf\left\{ \min\{Q(y,y)\,:\,y\in\states \}\,:\,Q\in\rateset \right\} \\
- &\geq \inf\left\{ \min\{2\cdot Q(y,y)\,:\,y\in\states \}\,:\,Q\in\rateset \right\} \\
- &= \inf\left\{ -\max\{-2\cdot Q(y,y)\,:\,y\in\states \}\,:\,Q\in\rateset \right\} \\
- &= \inf\left\{ -\max\{2\cdot \abs{Q(y,y)}\,:\,y\in\states \}\,:\,Q\in\rateset \right\} \\
- &= \inf\left\{ -\max\left\{ \sum_{z\in\states}\abs{Q(y,z)}\,:\,y\in\states \right\}\,:\,Q\in\rateset \right\} \\
- &= \inf\left\{ -\norm{Q}\,:\,Q\in\rateset \right\} \\
- &= -\sup\left\{ \norm{Q}\,:\,Q\in\rateset \right\} \\
- &= -\norm{\rateset} > -\infty\,,
-\end{align*}
-where the first and second inequalities follow from the fact that, by Definition~\ref{def:rate_matrix}, $Q(y,y)$ is non-positive, the third equality also follows from Definition~\ref{def:rate_matrix}, and the final inequality follows from the fact that $\rateset$ is bounded. Because the $x\in\states$ was arbitrary, Equation~\eqref{eq:alternative_bounded} now follows.
+We next show that $\norm{\rateset}<+\infty$ implies Equation~\eqref{eq:alternative_bounded}. To this end, consider any set of rate matrices $\rateset\subseteq\mathcal{R}$ such that $\norm{\rateset}<+\infty$, and assume \emph{ex absurdo} that Equation~\eqref{eq:alternative_bounded} is not true. Then clearly, there is some $x'\in\states$ and $Q'\in\rateset$ such that $Q'(x,x)<-\norm{\rateset}$. However, this implies that $\norm{\rateset}\geq\norm{Q'}\geq\abs{Q'(x,x)}>\norm{\rateset}$, which is a contradiction. Hence, it follows that Equation~\eqref{eq:alternative_bounded} must be true.
+% $\norm{\rateset}<+\infty$, and consider any $x\in\states$. Then,
+% \begin{align*}
+% \inf\{Q(x,x)\,:\,Q\in\rateset\} &\geq \inf\left\{ \min\{Q(y,y)\,:\,y\in\states \}\,:\,Q\in\rateset \right\} \\
+%  &\geq \inf\left\{ \min\{2\cdot Q(y,y)\,:\,y\in\states \}\,:\,Q\in\rateset \right\} \\
+%  &= \inf\left\{ -\max\{-2\cdot Q(y,y)\,:\,y\in\states \}\,:\,Q\in\rateset \right\} \\
+%  &= \inf\left\{ -\max\{2\cdot \abs{Q(y,y)}\,:\,y\in\states \}\,:\,Q\in\rateset \right\} \\
+%  &= \inf\left\{ -\max\left\{ \sum_{z\in\states}\abs{Q(y,z)}\,:\,y\in\states \right\}\,:\,Q\in\rateset \right\} \\
+%  &= \inf\left\{ -\norm{Q}\,:\,Q\in\rateset \right\} \\
+%  &= -\sup\left\{ \norm{Q}\,:\,Q\in\rateset \right\} \\
+%  &= -\norm{\rateset} > -\infty\,,
+% \end{align*}
+% where the first and second inequalities follow from the fact that, by Definition~\ref{def:rate_matrix}, $Q(y,y)$ is non-positive, the third equality also follows from Definition~\ref{def:rate_matrix}, and the final inequality follows from the fact that $\rateset$ is bounded. Because the $x\in\states$ was arbitrary, Equation~\eqref{eq:alternative_bounded} now follows.
 \end{proof}
 
 \begin{lemma}{\cite[Theorem 2.1.1]{norris1998markov}}\label{lemma:deriv_exponential_trans}
