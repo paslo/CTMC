@@ -225,15 +225,17 @@ As a special case, we consider finite sequences of time points that partition a 
 
 \subsection{State Space and Functions}\label{sec:multivar_notation}
 
-Throughout this work, we will consider some fixed finite \emph{state space} $\states=\{1,\dots,m\}$. Let $\gamblesX$ denote the set of all real-valued functions on $\states$. Because $\states$ is finite, we can also interpret any function $f\in\gamblesX$ as a vector in $\reals^m$. Hence, we will in the sequel use the terms `function' and `vector' interchangeably when referring to elements of $\gamblesX$.
+Throughout this work, we will consider some fixed finite \emph{state space} $\states=\{1,\dots,m\}$. A generic element of this set is called a state, and will be denoted by $x$.
 
-We will also find it convenient to have notation for the state space at (multiple) explicit time points. To this end, for any finite sequence of time points $u\in\mathcal{U}$ such that $u=t_0,\ldots,t_n$, we let
+We use $\gamblesX$ to denote the set of all real-valued functions on $\states$. Because $\states$ is finite, we can also interpret any function $f\in\gamblesX$ as a vector in $\reals^m$. Hence, we will in the sequel use the terms `function' and `vector' interchangeably when referring to elements of $\gamblesX$.
+
+We will also find it convenient to refer to the state space at (multiple) explicit time points. To this end, for any finite sequence of time points $u\in\mathcal{U}$ such that $u=t_0,\ldots,t_n$, we let
 \begin{equation*}
 \states^u \coloneqq \prod_{i=0}^n \states
 \end{equation*}
-denote the joint state space at the time points in $u$. Note that if $u$ only contains a single time point $t$, then we simply have that $\states^u=\states^{\{t\}}=\states$. The corresponding joint state assignment will be written as $x_u\in\states^u$, with which we then mean the state assignment $(x_{t_0},\ldots,x_{t_n})\in\states^{\{t_0\}}\times\cdots\times\states^{\{t_n\}}$. If $u=\emptyset$, then the notation $x_\emptyset\in\states^\emptyset$ may be used as a ``dummy'' placeholder, typically leading to statements that are vacuously true.
+denote the joint state space at the time points in $u$. A joint state assignment is denoted by $x_u\in\states^u$, and should be interpreted as a tuple $(x_{t_0},\ldots,x_{t_n})\in\states^{\{t_0\}}\times\cdots\times\states^{\{t_n\}}$. Note that if $u$ only contains a single time point $t$, then we simply have that $\states^u=\states^{\{t\}}=\states$. If $u=\emptyset$, then $x_\emptyset\in\states^\emptyset$ is a ``dummy'' placeholder, which typically leads to statements that are vacuously true.
 
-For any $u\in\mathcal{U}_\emptyset$, we use $\gambles(\states^u)$ to denote the set of real-valued functions on $\states^u$. For a function $f\in\gambles(\states^{u\cup\{s\}})$, we will write $f(x_u,X_s)$ for the restriction of $f$ to $\states^{\{s\}}$ specific to the joint state assignment $x_u\in\states^u$. Thus, $f(x_u,X_s)$ corresponds to a $g\in\gambles(\states^{\{s\}})$ such that $g(x_s) = f(x_u,x_s)$ for all $x_s\in\states^{\{s\}}$.
+For any $u\in\mathcal{U}_\emptyset$, we use $\gambles(\states^u)$ to denote the set of all real-valued functions on $\states^u$. For any such function $f\in\gambles(\states^{u\cup\{s\}})$, we will write $f(x_u,X_s)$ for the restriction of $f$ to $\states^{\{s\}}$ specific to the joint state assignment $x_u\in\states^u$. Thus, $f(x_u,X_s)$ corresponds to a $g\in\gambles(\states^{\{s\}})$ such that $g(x_s) = f(x_u,x_s)$ for all $x_s\in\states^{\{s\}}$.
 
 %Finally, we will want to use operators as defined in Section~\ref{sec:func_oper_norm} for functions defined on (multiple) explicit time points. To this end, for any $f\in\gambles(\states^{u\cup\{s\}})$, with $u<s$, and any non-negatively homogeneous operator $A$ from $\gamblesX$ to $\gamblesX$, we stipulate the following convention. If $A$ is applied to $f$, it will be applied to the restriction of $f$ to the \emph{latest} time point at which it is defined---the time point $s$, in this case. Because this restriction depends on the specific state assignment $x_u$ corresponding to the other time points $u=t_0,\ldots,t_n$, the result is a function $[Af]\in\gambles(\states^u)$. In other words, we stipulate that
 %\begin{equation*}
