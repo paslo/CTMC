@@ -2449,17 +2449,24 @@ We next show that $\norm{\rateset}<+\infty$ implies Equation~\eqref{eq:alternati
 \end{proof}
 
 \begin{lemma}{\cite[Theorem 2.1.1]{norris1998markov}}\label{lemma:deriv_exponential_trans}
-For any $Q\in\mathcal{R}$, the derivative of the matrix exponential $\nicefrac{d}{d \Delta}[e^{Q\Delta}]\big\vert_{\Delta=0} \coloneqq \lim_{\Delta\to 0^+}\nicefrac{1}{\Delta}(e^{Q\Delta}-I)$ exists, and satisfies $\nicefrac{d}{d \Delta}[e^{Q\Delta}]\big\vert_{\Delta=0} = Q$.
+For any $Q\in\mathcal{R}$, we have that
+\begin{equation*}
+{\frac{d}{d \Delta}e^{Q\Delta}}\big\vert_{\Delta=0} \coloneqq \lim_{\Delta\to 0}\frac{1}{\Delta}(e^{Q\Delta}-I)= Q.
+\end{equation*}
 \end{lemma}
 
 \begin{proof}[Proof of Proposition~\ref{prop:systemQ}]
-We start by showing that $\mathcal{T}_Q$ is a transition matrix system. Consider any $t,r,s\in\realsnonneg$ such that $t\leq r\leq s$. It follows from the definition of $\mathcal{T}_Q$ and~\cite[Theorem 2.1.1]{norris1998markov} that $T_t^s=T_t^rT_r^s$, and $T_t^t=I$. Because the $t,r,s$ are arbitrary, it follows from Definition~\ref{def:trans_mat_system} that $\mathcal{T}_Q$ is a transition matrix system.
+We start by showing that $\mathcal{T}_Q$ is a transition matrix system. Because of Proposition~\ref{prop:stochastic_from_exponential}, $\mathcal{T}_Q$ is clearly a family of transition matrices. Consider now any $t,r,s\in\realsnonneg$ such that $t\leq r\leq s$. It then follows from the definition of $\mathcal{T}_Q$ and~\cite[Theorem 2.1.1]{norris1998markov} that $T_t^s=T_t^rT_r^s$, and $T_t^t=I$. Because the $t,r,s$ are arbitrary, it follows from Definition~\ref{def:trans_mat_system} that $\mathcal{T}_Q$ is a transition matrix system.
 
-To prove that $\mathcal{T}_Q$ is well-behaved, note that for any $t\in\realsnonneg$, by the definition of $\mathcal{T}_Q$ and Lemma~\ref{lemma:deriv_exponential_trans}, the quantity $\nicefrac{\partial}{\partial s}\left[T_t^s\right]\big\vert_{s=t}=Q$. Hence,
-\begin{equation*}
-\limsup_{\Delta\to 0^+}\frac{1}{\Delta}\norm{T_t^{t+\Delta}-I} = \norm{\frac{\partial}{\partial s}\left[T_t^s\right]\Big\vert_{s=t}} = \norm{Q} < \infty\,,
-\end{equation*}
-where the final inequality follows from the fact that $Q$ is real-valued. Because this holds for any $t\in\realsnonneg$, the first condition in Equation~\eqref{eq:wellbehavedtransitionmatrixsystem} is satisfied. A similar argument shows that also the second condition is satisfied for all $t\in\realspos$, and hence $\mathcal{T}_Q$ is well-behaved.
+To prove that $\mathcal{T}_Q$ is well-behaved, note that for any $t\in\realsnonneg$, because of Definition~\ref{def:systemfromQ},
+\begin{align*}
+\limsup_{\Delta\to 0^+}\frac{1}{\Delta}\norm{T_t^{t+\Delta}-I} 
+%= \norm{\frac{\partial}{\partial s}\left[T_t^s\right]\Big\vert_{s=t}} 
+&=\limsup_{\Delta\to 0^+}\norm{\frac{1}{\Delta}(T_t^{t+\Delta}-I)-Q+Q}\\
+&\leq\limsup_{\Delta\to 0^+}\norm{\frac{1}{\Delta}(T_t^{t+\Delta}-I)-Q}+\norm{Q}  
+= \norm{Q} < \infty\,,
+\end{align*}
+where the first inequality follows from Lemma~\ref{lemma:deriv_exponential_trans} and the final inequality follows from the fact that $Q$ is real-valued. Because this holds for any $t\in\realsnonneg$, the first condition in Equation~\eqref{eq:wellbehavedtransitionmatrixsystem} is satisfied. A similar argument shows that also the second condition is satisfied for all $t\in\realspos$, and hence $\mathcal{T}_Q$ is well-behaved.
 \end{proof}
 
 \begin{proof}[Proof of Proposition~\ref{prop:concat_restr_trans_mat_systems_is_system}]
