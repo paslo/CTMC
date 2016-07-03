@@ -434,9 +434,11 @@ This exponential transition matrix system corresponding to a $Q\in\mathcal{R}$ w
 
 \subsection{Restricted Transition Matrix Systems}
 
-We finally consider another construct that will be useful later; restrictions of transition matrix systems to some specified interval of the time-line $\realsnonneg$. An interval $\mathbf{I}$ is simply any subset $\mathbf{I}\subseteq\realsnonneg$ that is connected, meaning that for any $t,s\in\mathbf{I}$ such that $t\leq s$, and any $r\in[t,s]$, it holds that $r\in\mathbf{I}$. 
+We finally consider yet another construct that will be useful later: the restriction of a transition matrix system $\mathcal{T}$ to a closed interval $\mathbf{I}$ in the time-line $\realsnonneg$.
 
-For any transition matrix system $\mathcal{T}$ and any interval $\mathbf{I}\subseteq\realsnonneg$, let $\mathcal{T}^\mathbf{I}$ denote the family of transition matrices $T_t^s$ corresponding to $\mathcal{T}$, for all $t,s\in\mathbf{I}$ such that $t\leq s$.
+By a closed interval $\mathbf{I}$, we here mean a non-empty closed subset $\mathbf{I}\subseteq\realsnonneg$ that is connected, in the sense that for any $t,s\in\mathbf{I}$ such that $t\leq s$, and any $r\in[t,s]$, it holds that $r\in\mathbf{I}$. Note that for any $c\in\realsnonneg$, $[c,+\infty)$ is such a closed interval.
+
+For any transition matrix system $\mathcal{T}$ and any such closed interval $\mathbf{I}\subseteq\realsnonneg$, we use $\mathcal{T}^\mathbf{I}$ to denote the restriction of $\mathcal{T}$ to $\mathbf{I}$. Such a restriction is a family of transition matrices $T_t^s$ that is defined for all $t,s\in\mathbf{I}$ such that $t\leq s$.
 %\begin{equation*}
 %\mathcal{T}^{\mathbf{I}} \coloneqq \left\{T_t^s\in\mathcal{T}\,:\,\forall t,s\in\mathbf{I},\, t\leq s\right\}\,.
 %\end{equation*}
@@ -445,11 +447,9 @@ We call such a family $\mathcal{T}^{\mathbf{I}}$ a \emph{restricted transition m
 %**** misschien iets zeggen dat we ook open intervallen toelaten; in het bijzonder heb ik $\mathcal{T}^{[t,\infty)}$ nodig.
 
 \begin{proposition}\label{prop:restr_trans_mat_system_if_semigroup}
-For any interval $\mathbf{I}\subseteq\realsnonneg$, a family $\mathcal{T}^{\mathbf{I}}$ is a restricted transition matrix system defined on $\mathbf{I}$ if and only if it is a family of transition matrices $T_t^s$ defined for all $t,s\in\mathbf{I}$ with $t\leq s$, such that for all $t,r,s\in\mathbf{I}$ with $t\leq r\leq s$, it holds that $T_t^s = T_t^rT_r^s$, and $T_t^t=I$.
+Consider any closed interval $\mathbf{I}\subseteq\realsnonneg$, and let $\mathcal{T}^{\mathbf{I}}$ be a family of transition matrices $T_t^s$ that is defined for all $t,s\in\mathbf{I}$ with $t\leq s$. Then $\mathcal{T}^{\mathbf{I}}$ is a restricted transition matrix system defined on $\mathbf{I}$ if and only if, for all $t,r,s\in\mathbf{I}$ with $t\leq r\leq s$, it holds that $T_t^s = T_t^rT_r^s$ and $T_t^t=I$.
 \end{proposition}
-\begin{proof}
-*** still need to check this *** Trivial consequence of Definition~\ref{def:trans_mat_system}.
-\end{proof}
+
 We will henceforth call $\mathcal{T}^{\mathbf{I}}$ well-behaved if it satisfies Equation~\eqref{eq:wellbehavedtransitionmatrixsystem} on $\mathbf{I}$, instead of on the entirety of $\realsnonneg$.
 
 Now, because these restricted transition matrix systems are only defined on some given interval, it will be useful to define a concatenation operator between two such systems defined on adjacent intervals. We will say that two intervals $\mathbf{I},\mathbf{J}\subseteq\realsnonneg$ are \emph{adjacent} if, without loss of generality, $\mathbf{I}$ is closed on the right and $\mathbf{J}$ is closed on the left, and $\max\mathbf{I}=\min\mathbf{J}$. 
@@ -2467,6 +2467,26 @@ To prove that $\mathcal{T}_Q$ is well-behaved, note that for any $t\in\realsnonn
 = \norm{Q} < \infty\,,
 \end{align*}
 where the first inequality follows from Lemma~\ref{lemma:deriv_exponential_trans} and the final inequality follows from the fact that $Q$ is real-valued. Because this holds for any $t\in\realsnonneg$, the first condition in Equation~\eqref{eq:wellbehavedtransitionmatrixsystem} is satisfied. A similar argument shows that also the second condition is satisfied for all $t\in\realspos$, and hence $\mathcal{T}_Q$ is well-behaved.
+\end{proof}
+
+\begin{proof}[Proof of Proposition~\ref{prop:restr_trans_mat_system_if_semigroup}]
+If $\mathcal{T}^{\mathbf{I}}$ is a restricted transition matrix system, then, by definition, it is the restriction to $I$ of some transition matrix system $\mathcal{T}$. Therefore, the `only if' part of this result follows trivially from Definition~\ref{def:trans_mat_system}.
+
+For the only if part, we need to prove that for any family of transition matrices $\mathcal{T}^{\mathbf{I}}$ such that, for all $t,r,s\in\mathbf{I}$ with $t\leq r\leq s$, it holds that $T_t^s = T_t^rT_r^s$ and $T_t^t=I$, there is a transition matrix system $\mathcal{T}$ that coincides with $\mathcal{T}^{\mathbf{I}}$ on $\mathbf{I}$. In order to prove this, it suffices to show that the unique family of transition matrices $\mathcal{T}$ that coincides with $\mathcal{T}^{\mathbf{I}}$ on $\mathbf{I}$ and that is otherwise defined by
+\begin{equation*}
+T_t^s
+\coloneqq
+\begin{cases}
+I &\text{ if $s<\min I$}\\
+T_{\min\textbf{I}}^s &\text{ if $t<\min\textbf{I}$ and $s\in\textbf{I}$}\\
+T_{\min\textbf{I}}^{\max\textbf{I}} &\text{ if $t<\min\textbf{I}$ and $\max\textbf{I}<s$}\\
+T_t^{\max\textbf{I}}
+&\text{ if $t\in\textbf{I}$ and $\max\textbf{I}<s$}\\
+I &\text{ if $\max I<t$}
+\end{cases}
+~~~\text{ for $t,s\in\realsnonneg$ with $t\leq s$ and $[t,s]\not\subseteq\mathbf{I}$,}
+\end{equation*}
+is a transition matrix system. This is a matter of straightforward verification.
 \end{proof}
 
 \begin{proof}[Proof of Proposition~\ref{prop:concat_restr_trans_mat_systems_is_system}]
