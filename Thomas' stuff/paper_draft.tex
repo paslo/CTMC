@@ -519,7 +519,7 @@ Therefore, and because $\{\Delta_i\}_{i\in\nats}\to0^+$, the limit $\mathcal{T}_
 \end{exmp}
 
 Thus, Proposition~\ref{lemma:restricted_trans_mat_system_cauchy_converges} allows us to prove the existence of limits of sequences of (restricted) transition matrix systems. Because this limit is then again a (restricted) transition matrix system, it will be a family $\mathcal{T}_*$ of transition matrices $\presuper{*}T_t^s$. In some cases, we will be interested in these matrices $\presuper{*}T_t^s$. The following example sketches how, for the particular case of the limit from Example~\ref{exmp:limit_trans_mat_system}, we may find closed-form expressions for these transition matrices. This example is included mostly in preparation of some other examples later in this work.
-\begin{exmp}
+\begin{exmp}\label{exmp:limit_trans_mat_system_matrices}
 Consider again the sequence $\{\mathcal{T}_i\}_{i\in\nats}$ from Example~\ref{exmp:limit_trans_mat_system}, with limit $\mathcal{T}_*\coloneqq \lim_{i\to\infty}\mathcal{T}_i$. We will be interested in the transition matrices $\presuper{*}T_t^s$ corresponding to this transition matrix system $\mathcal{T}_*$. 
 
 It follows from the proof of Proposition~\ref{lemma:restricted_trans_mat_system_cauchy_converges} that these transition matrices are given by $\presuper{*}T_t^s = \lim_{i\to\infty} \presuper{i}T_t^s$, where for all $i\in\nats$, $\presuper{i}T_t^s$ corresponds to $\mathcal{T}_i$. In what follows, we derive an explicit expression for the matrices $\presuper{*}T_t^{s}$, for the specific case where $t=0$ and $s\in\{\Delta_i\}_{i\in\nats}$.
@@ -549,7 +549,7 @@ with $s_k\coloneqq \sum_{\ell=0}^k \nicefrac{1}{4^\ell} - 1$. Clearly, the limit
 \begin{equation*}
 \presuper{*}T_0^{\Delta_j} = \lim_{i\to\infty} \presuper{i}T_0^{\Delta_j} = \lim_{k\to\infty} \presuper{j+2k}T_{0}^{\Delta_j} = \lim_{k\to\infty} e^{\Delta_j\left(Q_1(1-s_k) + Q_2s_k\right)} = e^{\Delta_j(Q_1(\nicefrac{2}{3}) + Q_2(\nicefrac{1}{3}))}\,,
 \end{equation*}
-where the first equality follows from the proof of Proposition~\ref{lemma:restricted_trans_mat_system_cauchy_converges}. Using a completely analogous argument, if $j$ was taken to be even instead of odd, then instead $Q_2$ will dominate the limiting behavior, and $\presuper{*}T_0^{\Delta_j}=e^{\Delta_j(Q_1(\nicefrac{1}{3}) + Q_2(\nicefrac{2}{3}))}$. Note that the mixing proportion between $Q_1$ and $Q_2$ is then reversed.
+where the first equality follows from the proof of Proposition~\ref{lemma:restricted_trans_mat_system_cauchy_converges}. Using a completely analogous argument, if $j$ was taken to be even instead of odd, then instead $Q_2$ will dominate the limiting behavior, and $\presuper{*}T_0^{\Delta_j}=e^{\Delta_j(Q_1(\nicefrac{1}{3}) + Q_2(\nicefrac{2}{3}))}$. Note that the mixing proportion between $Q_1$ and $Q_2$ is then reversed. We will use these observations in other examples later in this work.
 \exampleend
 \end{exmp}
 
@@ -1120,7 +1120,7 @@ Note that in the above, the directional outer partial derivatives $\smash{\overl
 \begin{exmp}\label{exmp:markov_with_no_deriv}
 Recall from Example~\ref{exmp:limit_trans_mat_system} the well-behaved transition matrix system $\mathcal{T}_*$ that was constructed as the limit of a sequence $\{\mathcal{T}_i\}_{i\in\nats}$ of (well-behaved) transition matrix systems. Theorem~\ref{theo:uniqueMarkovchain} now implies that there is some $P\in\wmprocesses$ such that $\mathcal{T}_P = \mathcal{T}_*$. Let $T_t^s$ denote the transition matrices corresponding to this $\mathcal{T}_P = \mathcal{T}_*$.
 
-Recall furthermore from Example~\ref{exmp:limit_trans_mat_system} that $\mathcal{T}_*$ was constructed using a sequence $\{\Delta_i\}_{i\in\nats}=\{\nicefrac{1}{2^i}\}_{i\in\nats}$, and that, for all $i\in\nats$,
+Recall furthermore from Examples~\ref{exmp:limit_trans_mat_system} and~\ref{exmp:limit_trans_mat_system_matrices} that $\mathcal{T}_*$ was constructed using a sequence $\{\Delta_i\}_{i\in\nats}=\{\nicefrac{1}{2^i}\}_{i\in\nats}$, and that, for all $i\in\nats$,
 \begin{equation*}
 T_0^{\Delta_i} = \begin{cases}
 e^{\Delta_i(Q_1(\nicefrac{2}{3}) + Q_2(\nicefrac{1}{3}))} & \text{if $i$ is odd, and} \\
@@ -1140,10 +1140,16 @@ Similarly, for the subsequence $\{\Delta_{i_k}\}_{k\in\nats}$ corresponding to t
 \exampleend
 \end{exmp}
 
-Thus, we have found that in general, the directional outer partial derivatives $\smash{\overline{\partial}}_-T_t^t$ and $\smash{\overline{\partial}}_+T_t^t$ can be non-singleton sets of rate matrices. Furthermore, we know from Proposition~\ref{prop:boundednon-emptyandclosed} that, for well-behaved stochastic processes, these sets are always non-empty, bounded, and closed. The next example establishes that these sets might furthermore be convex.
+Thus, we have found that in general, the directional outer partial derivatives $\smash{\overline{\partial}}_-T_t^t$ and $\smash{\overline{\partial}}_+T_t^t$ can be non-singleton sets of rate matrices. Furthermore, we know from Proposition~\ref{prop:boundednon-emptyandclosed} that, for well-behaved stochastic processes, these sets are always non-empty, bounded, and closed. 
+
+********** DO WE WANT TO KEEP THE BELOW EXAMPLE? COULD ALSO REPLACE WITH JUST MENTIONING THAT THEY WILL BE CONNECTED, ALTHOUGH WE DONT HAVE TO PROVIDE A PROOF.
+
+The next example establishes that these sets might furthermore be convex.
 
 \begin{exmp}
 Consider again the Markov chain $P\in\wmprocesses$ from Example~\ref{exmp:markov_with_no_deriv}, whose transition matrix system $\mathcal{T}_P$ is given by $\mathcal{T}_P=\mathcal{T}^*$, the transition matrix system from Example~\ref{exmp:limit_trans_mat_system}. We already established in Example~\ref{exmp:markov_with_no_deriv} that this Markov chain's outer partial derivative satisfies $\{Q_o,Q_e\}\subseteq \smash{\overline{\partial}}_+T_0^0$. Consider now any $\lambda\in[0,1]$, and let $Q_\lambda\coloneqq \lambda Q_o + (1-\lambda)Q_e$. We will show that $Q_\lambda \in \smash{\overline{\partial}}_+T_0^0$.
+
+**** TODO: FINISH THIS
 \exampleend
 \end{exmp}
 
