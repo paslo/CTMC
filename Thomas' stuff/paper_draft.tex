@@ -498,29 +498,27 @@ Consider two closed intervals $\mathbf{I},\mathbf{J}\subseteq\realsnonneg$ such 
 \end{proposition}
 
 \begin{exmp}
-Consider any two rate matrices $Q_1,Q_2\in\mathcal{R}$ such that $Q_1\neq Q_2$, and let $\mathcal{T}_{Q_1}$ and $\mathcal{T}_{Q_2}$ be their exponential transition matrix systems. Consider any $r\in\realsnonneg$, and define
+Consider any two rate matrices $Q_1,Q_2\in\mathcal{R}$ such that $Q_1\neq Q_2$, and let $\mathcal{T}_{Q_1}$ and $\mathcal{T}_{Q_2}$ be their exponential transition matrix systems, which, as we know from Proposition~\ref{prop:systemQ}, are well-behaved. Now choose any $r\in\realsnonneg$ and define
 \begin{equation*}
 \mathcal{T} \coloneqq \mathcal{T}_{Q_1}^{[0,r]} \otimes \mathcal{T}_{Q_2}^{[r,+\infty)}\,.
 \end{equation*}
-Then, $\mathcal{T}$ is a transition matrix system, and because $\mathcal{T}_{Q_1}^{[0,r]}$ and $\mathcal{T}_{Q_2}^{[r,+\infty)}$ are well-behaved, so is $\mathcal{T}$. Furthermore, for any $t,s\in\realsnonneg$ such that $t\leq r\leq s$, the transition matrix $T_t^s$ corresponding to $\mathcal{T}$ satisfies $T_t^s = T_t^rT_r^s = e^{Q_1(r-t)}e^{Q_2(s-r)}$.
+It then follows from Proposition~\ref{prop:concat_restr_trans_mat_systems_is_system} that $\mathcal{T}$ is a well-behaved transition matrix system. Furthermore, for any $t,s\in\realsnonneg$ such that $t\leq r\leq s$, the transition matrix $T_t^s$ that corresponds to $\mathcal{T}$ is given by $T_t^s = T_t^rT_r^s = e^{Q_1(r-t)}e^{Q_2(s-r)}$.
 \exampleend
 \end{exmp}
 
-We will finally find it useful to define a metric between any two restricted transition matrix systems $\mathcal{T}^\mathbf{I}$ and $\mathcal{S}^\mathbf{I}$ defined on the same interval. We define this metric $d$ as
+We also introduce a metric $d$ between restricted transition matrix systems that are defined on the same interval $\mathbf{I}$. For any two such restricted transition matrix systems $\mathcal{T}^\mathbf{I}$ and $\mathcal{S}^\mathbf{I}$, we let
 \begin{equation}\label{eq:trans_mat_system_metric}
-d(\mathcal{T}^{\mathbf{I}},\mathcal{S}^{\mathbf{I}}) \coloneqq \sup\left\{\norm{T_t^s - S_t^s}\,:\,t,s\in\mathbf{I},\,t\leq s\right\}\,,
+d(\mathcal{T}^{\mathbf{I}},\mathcal{S}^{\mathbf{I}}) \coloneqq \sup\left\{\norm{T_t^s - S_t^s}\,:\,t,s\in\mathbf{I},\,t\leq s\right\},
 \end{equation}
-where, for all $t,s\in\mathbf{I}$, it is understood that $T_t^s$ corresponds to $\mathcal{T}^{\mathbf{I}}$ and $S_t^s$ to $\mathcal{S}^{\mathbf{I}}$.
-
-We now give a powerful theoretical result that we will return to later. 
+where, for all $t,s\in\mathbf{I}$, it is understood that $T_t^s$ corresponds to $\mathcal{T}^{\mathbf{I}}$ and $S_t^s$ to $\mathcal{S}^{\mathbf{I}}$. This metric allows us to state the following result.
 
 \begin{proposition}\label{lemma:restricted_trans_mat_system_cauchy_converges}
 Consider any interval $\mathbf{I}\subseteq\realsnonneg$, let $\mathbb{T}^{\mathbf{I}}$ be the set of all restricted transition matrix systems on $\mathbf{I}$ and let $d$ be the metric that is defined in Equation~\eqref{eq:trans_mat_system_metric}. The metric space $\smash{(\mathbb{T}^{\mathbf{I}},d)}$ is then complete.
 \end{proposition}
-Note that this result includes as a special case completeness of the set $\mathbb{T}^{\realsnonneg}$ of all (unrestricted) transition matrix systems. The following provides an example of how this result can be used. 
+Note that this result includes as a special case that the set $\mathbb{T}^{\realsnonneg}$ of all (unrestricted) transition matrix systems is complete. We illustrate this property in the following example.
 
 \begin{exmp}\label{exmp:limit_trans_mat_system}
-Consider any two commuting rate matrices $Q_1,Q_2\in\mathcal{R}$ such that $Q_1\neq Q_2$, and let $\mathcal{T}_{Q_1}$ and $\mathcal{T}_{Q_2}$ be their exponential transition matrix systems. Consider now the sequence $\{\Delta_i\}_{i\in\nats}\coloneqq \{\nicefrac{1}{2^i}\}_{i\in\nats}$, define $\mathcal{T}_0\coloneqq \mathcal{T}_{Q_1}$, and, for all $i\in\nats$, let
+Let $Q_1,Q_2\in\mathcal{R}$ be any two commuting rate matrices such that $Q_1\neq Q_2$, and let $\mathcal{T}_{Q_1}$ and $\mathcal{T}_{Q_2}$ be their exponential transition matrix systems. Consider now the sequence $\{\Delta_i\}_{i\in\nats}\coloneqq \{\nicefrac{1}{2^i}\}_{i\in\nats}$, define $\mathcal{T}_0\coloneqq \mathcal{T}_{Q_1}$, and, for all $i\in\nats$, let
 \begin{equation*}
 \mathcal{T}_i \coloneqq \begin{cases}
 \mathcal{T}_{Q_1}^{[0,\Delta_i]}\otimes \mathcal{T}_{i-1}^{[\Delta_i,+\infty)} & \text{if $i$ is odd, and} \\
