@@ -2510,21 +2510,30 @@ For the `if' part, we need to show that for any restricted transition matrix sys
 \end{proof}
 
 \begin{proof}[Proof of Proposition~\ref{prop:concat_restr_trans_mat_systems_is_system}]
-For all $t,s\in\mathbf{I}\cup\mathbf{J}$ such that $t\leq s$, it follows from Proposition~\ref{lemma:compositiontransitionmatrix} that the matrix $T_t^s$ that corresponds to $\mathcal{T}^{\mathbf{I}\cup\mathbf{J}}$ is a transition matrix. Furthermore, for all $t\in\mathbf{I}\cup\mathbf{J}$, we have that either $t\in\mathbf{I}$ or $t\in\mathbf{J}$. In either case, we have that $T_t^t=I$, because either $T_t^t=\presuper{i}T_t^t=I$ or $T_t^t=\presuper{j}T_t^t=I$, with $\presuper{i}T_t^t$ and $\presuper{j}T_t^t$ corresponding to $\mathcal{T}^{\mathbf{I}}$ and $\mathcal{T}^{\mathbf{J}}$, respectively. It remains to show that for all $t,q,s\in\mathbf{I}\cup\mathbf{J}$ with $t\leq q\leq s$, it holds that
+For all $t,s\in\mathbf{I}\cup\mathbf{J}$ such that $t\leq s$, it follows from Proposition~\ref{lemma:compositiontransitionmatrix} that the matrix $T_t^s$ that corresponds to $\mathcal{T}^{\mathbf{I}\cup\mathbf{J}}$ is a transition matrix. Furthermore, for all $t\in\mathbf{I}\cup\mathbf{J}$, we have that either $t\in\mathbf{I}$ or $t\in\mathbf{J}$. In either case, we have that $T_t^t=I$, because either $T_t^t=\presuper{i}T_t^t=I$ or $T_t^t=\presuper{j}T_t^t=I$, with $\presuper{i}T_t^t$ and $\presuper{j}T_t^t$ corresponding to $\mathcal{T}^{\mathbf{I}}$ and $\mathcal{T}^{\mathbf{J}}$, respectively. Next, we show that for all $t,q,s\in\mathbf{I}\cup\mathbf{J}$ with $t\leq q\leq s$, it holds that
 \begin{equation*}
 T_t^s = T_t^qT_q^s\,.
 \end{equation*}
-If both $t,s\in\mathbf{I}$ or if both $t,s\in\mathbf{J}$, this clearly holds. Therefore, suppose that $t\in\mathbf{I}$ and $s\in\mathbf{J}$. Suppose furthermore that $q\in\mathbf{I}$. Then, from the definition of the concatenation operator $\otimes$, we have that $T_q^s=T_q^rT_r^s$, with $r=\max\mathbf{I}=\min\mathbf{J}$. Because $t,q,r\in\mathbf{I}$, we know that $T_t^qT_q^r=T_t^r$, and hence, by the definition of the concatenation operator,
+If both $t,s\in\mathbf{I}$ or if both $t,s\in\mathbf{J}$, this clearly holds. Therefore, we may assume that $t\in\mathbf{I}$ and $s\in\mathbf{J}$. Suppose furthermore that $q\in\mathbf{I}$. Then, from the definition of the concatenation operator $\otimes$, we have that $T_q^s=T_q^rT_r^s$, with $r=\max\mathbf{I}=\min\mathbf{J}$. Because $t,q,r\in\mathbf{I}$, we know that $T_t^qT_q^r=T_t^r$, and hence, by the definition of the concatenation operator,
 \begin{equation*}
 T_t^qT_q^s = T_t^qT_q^rT_r^s = T_t^rT_r^s = T_t^s\,.
 \end{equation*}
 An exactly analogous argument proves the case for $q\in\mathbf{J}$. Therefore, it follows from Proposition~\ref{prop:restr_trans_mat_system_if_semigroup} that $\mathcal{T}^{\mathbf{I}\cup\mathbf{J}}$ is a restricted transition matrix system.
 
-It remains to show that if $\mathcal{T}^{\mathbf{I}}$ and $\mathcal{T}^{\mathbf{J}}$ are both well-behaved, that then $\mathcal{T}^{\mathbf{I}\cup\mathbf{J}}$ is also well-behaved. We need to show that for all $t\in\mathbf{I}\cup\mathbf{J}$, it holds that
+It remains to prove that if $\mathcal{T}^{\mathbf{I}}$ and $\mathcal{T}^{\mathbf{J}}$ are both well-behaved, then $\mathcal{T}^{\mathbf{I}\cup\mathbf{J}}$ is also well-behaved. Due to proposition~\ref{prop:well_restr_trans_mat_system_if_limsup}, it suffices to prove Equation~\eqref{eq:wellbehavedrestrictedtransitionmatrixsystem}. We only prove the left part of this equation, that is, we prove that
 \begin{equation*}
-\limsup_{\Delta\to0^+}\norm{\frac{1}{\Delta}\left(T_t^{t+\Delta} - I\right)} < +\infty,\quad\text{and,}\quad \limsup_{\Delta\to0^+}\norm{\frac{1}{\Delta}\left(T_{t-\Delta}^{t} - I\right)} < +\infty\,.
+\left(\forall t\in(\mathbf{I}\cup\mathbf{J})^+\right)~\limsup_{\Delta\to0^+}\norm{\frac{1}{\Delta}\left(T_t^{t+\Delta} - I\right)} < +\infty.
 \end{equation*}
-Because this clearly holds for all $t\in\mathbf{I}\setminus\{r\}$ and all $t\in\mathbf{J}\setminus\{r\}$, the interesting case is to show that this holds for $t=r$. However, for all $\Delta\in\realspos$ we have that $T_r^{r+\Delta}$ corresponds to $\mathcal{T}^{\mathbf{J}}$, and $T_{r-\Delta}^{r}$ corresponds to $\mathcal{T}^{\mathbf{I}}$. Because both $\mathcal{T}^{\mathbf{I}}$ and $\mathcal{T}^{\mathbf{J}}$ are well-behaved, we find that $\mathcal{T}^{\mathbf{I}\cup\mathbf{J}}$ is also well-behaved at $t=r$. Hence, $\mathcal{T}^{\mathbf{I}\cup\mathbf{J}}$ is well-behaved.
+The proof for the right part of Equation~\eqref{eq:wellbehavedrestrictedtransitionmatrixsystem} is completely analogous. So consider any $t\in(\mathbf{I}\cup\mathbf{J})^+$. Since $\sup\mathbf{I}=\max\mathbf{I}=\min\mathbf{J}$, it follows that
+\begin{equation*}
+(\mathbf{I}\cup\mathbf{J})^+
+\coloneqq
+(\mathbf{I}\cup\mathbf{J})\setminus\{\sup(\mathbf{I}\cup\mathbf{J})\}=(\mathbf{I}\cup\mathbf{J})\setminus\{\sup\mathbf{J}\}
+=(\mathbf{I}\setminus\sup\mathbf{I})\cup(\mathbf{J}\setminus\sup\mathbf{J})=\mathbf{I}^+\cup\mathbf{J}^+.
+\end{equation*}
+Therefore, without loss of generality, we may assume that $t\in\mathbf{I}^+$. The desired result now follows by applying Proposition~\ref{prop:well_restr_trans_mat_system_if_limsup} to the well-behaved restricted transition matrix system $\mathcal{T}^\mathbf{I}$.
+% $\coloneqq(\mathbf{I}\cup\mathbf{J})\setminus\{\sup(\mathbf{I}\cup\mathbf{J})\}=\mathbf{I}\cup\mathbf{J}\setminus\{\sup\mathbf{J}\}$. If $t\in\mathbf{I}^+\coloneqq$
+% Because this clearly holds for all $t\in\mathbf{I}\setminus\{r\}$ and all $t\in\mathbf{J}\setminus\{r\}$, the interesting case is to show that this holds for $t=r$. However, for all $\Delta\in\realspos$ we have that $T_r^{r+\Delta}$ corresponds to $\mathcal{T}^{\mathbf{J}}$, and $T_{r-\Delta}^{r}$ corresponds to $\mathcal{T}^{\mathbf{I}}$. Because both $\mathcal{T}^{\mathbf{I}}$ and $\mathcal{T}^{\mathbf{J}}$ are well-behaved, we find that $\mathcal{T}^{\mathbf{I}\cup\mathbf{J}}$ is also well-behaved at $t=r$. Hence, $\mathcal{T}^{\mathbf{I}\cup\mathbf{J}}$ is well-behaved.
 \end{proof}
 
 \begin{lemma}\label{lemma:recursive}
