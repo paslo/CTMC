@@ -1160,35 +1160,36 @@ Consider again the Markov chain $P\in\wmprocesses$ from Example~\ref{exmp:markov
 \section{Imprecise Continuous-Time Markov chains}
 \label{sec:iCTMC}
 
-In Sections~\ref{sec:stochastic_processes} and~\ref{sec:cont_time_markov_chains}, we formalized stochastic processes, and provided tools for describing them. We now turn to the field of \emph{imprecise probability} {\bf CITE CITE}, and will formalize in this section the notion of \emph{imprecise continuous-time Markov chains}. Here, rather than look at a single stochastic process $P\in\processes$, we instead consider jointly some \emph{set} of processes $\mathcal{P}\subseteq\processes$. Our main object of consideration will be the \emph{lower expectation} with respect to such a set $\mathcal{P}$.
+In Sections~\ref{sec:stochastic_processes} and~\ref{sec:cont_time_markov_chains}, we formalized stochastic processes, and provided ways to characterize them. We now turn to the field of \emph{imprecise probability}~\cite{Walley:1991vk} {\bf CITE CITE}, and will formalize in this section the notion of \emph{imprecise continuous-time Markov chains}. Here, rather than look at a single stochastic process $P\in\processes$, we instead consider jointly some \emph{set} of processes $\mathcal{P}\subseteq\processes$. Our main object of consideration will be the \emph{lower expectation} with respect to such a set $\mathcal{P}$.
 
 \begin{definition}[Lower Expectation]\label{def:lower_exp}
 For any set of stochastic processes $\mathcal{P}\subseteq\processes$, the \emph{(conditional) lower expectation with respect to $\mathcal{P}$} is defined as
 \begin{equation*}
-\underline{\mathbb{E}}[\cdot\,\vert\,\cdot] \coloneqq \inf\left\{\mathbb{E}[\cdot\,\vert\,\cdot]\,:\,P\in\mathcal{P}\right\}\,.
+\underline{\mathbb{E}}[\cdot\,\vert\,\cdot] \coloneqq \inf\left\{\mathbb{E}_P[\cdot\,\vert\,\cdot]\,:\,P\in\mathcal{P}\right\}\,,
 \end{equation*}
+where $\mathbb{E}_P[\cdot\,\vert\,\cdot]$ denotes the (conditional) expectation taken with respect to $P$.
 \vspace{0pt}
 \end{definition}
 
-\noindent The corresponding \emph{upper expectation}, $\overline{\mathbb{E}}[\cdot\,\vert\,\cdot]\coloneqq \sup\{\mathbb{E}[\cdot\,\vert\,\cdot]\,:\,P\in\mathcal{P}\}$ can, as is well-known~{\bf CITE}, always be defined through the conjugacy relation $\overline{\mathbb{E}}[\cdot\,\vert\,\cdot]=-\underline{\mathbb{E}}[-\cdot\,\vert\,\cdot]$. Therefore, we will in the remainder of this work focus only on the lower expectation with respect to some set $\mathcal{P}$.
+\noindent The corresponding \emph{upper expectation}, $\overline{\mathbb{E}}[\cdot\,\vert\,\cdot]\coloneqq \sup\{\mathbb{E}_P[\cdot\,\vert\,\cdot]\,:\,P\in\mathcal{P}\}$ can, as is well-known~{\bf CITE}, always be defined through the conjugacy relation $\overline{\mathbb{E}}[\cdot\,\vert\,\cdot]=-\underline{\mathbb{E}}[-\cdot\,\vert\,\cdot]$. Therefore, we will in the remainder of this work focus only on the lower expectation with respect to some set $\mathcal{P}$.
 
-Because these lower expectations are linked to a given set $\mathcal{P}\subseteq\processes$ of stochastic processes, we will next look at how we can describe such a set $\mathcal{P}$.
+Because these lower expectations are linked to a given set $\mathcal{P}\subseteq\processes$ of stochastic processes, we will first look at how we can describe such a set $\mathcal{P}$.
 Recall from Section~\ref{sec:dynamics} that for a given stochastic process $P\in\processes$, its behavior can be described using the outer partial derivatives $\smash{\overline{\partial}}T_{t,\,x_u}^t$ of its transition matrices $T_{t,\,x_u}^t$ at each time $t\in\realsnonneg$ and for each history $x_u\in\states^u$. There, we found that---at least for well-behaved processes---these outer partial derivatives are non-empty bounded sets of rate matrices. Hence, because individual stochastic processes can be described using sets of rate matrices, this is also a natural starting point for describing sets of processes.
 
-Therefore, consider some non-empty bounded set $\rateset\subset\mathcal{R}$ of rate matrices. We can then ask if there are any processes that are described by this set $\rateset$. Indeed, we found in Section~\ref{sec:homogen_markov_chain} that for any $Q\in\rateset$, there is a well-behaved homogeneous Markov chain that is characterized---up to its initial distribution---by this $Q$. Hence, an obvious way to construct a set $\mathcal{P}$ from a given set $\rateset$ is as the set of well-behaved homogeneous Markov chains characterized by elements of $\rateset$.
+Therefore, consider some non-empty bounded set $\rateset\subset\mathcal{R}$ of rate matrices. We can then ask if there are any processes that are described by this set $\rateset$. Indeed, we found in Section~\ref{sec:homogen_markov_chain} that for any $Q\in\rateset$, there is a well-behaved homogeneous Markov chain that is characterized---up to its initial distribution---by this $Q$. Hence, an obvious way to construct a set $\mathcal{P}$ from a given set $\rateset$ is as the set of well-behaved homogeneous Markov chains characterized by elements of $\rateset$. This idea will be formalized in Section~\ref{subsec:types_ictmc}.
 
-From this, we might next consider whether we can also describe sets of non-homogeneous, (non-)Markov processes using a given set $\rateset$ of rate matrices. However, it should be clear that this is less straightforward than in the homogeneous, Markovian case. In particular, because such a set $\rateset$ is not explicitly connected to any time $t$ or history $x_u$, asking if a (non-homogeneous, non-Markov) process is described by this set is in some sense an ill-posed question.
+For now, we next consider whether we can also describe sets of non-homogeneous, (non-)Markov processes using a given set $\rateset$ of rate matrices. However, it should be clear that this is less straightforward than in the homogeneous, Markovian case. In particular, because such a set $\rateset$ is not explicitly connected to any time $t$ or history $x_u$, asking if a (non-homogeneous, non-Markov) process is described by this set is in some sense an ill-posed question.
 Therefore, rather than asking if a process can be described by some set of rate matrices, we will now introduce the following weaker notion of \emph{consistency} of a stochastic process with a given set of rate matrices.
 
 \begin{definition}[Consistent Process]\label{def:consistent_process}
 Consider any non-empty bounded set $\rateset$ of rate matrices, and any stochastic process $P\in\processes$. Then $P$ is said to be \emph{consistent} with $\rateset$, if
 \begin{equation*}
-(\forall t\in\realsnonneg)(\forall u\in\mathcal{U}_{<t})(\forall x_u\in\states^u)\,:\, \smash{\overline{\partial}}T_{t,x_u}^t \subseteq \rateset\,.
+(\forall t\in\realsnonneg)(\forall u\in\mathcal{U}_{<t})(\forall x_u\in\states_u)\,:\, \smash{\overline{\partial}}T_{t,x_u}^t \subseteq \rateset\,.
 \end{equation*}
 If $P$ is consistent with $\rateset$, we will write $P\sim\rateset$.
 \end{definition}
 
-Thus, when a process $P\in\processes$ is consistent with some $\rateset\subset\mathcal{R}$, we know that its behavior over time can always be described using the elements of $\rateset$. However, we do not know which of these elements $Q\in\rateset$ describe this behavior at any given time  $t\in\realsnonneg$ or for any given history $x_u\in\states^u$. Furthermore, consistency of a process with some set $\rateset$ only asserts ``consistency in behavior"; in particular, it does not tell us anything about the initial distribution of the process. It should therefore be clear that there will be many processes consistent with any non-empty bounded set $\rateset\subset\mathcal{R}$. The next example shows that this is already the case when $\rateset$ is singleton.
+Thus, when a process $P\in\processes$ is consistent with some $\rateset\subset\mathcal{R}$, we know that its behavior over time can always be described using the elements of $\rateset$. However, we do not know which of these elements $Q\in\rateset$ describe this behavior at any given time  $t\in\realsnonneg$ or for any given history $x_u\in\states_u$. Furthermore, consistency of a process with some set $\rateset$ only asserts ``consistency in behavior"; in particular, it does not tell us anything about the initial distribution of the process. It should therefore be clear that there will be many processes consistent with any non-empty bounded set $\rateset\subset\mathcal{R}$. The next example shows that this is already the case when $\rateset$ is singleton.
 
 \begin{exmp}\label{example:singleton_infinite_consistent}
 Suppose that $\rateset=\{Q\}$ for some $Q\in\mathcal{R}$. Then, there are an infinite number of stochastic processes consistent with $\rateset$. In particular, recall from Section~\ref{sec:homogen_markov_chain} that there exists a well-behaved homogeneous Markov chain that is characterized uniquely by the rate matrix $Q$, \emph{up to} its initial distribution $P(X_0)$. Therefore, and due to Proposition~\ref{prop:Q_is_singleton_deriv_for_homogen}, for each choice of probability mass function $p$ on $\states$, there is a well-behaved homogeneous Markov chain $P$ that is consistent with $\rateset$, and for which $P(X_0=x)=p(x)$ for all $x\in\states$.
@@ -1197,16 +1198,30 @@ Suppose that $\rateset=\{Q\}$ for some $Q\in\mathcal{R}$. Then, there are an inf
 
 Hence, if we consider the set $\mathcal{P}$ of all stochastic processes consistent with some $\rateset$, this set will contain (infinitely) many processes that differ only in their initial distributions. Of course, this should hardly be surprising; even individual homogeneous Markov chains require both a rate matrix $Q$ and initial distribution $p$ to be uniquely characterized. 
 
-**** some notes on how to fix this: ignore it (works if only interested in conditional lower expectation, as shown below), fix the initial $P(X_0=x)=p(x)$ for all $P\in\mathcal{P}$ consistent with some $\rateset$ (then we can also ignore it: compute the conditional, and multiply the $p$ to get unconditional), or take a set $\mathcal{M}$ of probability mass functions on $\states$, and constrain $\mathcal{P}$ such that for all $P\in\mathcal{P}$, $P(X_0)\in\mathcal{M}$. (under some?? conditions), we can just focus on conditional, then compute lower expectation w.r.t. $\mathcal{M}$. hence, we can always ignore it.
+Note however that this is not problematic for our purposes. In particular, suppose that we are only ever interested in conditional lower expectations with respect to $\mathcal{P}$. It should be clear that such conditioning makes the lower expectation invariant to the initial distribution, and hence we can just ignore the fact that $\mathcal{P}$ contains many processes that differ only in their initial distribution. This will be illustrated in Example~\ref{exmp:singleton_set_only_different_initial} below.
+
+However, suppose that we \emph{are} interested in unconditional lower expectations. We distinguish two cases: either we consider a (precise) initial distribution $p$ and restrict the set $\mathcal{P}$ such that $P(X_0)=p(\cdot)$ for all $P\in\mathcal{P}$, or, we consider an imprecise initial distribution represented by a set $\mathcal{M}$ of probability mass functions on $\states$, and restrict $\mathcal{P}$ such that it contains exactly those processes whose initial distributions $P(X_0)$ are in this set $\mathcal{M}$.
+
+In the first case, where we consider a precise initial distribution $p$, the unconditional lower expectation $\underline{\mathbb{E}}[\,\cdot\,]$ simply reduces to
+\begin{align*}
+\underline{\mathbb{E}}[\,\cdot\,] = \inf\{\mathbb{E}_P[\,\cdot\,]\,:\,P\in\mathcal{P}\} &= \inf\left\{\sum_{x\in\states}\mathbb{E}_P[\,\cdot\,\vert\,X_0=x]P(X_0=x)\,:\,P\in\mathcal{P}\right\}\\
+ &= \inf\left\{\sum_{x\in\states}\mathbb{E}_P[\,\cdot\,\vert\,X_0=x]p(x)\,:\,P\in\mathcal{P}\right\} \\
+ &\geq \sum_{x \in \states} \inf\{\mathbb{E}_P[\,\cdot\,\vert\,X_0=x]\,:\,P\in\mathcal{P}\} p(x) \\
+ &= \sum_{x \in \states} \underline{\mathbb{E}}[\,\cdot\,\vert\,X_0=x]p(x)
+\end{align*}
+
+***** PROBLEEMPJE: IK HAD IN MN HOOFD ZITTEN DAT DIE ONGELIJKHEID EEN GELIJKHEID ZOU WORDEN. DIT KAN DUIDELIJK ALS $\mathcal{P}$ GROOT (FLEXIBEL) GENOEG IS, MAAR IS EEN BEETJE LASTIG OM DAT HIER TE FORMALISEREN.
+
+%**** some notes on how to fix this: ignore it (works if only interested in conditional lower expectation, as shown below), fix the initial $P(X_0=x)=p(x)$ for all $P\in\mathcal{P}$ consistent with some $\rateset$ (then we can also ignore it: compute the conditional, and multiply the $p$ to get unconditional), or take a set $\mathcal{M}$ of probability mass functions on $\states$, and constrain $\mathcal{P}$ such that for all $P\in\mathcal{P}$, $P(X_0)\in\mathcal{M}$. (under some?? conditions), we can just focus on conditional, then compute lower expectation w.r.t. $\mathcal{M}$. hence, we can always ignore it.
 
 %We briefly mentioned earlier that our ignoring of the initial distributions is not a problem for our intended purposes. The reason for this is that we are constructing these sets $\mathcal{P}$ of processes with the intent to compute conditional lower expectations with respect to these sets. In particular, this conditioning is done on states in the process' history. Therefore, once this conditioning is taken into account, the under-parameterization with respect to the initial distributions becomes irrelevant, as shown by the example below.
 
-\begin{exmp}
+\begin{exmp}\label{exmp:singleton_set_only_different_initial}
 Suppose that $\mathcal{P}$ is the set of all well-behaved homogeneous Markov chains consistent with some $\rateset=\{Q\}$. As is clear from Example~\ref{example:singleton_infinite_consistent}, $\mathcal{P}$ contains an infinite number of stochastic processes. However, while these processes differ in their initial distributions, for any time points $t,s\in\realsnonneg$ such that $t\leq s$, their transition matrices $T_t^s$ are identical. In particular, these satisfy $T_t^s=e^{Q(s-t)}$, as was found in Section~\ref{sec:homogen_markov_chain}.
 
 Suppose now that we want to compute the lower expectation $\underline{\mathbb{E}}$ of some function $f\in\gamblesX$ with respect to $\mathcal{P}$, at some time $s\in\realsnonneg$ and given the initial state $x_0\in\states$ at time $t=0$. Then, using the observation from Section~\ref{sec:dynamics} that conditional expectations can be represented using transition matrices, we have that
 \begin{align*}
-\underline{\mathbb{E}}[f(X_s)\,\vert\,X_{0}=x_0] &= \inf\left\{\mathbb{E}[f(X_s)\,\vert\,X_{0}=x_0]\,:\,P\in\mathcal{P}\right\} \\
+\underline{\mathbb{E}}[f(X_s)\,\vert\,X_{0}=x_0] &= \inf\left\{\mathbb{E}_P[f(X_s)\,\vert\,X_{0}=x_0]\,:\,P\in\mathcal{P}\right\} \\
  &= \inf\left\{ [T_0^sf](x_0) \,:\,P\in\mathcal{P}\right\} \\
  &= \inf\left\{ [e^{Q\cdot s}f](x_0)\,:\,P\in\mathcal{P}\right\} \\
  &= [e^{Q\cdot s}f](x_0)\,.
@@ -1219,12 +1234,12 @@ Hence, even though $\mathcal{P}$ contains an infinite number of processes which 
 
 %**** however, if $\rateset$ is not singleton, the collection of processes consistent with $\rateset$ becomes more interesting.
 
-Therefore, even though different processes may be consistent with the same set $\rateset$, we need not actually find the difference between these processes interesting. In particular, this is the case whenever different processes always have the same (conditional) expectation. However, when $\rateset$ is not singleton, the collection of processes consistent with $\rateset$ actually starts to exhibit differences that lead to different conditional expectations, and that we would therefore consider interesting.
+Therefore, even though different processes may be consistent with the same set $\rateset$, their difference need not be relevant. In particular, this is the case whenever different processes have the same conditional expectation. However, when $\rateset$ is not singleton, the collection of processes consistent with $\rateset$ actually starts to exhibit differences that lead to different conditional expectations, and that are therefore relevant.
 
 \begin{exmp}\label{example:rateset_not_singleton}
 Suppose that $\rateset=\{Q_1,Q_2\}$ for some $Q_1,Q_2\in\mathcal{R}$ with $Q_1\neq Q_2$. Then, clearly, all well-behaved homogeneous Markov chains described by either $Q_1$ or $Q_2$ are consistent with $\rateset$. Furthermore, there will also be different non-homogeneous Markov chains consistent with $\rateset$. In particular, not only can such processes differ in their initial distribution, there will be non-homogeneous Markov chains with the same initial distribution but which differ in the choice of $Q_1$ or $Q_2$ for any given time $t\in\realsnonneg$. 
 
-Furthermore, various non-homogeneous, non-Markov processes will be consistent with $\rateset$ as well. For example, for some $t\in\realsnonneg$ and some $x_u,y_u\in\states^u$ such that $x_u\neq y_u$, such a process might satisfy $\smash{\overline{\partial}}T_{t,x_u}^t=\{Q_1\}$ and $\smash{\overline{\partial}}T_{t,y_u}^t=\{Q_2\}$.
+Furthermore, various non-homogeneous, non-Markov processes will be consistent with $\rateset$ as well. For example, for any $t\in\realsnonneg$ and any $x_u,y_u\in\states_u$ such that $x_u\neq y_u$, there will be a process that satisfies $\smash{\overline{\partial}}T_{t,x_u}^t=\{Q_1\}$ and $\smash{\overline{\partial}}T_{t,y_u}^t=\{Q_2\}$.
 \exampleend
 \end{exmp}
 
@@ -1240,7 +1255,7 @@ Consider any non-empty bounded set of rate matrices $\rateset$, and any set of s
 \end{definition}
 Such a set $\mathcal{P}_\rateset$ will also be called an \emph{imprecise continuous-time Markov chain}. We will next focus on some specific cases.
 
-\subsection{Types of Imprecise Continuous-Time Markov Chains}
+\subsection{Types of Imprecise Continuous-Time Markov Chains}\label{subsec:types_ictmc}
 
 It is clear from Example~\ref{example:rateset_not_singleton} that, for arbitrary $\rateset$, the entire consistent set $\processes_\rateset$ contains processes that differ not only quantitatively---differing in which $Q\in\rateset$ they use---but also qualitatively: differing in whether they satisfy homogeneity or Markov properties. We will therefore find it convenient to focus on the following sets of processes, which make explicit this qualitative difference.
 
