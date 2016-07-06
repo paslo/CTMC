@@ -406,8 +406,8 @@ For each $\Delta\in\realspos$, due the property that we have just recalled, ther
 \begin{definition}[Well-Behaved Transition Matrix System]\label{def:well_behaved_trans_mat_system}
 A transition matrix system $\mathcal{T}$ is called \emph{well-behaved} if 
 \begin{equation}\label{eq:wellbehavedtransitionmatrixsystem}%\label{eq:wellbehavedhistorictransitionmatrix}
-(\forall t\in\realsnonneg)~\limsup_{\Delta\to 0^{+}}\frac{1}{\Delta}\norm{T_{t}^{t+\Delta}-I}<+\infty\,,
-\text{~and,~}
+(\forall t\in\realsnonneg)~\limsup_{\Delta\to 0^{+}}\frac{1}{\Delta}\norm{T_{t}^{t+\Delta}-I}<+\infty\,
+\text{~and~}
 (\forall t\in\realspos)~\limsup_{\Delta\to 0^{+}}\frac{1}{\Delta}\norm{T_{t-\Delta}^t-I}<+\infty\,.
 \end{equation}
 \end{definition}
@@ -442,20 +442,34 @@ For any transition matrix system $\mathcal{T}$ and any such closed interval $\ma
 %\begin{equation*}
 %\mathcal{T}^{\mathbf{I}} \coloneqq \left\{T_t^s\in\mathcal{T}\,:\,\forall t,s\in\mathbf{I},\, t\leq s\right\}\,.
 %\end{equation*}
-We call such a family $\mathcal{T}^{\mathbf{I}}$ a \emph{restricted transition matrix system} defined on $\mathbf{I}$.
+We call such a family $\mathcal{T}^{\mathbf{I}}$ a \emph{restricted transition matrix system} on $\mathbf{I}$.
 
 %**** misschien iets zeggen dat we ook open intervallen toelaten; in het bijzonder heb ik $\mathcal{T}^{[t,\infty)}$ nodig.
 
 \begin{proposition}\label{prop:restr_trans_mat_system_if_semigroup}
-Consider any closed interval $\mathbf{I}\subseteq\realsnonneg$, and let $\mathcal{T}^{\mathbf{I}}$ be a family of transition matrices $T_t^s$ that is defined for all $t,s\in\mathbf{I}$ with $t\leq s$. Then $\mathcal{T}^{\mathbf{I}}$ is a restricted transition matrix system defined on $\mathbf{I}$ if and only if, for all $t,r,s\in\mathbf{I}$ with $t\leq r\leq s$, it holds that $T_t^s = T_t^rT_r^s$ and $T_t^t=I$.
+Consider any closed interval $\mathbf{I}\subseteq\realsnonneg$, and let $\mathcal{T}^{\mathbf{I}}$ be a family of transition matrices $T_t^s$ that is defined for all $t,s\in\mathbf{I}$ with $t\leq s$. Then $\mathcal{T}^{\mathbf{I}}$ is a restricted transition matrix system on $\mathbf{I}$ if and only if, for all $t,r,s\in\mathbf{I}$ with $t\leq r\leq s$, it holds that $T_t^s = T_t^rT_r^s$ and $T_t^t=I$.
 \end{proposition}
 
-We will henceforth call $\mathcal{T}^{\mathbf{I}}$ well-behaved if it satisfies Equation~\eqref{eq:wellbehavedtransitionmatrixsystem} on $\mathbf{I}$, instead of on the entirety of $\realsnonneg$.
+We call a restricted transition matrix system $\mathcal{T}^{\mathbf{I}}$ well-behaved if it is the restriction to $\mathbf{I}$ of a well-behaved transition matrix system.
 
-Now, because these restricted transition matrix systems are only defined on some given interval, it will be useful to define a concatenation operator between two such systems defined on adjacent intervals. We will say that two intervals $\mathbf{I},\mathbf{J}\subseteq\realsnonneg$ are \emph{adjacent} if, without loss of generality, $\mathbf{I}$ is closed on the right and $\mathbf{J}$ is closed on the left, and $\max\mathbf{I}=\min\mathbf{J}$. 
+\begin{proposition}\label{prop:well_restr_trans_mat_system_if_limsup}
+Consider any closed interval $\mathbf{I}\subseteq\realsnonneg$, and let $\mathcal{T}^{\mathbf{I}}$ be a restricted transition matrix system on $\mathbf{I}$. Then $\mathcal{T}^{\mathbf{I}}$ is well-behaved if and only if
+\begin{equation}\label{eq:wellbehavedrestrictedtransitionmatrixsystem}%\label{eq:wellbehavedhistorictransitionmatrix}
+(\forall t\in\mathbf{I}^+)~\limsup_{\Delta\to 0^{+}}\frac{1}{\Delta}\norm{T_{t}^{t+\Delta}-I}<+\infty\,
+\text{~and~}
+(\forall t\in\mathbf{I}^-)~\limsup_{\Delta\to 0^{+}}\frac{1}{\Delta}\norm{T_{t-\Delta}^t-I}<+\infty\,,
+\end{equation}
+where $\mathbf{I}^+\coloneqq\mathbf{I}\setminus\{\sup\mathbf{I}\}$ and $\mathbf{I}^-\coloneqq\mathbf{I}\setminus\{\min\mathbf{I}\}$.%\footnote{Since $\mathbf{I}$ may not have a maximum $\max\mathbf{I}$, for example if $\mathbf{I}=\realsnonneg$, we consider its supremum $\sup\mathbf{I}$.}
+\end{proposition}
+
+%it satisfies Equation~\eqref{eq:wellbehavedtransitionmatrixsystem} on $\mathbf{I}$, instead of on the entirety of $\realsnonneg$.
+
+%For all $t\in\mathbf{I}\setminus\min\mathbf{I}$
+
+Now, because these restricted transition matrix systems are only defined on some given closed interval, it will be useful to define a concatenation operator between two such systems. % defined on adjacent intervals, where we say that two intervals $\mathbf{I},\mathbf{J}\subseteq\realsnonneg$ are \emph{adjacent} if, without loss of generality, $\mathbf{I}$ is closed on the right and $\mathbf{J}$ is closed on the left, and $\max\mathbf{I}=\min\mathbf{J}$. 
 
 \begin{definition}[Concatenation Operator]
-For any two adjacent intervals $\mathbf{I},\mathbf{J}\subseteq\realsnonneg$ and any two restricted transition matrix systems $\mathcal{T}^{\mathbf{I}}$ and $\mathcal{T}^{\mathbf{J}}$, the concatenation of $\mathcal{T}^{\mathbf{I}}$ and $\mathcal{T}^{\mathbf{J}}$ is denoted $\mathcal{T}^\mathbf{I}\otimes\mathcal{T}^\mathbf{J}$, and defined as the family of transition matrices $T_t^s$ given by
+For any two closed intervals $\mathbf{I},\mathbf{J}\subseteq\realsnonneg$ such that $\max\mathbf{I}=\min\mathbf{J}$, and any two restricted transition matrix systems $\mathcal{T}^{\mathbf{I}}$ and $\mathcal{T}^{\mathbf{J}}$, the concatenation of $\mathcal{T}^{\mathbf{I}}$ and $\mathcal{T}^{\mathbf{J}}$ is denoted by $\mathcal{T}^\mathbf{I}\otimes\mathcal{T}^\mathbf{J}$, and defined as the family of transition matrices $T_t^s$ that is given by
 \begin{equation*}
 T_t^s \coloneqq \begin{cases}
 \presuper{i}T_t^s & \text{if $t,s\in\mathbf{I}$} \\
@@ -480,7 +494,7 @@ where $r\coloneqq\max\mathbf{I}=\min\mathbf{J}$, and $\presuper{i}T_t^s$ and $\p
 % \cup \left\{T_t^s\coloneqq T_t^rT_r^{s}\,\Big\vert\,T_{t}^r\in\mathcal{T}^{\mathbf{I}},\,T_r^{s}\in\mathcal{T}^{\mathbf{J}},\,\forall t\in\mathbf{I},\,\forall s\in\mathbf{J}\right\}\,.
 %\end{align*}
 \begin{proposition}\label{prop:concat_restr_trans_mat_systems_is_system}
-Consider two adjacent intervals $\mathbf{I},\mathbf{J}\subseteq\realsnonneg$, and any two restricted transition matrix systems $\mathcal{T}^{\mathbf{I}}$ and $\mathcal{T}^{\mathbf{J}}$. Then, their concatenation $\mathcal{T}^{\mathbf{I}\cup \mathbf{J}} \coloneqq \mathcal{T}^{\mathbf{I}}\otimes \mathcal{T}^{\mathbf{J}}$ is a restricted transition matrix system defined on $\mathbf{I}\cup\mathbf{J}$. Furthermore, if both $\mathcal{T}^{\mathbf{I}}$ and $\mathcal{T}^{\mathbf{J}}$ are well behaved, then $\mathcal{T}^{\mathbf{I}\cup\mathbf{J}}$ is also well-behaved.
+Consider two closed intervals $\mathbf{I},\mathbf{J}\subseteq\realsnonneg$ such that $\max\mathbf{I}=\min\mathbf{J}$, and any two restricted transition matrix systems $\mathcal{T}^{\mathbf{I}}$ and $\mathcal{T}^{\mathbf{J}}$. Then their concatenation $\mathcal{T}^{\mathbf{I}\cup \mathbf{J}} \coloneqq \mathcal{T}^{\mathbf{I}}\otimes \mathcal{T}^{\mathbf{J}}$ is a restricted transition matrix system on $\mathbf{I}\cup\mathbf{J}$. Furthermore, if both $\mathcal{T}^{\mathbf{I}}$ and $\mathcal{T}^{\mathbf{J}}$ are well behaved, then $\mathcal{T}^{\mathbf{I}\cup\mathbf{J}}$ is also well-behaved.
 \end{proposition}
 
 \begin{exmp}
@@ -2466,20 +2480,33 @@ where the first inequality follows from Proposition~\ref{prop:norm_properties}, 
 If $\mathcal{T}^{\mathbf{I}}$ is a restricted transition matrix system, then, by definition, it is the restriction to $\mathbf{I}$ of some transition matrix system $\mathcal{T}$. Therefore, the `only if' part of this result follows trivially from Definition~\ref{def:trans_mat_system}.
 
 For the `if' part, we need to prove that for any family of transition matrices $\mathcal{T}^{\mathbf{I}}$ such that, for all $t,r,s\in\mathbf{I}$ with $t\leq r\leq s$, it holds that $T_t^s = T_t^rT_r^s$ and $T_t^t=I$, there is a transition matrix system $\mathcal{T}$ that coincides with $\mathcal{T}^{\mathbf{I}}$ on $\mathbf{I}$. In order to prove this, it suffices to show that the unique family of transition matrices $\mathcal{T}$ that coincides with $\mathcal{T}^{\mathbf{I}}$ on $\mathbf{I}$ and that is otherwise defined by
-\begin{equation*}
+\begin{equation}\label{eq:prop:restr_trans_mat_system_if_semigroup}
 T_t^s
 \coloneqq
 \begin{cases}
 I &\text{ if $s<\min \mathbf{I}$}\\
 T_{\min\textbf{I}}^s &\text{ if $t<\min\textbf{I}$ and $s\in\textbf{I}$}\\
-T_{\min\textbf{I}}^{\max\textbf{I}} &\text{ if $t<\min\textbf{I}$ and $\max\textbf{I}<s$}\\
-T_t^{\max\textbf{I}}
-&\text{ if $t\in\textbf{I}$ and $\max\textbf{I}<s$}\\
-I &\text{ if $\max \mathbf{I}<t$}
+T_{\min\textbf{I}}^{\sup\textbf{I}} &\text{ if $t<\min\textbf{I}$ and $\sup\textbf{I}<s$}\\
+T_t^{\sup\textbf{I}}
+&\text{ if $t\in\textbf{I}$ and $\sup\textbf{I}<s$}\\
+I &\text{ if $\sup\mathbf{I}<t$}
 \end{cases}
 ~~~\text{ for $t,s\in\realsnonneg$ with $t\leq s$ and $[t,s]\not\subseteq\mathbf{I}$,}
-\end{equation*}
+\end{equation}
 is a transition matrix system. This is a matter of straightforward verification.
+\end{proof}
+
+\begin{proof}[Proof of Proposition~\ref{prop:well_restr_trans_mat_system_if_limsup}]
+% Consider any closed interval $\mathbf{I}\subseteq\realsnonneg$, and let $\mathcal{T}^{\mathbf{I}}$ be a restricted transition matrix system defined on $\mathbf{I}$. Then $\mathcal{T}^{\mathbf{I}}$ is well-behaved if and only if
+% \begin{equation*}%\label{eq:wellbehavedrestrictedtransitionmatrixsystem}%\label{eq:wellbehavedhistorictransitionmatrix}
+% (\forall t\in\mathbf{I}^+)~\limsup_{\Delta\to 0^{+}}\frac{1}{\Delta}\norm{T_{t}^{t+\Delta}-I}<+\infty\,
+% \text{~and~}
+% (\forall t\in\mathbf{I}^-)~\limsup_{\Delta\to 0^{+}}\frac{1}{\Delta}\norm{T_{t-\Delta}^t-I}<+\infty\,,
+% \end{equation*}
+% where $\mathbf{I}^+\coloneqq\mathbf{I}\setminus\{\sup\mathbf{I}\}$ and $\mathbf{I}^-\coloneqq\mathbf{I}\setminus\{\min\mathbf{I}\}$.%\footnote{Since $\mathbf{I}$ may not have a maximum $\max\mathbf{I}$, for example if $\mathbf{I}=\realsnonneg$, we consider its supremum $\sup\mathbf{I}$.}
+If $\mathcal{T}^{\mathbf{I}}$ is well-behaved, then, by definition, it is the restriction to $\mathbf{I}$ of a well-behaved transition matrix system $\mathcal{T}$. Therefore, the `only if' part of this result follows trivially from Definition~\ref{def:well_behaved_trans_mat_system}.
+
+For the `if' part, we need to show that for any restricted transition matrix system $\mathcal{T}^\mathbf{I}$ on $\mathbf{I}$ that satisfies Equation~\eqref{eq:wellbehavedrestrictedtransitionmatrixsystem}, there is a well-behaved transition matrix system $\mathcal{T}$ that coincides with $\mathcal{T}^\mathbf{I}$ on $\mathbf{I}$. Let $\mathcal{T}$ be constructed as in the proof of Proposition~\ref{prop:restr_trans_mat_system_if_semigroup}. Then, as explained in that proof, $\mathcal{T}$ is a transition matrix system that coincides with $\mathcal{T}^{\mathbf{I}}$ on $\mathbf{I}$. Therefore, it suffices to prove that $\mathcal{T}$ is well-behaved. We start by proving the first part of Equation~\eqref{eq:wellbehavedtransitionmatrixsystem}. So consider any $t\in\realsnonneg$. If $t\in\mathbf{I}^+$, then the desired inequality follows from Equation~\eqref{eq:wellbehavedrestrictedtransitionmatrixsystem}. If $t\notin\mathbf{I}^+$, then either $t<\min\mathbf{I}$ or $t\geq\sup\mathbf{I}$, and therefore, for sufficiently small $\Delta>0$, it follows from Equation~\eqref{eq:prop:restr_trans_mat_system_if_semigroup} that $T_t^{t+\Delta}=I$, thereby making the desired inequality trivially true. We second part of Equation~\eqref{eq:wellbehavedtransitionmatrixsystem} can be proved similarly.
 \end{proof}
 
 \begin{proof}[Proof of Proposition~\ref{prop:concat_restr_trans_mat_systems_is_system}]
