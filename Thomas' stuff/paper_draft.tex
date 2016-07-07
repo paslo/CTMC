@@ -515,21 +515,45 @@ where, for all $t,s\in\mathbf{I}$, it is understood that $T_t^s$ corresponds to 
 \begin{proposition}\label{lemma:restricted_trans_mat_system_cauchy_converges}
 Consider any interval $\mathbf{I}\subseteq\realsnonneg$, let $\mathbb{T}^{\mathbf{I}}$ be the set of all restricted transition matrix systems on $\mathbf{I}$ and let $d$ be the metric that is defined in Equation~\eqref{eq:trans_mat_system_metric}. The metric space $\smash{(\mathbb{T}^{\mathbf{I}},d)}$ is then complete.
 \end{proposition}
-Note that this result includes as a special case that the set $\mathbb{T}^{\realsnonneg}$ of all (unrestricted) transition matrix systems is complete. The following example illustrates this result for $\mathbf{I}=[0,1]$.
+Note that this result includes as a special case that the set $\mathbb{T}^{\realsnonneg}$ of all (unrestricted) transition matrix systems is complete. The following example illustrates how Proposition~\ref{lemma:restricted_trans_mat_system_cauchy_converges} can be used (a) to establish the convergence of a sequence of restricted transition matrix systems to a limit and (b) to show that this limit is again a restricted transition matrix system. 
 
 \begin{exmp}\label{exmp:limit_trans_mat_system}
 Consider any two commuting rate matrices $Q_1,Q_2\in\mathcal{R}$ such that $Q_1\neq Q_2$. For example, let $Q_1\in\mathcal{R}$ be any arbitrary rate matrix that is not identical to zero, and let $Q_2\coloneqq\lambda Q_1$, with $\lambda\in\realsnonneg$ and $\lambda\neq 1$. Now let $\mathcal{T}_{Q_1}$ and $\mathcal{T}_{Q_2}$ be the corresponding transition matrix systems. 
 
-We can then construct the following sequence. For $i=0$, we let $\mathcal{T}_{0}^{[0,1]}\coloneqq\mathcal{T}_{Q_2}^{[0,1]}$, and for all $i\in\nats$, we let
+We can then construct the following sequence. For $i=0$, we let $\smash{\mathcal{T}_{0}^{[0,1]}\coloneqq\mathcal{T}_{Q_2}^{[0,1]}}$, and for all $i\in\nats$, we let\vspace{-7pt}
 \begin{equation*}
 \mathcal{T}_i^{[0,1]} \coloneqq \begin{cases}
 \mathcal{T}_{Q_1}^{[0,\Delta_i]}\otimes \mathcal{T}_{i-1}^{[\Delta_i,+\infty)} & \text{if $i$ is odd;}\\
-\mathcal{T}_{Q_2}^{[0,\Delta_i]}\otimes \mathcal{T}_{i-1}^{[\Delta_i,+\infty)} & \text{otherwise.}
+\mathcal{T}_{Q_2}^{[0,\Delta_i]}\otimes \mathcal{T}_{i-1}^{[\Delta_i,+\infty)} & \text{otherwise,}
 \end{cases}
 \end{equation*}
-The sequence $\{\mathcal{T}_i\}_{i\in\nats}$ then clearly belongs to $\mathbb{T}^{\realsnonneg}$. Furthermore, for any $i\in\nats$, $\mathcal{T}_{i-1}$ and $\mathcal{T}_i$ differ the ``most'' on the interval $[0,\Delta_i]$. It should therefore be intuitively clear that $d(\mathcal{T}_{i-1},\mathcal{T}_i)\propto \Delta_i$; a formal proof can be constructed by combining Equations~\eqref{eq:trans_mat_system_metric} and~\eqref{eq:transmatrixproduct} with Lemmas~\ref{lemma:recursive} and~\ref{lemma:linearpartofexponential} in the appendix; we leave this as an exercise. 
+where, for all $i\in\nats_0$, $\Delta_i\coloneqq 2^{-i}$. Then clearly, the resulting sequence $\{\mathcal{T}_i\}_{i\in\nats_0}$ is a subset of $\mathbb{T}^{[0,1]}$. Furthermore, as we will explain in the rest of this example, $\{\mathcal{T}_i\}_{i\in\nats_0}$ is a Cauchy sequence. Loosely speaking, this means that its elements become arbitrarily close to each other as the sequence progresses. Formally, it means that
+\begin{equation}\label{eq:cauchyexample}
+(\forall\epsilon\in\realspos)\,(\exists n_\epsilon\in\nats)\,(\forall k,\ell > n_\epsilon)~d(\mathcal{T}_{k},\mathcal{T}_\ell)<\epsilon.
+\end{equation}
+The reason why this is of interest to us is because in a complete metric space, every Cauchy sequence converges a limit that belongs to the same space. Hence, since $\{\mathcal{T}_i\}_{i\in\nats_0}$ is Cauchy, Proposition~\ref{lemma:restricted_trans_mat_system_cauchy_converges} allow us to infer that $\{\mathcal{T}_i\}_{i\in\nats_0}$ converges to a limit in $\mathbb{T}^{[0,1]}$.
 
-Therefore, and because $\{\Delta_i\}_{i\in\nats}\to0^+$, the limit $\mathcal{T}_*\coloneqq \lim_{i\to\infty}\mathcal{T}_i$ clearly exists and, by Proposition~\ref{lemma:restricted_trans_mat_system_cauchy_converges}, is a transition matrix system. It should also be intuitively clear that $\mathcal{T}_*$ is well-behaved, however a formal proof is rather lengthy and left as an exercise.
+So it remains to show that $\{\mathcal{T}_i\}_{i\in\nats_0}$ is Cauchy. In order to prove this, the first step is to notice that for any $i\in\nats$, the difference between $\mathcal{T}_{i-1}$ and $\mathcal{T}_i$ is essentially situated on the interval $[0,\Delta_i]$. It should therefore be intuitively clear that $d(\mathcal{T}_{i-1},\mathcal{T}_i)$ is proportional to $\Delta_i$. A more rigorous argument shows that $d(\mathcal{T}_{i-1},\mathcal{T}_i)\leq\Delta_i\norm{Q_1-Q_2}$; see the appendix for a formal proof.
+%a formal proof can be constructed by combining Equations~\eqref{eq:trans_mat_system_metric} and~\eqref{eq:transmatrixproduct} with Lemmas~\ref{lemma:recursive} and~\ref{lemma:linearpartofexponential} in the appendix; we leave this as an exercise. 
+Using this inequality, and because $d$ is a metric, Equation~\eqref{eq:cauchyexample} can now easily be proven. It suffices to choose $n_\epsilon$ in such a way that $\norm{Q_1-Q_2}2^{-n_\epsilon}<\epsilon$. Indeed, in that case, for any $k,\ell>n_\epsilon$, if we assume---without loss of generality---that $k\leq\ell$, it follows that
+ \begin{equation*}
+d(\mathcal{T}_{k},\mathcal{T}_\ell)
+\leq\sum_{i=k+1}^{\ell}d(\mathcal{T}_{i-1},\mathcal{T}_i)
+\leq\sum_{i=k+1}^{\ell}\Delta_i\norm{Q_1-Q_2}
+=\norm{Q_1-Q_2}\sum_{i=k+1}^{\ell}\Delta_i
+%\leq\norm{Q_1-Q_2}\sum_{i=k+1}^{\infty}\Delta_i
+%=\norm{Q_1-Q_2}
+ \end{equation*}
+and therefore, since we also know that
+\begin{equation*}
+\sum_{i=k+1}^{\ell}\Delta_i
+\leq
+\sum_{i=k+1}^{+\infty}\Delta_i
+=\sum_{i=k+1}^{+\infty}2^{-i}
+=2^{-k}\leq2^{-n_\epsilon},
+\end{equation*}
+it follows that $\smash{d(\mathcal{T}_{k},\mathcal{T}_\ell)\leq\norm{Q_1-Q_2}2^{-n_\epsilon}}<\epsilon$, as required.\exampleend
+%Therefore, and because $\{\Delta_i\}_{i\in\nats}\to0^+$, the limit $\mathcal{T}_*\coloneqq \lim_{i\to\infty}\mathcal{T}_i$ clearly exists and, by Proposition~\ref{lemma:restricted_trans_mat_system_cauchy_converges}, is a transition matrix system. It should also be intuitively clear that $\mathcal{T}_*$ is well-behaved, however a formal proof is rather lengthy and left as an exercise.
 \end{exmp}
 
 Thus, Proposition~\ref{lemma:restricted_trans_mat_system_cauchy_converges} allows us to prove the existence of limits of sequences of (restricted) transition matrix systems. Because this limit is then again a (restricted) transition matrix system, it will be a family $\mathcal{T}_*$ of transition matrices $\presuper{*}T_t^s$. In some cases, we will be interested in these matrices $\presuper{*}T_t^s$. The following example sketches how, for the particular case of the limit from Example~\ref{exmp:limit_trans_mat_system}, we may find closed-form expressions for these transition matrices. This example is included mostly in preparation of some other examples later in this work.
@@ -2667,6 +2691,14 @@ Since $\lim_{\ell\to+\infty}\presuper{\ell}T_t^s=\presuper{*}T_t^s$, this implie
 (\forall\epsilon\in\realspos)\,(\exists n_\epsilon\in\nats)\,(\forall k > n_\epsilon)~d(\mathcal{T}_k^{\mathbf{I}},\mathcal{T}_*^{\mathbf{I}})\leq\epsilon,
 \end{equation*}
 which implies that $\mathcal{T}_*^{\mathbf{I}}=\lim_{i\to\infty}\mathcal{T}_i^{\mathbf{I}}$.
+\end{proof}
+
+\begin{proof}[Proof of Example~\ref{exmp:limit_trans_mat_system}]
+*** STILL NEED TO ADD THIS ***
+\end{proof}
+
+\begin{proof}[Proof of Example~\ref{exmp:limit_trans_mat_system_matrices}]
+*** STILL NEED TO ADD THIS ***
 \end{proof}
 
 % \begin{proof}[Proof of Proposition~\ref{prop:fullcoherent}]
