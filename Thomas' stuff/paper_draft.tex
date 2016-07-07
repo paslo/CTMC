@@ -1243,15 +1243,16 @@ Such a set $\mathcal{P}_{\rateset,\mathcal{M}}$ will also be called an \emph{imp
 It is clear from Example~\ref{example:rateset_not_singleton} that, for arbitrary $\rateset$, the entire consistent set $\processes_\rateset$ contains processes that differ not only quantitatively---differing in which $Q\in\rateset$ they use---but also qualitatively: differing in whether they satisfy homogeneity or Markov properties. We will therefore find it convenient to focus on the following sets of processes, which make explicit this qualitative difference.
 
 \begin{definition}\label{def:process_sets}
-For any non-empty bounded set of rate matrices $\rateset$,
+For any non-empty bounded set of rate matrices $\rateset$, and any non-empty set $\mathcal{M}$ of probability mass functions on $\states$, we define the following sets of stochastic processes that are jointly consistent with $\rateset$ and $\mathcal{M}$:
 \begin{itemize}
-\item $\wprocesses_\rateset\subset\wprocesses$ is the set of all well-behaved stochastic processes consistent with $\rateset$.
-\item $\wmprocesses_\rateset\subset\wmprocesses$ is the set of all well-behaved Markov chains consistent with $\rateset$;
-\item $\whmprocesses_\rateset\subset\whmprocesses$ is the set of all well-behaved homogeneous Markov chains consistent with $\rateset$;
+\item $\wprocesses_{\rateset,\mathcal{M}}\subset\wprocesses$ is the consistent set of all well-behaved stochastic processes;
+\item $\wmprocesses_{\rateset,\mathcal{M}}\subset\wmprocesses$ is the consistent set of all well-behaved Markov chains;
+\item $\whmprocesses_{\rateset,\mathcal{M}}\subset\whmprocesses$ is the consistent set of all well-behaved homogeneous Markov chains.
 \end{itemize}
-We will denote the lower expectation with respect to $\wprocesses_\rateset$ as $\underline{\mathbb{E}}_\rateset^{\mathrm{W}}$, with respect to $\wmprocesses_\rateset$ as $\underline{\mathbb{E}}_\rateset^{\mathrm{WM}}$, and with respect to  $\whmprocesses_\rateset$ as $\underline{\mathbb{E}}_\rateset^{\mathrm{WHM}}$.
+We will denote the lower expectation with respect to $\wprocesses_{\rateset,\mathcal{M}}$ as $\underline{\mathbb{E}}_{\rateset,\mathcal{M}}^{\mathrm{W}}$, with respect to $\wmprocesses_{\rateset,\mathcal{M}}$ as $\underline{\mathbb{E}}_{\rateset,\mathcal{M}}^{\mathrm{WM}}$, and with respect to  $\whmprocesses_{\rateset,\mathcal{M}}$ as $\underline{\mathbb{E}}_{\rateset,\mathcal{M}}^{\mathrm{WHM}}$. Following Definition~\ref{def:consistent_process_set}, we will write $\wprocesses_{\rateset}$, with lower expectation $\underline{\mathbb{E}}_{\rateset}^{\mathrm{W}}$, when we take $\mathcal{M}$ to be the set of \emph{all} probability mass functions on $\states$ (and similarly for these other sets). 
 \end{definition}
-Following Definition~\ref{def:consistent_process_set}, we will write $\wprocesses_{\rateset,\mathcal{M}}$, with lower expectation $\underline{\mathbb{E}}_{\rateset,\mathcal{M}}^{\mathrm{W}}$, when we want to consider a specific set $\mathcal{M}$ of initial distributions (and similarly for the other sets above). However, we will in the sequel focus almost exclusively on sets of processes consistent only with a given set $\rateset$, and \emph{conditional} lower expectations with respect to those sets. Restrictions to specific sets $\mathcal{M}$ of initial distributions are then revisited in Section~{\bf REF}, where we will show how to compute (conditional) lower expectations when we do take into consideration such sets $\mathcal{M}$. In particular, we will there show that conditional lower expectations are invariant to the choice of $\mathcal{M}$, so that all our results up to that point remain valid for any choice of $\mathcal{M}$. Furthermore, we will show how to use these earlier results to compute \emph{unconditional} lower expectations, for which the choice of $\mathcal{M}$ does matter.
+
+%However, we will in the sequel focus almost exclusively on sets of processes consistent only with a given set $\rateset$, and \emph{conditional} lower expectations with respect to those sets. Restrictions to specific sets $\mathcal{M}$ of initial distributions are then revisited in Section~{\bf REF}, where we will show how to compute (conditional) lower expectations when we do take into consideration such sets $\mathcal{M}$. In particular, we will there show that conditional lower expectations are invariant to the choice of $\mathcal{M}$, so that all our results up to that point remain valid for any choice of $\mathcal{M}$. Furthermore, we will show how to use these earlier results to compute \emph{unconditional} lower expectations, for which the choice of $\mathcal{M}$ does matter.
 
 %\begin{proposition}\label{prop:process_sets_simplify}
 %For any non-empty bounded set of rate matrices $\rateset$, it holds that
@@ -1275,22 +1276,22 @@ Following Definition~\ref{def:consistent_process_set}, we will write $\wprocesse
 %\begin{proof}
 %*** {\bf TODO}, but trivial.
 %\end{proof}
-Returning to the qualitative differences between the sets mentioned above, observe that these differences simplify the notion of consistency from Definition~\ref{def:consistent_process}. In particular, it holds that
+Observe that the qualitative differences between these sets simplify the notion of consistency from Definition~\ref{def:consistent_process}. In particular, it holds that
 \begin{equation*}
-\wmprocesses_\rateset = \left\{P\in\wmprocesses\,:\,(\forall t\in\realsnonneg)~~ \smash{\overline{\partial}}T_t^t\subseteq\rateset\right\}\,,
+\wmprocesses_{\rateset,\mathcal{M}} = \left\{P\in\wmprocesses\,:\,(\forall t\in\realsnonneg)~~ \smash{\overline{\partial}}T_t^t\subseteq\rateset,\,P(X_0)\in\mathcal{M}\right\}\,,
 \end{equation*}
 and
 \begin{equation*}
-\whmprocesses_\rateset = \left\{P\in\whmprocesses\,:\,Q_P\in\rateset\right\}\,.
+\whmprocesses_{\rateset,\mathcal{M}} = \left\{P\in\whmprocesses\,:\,Q_P\in\rateset,\,P(X_0)\in\mathcal{M}\right\}\,.
 \end{equation*}
-This first equality follows from the Markov property of the elements of $\wmprocesses$, ensuring that $\smash{\overline{\partial}}T_{t,x_u}^t=\smash{\overline{\partial}}T_t^t$ for all $u\in\mathcal{U}_{<t}$ and all $x_u\in\states^u$. The second equality follows from the Markov property and the homogeneity of the elements $P\in\whmprocesses$, which, by Proposition~\ref{prop:Q_is_singleton_deriv_for_homogen}, ensures that $\smash{\overline{\partial}}T_t^t=\{Q_P\}$ for all $t\in\realsnonneg$.
+This first equality follows from the Markov property of the elements of $\wmprocesses$, ensuring that $\smash{\overline{\partial}}T_{t,x_u}^t=\smash{\overline{\partial}}T_t^t$ for all $u\in\mathcal{U}_{<t}$ and all $x_u\in\states_u$. The second equality follows from the Markov property and the homogeneity of the elements $P\in\whmprocesses$, which, by Proposition~\ref{prop:Q_is_singleton_deriv_for_homogen}, ensures that $\smash{\overline{\partial}}T_t^t=\{Q_P\}$ for all $t\in\realsnonneg$.
 
-It should furthermore be clear that these different sets are nested, and, as an immediate result, that their corresponding lower expectations provide bounds for each other.
+It should furthermore be clear that these different sets are nested, and, as an immediate consequence, that their corresponding lower expectations provide bounds for each other.
 
 \begin{proposition}\label{prop:markov_set_subset_of_nonmarkov_set}
-Consider any bounded set of rate matrices $\rateset$. Then,
+Consider any bounded set of rate matrices $\rateset$, and any non-empty set $\mathcal{M}$ of probability mass functions on $\states$. Then,
 \begin{equation*}
-\whmprocesses_\rateset \subseteq \wmprocesses_\rateset \subseteq \wprocesses_\rateset\,.
+\whmprocesses_{\rateset,\mathcal{M}} \subseteq \wmprocesses_{\rateset,\mathcal{M}} \subseteq \wprocesses_{\rateset,\mathcal{M}}\,.
 \end{equation*}
 \end{proposition}
 \begin{proof}
@@ -1298,11 +1299,11 @@ Consider any bounded set of rate matrices $\rateset$. Then,
 \end{proof}
 
 \begin{proposition}\label{prop:lower_exp_markov_bounded_by_nonmarkov}
-Consider any bounded set of rate matrices $\rateset$. Then,
+Consider any bounded set of rate matrices $\rateset$, and any non-empty set $\mathcal{M}$ of probability mass functions on $\states$. Then,
 \begin{equation*}
-\underline{\mathbb{E}}_\rateset^\mathrm{W}[\cdot\,\vert\,\cdot] \leq
-\underline{\mathbb{E}}_\rateset^\mathrm{WM}[\cdot\,\vert\,\cdot] \leq
-\underline{\mathbb{E}}_\rateset^\mathrm{WHM}[\cdot\,\vert\,\cdot]\,.
+\underline{\mathbb{E}}_{\rateset,\mathcal{M}}^\mathrm{W}[\cdot\,\vert\,\cdot] \leq
+\underline{\mathbb{E}}_{\rateset,\mathcal{M}}^\mathrm{WM}[\cdot\,\vert\,\cdot] \leq
+\underline{\mathbb{E}}_{\rateset,\mathcal{M}}^\mathrm{WHM}[\cdot\,\vert\,\cdot]\,.
 \end{equation*}
 \end{proposition}
 \begin{proof}
@@ -1313,10 +1314,16 @@ Now, ironically, it turns out that computing lower expectations for the set $\wh
 
 The problem is, essentially, that while homogeneous Markov chains are easy to work with numerically, the set $\whmprocesses_\rateset$ does not provide enough ``degrees of freedom'' to make the optimization problem involved in computing $\underline{\mathbb{E}}^\mathrm{WHM}_\rateset$ tractable. The following example serves as an illustration. 
 
-*** Known to be difficult: even finding an $\epsilon$-approximation takes at least exponential time~\cite[Theorem 20.1]{kreinovich2013computational}.
+%*** Known to be difficult: even finding an $\epsilon$-approximation takes at least exponential time~\cite[Theorem 20.1]{kreinovich2013computational}.
 
 \begin{exmp}
-**** example that homogeneous case is harder than non-homogeneous case.
+Suppose that we want to compute the conditional lower expectation $\underline{\mathbb{E}}_\rateset^{\mathrm{WHM}}[f(X_t)\,\vert\,X_0]$ for some function $f\in\gamblesX$. It follows from Remark~\ref{remark:expectationT}, Definition~\ref{def:lower_exp}, and Proposition~\ref{prop:Q_is_singleton_deriv_for_homogen} that
+\begin{align*}
+\underline{\mathbb{E}}_\rateset^{\mathrm{WHM}}[f(X_t)\,\vert\,X_0] &= \inf\left\{ \mathbb{E}_P[f(X_t)\,\vert\,X_0]\,:\,P\in\whmprocesses_\rateset \right\} \\
+ &= \inf\left\{ e^{Q_P t}f\,:\,P\in\whmprocesses_\rateset \right\} \\
+ &= \inf\left\{ e^{Q t}f\,:\,Q\in\rateset\right\}\,.
+\end{align*}
+**** blabla
 \exampleend
 \end{exmp}
 
@@ -1342,6 +1349,62 @@ P(A\vert X_u=x_u)=P_{x_u}(A\vert X_u=x_u).
 \vspace{7pt}
 \end{equation}
 \end{theorem}
+
+**** blabla
+
+\begin{lemma}
+Consider any well-behaved transition matrix system $\mathcal{T}$, and any two probability mass functions $p,q$ on $\states$. Let $P_p$ and $P_q$ denote the unique well-behaved Markov chains with transition matrix systems $\mathcal{T}_{P_p}$, $\mathcal{T}_{P_q}$, for which $\mathcal{T}_{P_p}=\mathcal{T}$, $P_p(X_0)=p$ and $\mathcal{T}_{P_q}=\mathcal{T}$, $P_q(X_0)=q$. These unique Markov chains are guaranteed to exist by Theorem~\ref{theo:uniqueMarkovchain}. Let $\rateset$ be an arbitrary non-empty bounded set of rate matrices. Then, $P_p\sim\rateset$ if and only if $P_q\sim\rateset$.
+\end{lemma}
+\begin{proof}
+Due to the definition of the outer partial derivative in Definition~\ref{def:outerpartialderivatives}, the outer partial derivatives of any process $P$ are completely determined by the transition matrices corresponding to this $P$.
+
+Hence, because $\mathcal{T}_{P_p}=\mathcal{T}=\mathcal{T}_{P_q}$, we must have that $\overline{\partial}\presuper{P_p}T_t^t = \overline{\partial}\presuper{P_q}T_t^t$ for all $t\in\realsnonneg$, where $\overline{\partial}\presuper{P_p}T_t^t$ and $\overline{\partial}\presuper{P_q}T_t^t$ denote the outer partial derivatives of $P_p$ and $P_q$, at time $t$, respectively. The result now follows trivially from the definition of consistency in Definition~\ref{def:consistent_process}.
+\end{proof}
+
+\begin{proposition}
+Consider any non-empty and bounded set of rate matrices $\rateset$, any two non-empty sets $\mathcal{M}_1,\mathcal{M}_2$ of probability mass functions on $\states$, any $u\in\mathcal{U}_{\empty}$ and $x_u\in\states_u$, any $v\in\mathcal{U}$ such that $u<v$, and any $f\in\gambles(\states_{u\cup v})$. Then,
+\begin{equation*}
+\underline{\mathbb{E}}_{\rateset,\,\mathcal{M}_1}^{\mathrm{W}}[f(x_u,X_v)\,\vert\,X_u=x_u]=\underline{\mathbb{E}}_{\rateset,\,\mathcal{M}_2}^{\mathrm{W}}[f(x_u,X_v)\,\vert\,X_u=x_u]\,.
+\end{equation*}
+Similarly, it holds that $\underline{\mathbb{E}}_{\rateset,\,\mathcal{M}_1}^{\mathrm{WM}}[f(x_u,X_v)\,\vert\,X_u=x_u]=\underline{\mathbb{E}}_{\rateset,\,\mathcal{M}_2}^{\mathrm{WM}}[f(x_u,X_v)\,\vert\,X_u=x_u]$, and $\underline{\mathbb{E}}_{\rateset,\,\mathcal{M}_1}^{\mathrm{WHM}}[f(x_u,X_v)\,\vert\,X_u=x_u]=\underline{\mathbb{E}}_{\rateset,\,\mathcal{M}_2}^{\mathrm{WHM}}[f(x_u,X_v)\,\vert\,X_u=x_u]$.
+\end{proposition}
+\begin{proof}
+****{\bf  TODO}: case for non-Markov processes. Can't easily do this currently without invoking convexity of $\rateset$.
+
+We next prove the equality $\underline{\mathbb{E}}_{\rateset,\,\mathcal{M}_1}^{\mathrm{WM}}[f(x_u,X_v)\,\vert\,X_u=x_u]=\underline{\mathbb{E}}_{\rateset,\,\mathcal{M}_2}^{\mathrm{WM}}[f(x_u,X_v)\,\vert\,X_u=x_u]$. 
+To this end, consider the two sets $\mathcal{E}_1$ and $\mathcal{E}_2$, given by
+\begin{align*}
+\mathcal{E}_1 \coloneqq \left\{ \mathbb{E}_P[f(x_u,X_v)\,\vert\,X_u=x_u]\,:\,P\in\wmprocesses_{\rateset,\,\mathcal{M}_1} \right\}\,,\\
+\mathcal{E}_2 \coloneqq \left\{ \mathbb{E}_P[f(x_u,X_v)\,\vert\,X_u=x_u]\,:\,P\in\wmprocesses_{\rateset,\,\mathcal{M}_2} \right\}\,.
+\end{align*}
+Clearly, we then have that $\underline{\mathbb{E}}_{\rateset,\,\mathcal{M}_1}^{\mathrm{WM}}[f(x_u,X_v)\,\vert\,X_u=x_u] = \inf\mathcal{E}_1$, and $\underline{\mathbb{E}}_{\rateset,\,\mathcal{M}_2}^{\mathrm{WM}}[f(x_u,X_v)\,\vert\,X_u=x_u] = \inf\mathcal{E}_2$.
+
+Let $v=s_0,\ldots,s_n$, and consider any $P\in\wmprocesses_{\rateset,\,\mathcal{M}_1}$. Due to the Markov property of $P$, it holds that
+\begin{align*}
+\mathbb{E}_P[f(x_u,X_v)\,\vert\,X_u=x_u] &= \sum_{x_v\in\states_v} P(X_v=x_v,X_u=x_u\,\vert\,X_u=x_u) f(x_u,x_v) \\
+ &= \sum_{x_v\in\states_v} P(X_v=x_v\,\vert\,X_u=x_u) f(x_u,x_v) \\
+ %&= \sum_{x_v\in\states_v} P(X_{\{s_0,\ldots,s_n\}}=x_{\{s_0,\ldots,s_n\}}\,\vert\,X_u=x_u) f(x_u,x_v) \\
+ &= \sum_{x_v\in\states_v} P(X_{s_0}=x_{s_0},\ldots,X_{s_n}=x_{s_n}\,\vert\,X_u=x_u) f(x_u,x_v) \\
+ = \sum_{x_v\in\states_v} P(X_{s_0}=x_{s_0}\,\vert\,X_u=x_u)&\prod_{i=1}^n P(X_{s_i}=x_{s_i}\,\vert\,X_{s_{i-1}}=x_{s_{i-1}},\ldots,X_{s_0}=x_{s_0},X_u=x_u) f(x_u,x_v) \\
+ = \sum_{x_v\in\states_v} P(X_{s_0}=x_{s_0}\,\vert\,X_u=x_u)&\prod_{i=1}^n P(X_{s_i}=x_{s_i}\,\vert\,X_{s_{i-1}}=x_{s_{i-1}}) f(x_u,x_v) \\
+ &= \sum_{x_v\in\states_v} T_{\max u}^{s_0}(x_{\{\max u\}}, x_{s_0})\prod_{i=1}^n T_{s_{i-1}}^{s_i}(x_{s_{i-1}},x_{s_i}) f(x_u,x_v)\,.
+\end{align*}
+Hence, for any $P\in\wmprocesses_{\rateset,\,\mathcal{M}_1}$, the expectation $\mathbb{E}_P[f(x_u,X_v)\,\vert\,X_u=x_u]$ is completely determined by the transition matrices corresponding to $P$, and therefore also by the transition matrix system $\mathcal{T}_P$ corresponding to $P$. A similar argument shows that this also holds for the conditional expectation of any $P'\in\wmprocesses_{\rateset,\,\mathcal{M}_2}$.
+
+Now, consider any $P\in\wmprocesses_{\rateset,\,\mathcal{M}_1}$, and let $\mathcal{T}_P$ denote the (well-behaved) transition matrix system corresponding to this $P$. Choose any $q\in\mathcal{M}_2$. Theorem~\ref{theo:uniqueMarkovchain} now implies that there is a unique well-behaved Markov chain $P'$ with transition matrix system $\mathcal{T}_{P'}$, such that $\mathcal{T}_{P'}=\mathcal{T}_P$ and $P'(X_0)=q$. Because $P\sim\rateset$, Lemma~{\bf REF} implies that $P'\sim\rateset$. Because $P'(X_0)=q\in\mathcal{M}_2$, it follows from Definition~\ref{def:consistent_process_set} that $P'\in\wmprocesses_{\rateset,\mathcal{M}_2}$. Because the $P$ was arbitrary, this implies that for every $P\in\wmprocesses_{\rateset,\,\mathcal{M}_1}$, there is a $P'\in\wmprocesses_{\rateset,\,\mathcal{M}_2}$ such that $\mathcal{T}_{P'}=\mathcal{T}_{P}$. \emph{Mutatis mutandis}, we also find that for every $P'\in\wmprocesses_{\rateset,\,\mathcal{M}_2}$, there is a $P\in\wmprocesses_{\rateset,\,\mathcal{M}_1}$ such that $\mathcal{T}_{P}=\mathcal{T}_{P'}$.
+
+Hence, it follows from the above that, for every $\mathbb{E}_P[f(x_u,X_v)\,\vert\,X_u=x_u]\in\mathcal{E}_1$---and because this expectation only depends on the transition matrix system $\mathcal{T}_P$---there is a $\mathbb{E}_{P'}[f(x_u,X_v)\,\vert\,X_u=x_u]\in\mathcal{E}_2$, such that
+\begin{equation*}
+\mathbb{E}_P[f(x_u,X_v)\,\vert\,X_u=x_u] = \mathbb{E}_{P'}[f(x_u,X_v)\,\vert\,X_u=x_u].
+\end{equation*}
+Similarly, for every expectation in $\mathcal{E}_2$, there is an identical expectation in $\mathcal{E}_1$. It follows that $\mathcal{E}_1=\mathcal{E}_2$, and hence that
+\begin{equation*}
+\underline{\mathbb{E}}_{\rateset,\,\mathcal{M}_1}^{\mathrm{WM}}[f(x_u,X_v)\,\vert\,X_u=x_u] = \inf\mathcal{E}_1 = \inf\mathcal{E}_2 = \underline{\mathbb{E}}_{\rateset,\,\mathcal{M}_2}^{\mathrm{WM}}[f(x_u,X_v)\,\vert\,X_u=x_u]\,.
+\end{equation*}
+
+An exactly analogous argument to the proof for well-behaved Markov chains shows that also $\underline{\mathbb{E}}_{\rateset,\,\mathcal{M}_1}^{\mathrm{WHM}}[f(x_u,X_v)\,\vert\,X_u=x_u]=\underline{\mathbb{E}}_{\rateset,\,\mathcal{M}_2}^{\mathrm{WHM}}[f(x_u,X_v)\,\vert\,X_u=x_u]$.
+\end{proof}
+
 This result is particularly useful when we consider functions $f\in\gambles(\states^{u\cup v})$ defined on an arbitrary number of time points $u$ and $v$. Specifically, it follows from the basic properties of expectation that for any process $P\in\wprocesses_\rateset$, the expectation $\mathbb{E}$ of such a function satisfies, for any $w\subseteq v$,
 \begin{equation*}
 \mathbb{E}[f(X_u,X_v)\,\vert\,X_u] = \mathbb{E}\bigl[\mathbb{E}[f(X_u,X_v)\,\vert\,X_u,X_{v\setminus w}]\,\big\vert\,X_u\bigr]\,.
@@ -1372,6 +1435,11 @@ Consider a non-empty, bounded, convex and closed set of rate matrices $\rateset$
 \end{theorem}
 
 The reason that this result is of interest to us, is that it allows us to prove the existence of certain processes $P\in\wmprocesses_\rateset$. In particular, it allows us to establish the existence of limits of sequences $\left\{P_i\right\}_{i\in\nats}$ in $\wmprocesses_\rateset$ that satisfy certain behavior on a specified interval $[t,s]$. This works because, since the space $\mathbb{T}^{[t,s]}_\rateset$ is compact, not only do convergent sequences converge within this set, but furthermore, any sequence in this set will always have a convergent subsequence.
+
+\begin{exmp}
+***** TODO: final part of running example for non-differentiable Markov chain. Show that $\mathcal{T}_*$ is indeed well-behaved, using Theorem~\ref{theorem:restricted_transmatsystem_space_compact_if_Q_closed}. Add proof in corresponding part of appendix to show that $\overline{\partial}_+T_0^0$ is indeed convex, using Theorem~\ref{theorem:restricted_transmatsystem_space_compact_if_Q_closed}. Also argue that convexity of that out partial derivative illustrates the requirement of convexity in that theorem.
+\exampleend
+\end{exmp}
 
 For instance, the next result follows immediately from Theorem~\ref{theorem:restricted_transmatsystem_space_compact_if_Q_closed}. This result establishes that, if $\rateset$ is closed and convex, the lower expectation $\underline{\mathbb{E}}_{\,\rateset}^{\mathrm{WM}}$ is always reached by some $P\in\wmprocesses_\rateset$, and hence is in fact a minimum.
 \begin{proposition}\label{prop:lower_expectation_reached_if_Q_closed}
