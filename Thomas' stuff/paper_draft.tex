@@ -311,7 +311,7 @@ We provide in this section some definitions that will later be useful for charac
 
 For the purposes of this section, it suffices to say that a continuous-time Markov chain is a process which at each time $t$ is in some state $x\in\states$. As time elapses, the proces moves through the state space $\states$ in some stochastic fashion. We here define tools with which this stochastic behavior can be conveniently described.
 
-\subsection{Transition (Rate) Matrices}\label{sec:trans_rate_matrices}
+\subsection{Transition Matrices and Transition Rate Matrices}\label{sec:trans_rate_matrices}
 
 %\emph{Transition matrices} are convenient tools for describing both discrete-time and continuous-time Markov chains. 
 A \emph{transition matrix} $T$ is a matrix that is row-stochastic, meaning that, for each $x\in\states$, the row $T(x,\cdot)$ is a probability mass function on $\states$.
@@ -382,7 +382,7 @@ A set of rate matrices $\rateset\subseteq\mathcal{R}$ is bounded if and only if
 \end{proposition}
 
 
-\subsection{Transition Matrix Systems}
+\subsection{Transition Matrix Systems that are Well-Behaved}
 
 In the previous section, we used the notation $T_t^s$ to refer to a transition matrix that contains the probabilities of moving from a state at time $t$, to a state at time $s$. We now consider \emph{families} of these transition matrices. Such a family $\mathcal{T}$ specifies a transition matrix $T_t^s$ for every $t,s\in\realsnonneg$ such that $t\leq s$. 
 
@@ -518,14 +518,14 @@ Consider any interval $\mathbf{I}\subseteq\realsnonneg$, let $\mathbb{T}^{\mathb
 Note that this result includes as a special case that the set $\mathbb{T}^{\realsnonneg}$ of all (unrestricted) transition matrix systems is complete. We illustrate this property in the following example.
 
 \begin{exmp}\label{exmp:limit_trans_mat_system}
-Let $Q_1,Q_2\in\mathcal{R}$ be any two commuting rate matrices such that $Q_1\neq Q_2$, and let $\mathcal{T}_{Q_1}$ and $\mathcal{T}_{Q_2}$ be their exponential transition matrix systems. Consider now the sequence $\{\Delta_i\}_{i\in\nats}\coloneqq \{\nicefrac{1}{2^i}\}_{i\in\nats}$, define $\mathcal{T}_0\coloneqq \mathcal{T}_{Q_1}$, and, for all $i\in\nats$, let
+Let $Q_1,Q_2\in\mathcal{R}$ be any two commuting rate matrices such that $Q_1\neq Q_2$, and let $\mathcal{T}_{Q_1}$ and $\mathcal{T}_{Q_2}$ be their exponential transition matrix systems. Consider now the sequence $\{\Delta_i\}_{i\in\nats}\coloneqq \{\nicefrac{1}{2^i}\}_{i\in\nats}$, define $\mathcal{T}_0\coloneqq \mathcal{T}_{Q_2}$, and, for all $i\in\nats$, let
 \begin{equation*}
 \mathcal{T}_i \coloneqq \begin{cases}
-\mathcal{T}_{Q_1}^{[0,\Delta_i]}\otimes \mathcal{T}_{i-1}^{[\Delta_i,+\infty)} & \text{if $i$ is odd, and} \\
+\mathcal{T}_{Q_1}^{[0,\Delta_i]}\otimes \mathcal{T}_{i-1}^{[\Delta_i,+\infty)} & \text{if $i$ is odd;}\\
 \mathcal{T}_{Q_2}^{[0,\Delta_i]}\otimes \mathcal{T}_{i-1}^{[\Delta_i,+\infty)} & \text{otherwise.}
 \end{cases}
 \end{equation*}
-The sequence $\{\mathcal{T}_i\}_{i\in\nats}$ is then clearly in $\mathbb{T}^{\realsnonneg}$. Furthermore, for any $i\in\nats$, the systems $\mathcal{T}_{i-1}$ and $\mathcal{T}_i$ differ the ``most'' on the interval $[0,\Delta_i]$. It should therefore be intuitively clear that $d(\mathcal{T}_{i-1},\mathcal{T}_i)\propto \Delta_i$, which can also be formally shown by combining Equations~\eqref{eq:trans_mat_system_metric} and~\eqref{eq:transmatrixproduct} with Lemmas~\ref{lemma:recursive} and~\ref{lemma:linearpartofexponential} in the appendix. 
+The sequence $\{\mathcal{T}_i\}_{i\in\nats}$ then clearly belongs to $\mathbb{T}^{\realsnonneg}$. Furthermore, for any $i\in\nats$, $\mathcal{T}_{i-1}$ and $\mathcal{T}_i$ differ the ``most'' on the interval $[0,\Delta_i]$. It should therefore be intuitively clear that $d(\mathcal{T}_{i-1},\mathcal{T}_i)\propto \Delta_i$; a formal proof can be constructed by combining Equations~\eqref{eq:trans_mat_system_metric} and~\eqref{eq:transmatrixproduct} with Lemmas~\ref{lemma:recursive} and~\ref{lemma:linearpartofexponential} in the appendix; we leave this as an exercise. 
 
 Therefore, and because $\{\Delta_i\}_{i\in\nats}\to0^+$, the limit $\mathcal{T}_*\coloneqq \lim_{i\to\infty}\mathcal{T}_i$ clearly exists and, by Proposition~\ref{lemma:restricted_trans_mat_system_cauchy_converges}, is a transition matrix system. It should also be intuitively clear that $\mathcal{T}_*$ is well-behaved, however a formal proof is rather lengthy and left as an exercise.
 \end{exmp}
@@ -4009,7 +4009,7 @@ Since $\epsilon>0$ is arbitrary, it follows that $\norm{T_t^s-I}\leq(s-t)\norm{\
 Consider a non-empty, bounded, convex and closed set of rate matrices $\rateset$ and any $t,s\in\realsnonneg$ such that $t\leq s$. Let $d$ be the metric that is defined in Equation~\eqref{eq:trans_mat_system_metric}. The metric space $\smash{(\mathbb{T}_\rateset^{[t,s]},d)}$ is then complete.
 \end{lemma}
 \begin{proof}
-Consider any sequence $\{\mathcal{T}_i^{[t,s]}\}_{i\in\nats}$ in $\mathbb{T}_{\rateset}^{[t,s]}$ that is Cauchy. We need to prove that this sequence converges to a limit $\mathcal{T}_*^{[t,s]}$ that belongs to $\mathbb{T}_{\rateset}^{[t,s]}$. Since we already know from Lemma~\ref{lemma:restricted_trans_mat_system_cauchy_converges} this limit exists and belongs to $\mathbb{T}^{[t,s]}$, the only thing that remains to be shown is that $\mathcal{T}_*^{[t,s]}\in\mathbb{T}_{\rateset}^{[t,s]}$. 
+Consider any sequence $\{\mathcal{T}_i^{[t,s]}\}_{i\in\nats}$ in $\mathbb{T}_{\rateset}^{[t,s]}$ that is Cauchy. We need to prove that this sequence converges to a limit $\mathcal{T}_*^{[t,s]}$ that belongs to $\mathbb{T}_{\rateset}^{[t,s]}$. Since we already know from Proposition~\ref{lemma:restricted_trans_mat_system_cauchy_converges} this limit exists and belongs to $\mathbb{T}^{[t,s]}$, the only thing that remains to be shown is that $\mathcal{T}_*^{[t,s]}\in\mathbb{T}_{\rateset}^{[t,s]}$. 
 Throughout this proof, for any $q,r\in[t,s]$ such that $q\leq r$, we will use $\smash{\presuper{*}T_q^r}$ to denote the transition matrix that corresponds to $\mathcal{T}_*^{[t,s]}$ and, for all $i\in\nats$, we will use $\presuper{i}T_q^r$ to denote the transition matrix that corresponds to $\mathcal{T}_i^{[t,s]}$. 
 
 Fix any $r\in[t,s]$ and consider any $\Delta>0$. Then due to Lemma~\ref{lemma:uniformelywellbehaved}, for all $i\in\nats$:
