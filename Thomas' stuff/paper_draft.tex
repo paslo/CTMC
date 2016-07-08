@@ -1422,58 +1422,135 @@ P(A\vert X_u=x_u)=P_{x_u}(A\vert X_u=x_u).
 
 **** blabla
 
-\begin{lemma}
-Consider any well-behaved transition matrix system $\mathcal{T}$, and any two probability mass functions $p,q$ on $\states$. Let $P_p$ and $P_q$ denote the unique well-behaved Markov chains with transition matrix systems $\mathcal{T}_{P_p}$, $\mathcal{T}_{P_q}$, for which $\mathcal{T}_{P_p}=\mathcal{T}$, $P_p(X_0)=p$ and $\mathcal{T}_{P_q}=\mathcal{T}$, $P_q(X_0)=q$. These unique Markov chains are guaranteed to exist by Theorem~\ref{theo:uniqueMarkovchain}. Let $\rateset$ be an arbitrary non-empty bounded set of rate matrices. Then, $P_p\sim\rateset$ if and only if $P_q\sim\rateset$.
-\end{lemma}
-\begin{proof}
-Due to the definition of the outer partial derivative in Definition~\ref{def:outerpartialderivatives}, the outer partial derivatives of any process $P$ are completely determined by the transition matrices corresponding to this $P$.
-
-Hence, because $\mathcal{T}_{P_p}=\mathcal{T}=\mathcal{T}_{P_q}$, we must have that $\overline{\partial}\presuper{P_p}T_t^t = \overline{\partial}\presuper{P_q}T_t^t$ for all $t\in\realsnonneg$, where $\overline{\partial}\presuper{P_p}T_t^t$ and $\overline{\partial}\presuper{P_q}T_t^t$ denote the outer partial derivatives of $P_p$ and $P_q$, at time $t$, respectively. The result now follows trivially from the definition of consistency in Definition~\ref{def:consistent_process}.
-\end{proof}
-
 \begin{proposition}
-Consider any non-empty and bounded set of rate matrices $\rateset$, any two non-empty sets $\mathcal{M}_1,\mathcal{M}_2$ of probability mass functions on $\states$, any $u\in\mathcal{U}_{\empty}$ and $x_u\in\states_u$, any $v\in\mathcal{U}$ such that $u<v$, and any $f\in\gambles(\states_{u\cup v})$. Then,
-\begin{equation*}
-\underline{\mathbb{E}}_{\rateset,\,\mathcal{M}_1}^{\mathrm{W}}[f(x_u,X_v)\,\vert\,X_u=x_u]=\underline{\mathbb{E}}_{\rateset,\,\mathcal{M}_2}^{\mathrm{W}}[f(x_u,X_v)\,\vert\,X_u=x_u]\,.
-\end{equation*}
-Similarly, it holds that $\underline{\mathbb{E}}_{\rateset,\,\mathcal{M}_1}^{\mathrm{WM}}[f(x_u,X_v)\,\vert\,X_u=x_u]=\underline{\mathbb{E}}_{\rateset,\,\mathcal{M}_2}^{\mathrm{WM}}[f(x_u,X_v)\,\vert\,X_u=x_u]$, and $\underline{\mathbb{E}}_{\rateset,\,\mathcal{M}_1}^{\mathrm{WHM}}[f(x_u,X_v)\,\vert\,X_u=x_u]=\underline{\mathbb{E}}_{\rateset,\,\mathcal{M}_2}^{\mathrm{WHM}}[f(x_u,X_v)\,\vert\,X_u=x_u]$.
+Consider an arbitrary non-empty and bounded set of rate matrices $\rateset$, and any two non-empty sets $\mathcal{M}_1,\mathcal{M}_2$ of probability mass functions on $\states$. Consider any $P\in\wprocesses_{\rateset,\,\mathcal{M}_1}$. Then, for all $p\in\mathcal{M}_2$, there exists a $\tilde{P}\in\wprocesses_{\rateset,\,\mathcal{M}_2}$ such that $\tilde{P}(X_0)=p$ and, for all $(A,X_u=x_u)\in\mathcal{C}^\mathrm{SP}$ with $u\neq\emptyset$, it holds that $\tilde{P}(A\,\vert\,X_u=x_u)=P(A\,\vert\,X_u=x_u)$.
+
+Furthermore, if $P\in\wmprocesses_{\rateset,\,\mathcal{M}_1}\subseteq \wprocesses_{\rateset,\,\mathcal{M}_1}$ then $\tilde{P}\in\wmprocesses_{\rateset,\,\mathcal{M}_2}\subseteq \wprocesses_{\rateset,\,\mathcal{M}_2}$, and similarly, if $P\in\whmprocesses_{\rateset,\,\mathcal{M}_1}\subseteq \wprocesses_{\rateset,\,\mathcal{M}_1}$ then $\tilde{P}\in\whmprocesses_{\rateset,\,\mathcal{M}_2}\subseteq \wprocesses_{\rateset,\,\mathcal{M}_2}$.
 \end{proposition}
 \begin{proof}
-****{\bf  TODO}: case for non-Markov processes. Can't easily do this currently without invoking convexity of $\rateset$.
-
-We next prove the equality $\underline{\mathbb{E}}_{\rateset,\,\mathcal{M}_1}^{\mathrm{WM}}[f(x_u,X_v)\,\vert\,X_u=x_u]=\underline{\mathbb{E}}_{\rateset,\,\mathcal{M}_2}^{\mathrm{WM}}[f(x_u,X_v)\,\vert\,X_u=x_u]$. 
-To this end, consider the two sets $\mathcal{E}_1$ and $\mathcal{E}_2$, given by
-\begin{align*}
-\mathcal{E}_1 \coloneqq \left\{ \mathbb{E}_P[f(x_u,X_v)\,\vert\,X_u=x_u]\,:\,P\in\wmprocesses_{\rateset,\,\mathcal{M}_1} \right\}\,,\\
-\mathcal{E}_2 \coloneqq \left\{ \mathbb{E}_P[f(x_u,X_v)\,\vert\,X_u=x_u]\,:\,P\in\wmprocesses_{\rateset,\,\mathcal{M}_2} \right\}\,.
-\end{align*}
-Clearly, we then have that $\underline{\mathbb{E}}_{\rateset,\,\mathcal{M}_1}^{\mathrm{WM}}[f(x_u,X_v)\,\vert\,X_u=x_u] = \inf\mathcal{E}_1$, and $\underline{\mathbb{E}}_{\rateset,\,\mathcal{M}_2}^{\mathrm{WM}}[f(x_u,X_v)\,\vert\,X_u=x_u] = \inf\mathcal{E}_2$.
-
-Let $v=s_0,\ldots,s_n$, and consider any $P\in\wmprocesses_{\rateset,\,\mathcal{M}_1}$. Due to the Markov property of $P$, it holds that
-\begin{align*}
-\mathbb{E}_P[f(x_u,X_v)\,\vert\,X_u=x_u] &= \sum_{x_v\in\states_v} P(X_v=x_v,X_u=x_u\,\vert\,X_u=x_u) f(x_u,x_v) \\
- &= \sum_{x_v\in\states_v} P(X_v=x_v\,\vert\,X_u=x_u) f(x_u,x_v) \\
- %&= \sum_{x_v\in\states_v} P(X_{\{s_0,\ldots,s_n\}}=x_{\{s_0,\ldots,s_n\}}\,\vert\,X_u=x_u) f(x_u,x_v) \\
- &= \sum_{x_v\in\states_v} P(X_{s_0}=x_{s_0},\ldots,X_{s_n}=x_{s_n}\,\vert\,X_u=x_u) f(x_u,x_v) \\
- = \sum_{x_v\in\states_v} P(X_{s_0}=x_{s_0}\,\vert\,X_u=x_u)&\prod_{i=1}^n P(X_{s_i}=x_{s_i}\,\vert\,X_{s_{i-1}}=x_{s_{i-1}},\ldots,X_{s_0}=x_{s_0},X_u=x_u) f(x_u,x_v) \\
- = \sum_{x_v\in\states_v} P(X_{s_0}=x_{s_0}\,\vert\,X_u=x_u)&\prod_{i=1}^n P(X_{s_i}=x_{s_i}\,\vert\,X_{s_{i-1}}=x_{s_{i-1}}) f(x_u,x_v) \\
- &= \sum_{x_v\in\states_v} T_{\max u}^{s_0}(x_{\{\max u\}}, x_{s_0})\prod_{i=1}^n T_{s_{i-1}}^{s_i}(x_{s_{i-1}},x_{s_i}) f(x_u,x_v)\,.
-\end{align*}
-Hence, for any $P\in\wmprocesses_{\rateset,\,\mathcal{M}_1}$, the expectation $\mathbb{E}_P[f(x_u,X_v)\,\vert\,X_u=x_u]$ is completely determined by the transition matrices corresponding to $P$, and therefore also by the transition matrix system $\mathcal{T}_P$ corresponding to $P$. A similar argument shows that this also holds for the conditional expectation of any $P'\in\wmprocesses_{\rateset,\,\mathcal{M}_2}$.
-
-Now, consider any $P\in\wmprocesses_{\rateset,\,\mathcal{M}_1}$, and let $\mathcal{T}_P$ denote the (well-behaved) transition matrix system corresponding to this $P$. Choose any $q\in\mathcal{M}_2$. Theorem~\ref{theo:uniqueMarkovchain} now implies that there is a unique well-behaved Markov chain $P'$ with transition matrix system $\mathcal{T}_{P'}$, such that $\mathcal{T}_{P'}=\mathcal{T}_P$ and $P'(X_0)=q$. Because $P\sim\rateset$, Lemma~{\bf REF} implies that $P'\sim\rateset$. Because $P'(X_0)=q\in\mathcal{M}_2$, it follows from Definition~\ref{def:consistent_process_set} that $P'\in\wmprocesses_{\rateset,\mathcal{M}_2}$. Because the $P$ was arbitrary, this implies that for every $P\in\wmprocesses_{\rateset,\,\mathcal{M}_1}$, there is a $P'\in\wmprocesses_{\rateset,\,\mathcal{M}_2}$ such that $\mathcal{T}_{P'}=\mathcal{T}_{P}$. \emph{Mutatis mutandis}, we also find that for every $P'\in\wmprocesses_{\rateset,\,\mathcal{M}_2}$, there is a $P\in\wmprocesses_{\rateset,\,\mathcal{M}_1}$ such that $\mathcal{T}_{P}=\mathcal{T}_{P'}$.
-
-Hence, it follows from the above that, for every $\mathbb{E}_P[f(x_u,X_v)\,\vert\,X_u=x_u]\in\mathcal{E}_1$---and because this expectation only depends on the transition matrix system $\mathcal{T}_P$---there is a $\mathbb{E}_{P'}[f(x_u,X_v)\,\vert\,X_u=x_u]\in\mathcal{E}_2$, such that
+Choose any $P\in\wprocesses_{\rateset,\,\mathcal{M}_1}$ and any $p\in\mathcal{M}_2$. Consider a set of conditional events $\mathcal{C}\subset\mathcal{C}^\mathrm{SP}$, defined by
 \begin{equation*}
-\mathbb{E}_P[f(x_u,X_v)\,\vert\,X_u=x_u] = \mathbb{E}_{P'}[f(x_u,X_v)\,\vert\,X_u=x_u].
+\mathcal{C} \coloneqq \left\{(A,X_u=x_u)\in\mathcal{C}^\mathrm{SP}\,:\,u\neq\emptyset\right\} \cup \left\{ (X_0=x,X_{\emptyset}=x_{\emptyset})\in\mathcal{C}^\mathrm{SP}\,:\,x\in\states \right\}.
 \end{equation*}
-Similarly, for every expectation in $\mathcal{E}_2$, there is an identical expectation in $\mathcal{E}_1$. It follows that $\mathcal{E}_1=\mathcal{E}_2$, and hence that
+Let $P^*$ be a real-valued map from $\mathcal{C}$ to $\reals$ that is defined, for all $(A,X_u=x_u)\in\mathcal{C}$, as
+\begin{equation}\label{eq:prop_initial_dist_swap_def}
+P^*(A\,\vert\,X_u=x_u) \coloneqq \left\{ \begin{array}{ll}
+p(x) & \text{if $u=\emptyset$ and $A=(X_0=x)$, and} \\
+P(A\,\vert\,X_u=x_u) & \text{otherwise.}
+\end{array}\right.
+\end{equation}
+We will start by proving that $P^*$ is a coherent conditional probability on $\mathcal{C}$.
+
+So, consider any $n\in\nats$ and, for all $i\in\{1,\ldots,n\}$, choose $(A_i,C_i)\in\mathcal{C}$ and $\lambda_i\in\reals$. We need to show that
+\begin{equation}\label{eq:prop_initial_dist_swap_coherent}
+\max\left\{ \sum_{i=1}^n\lambda_i\ind{C_i}(\omega)\left(P^*(A_i\,\vert\,C_i) - \ind{A_i}(\omega)\right) \,\vert\, \omega\in C_0\right\} \geq 0\,,
+\end{equation}
+with $C_0\coloneqq \cup_{i=1}^nC_i$. 
+
+Let $S\coloneqq\left\{i\in\{1,\ldots,n\}\,:\,C_i = (X_{\emptyset}=x_{\emptyset}) = \Omega\right\}$, that is, $S$ is the index-set of the \emph{unconditional} events $(A_i,C_i)$. Note that if $S=\emptyset$, it follows from Equation~\eqref{eq:prop_initial_dist_swap_def} that $P^*(A_i\,\vert\,C_i)=P(A_i\,\vert\,C_i)$ for all $i\in\{1,\ldots,n\}$, and hence Equation~\eqref{eq:prop_initial_dist_swap_coherent} will be trivially satisfied because $P$ is a coherent conditional probability on $\mathcal{C}^\mathrm{SP}\supset\mathcal{C}$. Hence, we can assume without loss of generality that $S\neq\emptyset$. 
+
+Note that for all $i\in S$, $A_i=(X_0=x)$ for some $x\in\states$. Let $x_i\in\states$ denote these states such that $A_i=(X_0=x_i)$. Then, because $p$ is trivially coherent\footnote{This might need some explanation?}, it follows that there is some $\omega\in\Omega$ such that
+\begin{align*}
+\sum_{i\in S} \lambda_i \ind{C_i}(\omega)\left(P^*(A_i\,\vert\,C_i) - \ind{A_i}(\omega)\right) &= \sum_{i\in S} \lambda_i \ind{\Omega}(\omega)\left(P^*(X_0=x_i\,\vert\,X_{\emptyset}=x_{\emptyset}) - \ind{(X_0=x_i)}(\omega)\right) \\
+&= \sum_{i\in S} \lambda_i\left(p(x_i) - \ind{(X_0=x_i)}(\omega)\right) \geq 0\,.
+\end{align*}
+Note also that this sum only depends on the exact path $\omega$ through the state $\omega(0)$.
+
+We next consider the indices of the conditional events $(A_i,C_i)$, $i\in\{1,\ldots,n\}\setminus S$, whose conditioning event $C_i$ does not disagree with $\omega(0)$, that is, we consider the index set
 \begin{equation*}
-\underline{\mathbb{E}}_{\rateset,\,\mathcal{M}_1}^{\mathrm{WM}}[f(x_u,X_v)\,\vert\,X_u=x_u] = \inf\mathcal{E}_1 = \inf\mathcal{E}_2 = \underline{\mathbb{E}}_{\rateset,\,\mathcal{M}_2}^{\mathrm{WM}}[f(x_u,X_v)\,\vert\,X_u=x_u]\,.
+S^* \coloneqq \{ i\in\{1,\ldots,n\}\setminus S : C_i\cap(X_0=\omega(0))\neq\emptyset \}\,.
+\end{equation*}
+Because, for all $i\in S^*$, the events $(A_i,C_i)$ are conditional events, it follows from Equation~\eqref{eq:prop_initial_dist_swap_coherent} that $P^*(A_i\,\vert\,C_i)=P(A_i\,\vert\,C_i)$ for all $i\in S^*$. Therefore, and because $P$ is a coherent conditional probability on $\mathcal{C}^\mathrm{SP}\supset\mathcal{C}$, there is some $\omega^*\in \cup_{i\in S^*}C_i$ such that
+\begin{equation*}
+\sum_{i\in S^*} \lambda_i\ind{C_i}(\omega^*)\left(P^*(A_i\,\vert\,C_i) - \ind{A_i}(\omega^*)\right) \geq 0\,.
 \end{equation*}
 
-An exactly analogous argument to the proof for well-behaved Markov chains shows that also $\underline{\mathbb{E}}_{\rateset,\,\mathcal{M}_1}^{\mathrm{WHM}}[f(x_u,X_v)\,\vert\,X_u=x_u]=\underline{\mathbb{E}}_{\rateset,\,\mathcal{M}_2}^{\mathrm{WHM}}[f(x_u,X_v)\,\vert\,X_u=x_u]$.
+For any $i\in S^*$, because $(A_i,C_i)\in\mathcal{C}\subset\mathcal{C}^\mathrm{SP}$, there exists some finite sequence of time points $w_{C_i}\in\mathcal{U}$ such that $C_i$ only depends on the time points in $w_{C_i}$. Furthermore, and using this notation, it follows from Definition~\ref{def:stoch_process} that $A_i$ is an element of an algebra $\mathcal{A}_{w_{C_i}}$ that is generated by a set of events that only depend on a finite number of time points. Therefore, there is also some finite sequence of time points $w_{A_i}\in\mathcal{U}$, such that $A_i$ only depends on the time points in $w_{A_i}$. If we now let $w_i\coloneqq w_{A_i}\cup w_{C_i}$, then $(A_i,C_i)$ only depends on the (finite) sequence of time points $w_i$.
+
+Because this holds for any $i\in S^*$, this implies the existence of some finite sequence $w\in\mathcal{U}$ such that $w_i\subseteq w$ for all $i\in S^*$.
+
+**** Still need the fact that either $\omega^*(0)=\omega(0)$, or $0\notin w$. This is clear, but not easy to write down succinctly.
+
+Now let $\omega^{**}\in\Omega$ be any path such that, for all $s\in (\{0\}\cup w)$,
+\begin{equation*}
+\omega^{**}(s) \coloneqq \left\{ \begin{array}{ll}
+\omega(0) & \text{if $s=0$, and} \\
+\omega^*(s) & \text{otherwise.}
+\end{array}\right.
+\end{equation*}
+The existence of this $\omega^{**}\in\Omega$ is guaranteed by Equation~\ref{eq:path_exists_for_finite_points}. Furthermore, since by assumption $S\neq \emptyset$, there is some $C_i=\Omega$, so that $C_0 = \cup_{i=0}^n C_i = \Omega$, and hence $\omega^{**}\in C_0$.
+
+
+-- Still need to prove that $\omega^{**}\in C_0$ implies that Equation~\eqref{eq:prop_initial_dist_swap_coherent} holds. Should be trivial from here though.
+
+%A- $p$ is trivially coherent, so there is some $\omega$ such that the events indexed by $S$ sum to non-negative. Furthermore, that sum only depends on $\omega$ through $\omega(0)$.
+
+%2B- All the conditional events $i\in S^*$ for which $(X_0=\omega(0))\cap C_i=\emptyset$ can be made to drop out, due to the term $\ind{C_i}(\omega)$.
+
+%C- For the remaining events, since $P$ is coherent, there is an $\omega^*$ so that those terms sum to non-negative. Furthermore, because $(X_0=\omega(0))\cap C_i\neq\emptyset$, we must have that $\omega^*(0)=\omega(0)$. Because the terms dropped out in step $B$ were not compatible with $\omega(0)$, they are also not compatible with $\omega^*(0)$. Hence, the remaining sum is a sum of two non-negative sums, so must be non-negative itself. Since $\omega^*\in \cup C_{i^*}\subset C_0$, we must have that $P^*$ is coherent on $\mathcal{C}$.
+
+-- Sketch of the remainder:
+
+-- Because $P^*$ is coherent on $\mathcal{C}\subset\mathcal{C}^\mathrm{SP}$, it can be extended to a coherent conditional probability $\tilde{P}$ on $\mathcal{C}^\mathrm{SP}$. By corollary REF, that makes $\tilde{P}$ a stochastic process.
+
+-- Clearly, due to equation~\eqref{eq:prop_initial_dist_swap_def} and because $\tilde{P}$ extends $P^*$, all conditional probabilities $\tilde{P}(A\,\vert\,X_u=x_u)$, with $u\neq\emptyset$, will coincide with $P(A\,\vert\,X_u=x_u)$. Therefore, the transition matrices of $\tilde{P}$ and $P$ are the same, and hence so are their outer partial derivatives. Similarly, because $P$ is well-behaved, so is $\tilde{P}$. Therefore, and because $P\sim\rateset$ (since $P\in\wprocesses_{\rateset,\,\mathcal{M}_1}$), we must have that $\tilde{P}\sim\rateset$. Because by Equation~\ref{eq:prop_initial_dist_swap_def} we also have that $\tilde{P}(X_0)=p\in\mathcal{M}_2$, it follows that $\tilde{P}\in\wprocesses_{\rateset,\,\mathcal{M}_2}$.
+
+-- Similarly, Markov and homogeneity properties of $P$ trivially transfer to $\tilde{P}$.
 \end{proof}
+
+
+%\begin{lemma}
+%Consider any well-behaved transition matrix system $\mathcal{T}$, and any two probability mass functions $p,q$ on $\states$. Let $P_p$ and $P_q$ denote the unique well-behaved Markov chains with transition matrix systems $\mathcal{T}_{P_p}$, $\mathcal{T}_{P_q}$, for which $\mathcal{T}_{P_p}=\mathcal{T}$, $P_p(X_0)=p$ and $\mathcal{T}_{P_q}=\mathcal{T}$, $P_q(X_0)=q$. These unique Markov chains are guaranteed to exist by Theorem~\ref{theo:uniqueMarkovchain}. Let $\rateset$ be an arbitrary non-empty bounded set of rate matrices. Then, $P_p\sim\rateset$ if and only if $P_q\sim\rateset$.
+%\end{lemma}
+%\begin{proof}
+%Due to the definition of the outer partial derivative in Definition~\ref{def:outerpartialderivatives}, the outer partial derivatives of any process $P$ are completely determined by the transition matrices corresponding to this $P$.
+%
+%Hence, because $\mathcal{T}_{P_p}=\mathcal{T}=\mathcal{T}_{P_q}$, we must have that $\overline{\partial}\presuper{P_p}T_t^t = \overline{\partial}\presuper{P_q}T_t^t$ for all $t\in\realsnonneg$, where $\overline{\partial}\presuper{P_p}T_t^t$ and $\overline{\partial}\presuper{P_q}T_t^t$ denote the outer partial derivatives of $P_p$ and $P_q$, at time $t$, respectively. The result now follows trivially from the definition of consistency in Definition~\ref{def:consistent_process}.
+%\end{proof}
+%
+%\begin{proposition}
+%Consider any non-empty and bounded set of rate matrices $\rateset$, any two non-empty sets $\mathcal{M}_1,\mathcal{M}_2$ of probability mass functions on $\states$, any $u\in\mathcal{U}_{\empty}$ and $x_u\in\states_u$, any $v\in\mathcal{U}$ such that $u<v$, and any $f\in\gambles(\states_{u\cup v})$. Then,
+%\begin{equation*}
+%\underline{\mathbb{E}}_{\rateset,\,\mathcal{M}_1}^{\mathrm{W}}[f(x_u,X_v)\,\vert\,X_u=x_u]=\underline{\mathbb{E}}_{\rateset,\,\mathcal{M}_2}^{\mathrm{W}}[f(x_u,X_v)\,\vert\,X_u=x_u]\,.
+%\end{equation*}
+%Similarly, it holds that $\underline{\mathbb{E}}_{\rateset,\,\mathcal{M}_1}^{\mathrm{WM}}[f(x_u,X_v)\,\vert\,X_u=x_u]=\underline{\mathbb{E}}_{\rateset,\,\mathcal{M}_2}^{\mathrm{WM}}[f(x_u,X_v)\,\vert\,X_u=x_u]$, and $\underline{\mathbb{E}}_{\rateset,\,\mathcal{M}_1}^{\mathrm{WHM}}[f(x_u,X_v)\,\vert\,X_u=x_u]=\underline{\mathbb{E}}_{\rateset,\,\mathcal{M}_2}^{\mathrm{WHM}}[f(x_u,X_v)\,\vert\,X_u=x_u]$.
+%\end{proposition}
+%\begin{proof}
+%****{\bf  TODO}: case for non-Markov processes. Can't easily do this currently without invoking convexity of $\rateset$.
+%
+%We next prove the equality $\underline{\mathbb{E}}_{\rateset,\,\mathcal{M}_1}^{\mathrm{WM}}[f(x_u,X_v)\,\vert\,X_u=x_u]=\underline{\mathbb{E}}_{\rateset,\,\mathcal{M}_2}^{\mathrm{WM}}[f(x_u,X_v)\,\vert\,X_u=x_u]$. 
+%To this end, consider the two sets $\mathcal{E}_1$ and $\mathcal{E}_2$, given by
+%\begin{align*}
+%\mathcal{E}_1 \coloneqq \left\{ \mathbb{E}_P[f(x_u,X_v)\,\vert\,X_u=x_u]\,:\,P\in\wmprocesses_{\rateset,\,\mathcal{M}_1} \right\}\,,\\
+%\mathcal{E}_2 \coloneqq \left\{ \mathbb{E}_P[f(x_u,X_v)\,\vert\,X_u=x_u]\,:\,P\in\wmprocesses_{\rateset,\,\mathcal{M}_2} \right\}\,.
+%\end{align*}
+%Clearly, we then have that $\underline{\mathbb{E}}_{\rateset,\,\mathcal{M}_1}^{\mathrm{WM}}[f(x_u,X_v)\,\vert\,X_u=x_u] = \inf\mathcal{E}_1$, and $\underline{\mathbb{E}}_{\rateset,\,\mathcal{M}_2}^{\mathrm{WM}}[f(x_u,X_v)\,\vert\,X_u=x_u] = \inf\mathcal{E}_2$.
+%
+%Let $v=s_0,\ldots,s_n$, and consider any $P\in\wmprocesses_{\rateset,\,\mathcal{M}_1}$. Due to the Markov property of $P$, it holds that
+%\begin{align*}
+%\mathbb{E}_P[f(x_u,X_v)\,\vert\,X_u=x_u] &= \sum_{x_v\in\states_v} P(X_v=x_v,X_u=x_u\,\vert\,X_u=x_u) f(x_u,x_v) \\
+% &= \sum_{x_v\in\states_v} P(X_v=x_v\,\vert\,X_u=x_u) f(x_u,x_v) \\
+% %&= \sum_{x_v\in\states_v} P(X_{\{s_0,\ldots,s_n\}}=x_{\{s_0,\ldots,s_n\}}\,\vert\,X_u=x_u) f(x_u,x_v) \\
+% &= \sum_{x_v\in\states_v} P(X_{s_0}=x_{s_0},\ldots,X_{s_n}=x_{s_n}\,\vert\,X_u=x_u) f(x_u,x_v) \\
+% = \sum_{x_v\in\states_v} P(X_{s_0}=x_{s_0}\,\vert\,X_u=x_u)&\prod_{i=1}^n P(X_{s_i}=x_{s_i}\,\vert\,X_{s_{i-1}}=x_{s_{i-1}},\ldots,X_{s_0}=x_{s_0},X_u=x_u) f(x_u,x_v) \\
+% = \sum_{x_v\in\states_v} P(X_{s_0}=x_{s_0}\,\vert\,X_u=x_u)&\prod_{i=1}^n P(X_{s_i}=x_{s_i}\,\vert\,X_{s_{i-1}}=x_{s_{i-1}}) f(x_u,x_v) \\
+% &= \sum_{x_v\in\states_v} T_{\max u}^{s_0}(x_{\{\max u\}}, x_{s_0})\prod_{i=1}^n T_{s_{i-1}}^{s_i}(x_{s_{i-1}},x_{s_i}) f(x_u,x_v)\,.
+%\end{align*}
+%Hence, for any $P\in\wmprocesses_{\rateset,\,\mathcal{M}_1}$, the expectation $\mathbb{E}_P[f(x_u,X_v)\,\vert\,X_u=x_u]$ is completely determined by the transition matrices corresponding to $P$, and therefore also by the transition matrix system $\mathcal{T}_P$ corresponding to $P$. A similar argument shows that this also holds for the conditional expectation of any $P'\in\wmprocesses_{\rateset,\,\mathcal{M}_2}$.
+%
+%Now, consider any $P\in\wmprocesses_{\rateset,\,\mathcal{M}_1}$, and let $\mathcal{T}_P$ denote the (well-behaved) transition matrix system corresponding to this $P$. Choose any $q\in\mathcal{M}_2$. Theorem~\ref{theo:uniqueMarkovchain} now implies that there is a unique well-behaved Markov chain $P'$ with transition matrix system $\mathcal{T}_{P'}$, such that $\mathcal{T}_{P'}=\mathcal{T}_P$ and $P'(X_0)=q$. Because $P\sim\rateset$, Lemma~{\bf REF} implies that $P'\sim\rateset$. Because $P'(X_0)=q\in\mathcal{M}_2$, it follows from Definition~\ref{def:consistent_process_set} that $P'\in\wmprocesses_{\rateset,\mathcal{M}_2}$. Because the $P$ was arbitrary, this implies that for every $P\in\wmprocesses_{\rateset,\,\mathcal{M}_1}$, there is a $P'\in\wmprocesses_{\rateset,\,\mathcal{M}_2}$ such that $\mathcal{T}_{P'}=\mathcal{T}_{P}$. \emph{Mutatis mutandis}, we also find that for every $P'\in\wmprocesses_{\rateset,\,\mathcal{M}_2}$, there is a $P\in\wmprocesses_{\rateset,\,\mathcal{M}_1}$ such that $\mathcal{T}_{P}=\mathcal{T}_{P'}$.
+%
+%Hence, it follows from the above that, for every $\mathbb{E}_P[f(x_u,X_v)\,\vert\,X_u=x_u]\in\mathcal{E}_1$---and because this expectation only depends on the transition matrix system $\mathcal{T}_P$---there is a $\mathbb{E}_{P'}[f(x_u,X_v)\,\vert\,X_u=x_u]\in\mathcal{E}_2$, such that
+%\begin{equation*}
+%\mathbb{E}_P[f(x_u,X_v)\,\vert\,X_u=x_u] = \mathbb{E}_{P'}[f(x_u,X_v)\,\vert\,X_u=x_u].
+%\end{equation*}
+%Similarly, for every expectation in $\mathcal{E}_2$, there is an identical expectation in $\mathcal{E}_1$. It follows that $\mathcal{E}_1=\mathcal{E}_2$, and hence that
+%\begin{equation*}
+%\underline{\mathbb{E}}_{\rateset,\,\mathcal{M}_1}^{\mathrm{WM}}[f(x_u,X_v)\,\vert\,X_u=x_u] = \inf\mathcal{E}_1 = \inf\mathcal{E}_2 = \underline{\mathbb{E}}_{\rateset,\,\mathcal{M}_2}^{\mathrm{WM}}[f(x_u,X_v)\,\vert\,X_u=x_u]\,.
+%\end{equation*}
+%
+%An exactly analogous argument to the proof for well-behaved Markov chains shows that also $\underline{\mathbb{E}}_{\rateset,\,\mathcal{M}_1}^{\mathrm{WHM}}[f(x_u,X_v)\,\vert\,X_u=x_u]=\underline{\mathbb{E}}_{\rateset,\,\mathcal{M}_2}^{\mathrm{WHM}}[f(x_u,X_v)\,\vert\,X_u=x_u]$.
+%\end{proof}
 
 This result is particularly useful when we consider functions $f\in\gambles(\states^{u\cup v})$ defined on an arbitrary number of time points $u$ and $v$. Specifically, it follows from the basic properties of expectation that for any process $P\in\wprocesses_\rateset$, the expectation $\mathbb{E}$ of such a function satisfies, for any $w\subseteq v$,
 \begin{equation*}
