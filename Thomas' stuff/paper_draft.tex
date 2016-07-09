@@ -523,12 +523,13 @@ Note that this result includes as a special case that the set $\mathbb{T}$ of al
 Consider any two commuting rate matrices $Q_1,Q_2\in\mathcal{R}$ such that $Q_1\neq Q_2$. For example, let $Q_1\in\mathcal{R}$ be any arbitrary rate matrix that is not identical to zero, and let $Q_2\coloneqq\lambda Q_1$, with $\lambda\in\realsnonneg$ and $\lambda\neq 1$. Now let $\mathcal{T}_{Q_1}$ and $\mathcal{T}_{Q_2}$ be the corresponding transition matrix systems. 
 
 We can then construct the following sequence. For $i=0$, we let $\smash{\mathcal{T}_{0}\coloneqq\mathcal{T}_{Q_2}}$, and for all $i\in\nats$, we let\vspace{-2pt}
-\begin{equation*}
+\begin{equation}
 \mathcal{T}_i\coloneqq \begin{cases}
 \mathcal{T}_{Q_1}^{[0,\Delta_i]}\otimes \mathcal{T}_{i-1}^{[\Delta_i,+\infty)} & \text{if $i$ is odd;}\\
 \mathcal{T}_{Q_2}^{[0,\Delta_i]}\otimes \mathcal{T}_{i-1}^{[\Delta_i,+\infty)} & \text{if $i$ is even,}
 \end{cases}
-\end{equation*}
+\label{eq:def:sequenceinexample3}
+\end{equation}
 where, for all $i\in\nats_0$, $\Delta_i\coloneqq 2^{-i}$. The resulting sequence $\smash{\{\mathcal{T}_i\}_{i\in\nats_0}}$ is then clearly a subset of $\mathbb{T}$. Furthermore, as we will explain in the rest of this example, $\{\mathcal{T}_i\}_{i\in\nats_0}$ is a Cauchy sequence. Loosely speaking, this means that its elements become arbitrarily close to each other as the sequence progresses. Formally, it means that
 \begin{equation}\label{eq:cauchyexample}
 (\forall\epsilon\in\realspos)\,(\exists n_\epsilon\in\nats)\,(\forall k,\ell > n_\epsilon)~d(\mathcal{T}_{k},\mathcal{T}_\ell)<\epsilon.
@@ -634,6 +635,10 @@ with $s_k\coloneqq \sum_{\ell=0}^k \nicefrac{1}{4^\ell} - 1$. Clearly, the limit
 where the first equality follows from the proof of Proposition~\ref{lemma:restricted_trans_mat_system_cauchy_converges}. Using a completely analogous argument, if $j$ was taken to be even instead of odd, then instead $Q_2$ will dominate the limiting behavior, and $\presuper{*}T_0^{\Delta_j}=e^{\Delta_j(Q_1(\nicefrac{1}{3}) + Q_2(\nicefrac{2}{3}))}$. Note that the mixing proportion between $Q_1$ and $Q_2$ is then reversed. We will use these observations in other examples later in this work.
 \exampleend
 \end{exmp}
+
+\begin{proof}[Proof of Example~\ref{exmp:limit_trans_mat_system_matrices}]
+*** STILL NEED TO ADD THIS ***
+\end{proof}
 
 \section{Continuous-Time Stochastic Processes}\label{sec:stochastic_processes}
 
@@ -2737,13 +2742,6 @@ Since $\lim_{\ell\to+\infty}\presuper{\ell}T_t^s=\presuper{*}T_t^s$, this implie
 which implies that $\mathcal{T}_*^{\mathbf{I}}=\lim_{i\to\infty}\mathcal{T}_i^{\mathbf{I}}$.
 \end{proof}
 
-\begin{proof}[Proof of Example~\ref{exmp:limit_trans_mat_system}]
-*** STILL NEED TO ADD THIS ***
-\end{proof}
-
-\begin{proof}[Proof of Example~\ref{exmp:limit_trans_mat_system_matrices}]
-*** STILL NEED TO ADD THIS ***
-\end{proof}
 
 % \begin{proof}[Proof of Proposition~\ref{prop:fullcoherent}]
 % Since $\power$ is clearly an algebra of events, it follows from Reference~\cite{berti1991coherent} that $P$ is a coherent conditional probability if and only if it satisfies the conditions~\ref{lem:alt_axiom_prob_1}-\ref{lem:alt_axiom_prob_3} in Lemma~\ref{lemma:alt_axiom_prob}. The result now follows directly from Lemma~\ref{lemma:alt_axiom_prob}.
@@ -2798,6 +2796,95 @@ which implies that $\mathcal{T}_*^{\mathbf{I}}=\lim_{i\to\infty}\mathcal{T}_i^{\
 % \end{align*}
 % which proves~\ref{lem:alt_axiom_prob_3}.
 % \end{proof}
+
+\begin{lemma}\label{lemma:linearpartofexponential}
+Consider any $Q\in\mathcal{R}$ and any $\Delta\geq0$. Then,
+\begin{equation*}
+\norm{e^{Q\Delta}-(I+\Delta Q)}\leq
+\Delta^2\norm{Q}^2.
+\end{equation*}
+\end{lemma}
+\begin{proof}
+This is a special case of a more general lemma that we prove later. To see this, refer to our comments in Section~\ref{sec:properties_lower_trans}, where we note that the rate matrix $Q$ is also a lower transition rate operator $\lrate=Q$, for which the corresponding lower transition operator $L_0^{\Delta}$ satisfies $L_0^{\Delta}=e^{Q\Delta}$. This lemma then follows by combining Theorem~\ref{theo:convergencelowerbound} with Lemma~\ref{lemma:justthelinearpart}.
+%To avoid trivialities, we assume that $\Delta\neq 0$ and $\norm{Q}\neq 0$. 
+%
+%Recall the $\epsilon-\delta$ limit expression for the matrix exponential, given by Equation~\eqref{eq:matrix_exp_limit}. Now, consider any $\epsilon\in\realspos$, and let $\delta^*\coloneqq\min\{\nicefrac{1}{\norm{Q}},\delta\}$, where $\delta$ satisfies Equation~\eqref{eq:matrix_exp_limit}. Take any $u\in\mathcal{U}_{[0,\Delta]}$ such that $\sigma(u)<\delta^*$. Then, clearly,
+%\begin{align*}
+%\norm{e^{Q\Delta}-(I+\Delta Q)} &\leq \norm{e^{Q\Delta} - \prod_{i=1}^n(I+\Delta_iQ)} + \norm{\prod_{i=1}^n(I+\Delta_iQ) - (I+\Delta Q)} \\
+% &< \norm{\prod_{i=1}^n(I+\Delta_iQ) - (I+\Delta Q)} + \epsilon\,.
+%\end{align*}
+%Furthermore, because $Q$ is a rate matrix, it is easily verified that $Q$ satisfies~\ref{LR:constantzero}--\ref{LR:nondiagpos}. Hence, $Q$ is also a lower transition rate operator. Therefore, and because $\sigma(u)<\delta^*\leq\nicefrac{1}{\norm{Q}}$, it follows from Lemma~\ref{lemma:justthelinearpart} that
+%\begin{equation*}
+%\norm{\prod_{i=1}^n(I+\Delta_iQ) - (I+\Delta Q)} \leq \Delta^2\norm{Q}^2\,.
+%\end{equation*}
+%Hence, we find
+%\begin{equation*}
+%\norm{e^{Q\Delta}-(I+\Delta Q)} < \Delta^2\norm{Q}^2 + \epsilon\,.
+%\end{equation*}
+%Because this holds for any $\epsilon\in\realspos$, the statement in the lemma  follows.
+\end{proof}
+
+\begin{lemma}\label{lemma:differencebetweenexponentials}
+If $Q_1,Q_2\in\mathcal{R}$ and $\Delta\in\realsnonneg$, then $\norm{e^{Q_1\Delta}-e^{Q_2\Delta}}\leq\Delta\norm{Q_1-Q_2}$.
+\end{lemma}
+\begin{proof}
+Consider any $n\in\nats$. It then follows from Lemma~\ref{lemma:recursive} that
+\begin{equation*}
+\norm{e^{Q_1\Delta}-e^{Q_2\Delta}}
+=\norm{\prod_{k=1}^n e^{Q_1\frac{\Delta}{n}}-\prod_{k=1}^n e^{Q_2\frac{\Delta}{n}}}
+\leq\sum_{k=1}^n\norm{e^{Q_1\frac{\Delta}{n}}-e^{Q_2\frac{\Delta}{n}}}
+=
+n\norm{e^{Q_1\frac{\Delta}{n}}-e^{Q_2\frac{\Delta}{n}}}.
+\end{equation*}
+which, since we know from Lemma~\ref{lemma:linearpartofexponential} that
+\begin{align*}
+\norm{e^{Q_1\frac{\Delta}{n}}-e^{Q_2\frac{\Delta}{n}}}
+&\leq
+\norm{e^{Q_1\frac{\Delta}{n}}-(I+\frac{\Delta}{n}Q_1)}
++
+\norm{\frac{\Delta}{n}(Q_1-Q_2)}
++\norm{(I+\frac{\Delta}{n}Q_2)-e^{Q_2\frac{\Delta}{n}}}\\
+&\leq\frac{\Delta^2}{n^2}\norm{Q_1}^2
++
+\frac{\Delta}{n}\norm{Q_1-Q_2}
++
+\frac{\Delta^2}{n^2}\norm{Q_2}^2,
+\end{align*}
+implies that
+\begin{equation*}
+\norm{e^{Q_1\Delta}-e^{Q_2\Delta}}
+\leq
+\frac{\Delta^2}{n}\norm{Q_1}^2
++
+\Delta\norm{Q_1-Q_2}
++
+\frac{\Delta^2}{n}\norm{Q_2}^2.
+\end{equation*}
+The result now follows by taking the limit for $n$ going to infinity.
+\end{proof}
+
+\begin{proof}[Proof of Example~\ref{exmp:limit_trans_mat_system}]
+Fix any $i\in\nats$. We will prove that $d(\mathcal{T}_{i-1},\mathcal{T}_i)\leq\Delta_i\norm{Q_1-Q_2}$. Fix any $t,s\in\realsnonneg$ such that $t\leq s$, and let $\presuper{i}T_t^s$ and $\presuper{i-1}T_t^s$ be the transition matrices that correspond to $\mathcal{T}_i$ and $\mathcal{T}_{i-1}$, respectively. 
+We now consider three cases. The first case is $t\geq\Delta_i$. It then follows from Equation~\eqref{eq:def:sequenceinexample3} that $\norm{\presuper{i}T_t^s-\presuper{i-1}T_t^s}=0$. The second case is $s\leq\Delta_i$. It then follows from Equation~\eqref{eq:def:sequenceinexample3} and Lemma~\ref{lemma:differencebetweenexponentials} that
+\begin{equation*}
+\norm{\presuper{i}T_t^s-\presuper{i-1}T_t^s}
+=\norm{e^{Q_1(s-t)}-e^{Q_2(s-t)}}
+\leq (s-t)\norm{Q_1-Q_2}\leq\Delta_i\norm{Q_1-Q_2}.
+%=\norm{e^{Q_1\Delta}-e^{Q_2\Delta}}
+\end{equation*}
+The third case is $t\leq\Delta_i\leq s$. We then find that
+\begin{align*}
+\norm{\presuper{i}T_t^s-\presuper{i-1}T_t^s}
+=\norm{\presuper{i}T_t^{\Delta_i}\presuper{i}T_{\Delta_i}^s-\presuper{i-1}T_t^{\Delta_i}\presuper{i-1}T_{\Delta_i}^s}
+&\leq
+\norm{\presuper{i}T_t^{\Delta_i}-\presuper{i-1}T_t^{\Delta_i}}
++
+\norm{\presuper{i}T_{\Delta_i}^s-\presuper{i-1}T_{\Delta_i}^s}\\
+&=\norm{\presuper{i}T_t^{\Delta_i}-\presuper{i-1}T_t^{\Delta_i}}
+\leq\Delta_i\norm{Q_1-Q_2},
+\end{align*}
+where the first inequality follows from Lemma~\ref{lemma:recursive}, the second equality follows from the first case above, and the last inequality follows from the second case above. Hence, in all three cases, we find that $\norm{\presuper{i}T_t^s-\presuper{i-1}T_t^s}\leq\Delta_i\norm{Q_1-Q_2}$. Since this inequality holds for any $t,s\in\realsnonneg$ such that $s\geq t$, it now follows from Equation~\eqref{eq:trans_mat_system_metric} that $d(\mathcal{T}_{i-1},\mathcal{T}_i)\leq\Delta_i\norm{Q_1-Q_2}$.
+\end{proof}
 
 \section{Proofs and Lemmas for Section~\ref{sec:stochastic_processes}}\label{app:stoch_proc}
 
@@ -3340,33 +3427,6 @@ or equivalently, that $\mathcal{T}_P=\mathcal{T}_Q$.
 Finally, we prove that $Q$ is unique. Assume \emph{ex absurdo} that this is not the case, or equivalently, that there are rate matrices $Q_1$ and $Q_2$, with $Q_1\neq Q_2$, such that $\mathcal{T}_P=\mathcal{T}_{Q_1}$ and $\mathcal{T}_P=\mathcal{T}_{Q_2}$. It then follows from Definition~\ref{def:systemfromQ} that $\partial_{+}{T^0_{0}}=Q_1$ and $\partial_{+}{T^0_{0}}=Q_2$, which implies that $Q_1=Q_2$. From this contradiction, it follows that $Q$ is indeed unique.
 \end{proof}
 
-
-\begin{lemma}\label{lemma:linearpartofexponential}
-Consider any $Q\in\mathcal{R}$ and any $\Delta\geq0$. Then,
-\begin{equation*}
-\norm{e^{Q\Delta}-(I+\Delta Q)}\leq
-\Delta^2\norm{Q}^2.
-\end{equation*}
-\end{lemma}
-\begin{proof}
-This is a special case of a more general lemma that we prove later. To see this, refer to our comments in Section~\ref{sec:properties_lower_trans}, where we note that the rate matrix $Q$ is also a lower transition rate operator $\lrate=Q$, for which the corresponding lower transition operator $L_0^{\Delta}$ satisfies $L_0^{\Delta}=e^{Q\Delta}$. This lemma then follows by combining Theorem~\ref{theo:convergencelowerbound} with Lemma~\ref{lemma:justthelinearpart}.
-%To avoid trivialities, we assume that $\Delta\neq 0$ and $\norm{Q}\neq 0$. 
-%
-%Recall the $\epsilon-\delta$ limit expression for the matrix exponential, given by Equation~\eqref{eq:matrix_exp_limit}. Now, consider any $\epsilon\in\realspos$, and let $\delta^*\coloneqq\min\{\nicefrac{1}{\norm{Q}},\delta\}$, where $\delta$ satisfies Equation~\eqref{eq:matrix_exp_limit}. Take any $u\in\mathcal{U}_{[0,\Delta]}$ such that $\sigma(u)<\delta^*$. Then, clearly,
-%\begin{align*}
-%\norm{e^{Q\Delta}-(I+\Delta Q)} &\leq \norm{e^{Q\Delta} - \prod_{i=1}^n(I+\Delta_iQ)} + \norm{\prod_{i=1}^n(I+\Delta_iQ) - (I+\Delta Q)} \\
-% &< \norm{\prod_{i=1}^n(I+\Delta_iQ) - (I+\Delta Q)} + \epsilon\,.
-%\end{align*}
-%Furthermore, because $Q$ is a rate matrix, it is easily verified that $Q$ satisfies~\ref{LR:constantzero}--\ref{LR:nondiagpos}. Hence, $Q$ is also a lower transition rate operator. Therefore, and because $\sigma(u)<\delta^*\leq\nicefrac{1}{\norm{Q}}$, it follows from Lemma~\ref{lemma:justthelinearpart} that
-%\begin{equation*}
-%\norm{\prod_{i=1}^n(I+\Delta_iQ) - (I+\Delta Q)} \leq \Delta^2\norm{Q}^2\,.
-%\end{equation*}
-%Hence, we find
-%\begin{equation*}
-%\norm{e^{Q\Delta}-(I+\Delta Q)} < \Delta^2\norm{Q}^2 + \epsilon\,.
-%\end{equation*}
-%Because this holds for any $\epsilon\in\realspos$, the statement in the lemma  follows.
-\end{proof}
 
 \section{Proofs and Lemmas for Section~\ref{sec:iCTMC}}
 
