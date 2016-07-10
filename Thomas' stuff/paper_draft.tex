@@ -522,13 +522,15 @@ Note that this result includes as a special case that the set $\mathbb{T}$ of al
 \begin{exmp}\label{exmp:limit_trans_mat_system}
 Consider two rate matrices $Q_1,Q_2\in\mathcal{R}$ and let $\mathcal{T}_{Q_1}$ and $\mathcal{T}_{Q_2}$ be the corresponding transition matrix systems. We can then construct the following sequence. For $i=0$, we let $\smash{\mathcal{T}_{0}\coloneqq\mathcal{T}_{Q_2}}$, and for all $i\in\nats$, we let%\vspace{-2pt}
 \begin{equation}
-\mathcal{T}_i\coloneqq \begin{cases}
-\mathcal{T}_{Q_1}^{[0,\Delta_i]}\otimes \mathcal{T}_{i-1}^{[\Delta_i,+\infty)} & \text{if $i$ is odd;}\\
-\mathcal{T}_{Q_2}^{[0,\Delta_i]}\otimes \mathcal{T}_{i-1}^{[\Delta_i,+\infty)} & \text{if $i$ is even,}
-\end{cases}
+\mathcal{T}_i\coloneqq
+\mathcal{T}_{Q_i}^{[0,\Delta_i]}\otimes \mathcal{T}_{i-1}^{[\Delta_i,+\infty)}
+%\begin{cases}
+% \mathcal{T}_{Q_1}^{[0,\Delta_i]}\otimes \mathcal{T}_{i-1}^{[\Delta_i,+\infty)} & \text{if $i$ is odd;}\\
+% \mathcal{T}_{Q_2}^{[0,\Delta_i]}\otimes \mathcal{T}_{i-1}^{[\Delta_i,+\infty)} & \text{if $i$ is even,}
+%\end{cases}
 \label{eq:def:sequenceinexample3}
 \end{equation}
-where, for all $i\in\nats_0$, $\Delta_i\coloneqq 2^{-i}$. The resulting sequence $\smash{\{\mathcal{T}_i\}_{i\in\nats_0}}$ is then clearly a subset of $\mathbb{T}$. Furthermore, as we will explain in the rest of this example, $\{\mathcal{T}_i\}_{i\in\nats_0}$ is a Cauchy sequence. Loosely speaking, this means that its elements become arbitrarily close to each other as the sequence progresses. Formally, it means that
+where, for all $i\in\nats_0$, $\Delta_i\coloneqq 2^{-i}$ and $Q_i\coloneqq Q_1$ if $i$ is odd and $Q_i\coloneqq Q_2$ if $i$ is even. The resulting sequence $\smash{\{\mathcal{T}_i\}_{i\in\nats_0}}$ is then clearly a subset of $\mathbb{T}$. Furthermore, as we will explain in the rest of this example, $\{\mathcal{T}_i\}_{i\in\nats_0}$ is a Cauchy sequence. Loosely speaking, this means that its elements become arbitrarily close to each other as the sequence progresses. Formally, it means that
 \begin{equation}\label{eq:cauchyexample}
 (\forall\epsilon\in\realspos)\,(\exists n_\epsilon\in\nats)\,(\forall k,\ell > n_\epsilon)~d(\mathcal{T}_{k},\mathcal{T}_\ell)<\epsilon.
 \end{equation}
@@ -567,76 +569,124 @@ In order to make this concept of a limit of transition matrix systems less abstr
 
 %This example is included mostly in preparation of some other examples further on.
 \begin{exmp}\label{exmp:limit_trans_mat_system_matrices}
-Consider any two commuting rate matrices $Q_1,Q_2\in\mathcal{R}$ such that $Q_1\neq Q_2$. For example, let $Q_1\in\mathcal{R}$ be any arbitrary rate matrix that is not identical to zero, and let $Q_2\coloneqq\lambda Q_1$, with $\lambda\in\realsnonneg$ and $\lambda\neq 1$.
+Consider any two commuting rate matrices $Q_1,Q_2\in\mathcal{R}$. For example, let $Q_1\in\mathcal{R}$ be an arbitrary rate matrix and let $Q_2\coloneqq\lambda Q_1$, with $\lambda\in\realsnonneg$.
 
 
-*** do we need the `commuting' part for example 3? It migth be that we only need it from Example 4 on... ***
+%*** do we need the `commuting' part for example 3? It migth be that we only need it from Example 4 on... ***
 
 
 Consider again the sequence $\{\mathcal{T}_i\}_{i\in\nats}$ from Example~\ref{exmp:limit_trans_mat_system}, which, due to Proposition~\ref{lemma:restricted_trans_mat_system_cauchy_converges}, converges to a limit in $\mathbb{T}$, and denote this limit by $\mathcal{T}_*\coloneqq \lim_{i\to\infty}\mathcal{T}_i$. For any $\Delta\in(0,1]$, the transition matrix $\presuper{*}T_0^\Delta$ that corresponds to the transition matrix system $\mathcal{T}_*$ is then equal to
-\begin{equation*}
+\begin{equation}\label{eq:ex4:def}
 \presuper{*}T_0^\Delta=e^{Q_1\varphi_1(\Delta)+Q_2\varphi_2(\Delta)},
-\end{equation*}
+\end{equation}
 with
-\begin{equation*}
+\begin{equation}\label{eq:ex4:phi1}
 \varphi_1(\Delta)
 \coloneqq
 \begin{cases}
-\Delta-\nicefrac{2}{3}\Delta_i
-&\text{ if $\Delta_i\leq\Delta\leq\Delta_{i-1}$ with $i$ even}\\
-\nicefrac{2}{3}\Delta_i
-&\text{ if $\Delta_i\leq\Delta\leq\Delta_{i-1}$ with $i$ uneven} 
+\Delta-\nicefrac{2}{3}\Delta_{i+1}
+&\text{ if $\Delta_{i+1}\leq\Delta\leq\Delta_{i}$ with $i$ odd}\\
+\nicefrac{2}{3}\Delta_{i+1}
+&\text{ if $\Delta_{i+1}\leq\Delta\leq\Delta_{i}$ with $i$ even} 
 \end{cases}
-\end{equation*}
+\end{equation}
 and
-\begin{equation*}
+\begin{equation}\label{eq:ex4:phi2}
 \varphi_2(\Delta)
 \coloneqq
 %t-\varphi_1(t)
 %=
 \begin{cases}
-\nicefrac{2}{3}\Delta_i
-&\text{ if $\Delta_i\leq\Delta\leq\Delta_{i-1}$ with $i$ even}\\
-\Delta-\nicefrac{2}{3}\Delta_i
-&\text{ if $\Delta_i\leq\Delta\leq\Delta_{i-1}$ with $i$ uneven.} 
+\nicefrac{2}{3}\Delta_{i+1}
+&\text{ if $\Delta_{i+1}\leq\Delta\leq\Delta_{i}$ with $i$ odd}\\
+\Delta-\nicefrac{2}{3}\Delta_{i+1}
+&\text{ if $\Delta_{i+1}\leq\Delta\leq\Delta_{i}$ with $i$ even.} 
 \end{cases}
 \vspace{7pt}
-\end{equation*}
+\end{equation}
 A complete proof for this claim can be found in the appendix. For the purposes of this example, we restrict ourselves to a proof for the case $\Delta=1$.
 
 *** STILL NEED TO ADD THIS ***
 
 
+Consider any $t\in(0,1]$ and let $j$ be the unique element of $\nats_0$ such that $\Delta_{j+1}\leq t\leq\Delta_j$. Since $Q_1$ and $Q_2$ commute, it then follows from Equations~\eqref{eq:ex4:def}--\eqref{eq:ex4:phi2} that
+\begin{align}\label{eq:ex4:recursestar}
+\presuper{*}T_0^{t}
+=e^{Q_1\varphi_1(t)+Q_2\varphi_2(t)}
+&=e^{Q_1\varphi_1(\Delta_{j+1})+Q_2\varphi_2(\Delta_{j+1})+Q_j(t-\Delta_{j+1})}\notag\\
+&=e^{Q_1\varphi_1(\Delta_{j+1})+Q_2\varphi_2(\Delta_{j+1})}e^{Q_j(t-\Delta_{j+1})}
+=\presuper{*}T_0^{\Delta_{j+1}}e^{Q_j(t-\Delta_{j+1})}.
+\end{align}
+For large enough $k\in\nats$, a similar statement holds for $\presuper{k}T_0^{t}$. In particular, Equation~\eqref{eq:def:sequenceinexample3} implies that
+\begin{equation}\label{eq:ex4:recursek}
+\presuper{k}T_0^{t}
+=\presuper{k}T_0^{\Delta_{j+1}}e^{Q_j(t-\Delta_{j+1})}
+~~\text{ for all $k\geq j$}
+\end{equation}
+Hence, for all $j\in\nats_0$, by choosing $t=\Delta_j$, and because $\Delta_j-\Delta_{j+1}=\Delta_{j+1}$, it follows that
+\begin{equation}\label{eq:ex4:recursekandstar}
+\presuper{*}T_0^{\Delta_j}
+=\presuper{*}T_0^{\Delta_{j+1}}e^{Q_j\Delta_{j+1}}
+~\text{ and }~
+\presuper{k}T_0^{\Delta_j}
+=\presuper{k}T_0^{\Delta_{j+1}}e^{Q_j\Delta_{j+1}}
+~\text{ for all $k\geq j$.}
+\end{equation}
 
+Consider now any $\Delta\in(0,1]$, let $i$ be the unique element of $\nats_0$ such that $\Delta_{i+1}\leq\Delta\leq\Delta_i$, and consider any $k\geq i$. Then
+\begin{align*}
+\norm{\presuper{*}T_0^\Delta-\presuper{k}T_0^\Delta}
+&=
+\norm{\presuper{*}T_0^{\Delta_{i+1}}e^{Q_i(\Delta-\Delta_{i+1})}-\presuper{k}T_0^{\Delta_{i+1}}e^{Q_i(\Delta-\Delta_{i+1})}}\\
+&\leq
+\norm{\presuper{*}T_0^{\Delta_{i+1}}-\presuper{k}T_0^{\Delta_{i+1}}}
++
+\norm{e^{Q_i(\Delta-\Delta_{i+1})}-e^{Q_i(\Delta-\Delta_{i+1})}}\\
+&=
+\norm{\presuper{*}T_0^{\Delta_{i+1}}-\presuper{k}T_0^{\Delta_{i+1}}}
+=
+\norm{\presuper{*}T_0^{\Delta_{i+2}}e^{Q_{i+1}\Delta_{i+2}}-\presuper{k}T_0^{\Delta_{i+2}}e^{Q_{i+1}\Delta_{i+2}}}\\
+&\quad\quad\quad\quad\quad\quad\quad\quad~\,\,\leq
+\norm{\presuper{*}T_0^{\Delta_{i+2}}-\presuper{k}T_0^{\Delta_{i+2}}}
++
+\norm{e^{Q_{i+1}\Delta_{i+2}}-e^{Q_{i+1}\Delta_{i+2}}}\\
+&\quad\quad\quad\quad\quad\quad\quad\quad~\,\,=
+\norm{\presuper{*}T_0^{\Delta_{i+2}}-\presuper{k}T_0^{\Delta_{i+2}}}
+\leq\dots\leq
+\norm{\presuper{*}T_0^{\Delta_{k+1}}-\presuper{k}T_0^{\Delta_{k+1}}}
+\end{align*}
+
+*********
 
 It follows from the proof of Proposition~\ref{lemma:restricted_trans_mat_system_cauchy_converges} that these transition matrices are given by $\presuper{*}T_t^s = \lim_{i\to\infty} \presuper{i}T_t^s$, where for all $i\in\nats$, $\presuper{i}T_t^s$ corresponds to $\mathcal{T}_i$. In what follows, we derive an explicit expression for the matrices $\presuper{*}T_t^{s}$, for the specific case where $t=0$ and $s\in\{\Delta_i\}_{i\in\nats}$.
 
-To this end, fix any $j\in\nats$, and consider first the $\presuper{i}T_0^{\Delta_j}$ corresponding to $\mathcal{T}_i$. Assume without loss of generality that $j$ is odd. Then, the sequence $\presuper{j}T_0^{\Delta_j},\presuper{j+1}T_0^{\Delta_j},\presuper{j+2}T_0^{\Delta_j},\ldots$ is clearly given by
-\begin{equation*}
-\left(\presuper{j}T_0^{\Delta_j}\right), ~~\left(\presuper{j+1}T_0^{\Delta_{j+1}}\right)\left(\presuper{j}T_{\Delta_{j+1}}^{\Delta_j}\right), ~~\left(\presuper{j+2}T_0^{\Delta_{j+2}}\right)\left(\presuper{j+1}T_{\Delta_{j+2}}^{\Delta_{j+1}}\right)\left(\presuper{j}T_{\Delta_{j+1}}^{\Delta_j}\right), \ldots
-\end{equation*}
-Because each of these component transition matrices corresponds to either $\mathcal{T}_{Q_1}$ or $\mathcal{T}_{Q_2}$, this can equivalently be expressed as
-\begin{equation*}
-\left(e^{Q_1\Delta_j}\right), ~~\left(e^{Q_2\Delta_{j+1}}\right)\left(e^{Q_1(\Delta_j-\Delta_{j+1})}\right), ~~\left(e^{Q_1\Delta_{j+2}}\right)\left(e^{Q_2(\Delta_{j+1}-\Delta_{j+2})}\right)\left(e^{Q_1(\Delta_j-\Delta_{j+1})}\right), \ldots
-\end{equation*}
-Because $Q_1$ and $Q_2$ were taken to commute, meaning that $Q_1Q_2=Q_2Q_1$, the matrix exponential is well-known~\cite[Theorem 5]{van2006study} to satisfy $e^{Q_1\Delta_1'}e^{Q_2\Delta_2'}=e^{Q_1\Delta_1' + Q_2\Delta_2'}$, for any $\Delta_1',\Delta_2'\in\realsnonneg$. Therefore, the above sequence can equivalently be written
-\begin{align*}
-%& e^{Q_1\Delta_j}, ~~e^{Q_2\Delta_{j+1}}e^{Q_1(\Delta_j-\Delta_{j+1})}, ~~e^{Q_2(\Delta_{j+1}-\Delta_{j+2})}e^{Q_1(\Delta_j-\Delta_{j+1} + \Delta_{j+2})},\ldots \\
-& e^{Q_1\Delta_j}, ~~e^{Q_1(\Delta_j-\Delta_{j+1}) + Q_2\Delta_{j+1}}, ~~e^{Q_1(\Delta_j-\Delta_{j+1} + \Delta_{j+2}) + Q_2(\Delta_{j+1}-\Delta_{j+2})},\ldots
-\end{align*}
-%Furthermore, because $\{\Delta_i\}_{i\in\nats}=\{\nicefrac{1}{2^i}\}_{i\in\nats}$, it follows that, in the exponents above, $(\Delta_j-\Delta_{j+1})=\Delta_j(1-\nicefrac{1}{2})=\Delta_j(\nicefrac{1}{2})$, that $(\Delta_{j}-\Delta_{j+1}+\Delta_{j+2})=\Delta_j(1 - \nicefrac{1}{2} + \nicefrac{1}{4}) = \Delta_j(\nicefrac{1}{2} + \nicefrac{1}{4})$, and that $(\Delta_{j+1} - \Delta_{j+2})=\Delta_j(\nicefrac{1}{2} - \nicefrac{1}{4})=\Delta_j(\nicefrac{1}{4})$. Hence, the sequence can be written as
-%\begin{equation*}
-%e^{\Delta_j\left(Q_1(1) + Q_2(0)\right)}, ~~e^{\Delta_j\left(Q_1(\nicefrac{1}{2}) + Q_2(\nicefrac{1}{2})\right)}, ~~e^{\Delta_j(Q_1\left(\nicefrac{1}{2} + \nicefrac{1}{4}) + Q_2(\nicefrac{1}{4})\right)}, \ldots
-%\end{equation*}
-By focusing only on the subsequence $\presuper{j}T_0^{\Delta_j},\presuper{j+2}T_0^{\Delta_j},\presuper{j+4}T_0^{\Delta_j},\ldots$ containing the odd elements (note that $j$ is itself odd), it can rather easily---but not concisely---be shown that because $\{\Delta_i\}_{i\in\nats}=\{\nicefrac{1}{2^i}\}_{i\in\nats}$, it holds for all $k\in\natswith$ that
-\begin{equation*}
-\presuper{j+2k}T_0^{\Delta_j} = e^{\Delta_j\left(Q_1(1-s_k) + Q_2s_k\right)}\,,
-\end{equation*}
-with $s_k\coloneqq \sum_{\ell=0}^k \nicefrac{1}{4^\ell} - 1$. Clearly, the limiting behavior of the sequence is therefore governed by the limiting behavior of the geometric power series $s_k$, and since $\lim_{k\to\infty}s_k=\nicefrac{1}{3}$, we find
-\begin{equation*}
-\presuper{*}T_0^{\Delta_j} = \lim_{i\to\infty} \presuper{i}T_0^{\Delta_j} = \lim_{k\to\infty} \presuper{j+2k}T_{0}^{\Delta_j} = \lim_{k\to\infty} e^{\Delta_j\left(Q_1(1-s_k) + Q_2s_k\right)} = e^{\Delta_j(Q_1(\nicefrac{2}{3}) + Q_2(\nicefrac{1}{3}))}\,,
-\end{equation*}
-where the first equality follows from the proof of Proposition~\ref{lemma:restricted_trans_mat_system_cauchy_converges}. Using a completely analogous argument, if $j$ was taken to be even instead of odd, then instead $Q_2$ will dominate the limiting behavior, and $\presuper{*}T_0^{\Delta_j}=e^{\Delta_j(Q_1(\nicefrac{1}{3}) + Q_2(\nicefrac{2}{3}))}$. Note that the mixing proportion between $Q_1$ and $Q_2$ is then reversed. We will use these observations in other examples later in this work.
+To this end, fix any $j\in\nats$, and consider first the $\presuper{i}T_0^{\Delta_j}$ corresponding to $\mathcal{T}_i$. 
+% Assume without loss of generality that $j$ is odd. Then, the sequence $\presuper{j}T_0^{\Delta_j},\presuper{j+1}T_0^{\Delta_j},\presuper{j+2}T_0^{\Delta_j},\ldots$ is clearly given by
+% \begin{equation*}
+% \left(\presuper{j}T_0^{\Delta_j}\right), ~~\left(\presuper{j+1}T_0^{\Delta_{j+1}}\right)\left(\presuper{j}T_{\Delta_{j+1}}^{\Delta_j}\right), ~~\left(\presuper{j+2}T_0^{\Delta_{j+2}}\right)\left(\presuper{j+1}T_{\Delta_{j+2}}^{\Delta_{j+1}}\right)\left(\presuper{j}T_{\Delta_{j+1}}^{\Delta_j}\right), \ldots
+% \end{equation*}
+% Because each of these component transition matrices corresponds to either $\mathcal{T}_{Q_1}$ or $\mathcal{T}_{Q_2}$, this can equivalently be expressed as
+% \begin{equation*}
+% \left(e^{Q_1\Delta_j}\right), ~~\left(e^{Q_2\Delta_{j+1}}\right)\left(e^{Q_1(\Delta_j-\Delta_{j+1})}\right), ~~\left(e^{Q_1\Delta_{j+2}}\right)\left(e^{Q_2(\Delta_{j+1}-\Delta_{j+2})}\right)\left(e^{Q_1(\Delta_j-\Delta_{j+1})}\right), \ldots
+% \end{equation*}
+% Because $Q_1$ and $Q_2$ were taken to commute, meaning that $Q_1Q_2=Q_2Q_1$, the matrix exponential is well-known~\cite[Theorem 5]{van2006study} to satisfy $e^{Q_1\Delta_1'}e^{Q_2\Delta_2'}=e^{Q_1\Delta_1' + Q_2\Delta_2'}$, for any $\Delta_1',\Delta_2'\in\realsnonneg$. Therefore, the above sequence can equivalently be written
+% \begin{align*}
+% %& e^{Q_1\Delta_j}, ~~e^{Q_2\Delta_{j+1}}e^{Q_1(\Delta_j-\Delta_{j+1})}, ~~e^{Q_2(\Delta_{j+1}-\Delta_{j+2})}e^{Q_1(\Delta_j-\Delta_{j+1} + \Delta_{j+2})},\ldots \\
+% & e^{Q_1\Delta_j}, ~~e^{Q_1(\Delta_j-\Delta_{j+1}) + Q_2\Delta_{j+1}}, ~~e^{Q_1(\Delta_j-\Delta_{j+1} + \Delta_{j+2}) + Q_2(\Delta_{j+1}-\Delta_{j+2})},\ldots
+% \end{align*}
+% %Furthermore, because $\{\Delta_i\}_{i\in\nats}=\{\nicefrac{1}{2^i}\}_{i\in\nats}$, it follows that, in the exponents above, $(\Delta_j-\Delta_{j+1})=\Delta_j(1-\nicefrac{1}{2})=\Delta_j(\nicefrac{1}{2})$, that $(\Delta_{j}-\Delta_{j+1}+\Delta_{j+2})=\Delta_j(1 - \nicefrac{1}{2} + \nicefrac{1}{4}) = \Delta_j(\nicefrac{1}{2} + \nicefrac{1}{4})$, and that $(\Delta_{j+1} - \Delta_{j+2})=\Delta_j(\nicefrac{1}{2} - \nicefrac{1}{4})=\Delta_j(\nicefrac{1}{4})$. Hence, the sequence can be written as
+% %\begin{equation*}
+% %e^{\Delta_j\left(Q_1(1) + Q_2(0)\right)}, ~~e^{\Delta_j\left(Q_1(\nicefrac{1}{2}) + Q_2(\nicefrac{1}{2})\right)}, ~~e^{\Delta_j(Q_1\left(\nicefrac{1}{2} + \nicefrac{1}{4}) + Q_2(\nicefrac{1}{4})\right)}, \ldots
+% %\end{equation*}
+% By focusing only on the subsequence $\presuper{j}T_0^{\Delta_j},\presuper{j+2}T_0^{\Delta_j},\presuper{j+4}T_0^{\Delta_j},\ldots$ containing the odd elements (note that $j$ is itself odd), it can rather easily---but not concisely---be shown that because $\{\Delta_i\}_{i\in\nats}=\{\nicefrac{1}{2^i}\}_{i\in\nats}$, it holds for all $k\in\natswith$ that
+% \begin{equation*}
+% \presuper{j+2k}T_0^{\Delta_j} = e^{\Delta_j\left(Q_1(1-s_k) + Q_2s_k\right)}\,,
+% \end{equation*}
+% with $s_k\coloneqq \sum_{\ell=0}^k \nicefrac{1}{4^\ell} - 1$. Clearly, the limiting behavior of the sequence is therefore governed by the limiting behavior of the geometric power series $s_k$, and since $\lim_{k\to\infty}s_k=\nicefrac{1}{3}$, we find
+% \begin{equation*}
+% \presuper{*}T_0^{\Delta_j} = \lim_{i\to\infty} \presuper{i}T_0^{\Delta_j} = \lim_{k\to\infty} \presuper{j+2k}T_{0}^{\Delta_j} = \lim_{k\to\infty} e^{\Delta_j\left(Q_1(1-s_k) + Q_2s_k\right)} = e^{\Delta_j(Q_1(\nicefrac{2}{3}) + Q_2(\nicefrac{1}{3}))}\,,
+% \end{equation*}
+% where the first equality follows from the proof of Proposition~\ref{lemma:restricted_trans_mat_system_cauchy_converges}. Using a completely analogous argument, if $j$ was taken to be even instead of odd, then instead $Q_2$ will dominate the limiting behavior, and $\presuper{*}T_0^{\Delta_j}=e^{\Delta_j(Q_1(\nicefrac{1}{3}) + Q_2(\nicefrac{2}{3}))}$. Note that the mixing proportion between $Q_1$ and $Q_2$ is then reversed. We will use these observations in other examples later in this work.
 \exampleend
 \end{exmp}
 
