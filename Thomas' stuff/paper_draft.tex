@@ -159,7 +159,7 @@ In order to model a problem by means of such a continuous-time Markov chain, qui
 For example, it is common practice to assume that the user is able to specify an exact value for all the parameters of the model.
 %In fact, they are usually estimated, and are therefore inherently approximate.
 A second important assumption is the Markov condition, which states that the future behavior of the system only depends on its current state, and not on its history. Other examples are time-homogeneity, which assumes that the dynamics of the system are independent of time, and some technical differentiability assumptions. 
-As a result of all these assumptions, continuous-time Markov chains can be described using convenient analytic expressions. 
+As a result of all these assumptions, continuous-time Markov chains can be described by means of simple analytic expressions. 
 
 
 However, we would argue that in many cases, these assumptions are not realistic, and are grounded more in pragmatism than in informed consideration of the underlying system.
@@ -181,7 +181,7 @@ It is clearly too simple to be of any practical use, but it does allow us to ill
 Consider a person periodically becoming sick, and recovering after some time. If we want to model this behavior using a continuous-time Markov chain with a binary state space $\{\text{\tt healthy, sick}\}$, we need to specify a \emph{rate parameter} for each of the two possible state-transitions: from {\tt healthy} to {\tt sick}, and from {\tt sick} to {\tt healthy}. Loosely speaking, such a rate parameter characterises how quickly the corresponding state-transition happens. Technically, it specifies the derivative of a transition probability. For example, for the transition from {\tt healthy} to {\tt sick}, the corresponding rate parameter is the derivative of $P(X_s={\tt sick}\,\vert\,X_t={\tt healthy})$ with respect to $s$, for $s=t$, where $P(X_s={\tt sick}\,\vert\,X_t={\tt healthy})$ is the probability of a person being sick at time $s$, given that he or she is healthy at time $t$. Together with the initial probabilities of a person being {\tt sick} or {\tt healthy} at time zero, the rate parameters uniquely characterize a continuous-time Markov chain, which can then be used to answer various probabilistic queries of interest.
 For instance, we could use it to compute the probability that a person will be sick in ten days, given that he or she is healty today.
 
-In this example, the defining assumptions of a standard continuous-time Markov chain impose rather strict conditions on our model. 
+In this example, the defining assumptions of a continuous-time Markov chain impose rather strict conditions on our model. 
 First of all: it is necessary to provide exact values for the initial probabilities and for the rate parameters. If these values are incorrect, this will affect the resulting conclusions.
 Secondly, in order to be able to define the rate parameters, the transition probabilities of the model need to be differentiable.
 Thirdly, the Markov assumption implies that for any time points $r<t<s$,
@@ -199,7 +199,7 @@ The fourth condition can easily be removed by considering a continous-time Marko
 
 %As a final example, differentiability assumptions are often made about the probabilities involved. For instance, we might assume that $\nicefrac{\partial}{\partial s}\left[P(X_s\,\vert\,X_t)\right]$ exists. However, if the person that we are modeling is exposed to someone carrying a virus, the probability of becoming sick could suddenly and drastically change. More generally, this might be the case when our specified model fails to account for possible external perturbations.
 
-In the continous-time imprecise Markov chains that we consider, these four conditions are relaxed in the following way. First of all, instead of providing an exact value for the initial probabilities and the rate parameters, we allow ourselves to specify a set of values. For the purpose of this example, we take these sets to be intervals. The other three conditions are then dropped completely, provided that they remain compatible with these intervals. For example, a rate parameter does not need to be constant, but can vary in time in an arbitrary way, as long as it remains within its interval. Similarly, the rate parameters are also allowed to depend on previous states. In fact, they do not even need to exist, since we do not require differentiability either.
+In the imprecise continuous-time Markov chains that we consider, these four conditions are relaxed in the following way. First of all, instead of providing an exact value for the initial probabilities and the rate parameters, we allow ourselves to specify a set of values. For the purpose of this example, we take these sets to be intervals. The other three conditions are then dropped completely, provided that they remain compatible with these intervals. For example, a rate parameter does not need to be constant, but can vary in time in an arbitrary way, as long as it remains within its interval. Similarly, the rate parameters are also allowed to depend on previous states. In fact, they do not even need to exist, since we do not require differentiability either.
 \exampleend
 \end{exmp}
 
@@ -229,7 +229,12 @@ Our main contributions are the following:
 \item We introduce a \emph{lower transition operator} for imprecise continuous-time Markov chains, and show that this operator satisfies convenient algebraic properties such as time-homogeneity, differentiability, and Markovian-like factorization---even if the underlying set of processes does not. We show that we can use this operator to \emph{compute lower and upper expectations} of arbitrary functions that depend on a finite number of time points, and provide an exact characterization of the largest set of processes for which a given such operator does this.
 \end{enumerate}
 
-The remainder of this paper is organized as follows. In Section~\ref{sec:prelim}, we introduce notation and some basic concepts that will be used throughout. In Section~\ref{sec:systems}, we define some tools for representing the behavior of stochastic processes. Section~\ref{sec:stochastic_processes} formally introduces stochastic processes, and formalizes the tools for describing their dynamics. Section~\ref{sec:cont_time_markov_chains} focuses on the special case of continuous-time Markov chains. 
+The remainder of this paper is organized as follows. We start in Section~\ref{sec:prelim}, where we  introduce our notation and discuss some basic mathematical concepts that will be used throughout. Next, in Section~\ref{sec:systems}, we define some algebraic tools for representing the behavior of stochastic processes. Section~\ref{sec:stochastic_processes} then goes on to formally introduce stochastic processes and provides some powerful tools for describing their dynamics.
+
+Once these
+
+
+ and in Section~\ref{sec:cont_time_markov_chains}, we focus on the special case of continuous-time Markov chains. 
 
 In Section~\ref{sec:iCTMC}, we formalize the notion of imprecise continuous-time Markov chains, and state some powerful properties that can aid in their analysis. Section~\ref{sec:lowertrans} introduces a lower transition operator for imprecise continuous-time Markov chains, and we show in Sections~\ref{sec:connections} and~\ref{sec:funcs_multi_time_points} that this operator can be used to compute lower expectations of arbitrary functions on the state space. In Section~\ref{sec:prev_work}, we relate and compare our results to previous work from the literature. Section~\ref{sec:conclusions} finally contains some conclusions, along with pointers to possible future work.
 
