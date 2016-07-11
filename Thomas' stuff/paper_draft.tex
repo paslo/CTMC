@@ -1492,12 +1492,12 @@ Therefore, we will in the sequel focus on the sets $\wmprocesses_{\rateset,\,\ma
 
 \subsection{Closure Properties for Sets of Consistent Processes}
 
-We have in the previous section defined imprecise continuous-time Markov chains as sets of stochastic processes consistent with some set $\rateset$ of rate matrices. An obvious question, therefore, is to see if we can express properties of these sets $\wmprocesses_\rateset$ and $\wprocesses_\rateset$ in relation to properties of the set $\rateset$. We have by assumption stated that such a $\rateset$ must be non-empty and bounded, and will here consider the cases where $\rateset$ is additionally closed or convex.
+We have in the previous section defined imprecise continuous-time Markov chains as sets of stochastic processes consistent with some set $\rateset$ of rate matrices. An obvious question, therefore, is to see if we can express properties of these sets $\wmprocesses_{\rateset,\,\mathcal{M}}$ and $\wprocesses_{\rateset,\,\mathcal{M}}$ in relation to properties of the set $\rateset$. We have by assumption stated that such a $\rateset$ must be non-empty and bounded, and will here consider the cases where $\rateset$ is additionally closed or convex.
 
-We start with considering the case where $\rateset$ is convex, in relation to the set $\wprocesses_\rateset$. It turns out that this leads to a powerful construction tool for stochastic processes. In particular, this allows us to construct a new stochastic process by ``piecing together'' other processes from the set $\wprocesses_\rateset$. The next result ensures that this new process will then also belong to $\wprocesses_\rateset$.
+We start with considering the case where $\rateset$ is convex, in relation to the set $\wprocesses_{\rateset,\,\mathcal{M}}$. It turns out that this leads to a powerful construction tool for stochastic processes. In particular, this allows us to construct a new stochastic process by ``piecing together'' other processes from the set $\wprocesses_{\rateset,\,\mathcal{M}}$. The next result ensures that this new process will then also belong to $\wprocesses_{\rateset,\,\mathcal{M}}$.
 \begin{theorem}\label{theo:aanelkaarplakken}
-Consider a non-empty convex set of rate matrices $\rateset\subseteq\mathcal{R}$.
-Fix a finite sequence of time points $u$. Choose any $P_\emptyset\in\wprocesses_\rateset$ and, for all $x_u\in\states^u$, choose some $P_{x_u}\in\wprocesses_\rateset$. Then there is a stochastic process $P\in\wprocesses_\rateset$ such that, for all $u_1,u_2\subseteq u$ such that $u_1<u_2$, all $x_u\in\states^u$ and all $A\in\mathcal{A}_u$:
+Consider a non-empty convex set of rate matrices $\rateset\subseteq\mathcal{R}$, and any non-empty set $\mathcal{M}$ of probability mass functions on $\states$.
+Fix a finite sequence of time points $u$. Choose any $P_\emptyset\in\wprocesses_{\rateset,\,\mathcal{M}}$ and, for all $x_u\in\states_u$, choose some $P_{x_u}\in\wprocesses_{\rateset,\,\mathcal{M}}$. Then there is a stochastic process $P\in\wprocesses_{\rateset,\,\mathcal{M}}$ such that, for all $u_1,u_2\subseteq u$ such that $u_1<u_2$, all $x_u\in\states_u$ and all $A\in\mathcal{A}_u$:
 \begin{equation}\label{eq:theo:aanelkaarplakken:equalsfirst}
 P(X_{u_2}=x_{u_2}\vert X_{u_1}=x_{u_1})=P_{\emptyset}(X_{u_2}=x_{u_2}\vert X_{u_1}=x_{u_1})
 %\text{~for all $x_u\in\states^u$}
@@ -1511,71 +1511,16 @@ P(A\vert X_u=x_u)=P_{x_u}(A\vert X_u=x_u).
 \end{equation}
 \end{theorem}
 
-**** blabla
-
-%\begin{lemma}
-%Consider any well-behaved transition matrix system $\mathcal{T}$, and any two probability mass functions $p,q$ on $\states$. Let $P_p$ and $P_q$ denote the unique well-behaved Markov chains with transition matrix systems $\mathcal{T}_{P_p}$, $\mathcal{T}_{P_q}$, for which $\mathcal{T}_{P_p}=\mathcal{T}$, $P_p(X_0)=p$ and $\mathcal{T}_{P_q}=\mathcal{T}$, $P_q(X_0)=q$. These unique Markov chains are guaranteed to exist by Theorem~\ref{theo:uniqueMarkovchain}. Let $\rateset$ be an arbitrary non-empty bounded set of rate matrices. Then, $P_p\sim\rateset$ if and only if $P_q\sim\rateset$.
-%\end{lemma}
-%\begin{proof}
-%Due to the definition of the outer partial derivative in Definition~\ref{def:outerpartialderivatives}, the outer partial derivatives of any process $P$ are completely determined by the transition matrices corresponding to this $P$.
-%
-%Hence, because $\mathcal{T}_{P_p}=\mathcal{T}=\mathcal{T}_{P_q}$, we must have that $\overline{\partial}\presuper{P_p}T_t^t = \overline{\partial}\presuper{P_q}T_t^t$ for all $t\in\realsnonneg$, where $\overline{\partial}\presuper{P_p}T_t^t$ and $\overline{\partial}\presuper{P_q}T_t^t$ denote the outer partial derivatives of $P_p$ and $P_q$, at time $t$, respectively. The result now follows trivially from the definition of consistency in Definition~\ref{def:consistent_process}.
-%\end{proof}
-%
-%\begin{proposition}
-%Consider any non-empty and bounded set of rate matrices $\rateset$, any two non-empty sets $\mathcal{M}_1,\mathcal{M}_2$ of probability mass functions on $\states$, any $u\in\mathcal{U}_{\empty}$ and $x_u\in\states_u$, any $v\in\mathcal{U}$ such that $u<v$, and any $f\in\gambles(\states_{u\cup v})$. Then,
-%\begin{equation*}
-%\underline{\mathbb{E}}_{\rateset,\,\mathcal{M}_1}^{\mathrm{W}}[f(x_u,X_v)\,\vert\,X_u=x_u]=\underline{\mathbb{E}}_{\rateset,\,\mathcal{M}_2}^{\mathrm{W}}[f(x_u,X_v)\,\vert\,X_u=x_u]\,.
-%\end{equation*}
-%Similarly, it holds that $\underline{\mathbb{E}}_{\rateset,\,\mathcal{M}_1}^{\mathrm{WM}}[f(x_u,X_v)\,\vert\,X_u=x_u]=\underline{\mathbb{E}}_{\rateset,\,\mathcal{M}_2}^{\mathrm{WM}}[f(x_u,X_v)\,\vert\,X_u=x_u]$, and $\underline{\mathbb{E}}_{\rateset,\,\mathcal{M}_1}^{\mathrm{WHM}}[f(x_u,X_v)\,\vert\,X_u=x_u]=\underline{\mathbb{E}}_{\rateset,\,\mathcal{M}_2}^{\mathrm{WHM}}[f(x_u,X_v)\,\vert\,X_u=x_u]$.
-%\end{proposition}
-%\begin{proof}
-%****{\bf  TODO}: case for non-Markov processes. Can't easily do this currently without invoking convexity of $\rateset$.
-%
-%We next prove the equality $\underline{\mathbb{E}}_{\rateset,\,\mathcal{M}_1}^{\mathrm{WM}}[f(x_u,X_v)\,\vert\,X_u=x_u]=\underline{\mathbb{E}}_{\rateset,\,\mathcal{M}_2}^{\mathrm{WM}}[f(x_u,X_v)\,\vert\,X_u=x_u]$. 
-%To this end, consider the two sets $\mathcal{E}_1$ and $\mathcal{E}_2$, given by
-%\begin{align*}
-%\mathcal{E}_1 \coloneqq \left\{ \mathbb{E}_P[f(x_u,X_v)\,\vert\,X_u=x_u]\,:\,P\in\wmprocesses_{\rateset,\,\mathcal{M}_1} \right\}\,,\\
-%\mathcal{E}_2 \coloneqq \left\{ \mathbb{E}_P[f(x_u,X_v)\,\vert\,X_u=x_u]\,:\,P\in\wmprocesses_{\rateset,\,\mathcal{M}_2} \right\}\,.
-%\end{align*}
-%Clearly, we then have that $\underline{\mathbb{E}}_{\rateset,\,\mathcal{M}_1}^{\mathrm{WM}}[f(x_u,X_v)\,\vert\,X_u=x_u] = \inf\mathcal{E}_1$, and $\underline{\mathbb{E}}_{\rateset,\,\mathcal{M}_2}^{\mathrm{WM}}[f(x_u,X_v)\,\vert\,X_u=x_u] = \inf\mathcal{E}_2$.
-%
-%Let $v=s_0,\ldots,s_n$, and consider any $P\in\wmprocesses_{\rateset,\,\mathcal{M}_1}$. Due to the Markov property of $P$, it holds that
-%\begin{align*}
-%\mathbb{E}_P[f(x_u,X_v)\,\vert\,X_u=x_u] %&= \sum_{x_v\in\states_v} P(X_v=x_v,X_u=x_u\,\vert\,X_u=x_u) f(x_u,x_v) \\
-% &= \sum_{x_v\in\states_v} P(X_v=x_v\,\vert\,X_u=x_u) f(x_u,x_v) \\
-% %&= \sum_{x_v\in\states_v} P(X_{\{s_0,\ldots,s_n\}}=x_{\{s_0,\ldots,s_n\}}\,\vert\,X_u=x_u) f(x_u,x_v) \\
-% &= \sum_{x_v\in\states_v} P(X_{s_0}=x_{s_0},\ldots,X_{s_n}=x_{s_n}\,\vert\,X_u=x_u) f(x_u,x_v) \\
-% = \sum_{x_v\in\states_v} P(X_{s_0}=x_{s_0}\,\vert\,X_u=x_u)&\prod_{i=1}^n P(X_{s_i}=x_{s_i}\,\vert\,X_{s_{i-1}}=x_{s_{i-1}},\ldots,X_{s_0}=x_{s_0},X_u=x_u) f(x_u,x_v) \\
-% = \sum_{x_v\in\states_v} P(X_{s_0}=x_{s_0}\,\vert\,X_u=x_u)&\prod_{i=1}^n P(X_{s_i}=x_{s_i}\,\vert\,X_{s_{i-1}}=x_{s_{i-1}}) f(x_u,x_v) \\
-% &= \sum_{x_v\in\states_v} T_{\max u}^{s_0}(x_{\{\max u\}}, x_{s_0})\prod_{i=1}^n T_{s_{i-1}}^{s_i}(x_{s_{i-1}},x_{s_i}) f(x_u,x_v)\,.
-%\end{align*}
-%Hence, for any $P\in\wmprocesses_{\rateset,\,\mathcal{M}_1}$, the expectation $\mathbb{E}_P[f(x_u,X_v)\,\vert\,X_u=x_u]$ is completely determined by the transition matrices corresponding to $P$, and therefore also by the transition matrix system $\mathcal{T}_P$ corresponding to $P$. A similar argument shows that this also holds for the conditional expectation of any $P'\in\wmprocesses_{\rateset,\,\mathcal{M}_2}$.
-%
-%Now, consider any $P\in\wmprocesses_{\rateset,\,\mathcal{M}_1}$, and let $\mathcal{T}_P$ denote the (well-behaved) transition matrix system corresponding to this $P$. Choose any $q\in\mathcal{M}_2$. Theorem~\ref{theo:uniqueMarkovchain} now implies that there is a unique well-behaved Markov chain $P'$ with transition matrix system $\mathcal{T}_{P'}$, such that $\mathcal{T}_{P'}=\mathcal{T}_P$ and $P'(X_0)=q$. Because $P\sim\rateset$, Lemma~{\bf REF} implies that $P'\sim\rateset$. Because $P'(X_0)=q\in\mathcal{M}_2$, it follows from Definition~\ref{def:consistent_process_set} that $P'\in\wmprocesses_{\rateset,\mathcal{M}_2}$. Because the $P$ was arbitrary, this implies that for every $P\in\wmprocesses_{\rateset,\,\mathcal{M}_1}$, there is a $P'\in\wmprocesses_{\rateset,\,\mathcal{M}_2}$ such that $\mathcal{T}_{P'}=\mathcal{T}_{P}$. \emph{Mutatis mutandis}, we also find that for every $P'\in\wmprocesses_{\rateset,\,\mathcal{M}_2}$, there is a $P\in\wmprocesses_{\rateset,\,\mathcal{M}_1}$ such that $\mathcal{T}_{P}=\mathcal{T}_{P'}$.
-%
-%Hence, it follows from the above that, for every $\mathbb{E}_P[f(x_u,X_v)\,\vert\,X_u=x_u]\in\mathcal{E}_1$---and because this expectation only depends on the transition matrix system $\mathcal{T}_P$---there is a $\mathbb{E}_{P'}[f(x_u,X_v)\,\vert\,X_u=x_u]\in\mathcal{E}_2$, such that
-%\begin{equation*}
-%\mathbb{E}_P[f(x_u,X_v)\,\vert\,X_u=x_u] = \mathbb{E}_{P'}[f(x_u,X_v)\,\vert\,X_u=x_u].
-%\end{equation*}
-%Similarly, for every expectation in $\mathcal{E}_2$, there is an identical expectation in $\mathcal{E}_1$. It follows that $\mathcal{E}_1=\mathcal{E}_2$, and hence that
-%\begin{equation*}
-%\underline{\mathbb{E}}_{\rateset,\,\mathcal{M}_1}^{\mathrm{WM}}[f(x_u,X_v)\,\vert\,X_u=x_u] = \inf\mathcal{E}_1 = \inf\mathcal{E}_2 = \underline{\mathbb{E}}_{\rateset,\,\mathcal{M}_2}^{\mathrm{WM}}[f(x_u,X_v)\,\vert\,X_u=x_u]\,.
-%\end{equation*}
-%
-%An exactly analogous argument to the proof for well-behaved Markov chains shows that also $\underline{\mathbb{E}}_{\rateset,\,\mathcal{M}_1}^{\mathrm{WHM}}[f(x_u,X_v)\,\vert\,X_u=x_u]=\underline{\mathbb{E}}_{\rateset,\,\mathcal{M}_2}^{\mathrm{WHM}}[f(x_u,X_v)\,\vert\,X_u=x_u]$.
-%\end{proof}
-
-This result is particularly useful when we consider functions $f\in\gambles(\states^{u\cup v})$ defined on an arbitrary number of time points $u$ and $v$. Specifically, it follows from the basic properties of expectation that for any process $P\in\wprocesses_\rateset$, the expectation $\mathbb{E}$ of such a function satisfies, for any $w\subseteq v$,
+This result is particularly useful when we consider functions $f\in\gambles(\states_{u\cup v\cup w})$ defined on an arbitrary number of time points $u,v,w\in\mathcal{U}$. Specifically, it follows from the basic properties of expectation that for any process $P\in\wprocesses_{\rateset,\,\mathcal{M}}$, the expectation $\mathbb{E}_P$ of such a function satisfies,
 \begin{equation*}
-\mathbb{E}[f(X_u,X_v)\,\vert\,X_u] = \mathbb{E}\bigl[\mathbb{E}[f(X_u,X_v)\,\vert\,X_u,X_{v\setminus w}]\,\big\vert\,X_u\bigr]\,.
+\mathbb{E}_P[f(X_u,X_v,X_w)\,\vert\,X_u] = \mathbb{E}_P\bigl[\mathbb{E}_P[f(X_u,X_v,X_w)\,\vert\,X_u,X_v]\,\big\vert\,X_u\bigr]\,,
 \end{equation*}
-As shown by our next result, it follows from Theorem~\ref{theo:aanelkaarplakken} that, if $\rateset$ is convex, the same decomposition property holds for lower expectations $\underline{\mathbb{E}}^{\mathrm{W}}_\rateset$.
+assuming without loss of generality that $u<v<w$. This equality is the well-known \emph{law of iterated expectation}. As shown by our next result, it follows from Theorem~\ref{theo:aanelkaarplakken} that, if $\rateset$ is convex, the same decomposition property holds for lower expectations $\underline{\mathbb{E}}^{\mathrm{W}}_{\rateset,\,\mathcal{M}}$; this is the law of iterated \emph{lower} expectation {\bf CITE?}.
 
 \begin{theorem}\label{theorem:decomposition_multivar}
-Let $\rateset$ be an arbitrary non-empty, bounded, and convex set of rate matrices. Then for any $u,v,w\in\mathcal{U}$ such that $u<v<w$ and any $f\in\gambles(\states^{u\cup v\cup w})$:
+Let $\rateset$ be an arbitrary non-empty, bounded, and convex set of rate matrices, and consider any non-empty set $\mathcal{M}$ of probability mass functions on $\states$. Then for any $u,v,w\in\mathcal{U}$ such that $u<v<w$ and any $f\in\gambles(\states_{u\cup v\cup w})$:
 \begin{equation}\label{eq:lower_exp_factorizes}
-\underline{\mathbb{E}}^{\mathrm{W}}_\rateset\left[f(X_u,X_v,X_w)\,\vert\,X_u\right] = \underline{\mathbb{E}}^{\mathrm{W}}_\rateset\Bigl[\underline{\mathbb{E}}^{\mathrm{W}}_\rateset\left[f(X_u,X_v,X_w)\,\vert\,X_u,X_v\right] \Big\vert\,X_u\Bigr]\,. 
+\underline{\mathbb{E}}^{\mathrm{W}}_{\rateset,\,\mathcal{M}}\left[f(X_u,X_v,X_w)\,\vert\,X_u\right] = \underline{\mathbb{E}}^{\mathrm{W}}_{\rateset,\,\mathcal{M}}\Bigl[\underline{\mathbb{E}}^{\mathrm{W}}_{\rateset,\,\mathcal{M}}\left[f(X_u,X_v,X_w)\,\vert\,X_u,X_v\right] \Big\vert\,X_u\Bigr]\,. 
 \end{equation}
 \end{theorem}
 The reason that this result is useful, is that it essentially allows us to compute the lower expectation of such functions recursively. In particular, instead of computing the lower expectation on all time-points simultaneously, we can focus on subsets of the time-points separately. We will revisit this idea in Section~\ref{sec:funcs_multi_time_points}.
@@ -3518,10 +3463,12 @@ Finally, we prove that $Q$ is unique. Assume \emph{ex absurdo} that this is not 
 
 
 \begin{proof}[Proof of Theorem~\ref{theo:aanelkaarplakken}]
-Let $\mathcal{C}\coloneqq\mathcal{C}_\emptyset\cup(\bigcup_{x_u\in\states^u}\mathcal{C}_{x_u})$, with
+The proof works as follows. First, we will show that there exists a stochastic process $P$ that satisfies Equations~\eqref{eq:theo:aanelkaarplakken:equalsfirst} and~\eqref{eq:theo:aanelkaarplakken:equalssecond}, by constructing it as the extension of a coherent conditional probability on a set of events $\mathcal{C}\subset\mathcal{C}^\mathrm{SP}$. The proof is then finished by showing that $P\in\wprocesses_{\rateset,\,\mathcal{M}}$, as desired.
+
+Let $\mathcal{C}\coloneqq\mathcal{C}_\emptyset\cup(\bigcup_{x_u\in\states_u}\mathcal{C}_{x_u})$, with
 \begin{multline}\label{eq:theo:aanelkaarplakken:firstpartofdomain}
 \mathcal{C}_\emptyset\coloneqq
-\{(A,X_v=x_v)\in\mathcal{C}^{\mathrm{SP}}\colon \max v<\max u\text{~and~}\\A\in\left\langle
+\{(A,X_v=x_v)\in\mathcal{C}^{\mathrm{SP}}\colon v\in\mathcal{U}_{< \max u}\text{~and~}\\A\in\left\langle
 \left\{
 (X_t=x)
 \colon
@@ -3529,27 +3476,27 @@ x\in\states,t\in[0,\max u]
 \right\}
 \right\rangle\}
 \end{multline}
-and
+and, for all $x_u\in\states_u$,
 \begin{equation}\label{eq:theo:aanelkaarplakken:secondpartofdomain}
 \mathcal{C}_{x_u}\coloneqq\{
 (A,X_v=x_v)\in\mathcal{C}^\mathrm{SP}
 \colon
 u\subseteq v\in\mathcal{U},\,
-x_{v\setminus u}\in\states^{v\setminus u},\,
+x_{v\setminus u}\in\states_{v\setminus u},\,
  A\in\mathcal{A}_{u\cup(v\setminus[0,\max u])}
 \}
 \end{equation}
-for all $x_u\in\states^u$, and consider a real-valued function $\tilde{P}$ on $\mathcal{C}$ that is defined by 
+Consider a real-valued function $\tilde{P}$ on $\mathcal{C}$ that is defined, for all $(A,X_v=x_v)\in\mathcal{C}$, by
 \begin{equation}\label{eq:theo:aanelkaarplakken:defPtilde}
 \tilde{P}(A\vert X_v=x_v)
 \coloneqq
 \begin{cases}
 P_\emptyset(A\vert X_v=x_v)&\text{~if $(A,X_v=x_v)\in\mathcal{C}_\emptyset$}\\
 P_{x_u}(A\vert 
-X_{u\cup(v\setminus[0,\max u])}=x_{u\cup(v\setminus[0,\max u])})&\text{~if $(A,X_v=x_v)\in\mathcal{C}_{x_u}$}
+X_{u\cup(v\setminus[0,\max u])}=x_{u\cup(v\setminus[0,\max u])})&\text{~if $(A,X_v=x_v)\in\mathcal{C}_{x_u}$}\,.
 \end{cases}
 \end{equation}
-for all $(A,X_v=x_v)\in\mathcal{C}$.
+
 
 We first prove that $\tilde{P}$ is a coherent conditional probability on $\mathcal{C}$. So consider any $n\in\nats$ and, for all $i\in\{1,\dots,n\}$, choose $(A_i,C_i)\in\mathcal{C}$ and $\lambda_i\in\reals$. We need to show that
 \begin{equation}\label{eq:theo:aanelkaarplakken:coh}
@@ -3568,8 +3515,8 @@ with $C^*\coloneqq\cup_{i\in S^*}C_i$. Therefore, there is some $\omega^*\in C^*
 If $S^*=\emptyset$, we let $\omega^*$ be any element of $C_0$ (this is always possible, because $C_0\neq\emptyset$). Clearly, this path $\omega^*$ will then also satisfy Equation~\eqref{eq:theo:aanelkaarplakken:geqfirstpart}.
 
 
-Let $x_u^*\in\states^u$ be defined by $x_u^*\coloneqq \omega^*\vert_u$.
-Then for all $i\in\{1,\dots,n\}$ such that $(A_i,C_i)\in\mathcal{C}_{x_u^*}$, we know from Equation~\eqref{eq:theo:aanelkaarplakken:secondpartofdomain} that there are $u\subseteq v_i\in\mathcal{U}$ and $x_{v_i\setminus u}\in\states^{v_i\setminus u}$ such that
+Let $x_u^*\in\states_u$ be defined by $x_u^*\coloneqq \omega^*\vert_u$.
+Then for all $i\in\{1,\dots,n\}$ such that $(A_i,C_i)\in\mathcal{C}_{x_u^*}$, we know from Equation~\eqref{eq:theo:aanelkaarplakken:secondpartofdomain} that there are $u\subseteq v_i\in\mathcal{U}$ and $x_{v_i\setminus u}\in\states_{v_i\setminus u}$ such that
 \begin{equation}\label{eq:theo:aanelkaarplakken:Cisplit}
 C_i=(X_u=x_u^*)\cap(X_{v_i\setminus u}=x_{v_i\setminus u})=C_i^*\cap C_i^{**},\vspace{2mm}
 \end{equation}
@@ -3665,7 +3612,7 @@ and Equations~\eqref{eq:theo:aanelkaarplakken:secondpartofdomain} and~\eqref{eq:
 \geq0.
 \end{equation}
 
-Consider now any $i\in\{1,\dots,n\}$ such that $i\notin S^*$ and $i\notin S^{**}$. Since $i\notin S^*$, there is some $x_u\in\states^u$ such that $(A_i,C_i)\in\mathcal{C}_{x_u}$. If $x_u= x_u^*$, then since $i\notin S^{**}$, it follows from Equation~\eqref{eq:theo:aanelkaarplakken:Sstarstardef} that $\ind{C_i^*}(\omega^*)=0$, and therefore, Equation~\eqref{eq:theo:aanelkaarplakken:triplestarequivalence} implies that $\ind{C_i}(\omega^{***})=0$. 
+Consider now any $i\in\{1,\dots,n\}$ such that $i\notin S^*$ and $i\notin S^{**}$. Since $i\notin S^*$, there is some $x_u\in\states_u$ such that $(A_i,C_i)\in\mathcal{C}_{x_u}$. If $x_u= x_u^*$, then since $i\notin S^{**}$, it follows from Equation~\eqref{eq:theo:aanelkaarplakken:Sstarstardef} that $\ind{C_i^*}(\omega^*)=0$, and therefore, Equation~\eqref{eq:theo:aanelkaarplakken:triplestarequivalence} implies that $\ind{C_i}(\omega^{***})=0$. 
 If $x_u\neq x_u^*$, then $(X_u=x_u)\cap(X_u=x_u^*)=\emptyset$, and therefore, since $(A_i,C_i)\in\mathcal{C}_{x_u}$ implies that $C_i\subseteq (X_u=x_u)$, it follows that $C_i\cap (X_u=x_u^*)=\emptyset$. Since it follows from Equations~\eqref{eq:theo:aanelkaarplakken:starstarniceonu} and~\eqref{eq:theo:aanelkaarplakken:triplestarparttwo} that $\omega^{***}(t)=x_t^*$ for all $t\in u$, this implies that $\omega^{***}\notin C_i$, and therefore, we find that $\ind{C_i}(\omega^{***})=0$.
 Hence, in all cases, we find that $\ind{C_i}(\omega^{***})=0$. Since this is true for any $i\in\{1,\dots,n\}$ such that $i\notin S^*$ and $i\notin S^{**}$, it follows from Equations~\eqref{eq:theo:aanelkaarplakken:geqfirstparttriplestar} and~\eqref{eq:theo:aanelkaarplakken:geqsecondparttriplestar} that
 \begin{equation}\label{eq:theo:aanelkaarplakken:geqtotal}
@@ -3673,41 +3620,43 @@ Hence, in all cases, we find that $\ind{C_i}(\omega^{***})=0$. Since this is tru
 \end{equation}
 
 We will now prove that $\omega^{***}\in C_0$. We consider two cases: $S^*\neq\emptyset$ and $S^*=\emptyset$. First assume that $S^*\neq\emptyset$. In that case, we have that $\omega^*\in C^*$, which implies that there is some $i\in S^*$ such that $\omega^*\in C_i$. It then follows from Equations~\eqref{eq:theo:aanelkaarplakken:firstpartofdomain} and~\eqref{eq:theo:aanelkaarplakken:triplestarpartone} that $\omega^{***}\in C_i\subseteq C_0$. 
-Next, assume that $S^*=\emptyset$. In that case, we have that $\omega^*\in C_0$, which implies that there is some $i\in\{1,\dots,n\}$ such that $\omega^*\in C_i$. Since $(A_i,C_i)\in\mathcal{C}$ and $S^*=\emptyset$, there is some $x_u\in\states^u$ such that $(A_i,C_i)\in\mathcal{C}_{x_u}$ and, since Equation~\eqref{eq:theo:aanelkaarplakken:secondpartofdomain} implies that $x_t=\omega^*(t)$ for all $t\in u$, it follows that $x_u=x_u^*$. We conclude from this that $(A_i,C_i)\in\mathcal{C}_{x_u^*}$. Furthermore, since $\omega^*\in C_i\subseteq C_i^*$, we know that $\ind{C_i^*}(\omega^*)=1$. Therefore, it follows from Equation~\eqref{eq:theo:aanelkaarplakken:Sstarstardef} that $S^{**}\neq\emptyset$, which implies that $\omega^{**}\in C^{**}$. Hence, there is some $j\in S^{**}$ such that $\omega^{**}\in C_j^{**}$ and, since $j\in S^{**}$, we also know that $\ind{C_j^*}(\omega^*)=1$, or equivalently, that $\omega^*\in C_j^*$. By combining this with Equation~\eqref{eq:theo:aanelkaarplakken:triplestarequivalence}, it follows that $\omega^{***}\in C_j\subseteq C_0$.
+Next, assume that $S^*=\emptyset$. In that case, we have that $\omega^*\in C_0$, which implies that there is some $i\in\{1,\dots,n\}$ such that $\omega^*\in C_i$. Since $(A_i,C_i)\in\mathcal{C}$ and $S^*=\emptyset$, there is some $x_u\in\states_u$ such that $(A_i,C_i)\in\mathcal{C}_{x_u}$ and, since Equation~\eqref{eq:theo:aanelkaarplakken:secondpartofdomain} implies that $x_t=\omega^*(t)$ for all $t\in u$, it follows that $x_u=x_u^*$. We conclude from this that $(A_i,C_i)\in\mathcal{C}_{x_u^*}$. Furthermore, since $\omega^*\in C_i\subseteq C_i^*$, we know that $\ind{C_i^*}(\omega^*)=1$. Therefore, it follows from Equation~\eqref{eq:theo:aanelkaarplakken:Sstarstardef} that $S^{**}\neq\emptyset$, which implies that $\omega^{**}\in C^{**}$. Hence, there is some $j\in S^{**}$ such that $\omega^{**}\in C_j^{**}$ and, since $j\in S^{**}$, we also know that $\ind{C_j^*}(\omega^*)=1$, or equivalently, that $\omega^*\in C_j^*$. By combining this with Equation~\eqref{eq:theo:aanelkaarplakken:triplestarequivalence}, it follows that $\omega^{***}\in C_j\subseteq C_0$.
 So, in all cases, we find that $\omega^{***}\in C_0$. By combining this with Equation~\eqref{eq:theo:aanelkaarplakken:geqtotal}, it follows that Equation~\eqref{eq:theo:aanelkaarplakken:coh} holds, and therefore, that $\tilde{P}$ is coherent.
 
 
-Since $\tilde{P}$ is coherent, and because of Corollary~\ref{corol:coherentextendable}, $\tilde{P}$ can be extended to a full conditional probability $\tilde{P}^*$. If we now let $P$ be the restriction of $\tilde{P}^*$ to $\mathcal{C}^\mathrm{SP}$, then $P$ is a stochastic process that, because $\mathcal{C}\subseteq\mathcal{C}^\mathrm{SP}$, extends $\tilde{P}$. Due to Equation~\eqref{eq:theo:aanelkaarplakken:defPtilde}, this implies that $P$ satisfies Equations~\eqref{eq:theo:aanelkaarplakken:equalsfirst} and~\eqref{eq:theo:aanelkaarplakken:equalssecond}. In the remainder of this proof, we will show that $P\in\wprocesses_\rateset$.
+Since $\tilde{P}$ is coherent, and because of Corollary~\ref{corol:coherentextendable}, $\tilde{P}$ can be extended to a full conditional probability $\tilde{P}^*$. If we now let $P$ be the restriction of $\tilde{P}^*$ to $\mathcal{C}^\mathrm{SP}$, then $P$ is a stochastic process that, because $\mathcal{C}\subseteq\mathcal{C}^\mathrm{SP}$, extends $\tilde{P}$. Due to Equation~\eqref{eq:theo:aanelkaarplakken:defPtilde}, this implies that $P$ satisfies Equations~\eqref{eq:theo:aanelkaarplakken:equalsfirst} and~\eqref{eq:theo:aanelkaarplakken:equalssecond}. This concludes the first part of this proof.
+
+In the remainder of this proof, we will show that $P\in\wprocesses_{\rateset,\,\mathcal{M}}$ as desired. Observe that due to Equation~\eqref{eq:theo:aanelkaarplakken:firstpartofdomain}, we have for all $x\in\states$ that $(X_0=x,X_{\emptyset}=x_{\emptyset})\in\mathcal{C}_{\emptyset}$. Therefore, and because of Equation~\eqref{eq:theo:aanelkaarplakken:defPtilde}, we find $P(X_0)=P(X_0\,\vert\,X_{\emptyset}=x_{\emptyset})=P_{\emptyset}(X_0\,\vert\,X_{\emptyset}=x_{\emptyset})=P_{\emptyset}(X_0)$, which together with the fact that $P_{\emptyset}\in\wprocesses_{\rateset,\,\mathcal{M}}$ implies $P(X_0)\in\mathcal{M}$. Hence, in order to prove that $P\in\wprocesses_{\rateset,\,\mathcal{M}}$, it remains to show that $P$ is both well-behaved and consistent with $\rateset$.
 
 In order to do this, we start by establishing an important equality.
-Consider any $w\in\mathcal{U}$ and $s\in\reals_{\geq0}$ such that $w<s$ and $u<s$. Then for all $x_w\in\states^w$ and $y\in\states$, we have that
+Consider any $w\in\mathcal{U}$ and $s\in\reals_{\geq0}$ such that $w<s$ and $u<s$. Then for all $x_w\in\states_w$ and $y\in\states$, we have that
 \begin{align}\label{eq:theo:aanelkaarplakken:convexcombo}
 P&(X_s=y\vert X_w=x_w)
 =
-\sum_{x_{u\setminus w}\in\states^{u\setminus w}}
+\sum_{x_{u\setminus w}\in\states_{u\setminus w}}
 P(X_s=y,
 X_{u\setminus w}=x_{u\setminus w}
 \vert X_w=x_w)\notag\\
 &=
-\sum_{x_{u\setminus w}\in\states^{u\setminus w}}
+\sum_{x_{u\setminus w}\in\states_{u\setminus w}}
 P(X_s=y\vert
 X_{u\setminus w}=x_{u\setminus w}, X_w=x_w)
 P(X_{u\setminus w}=x_{u\setminus w}
 \vert X_w=x_w)\notag\\
 &=
-\sum_{x_{u\setminus w}\in\states^{u\setminus w}}
+\sum_{x_{u\setminus w}\in\states_{u\setminus w}}
 P(X_s=y\vert
 X_{u}=x_{u}, X_{w\setminus u}=x_{w\setminus u})
 P(X_{u\setminus w}=x_{u\setminus w}
 \vert X_w=x_w)\notag\\
 &=
-\sum_{x_{u\setminus w}\in\states^{u\setminus w}}
+\sum_{x_{u\setminus w}\in\states_{u\setminus w}}
 \tilde{P}(X_s=y\vert
 X_{u}=x_{u}, X_{w\setminus u}=x_{w\setminus u})
 P(X_{u\setminus w}=x_{u\setminus w}
 \vert X_w=x_w)\notag\\
 &=
-\sum_{x_{u\setminus w}\in\states^{u\setminus w}}
+\sum_{x_{u\setminus w}\in\states_{u\setminus w}}
 P_{x_u}(X_s=y\vert
 X_{u}=x_{u}, X_{w\setminus [0,\max u]}=x_{w\setminus [0,\max u]})
 P(X_{u\setminus w}=x_{u\setminus w}
@@ -3719,6 +3668,9 @@ P(X_{u\setminus w}=x_{u\setminus w}
 %P(X_{u\setminus w}=x_{u\setminus w}
 %\vert X_w=x_w)
 \end{align}
+
+***** fixed up to here
+
 Using this equality, we will now show that, for any $t\geq0$, $v\in\mathcal{U}_{<t}$ and $x_v\in\states^v$, there is some finite index set $I$, some $v^*\in\mathcal{U}_{<t}$, a set of non-negative coefficients $(\lambda_i)_{i\in I}$ that sum to one, a set of stochastic processes $({}^iP\in\wprocesses_\rateset)_{i\in I}$ and a set of state instantiations $({}^ix_{v^*}\in\states^{v^*})_{i\in I}$ such that
 \begin{equation}\label{eq:theo:aanelkaarplakken:convexTright}
 (\exists \delta>0)~(\forall 0<\Delta<\delta)~~
