@@ -199,11 +199,33 @@ The fourth condition can easily be removed by considering a continous-time Marko
 
 %As a final example, differentiability assumptions are often made about the probabilities involved. For instance, we might assume that $\nicefrac{\partial}{\partial s}\left[P(X_s\,\vert\,X_t)\right]$ exists. However, if the person that we are modeling is exposed to someone carrying a virus, the probability of becoming sick could suddenly and drastically change. More generally, this might be the case when our specified model fails to account for possible external perturbations.
 
-In the imprecise continuous-time Markov chains that we consider, these four conditions are relaxed in the following way. First of all, instead of providing an exact value for the initial probabilities and the rate parameters, we allow ourselves to specify a set of values. For the purpose of this example, we take these sets to be intervals. The other three conditions are then dropped completely, provided that they remain compatible with these intervals. For example, a rate parameter does not need to be constant, but can vary in time in an arbitrary way, as long as it remains within its interval. Similarly, the rate parameters are also allowed to depend on previous states. In fact, they do not even need to exist, since we do not require differentiability either.
+In the imprecise continuous-time Markov chains that we consider, these four conditions are relaxed in the following way. First of all, instead of providing an exact value for the initial probabilities and the rate parameters, we allow ourselves to specify a set of values. For the purpose of this example, we take these sets to be intervals. The other three conditions are then dropped completely, provided that they remain compatible with these intervals. For example, a rate parameter does not need to be constant, but can vary in time in an arbitrary way, as long as it remains within its interval. Similarly, the rate parameters are also allowed to depend on the history of the process, that is, the value of the previous states. In fact, the rate parameters do not even need to exist, since we do not require differentiability either.
 \exampleend
 \end{exmp}
 
-In particular, it would be useful to have a framework that can jointly deal with these different types of uncertainty and model misspecifications. Indeed, methods for working with uncertain parameter estimates include for example Bayesian techniques~\cite{insua2012bayesian}, and plenty of work has been done on modeling non-homogeneous systems (see, e.g.,~\cite{rindos1995exact,aalen1978empirical,johnson1989nonhomogeneous}). However, as far as we can tell, much less work has been done on dropping the Markovian and differentiability assumptions. Frameworks for jointly dealing with these different types of uncertainty are also scarce, if not non-existent.
+The idea of relaxing the defining assumptions of a continuous-time Markov chain is not new. Various variations on it have been developed over the years.
+%In particular, it would be useful to have a framework that can jointly deal with these different types of uncertainty and model misspecifications. 
+For example, there are plenty of results to be found that deal with non-homogeneous continuous-time Markov chains~\cite{rindos1995exact,aalen1978empirical,johnson1989nonhomogeneous}.
+Dropping the Markov condition is less common, but nevertheless definitely possible~\cite{Harlamov:1320525}. However, the approaches that drop this Markov assumption will typically replace it by some other, weaker assumption, instead of dropping it altogether. %Almost all of the existing approaches seem to assume some type of differentiability or integrability condition.
+
+A common property of all of these approaches is that they still require the parameters of the model to be specified exactly. Furthermore, since these models are typically more complex, the number of parameters that needs to be specified is a lot larger than before. Therefore, in practice, specifying such a generalised model is a lot more difficult than specifying a normal, time-homogeneous continous-time Markov chain.
+In contrast, our approach does not introduce additional parameters. Instead, we provide constraints on the traditional parameters of a continous-time Markov chain, by requiring them to belong to some specified set of condidate parameters.
+In this sense, our approach can be regarded as a type of sensitivity analysis on the parameters of a continuous-time Markov chain. However, instead of simply varying the parameters of a continuous-time Markov chain, as a more traditional sensitivity analysis would do, we also consider what happens when these parameters are allowed to be time- and history-dependent. Furthermore, a sensitivity analysis is typically interested in the effect of infenitesimal parameter variations, whereas we consider the effect of variations within some freely chosen set of candidate parameters.
+
+our results should also be of interest to other fields whose aim it is to robustify the theory of continuous-time Markov chains, such as continuous-time Markov decision processes~\cite{Xianping:2009}, continuous-time controlled Markov chains~\cite{guo2003} and interval continuous-time Markov chains~\cite{Galdino:2013}.
+
+
+
+
+
+
+
+ Frameworks for jointly dealing with these different types of uncertainty are also scarce, if not non-existent.
+
+Indeed, methods for working with uncertain parameter estimates include for example Bayesian techniques~\cite{insua2012bayesian}
+
+
+In order to formalize this idea, we define an imprecise continuous-time Markov chain as a set of stochastic processes. The only information
 
 In order to formulate such a framework here, we turn in this work to the field of \emph{imprecise probability}~\cite{Walley:1991vk}. Here, rather than work with a single model, say $P$, we jointly consider some \emph{set} of models $\mathcal{P}$. 
 
