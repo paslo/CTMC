@@ -155,15 +155,17 @@ Lorem ipsum.
 
 Continuous-time Markov chains are mathematical models that can describe the behavior of dynamical systems under stochastic uncertainty. In particular, they describe the stochastic evolution of such a system through a discrete state-space and over a continuous time-dimension. This class of models has found widespread applications in various fields, including queuing theory~\cite{asmussen2008applied,bolch2006queueing}, mathematical finance~\cite{elliott2013default, rolski2009stochastic,sass2004optimizing}, epidemiology~\cite{ duffy1995estimation,jackson2003multistate, lemey2009reconstructing}, system reliability analysis~\cite{besnard2010approach,gokhale2004analysis, wang2007reliability}, and many others~\cite{yin2012continuous}.
 
-As in any modeling task, simplifying assumptions are made when we choose to model a problem using a continuous-time Markov chain. %We would argue however that in many cases, these assumptions are grounded more in pragmatism than in informed consideration of the underlying system. F
+In order to model a problem by means of such a continuous-time Markov chain, quite a lot of assumptions need to be satisfied. %We would argue however that in many cases, these assumptions are grounded more in pragmatism than in informed consideration of the underlying system. F
 For example, it is common practice to assume that the user is able to specify an exact value for all the parameters of the model.
 %In fact, they are usually estimated, and are therefore inherently approximate.
 A second important assumption is the Markov condition, which states that the future behavior of the system only depends on its current state, and not on its history. Other examples are time-homogeneity, which assumes that the dynamics of the system are independent of time, and some technical differentiability assumptions. 
-As a result of all these assumptions, continous-time Markov chains can be described using convenient analytic expressions. 
+As a result of all these assumptions, continuous-time Markov chains can be described using convenient analytic expressions. 
 
 
-However, we would argue that in many cases, these assumptions are not realistic, and that they are grounded more in pragmatism than in informed consideration of the underlying system.
-Therefore, we consider in this paper \emph{imprecise continuous-time Markov chains}, which can be used to model the same systems that are typicallly modelled with a continous-time Markov chain, but in a more robust way, without the need to impose the many simplifying  assumptions that we have just discussed. The following provides a motivating toy example that will return throughout this work. Although the model in this example is clearly too simple to be of practical use, it does already illustrate that the simplifying assumptions above are clearly unrealistic.
+However, we would argue that in many cases, these assumptions are not realistic, and are grounded more in pragmatism than in informed consideration of the underlying system.
+In those cases, we think that it is best to avoid these assumptions. In order to make this possible, we here consider \emph{imprecise continuous-time Markov chains}. They are quite similar to continuous-time Markov chains: they model the same type of dynamical systems, and they therefore have the same fields of application. However, they do not impose the many simplifying assumptions that are traditionally adopted, and are therefore far more robust.
+
+%The following provides a motivating toy example that will return throughout this work. Although the model in this example is clearly too simple to be of practical use, it does already illustrate that the simplifying assumptions above are clearly unrealistic.
 
 %We here consider \emph{imprecise continuous-time Markov chains}, which can be used to robustly model systems for which often-made assumptions need not hold. Such assumptions may include time-homogeneity, whereby the behavior of the system is independent of the absolute point in time at which it is considered. Other such assumptions are the Markov property and differentiability of the state-transition probabilities. The former means that the future behavior of the system is independent of its history, given the current state. The differentiability assumption leads to convenient analytic expressions but might not hold if, e.g., the system is exposed to external perturbations. 
 
@@ -171,11 +173,17 @@ Therefore, we consider in this paper \emph{imprecise continuous-time Markov chai
 
 %Therefore, we consider in this paper \emph{imprecise continuous-time Markov chains}, which can be used to robustly model systems for which the above assumptions need not hold. 
 
-The following provides a motivating toy example that will return throughout this work. Although the model in this example is clearly too simple to be of practical use, it does already illustrate that the simplifying assumptions above are often unrealistic.
-\begin{exmp}\label{ex:health_sick_exmp}
-Suppose that we want to model a person periodically becoming sick, and recovering after some time. We model this behavior using a binary state space $\{\text{\tt healthy, sick}\}$, and consider the two possible state-transitions: from {\tt healthy} to {\tt sick}, and from {\tt sick} to {\tt healthy}. A \emph{rate parameter} is then associated with each of these transitions, which quantifies the ``speed'' with which the model completes such a transition. A continuous-time Markov chain can then be used to answer probabilistic questions about this system.
+The following provides a motivating toy example. 
+% that will return throughout this work. 
+It is clearly too simple to be of any practical use, but it does allow us to illustrate the simplifying assumptions that are usually adopted, and to provide a basic idea of how we intend to relax them.
 
-For instance, we might be interested in the probability $P(X_s={\tt sick}\,\vert\,X_t={\tt healthy})$ of the person being sick at time $s$, given that he or she is healthy at time $t$. Under an assumption of time-homogeneity, this probability would not depend on the absolute values of $t$ and $s$, but only on the relative difference $(s-t)$. This assumption might therefore be invalid if, e.g., there is a seasonal trend to the disease (it might be more likely to contract this disease during the winter).
+\begin{exmp}\label{ex:health_sick_exmp}
+Consider a person periodically becoming sick, and recovering after some time. If we want to model this behavior using a continuous-time Markov chain with a binary state space $\{\text{\tt healthy, sick}\}$, we need to specify a \emph{rate parameter} for each of the following two state-transitions: from {\tt healthy} to {\tt sick}, and from {\tt sick} to {\tt healthy}. Loosely speaking, such a rate parameter characterises how quickly the corresponding state-transition happens. Together with the initial probability of the person being {\tt sick}, these two rate parameters characterize a unique continuous-time Markov chain, which can then be used to answer various probabilistic questions of interest.
+For instance, we could compute the probability $P(X_s={\tt sick}\,\vert\,X_t={\tt healthy})$ of a person being sick at time $s$, given that he or she is healthy at time $t$.
+
+In this example, the defining assumptions of a continuous-time Markov chain impose rather strict conditions on our model. First of all: we need to provide exact values for the initial probability of a person being sick, and for the two rate parameters. Secondly, these rate parameters should 
+
+ Under an assumption of time-homogeneity, this probability would not depend on the absolute values of $t$ and $s$, but only on the relative difference $(s-t)$. This assumption might therefore be invalid if, e.g., there is a seasonal trend to the disease (it might be more likely to contract this disease during the winter).
 
 As another example, the Markov assumption states that, for time points $t< r< s$,
 \begin{equation*}
