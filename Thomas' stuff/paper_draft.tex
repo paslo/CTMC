@@ -181,17 +181,23 @@ It is clearly too simple to be of any practical use, but it does allow us to ill
 Consider a person periodically becoming sick, and recovering after some time. If we want to model this behavior using a continuous-time Markov chain with a binary state space $\{\text{\tt healthy, sick}\}$, we need to specify a \emph{rate parameter} for each of the following two state-transitions: from {\tt healthy} to {\tt sick}, and from {\tt sick} to {\tt healthy}. Loosely speaking, such a rate parameter characterises how quickly the corresponding state-transition happens. Together with the initial probability of the person being {\tt sick}, these two rate parameters characterize a unique continuous-time Markov chain, which can then be used to answer various probabilistic questions of interest.
 For instance, we could compute the probability $P(X_s={\tt sick}\,\vert\,X_t={\tt healthy})$ of a person being sick at time $s$, given that he or she is healthy at time $t$.
 
-In this example, the defining assumptions of a continuous-time Markov chain impose rather strict conditions on our model. First of all: we need to provide exact values for the initial probability of a person being sick, and for the two rate parameters. Secondly, these rate parameters should 
-
- Under an assumption of time-homogeneity, this probability would not depend on the absolute values of $t$ and $s$, but only on the relative difference $(s-t)$. This assumption might therefore be invalid if, e.g., there is a seasonal trend to the disease (it might be more likely to contract this disease during the winter).
-
-As another example, the Markov assumption states that, for time points $t< r< s$,
+In this example, the defining assumptions of a standard continuous-time Markov chain impose rather strict conditions on our model. 
+First of all: it is necessary to provide exact values for the initial probability of a person being sick, and for the two rate parameters. If these values are incorrect, this will affect the resulting conclusions.
+Secondly, the Markov assumption implies that for any time points $r<t<s$,
 \begin{equation*}
-P(X_s={\tt sick}\,\vert\, X_r={\tt healthy}, X_t={\tt sick}) = P(X_s={\tt sick}\,\vert\, X_r={\tt healthy})\,,
+P(X_s={\tt sick}\,\vert\, X_r={\tt healthy}, X_t={\tt sick}) = P(X_s={\tt sick}\,\vert\, X_t={\tt healthy}),
 \end{equation*}
-that is, the probability of being sick at time $s$ \emph{only} depends on the person's condition at time $r$, and not on whether he or she has ever been sick before time $r$. When it is for instance possible to develop immunity to the disease, the Markov assumption is thus clearly incorrect.
+that is, once we know the person's health state at time~$r$, his or her probability of being sick at time~$s$ does not depend on whether he or she has ever been sick before time~$r$. If it is possible develop immunity to the disease in question, then clearly, such an assumption is not realistic. 
+Thirdly, the rate parameters are assumed to remain constant over time, which, for example, excludes the possibility of modelling seasonal variations.
+The third condition can easily be removed by considering a continous-time Markov chain that is not time-homogeneous. However, in that case, the first condition becomes even more severe, because in that case, the two rate parameters become time-dependent, which requires us to specify an infinity of values, rather than just two of them. Furthermore, for computational reasons, we then typically also need a technical fourth condition, which requires some type of differentiability or integrability.
 
-As a final example, differentiability assumptions are often made about the probabilities involved. For instance, we might assume that $\nicefrac{\partial}{\partial s}\left[P(X_s\,\vert\,X_t)\right]$ exists. However, if the person that we are modeling is exposed to someone carrying a virus, the probability of becoming sick could suddenly and drastically change. More generally, this might be the case when our specified model fails to account for possible external perturbations.
+% Under an assumption of time-homogeneity, this probability would not depend on the absolute values of $t$ and $s$, but only on the relative difference $(s-t)$. This assumption might therefore be invalid if, e.g., there is a seasonal trend to the disease (it might be more likely to contract this disease during the winter).
+
+
+
+%As a final example, differentiability assumptions are often made about the probabilities involved. For instance, we might assume that $\nicefrac{\partial}{\partial s}\left[P(X_s\,\vert\,X_t)\right]$ exists. However, if the person that we are modeling is exposed to someone carrying a virus, the probability of becoming sick could suddenly and drastically change. More generally, this might be the case when our specified model fails to account for possible external perturbations.
+
+Our approach consists in dropping each of these four conditions. Basically, instead of 
 \exampleend
 \end{exmp}
 From a practical point of view, once such a model is formulated and numerical estimates for its parameters have been obtained, one is typically interested in computing the expected value of some function with respect to this model. Such a function might be the expected utility of some financial strategy~\cite{sass2004optimizing}; the expected time until some component in a system breaks down~\cite{besnard2010approach}; or the expected speed with which clinical symptoms of a disease develop~\cite{duffy1995estimation}. It is of interest, therefore, to robustify such assessments not only against uncertain parameter estimates, but also against possibly incorrect assumptions like the ones discussed above. 
@@ -212,9 +218,9 @@ Our aims with this present paper are threefold: firstly, to solidify the theoret
 
 Our main contributions are the following:
 \begin{enumerate}
-\item We provide a unified framework for describing continuous-time, discrete-space stochastic processes, using the formalism of full conditional probabilities. This framework covers the full range of (non-)homogeneous, (non-)Markovian, and (non-)differentiable stochastic processes.
-\item We use this framework to formalize ``imprecise continuous-time Markov chains"; sets of stochastic processes that are in a specific sense ``consistent'' with a given set of parameters. We derive closure properties of such sets of processes, as well as factorization properties of their corresponding lower expectations.
-\item We introduce a ``lower transition operator'' for imprecise continuous-time Markov chains, and show that this operator satisfies convenient algebraic properties like time-homogeneity, differentiability, and Markovian-like factorization---even if the underlying set of processes does not. We show that we can use this operator to compute lower expectations for arbitrary functions on the state space, and provide an exact characterization of the largest set of processes for which a given such operator does this.
+\item We provide a unified framework for describing continuous-time, discrete-space stochastic processes, using the formalism of \emph{full conditional probabilities}. This framework covers the full range of (non-)homogeneous, (non-)Markovian, and (non-)differentiable stochastic processes.
+\item We use this framework to formalize \emph{imprecise continuous-time Markov chains}: sets of stochastic processes that are in a specific sense consistent with a given set of parameters. We derive closure properties of such sets of processes, as well as factorization properties of their corresponding lower expectations.
+\item We introduce a \emph{lower transition operator} for imprecise continuous-time Markov chains, and show that this operator satisfies convenient algebraic properties such as time-homogeneity, differentiability, and Markovian-like factorization---even if the underlying set of processes does not. We show that we can use this operator to \emph{compute lower and upper expectations} of arbitrary functions that depend on a finite number of time points, and provide an exact characterization of the largest set of processes for which a given such operator does this.
 \end{enumerate}
 
 The remainder of this paper is organized as follows. In Section~\ref{sec:prelim}, we introduce notation and some basic concepts that will be used throughout. In Section~\ref{sec:systems}, we define some tools for representing the behavior of stochastic processes. Section~\ref{sec:stochastic_processes} formally introduces stochastic processes, and formalizes the tools for describing their dynamics. Section~\ref{sec:cont_time_markov_chains} focuses on the special case of continuous-time Markov chains. 
