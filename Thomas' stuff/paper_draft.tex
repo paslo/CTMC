@@ -1345,7 +1345,7 @@ where $\mathbb{E}_P[\cdot\,\vert\,\cdot]$ denotes the (conditional) expectation 
 Because these lower expectations are linked to a given set $\mathcal{P}\subseteq\processes$ of stochastic processes, we will first look at how we can describe such a set $\mathcal{P}$.
 Recall from Section~\ref{sec:dynamics} that for a given stochastic process $P\in\processes$, its behavior can be described using the outer partial derivatives $\smash{\overline{\partial}}T_{t,\,x_u}^t$ of its transition matrices $T_{t,\,x_u}^t$ at each time $t\in\realsnonneg$ and for each history $x_u\in\states_u$. There, we found that---at least for well-behaved processes---these outer partial derivatives are non-empty bounded sets of rate matrices. Hence, because individual stochastic processes can be described using sets of rate matrices, this is also a natural starting point for describing sets of processes.
 
-Therefore, consider some non-empty bounded set $\rateset\subset\mathcal{R}$ of rate matrices. We can then ask if there are any processes that are described by this set $\rateset$. Indeed, we found in Section~\ref{sec:homogen_markov_chain} that for any $Q\in\rateset$, there is a well-behaved homogeneous Markov chain that is characterized---up to its initial distribution---by this $Q$. Hence, an obvious way to construct a set $\mathcal{P}$ from a given set $\rateset$ is as the set of well-behaved homogeneous Markov chains characterized by elements of $\rateset$. This idea will be formalized in Section~\ref{subsec:types_ictmc}.
+Therefore, consider some non-empty bounded set $\rateset\subset\mathcal{R}$ of rate matrices. We can then ask if there are any processes that are described by this set $\rateset$. Indeed, we found in Section~\ref{sec:homogen_markov_chain} that for every $Q\in\rateset$, there is a well-behaved homogeneous Markov chain that is characterized---up to its initial distribution---by this $Q$. Hence, an obvious way to construct a set $\mathcal{P}$ from a given set $\rateset$ is as the set of well-behaved homogeneous Markov chains characterized by elements of $\rateset$. This idea will be formalized in Section~\ref{subsec:types_ictmc}.
 
 For now, we next consider whether we can also describe sets of non-homogeneous, (non-)Markov processes using a given set $\rateset$ of rate matrices. However, it should be clear that this is less straightforward than in the homogeneous, Markovian case. In particular, because such a set $\rateset$ is not explicitly connected to any time $t$ or history $x_u$, asking if a (non-homogeneous, non-Markov) process is described by this set is in some sense an ill-posed question.
 Therefore, rather than asking if a process can be described by some set of rate matrices, we will now introduce the following weaker notion of \emph{consistency} of a stochastic process with a given set of rate matrices.
@@ -1467,24 +1467,28 @@ Consider any bounded set of rate matrices $\rateset$, and any non-empty set $\ma
 *** still need to check this *** This is immediate from Definition~\ref{def:lower_exp} and Proposition \ref{prop:markov_set_subset_of_nonmarkov_set}.
 \end{proof}
 
-Now, ironically, it turns out that computing lower expectations for the set $\whmprocesses_\rateset$ is in general much harder than for the sets $\wmprocesses_\rateset$ or $\wprocesses_\rateset$. In fact, we will show in Section~\ref{sec:funcs_multi_time_points} that $\wprocesses_\rateset$ is in some sense the easiest set to do this for, for arbitrary functions. 
+One of the main aims of this paper is to provide methods to compute the lower expectations for these different types of imprecise continuous-time Markov chains that we have just introduced. While Proposition~\ref{prop:lower_exp_markov_bounded_by_nonmarkov} states that these lower expectations provide bounds for each other, it thereby also implies that these lower expectations are not always the same. Furthermore, due to their qualitative differences, one might expect that some of these lower expectations are harder to compute than others. We will show that this is indeed the case.
 
-The problem is, essentially, that while homogeneous Markov chains are easy to work with numerically, the set $\whmprocesses_\rateset$ does not provide enough ``degrees of freedom'' to make the optimization problem involved in computing $\underline{\mathbb{E}}^\mathrm{WHM}_\rateset$ tractable. The following example serves as an illustration. 
+Ironically, it turns out that computing lower expectations for the set $\whmprocesses_{\rateset\,,\mathcal{M}}$ is in general much harder than for the sets $\wmprocesses_{\rateset\,,\mathcal{M}}$ or $\wprocesses_{\rateset\,,\mathcal{M}}$. In fact, we will show in Section~\ref{sec:funcs_multi_time_points} that $\wprocesses_{\rateset\,,\mathcal{M}}$ is in some sense the easiest set to do this for, for arbitrary functions. 
+
+The problem is, essentially, that while homogeneous Markov chains are easy to work with numerically, the set $\whmprocesses_{\rateset\,,\mathcal{M}}$ does not provide enough ``degrees of freedom'' to make the optimization problem involved in computing $\underline{\mathbb{E}}^\mathrm{WHM}_{\rateset\,,\mathcal{M}}$ tractable. The following serves as an illustration. 
 
 %*** Known to be difficult: even finding an $\epsilon$-approximation takes at least exponential time~\cite[Theorem 20.1]{kreinovich2013computational}.
 
-\begin{exmp}
-Suppose that we want to compute the conditional lower expectation $\underline{\mathbb{E}}_\rateset^{\mathrm{WHM}}[f(X_t)\,\vert\,X_0]$ for some function $f\in\gamblesX$. It follows from Remark~\ref{remark:expectationT}, Definition~\ref{def:lower_exp}, and Proposition~\ref{prop:Q_is_singleton_deriv_for_homogen} that
+%\begin{exmp}
+Suppose that we want to compute the conditional lower expectation $\underline{\mathbb{E}}_{\rateset,\,\mathcal{M}}^{\mathrm{WHM}}[f(X_t)\,\vert\,X_0]$ for some function $f\in\gamblesX$. It follows from Remark~\ref{remark:expectationT}, Definition~\ref{def:lower_exp}, and Proposition~\ref{prop:Q_is_singleton_deriv_for_homogen} that
 \begin{align*}
-\underline{\mathbb{E}}_\rateset^{\mathrm{WHM}}[f(X_t)\,\vert\,X_0] &= \inf\left\{ \mathbb{E}_P[f(X_t)\,\vert\,X_0]\,:\,P\in\whmprocesses_\rateset \right\} \\
- &= \inf\left\{ e^{Q_P t}f\,:\,P\in\whmprocesses_\rateset \right\} \\
+\underline{\mathbb{E}}_{\rateset,\,\mathcal{M}}^{\mathrm{WHM}}[f(X_t)\,\vert\,X_0] &= \inf\left\{ \mathbb{E}_P[f(X_t)\,\vert\,X_0]\,:\,P\in\whmprocesses_{\rateset,\,\mathcal{M}} \right\} \\
+ &= \inf\left\{ e^{Q_P t}f\,:\,P\in\whmprocesses_{\rateset,\,\mathcal{M}} \right\} \\
  &= \inf\left\{ e^{Q t}f\,:\,Q\in\rateset\right\}\,.
 \end{align*}
-**** blabla
-\exampleend
-\end{exmp}
+Therefore, computing the term $\underline{\mathbb{E}}_{\rateset,\,\mathcal{M}}^{\mathrm{WHM}}[f(X_t)\,\vert\,X_0]$ is at its core a non-linear, constrained optimization problem over the set $\rateset$---the non-linearity stemming from the term $e^{Qt}$, and the specific form of the constraints depending on the choice of $\rateset$. While numerically solving this optimization problem is tractable for sufficiently ``nice'' $\rateset$ and in low dimensions, the computational complexity will in general quickly explode as the size of $\states$ increases.
 
-Because of these observations, we will in the sequel focus on the sets $\wmprocesses_\rateset$ and $\wprocesses_\rateset$, having introduced $\whmprocesses_\rateset$ only for the sake of completeness. Note that Proposition~\ref{prop:lower_exp_markov_bounded_by_nonmarkov} guarantees that the lower expectation for either $\wmprocesses_\rateset$ or $\wprocesses_\rateset$ suffices to compute a lower bound for $\underline{\mathbb{E}}_\rateset^\mathrm{WHM}$. Of course, this bound will in general not be tight if one insists that any analysis should be done with respect to the set $\whmprocesses_\rateset$. However, because this latter set does make the strictest---and, we would argue, most unrealistic---assumptions about the domain of interest, we do not consider this particularly problematic.
+The problem, then, is that for lower expectations $\underline{\mathbb{E}}_{\rateset,\,\mathcal{M}}^{\mathrm{WHM}}$, we are unable to simplify the above optimization problem. In contrast, we will show later in this work that this is possible for lower expectations $\underline{\mathbb{E}}_{\rateset,\,\mathcal{M}}^{\mathrm{WM}}$ and $\underline{\mathbb{E}}_{\rateset,\,\mathcal{M}}^{\mathrm{W}}$.
+%\exampleend
+%\end{exmp}
+
+Therefore, we will in the sequel focus on the sets $\wmprocesses_{\rateset,\,\mathcal{M}}$ and $\wprocesses_{\rateset,\,\mathcal{M}}$, having introduced $\whmprocesses_{\rateset,\,\mathcal{M}}$ only for the sake of completeness. Note that Proposition~\ref{prop:lower_exp_markov_bounded_by_nonmarkov} guarantees that the lower expectation for either $\wmprocesses_{\rateset,\,\mathcal{M}}$ or $\wprocesses_{\rateset,\,\mathcal{M}}$ suffices to compute a lower bound for $\underline{\mathbb{E}}_{\rateset,\,\mathcal{M}}^\mathrm{WHM}$. Of course, this bound will in general not be tight if one insists that any analysis should be done with respect to the set $\whmprocesses_{\rateset,\,\mathcal{M}}$. However, because this latter set does make the strictest---and, we would argue, most unrealistic---assumptions about the domain of interest, we do not consider this particularly problematic.
 
 \subsection{Closure Properties for Sets of Consistent Processes}
 
