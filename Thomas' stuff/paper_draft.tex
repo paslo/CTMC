@@ -219,20 +219,28 @@ In order to formalize our approach, we turn in this work to the field of \emph{i
 
 From a practical point of view, once a probabilistic model has been formulated and its parameters have been specified, one is typically interested in computing inferences, such as the probability of some event, or the expectation of some function. For example, as in Example~\ref{ex:health_sick_exmp}, we might want to know the probability that a person will be sick in ten days, given that he or she is healthy today.
 Similarly, for expectations, one might for example like to know the expected utility of some financial strategy~\cite{sass2004optimizing}; the expected time until some component in a system breaks down~\cite{besnard2010approach}; or the expected speed with which clinical symptoms of a disease develop~\cite{duffy1995estimation}. However, these inferences might depend crucially on the specific value of the model parameters, and on the defining assumptions of the model.
-It is of interest, therefore, to study the robustness of such inferences against changes to the parameters and the defining assumptions of the model.
+It is of interest, therefore, to study the robustness of such inferences with respect to parameter changes and relaxations of the defining assumptions of the model.
 
-exact lower and upper bounds on these expectations, which we call lower and upper expectations. Lower and upper probabilities are included as a special case, by considering bounds on the expectation of indicators.
+In our approach, investigating this type of robustness is easy. In principle, all we have to do is to consider the probability or expectation of interest for each of the stochastic processes in $\mathcal{P}$, and to then report the corresponding lower and upper bound. Intuitively, this can be regarded as providing best- and worst-case scenarios with respect to all the models in $\mathcal{P}$.
+%It suffices to focus on lower and upper expectations, because lower and upper probabilities can be obtained as a special case.
+Of course, since the stochastic processes in $\mathcal{P}$ are not required to satisfy the Markov condition, a naive optimisation method will be higly inefficient, and in most cases not even possible. However, as we will see, it is possible to develop other, more efficient methods for computing the lower and upper bounds that we are after. If the lower and upper bounds that we obtain are similar, we can conclude that the corresponding inference is robust with respect to the variations that ar represented by $\mathcal{P}$. However, if the lower and upper bound are substantially different, then the inference is clearly sensitive to these variations, and policy may then have to be adapted accordingly. 
+%In our specific setting, such a set might contain not only models under various parameter estimates, but also models for which, e.g., the Markov assumption does not hold. 
 
-And, instead of computing the expectation $\mathbb{E}_P[f(\cdot)]$ of some function $f$ with respect to a single model $P$, we are then interested in the \emph{lower-} and \emph{upper expectation} with respect to this set $\mathcal{P}$.
+
+
+%exact lower and upper bounds on these expectations, which we call lower and upper expectations. Lower and upper probabilities are included as a special case, by considering bounds on the expectation of indicators.
+
+%And, instead of computing the expectation $\mathbb{E}_P[f(\cdot)]$ of some function $f$ with respect to a single model $P$, we are then interested in the \emph{lower-} and \emph{upper expectation} with respect to this set $\mathcal{P}$.
 %\footnote{We adopt in this work the ``sensitivity analysis'' interpretation of imprecise probability, by explicitly considering sets of stochastic models. Specifically, it is also possible to instead take the lower- and upper expectation as themselves being the elementary objects of interest. We refer to {\bf CITE} {\bf CITE} {\bf CITE} for further discussion on this.}. 
-These quantities are defined, respectively, as
-\begin{equation*}
-\underline{\mathbb{E}}[f(\cdot)] \coloneqq \inf\left\{\mathbb{E}_P[f(\cdot)]\,:\,P\in\mathcal{P}\right\}\,\quad\text{and}\quad\overline{\mathbb{E}}[f(\cdot)] \coloneqq \sup\left\{\mathbb{E}_P[f(\cdot)]\,:\,P\in\mathcal{P}\right\}\,.
-\end{equation*}
-This can intuitively be interpreted as providing best- and worst-case expectations with respect to all models in $\mathcal{P}$. For example, $\mathcal{P}$ may contain models under various plausible parameter estimates. Then, if the lower- and upper expectations of some function are roughly similar, we can say that the assessment is robust against choosing a (somewhat) incorrect parameter estimate. If, on the other hand, the lower- and upper expectation vary wildly, the assessment is clearly sensitive to the specific parameter estimate. In that case, e.g., policy may have to be adapted accordingly. In our specific setting, such a set might contain not only models under various parameter estimates, but also models for which, e.g., the Markov assumption does not hold. 
+% These quantities are defined, respectively, as
+% \begin{equation*}
+% \underline{\mathbb{E}}[f(\cdot)] \coloneqq \inf\left\{\mathbb{E}_P[f(\cdot)]\,:\,P\in\mathcal{P}\right\}\,\quad\text{and}\quad\overline{\mathbb{E}}[f(\cdot)] \coloneqq \sup\left\{\mathbb{E}_P[f(\cdot)]\,:\,P\in\mathcal{P}\right\}\,.
+% \end{equation*}
+% This can intuitively be interpreted as providing best- and worst-case expectations with respect to all models in $\mathcal{P}$. For example, $\mathcal{P}$ may contain models under various plausible parameter estimates. 
+% Then, if the lower- and upper expectations of some function are roughly similar, we can say that the assessment is robust against choosing a (somewhat) incorrect parameter estimate. If, on the other hand, the lower- and upper expectation vary wildly, the assessment is clearly sensitive to the specific parameter estimate. In that case, e.g., policy may have to be adapted accordingly. In our specific setting, such a set might contain not only models under various parameter estimates, but also models for which, e.g., the Markov assumption does not hold. 
 
 
-
+This lower and upper bound aspect of our approach clearly distinguishes it from Bayesian methods~\cite{insua2012bayesian}. Although these methods also consider parameter uncertainty, they model this uncertainty by means of a prior distribution---thereby introducing even more parameters---whereas we consider a set-valued assessment, without providing a prior distribution over this set. Instead of obtaining bounds, a Bayesian method then reports a single `average' expectation or probability, where the average is taken with respect to the prior distribution. Basically, instead of optimising an inference with respect to $\mathcal{P}$, they average it out in some parametrised way.
 
 Markov set-chains~\cite{hartfiel1994,hartfiel1998markov} (these are discrete and do satisfy the Markov assumption)
 
@@ -249,9 +257,9 @@ interval continuous-time Markov chains~\cite{Galdino:2013}. (we consider more ge
 
 
 
- Frameworks for jointly dealing with these different types of uncertainty are also scarce, if not non-existent.
+ %Frameworks for jointly dealing with these different types of uncertainty are also scarce, if not non-existent.
 
-Indeed, methods for working with uncertain parameter estimates include for example Bayesian techniques~\cite{insua2012bayesian}
+%Indeed, methods for working with uncertain parameter estimates include for example Bayesian techniques~\cite{insua2012bayesian}
 
 
 
@@ -265,8 +273,8 @@ Our aims with this present paper are threefold: firstly, to solidify the theoret
 Our main contributions are the following:
 \begin{enumerate}
 \item We provide a unified framework for describing continuous-time, discrete-space stochastic processes, using the formalism of \emph{full conditional probabilities}. This framework covers the full range of (non-)homogeneous, (non-)Markovian, and (non-)differentiable stochastic processes.
-\item We use this framework to formalize \emph{imprecise continuous-time Markov chains}: sets of stochastic processes that are in a specific sense consistent with a given set of parameters. We derive closure properties of such sets of processes, as well as factorization properties of their corresponding lower expectations.
-\item We introduce a \emph{lower transition operator} for imprecise continuous-time Markov chains, and show that this operator satisfies convenient algebraic properties such as time-homogeneity, differentiability, and Markovian-like factorization---even if the underlying set of processes does not. We show that we can use this operator to \emph{compute lower and upper expectations} of arbitrary functions that depend on a finite number of time points, and provide an exact characterization of the largest set of processes for which a given such operator does this.
+\item We use this framework to formalize \emph{imprecise continuous-time Markov chains}: sets of stochastic processes that are in a specific sense consistent with given set-valued assessments of the parameters of a continuous-time Markov chain. We derive closure properties for such sets of processes, as well as factorization properties for their corresponding lower expectations.
+\item We introduce a \emph{lower transition operator} for imprecise continuous-time Markov chains, and show that this operator satisfies convenient algebraic properties such as time-homogeneity, differentiability, and Markovian-like factorization---even if the underlying set of processes does not. We show that we can use this operator to \emph{compute lower and upper expectations} of arbitrary functions that depend on a finite number of time points and provide an exact characterization of the largest set of processes for which a given such operator does this.
 \end{enumerate}
 
 The remainder of this paper is organized as follows. We start in Section~\ref{sec:prelim}, where we  introduce our notation and discuss some basic mathematical concepts that will be used throughout. Next, in Section~\ref{sec:systems}, we define some algebraic tools for representing the behavior of stochastic processes. Section~\ref{sec:stochastic_processes} then goes on to formally introduce stochastic processes and provides some powerful tools for describing their dynamics.
