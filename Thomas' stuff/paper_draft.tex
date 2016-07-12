@@ -3998,8 +3998,10 @@ $\underline{\mathbb{E}}^{\mathrm{W}}_{\rateset,\,\mathcal{M}}\left[f(X_u,X_v,X_w
 % \end{align*}
 \end{proof}
 
+Below, we prove a number of lemmas that are required for the proof of Theorem~\ref{theorem:restricted_transmatsystem_space_compact_if_Q_closed}, as well as for some other results in later sections. Lemmas~\ref{lemma:bound_on_linear_approx_partition}-\ref{lemma:uniformelywellbehaved} give a number of norm inequalities that provide bounds on how well we can approximate the transition matrices of stochastic processes consistent with some set of rate matrices $\rateset$, using linear approximations of the form $(I+\Delta Q)$.
+
 \begin{lemma}\label{lemma:bound_on_linear_approx_partition}
-Consider any $P\in\wprocesses_\rateset$, any $0\leq t<s$, any $u\in\mathcal{U}_{<t}$ and any $x_u\in\states^u$. Then for all $\epsilon>0$ and $\delta>0$, there is some $v\in\mathcal{U}_{[t,s]}$ such that $\sigma(v)<\delta$ and, for all $i\in\{0,\dots,n-1\}$:
+Consider any $P\in\wprocesses_{\rateset,\,\mathcal{M}}$, any $0\leq t<s$, any $u\in\mathcal{U}_{<t}$ and any $x_u\in\states_u$. Then for all $\epsilon>0$ and $\delta>0$, there is some $v\in\mathcal{U}_{[t,s]}$ such that $\sigma(v)<\delta$ and, for all $i\in\{0,\dots,n-1\}$:
 \begin{equation*}
 (\exists Q\in\rateset)
 ~
@@ -4249,13 +4251,13 @@ where the second inequality follows from the induction hypothesis and the third 
 % \end{proof}
 
 \begin{lemma}\label{lemma:uniform_delta_for_convex_markov_set}
-Let $\rateset$ be any non-empty, bounded and convex set of rate matrices, and choose any $\epsilon\in\realspos$. Then there is some $\delta\in\realspos$ such that for all $P\in\wmprocesses_\rateset$, all $t\in\realsnonneg$, and all $\Delta\in\realsnonneg$ such that $\Delta<\delta$:
+Let $\rateset$ be any non-empty, bounded and convex set of rate matrices, and choose any $\epsilon\in\realspos$. Then there is some $\delta\in\realspos$ such that for all $P\in\wmprocesses_{\rateset,\,\mathcal{M}}$, all $t\in\realsnonneg$, and all $\Delta\in\realsnonneg$ such that $\Delta<\delta$:
 \begin{equation*}
 (\exists Q\in\rateset)\,\norm{T_{t}^{t+\Delta} - (I+\Delta Q)} \leq \Delta\epsilon.
 \end{equation*}
 \end{lemma}
 \begin{proof}
-Choose $\delta\in\realspos$ such that $\delta\norm{\rateset}<1$ and $\delta\norm{\rateset}^2<\nicefrac{\epsilon}{2}$ [this is clearly always possible] and consider any $P\in\wmprocesses_\rateset$, any $t\in\realsnonneg$ and any $\Delta<\delta$. If $\Delta=0$, the result is trivial because we know from Proposition~\ref{prop:Markovhassystem} and Definition~\ref{def:trans_mat_system} that $T_t^t=I$. Hence, without loss of generality, we may assume that $\Delta>0$.
+Choose $\delta\in\realspos$ such that $\delta\norm{\rateset}<1$ and $\delta\norm{\rateset}^2<\nicefrac{\epsilon}{2}$ [this is clearly always possible] and consider any $P\in\wmprocesses_{\rateset,\,\mathcal{M}}$, any $t\in\realsnonneg$ and any $\Delta<\delta$. If $\Delta=0$, the result is trivial because we know from Proposition~\ref{prop:Markovhassystem} and Definition~\ref{def:trans_mat_system} that $T_t^t=I$. Hence, without loss of generality, we may assume that $\Delta>0$.
 
 It now follows from Lemma~\ref{lemma:bound_on_linear_approx_partition} that there is some $v\in\mathcal{U}_{[t,t+\Delta]}$ with $v=t_0,\ldots,t_n$ and $t=t_0<t_1<\dots<t_n=t+\Delta$ and, for all $i\in\{1,\ldots,n\}$, some $Q_i\in\rateset$ such that
 \begin{equation*}
@@ -4287,7 +4289,7 @@ The result now follows because the convexity of $\rateset$ implies that $Q\in\ra
 
 
 \begin{lemma}\label{lemma:uniformelywellbehaved}
-Consider a non-empty bounded set $\rateset$ of rate matrices and let $P\in\wmprocesses_{\rateset}$ be a well-behaved Markov chain that is consistent with $\rateset$. 
+Consider a non-empty bounded set $\rateset$ of rate matrices and let $P\in\wmprocesses_{\rateset,\,\mathcal{M}}$ be a well-behaved Markov chain that is consistent with $\rateset$. 
 Then, for any $t,s\in\realsnonneg$ such that $t\leq s$, we have that $\norm{T_t^s-I}\leq(s-t)\norm{\rateset}$.
 \end{lemma}
 \begin{proof}
@@ -4310,6 +4312,8 @@ with $\Delta_i\coloneqq t_{i}-t_{i-1}$. Since it follows from Proposition~\ref{p
 \end{align*}
 Since $\epsilon>0$ is arbitrary, it follows that $\norm{T_t^s-I}\leq(s-t)\norm{\rateset}$.
 \end{proof}
+
+Lemma~\ref{lemma:restricted_trans_mat_system_complete_if_Q_closed} and~\ref{lemma:restricted_trans_mat_system_totally_bounded_if_Q_bounded_convex} below essentially provide the bulk of the proof for Theorem~\ref{theorem:restricted_transmatsystem_space_compact_if_Q_closed}; these results are stated separately for ease of exposition.
 
 \begin{lemma}\label{lemma:restricted_trans_mat_system_complete_if_Q_closed}
 Consider a non-empty, bounded, convex and closed set of rate matrices $\rateset$ and any $t,s\in\realsnonneg$ such that $t\leq s$. Let $d$ be the metric that is defined in Equation~\eqref{eq:trans_mat_system_metric}. The metric space $\smash{(\mathbb{T}_\rateset^{[t,s]},d)}$ is then complete.
@@ -4549,20 +4553,21 @@ Since a metric space is compact if and only if it is complete and totally bounde
 \end{proof}
 
 \begin{proof}[Proof of Proposition~\ref{prop:lower_expectation_reached_if_Q_closed}]
-Since $\underline{\mathbb{E}}^{\mathrm{WM}}_\rateset$ computes an infimum, there is a sequence $\{P_i\}_{i\in\nats}$ in $\wmprocesses_\rateset$ such that
+Since $\underline{\mathbb{E}}^{\mathrm{WM}}_{\rateset,\,\mathcal{M}}$ computes an infimum, there is a sequence $\{P_i\}_{i\in\nats}$ in $\wmprocesses_{\rateset,\,\mathcal{M}}$ such that
 \begin{equation}\label{eq:prop:lower_expectation_reached_if_Q_closed}
-\underline{\mathbb{E}}^{\mathrm{WM}}_\rateset[f(X_s)\vert\,X_t=x]
+\underline{\mathbb{E}}^{\mathrm{WM}}_{\rateset,\,\mathcal{M}}[f(X_s)\vert\,X_t=x]
 =\lim_{i\to+\infty}\mathbb{E}_i[f(X_s)\vert\,X_t=x]
 =\lim_{i\to+\infty}\left[\presuper{i}T_t^sf\right](x),
 \end{equation}
-where we use $\mathbb{E}_i$ and $\presuper{i}T_t^s$ to denote the expectation operator and transition matrix that corresponds to $P_i$, respectively, and where the last equality follows from Remark~\ref{remark:expectationT}.
+where we use $\mathbb{E}_i$ and $\presuper{i}T_t^s$ to denote the expectation operator and transition matrix that correspond to $P_i$, respectively, and where the last equality follows from Remark~\ref{remark:expectationT}.
 
-For every $i\in\nats$, we now let $\mathcal{T}_i^{[t,s]}$ be the corresponding restricted transition matrix system, which, since $P_i$ belongs to $\wmprocesses_\rateset$, is clearly an element of $\mathbb{T}_\rateset^{[t,s]}$.
-Hence, since we know from Theorem~\ref{theorem:restricted_transmatsystem_space_compact_if_Q_closed} that the metric space $(\mathbb{T}_\rateset^{[t,s]},d)$ is compact, the sequence $\{\mathcal{T}_i^{[t,s]}\}_{i\in\nats}$ contains a convergent subsequence $\{\mathcal{T}_{i_k}^{[t,s]}\}_{k\in\nats}$ whose limit $\mathcal{T}^{[t,s]}$ belongs to $\mathbb{T}_\rateset^{[t,s]}$, which in turn implies that there is some $P\in\wmprocesses_\rateset$ such that $\mathcal{T}_{P}^{[t,s]}=\mathcal{T}^{[t,s]}$. Let $\mathbb{E}$ and $T_t^s$ be the expectation operator and transition matrix that corresponds to $P$, respectively. It then follows from Remark~\ref{remark:expectationT} and the fact that $\{\mathcal{T}_{i_k}^{[t,s]}\}_{k\in\nats}$ converges to $\mathcal{T}^{[t,s]}$ that
+For every $i\in\nats$, we now let $\mathcal{T}_i^{[t,s]}$ be the corresponding restricted transition matrix system, which, since $P_i$ belongs to $\wmprocesses_{\rateset,\,\mathcal{M}}$, is clearly an element of $\mathbb{T}_\rateset^{[t,s]}$ (note that this holds for any choice of $\mathcal{M}$).
+
+Hence, since we know from Theorem~\ref{theorem:restricted_transmatsystem_space_compact_if_Q_closed} that the metric space $(\mathbb{T}_\rateset^{[t,s]},d)$ is compact, the sequence $\{\mathcal{T}_i^{[t,s]}\}_{i\in\nats}$ contains a convergent subsequence $\{\mathcal{T}_{i_k}^{[t,s]}\}_{k\in\nats}$ whose limit $\mathcal{T}^{[t,s]}$ belongs to $\mathbb{T}_\rateset^{[t,s]}$, which in turn implies that there is some $P\in\wmprocesses_{\rateset,\,\mathcal{M}}$ such that $\mathcal{T}_{P}^{[t,s]}=\mathcal{T}^{[t,s]}$. Again, note that the choice of $\mathcal{M}$ here does not matter. Let $\mathbb{E}_P$ and $T_t^s$ be the expectation operator and transition matrix that correspond to $P$, respectively. It then follows from Remark~\ref{remark:expectationT} and the fact that $\{\mathcal{T}_{i_k}^{[t,s]}\}_{k\in\nats}$ converges to $\mathcal{T}^{[t,s]}$ that
 \begin{equation*}
-\mathbb{E}[f(X_s)\,\vert\,X_t=x]
+\mathbb{E}_P[f(X_s)\,\vert\,X_t=x]
 =\left[T_t^sf\right](x)
-=\lim_{k\to+\infty}\left[\presuper{i_k}T_t^sf\right](x)
+=\lim_{k\to+\infty}\left[\presuper{i_k}T_t^sf\right](x)\,.
 \end{equation*}
 By combining this expression with Equation~\eqref{eq:prop:lower_expectation_reached_if_Q_closed}, the result is now immediate.
 \end{proof}
