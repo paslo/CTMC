@@ -1611,33 +1611,100 @@ Let $\rateset$ be an arbitrary non-empty, bounded, and convex set of rate matric
 \end{theorem}
 The reason that this result is useful, is that it essentially allows us to compute the lower expectation of such functions recursively. In particular, instead of computing the lower expectation on all time-points simultaneously, we can focus on subsets of the time-points separately. We will revisit this idea in Section~\ref{sec:funcs_multi_time_points}.
 
-We next consider the case where $\rateset$ is both convex and closed, and consider the set $\wmprocesses_\rateset$. Recall from Section~\ref{sec:dynamics} that for any function $f\in\gamblesX$, its expectation with respect to a process $P\in\wmprocesses_\rateset$ can alternatively be expressed using the transition matrix corresponding to this process. Specifically, it holds that $\mathbb{E}[f(X_s)\,\vert\,X_t]=T_t^sf$. Note furthermore that a lower expectation $\underline{\mathbb{E}}_{\,\rateset}^{\mathrm{WM}}$ is an infimum over the set of expectations $\mathbb{E}$ corresponding to all $P\in\wmprocesses_\rateset$. It should therefore be clear that the set of transition matrices $T_t^s$ corresponding to all $P\in\wmprocesses_\rateset$ is also of interest to us.
+We next consider the case where $\rateset$ is both convex and closed, and consider the set $\wmprocesses_{\rateset,\,\mathcal{M}}$. Recall from Section~\ref{sec:dynamics} that for any function $f\in\gamblesX$, its expectation with respect to a process $P\in\wmprocesses_{\rateset,\,\mathcal{M}}$ can alternatively be expressed using the transition matrix corresponding to this process. Specifically, it holds that $\mathbb{E}_P[f(X_s)\,\vert\,X_t]=T_t^sf$. Note furthermore that a lower expectation $\underline{\mathbb{E}}_{\rateset,\,\mathcal{M}}^{\mathrm{WM}}$ is an infimum over the set of expectations $\mathbb{E}_P$ corresponding to all $P\in\wmprocesses_{\rateset,\,\mathcal{M}}$. It should therefore be clear that the set of transition matrices $T_t^s$ corresponding to all $P\in\wmprocesses_{\rateset,\,\mathcal{M}}$ is also of interest to us.
 
-Recall from Section~\ref{sec:cont_time_markov_chains} that for each $P\in\wmprocesses_\rateset$, there is a transition matrix system $\mathcal{T}_P$ specifying all transition matrices corresponding to $P$. Furthermore, this $\mathcal{T}_P$ has a restriction $\mathcal{T}_P^{[t,s]}$ to the interval $[t,s]$, and this restriction also specifies $T_t^s$. 
+Recall from Section~\ref{sec:cont_time_markov_chains} that for each $P\in\wmprocesses_{\rateset,\,\mathcal{M}}$, there is a transition matrix system $\mathcal{T}_P$ specifying all transition matrices corresponding to $P$. Furthermore, this $\mathcal{T}_P$ has a restriction $\mathcal{T}_P^{[t,s]}$ to the interval $[t,s]$, and this restriction also specifies $T_t^s$. 
 
-We have already seen in Section~\ref{sec:systems} that the space $\mathbb{T}^{[t,s]}$ of \emph{all} restricted transition matrix systems on $[t,s]$ is complete. We will now look at the subspace of $\mathbb{T}^{[t,s]}$ corresponding to all $P\in\wmprocesses_\rateset$. To this end, for any non-empty bounded set of rate matrices $\rateset$ and any $t,s\in\realsnonneg$ such that $t\leq s$, let
+We have already seen in Section~\ref{sec:systems} that the space $\mathbb{T}^{[t,s]}$ of \emph{all} restricted transition matrix systems on $[t,s]$ is complete. We will now look at the subspace of $\mathbb{T}^{[t,s]}$ corresponding to all $P\in\wmprocesses_{\rateset,\,\mathcal{M}}$. To this end, for any non-empty bounded set of rate matrices $\rateset$ and any $t,s\in\realsnonneg$ such that $t\leq s$, let
 \begin{equation*}
 \mathbb{T}_\rateset^{[t,s]} \coloneqq \left\{\mathcal{T}_P^{[t,s]}\,:\,P\in\wmprocesses_\rateset\right\}\,.
 \end{equation*}
+Note that this set $\mathbb{T}_\rateset^{[t,s]}$ does not depend on a set $\mathcal{M}$ of initial distributions. This makes sense because we are only interested in the transition matrix systems $\mathcal{T}_P$ corresponding to the Markov chains $P\in\wmprocesses_{\rateset,\,\mathcal{M}}$, and clearly the set of these (restricted) transition matrix systems would be invariant to any choice of $\mathcal{M}$. Hence, we simply define $\mathbb{T}_\rateset^{[t,s]}$ to depend on $\wmprocesses_\rateset$.
 
-Then, if $\rateset$ is closed and convex, we obtain the following result.
+Now, if $\rateset$ is closed and convex, we obtain the following result.
 
 \begin{theorem}\label{theorem:restricted_transmatsystem_space_compact_if_Q_closed}
 Consider a non-empty, bounded, convex and closed set of rate matrices $\rateset$ and any $t,s\in\realsnonneg$ such that $t\leq s$. Let $d$ be the metric that is defined in Equation~\eqref{eq:trans_mat_system_metric}. The metric space $\smash{(\mathbb{T}_\rateset^{[t,s]},d)}$ is then compact.
 \end{theorem}
 
-The reason that this result is of interest to us, is that it allows us to prove the existence of certain processes $P\in\wmprocesses_\rateset$. In particular, it allows us to establish the existence of limits of sequences $\left\{P_i\right\}_{i\in\nats}$ in $\wmprocesses_\rateset$ that satisfy certain behavior on a specified interval $[t,s]$. This works because, since the space $\mathbb{T}^{[t,s]}_\rateset$ is compact, not only do convergent sequences converge within this set, but furthermore, any sequence in this set will always have a convergent subsequence.
+The reason that this result is of interest to us, is that it allows us to prove the existence of certain processes $P\in\wmprocesses_{\rateset,\,\mathcal{M}}$. In particular, it allows us to establish the existence of limits of sequences $\left\{P_i\right\}_{i\in\nats}$ in $\wmprocesses_{\rateset,\,\mathcal{M}}$ that satisfy certain behavior on a specified interval $[t,s]$. This works because, since the space $\mathbb{T}^{[t,s]}_\rateset$ is compact, not only do convergent sequences converge within this set, but furthermore, any sequence in this set will always have a convergent subsequence.
 
 \begin{exmp}
 ***** TODO: final part of running example for non-differentiable Markov chain. Show that $\mathcal{T}_*$ is indeed well-behaved, using Theorem~\ref{theorem:restricted_transmatsystem_space_compact_if_Q_closed}. Add proof in corresponding part of appendix to show that $\overline{\partial}_+T_0^0$ is indeed convex, using Theorem~\ref{theorem:restricted_transmatsystem_space_compact_if_Q_closed}. Also argue that convexity of that out partial derivative illustrates the requirement of convexity in that theorem.
 \exampleend
 \end{exmp}
 
-For instance, the next result follows immediately from Theorem~\ref{theorem:restricted_transmatsystem_space_compact_if_Q_closed}. This result establishes that, if $\rateset$ is closed and convex, the lower expectation $\underline{\mathbb{E}}_{\,\rateset}^{\mathrm{WM}}$ is always reached by some $P\in\wmprocesses_\rateset$, and hence is in fact a minimum.
-\begin{proposition}\label{prop:lower_expectation_reached_if_Q_closed}
-Let $\rateset$ be an arbitrary non-empty, bounded, convex and closed set of rate matrices. Then, for all $t,s\in\realsnonneg$ such that $t\leq s$, all $f\in\gamblesX$, and all $x\in\states$, there is some $P\in\wmprocesses_\rateset$ with expectation operator $\mathbb{E}$, such that
+\begin{exmp}
+*** showing that $\overline{\partial}_+T_0^0$ is indeed convex.
+
+The transition matrices ${}^*T_0^\Delta$ corresponding to $\mathcal{T}_*$ are given by
 \begin{equation*}
-\underline{\mathbb{E}}^{\mathrm{WM}}_\rateset[f(X_s)\,\vert\,X_t=x] = \mathbb{E}[f(X_s)\,\vert\,X_t=x]\,.
+{}^*T_0^\Delta = e^{Q_1\varphi_1(\Delta) + Q_2\varphi_2(\Delta)}\,,
+\end{equation*}
+with $\varphi_1$ and $\varphi_2$ as in Equation~REF and~REF, respectively. We now define two rate matrices $Q_o,Q_e\in\mathcal{R}$, as
+\begin{equation*}
+Q_o \coloneqq Q_1\frac{1}{3} + Q_2\frac{2}{3}\,,\quad\text{and,}\quad Q_e\coloneqq Q_1\frac{2}{3} + Q_2\frac{1}{3}\,.
+\end{equation*}
+For any $\lambda\in[0,1]$, we also define a rate matrix $Q_\lambda$ as
+\begin{equation*}
+Q_\lambda \coloneqq Q_o\lambda + Q_e(1-\lambda)\,.
+\end{equation*}
+
+We have already seen in Example~REF that, for every $\lambda\in[0,1]$, it holds that $Q_\lambda\in\overline{\partial}_+{}^*T_0^0$. That is, $\overline{\partial}_+{}^*T_0^0$ contains the convex hull of $\{Q_o,Q_e\}$. As we are about to show, $\overline{\partial}_+{}^*T_0^0$ is given \emph{exactly} by this convex hull, that is, for every $Q\in\overline{\partial}_+{}^*T_0^0$, there is some $\lambda\in[0,1]$ such that $Q=Q_\lambda$.
+
+In order to show this, we first consider a useful equality. To this end, consider any $\Delta\in\realspos$. Then, there is some $i\in\nats$ such that $\Delta\in[\Delta_{i+1},\Delta_i]$, with the sequence $\{\Delta_i\}_{i\in\nats}=\{\nicefrac{1}{2^i}\}_{i\in\nats}$ as in Example~REF. Let now
+\begin{equation*}
+\lambda \coloneqq \left\{ \begin{array}{ll}
+\frac{\Delta_i - \Delta}{\Delta} & \text{if $i$ is odd, and} \\
+1 - \frac{\Delta_i - \Delta}{\Delta} & \text{if $i$ is even.}
+\end{array}\right.
+\end{equation*}
+Then, clearly, $\lambda\in[0,1]$, and it is easily verified that also
+\begin{equation*}
+Q_1\varphi_1(\Delta) + Q_2\varphi_2(\Delta) = Q_\lambda\Delta\,,
+\end{equation*}
+and hence
+\begin{equation*}
+{}^*T_0^\Delta = e^{Q_\lambda\Delta}\,.
+\end{equation*}
+
+***** the above introduction of $Q_o,Q_e,Q_\lambda$ and the above equality using the given choice for $\lambda$ are probably useful/required for showing that $\overline{\partial}_+{}^*T_0^0$ contains the convex hull of $\{Q_o,Q_e\}$. Hence, I'm skipping nice introduction and justification here, and am just introducing the notation that I need. Will clean up later once examples in Section 4 are done.
+
+Consider now any $Q\in\overline{\partial}_+{}^*T_0^0$. Equation~REF then implies the existence of a sequence $\{\Delta_j'\}_{j\in\nats}\to 0^+$ such that $\lim_{j\to\infty}\nicefrac{1}{\Delta_j'}(T_0^{\Delta_j'}-I)=Q$, or in other words,
+\begin{equation}
+\lim_{j\to\infty} \norm{\frac{1}{\Delta_j'}\left(T_0^{\Delta_j'}-I\right)-Q} = 0\,.
+\end{equation}
+Fix any $j\in\nats$. Then, there is some $i\in\nats$ such that $\Delta_j'\in[\Delta_{i+1},\Delta_i]$. Define $\lambda_j\in[0,1]$ by
+\begin{equation*}
+\lambda_j \coloneqq \left\{ \begin{array}{ll}
+\frac{\Delta_i - \Delta_ j'}{\Delta_j'} & \text{if $i$ is odd, and} \\
+1 - \frac{\Delta_i - \Delta_j'}{\Delta_j'} & \text{if $i$ is even.}
+\end{array}\right.
+\end{equation*}
+By repeating this for every $j\in\nats$, we obtain a sequence $\{\lambda_j\}_{j\in\nats}$ in the (closed and bounded) interval $[0,1]$. The Bolzano-Weierstrass theorem now implies that this sequence contains a convergent subsequence $\{\lambda_{j_k}\}_{k\in\nats}$ whose limit $\lambda_*\coloneqq \lim_{k\to\infty}\lambda_{j_k}$ also satisfies $\lambda_*\in[0,1]$. Let also $\{\Delta_{j_k}'\}_{k\in\nats}$ denote the subsequence of $\{\Delta_{j}'\}_{j\in\nats}$ corresponding to the same elements.
+
+In the remainder of this example, we will prove that $Q=Q_{\lambda_*}$. To this end, fix any $\epsilon\in\realspos$. Equation~REF then implies that there is some $n\in\nats$ such that, for all $k>n$, $\norm{\nicefrac{1}{\Delta_{j_k}'}(T_0^{\Delta_{j_k}'}-I)-Q}<\nicefrac{\epsilon}{3}$. Similarly, since $\{\lambda_{j_k}\}_{k\in\nats}\to\lambda_*$, there is some $n'\in\nats$ such that, for all $k>n'$, it holds that 
+\begin{align*}
+\norm{Q_{\lambda_{j_k}} - Q_{\lambda_*}} &= \norm{Q_o\lambda_{j_k}+Q_e(1-\lambda_{j_k}) - Q_o\lambda_{*}+Q_e(1-\lambda_{*})} \\
+ &= \norm{Q_o-(\lambda_{j_k} - \lambda_{*}) + Q_e(\lambda_{*} - \lambda_{j_k})} \\
+ &\leq \abs{\lambda_{j_k} - \lambda_{*}}\cdot 2\norm{\rateset} \\
+ &< \frac{\epsilon}{3}.
+\end{align*}
+Finally, Lemma~REF implies that there is some $n''\in\nats$ such that for all $k>n''$, it holds that $\norm{\nicefrac{1}{\Delta_{j_k}'}(e^{Q_{\lambda_{j_k}}\Delta_{j_k}'}-I)-Q_{\lambda_{j_k}}} < \nicefrac{\epsilon}{3}$.
+
+Let now $n^*\coloneqq \max\{n,n',n''\}$, and consider any $k>n^*$. Then,
+\begin{align*}
+\norm{Q - Q_{\lambda_*}} \leq \norm{\frac{T_0^{\Delta_{j_k}'}-I}{\Delta_{j_k}'}-Q} + \norm{\frac{T_0^{\Delta_{j_k}'}-I}{\Delta_{j_k}'}-Q_{\lambda_{j_k}}} + \norm{Q_{\lambda_{j_k}} - Q_{\lambda_*}} < \epsilon\,.
+\end{align*}
+Because this holds for every $\epsilon\in\realspos$, it follows that, indeed, $\norm{Q-Q_{\lambda_*}}=0$.
+\exampleend
+\end{exmp}
+
+Finally, we conclude this section with a rather profound result that follows immediately from Theorem~\ref{theorem:restricted_transmatsystem_space_compact_if_Q_closed}. This result establishes that, if $\rateset$ is closed and convex, the conditional lower expectation $\underline{\mathbb{E}}_{\rateset,\,\mathcal{M}}^{\mathrm{WM}}$ of functions $f\in\gamblesX$ is actually a minimum---rather than an infimum---because it is always reached by some $P\in\wmprocesses_{\rateset,\,\mathcal{M}}$.
+\begin{proposition}\label{prop:lower_expectation_reached_if_Q_closed}
+Let $\rateset$ be an arbitrary non-empty, bounded, convex and closed set of rate matrices, and let $\mathcal{M}$ be an arbitrary non-empty set of probability mass functions on $\states$. Then, for all $t,s\in\realsnonneg$ such that $t\leq s$, all $f\in\gamblesX$, and all $x\in\states$, there is some $P\in\wmprocesses_{\rateset,\,\mathcal{M}}$ with expectation operator $\mathbb{E}_P$, such that
+\begin{equation*}
+\underline{\mathbb{E}}^{\mathrm{WM}}_{\rateset,\,\mathcal{M}}[f(X_s)\,\vert\,X_t=x] = \mathbb{E}_P[f(X_s)\,\vert\,X_t=x]\,.
 \end{equation*}
 \end{proposition}
 %In summary, then, closedness of $\rateset$ allows us to construct processes $P\in\wmprocesses_\rateset$ as limits of sequences of processes.
