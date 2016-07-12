@@ -158,7 +158,7 @@ Continuous-time Markov chains are mathematical models that can describe the beha
 In order to model a problem by means of such a continuous-time Markov chain, quite a lot of assumptions need to be satisfied. %We would argue however that in many cases, these assumptions are grounded more in pragmatism than in informed consideration of the underlying system. F
 For example, it is common practice to assume that the user is able to specify an exact value for all the parameters of the model.
 %In fact, they are usually estimated, and are therefore inherently approximate.
-A second important assumption is the Markov condition, which states that the future behavior of the system only depends on its current state, and not on its history. Other examples are time-homogeneity, which assumes that the dynamics of the system are independent of time, and some technical differentiability assumptions. 
+A second important assumption is the Markov condition, which states that the future behaviour of the system only depends on its current state, and not on its history. Other examples are time-homogeneity, which assumes that the dynamics of the system are independent of time, and some technical differentiability assumptions. 
 As a result of all these assumptions, continuous-time Markov chains can be described by means of simple analytic expressions. 
 
 
@@ -178,8 +178,8 @@ The following provides a motivating toy example.
 It is clearly too simple to be of any practical use, but it does allow us to illustrate the simplifying assumptions that are usually adopted, and to provide a basic idea of how we intend to relax them.
 
 \begin{exmp}\label{ex:health_sick_exmp}
-Consider a person periodically becoming sick, and recovering after some time. If we want to model this behavior using a continuous-time Markov chain with a binary state space $\{\text{\tt healthy, sick}\}$, we need to specify a \emph{rate parameter} for each of the two possible state-transitions: from {\tt healthy} to {\tt sick}, and from {\tt sick} to {\tt healthy}. Loosely speaking, such a rate parameter characterises how quickly the corresponding state-transition happens. Technically, it specifies the derivative of a transition probability. For example, for the transition from {\tt healthy} to {\tt sick}, the corresponding rate parameter is the derivative of $P(X_s={\tt sick}\,\vert\,X_t={\tt healthy})$ with respect to $s$, for $s=t$, where $P(X_s={\tt sick}\,\vert\,X_t={\tt healthy})$ is the probability of a person being sick at time $s$, given that he or she is healthy at time $t$. Together with the initial probabilities of a person being {\tt sick} or {\tt healthy} at time zero, the rate parameters uniquely characterize a continuous-time Markov chain, which can then be used to answer various probabilistic queries of interest.
-For instance, we could use it to compute the probability that a person will be sick in ten days, given that he or she is healty today.
+Consider a person periodically becoming sick, and recovering after some time. If we want to model this behaviour using a continuous-time Markov chain with a binary state space $\{\text{\tt healthy, sick}\}$, we need to specify a \emph{rate parameter} for each of the two possible state-transitions: from {\tt healthy} to {\tt sick}, and from {\tt sick} to {\tt healthy}. Loosely speaking, such a rate parameter characterises how quickly the corresponding state-transition happens. Technically, it specifies the derivative of a transition probability. For example, for the transition from {\tt healthy} to {\tt sick}, the corresponding rate parameter is the derivative of $P(X_s={\tt sick}\,\vert\,X_t={\tt healthy})$ with respect to $s$, for $s=t$, where $P(X_s={\tt sick}\,\vert\,X_t={\tt healthy})$ is the probability of a person being sick at time $s$, given that he or she is healthy at time $t$. Together with the initial probabilities of a person being {\tt sick} or {\tt healthy} at time zero, these rate parameters uniquely characterize a continuous-time Markov chain, which can then be used to answer various probabilistic queries of interest.
+For instance, to compute the probability that a person will be sick in ten days, given that he or she is healthy today.
 
 In this example, the defining assumptions of a continuous-time Markov chain impose rather strict conditions on our model. 
 First of all: it is necessary to provide exact values for the initial probabilities and for the rate parameters. If these values are incorrect, this will affect the resulting conclusions.
@@ -188,9 +188,9 @@ Thirdly, the Markov assumption implies that for any time points $r<t<s$,
 \begin{equation*}
 P(X_s={\tt sick}\,\vert\, X_r={\tt healthy}, X_t={\tt sick}) = P(X_s={\tt sick}\,\vert\, X_t={\tt healthy}),
 \end{equation*}
-that is, once we know the person's health state at time~$r$, his or her probability of being sick at time~$s$ does not depend on whether he or she has ever been sick before time~$r$. If it is possible develop immunity to the disease in question, then clearly, such an assumption is not realistic. Also, it implies that the rate parameters can only depend on the current state, and not on the previous ones.
+that is, once we know the person's health state at time~$t$, his or her probability of being sick at time~$s$ does not depend on whether he or she has ever been sick before time~$t$. If it is possible to develop immunity to the disease in question, then clearly, such an assumption is not realistic. Also, it implies that the rate parameters can only depend on the current state, and not on the previous ones.
 Fourthly, the rate parameters are assumed to remain constant over time, which, for example, excludes the possibility of modelling seasonal variations.
-The fourth condition can easily be removed by considering a continous-time Markov chain that is not time-homogeneous. However, in that case, the first condition becomes even more severe, because in that case, the rate parameters become time-dependent, which requires us to specify even more values.
+This fourth condition can easily be removed by considering a continuous-time Markov chain that is not time-homogeneous. However, in that case, the first condition becomes even more severe, because in that case, the rate parameters become time-dependent, which requires us to specify even more values.
 %Furthermore, for computational reasons, we then typically also need a technical fourth condition, which requires some type of differentiability or integrability.
 
 % Under an assumption of time-homogeneity, this probability would not depend on the absolute values of $t$ and $s$, but only on the relative difference $(s-t)$. This assumption might therefore be invalid if, e.g., there is a seasonal trend to the disease (it might be more likely to contract this disease during the winter).
@@ -199,7 +199,7 @@ The fourth condition can easily be removed by considering a continous-time Marko
 
 %As a final example, differentiability assumptions are often made about the probabilities involved. For instance, we might assume that $\nicefrac{\partial}{\partial s}\left[P(X_s\,\vert\,X_t)\right]$ exists. However, if the person that we are modeling is exposed to someone carrying a virus, the probability of becoming sick could suddenly and drastically change. More generally, this might be the case when our specified model fails to account for possible external perturbations.
 
-In the imprecise continuous-time Markov chains that we consider, these four conditions are relaxed in the following way. First of all, instead of providing an exact value for the initial probabilities and the rate parameters, we allow ourselves to specify a set of values. For the purpose of this example, we take these sets to be intervals. The other three conditions are then dropped completely, provided that they remain compatible with these intervals. For example, a rate parameter does not need to be constant, but can vary in time in an arbitrary way, as long as it remains within its interval. Similarly, the rate parameters are also allowed to depend on the history of the process, that is, the value of the previous states. In fact, the rate parameters do not even need to exist, since we do not require differentiability either.
+In the imprecise continuous-time Markov chains that we consider, these four conditions are relaxed in the following way. First of all, instead of providing an exact value for the initial probabilities and the rate parameters, we allow ourselves to specify a set of values. For the purpose of this example, we can take these sets to be intervals. The other three conditions are then dropped completely, provided that they remain compatible with these intervals. For example, the rate parameters do not need to be constant, but can vary in time in an arbitrary way, as long as they remain within their interval. Similarly, the rate parameters are also allowed to depend on the history of the process, that is, the value of the previous states. In fact, the rate parameters do not even need to exist, since we do not require differentiability either.
 \exampleend
 \end{exmp}
 
@@ -208,13 +208,35 @@ The idea of relaxing the defining assumptions of a continuous-time Markov chain 
 For example, there are plenty of results to be found that deal with non-homogeneous continuous-time Markov chains~\cite{rindos1995exact,aalen1978empirical,johnson1989nonhomogeneous}.
 Dropping the Markov condition is less common, but nevertheless definitely possible~\cite{Harlamov:1320525}. However, the approaches that drop this Markov assumption will typically replace it by some other, weaker assumption, instead of dropping it altogether. %Almost all of the existing approaches seem to assume some type of differentiability or integrability condition.
 
-A common property of all of these approaches is that they still require the parameters of the model to be specified exactly. Furthermore, since these models are typically more complex, the number of parameters that needs to be specified is a lot larger than before. Therefore, in practice, specifying such a generalised model is a lot more difficult than specifying a normal, time-homogeneous continous-time Markov chain.
-In contrast, our approach does not introduce additional parameters. Instead, we provide constraints on the traditional parameters of a continous-time Markov chain, by requiring them to belong to some specified set of condidate parameters.
-In this sense, our approach can be regarded as a type of sensitivity analysis on the parameters of a continuous-time Markov chain. However, instead of simply varying the parameters of a continuous-time Markov chain, as a more traditional sensitivity analysis would do, we also consider what happens when these parameters are allowed to be time- and history-dependent. Furthermore, a sensitivity analysis is typically interested in the effect of infenitesimal parameter variations, whereas we consider the effect of variations within some freely chosen set of candidate parameters.
+A common property of all of these approaches is that they still require the parameters of the model to be specified exactly. Furthermore, since these models are typically more complex, the number of parameters that needs to be specified is a lot larger than before. Therefore, in practice, specifying such a generalised model is a lot more difficult than specifying a normal, time-homogeneous continuous-time Markov chain.
+In contrast, our approach does not introduce additional parameters. Instead, we provide constraints on the traditional parameters of a continuous-time Markov chain, by requiring them to belong to some specified set of candidate parameters.
+In this sense, our approach can be regarded as a type of sensitivity analysis on the parameters of a continuous-time Markov chain. However, instead of simply varying the parameters of a continuous-time Markov chain, as a more traditional sensitivity analysis would do, we also consider what happens when these parameters are allowed to be time- and history-dependent. Furthermore, a sensitivity analysis is typically interested in the effect of infinitesimal parameter variations, whereas we consider the effect of variations within some freely chosen set of candidate parameters.
+
+Our approach should also not be confused with Bayesian methods~\cite{insua2012bayesian}. Although these methods also consider parameter uncertainty, they model this uncertainty by means of a prior distribution, thereby introducing even more (hyper)parameters. Furthermore, by integrating out this prior, a Bayesian method ends up with a single `averaged' stochastic process. In contrast, our approach considers set-valued parameter assessments, and does not provide a prior distribution over these sets. Every possible combination of parameter values gives rise to a different process, and we treat all of these processes on equal grounds, without averaging them out.
+% Instead of obtaining bounds, a Bayesian method then reports a single `average' expectation or probability, where the average is taken with respect to the prior distribution. Basically, instead of optimising an inference with respect to $\mathcal{P}$, Bayesian methods average it out in a parametrised way.
+
+Among the many extensions of continuous-time Markov chains that are able to deal with complex parameter variations, the ones that resemble our approach the most are continuous-time Markov decision processes~\cite{Xianping:2009} and continuous-time controlled Markov chains~\cite{guo2003}. Similar to what we do, these models vary the parameters of a continuous-time Markov chain, and allow these variations to depend on the history of the process. Their variations are more restrictive though, because the parameters are assumed to remain constant in between two transitions, whereas we allow them to vary in more arbitrary ways. The most important difference with our approach, however, is that in these models, the parameter changes are not at all uncertain. In fact, the parameters can be chosen freely, and the goal is to control the evolution of the process in some optimal way, by tuning its parameters as the process evolves.
+
+%(rate remains constant in between two transitions, whereas our rates can vary freely with time. Also, we do not control the rates.)
 
 
 
-In order to formalize our approach, we turn in this work to the field of \emph{imprecise probability}~\cite{Walley:1991vk,troffaes2013:lp,augustin2013:itip}. The basic premise of this field is that, whenever it is impossible or unrealistic to specify a single probabilistic model, say $P$, it is better to instead consider a \emph{set} of probabilistic models $\mathcal{P}$, and to then draw conclusions that are robust with respect to variations in this set. In our particular case, $\mathcal{P}$ will be a set of stochastic processes. Some of these procesess are homogeneous continuous-time Markov chains. However, the majority of them are not. As explained in Example~\ref{ex:health_sick_exmp}, we also consider other, more general stochastic processes, which are not required to be time-homogeneous, do not need to satisfy the Markov condition, and do not even need to be differentiable.
+*** Markov set-chains~\cite{hartfiel1994,hartfiel1998markov} (these are discrete and do satisfy the Markov assumption) ***
+
+
+
+interval continuous-time Markov chains~\cite{Galdino:2013}. (we consider more general sets, and they do not allow for time- or history-dependent rate matrices)
+
+
+
+
+
+
+
+
+
+
+In order to formalize our approach, we turn in this work to the field of \emph{imprecise probability}~\cite{Walley:1991vk,troffaes2013:lp,augustin2013:itip}. The basic premise of this field is that, whenever it is impossible or unrealistic to specify a single probabilistic model, say $P$, it is better to instead consider a \emph{set} of probabilistic models $\mathcal{P}$, and to then draw conclusions that are robust with respect to variations in this set. In our particular case, $\mathcal{P}$ will be a set of stochastic processes. Some of these processes are homogeneous continuous-time Markov chains. However, the majority of them are not. As explained in Example~\ref{ex:health_sick_exmp}, we also consider other, more general stochastic processes, which are not required to be time-homogeneous, do not need to satisfy the Markov condition, and do not even need to be differentiable.
 
 
 From a practical point of view, once a probabilistic model has been formulated and its parameters have been specified, one is typically interested in computing inferences, such as the probability of some event, or the expectation of some function. For example, as in Example~\ref{ex:health_sick_exmp}, we might want to know the probability that a person will be sick in ten days, given that he or she is healthy today.
@@ -223,7 +245,7 @@ It is of interest, therefore, to study the robustness of such inferences with re
 
 In our approach, investigating this type of robustness is easy. In principle, all we have to do is to consider the probability or expectation of interest for each of the stochastic processes in $\mathcal{P}$, and to then report the corresponding lower and upper bound. Intuitively, this can be regarded as providing best- and worst-case scenarios with respect to all the models in $\mathcal{P}$.
 %It suffices to focus on lower and upper expectations, because lower and upper probabilities can be obtained as a special case.
-Of course, since the stochastic processes in $\mathcal{P}$ are not required to satisfy the Markov condition, a naive optimisation method will be higly inefficient, and in most cases not even possible. However, as we will see, it is possible to develop other, more efficient methods for computing the lower and upper bounds that we are after. If the lower and upper bounds that we obtain are similar, we can conclude that the corresponding inference is robust with respect to the variations that ar represented by $\mathcal{P}$. However, if the lower and upper bound are substantially different, then the inference is clearly sensitive to these variations, and policy may then have to be adapted accordingly. 
+Of course, since the stochastic processes in $\mathcal{P}$ are not required to satisfy the Markov condition, a naive optimisation method will be highly inefficient, and in most cases not even possible. However, as we will see, it is possible to develop other, more efficient methods for computing the lower and upper bounds that we are after. If the lower and upper bounds that we obtain are similar, we can conclude that the corresponding inference is robust with respect to the variations that are represented by $\mathcal{P}$. However, if the lower and upper bound are substantially different, then the inference is clearly sensitive to these variations, and policy may then have to be adapted accordingly. 
 %In our specific setting, such a set might contain not only models under various parameter estimates, but also models for which, e.g., the Markov assumption does not hold. 
 
 
@@ -240,20 +262,9 @@ Of course, since the stochastic processes in $\mathcal{P}$ are not required to s
 % Then, if the lower- and upper expectations of some function are roughly similar, we can say that the assessment is robust against choosing a (somewhat) incorrect parameter estimate. If, on the other hand, the lower- and upper expectation vary wildly, the assessment is clearly sensitive to the specific parameter estimate. In that case, e.g., policy may have to be adapted accordingly. In our specific setting, such a set might contain not only models under various parameter estimates, but also models for which, e.g., the Markov assumption does not hold. 
 
 
-This lower and upper bound aspect of our approach clearly distinguishes it from Bayesian methods~\cite{insua2012bayesian}. Although these methods also consider parameter uncertainty, they model this uncertainty by means of a prior distribution---thereby introducing even more (hyper)parameters---whereas we consider a set-valued assessment, without providing a prior distribution over this set. Instead of obtaining bounds, a Bayesian method then reports a single `average' expectation or probability, where the average is taken with respect to the prior distribution. Basically, instead of optimising an inference with respect to $\mathcal{P}$, Bayesian methods average it out in a parametrised way.
+% This lower and upper bound aspect of our approach clearly distinguishes it from Bayesian methods~\cite{insua2012bayesian}. Although these methods also consider parameter uncertainty, they model this uncertainty by means of a prior distribution---thereby introducing even more (hyper)parameters---whereas we provide a set-valued assessment, without providing a prior distribution over this set. Instead of obtaining bounds, a Bayesian method then reports a single `average' expectation or probability, where the average is taken with respect to the prior distribution. Basically, instead of optimising an inference with respect to $\mathcal{P}$, Bayesian methods average it out in a parametrised way.
 
-The 
-
-Markov set-chains~\cite{hartfiel1994,hartfiel1998markov} (these are discrete and do satisfy the Markov assumption)
-
-continuous-time Markov decision processes~\cite{Xianping:2009}  continuous-time controlled Markov chains~\cite{guo2003} (rate remains constant in between two transitions, whereas our rates can vary freely with time. Also, we do not control the rates.)
-
-interval continuous-time Markov chains~\cite{Galdino:2013}. (we consider more general sets, and they do not allow for time- or history-dependent rate matrices)
-
-
-
-
-
+So in order to recapitulate, this paper is about a specific type of robust generalisation of a continuous-time Markov chain, called imprecise continuous-time Markov chains.
 
 
 
@@ -283,7 +294,7 @@ Our main contributions are the following:
 \item We introduce a \emph{lower transition operator} for imprecise continuous-time Markov chains, and show that this operator satisfies convenient algebraic properties such as time-homogeneity, differentiability, and Markovian-like factorization---even if the underlying set of processes does not. We show that we can use this operator to \emph{compute lower and upper expectations} of arbitrary functions that depend on a finite number of time points and provide an exact characterization of the largest set of processes for which a given such operator does this.
 \end{enumerate}
 
-The remainder of this paper is organized as follows. We start in Section~\ref{sec:prelim}, where we  introduce our notation and discuss some basic mathematical concepts that will be used throughout. Next, in Section~\ref{sec:systems}, we define some algebraic tools for representing the behavior of stochastic processes. Section~\ref{sec:stochastic_processes} then goes on to formally introduce stochastic processes and provides some powerful tools for describing their dynamics.
+The remainder of this paper is organized as follows. We start in Section~\ref{sec:prelim}, where we  introduce our notation and discuss some basic mathematical concepts that will be used throughout. Next, in Section~\ref{sec:systems}, we define some algebraic tools for representing the behaviour of stochastic processes. Section~\ref{sec:stochastic_processes} then goes on to formally introduce stochastic processes and provides some powerful tools for describing their dynamics.
 
 Once these
 
