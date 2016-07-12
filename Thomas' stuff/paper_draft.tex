@@ -227,7 +227,7 @@ Among the many extensions of continuous-time Markov chains that are able to deal
 
 
 
-Having situated our topic within the related literature, let us now take a closer look at the main model of this paper, which is a continuous-time Markov chain.
+Having situated our topic within the related literature, let us now take a closer look at what we actually mean by a continuous-time Markov chain.
 In order to formalize this concept, we turn in this work to the field of \emph{imprecise probability}~\cite{Walley:1991vk,troffaes2013:lp,augustin2013:itip}. The basic premise of this field is that, whenever it is impossible or unrealistic to specify a single probabilistic model, say $P$, it is better to instead consider a \emph{set} of probabilistic models $\mathcal{P}$, and to then draw conclusions that are robust with respect to variations in this set. In the particular case of an imprecise continuous-time Markov chain, $\mathcal{P}$ will be a set of stochastic processes. Some of these processes are homogeneous continuous-time Markov chains. However, the majority of them are not. As explained in Example~\ref{ex:health_sick_exmp}, we also consider other, more general stochastic processes, which are not required to be time-homogeneous, do not need to satisfy the Markov condition, and do not even need to be differentiable.
 
 
@@ -267,23 +267,27 @@ Of course, since the stochastic processes in $\mathcal{P}$ are not required to s
 %Indeed, methods for working with uncertain parameter estimates include for example Bayesian techniques~\cite{insua2012bayesian}
 
 
+Readers that are familiar with the literature on imprecise continuous-time Markov chains~\cite{Skulj:2015cq,troffaes2015using} should recognise the main ideas behind approach that we have just described, but will also notice that our presentation differs from the one that is adopted in References~\cite{Skulj:2015cq,troffaes2015using}.
+Indeed, the work by {\v{S}}kulj~\cite{Skulj:2015cq}, which provided the first---and so far only---theoretical study of imprecise continuous-time Markov chains, never actually considers a set of stochastic processes. Instead, lower and upper expectations of functions that depend on a single time point are defined directly, in a rather ad hoc way, and the main focus of the paper is on how to compute these. Nevertheless, as we show in Section~\ref{sec:connections} of this paper, the lower and upper expectations in Reference~\cite{Skulj:2015cq} are identical to ours.
+% and for this reason, we have chosen to adopt the terminology in Reference~\cite{Skulj:2015cq}, and to refer to our model as an imprecise continuous-time Markov chain.
+%This work focused on providing tools to tractably compute the lower expectation of functions on the state-space at a single time-point.
+Besides the theoretical study in Reference~\cite{Skulj:2015cq}, imprecise continuous-time Markov chains have also been applied to conduct a robust analysis of failure-rates and repair-times in power-grid networks~\cite{troffaes2015using}. This applied work does mention the use of a set of stochastic processes. However, it then proceeds under the assumption that the corresponding lower expectations are the ones that are used by {\v{S}}kulj~\cite{Skulj:2015cq}, without proving that this is actually the case.
 
+%This use of imprecise probability has previously been applied to ``normal''---discrete-time---Markov chains, resulting in \emph{imprecise Markov chains} {\bf CITE} {\bf CITE} {\bf CITE}. This has found applications in {\bf CITE} {\bf CITE}, and has been shown to {\bf CITE}. **** dingen
 
-This use of imprecise probability has previously been applied to ``normal''---discrete-time---Markov chains, resulting in \emph{imprecise Markov chains} {\bf CITE} {\bf CITE} {\bf CITE}. This has found applications in {\bf CITE} {\bf CITE}, and has been shown to {\bf CITE}. **** dingen
+%Previous work on imprecise continuous-time Markov chains is rather limited.
 
-Previous work on imprecise continuous-time Markov chains is rather limited.
-
-The notion of imprecise \emph{continuous-time} Markov chains was only recently introduced to the literature by the work of {\v{S}}kulj~\cite{Skulj:2015cq}. This work focused on providing tools to tractably compute the lower expectation of functions on the state-space at a single time-point. 
+% The notion of imprecise \emph{continuous-time} Markov chains was only recently introduced to the literature by the work of {\v{S}}kulj~\cite{Skulj:2015cq}. This work focused on providing tools to tractably compute the lower expectation of functions on the state-space at a single time-point. 
 %Note that it suffices to focus on either the lower- or the upper expectation, because they can be defined through the conjugacy relation $\overline{\mathbb{E}}[f(\cdot)]=-\underline{\mathbb{E}}[-f(\cdot)]$. 
-These results have since been applied to the robust analysis of failure-rates and repair-times in power-grid networks~\cite{troffaes2015using}.
+% These results have since been applied to the robust analysis of failure-rates and repair-times in power-grid networks~\cite{troffaes2015using}.
 
-Our aims with this present paper are threefold: firstly, to solidify the theoretical foundations of imprecise continuous-time Markov chains. Secondly, to extend and generalize previous results about the computability of lower expectations for this model class. Thirdly, to provide analytical tools for future analysis of these models, and to aid the development of algorithms.
-
+Our aims with the present paper are threefold. First of all, to solidify the theoretical foundations of imprecise continuous-time Markov chains. Secondly, to extend and generalize existing methods for computing the corresponding lower and upper expectations and probabilities. Thirdly, to provide analytical tools that can be used for future analysis of these models, and for the development of new algorithms.
 Our main contributions are the following:
 \begin{enumerate}
 \item We provide a unified framework for describing continuous-time, discrete-space stochastic processes, using the formalism of \emph{full conditional probabilities}. This framework covers the full range of (non-)homogeneous, (non-)Markovian, and (non-)differentiable stochastic processes.
-\item We use this framework to formalize \emph{imprecise continuous-time Markov chains}: sets of stochastic processes that are in a specific sense consistent with given set-valued assessments of the parameters of a continuous-time Markov chain. We derive closure properties for such sets of processes, as well as factorization properties for their corresponding lower expectations.
-\item We introduce a \emph{lower transition operator} for imprecise continuous-time Markov chains, and show that this operator satisfies convenient algebraic properties such as time-homogeneity, differentiability, and Markovian-like factorization---even if the underlying set of processes does not. We show that we can use this operator to \emph{compute lower and upper expectations} of arbitrary functions that depend on a finite number of time points and provide an exact characterization of the largest set of processes for which a given such operator does this.
+\item We use this framework to formalize \emph{imprecise continuous-time Markov chains}: sets of stochastic processes that are in a specific sense consistent with user-specified set-valued assessments of the parameters of a continuous-time Markov chain. We develop various theoretical properties
+%We derive closure properties for such sets of processes, as well as factorization properties for their corresponding lower expectations.
+\item We introduce a \emph{lower transition operator} for imprecise continuous-time Markov chains, and show that this operator satisfies convenient algebraic properties such as time-homogeneity, differentiability, and Markovian-like factorization---even if the underlying set of processes does not. Furthermore, and perhaps most importantly, we show that we can use this operator to \emph{compute lower and upper expectations} of arbitrary functions that depend on a finite number of time points.% and provide an exact characterization of the largest set of processes for which a given such operator does this.
 \end{enumerate}
 
 The remainder of this paper is organized as follows. We start in Section~\ref{sec:prelim}, where we  introduce our notation and discuss some basic mathematical concepts that will be used throughout. Next, in Section~\ref{sec:systems}, we define some algebraic tools for representing the behaviour of stochastic processes. Section~\ref{sec:stochastic_processes} then goes on to formally introduce stochastic processes and provides some powerful tools for describing their dynamics.
