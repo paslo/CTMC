@@ -215,35 +215,27 @@ In this sense, our approach can be regarded as a type of sensitivity analysis on
 Our approach should also not be confused with Bayesian methods~\cite{insua2012bayesian}. Although these methods also consider parameter uncertainty, they model this uncertainty by means of a prior distribution, thereby introducing even more (hyper)parameters. Furthermore, by integrating out this prior, a Bayesian method ends up with a single `averaged' stochastic process. In contrast, our approach considers set-valued parameter assessments, and does not provide a prior distribution over these sets. Every possible combination of parameter values gives rise to a different process, and we treat all of these processes on equal grounds, without averaging them out.
 % Instead of obtaining bounds, a Bayesian method then reports a single `average' expectation or probability, where the average is taken with respect to the prior distribution. Basically, instead of optimising an inference with respect to $\mathcal{P}$, Bayesian methods average it out in a parametrised way.
 
-Among the many extensions of continuous-time Markov chains that are able to deal with complex parameter variations, the ones that resemble our approach the most are continuous-time Markov decision processes~\cite{Xianping:2009} and continuous-time controlled Markov chains~\cite{guo2003}. Similar to what we do, these models vary the parameters of a continuous-time Markov chain, and allow these variations to depend on the history of the process. Their variations are more restrictive though, because the parameters are assumed to remain constant in between two transitions, whereas we allow them to vary in more arbitrary ways. The most important difference with our approach, however, is that in these models, the parameter changes are not at all uncertain. In fact, the parameters can be chosen freely, and the goal is to control the evolution of the process in some optimal way, by tuning its parameters as the process evolves.
+Among the many extensions of continuous-time Markov chains that are able to deal with complex parameter variations, the ones that resemble our approach the most are continuous-time Markov decision processes~\cite{Xianping:2009} and continuous-time controlled Markov chains~\cite{guo2003}. Similar to what we do, these models vary the parameters of a continuous-time Markov chain, and allow these variations to depend on the history of the process. However, their variations are more restrictive, because the parameters are assumed to remain constant in between two transitions, whereas we allow them to vary in more arbitrary ways. The most important difference with our approach though, is that in these models, the parameter changes are not at all uncertain. In fact, the parameters can be chosen freely, and the goal is to control the evolution of the process in some optimal way, by tuning its parameters as the process evolves.
 
 %(rate remains constant in between two transitions, whereas our rates can vary freely with time. Also, we do not control the rates.)
 
 
 
-*** Markov set-chains~\cite{hartfiel1994,hartfiel1998markov} (these are discrete and do satisfy the Markov assumption) ***
-
-
-
-interval continuous-time Markov chains~\cite{Galdino:2013}. (we consider more general sets, and they do not allow for time- or history-dependent rate matrices)
-
+%*** Markov set-chains~\cite{hartfiel1994,hartfiel1998markov} (these are discrete and do satisfy the Markov assumption) ***
+%interval continuous-time Markov chains~\cite{Galdino:2013}. (we consider more general sets, and they do not allow for time- or history-dependent rate matrices)
 
 
 
 
-
-
-
-
-
-In order to formalize our approach, we turn in this work to the field of \emph{imprecise probability}~\cite{Walley:1991vk,troffaes2013:lp,augustin2013:itip}. The basic premise of this field is that, whenever it is impossible or unrealistic to specify a single probabilistic model, say $P$, it is better to instead consider a \emph{set} of probabilistic models $\mathcal{P}$, and to then draw conclusions that are robust with respect to variations in this set. In our particular case, $\mathcal{P}$ will be a set of stochastic processes. Some of these processes are homogeneous continuous-time Markov chains. However, the majority of them are not. As explained in Example~\ref{ex:health_sick_exmp}, we also consider other, more general stochastic processes, which are not required to be time-homogeneous, do not need to satisfy the Markov condition, and do not even need to be differentiable.
+Having situated our topic within the related literature, let us now take a closer look at the main model of this paper, which is a continuous-time Markov chain.
+In order to formalize this concept, we turn in this work to the field of \emph{imprecise probability}~\cite{Walley:1991vk,troffaes2013:lp,augustin2013:itip}. The basic premise of this field is that, whenever it is impossible or unrealistic to specify a single probabilistic model, say $P$, it is better to instead consider a \emph{set} of probabilistic models $\mathcal{P}$, and to then draw conclusions that are robust with respect to variations in this set. In the particular case of an imprecise continuous-time Markov chain, $\mathcal{P}$ will be a set of stochastic processes. Some of these processes are homogeneous continuous-time Markov chains. However, the majority of them are not. As explained in Example~\ref{ex:health_sick_exmp}, we also consider other, more general stochastic processes, which are not required to be time-homogeneous, do not need to satisfy the Markov condition, and do not even need to be differentiable.
 
 
 From a practical point of view, once a probabilistic model has been formulated and its parameters have been specified, one is typically interested in computing inferences, such as the probability of some event, or the expectation of some function. For example, as in Example~\ref{ex:health_sick_exmp}, we might want to know the probability that a person will be sick in ten days, given that he or she is healthy today.
 Similarly, for expectations, one might for example like to know the expected utility of some financial strategy~\cite{sass2004optimizing}; the expected time until some component in a system breaks down~\cite{besnard2010approach}; or the expected speed with which clinical symptoms of a disease develop~\cite{duffy1995estimation}. However, these inferences might depend crucially on the specific value of the model parameters, and on the defining assumptions of the model.
 It is of interest, therefore, to study the robustness of such inferences with respect to parameter changes and relaxations of the defining assumptions of the model.
 
-In our approach, investigating this type of robustness is easy. In principle, all we have to do is to consider the probability or expectation of interest for each of the stochastic processes in $\mathcal{P}$, and to then report the corresponding lower and upper bound. Intuitively, this can be regarded as providing best- and worst-case scenarios with respect to all the models in $\mathcal{P}$.
+In our approach, we investigate this type of robustness as follows: we simply consider the probability or expectation of interest for each of the stochastic processes in $\mathcal{P}$, and to then report the corresponding lower and upper bound. Intuitively, this can be regarded as providing best- and worst-case scenarios with respect to all the models in $\mathcal{P}$.
 %It suffices to focus on lower and upper expectations, because lower and upper probabilities can be obtained as a special case.
 Of course, since the stochastic processes in $\mathcal{P}$ are not required to satisfy the Markov condition, a naive optimisation method will be highly inefficient, and in most cases not even possible. However, as we will see, it is possible to develop other, more efficient methods for computing the lower and upper bounds that we are after. If the lower and upper bounds that we obtain are similar, we can conclude that the corresponding inference is robust with respect to the variations that are represented by $\mathcal{P}$. However, if the lower and upper bound are substantially different, then the inference is clearly sensitive to these variations, and policy may then have to be adapted accordingly. 
 %In our specific setting, such a set might contain not only models under various parameter estimates, but also models for which, e.g., the Markov assumption does not hold. 
@@ -264,7 +256,7 @@ Of course, since the stochastic processes in $\mathcal{P}$ are not required to s
 
 % This lower and upper bound aspect of our approach clearly distinguishes it from Bayesian methods~\cite{insua2012bayesian}. Although these methods also consider parameter uncertainty, they model this uncertainty by means of a prior distribution---thereby introducing even more (hyper)parameters---whereas we provide a set-valued assessment, without providing a prior distribution over this set. Instead of obtaining bounds, a Bayesian method then reports a single `average' expectation or probability, where the average is taken with respect to the prior distribution. Basically, instead of optimising an inference with respect to $\mathcal{P}$, Bayesian methods average it out in a parametrised way.
 
-So in order to recapitulate, this paper is about a specific type of robust generalisation of a continuous-time Markov chain, called imprecise continuous-time Markov chains.
+%So, in order to recapitulate: this paper is about a robust generalisation of a continuous-time Markov chain, called an imprecise continuous-time Markov chain.
 
 
 
