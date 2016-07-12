@@ -3718,18 +3718,18 @@ P(X_{u\setminus w}=x_{u\setminus w}
 
 Using this equality, we will next show that for small enough $\Delta\in\realspos$, the transition matrices $T_{t,x_v}^{t+\Delta}$ and $T_{t-\Delta,x_v}^t$ corresponding to $P$ can each be written as a (different) convex combination of transition matrices corresponding to processes in $\wprocesses_{\rateset,\,\mathcal{M}}$.
 
-Formally, we will show that for any $t\geq0$, $v\in\mathcal{U}_{<t}$ and $x_v\in\states_v$, there is some finite index set $I$, some $v^*\in\mathcal{U}_{<t}$, a set of non-negative coefficients $(\lambda_i)_{i\in I}$ that sum to one, a set of stochastic processes $({}^iP\in\wprocesses_{\rateset,\,\mathcal{M}})_{i\in I}$ and a set of state instantiations $({}^ix_{v^*}\in\states_{v^*})_{i\in I}$ such that
+Formally, we will show that for any $t\geq0$, $v\in\mathcal{U}_{<t}$ and $x_v\in\states_v$, there is some finite index set $\mathcal{I}$, some $v^*\in\mathcal{U}_{<t}$, a set of non-negative coefficients $(\lambda_i)_{i\in \mathcal{I}}$ that sum to one, a set of stochastic processes $({}^iP\in\wprocesses_{\rateset,\,\mathcal{M}})_{i\in \mathcal{I}}$ and a set of state instantiations $({}^ix_{v^*}\in\states_{v^*})_{i\in \mathcal{I}}$ such that
 \begin{equation}\label{eq:theo:aanelkaarplakken:convexTright}
 (\exists \delta>0)~(\forall 0<\Delta<\delta)~~
 T_{t,x_v}^{t+\Delta}
-=\sum_{i\in I}\lambda_i
+=\sum_{i\in \mathcal{I}}\lambda_i
 {}^iT_{t,{}^ix_{v^*}}^{t+\Delta}
 \end{equation}
-and, similarly, that for any $t>0$, $v\in\mathcal{U}_{<t}$ and $x_v\in\states_v$, there is some finite index set $I$, some $v^*\in\mathcal{U}_{<t}$, a set of non-negative coefficients $(\lambda_i)_{i\in I}$ that sum to one, a set of stochastic processes $({}^iP\in\wprocesses_{\rateset,\,\mathcal{M}})_{i\in I}$ and a set of state instantiations $({}^ix_{v^*}\in\states_{v^*})_{i\in I}$ such that
+and, similarly, that for any $t>0$, $v\in\mathcal{U}_{<t}$ and $x_v\in\states_v$, there is some finite index set $\mathcal{I}$, some $v^*\in\mathcal{U}_{<t}$, a set of non-negative coefficients $(\lambda_i)_{i\in \mathcal{I}}$ that sum to one, a set of stochastic processes $({}^iP\in\wprocesses_{\rateset,\,\mathcal{M}})_{i\in \mathcal{I}}$ and a set of state instantiations $({}^ix_{v^*}\in\states_{v^*})_{i\in \mathcal{I}}$ such that
 \begin{equation}\label{eq:theo:aanelkaarplakken:convexTleft}
 (\exists \delta>0)~(\forall 0<\Delta<\delta)~~
 T_{t-\Delta,x_v}^{t}
-=\sum_{i\in I}\lambda_i
+=\sum_{i\in \mathcal{I}}\lambda_i
 {}^iT_{t-\Delta,{}^ix_{v^*}}^{t}.
 \end{equation}
 
@@ -3739,7 +3739,7 @@ We distinguish between two cases: $t<\max u$ and $t\geq\max u$. If $t<\max u$, t
 P(X_{t+\Delta}=y\vert X_t=x, X_v=x_v)
 =P_\emptyset(X_{t+\Delta}=y\vert X_t=x, X_v=x_v).
 \end{equation*}
-Hence, if we let $I\coloneqq\{i\}$, $v^*\coloneqq v$, $\lambda_i\coloneqq 1$, ${}^iP\coloneqq P_\emptyset$ and ${}^ix_{v^*}\coloneqq x_v$, Equation~\eqref{eq:theo:aanelkaarplakken:convexTright} is satisfied by choosing $\delta\coloneqq \max u-\max v$.
+Hence, if we let $\mathcal{I}\coloneqq\{i\}$, $v^*\coloneqq v$, $\lambda_i\coloneqq 1$, ${}^iP\coloneqq P_\emptyset$ and ${}^ix_{v^*}\coloneqq x_v$, Equation~\eqref{eq:theo:aanelkaarplakken:convexTright} is satisfied by choosing $\delta\coloneqq \max u-\max v$.
 If $t\geq \max u$, then for all $\Delta>0$, it follows from Equation~\eqref{eq:theo:aanelkaarplakken:convexcombo} (with $s\coloneqq t+\Delta$ and $w\coloneqq v\cup t$) that
 \begin{align*}
 &P(X_{t+\Delta}=y\vert X_t=x, X_v=x_v)\\
@@ -3752,7 +3752,7 @@ x_{(u\setminus t)\cup(v\setminus [0,\max u])})\\[-4mm]
 P(X_{u\setminus(v\cup t)}=x_{u\setminus(v\cup t)}
 \vert X_t=x, X_v=x_v).
 \end{align*}
-Therefore, if we let $I\coloneqq\states_{u\setminus(v\cup t)}$, $v^*\coloneqq (u\setminus t)\cup(v\setminus [0,\max u])$ and, for all $x_{u\setminus(v\cup t)}\in I$,
+Therefore, if we let $\mathcal{I}\coloneqq\states_{u\setminus(v\cup t)}$, $v^*\coloneqq (u\setminus t)\cup(v\setminus [0,\max u])$ and, for all $x_{u\setminus(v\cup t)}\in \mathcal{I}$,
 \begin{equation*}
 \lambda_{x_{u\setminus(v\cup t)}}
 \coloneqq P(X_{u\setminus(v\cup t)}=x_{u\setminus(v\cup t)}
@@ -3768,7 +3768,7 @@ We again distinguish between two cases: $t\leq\max u$ and $t>\max u$. If $t\leq\
 P(X_{t}=y\vert X_{t-\Delta}=x, X_v=x_v)
 =P_\emptyset(X_{t}=y\vert X_{t-\Delta}=x, X_v=x_v).
 \end{equation*}
-Hence, if we let $I\coloneqq\{i\}$, $v^*\coloneqq v$, $\lambda_i\coloneqq 1$, ${}^iP\coloneqq P_\emptyset$ and ${}^ix_{v^*}\coloneqq x_v$, Equation~\eqref{eq:theo:aanelkaarplakken:convexTleft} is satisfied by choosing $\delta\coloneqq t-\max v$.
+Hence, if we let $\mathcal{I}\coloneqq\{i\}$, $v^*\coloneqq v$, $\lambda_i\coloneqq 1$, ${}^iP\coloneqq P_\emptyset$ and ${}^ix_{v^*}\coloneqq x_v$, Equation~\eqref{eq:theo:aanelkaarplakken:convexTleft} is satisfied by choosing $\delta\coloneqq t-\max v$.
 If $t>\max u$, then for all $\Delta\in(0,t-\max(v\cup u))$, it follows from Equation~\eqref{eq:theo:aanelkaarplakken:convexcombo} (with $s\coloneqq t$ and $w\coloneqq v\cup {t-\Delta}$) that
 \begin{align*}
 &P(X_{t}=y\vert X_{t-\Delta}=x, X_v=x_v)\\
@@ -3781,7 +3781,7 @@ x_{u\cup(v\setminus [0,\max u])})\\[-4mm]
 P(X_{u\setminus v}=x_{u\setminus v}
 \vert X_{t-\Delta}=x, X_v=x_v).
 \end{align*}
-Therefore, if we let $I\coloneqq\states_{u\setminus v}$, $v^*\coloneqq u\cup(v\setminus [0,\max u])$ and, for all $x_{u\setminus v}\in I$,
+Therefore, if we let $\mathcal{I}\coloneqq\states_{u\setminus v}$, $v^*\coloneqq u\cup(v\setminus [0,\max u])$ and, for all $x_{u\setminus v}\in \mathcal{I}$,
 \begin{equation*}
 \lambda_{x_{u\setminus v}}
 \coloneqq P(X_{u\setminus v}=x_{u\setminus v}
@@ -3795,11 +3795,11 @@ Hence, Equation~\eqref{eq:theo:aanelkaarplakken:convexTleft} can be satisfied bo
 Therefore, indeed, as claimed before, both $T_{t,x_v}^{t+\Delta}$ and $T_{t-\Delta,x_v}^t$ can be written as a convex combination of transition matrices corresponding to elements of $\wprocesses_{\rateset,\,\mathcal{M}}$---assuming that $\Delta$ is small enough.
 We will use this fact to prove that $P$ is well-behaved and consistent with $\mathcal{Q}$.
 
-We start by proving that $P$ is well-behaved. First consider any $t\geq0$, $v\in\mathcal{U}_{<t}$ and $x_v\in\states_v$, and consider the indexed set $\{{}^iP\in\wprocesses_{\rateset,\,\mathcal{M}}\}_{i\in I}$ of stochastic processes whose transition matrices appear in the convex combination that satisfies  Equation~\eqref{eq:theo:aanelkaarplakken:convexTright}. Then,
+We start by proving that $P$ is well-behaved. First consider any $t\geq0$, $v\in\mathcal{U}_{<t}$ and $x_v\in\states_v$, and consider the indexed set $\{{}^iP\in\wprocesses_{\rateset,\,\mathcal{M}}\}_{i\in \mathcal{I}}$ of stochastic processes whose transition matrices appear in the convex combination that satisfies  Equation~\eqref{eq:theo:aanelkaarplakken:convexTright}. Then,
 \begin{equation}\label{eq:theo:aanelkaarplakken:wellbehavedTright}
 \begin{aligned}
-\limsup_{\Delta\to 0^{+}}\frac{1}{\Delta}\norm{T_{t,x_v}^{t+\Delta}-I} &= \limsup_{\Delta\to 0^{+}}\frac{1}{\Delta}\norm{\sum_{i\in I}\lambda_i{}^iT_{t,{}^ix_{v^*}}^{t+\Delta}-I} \\
- & \leq\sum_{i\in I}\lambda_i\limsup_{\Delta\to 0^{+}}\frac{1}{\Delta}\norm{{}^iT_{t,{}^ix_{v^*}}^{t+\Delta}-I}
+\limsup_{\Delta\to 0^{+}}\frac{1}{\Delta}\norm{T_{t,x_v}^{t+\Delta}-I} &= \limsup_{\Delta\to 0^{+}}\frac{1}{\Delta}\norm{\sum_{i\in \mathcal{I}}\lambda_i{}^iT_{t,{}^ix_{v^*}}^{t+\Delta}-I} \\
+ & \leq\sum_{i\in \mathcal{I}}\lambda_i\limsup_{\Delta\to 0^{+}}\frac{1}{\Delta}\norm{{}^iT_{t,{}^ix_{v^*}}^{t+\Delta}-I}
 <+\infty\,,
 \end{aligned}
 \end{equation}
@@ -3808,8 +3808,8 @@ where the last inequality follows from Proposition~\ref{prop:stochasticprocess:s
 Similarly, for any $t>0$, $v\in\mathcal{U}_{<t}$ and $x_v\in\states_v$, Equation~\eqref{eq:theo:aanelkaarplakken:convexTleft} can be satisfied with a convex combination of transition matrices corresponding to well-behaved processes, which implies that
 \begin{equation}\label{eq:theo:aanelkaarplakken:wellbehavedTleft}
 \begin{aligned}
-\limsup_{\Delta\to 0^{+}}\frac{1}{\Delta}\norm{T_{t-\Delta,x_v}^t-I} &= \limsup_{\Delta\to 0^{+}}\frac{1}{\Delta}\norm{\sum_{i\in I}\lambda_i{}^iT_{t-\Delta,{}^ix_{v^*}}^{t}-I} \\
- &\leq\sum_{i\in I}\lambda_i\limsup_{\Delta\to 0^{+}}\frac{1}{\Delta}\norm{{}^iT_{t-\Delta,{}^ix_{v^*}}^t-I}
+\limsup_{\Delta\to 0^{+}}\frac{1}{\Delta}\norm{T_{t-\Delta,x_v}^t-I} &= \limsup_{\Delta\to 0^{+}}\frac{1}{\Delta}\norm{\sum_{i\in \mathcal{I}}\lambda_i{}^iT_{t-\Delta,{}^ix_{v^*}}^{t}-I} \\
+ &\leq\sum_{i\in \mathcal{I}}\lambda_i\limsup_{\Delta\to 0^{+}}\frac{1}{\Delta}\norm{{}^iT_{t-\Delta,{}^ix_{v^*}}^t-I}
 <+\infty.
 \end{aligned}
 \end{equation}
@@ -3829,7 +3829,7 @@ If $\smash{Q^*\in\overline{\partial}_{+}
 (T^{t+\Delta_j}_{t,\,x_v}-I)
 =Q^*
 \end{equation}
-Consider the $I$, $v^*\in\mathcal{U}_{<t}$, $\{\lambda_i\}_{i\in I}$, $\{{}^iP\in\wprocesses_{\rateset,\,\mathcal{M}}\}_{i\in I}$, $\{{}^ix_{v^*}\}_{i\in I}$ and $\delta$ that satisfy Equation~\eqref{eq:theo:aanelkaarplakken:convexTright}. Fix any $i\in I$. Since ${}^iP$ is well-behaved, the sequence
+Consider the $\mathcal{I}$, $v^*\in\mathcal{U}_{<t}$, $\{\lambda_i\}_{i\in \mathcal{I}}$, $\{{}^iP\in\wprocesses_{\rateset,\,\mathcal{M}}\}_{i\in \mathcal{I}}$, $\{{}^ix_{v^*}\}_{i\in \mathcal{I}}$ and $\delta$ that satisfy Equation~\eqref{eq:theo:aanelkaarplakken:convexTright}. Fix any $i\in \mathcal{I}$. Since ${}^iP$ is well-behaved, the sequence
 \begin{equation*}%\label{eq:theo:aanelkaarplakken:fixingsubsequence}
 \left\{\frac{1}{\Delta_j}
 ({}^iT^{t+\Delta_j}_{t,\,{}^ix_{v^*}}-I)\right\}_{j\in\nats}
@@ -3840,14 +3840,14 @@ is bounded, and therefore, the Bolzano-Weierstra{\ss} theorem implies that it ha
 ({}^iT^{t+\Delta_j}_{t,\,{}^ix_{v^*}}-I)=Q_i.
 \end{equation}
 Since we know from Proposition~\ref{prop:rate_from_stochastic_matrix} that $Q_i$ is a limit of rate matrices, $Q_i$ is also a rate matrix, and therefore, it follows from Equation~\eqref{eq:rightouterderivative} that $Q_i\in\smash{\overline{\partial}_{+}
-{{}^iT^t_{t,\,{}^ix_{v^*}}}}$, which, since ${}^iP$ is consistent with $\rateset$, implies that $Q_i\in\rateset$. By repeating this argument for every other $i\in I$, we obtain a set of rate matrices $\{Q_i\in\rateset\}_{i\in I}$ such that, without loss of generality, Equation~\eqref{eq:theo:aanelkaarplakken:fixingsubsequence} holds for every $i\in I$. Additionally, since $\lim_{j\to\infty}\Delta_j=0$, we may assume without loss of generality that $0<\Delta_j<\delta$ for all $j\in\nats$. Equations~\eqref{eq:theo:aanelkaarplakken:convexTright} and~\eqref{eq:theo:aanelkaarplakken:fixingsubsequence} now imply that
+{{}^iT^t_{t,\,{}^ix_{v^*}}}}$, which, since ${}^iP$ is consistent with $\rateset$, implies that $Q_i\in\rateset$. By repeating this argument for every other $i\in \mathcal{I}$, we obtain a set of rate matrices $\{Q_i\in\rateset\}_{i\in \mathcal{I}}$ such that, without loss of generality, Equation~\eqref{eq:theo:aanelkaarplakken:fixingsubsequence} holds for every $i\in \mathcal{I}$. Additionally, since $\lim_{j\to\infty}\Delta_j=0$, we may assume without loss of generality that $0<\Delta_j<\delta$ for all $j\in\nats$. Equations~\eqref{eq:theo:aanelkaarplakken:convexTright} and~\eqref{eq:theo:aanelkaarplakken:fixingsubsequence} now imply that
 \begin{equation*}
 \lim_{j\to+\infty}
 \frac{1}{\Delta_j}
 (T_{t,x_v}^{t+\Delta_j}-I)
 =\lim_{j\to+\infty}
 \frac{1}{\Delta_j}
-(\sum_{i\in I}\lambda_i
+(\sum_{i\in \mathcal{I}}\lambda_i
 {}^iT_{t,{}^ix_{v^*}}^{t+\Delta_j}-I)
 %=
 %\sum_{i\in I}\lambda_i
@@ -3856,7 +3856,7 @@ Since we know from Proposition~\ref{prop:rate_from_stochastic_matrix} that $Q_i$
 %({}^iT_{t,x_u}^{t+\Delta_j}-I)
 =\sum_{i\in I}\lambda_i Q_i,
 \end{equation*}
-which, because of Equation~\eqref{eq:theo:aanelkaarplakken:Qstar}, implies that $Q^*=\sum_{i\in I}\lambda_i Q_i$. Since $\rateset$ is convex, this implies that $Q^*\in\rateset$, a contradiction. Recall that this contradiction was derived from the assumption that $Q^*\in\overline{\partial}_{+}
+which, because of Equation~\eqref{eq:theo:aanelkaarplakken:Qstar}, implies that $Q^*=\sum_{i\in \mathcal{I}}\lambda_i Q_i$. Since $\rateset$ is convex, this implies that $Q^*\in\rateset$, a contradiction. Recall that this contradiction was derived from the assumption that $Q^*\in\overline{\partial}_{+}
 {T^t_{t,\,x_v}}$.
 
 If instead $\smash{Q^*\in\overline{\partial}_{-}
