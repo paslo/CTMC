@@ -653,9 +653,10 @@ and therefore, since we also know that
 \leq
 \sum_{i=k+1}^{+\infty}\Delta_i
 =\sum_{i=k+1}^{+\infty}2^{-i}
-=2^{-k}\leq2^{-n_\epsilon},
+=2^{-k},
+%\leq2^{-n_\epsilon},
 \end{equation*}
-it follows that $\smash{d(\mathcal{T}_{k},\mathcal{T}_\ell)\leq c 2^{-n_\epsilon}}<\epsilon$, as required.\exampleend
+it follows that $\smash{d(\mathcal{T}_{k},\mathcal{T}_\ell)\leq c 2^{-k}\leq c 2^{-n_\epsilon}}<\epsilon$, as required.\exampleend
 %Therefore, and because $\{\Delta_i\}_{i\in\nats}\to0^+$, the limit $\mathcal{T}_*\coloneqq \lim_{i\to\infty}\mathcal{T}_i$ clearly exists and, by Proposition~\ref{lemma:restricted_trans_mat_system_cauchy_converges}, is a transition matrix system. It should also be intuitively clear that $\mathcal{T}_*$ is well-behaved, however a formal proof is rather lengthy and left as an exercise.
 \end{exmp}
 
@@ -1556,9 +1557,24 @@ However, this may not be the case if the process is not well-behaved...
 *** just a sketch for now, don't even know yet if it will work ***
 
 Consider any rate matrix $Q\in\mathcal{R}$ such that $\norm{Q}=1$.
-Let $Q_i\coloneqq 2^{i-1}Q$ and consider the corresponding sequence $\mathcal{T}_i$. Then $\{Q_i\}_{i\in\nats_0}$ satisfies the conditions of Example~\ref{exmp:limit_trans_mat_system}, and therefore $\{\mathcal{T}_i\}_{i\in\nats_0}$ has a limit $\mathcal{T}_*$ in $\mathbb{T}$.
+Let $Q_i\coloneqq iQ$ and consider the corresponding sequence $\mathcal{T}_i$. Then $\{Q_i\}_{i\in\nats_0}$ clearly satisfies the conditions of Example~\ref{exmp:limit_trans_mat_system}---with $c=1$---and therefore $\{\mathcal{T}_i\}_{i\in\nats_0}$ has a limit $\mathcal{T}_*$ in $\mathbb{T}$.
 
-Since $\mathcal{T}_*=\lim_{i\to+\infty}\mathcal{T}_i$, there is some $n\in\nats$ such that, for all $i\geq n$, $d(\mathcal{T}_*,\mathcal{T}_i)\leq\nicefrac{1}{8}$, and therefore also, for all $\Delta\in\realsnonneg$, $\norm{\presuper{i}T_0^\Delta-\presuper{*}T_0^\Delta}\leq\nicefrac{1}{8}$.
+Consider any $k\in\nats$. Then for all $\ell\geq k$, as we have seen in Example~\ref{exmp:limit_trans_mat_system}, we have that $d(\mathcal{T}_k,\mathcal{T}_\ell)\leq c 2^{-k}$, and therefore, for any $\Delta\in\realsnonneg$, we find that
+\begin{equation*}
+\norm{\presuper{k}T_0^\Delta-\presuper{*}T_0^\Delta}
+\leq
+d(\mathcal{T}_k,\mathcal{T}_*)
+\leq d(\mathcal{T}_k,\mathcal{T}_\ell)+d(\mathcal{T}_\ell,\mathcal{T}_*)\leq c 2^{-k}+d(\mathcal{T}_\ell,\mathcal{T}_*).
+\end{equation*}
+Since this is true for any $\ell\geq k$, and because $\mathcal{T}_*=\lim_{\ell\to+\infty}\mathcal{T}_\ell$, it now follows that
+\begin{equation*}
+\norm{\presuper{k}T_0^\Delta-\presuper{*}T_0^\Delta}
+%d(\mathcal{T}_k,\mathcal{T}_*)
+\leq c 2^{-k}+\lim_{\ell\to+\infty}d(\mathcal{T}_\ell,\mathcal{T}_*)
+= c 2^{-k}=2^{-k}.
+\end{equation*}
+
+
 
 Consider now any $\Delta\in(0,\Delta_n]$ and let $i$ be the unique element of $\nats_0$ such that $\Delta_{i+1}\leq\Delta\leq\Delta_i$.
 It then follows from Equation~\eqref{eq:ex4:def} that $\presuper{i}T_0^{\Delta}=e^{Q_i\Delta}$, and therefore, we find that
@@ -1567,8 +1583,16 @@ It then follows from Equation~\eqref{eq:ex4:def} that $\presuper{i}T_0^{\Delta}=
 &=\norm{\frac{1}{\Delta}\left(\presuper{*}T_0^\Delta-\presuper{i}T_0^\Delta+e^{Q_i\Delta}-(I+\Delta Q_i)\right)+Q_i}\\
 &\geq
 \norm{Q_i}
--\norm{\frac{1}{\Delta}\left(e^{Q_i\Delta}-(I+\Delta Q_i)\right)}-\norm{\frac{1}{\Delta}(\presuper{*}T_0^\Delta-\presuper{i}T_0^\Delta)}
+-\norm{\frac{1}{\Delta}\left(e^{Q_i\Delta}-(I+\Delta Q_i)\right)}-\norm{\frac{1}{\Delta}(\presuper{*}T_0^\Delta-\presuper{i}T_0^\Delta)}\\
+&\geq
+\norm{Q_i}
+-\Delta\norm{Q_i}^2
+-\frac{1}{\Delta}2^{-i}\\
+&=i-\Delta i^2-\frac{1}{\Delta}2^{-i}\\
+&\geq i-\Delta_i i^2-\frac{1}{\Delta_{i+1}}2^{-i}\\
+&= i-2^{-i}i^2-\frac{1}{2^{-(i+1)}}2^{-i}
 \\
+&=i-2^{-i}i^2-2
 \end{align*}
 \exampleend
 \end{exmp}
