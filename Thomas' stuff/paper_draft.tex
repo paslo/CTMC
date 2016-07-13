@@ -984,6 +984,49 @@ We denote the set of all such stochastic processes by $\processes$.
 Let $P$ be a real-valued map from $\mathcal{C}^\mathrm{SP}$ to $\reals$. Then $P$ is a stochastic process if and only if it is a coherent conditional probability.
 \end{corollary}
 
+**** blabla, voorbeeldje voor waarom we zoveel moeite doen met de definitie
+
+\begin{exmp}
+**** I'll construct a stochastic process $P$ that satisfies $P(X_t=x\,\vert\,X_0=x)=p(t)$ for all $t\in\realsnonneg$, for given $x\in\states$ and any given $p:\realsnonneg\to[0,1]$ that satisfies $p(0)=1$.
+
+We assume for this example that $\states$ is not singleton, i.e., there are at least two states $x,y\in\states$. Fix any $x\in\states$. Construct a set of events $\mathcal{C}\subset\mathcal{C}^\mathrm{SP}$ as
+\begin{equation*}
+\mathcal{C} \coloneqq \left\{ (X_t=x,X_0=x)\in\mathcal{C}^\mathrm{SP} : t\in\realsnonneg \right\}.
+\end{equation*}
+Let $p:\realsnonneg\to[0,1]$ be any function that satisfies $p(0)=1$. Consider a map $\tilde{P}:\mathcal{C}\to\reals$, defined for all $(X_t=x,X_0=x)\in\mathcal{C}$ as
+\begin{equation*}
+\tilde{P}(X_t=x\vert X_0=x) \coloneqq p(t)\,.
+\end{equation*}
+We will now show that $\tilde{P}$ is a coherent conditional probability on $\mathcal{C}$. In order to show this, consider any $n\in\nats$ and, for all $i\in\{1,\ldots,n\}$, any $(X_{t_i}=x,X_0=x)\in\mathcal{C}$ and any $\lambda_i\in\reals$. According to Definition~\ref{def:coherence}, we now have to show that
+\begin{equation*}
+\max\left\{ \sum_{i=1}^n \lambda_i\ind{(X_0=x)}(\omega)\left(\tilde{P}(X_{t_i}=x\vert X_0=x) - \ind{(X_{t_i}=x)}(\omega)\right)\Big\vert \omega\in C_0 \right\} \geq 0\,,
+\end{equation*}
+with $C_0\coloneqq \bigcup_{i=1}^n (X_0=x)=(X_0=x)$.
+
+Note that each of the conditional events $(X_{t_i}=x,X_0=x)$ depends only on the time points 0 and $t_i$. Observe that we can assume without loss of generality that $t_i\neq t_j$ for all $i,j\in\{1,\ldots,n\}$ such that $i\neq j$. **** maybe explain why, by taking $\lambda_{i'}\coloneqq \lambda_i+\lambda_j$ instead.
+
+**** also note that if $t_i=0$ for some $i$, the term cancels out because $p(0)=1$. explain this
+
+Because $n$ is finite, this implies the existence of a finite sequence of time points $u\in\mathcal{U}$ such that $0\in u$ and, for all $i\in\{1,\ldots,n\}$, $t_i\in u$. Let $y\in\states$ be any state such that $y\neq x$. Consider a state assignment $x_u\in\states_u$ such that $x_{0}\coloneqq x$ and, for all $i\in\{1,\ldots,n\}$,
+\begin{equation*}
+x_{t_i} \coloneqq \left\{\begin{array}{ll}
+x & \text{if $\lambda_i<0$, and} \\
+y & \text{otherwise.}
+\end{array} \right.
+\end{equation*}
+Now, Equation~\eqref{eq:path_exists_for_finite_points} guarantees that there is some $\omega\in\Omega$ such that $\omega\vert_{u}=x_u$. Furthermore, because $\omega(0)=x$, we clearly have that $\omega\in (X_0=x)\subset\Omega$. Therefore, we find that
+\begin{align*}
+ &\quad \sum_{i=1}^n \lambda_{i}\ind{(X_0=x)}(\omega)\left(\tilde{P}(X_{t_i}=x\vert X_0=x) - \ind{(X_{t_i}=x)}(\omega)\right) \\
+ &= \sum_{i=1}^n \lambda_{i}\ind{x}(\omega(0))\left(\tilde{P}(X_{t_i}=x\vert X_0=x) - \ind{x}(\omega(t_i))\right) = \sum_{i=1}^n \lambda_{i}\left(\tilde{P}(X_{t_i}=x\vert X_0=x) - \ind{x}(\omega(t_i))\right) \\
+ &= \sum_{\lambda_i < 0}\lambda_{i}\left(\tilde{P}(X_{t_i}=x\vert X_0=x) - \ind{x}(\omega(t_i))\right) + \sum_{\lambda_i \geq 0}\lambda_{i}\left(\tilde{P}(X_{t_i}=x\vert X_0=x) - \ind{x}(\omega(t_i))\right) \\
+ &= \sum_{\lambda_i < 0}\lambda_{i}\left(\tilde{P}(X_{t_i}=x\vert X_0=x) - 1\right) + \sum_{\lambda_i \geq 0}\lambda_{i}\tilde{P}(X_{t_i}=x\vert X_0=x) \\
+ &\geq \sum_{\lambda_i < 0}\lambda_{i}\left(\tilde{P}(X_{t_i}=x\vert X_0=x) - 1\right) = \sum_{\lambda_i < 0}\abs{\lambda_{i}}\left(1 - \tilde{P}(X_{t_i}=x\vert X_0=x)\right) \geq 0\,,
+\end{align*}
+where the last inequality follows from the fact that $\tilde{P}(X_{t_i}=x\vert X_0=x)=p(t_i)\in [0,1]$\,. Therefore, and because $\omega\in C_0$, we find that Equation~REF indeed holds. Hence, we conclude that $\tilde{P}$ is a coherent conditional probability on $\mathcal{C}$.
+
+Corollary REF now implies that $\tilde{P}$ can be extended to a full conditional probability $\tilde{P}^*$. If we now let $P$ be the restriction of $\tilde{P}^*$ to $\mathcal{C}^\mathrm{SP}$, then due to Corollary REF, $P$ is a stochastic process that, because $\mathcal{C}\subset\mathcal{C}^\mathrm{SP}$, extends $\tilde{P}$. Therefore, Equation REF implies that the stochastic process $P$ satisfies $P(X_t=x\vert X_0=x)=p(t)$ for all $t\in\realspos$.
+\exampleend
+\end{exmp}
 
 
 %Because Definition~\ref{def:cond_prob} only covered finitely additive full conditional probability measures, this also restricts our definition of stochastic processes to finitely additive stochastic processes. The advantage is that this simplifies considerably the subsequent analysis, and, as shown below, the extension to a $\sigma$-additive stochastic process can always be made when this is required.
@@ -1030,7 +1073,11 @@ The set of all well-behaved stochastic processes is denoted by $\wprocesses$.
 
 This definition of well-behavedness is related to continuity and differentiability, but stronger than the former and weaker than the latter. Example~\ref{exmp:well-behaved} below, and Example~\ref{exmp:well-behaved-no-deriv} in Section~\ref{sec:dynamics}, provide some intuition on this.
 
+**** maybe use example from previous section to show that discontinuous processes also exist, but are not well-behaved?
+
 \begin{exmp}\label{exmp:well-behaved}
+**** use new example from previous section to show that this process indeed exists, by taking $p(t)\coloneqq 1-\sqrt{t}$ if $t\in[0,1]$, and $p(t)\coloneqq 0$, otherwise.
+
 Suppose that a stochastic process $P\in\processes$ is such that, at some time $t\in\realsnonneg$ and for some history $x_u\in\states^u$, $u<t$, for some $x\in\states$ it satisfies for all $\Delta\in[0,1]$,
 \begin{equation*}
 P(X_{t+\Delta}=x\,\vert\,X_{t}=x,X_u=x_u) = 1-\sqrt{\Delta}\,.
@@ -5019,6 +5066,8 @@ It remains to show that $\lt$ is unique. Therefore, let $\lt'$ be any lower tran
 % (\forall u\in\mathcal{U}_{[t,s]}\colon\sigma(u)<\delta)~\norm{\lt - \Phi_u}<\epsilon\,.
 % \end{equation*}
 \end{proof}
+
+***** done up to here
 
 \begin{lemma}\label{lemma:limitboundonL}
 Let $\lrate$ be a lower transition rate operator. Then for any $t,s\in\realsnonneg$ such that $t\leq s$ and any $u\in\mathcal{U}_{[t,s]}$ such that $\sigma(u)\norm{\lrate}\leq 1$:
