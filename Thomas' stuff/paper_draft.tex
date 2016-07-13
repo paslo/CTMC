@@ -1717,73 +1717,11 @@ Consider a non-empty, bounded, convex and closed set of rate matrices $\rateset$
 The reason that this result is of interest to us, is that it allows us to prove the existence of certain processes $P\in\wmprocesses_{\rateset,\,\mathcal{M}}$. In particular, it allows us to establish the existence of limits of sequences $\left\{P_i\right\}_{i\in\nats}$ in $\wmprocesses_{\rateset,\,\mathcal{M}}$ that satisfy certain behavior on a specified interval $[t,s]$. This works because, since the space $\mathbb{T}^{[t,s]}_\rateset$ is compact, not only do convergent sequences converge within this set, but furthermore, any sequence in this set will always have a convergent subsequence.
 
 \begin{exmp}\label{exmp:running:wellbehaved}
-***** TODO: final part of running example for non-differentiable Markov chain. Show that $\mathcal{T}_*$ is indeed well-behaved, using Theorem~\ref{theorem:restricted_transmatsystem_space_compact_if_Q_closed}. Add proof in corresponding part of appendix to show that $\overline{\partial}_+T_0^0$ is indeed convex, using Theorem~\ref{theorem:restricted_transmatsystem_space_compact_if_Q_closed}. Also argue that convexity of that out partial derivative illustrates the requirement of convexity in that theorem.
-\exampleend
-\end{exmp}
+**** I'm leaving this example until some of the earlier ones are finished...
 
-\begin{exmp}
-*** showing that $\overline{\partial}_+T_0^0$ is indeed convex.
+***** TODO: final part of running example for non-differentiable Markov chain. Show that $\mathcal{T}_*$ is indeed well-behaved, using Theorem~\ref{theorem:restricted_transmatsystem_space_compact_if_Q_closed}. 
 
-The transition matrices ${}^*T_0^\Delta$ corresponding to $\mathcal{T}_*$ are given by
-\begin{equation*}
-{}^*T_0^\Delta = e^{Q_1\varphi_1(\Delta) + Q_2\varphi_2(\Delta)}\,,
-\end{equation*}
-with $\varphi_1$ and $\varphi_2$ as in Equation~REF and~REF, respectively. We now define two rate matrices $Q_o,Q_e\in\mathcal{R}$, as
-\begin{equation*}
-Q_o \coloneqq Q_1\frac{1}{3} + Q_2\frac{2}{3}\,,\quad\text{and,}\quad Q_e\coloneqq Q_1\frac{2}{3} + Q_2\frac{1}{3}\,.
-\end{equation*}
-For any $\lambda\in[0,1]$, we also define a rate matrix $Q_\lambda$ as
-\begin{equation*}
-Q_\lambda \coloneqq Q_o\lambda + Q_e(1-\lambda)\,.
-\end{equation*}
-
-We have already seen in Example~REF that, for every $\lambda\in[0,1]$, it holds that $Q_\lambda\in\overline{\partial}_+{}^*T_0^0$. That is, $\overline{\partial}_+{}^*T_0^0$ contains the convex hull of $\{Q_o,Q_e\}$. As we are about to show, $\overline{\partial}_+{}^*T_0^0$ is given \emph{exactly} by this convex hull, that is, for every $Q\in\overline{\partial}_+{}^*T_0^0$, there is some $\lambda\in[0,1]$ such that $Q=Q_\lambda$.
-
-In order to show this, we first consider a useful equality. To this end, consider any $\Delta\in\realspos$. Then, there is some $i\in\nats$ such that $\Delta\in[\Delta_{i+1},\Delta_i]$, with the sequence $\{\Delta_i\}_{i\in\nats}=\{\nicefrac{1}{2^i}\}_{i\in\nats}$ as in Example~REF. Let now
-\begin{equation*}
-\lambda \coloneqq \left\{ \begin{array}{ll}
-\frac{\Delta_i - \Delta}{\Delta} & \text{if $i$ is odd, and} \\
-1 - \frac{\Delta_i - \Delta}{\Delta} & \text{if $i$ is even.}
-\end{array}\right.
-\end{equation*}
-Then, clearly, $\lambda\in[0,1]$, and it is easily verified that also
-\begin{equation*}
-Q_1\varphi_1(\Delta) + Q_2\varphi_2(\Delta) = Q_\lambda\Delta\,,
-\end{equation*}
-and hence
-\begin{equation*}
-{}^*T_0^\Delta = e^{Q_\lambda\Delta}\,.
-\end{equation*}
-
-***** the above introduction of $Q_o,Q_e,Q_\lambda$ and the above equality using the given choice for $\lambda$ are probably useful/required for showing that $\overline{\partial}_+{}^*T_0^0$ contains the convex hull of $\{Q_o,Q_e\}$. Hence, I'm skipping nice introduction and justification here, and am just introducing the notation that I need. Will clean up later once examples in Section 4 are done.
-
-Consider now any $Q\in\overline{\partial}_+{}^*T_0^0$. Equation~REF then implies the existence of a sequence $\{\Delta_j'\}_{j\in\nats}\to 0^+$ such that $\lim_{j\to\infty}\nicefrac{1}{\Delta_j'}(T_0^{\Delta_j'}-I)=Q$, or in other words,
-\begin{equation}
-\lim_{j\to\infty} \norm{\frac{1}{\Delta_j'}\left(T_0^{\Delta_j'}-I\right)-Q} = 0\,.
-\end{equation}
-Fix any $j\in\nats$. Then, there is some $i\in\nats$ such that $\Delta_j'\in[\Delta_{i+1},\Delta_i]$. Define $\lambda_j\in[0,1]$ by
-\begin{equation*}
-\lambda_j \coloneqq \left\{ \begin{array}{ll}
-\frac{\Delta_i - \Delta_ j'}{\Delta_j'} & \text{if $i$ is odd, and} \\
-1 - \frac{\Delta_i - \Delta_j'}{\Delta_j'} & \text{if $i$ is even.}
-\end{array}\right.
-\end{equation*}
-By repeating this for every $j\in\nats$, we obtain a sequence $\{\lambda_j\}_{j\in\nats}$ in the (closed and bounded) interval $[0,1]$. The Bolzano-Weierstrass theorem now implies that this sequence contains a convergent subsequence $\{\lambda_{j_k}\}_{k\in\nats}$ whose limit $\lambda_*\coloneqq \lim_{k\to\infty}\lambda_{j_k}$ also satisfies $\lambda_*\in[0,1]$. Let also $\{\Delta_{j_k}'\}_{k\in\nats}$ denote the subsequence of $\{\Delta_{j}'\}_{j\in\nats}$ corresponding to the same elements.
-
-In the remainder of this example, we will prove that $Q=Q_{\lambda_*}$. To this end, fix any $\epsilon\in\realspos$. Equation~REF then implies that there is some $n\in\nats$ such that, for all $k>n$, $\norm{\nicefrac{1}{\Delta_{j_k}'}(T_0^{\Delta_{j_k}'}-I)-Q}<\nicefrac{\epsilon}{3}$. Similarly, since $\{\lambda_{j_k}\}_{k\in\nats}\to\lambda_*$, there is some $n'\in\nats$ such that, for all $k>n'$, it holds that 
-\begin{align*}
-\norm{Q_{\lambda_{j_k}} - Q_{\lambda_*}} &= \norm{Q_o\lambda_{j_k}+Q_e(1-\lambda_{j_k}) - Q_o\lambda_{*}+Q_e(1-\lambda_{*})} \\
- &= \norm{Q_o(\lambda_{j_k} - \lambda_{*}) + Q_e(\lambda_{*} - \lambda_{j_k})} \\
- &\leq \abs{\lambda_{j_k} - \lambda_{*}}\cdot 2\norm{\rateset} \\
- &< \frac{\epsilon}{3}.
-\end{align*}
-Finally, Lemma~REF implies that there is some $n''\in\nats$ such that for all $k>n''$, it holds that $\norm{\nicefrac{1}{\Delta_{j_k}'}(e^{Q_{\lambda_{j_k}}\Delta_{j_k}'}-I)-Q_{\lambda_{j_k}}} < \nicefrac{\epsilon}{3}$.
-
-Let now $n^*\coloneqq \max\{n,n',n''\}$, and consider any $k>n^*$. Then,
-\begin{align*}
-\norm{Q - Q_{\lambda_*}} \leq \norm{\frac{T_0^{\Delta_{j_k}'}-I}{\Delta_{j_k}'}-Q} + \norm{\frac{T_0^{\Delta_{j_k}'}-I}{\Delta_{j_k}'}-Q_{\lambda_{j_k}}} + \norm{Q_{\lambda_{j_k}} - Q_{\lambda_*}} < \epsilon\,.
-\end{align*}
-Because this holds for every $\epsilon\in\realspos$, it follows that, indeed, $\norm{Q-Q_{\lambda_*}}=0$.
+Also argue that convexity of that outer partial derivative illustrates the requirement of convexity in that theorem.
 \exampleend
 \end{exmp}
 
@@ -1796,14 +1734,14 @@ Let $\rateset$ be an arbitrary non-empty, bounded, convex and closed set of rate
 \end{proposition}
 %In summary, then, closedness of $\rateset$ allows us to construct processes $P\in\wmprocesses_\rateset$ as limits of sequences of processes.
 
-\section{An Important Lower Transition Operator}
+\section{A Lower Transition Operator for Imprecise Continuous-Time Markov Chains}
 \label{sec:lowertrans}
 
-Having introduced the notion of lower expectations with respect to sets of (non-)Markov processes, one might wonder how to compute these quantities, either numerically or for analytical purposes. 
+Having introduced the notion of lower expectation for sets of (non-)Markov processes, one might wonder how to compute this, either numerically or for analytical purposes. Indeed, one of the aims of this paper is to provide methods with which such lower expectations can be tractably computed.
 
-Obviously, one way to go about doing this is to work directly with the definitions. That is, explicitly generate the entire set $\wmprocesses_\rateset$ (or $\wprocesses_\rateset$) for a given $\rateset$, compute expectations of a function $f$ for each element of this set, and then find the infimum of these expectations. It should be clear that this approach is fairly unwieldy, not in the least because for arbitrary $\rateset$ the corresponding set of processes may be infinite. Therefore, we will instead provide an alternative characterization of these lower expectations.
+Obviously, one way to compute a lower expectation is to work directly with the definition. That is, explicitly generate the entire set $\wmprocesses_{\rateset,\,\mathcal{M}}$ (or $\wprocesses_{\rateset,\,\mathcal{M}}$) for a given $\rateset$ and $\mathcal{M}$, compute expectations of a function $f$ for each element of this set, and then find the infimum of these expectations. It should be clear that this approach is fairly unwieldy, not in the least because for arbitrary $\rateset$ the corresponding set of processes may be infinite. Therefore, we will instead provide an alternative characterization of this lower expectation.
 
-We have in the previous sections seen that the transition matrix $T_t^s$ corresponding to a stochastic process serves as an alternative representation of the expectation operator $\mathbb{E}[f(X_s)\,\vert\,X_t]$ for this process. We will in this section introduce a generalization of these transition matrices, so-called \emph{lower transition operators}. Specifically, we will introduce a lower transition operator corresponding to some \emph{lower transition rate operator}, which in turn generalizes the notion of a transition rate matrix. We will then show in Sections~\ref{sec:connections} and~\ref{sec:funcs_multi_time_points} that this lower transition operator serves as an alternative representation for the lower expectations of imprecise continuous-time Markov chains.
+We have in Section~\ref{sec:stochastic_processes} seen that the transition matrix $T_t^s$ corresponding to a stochastic process $P$ serves as an alternative representation of the expectation operator $\mathbb{E}_P[f(X_s)\,\vert\,X_t]$ for this process. We will in this section introduce a generalization of these transition matrices, so-called \emph{lower transition operators}. Specifically, we will introduce a lower transition operator corresponding to some \emph{lower transition rate operator}, which in turn generalizes the notion of a transition rate matrix. We will then show in Sections~\ref{sec:connections} and~\ref{sec:funcs_multi_time_points} that this lower transition operator serves as an alternative representation for the lower expectations of imprecise continuous-time Markov chains.
 
 We focus in this section on introducing the relevant concepts, and deriving this operator of interest. We end in Section~\ref{sec:properties_lower_trans} by showing that this operator satisfies a number of convenient properties.
 %We will in this section introduce a \emph{lower transition operator}, which is a map from $\gamblesX$ to $\gamblesX$ that generalizes the notion of a transition matrix. We will here focus on introducing the relevant concepts, and showing that this operator of interest is well-defined. We end this section by establishing that this (family) of operators is in many ways intuitively comparable to the transition matrix system of a well-behaved homogeneous Markov chain. In Section~\ref{sec:connections} we will then establish the relation between this operator and lower expectations, and show that we can indeed use it to compute the quantities of interest. In Section~\ref{sec:prev_work} we will show how this operator is related to previous work from the literature.
@@ -1814,9 +1752,6 @@ We start in this section by generalizing transition matrices $T$ to lower transi
 
 \begin{definition}[Lower Transition Operator]\label{def:coh_low_trans}
 We will call a map $\lt$ from $\gamblesX$ to $\gamblesX$ a \emph{lower transition operator} if, for all $f,g\in\gamblesX$, all $\lambda\in\realsnonneg$, and all $x\in\states$:
-
-*** why did you put these componentwise??? ***
-
 %\vspace{5pt}
 \begin{enumerate}[label=LT\arabic*:,ref=LT\arabic*]
 \item
@@ -1830,23 +1765,25 @@ $\left[\lt(\lambda f)\right](x)=\lambda\left[\lt\,f\right](x)$. \label{LT:homo}
 \noindent We use $\underline{\mathcal{T}}$ to denote the set of all lower transition operators.
 \vspace{5pt}
 \end{definition}
-The first thing to note is that any transition matrix $T$ will also satisfy properties~\ref{LT:bounded_min}-\ref{LT:homo}, and hence is also a lower transition operator. It is therefore clear that lower transition operators are a proper generalization of transition matrices.
+The first thing to note is that any transition matrix $T$ will also satisfy properties~\ref{LT:bounded_min}-\ref{LT:homo}, and hence is also a lower transition operator. It is therefore clear that lower transition operators are a generalization of transition matrices.
 
 A first way to motivate this specific generalization is to note the following. For any lower transition operator $\lt$ and any $x\in\states$, consider the map $\lt_x:\gamblesX\to\reals$, defined for all $f\in\gamblesX$ as
 \begin{equation}\label{eq:lowerprevisionfromlt}
 \lt_xf \coloneqq \left[\lt f\right](x)\,.
 \end{equation}
-Due to properties~\ref{LT:bounded_min}-\ref{LT:homo}, it follows that $\lt_x$ is a map from $\gamblesX$ to $\reals$ that is super-additive, non-negatively homogeneous, and bounded below by the minimum operator. By definition~\cite[Definition~2.3.3]{Walley:1991vk}, that means that $\lt_x$ is a \emph{coherent lower prevision} on $\gamblesX$. 
+Due to properties~\ref{LT:bounded_min}-\ref{LT:homo}, it follows that $\lt_x$ is a map from $\gamblesX$ to $\reals$ that is super-additive, non-negatively homogeneous, and bounded below by the minimum operator. By definition~\cite[Definition~2.3.3]{Walley:1991vk}, that means that $\lt_x$ is a \emph{coherent lower prevision} on $\gamblesX$. Note that the term ``prevision'' here is simply another name for ``expectation'', so this essentially states that $\lt_x$ is a ``coherent lower expectation'' on $\gamblesX$.
 
 For the unfamiliar reader, this notion of coherent lower previsions is perhaps best clarified as follows. Consider some arbitrary set $\mathcal{M}$ of probability mass functions on $\states$, and consider a map $\underline{\mathbb{E}}:\gamblesX\to\reals$, defined for all $f\in\gamblesX$ as
 \begin{equation*}
 \underline{\mathbb{E}}f \coloneqq \inf\left\{\sum_{x\in\states} p(x)f(x)\,:\,p\in\mathcal{M}\right\}\,.
 \end{equation*}
-It should be clear that this map $\underline{\mathbb{E}}$ essentially computes a lower expectation with respect to the set $\mathcal{M}$. Furthermore, note that for any $p\in\mathcal{M}$, the quantity $\sum_{x\in\states}p(x)f(x)$ is bounded from below by $\min\{f(y):y\in\states\}$. Because this holds for any $p\in\mathcal{M}$, it follows that $\underline{\mathbb{E}}$ is also bounded below by this minimum operator. Furthermore, it is easily verified that $\underline{\mathbb{E}}$ is super-additive and non-negatively homogeneous. Hence, by the definition cited above, this lower expectation operator corresponding to $\mathcal{M}$ is a coherent lower prevision on $\gamblesX$. 
+It should be clear that this map $\underline{\mathbb{E}}$ computes a lower expectation with respect to $\mathcal{M}$. Furthermore, note that for any $p\in\mathcal{M}$, the quantity $\sum_{x\in\states}p(x)f(x)$ is bounded from below by $\min\{f(y):y\in\states\}$. Because this holds for any $p\in\mathcal{M}$, it follows that $\underline{\mathbb{E}}$ is also bounded below by this minimum operator. Furthermore, it is easily verified that $\underline{\mathbb{E}}$ is super-additive and non-negatively homogeneous, due to the properties of the $\inf$ operator. Hence, by the definition cited above, this lower expectation operator corresponding to $\mathcal{M}$ is a coherent lower prevision on $\gamblesX$. 
 
 Our consideration of the coherent lower prevision $\lt_x$  above is essentially the same idea, but \emph{without} considering explicitly any link to sets $\mathcal{M}$ of probability mass functions. Suffice it to say that, for any coherent lower prevision, such a set $\mathcal{M}$ will always exist. It should furthermore be noted that the qualifier ``coherent'' here has connections to the notions of \emph{coherence} and \emph{avoiding sure loss} that we explained in Section~\ref{sec:cond_prob}. We refer to {\bf CITE CITE CITE} for further discussion on this.
 
-Because for any lower transition operator $\lt$ and any $x\in\states$, the map $\lt_x$ is a coherent lower prevision, it follows that the lower transition operator $\lt$ is essentially a vector of coherent lower previsions. It should be clear from the above that such operators $\lt$ are an intuitive starting point for alternative representations of lower expectations. We next focus on the generalization of transition rate matrices $Q$ to lower transition rate operators $\lrate$, as follows.
+Because for any lower transition operator $\lt$ and any $x\in\states$, the map $\lt_x$ is a coherent lower prevision, it follows that the lower transition operator $\lt$ can be seen as a vector of coherent lower previsions. 
+
+We next focus on the generalization of transition rate matrices $Q$ to lower transition rate operators $\lrate$, as follows.
 \begin{definition}[Lower Transition Rate Operator]\label{def:coh_low_trans_rate}
 We will call a map $\lrate$ from $\gamblesX$ to $\gamblesX$ a \emph{lower transition rate operator} if, for all $f,g\in\gamblesX$, all $\lambda\in\realsnonneg$, all constant functions $\mu\in\gamblesX$, and all $x\in\states$:
 
@@ -1864,7 +1801,7 @@ $\left[\lrate(\lambda f)\right](x)= \lambda\left[\lrate f\right](x)$.
 %\vspace{5pt}
 \end{definition}
 
-Note that properties~\ref{LR:constantzero} and~\ref{LR:nondiagpos} essentially preserve properties~\ref{def:Q:sumzero} and~\ref{def:Q:nonnegoffdiagonal} from Definition~\ref{def:rate_matrix}. However, where any rate matrix $Q$ represents a linear map, properties~\ref{LR:subadditive} and~\ref{LR:homo} merely require that a lower transition rate operator $\lrate$ is super-additive and non-negatively homogeneous. Hence, any rate matrix is in fact also a lower transition rate operator, with the latter concept providing a proper generalization of the former.
+Note that properties~\ref{LR:constantzero} and~\ref{LR:nondiagpos} essentially preserve properties~\ref{def:Q:sumzero} and~\ref{def:Q:nonnegoffdiagonal} from Definition~\ref{def:rate_matrix}. However, where any rate matrix $Q$ represents a linear map, properties~\ref{LR:subadditive} and~\ref{LR:homo} merely require that a lower transition rate operator $\lrate$ is super-additive and non-negatively homogeneous. Hence, any rate matrix is in fact also a lower transition rate operator, with the latter concept providing a generalization of the former.
 
 %\begin{proposition}\label{lem:normlratefinite}
 %For any lower transition rate operator $\lrate$, we have that $0\leq\norm{\lrate}<+\infty$.
@@ -1947,13 +1884,17 @@ The metric space $(\underline{\mathcal{T}},d)$ is complete under the metric $d$ 
 % *** {\bf TODO } *** This can be shown to follow from coherence.
 % \end{proof}
 
-\subsection{The Operator of Interest}
+\subsection{Lower Transition Operators Corresponding to Lower Transition Rate Operators}
 
-We will in this section introduce a specific lower transition operator on which we will focus for the remainder of this work. We will assume here that we are given some arbitrary lower transition rate operator $\lrate$, and define for any $u\in\mathcal{U}_{[t,s]}$ the auxiliary operator
+We will in this section introduce a specific lower transition operator on which we will focus for the remainder of this work. In particular, we will introduce the lower transition operator corresponding to a given lower transition rate operator.
+
+Therefore, we will assume here that we are given some arbitrary lower transition rate operator $\lrate$, and any two time points $t,s\in\realsnonneg$ such that $t\leq s$. For any $u\in\mathcal{U}_{[t,s]}$ such that $u=t_0,\ldots,t_n$, we then define the auxiliary operator
 \begin{equation}\label{eq:aux_lower_trans}
-\Phi_u\coloneqq\prod_{k=1}^n(I+\Delta_k\lrate)\,.
+\Phi_u\coloneqq\prod_{i=1}^n(I+\Delta_i\lrate)\,,
 \end{equation}
-Before defining the operator of interest, we first give some preliminary results to provide intuition on how this operator will be constructed. We start with a bound on the distance between two operators $\Phi_u$ and $\Phi_{u*}$.
+where, for every $i\in\{1,\ldots,n\}$, the $\Delta_i=t_i-t_{i-1}$ denote the sequential differences of the time points in $u$. The lower transition operator corresponding to this $\lrate$ will be defined below as a limit of such auxiliary operators $\Phi_u$, obtained as we take $u$ to be an increasingly finer partition of the interval $[t,s]$.
+
+Before defining this operator of interest, we therefore first give some results to show that such a limit exists. We start with a bound on the distance between two operators $\Phi_u$ and $\Phi_{u*}$.
 
 \begin{proposition}\label{prop:differencebetweenu}
 Consider any $t,s\in\realsnonneg$ with $t\leq s$, any $\delta\in\realspos$ such that $\delta\norm{\lrate}\leq1$, and any $u,u^*\in\mathcal{U}_{[t,s]}$ such that $\sigma(u)<\delta$ and $\sigma(u^*)<\delta$. Let $C\coloneqq s-t$. Then
@@ -1962,7 +1903,7 @@ Consider any $t,s\in\realsnonneg$ with $t\leq s$, any $\delta\in\realspos$ such 
 \end{equation*}
 \end{proposition}
 
-Using this bound established by Proposition~\ref{prop:differencebetweenu}, we find that for any sequence $\{u_i\}_{i\in\nats}$ in $\mathcal{U}_{[t,s]}$ such that $\lim_{i\to\infty}\sigma(u_i)=0$, the corresponding sequence $\{\Phi_{u_i}\}_{i\in\nats}$ is Cauchy.
+Note, therefore, that the distance $\norm{\Phi_u - \Phi_{u^*}}$ decreases as $\sigma(u)$ and $\sigma(u^*)$ become smaller. This allows us to state the following result.
 
 \begin{corollary}\label{corol:cauchy}
 For every sequence $\{u_i\}_{i\in\nats}$ in $\mathcal{U}_{[t,s]}$ such that $\lim_{i\to\infty}\sigma(u_i)=0$, the corresponding sequence $\{\Phi_{u_i}\}_{i\in\nats}$ is Cauchy.
@@ -1985,7 +1926,7 @@ For any $t,s\in\realsnonneg$ such that $t\leq s$ and any lower transition rate o
 \end{equation}
 \end{theorem}
 
-Note that the $\epsilon-\delta$ expression in Theorem~\ref{theo:convergencelowerbound} is a kind of limit statement. Specifically, it is a limit of operators $\Phi_{u}$ corresponding to increasingly finer partitions $u$ of the interval $[t,s]$. In the sequel, whenever such a unique limit exists and equals some lower transition operator $\lt$, we will denote it as
+Note that the $\epsilon-\delta$ expression in Theorem~\ref{theo:convergencelowerbound} is a limit statement. Specifically, it is a limit of operators $\Phi_{u}$ corresponding to increasingly finer partitions $u$ of the interval $[t,s]$. In the sequel, whenever such a unique limit exists and equals some lower transition operator $\lt$, we will denote it as
 \begin{equation}\label{eq:net_limit_lower_trans}
 \lim_{\sigma(u)\to0}\left\{\Phi_u\,\big\vert\,u\in\mathcal{U}_{[t,s]}\right\} = \lt\,.
 \end{equation}
@@ -2001,7 +1942,7 @@ Consider any $t,s\in\realsnonneg$ such that $t\leq s$ and let $\lrate$ be an arb
 where the limit is understood as in Equation~\eqref{eq:net_limit_lower_trans}.
 \end{definition}
 
-\subsection{Properties of the Operator of Interest}\label{sec:properties_lower_trans}
+\subsection{Properties of Corresponding Lower Transition Operators}\label{sec:properties_lower_trans}
 
 We will next establish that this operator $L_t^s$ satisfies a number of convenient properties. In particular, we will focus on the family $\underline{\mathcal{T}}_{\lrate}$ of lower transition operators corresponding to a given lower transition rate operator $\lrate$.
 
@@ -2009,7 +1950,7 @@ We will next establish that this operator $L_t^s$ satisfies a number of convenie
 Let $\lrate$ be an arbitrary lower transition rate operator. Then, the \emph{lower transition operator system} corresponding to $\lrate$ is the family $\underline{\mathcal{T}}_{\lrate}$ of lower transition operators $L_t^s$ corresponding to $\lrate$, defined for all $t,s\in\realsnonneg$, with $t\leq s$, as in Definition~\ref{def:low_trans}.
 \end{definition}
 
-Our first result is that this family $\underline{\mathcal{T}}_{\lrate}$ satisfies the same semi-group property that was in Section~\ref{sec:cont_time_markov_chains} found to hold for the transition matrix systems $\mathcal{T}_P$ corresponding to Markov chains $P\in\mprocesses$.
+Our first result is that this family $\underline{\mathcal{T}}_{\lrate}$ satisfies the same semi-group property that was found to hold for the transition matrix systems $\mathcal{T}_P$ corresponding to Markov chains $P\in\mprocesses$ in Section~\ref{sec:cont_time_markov_chains}.
 
 \begin{proposition}\label{prop:lower_trans_system_is_system}
 Let $\lrate$ be an arbitrary lower transition rate operator, and let $\underline{\mathcal{T}}_{\lrate}$ be the corresponding lower transition operator system. Then, for all $t,r,s\in\realsnonneg$ such that $t\leq r\leq s$, it holds that
@@ -2042,15 +1983,15 @@ One conclusion that we can draw from this, is that $L_t^s$ can alternatively be 
 \begin{equation*}
 \frac{\partial}{\partial s}L_t^s=\lrate L_t^s\,,\quad\quad L_t^t=I\,.
 \end{equation*}
-Observe, therefore, the strong correspondence between the operator $L_t^s$ corresponding to some $\lrate$, and the matrix exponential $e^{Q(s-t)}$ of any rate matrix $Q\in\mathcal{R}$. In particular, it is well known {\bf REF} that this matrix exponential is the solution of the differential equation
+Observe, therefore, the strong correspondence between the operator $L_t^s$ corresponding to some $\lrate$, and the matrix exponential $e^{Q(s-t)}$ of any rate matrix $Q\in\mathcal{R}$. In particular, it is well known~\cite[Equation 4.4]{van2006study} that this matrix exponential is the solution of the differential equation
 \begin{equation*}
 \frac{\partial}{\partial s}e^{Q(s-t)}=Qe^{Q(s-t)}\,,\quad\quad e^{Q(t-t)}=I\,.
 \end{equation*}
 Now, recall that any rate matrix $Q$ is also a lower transition rate operator. It therefore follows from the above that the lower transition operator $L_t^s$ corresponding to this $\lrate=Q$ will satisfy $L_t^s=e^{Q(s-t)}$. 
 
-Furthermore, if $\lrate=Q$ for some $Q\in\mathcal{R}$, we find that the family $\underline{\mathcal{T}}_{\lrate}$ is equal to $\mathcal{T}_Q$, the exponential transition matrix system from Definition~\ref{def:systemfromQ} that, by Corollary~\ref{cor:rate_has_unique_homogen_markov_process}, corresponds to some well-behaved homogeneous Markov chain $P\in\whmprocesses$. We can conclude from this that Equation~\eqref{eq:lowerbound} expresses a proper generalization of the matrix exponential, that can be used when working with lower transition rate operators.
+Furthermore, if $\lrate=Q$ for some $Q\in\mathcal{R}$, we find that the family $\underline{\mathcal{T}}_{\lrate}$ is equal to $\mathcal{T}_Q$, the exponential transition matrix system from Definition~\ref{def:systemfromQ} that, by Corollary~\ref{cor:rate_has_unique_homogen_markov_process}, corresponds to some well-behaved homogeneous Markov chain $P\in\whmprocesses$. We can conclude from this that Definition~\ref{def:low_trans} expresses a generalization of the matrix exponential, that can be used when working with lower transition rate operators.
 
-Interestingly, then, the family $\underline{\mathcal{T}}_{\lrate}$ maintains the convenient properties of differentiability, time-homogeneity, and ``Markovian-like'' factorization, when instead of some rate matrix $Q$ we take an arbitrary lower transition rate operator $\lrate$. And, mathematical niceties aside, we are of course not really interested in the trivial case where $\lrate=Q$. Instead, we wish to use our lower transition operator to compute lower expectations with respect to imprecise continuous-time Markov chains. We will find in the next section that this is possible by properly choosing $\lrate$.
+Interestingly, then, the family $\underline{\mathcal{T}}_{\lrate}$ maintains the convenient properties of differentiability, time-homogeneity, and ``Markovian-like'' factorization, when instead of some rate matrix $Q$ we take an arbitrary lower transition rate operator $\lrate$. And, mathematical niceties aside, we are of course not really interested in the trivial case where $\lrate=Q$. Instead, we wish to use our lower transition operator to compute lower expectations for imprecise continuous-time Markov chains. We will find in the next section that this is possible by properly choosing $\lrate$.
 
 \section{Connections Between Lower Transition (Rate) Operators and Imprecise Continuous-Time Markov Chains}\label{sec:connections}
 
