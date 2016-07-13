@@ -1135,31 +1135,45 @@ For any stochastic process $P\in\processes$, any $t\in\realsnonneg$, any sequenc
 
 The following example established that these directional partial derivatives need not exist. In particular, they need not exist even for well-behaved processes.
 \begin{exmp}\label{exmp:well-behaved-no-deriv}
-Consider a stochastic process $P\in\processes$ of which the transition matrices $T_t^s$ are given by Equation~\eqref{eq:ex4:def}. For now, we simply assume that this is possible. A formal proof for the existence of such a process requires some additional machinery, and we therefore postpone it to Examples~\ref{exmp:markov_with_no_deriv} and~\ref{exmp:running:wellbehaved}, where we will construct a well-behaved continuous-time Markov chain $P$ for which this is indeed the case.
+Let $Q_1,Q_2\in\mathcal{R}$ be two commuting rate matrices such that $Q_1\neq Q_2$---for example, let $Q_1\neq0$ be an arbitrary rate matrix and let $Q_2\coloneqq\lambda Q_1$, with $\lambda\in\realsnonneg\setminus\{1\}$---and consider a stochastic process $P\in\processes$ of which, for all $\Delta\in(0,1]$, the transition matrix $T_0^\Delta$ is given by Equation~\eqref{eq:ex4:def} in Example~\ref{exmp:limit_trans_mat_system_matrices}. 
 
-For all $k\in\nats_0$, let $\Delta_k\coloneqq2^{-k}$ and $Q_k$ be defined as in Example~\ref{exmp:limit_trans_mat_system_matrices}. It then follows from Equation~\eqref{eq:ex4:finalstep} that
+For now, we simply assume that this is possible. A formal proof for the existence of such a process requires some additional machinery, and we therefore postpone it to Examples~\ref{exmp:markov_with_no_deriv} and~\ref{exmp:running:wellbehaved}, where we construct a continuous-time Markov chain that is compatible with Equation~\eqref{eq:ex4:def}, and prove that it is well-behaved.
+
+The aim of the present example is to show that for any such process, the right-sided partial derivative $\partial_{+}{T_{0}^0}$---which corresponds to choosing $t=0$ and $u=\emptyset$ in Definition~\ref{def:direc_partial_deriv}---does not exist. In order to do this, we assume \emph{ex absurdo} that $\partial_{+}{T_{0}^0}$ does exist. As we will see, this leads to a contradiction. 
+
+For all $i\in\nats_0$, let $\Delta_i$ and $Q_i$ be defined as in Example~\ref{exmp:limit_trans_mat_system_matrices}. For all $k\in\nats_0$, it then follows from Equation~\eqref{eq:ex4:finalstep} that
 \begin{equation*}
-\lim_{k\to\infty}
 T_0^{\Delta_{2k}}
 =
-\lim_{k\to\infty}
 e^{Q_{2k}\nicefrac{2}{3}\Delta_{2k}+Q_{2k+1}\nicefrac{1}{3}\Delta_{2k}}
 =
-\lim_{k\to\infty}
 e^{(\nicefrac{2}{3}Q_2+\nicefrac{1}{3}Q_1)\Delta_{2k}}
+=
+e^{Q_e\Delta_{2k}},
 \end{equation*}
-
-Suppose that, for some well-behaved stochastic process $P\in\wprocesses$, for some time $t$ and for some history $x_u$ such that $u<t$, there exist two different sequences $\{\Delta_i\}_{i\in\nats}$ and $\{\Delta_i'\}_{i\in\nats}$ such that $\{\Delta_i\}_{i\in\nats}\to0^+$ and $\{\Delta_i'\}_{i\in\nats}\to0^+$, for which
+with $Q_e\coloneqq\nicefrac{2}{3}Q_2+\nicefrac{1}{3}Q_1$. Therefore, and because $\Delta_{2k}\to0^+$, the existence $\partial_{+}{T_{0}^0}$ implies that
 \begin{equation*}
-\lim_{i\to\infty}~~\frac{1}{\Delta_i}\left(T_{t,x_u}^{t+\Delta_i} - I\right) = Q_1\,,~~\text{and,}~~ \lim_{i\to\infty}~~ \frac{1}{\Delta_i'}\left(T_{t,x_u}^{t+\Delta_i'} - I\right) = Q_2\,,
+\partial_{+}{T_{0}^0}
+%=\lim_{\Delta\to 0^{+}}
+%\frac{1}{\Delta}
+%(T^{\Delta}_{0}-I)
+=\lim_{k\to+\infty}
+\frac{1}{\Delta_{2k}}
+(e^{Q_e\Delta_{2k}}-I)
+={\frac{d}{d \Delta}e^{Q_e\Delta}}\big\vert_{\Delta=0}
+=Q_e,
+\vspace{6pt}
 \end{equation*}
-with $Q_1,Q_2\in\mathcal{R}$ such that $Q_1\neq Q_2$. Then, clearly, the directional partial derivative $\partial_{+}{T_{t,\,x_u}^t}=\lim_{\Delta\to 0^{+}}
-\frac{1}{\Delta}
-(T^{t+\Delta}_{t,\,x_u}-I)$ does not exist. 
-
-However, $\lim_{i\to\infty}\nicefrac{1}{\Delta_i}\lVert T_{t,x_u}^{t+\Delta_i} - I\rVert = \norm{Q_1}$ and $\lim_{i\to\infty}\nicefrac{1}{\Delta_i'}\lVert T_{t,x_u}^{t+\Delta_i'} - I\rVert = \norm{Q_2}$, and because $\norm{Q_1},\norm{Q_2}<+\infty$, this is not problematic for the well-behavedness of $P$.
-
-Of course, one might wonder whether it is possible for such a $P\in\wprocesses$ to exist in the first place. Example~\ref{exmp:markov_with_no_deriv} in Section~\ref{sec:nonhomogen_markov} will show that this is indeed the case.
+where we use Lemma~\ref{lemma:deriv_exponential_trans} to establish the last equality. However, in a completely analogous way, we also find that $T_0^{\Delta_{2k+1}}=e^{Q_o\Delta_{2k+1}}$, with $Q_o\coloneqq\nicefrac{2}{3}Q_1+\nicefrac{1}{3}Q_2$, which then implies that $\partial_{+}{T_{0}^0}=Q_e$. Hence, we find that $Q_e=Q_o$. Since $Q_1\neq Q_2$, this clearly a contradiction, and therefore, it follows that $\partial_{+}{T_{0}^0}$ does not exist.
+% Suppose that, for some well-behaved stochastic process $P\in\wprocesses$, for some time $t$ and for some history $x_u$ such that $u<t$, there exist two different sequences $\{\Delta_i\}_{i\in\nats}$ and $\{\Delta_i'\}_{i\in\nats}$ such that $\{\Delta_i\}_{i\in\nats}\to0^+$ and $\{\Delta_i'\}_{i\in\nats}\to0^+$, for which
+% \begin{equation*}
+% \lim_{i\to\infty}~~\frac{1}{\Delta_i}\left(T_{t,x_u}^{t+\Delta_i} - I\right) = Q_1\,,~~\text{and,}~~ \lim_{i\to\infty}~~ \frac{1}{\Delta_i'}\left(T_{t,x_u}^{t+\Delta_i'} - I\right) = Q_2\,,
+% \end{equation*}
+% with $Q_1,Q_2\in\mathcal{R}$ such that $Q_1\neq Q_2$. Then, clearly, the directional partial derivative $\partial_{+}{T_{t,\,x_u}^t}=\lim_{\Delta\to 0^{+}}
+% \frac{1}{\Delta}
+% (T^{t+\Delta}_{t,\,x_u}-I)$ does not exist. 
+% However, $\lim_{i\to\infty}\nicefrac{1}{\Delta_i}\lVert T_{t,x_u}^{t+\Delta_i} - I\rVert = \norm{Q_1}$ and $\lim_{i\to\infty}\nicefrac{1}{\Delta_i'}\lVert T_{t,x_u}^{t+\Delta_i'} - I\rVert = \norm{Q_2}$, and because $\norm{Q_1},\norm{Q_2}<+\infty$, this is not problematic for the well-behavedness of $P$.
+% Of course, one might wonder whether it is possible for such a $P\in\wprocesses$ to exist in the first place. Example~\ref{exmp:markov_with_no_deriv} in Section~\ref{sec:nonhomogen_markov} will show that this is indeed the case.
 %**** verschillende $\{\Delta_i\}_{i\in\nats}\to0^+$ geven verschillende $Q$.
 %***** Meh, werkt ook niet echt. Wil eigenlijk accumulatie punt van exponentiele, maar hebben we hier nogniet geintroduceerd.
 %
