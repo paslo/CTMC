@@ -1765,7 +1765,7 @@ We have in Section~\ref{sec:stochastic_processes} seen that the transition matri
 We focus in this section on introducing the relevant concepts, and deriving this operator of interest. We end in Section~\ref{sec:properties_lower_trans} by showing that this operator satisfies a number of convenient properties.
 %We will in this section introduce a \emph{lower transition operator}, which is a map from $\gamblesX$ to $\gamblesX$ that generalizes the notion of a transition matrix. We will here focus on introducing the relevant concepts, and showing that this operator of interest is well-defined. We end this section by establishing that this (family) of operators is in many ways intuitively comparable to the transition matrix system of a well-behaved homogeneous Markov chain. In Section~\ref{sec:connections} we will then establish the relation between this operator and lower expectations, and show that we can indeed use it to compute the quantities of interest. In Section~\ref{sec:prev_work} we will show how this operator is related to previous work from the literature.
 
-\subsection{Lower Transition (Rate) Operators}
+\subsection{Lower Transition (Rate) Operators}\label{subsec:lowertrans_rate}
 
 We start in this section by generalizing transition matrices $T$ to lower transition operators $\lt$, as follows.
 
@@ -4721,6 +4721,11 @@ By combining this expression with Equation~\eqref{eq:prop:lower_expectation_reac
 
 \section{Proofs and Lemmas for Section~\ref{sec:lowertrans}}
 
+We require the following result for the proof of Proposition~\ref{lemma:completemetricspace}.
+\begin{lemma}\cite[Proposition~1]{DeBock:2016}\label{lemma:lowertrans_limit_iff_pointwise_limit}
+Let $\lt$ be a lower transition operator, and consider any sequence $\{\lt_i\}_{i\in\nats}$ of lower transition operators. Then, $\lt=\lim_{i\to\infty}T_i$ if and only if $\lt f=\lim_{i\to\infty}\lt_i f$ for all $f\in\gamblesX$.
+\end{lemma}
+
 \begin{proof}[Proof of Proposition~\ref{lemma:completemetricspace}]
 Consider any sequence $\{\lt_i\}_{i\in\nats}$ of lower transition operators that is Cauchy with respect to the operator norm $\norm{\cdot}$. We will prove that $\{\lt_i\}_{i\in\nats}$ converges to a limit $\lt\colon\gamblesX\to\gamblesX$ that is itself a lower transition operator.
 
@@ -4741,7 +4746,9 @@ Let $\lt\colon\gamblesX\to\gamblesX$ be the unique operator that maps any $f\in\
 +
 \lim_{i\to+\infty}\lt_ig=\lt f+\lt g.
 \end{equation*}
-Since $f$ and $g$ are arbitrary elements of $\gamblesX$, this means that $\lt$ satisfies \ref{LT:super_additive}. The proof for \ref{LT:bounded_min} and~\ref{LT:homo} is completely analogous. Hence, $\lt$ is a lower transition operator. Since $\lt f=\lim_{i\to+\infty}\lt_i f$ for all $f\in\gamblesX$, and because, for all $i\in\nats$, $\lt_i$ is a lower transition operator, it now follows from \cite[Proposition~1]{DeBock:2016} that $\lim_{i\to+\infty}\lt_i=\lt$.
+Since $f$ and $g$ are arbitrary elements of $\gamblesX$, this means that $\lt$ satisfies \ref{LT:super_additive}. The proof for \ref{LT:bounded_min} and~\ref{LT:homo} is completely analogous. Hence, $\lt$ is a lower transition operator. 
+
+Since we have shown above that $\lt f=\lim_{i\to+\infty}\lt_i f$ for all $f\in\gamblesX$, and that $\lt$ is a lower transition operator, and because, for all $i\in\nats$, $\lt_i$ is a lower transition operator, it now follows from Lemma~\ref{lemma:lowertrans_limit_iff_pointwise_limit} that $\lim_{i\to+\infty}\lt_i=\lt$.
 % Since $\{\lt_i\}_{i\in\nats}$ is cauchy with respect to $\norm{\cdot}$, we know that
 % \begin{equation}\label{eq:lemma:completemetricspace:cauchy}
 % (\forall\epsilon\in\realspos)\,(\exists n_\epsilon\in\nats)\,(\forall k,\ell > n_\epsilon)
@@ -4812,6 +4819,10 @@ Since $f$ and $g$ are arbitrary elements of $\gamblesX$, this means that $\lt$ s
 % \end{align*}
 % \end{proof}
 
+In order to prove the norm inequality stated by Proposition~\ref{prop:differencebetweenu}, we first give a number of norm inequalities that are more conveniently proved separately. These inequalities are stated by Lemmas~\ref{lemma:recursive_lower_trans}-\ref{corol:differencebetweennestedintermsofu} below.
+
+We start with the following result, which states that the distance between two composed lower transition operators $\lt_1\lt_2\cdots\lt_n$ and $\underline{S}_1\underline{S}_2\cdots\underline{S}_n$ is bounded from above by the sum of the distances $\norm{\lt_i - \underline{S}_i}$ between their components. Note that this result is the generalized version of Lemma~\ref{lemma:recursive}, which until this point has remained unproven. To see that the result below implies Lemma~\ref{lemma:recursive}, simply recall from Section~\ref{subsec:lowertrans_rate} that a transition matrix $T$ is also a lower transition operator.
+
 \begin{lemma}\label{lemma:recursive_lower_trans}
 Consider two finite sequences $\underline{T}_1,\ldots,\underline{T}_n$ and $\underline{S}_1,\ldots,\underline{S}_n$ of lower transition operators. Then
 \begin{equation}\label{eq:lemma_recursive_inequality}
@@ -4828,7 +4839,7 @@ We provide a proof by induction. Clearly, Equation~\eqref{eq:lemma_recursive_ine
  &\leq \norm{\underline{T}_n - \underline{S}_n} + \norm{\prod_{i=1}^{n-1}\underline{T}_i - \prod_{i=1}^{n-1}\underline{S}_i} \\
  &\leq \norm{\underline{T}_n - \underline{S}_n} + \sum_{i=1}^{n-1}\norm{\underline{T}_i - \underline{S}_i} = \sum_{i=1}^{n}\norm{\underline{T}_i - \underline{S}_i}\,.
 \end{align*}
-Here, in the second inequality, we applied Proposition~\ref{lemma:compositioncoherence} and properties \ref{LT:differencenorm} and~\ref{N:normAB}. In the third inequality, we used property~\ref{LT:norm_at_most_one}. In the final inequality, we used the induction hypothesis.
+Here, in the second inequality, we applied Proposition~\ref{lemma:compositioncoherence} and properties~\ref{N:normAB} and~\ref{LT:differencenorm} from Proposition~\ref{prop:norm_properties_lrate_lt}. In the third inequality, we used property~\ref{LT:norm_at_most_one} from Proposition~\ref{prop:norm_properties_lrate_lt}. In the final inequality, we used the induction hypothesis.
 \end{proof}
 
 \begin{lemma}\label{lemma:justthelinearpart}
@@ -4868,7 +4879,7 @@ For all $i\in\{2,\dots,n\}$, since $\Delta_i\norm{\lrate}\leq1$, it follows from
 =\Delta^2\norm{\lrate}^2,
 \end{aligned}
 \end{multline*}\\[3pt]
-where the second inequality follows from the induction hypothesis and property~\ref{LR:differenceofnorm}, and the third inequality follows from Lemma~\ref{lemma:recursive_lower_trans}.
+where the second inequality follows from the induction hypothesis and property~\ref{LR:differenceofnorm} from Proposition~\ref{prop:norm_properties_lrate_lt}, and the third inequality follows from Lemma~\ref{lemma:recursive_lower_trans}.
 \end{proof}
 
 
@@ -4970,23 +4981,26 @@ Consider any $u'\in\mathcal{U}_{[t,s]}$ that is finer than $u$ and $u^*$, meanin
 \end{proof}
 
 
-\begin{proof}[Proof of Corollory~\ref{corol:cauchy}]
+\begin{proof}[Proof of Corollary~\ref{corol:cauchy}]
 By definition of a Cauchy sequence, we need to show that
 \begin{equation*}
 (\forall \epsilon>0)(\exists n\in\nats)(\forall i,j\geq n)
 \norm{\Phi_{u_i}-\Phi_{u_j}}<\epsilon.
 \end{equation*}
-This follows directly from Proposition~\ref{prop:differencebetweenu} by noting that because $\lim_{i\to\infty}\sigma(u_i)=0$, we can decrease the $\delta$ in Proposition~\ref{prop:differencebetweenu} as we increase $n$.
+Therefore, fix any $\epsilon\in\realspos$, and choose $\delta\in\realspos$ such that $\delta\norm{\lrate}\leq 1$ and $2\delta(s-t)\norm{\lrate}^2<\epsilon$ [this is clearly always possible]. Because $\lim_{i\to\infty}\sigma(u_i)=0$, there is some $n\in\nats$ such that, for all $i\geq n$, $\sigma(u_i)<\delta$. Consider any $i,j\geq n$. It then follows from Proposition~\ref{prop:differencebetweenu} that
+\begin{equation*}
+\norm{\Phi_{u_i}-\Phi_{u_j}} \leq 2\delta(s-t)\norm{\lrate}^2 < \epsilon\,.
+\end{equation*}
 \end{proof}
 
 \begin{proof}[Proof of Corollary~\ref{corol:limitexistsandiscoherent}]
-Since $\lim_{i\to\infty}\sigma(u_i)=0$, and because of Propositions~\ref{lemma:normQsmallenough} and~\ref{lemma:compositioncoherence} and~\ref{LR:normlratefinite}, there is some index $n$ such that the sequence $\Phi_{u_n},\Phi_{u_{n+1}},\ldots$ consists of lower transition operators. Due to Corollary~\ref{corol:cauchy}, this sequence is Cauchy and therefore, because of Proposition~\ref{lemma:completemetricspace}, this sequence has a limit that is also a lower transition operator. Since the limit starting from $n$ and the limit starting from $1$ are identical (initial elements do not influence the limit), we find that the sequence $\left\{\Phi_{u_i}\right\}_{i\in\nats}$ has a limit, and that this limit is a lower transition operator.
+Since $\lim_{i\to\infty}\sigma(u_i)=0$, and because of Propositions~\ref{lemma:normQsmallenough} and~\ref{lemma:compositioncoherence} and property~\ref{LR:normlratefinite} from Proposition~\ref{prop:norm_properties_lrate_lt}, there is some index $n$ such that the sequence $\Phi_{u_n},\Phi_{u_{n+1}},\ldots$ consists of lower transition operators. Due to Corollary~\ref{corol:cauchy}, this sequence is Cauchy and therefore, because of Proposition~\ref{lemma:completemetricspace}, this sequence has a limit that is also a lower transition operator. Since the limit starting from $n$ and the limit starting from $1$ are identical (initial elements do not influence the limit), we find that the sequence $\left\{\Phi_{u_i}\right\}_{i\in\nats}$ has a limit, and that this limit is a lower transition operator.
 \end{proof}
 
 \begin{proof}[Proof of Theorem~\ref{theo:convergencelowerbound}]
 Consider any sequence $\{u_i\}_{i\in\nats}$ in $\mathcal{U}_{[t,s]}$ such that $\lim_{i\to\infty}\sigma(u_i)=0$. Because of Corollary~\ref{corol:limitexistsandiscoherent}, the sequence $\{\Phi_{u_i}\}_{i\in\nats}$ then converges to a lower transition operator, which we denote by $\lt$. 
 
-Fix any $\epsilon>0$, let $C\coloneqq s-t$ and choose any $\delta>0$ such that $\smash{4\delta C\norm{\lrate}^2<\epsilon}$ and $\delta\norm{\lrate}\leq1$ [this is clearly always possible].
+Let $C\coloneqq s-t$, fix any $\epsilon>0$, and choose any $\delta>0$ such that $\smash{4\delta C\norm{\lrate}^2<\epsilon}$ and $\delta\norm{\lrate}\leq1$ [this is clearly always possible].
 % \begin{equation*}
 % \delta\coloneqq\min\left\{\frac{\epsilon}{4C\norm{\lrate}^2},\frac{1}{\norm{\lrate}}\right\}.
 % \end{equation*}
@@ -5002,7 +5016,7 @@ Consider now any $u\in\mathcal{U}_{[t,s]}$ such that $\sigma(u)<\delta$. Then
 \end{equation*}
 where the strict inequality follows from Equation~\eqref{eq:theo:convergencelowerbound:proof} and Proposition~\ref{prop:differencebetweenu}.
 
-Now assume \emph{ex absurdo} that $\lt$ is not unique, and let $\lt'$ be any other lower transition operator that satisfies Equation~\eqref{eq:theo:convergencelowerbound}. Then clearly, for any $\epsilon>0$, there is some $u\in\mathcal{U}_{[t,s]}$ such that $\norm{\lt-\Phi_u}<\epsilon$ and $\norm{\lt'-\Phi_u}<\epsilon$, and therefore also $\norm{\lt-\lt'}<2\epsilon$. Since $\epsilon>0$ is arbitrary, this implies that $\norm{\lt-\lt'}=0$, or equivalently, that $\lt=\lt'$, a contradiction.
+It remains to show that $\lt$ is unique. Therefore, let $\lt'$ be any lower transition operator that satisfies Equation~\eqref{eq:theo:convergencelowerbound}. Then clearly, for any $\epsilon>0$, there is some $u\in\mathcal{U}_{[t,s]}$ such that $\norm{\lt-\Phi_u}<\epsilon$ and $\norm{\lt'-\Phi_u}<\epsilon$, and therefore also $\norm{\lt-\lt'}<2\epsilon$. Since $\epsilon>0$ is arbitrary, this implies that $\norm{\lt-\lt'}=0$, or equivalently, that $\lt=\lt'$. Because this holds for every $\lt'$ that satisfies Equation~\eqref{eq:theo:convergencelowerbound}, it follows that $\lt$ is the unique operator satisfying this equation.
 % In summary, we have shown that there is lower transition operator $\lt$ such that
 % \begin{equation*}
 % (\forall\epsilon>0)\,
