@@ -3007,6 +3007,8 @@ Therefore, without loss of generality, we may assume that $t\in\mathbf{I}^+$. Th
 % Because this clearly holds for all $t\in\mathbf{I}\setminus\{r\}$ and all $t\in\mathbf{J}\setminus\{r\}$, the interesting case is to show that this holds for $t=r$. However, for all $\Delta\in\realspos$ we have that $T_r^{r+\Delta}$ corresponds to $\mathcal{T}^{\mathbf{J}}$, and $T_{r-\Delta}^{r}$ corresponds to $\mathcal{T}^{\mathbf{I}}$. Because both $\mathcal{T}^{\mathbf{I}}$ and $\mathcal{T}^{\mathbf{J}}$ are well-behaved, we find that $\mathcal{T}^{\mathbf{I}\cup\mathbf{J}}$ is also well-behaved at $t=r$. Hence, $\mathcal{T}^{\mathbf{I}\cup\mathbf{J}}$ is well-behaved.
 \end{proof}
 
+The following lemma states a very useful norm inequality that we will use repeatedly in the proofs in this work. This result states that the distance between two composed transition matrices $T_1T_2\cdots T_n$ and $S_1S_2\cdots S_n$ is bounded from above by the sum of the distances $\norm{T_i - S_i}$ of their component transition matrices.
+
 \begin{lemma}\label{lemma:recursive}
 Let $T_1,\ldots,T_n$ and $S_1,\ldots,S_n$ be two finite sequences of transition matrices. Then
 \begin{equation*}
@@ -3135,7 +3137,7 @@ Consider any $Q\in\mathcal{R}$ and any $\Delta\geq0$. Then,
 \end{equation*}
 \end{lemma}
 \begin{proof}
-This is a special case of a more general lemma that we prove later. To see this, refer to our comments in Section~\ref{sec:properties_lower_trans}, where we note that the rate matrix $Q$ is also a lower transition rate operator $\lrate=Q$, for which the corresponding lower transition operator $L_0^{\Delta}$ satisfies $L_0^{\Delta}=e^{Q\Delta}$. This lemma then follows by combining Theorem~\ref{theo:convergencelowerbound} with Lemma~\ref{lemma:justthelinearpart}.
+This is a special case of Lemma~\ref{lemma:quadraticboundonL}, which states a more general version. We have included this version separately because Lemma~\ref{lemma:quadraticboundonL} uses concepts that, on a chronological reading of this paper, would be undefined at this point.
 %To avoid trivialities, we assume that $\Delta\neq 0$ and $\norm{Q}\neq 0$. 
 %
 %Recall the $\epsilon-\delta$ limit expression for the matrix exponential, given by Equation~\eqref{eq:matrix_exp_limit}. Now, consider any $\epsilon\in\realspos$, and let $\delta^*\coloneqq\min\{\nicefrac{1}{\norm{Q}},\delta\}$, where $\delta$ satisfies Equation~\eqref{eq:matrix_exp_limit}. Take any $u\in\mathcal{U}_{[0,\Delta]}$ such that $\sigma(u)<\delta^*$. Then, clearly,
@@ -5124,7 +5126,7 @@ It remains to show that $\lt$ is unique. Therefore, let $\lt'$ be any lower tran
 % \end{equation*}
 \end{proof}
 
-***** done up to here
+We following lemma restates the norm inequality given by Corollary~\ref{corol:differencebetweennestedintermsofu}, so that it can be used with lower transition operators $L_t^s$. In effect, it therefore provides a bound on how well we can approximate the operator $L_t^s$ using an operator $\Phi_u$ constructed using a finite partition $u\in\mathcal{U}_{[t,s]}$ of the interval $[t,s]$. In particular, this approximation improves as we take $u$ to be increasingly finer, that is, as we decrease $\sigma(u)$.
 
 \begin{lemma}\label{lemma:limitboundonL}
 Let $\lrate$ be a lower transition rate operator. Then for any $t,s\in\realsnonneg$ such that $t\leq s$ and any $u\in\mathcal{U}_{[t,s]}$ such that $\sigma(u)\norm{\lrate}\leq 1$:
@@ -5142,26 +5144,6 @@ Fix any $\epsilon>0$. Because of Definition~\ref{def:low_trans}, there is some $
 \norm{\Phi_{u'}-\Phi_{u}}
 <\epsilon+
 \sigma(u)(s-t)\norm{\lrate}^2.
-\end{equation*}
-Since $\epsilon>0$ is arbitrary, the result is now immediate.
-\end{proof}
-
-\begin{lemma}\label{lemma:quadraticboundonL}
-Let $\lrate$ be a lower transition rate operator. Then for any $t,\Delta\in\realsnonneg$:
-\begin{equation*}
-\norm{L_t^{t+\Delta}-(I+\Delta\lrate)}\leq\Delta^2\norm{\lrate}^2.\vspace{5pt}
-\end{equation*}
-\end{lemma}
-\begin{proof}
-Fix any $\epsilon>0$. Because of Definition~\ref{def:low_trans}, there is some $\smash{u\in\mathcal{U}_{[t,t+\Delta]}}$ such that $\sigma(u)\norm{\lrate}\leq1$ and $\norm{L_t^s-\Phi_{u}}<\epsilon$. By combining this with Lemma~\ref{lemma:justthelinearpart}, it follows that
-\begin{equation*}
-\norm{L_t^s-(I+\Delta\lrate)}
-\leq
-\norm{L_t^s-\Phi_{u}}
-+
-\norm{\Phi_{u}-(I+\Delta\lrate)}
-<\epsilon+
-\Delta^2\norm{\lrate}^2.
 \end{equation*}
 Since $\epsilon>0$ is arbitrary, the result is now immediate.
 \end{proof}
@@ -5248,7 +5230,7 @@ where the second inequality follows from Lemma~\ref{lemma:recursive_lower_trans}
 
 \begin{proof}[Proof of Proposition~\ref{prop:lower_transition_is_homogeneous}]
 Consider any $t,s\in\realsnonneg$ such that $t\leq s$, any $\Delta\in\realsnonneg$, and any sequence $\{u_i\}_{i\in\nats}$ in $\mathcal{U}_{[t,s]}$ such that $\lim_{i\to\infty}\sigma(u_i)=0$. %Then, by Theorem~\ref{theo:convergencelowerbound}, $\lim_{i\to\infty}\Phi_{u_i}=L_t^s$.
-For any $i\in\nats$, with $u_i=t_0,\ldots,t_n$, we now define the sequence $u_i^*=(t_0+\Delta),(t_1+\Delta),\ldots,(t_n+\Delta)$. Then clearly, $\lim_{i\to\infty}\sigma(u_i^*)=0$ and, for all $i\in\nats$, $u_i^*\in\mathcal{U}_{[t+\Delta,s+\Delta]}$ and $\Phi_{u_i}=\Phi_{u_i^*}$.
+For any $i\in\nats$, with $u_i=t_0,\ldots,t_n$, we now define the sequence $u_i^*=(t_0+\Delta),(t_1+\Delta),\ldots,(t_n+\Delta)$. Then clearly, $\lim_{i\to\infty}\sigma(u_i^*)=0$ and, for all $i\in\nats$, $u_i^*\in\mathcal{U}_{[t+\Delta,s+\Delta]}$ and, due to Equation~\eqref{eq:aux_lower_trans}, $\Phi_{u_i}=\Phi_{u_i^*}$.
 % Then, for all $i\in\nats$, we have that $u_i^*\in\mathcal{U}_{[t+\Delta,s+\Delta]}$. Furthermore, because $\lim_{i\to\infty}\sigma(u_i)=0$, we have $\lim_{i\to\infty}\sigma(u_i^*)=0$. Therefore, and by Theorem~\ref{theo:convergencelowerbound},  it holds that $\lim_{i\to\infty}\Phi_{u_i^*}=L_{t+\Delta}^{s+\Delta}$.
 % Consider now any $u_i=t_0,\ldots,t_n$, $i\in\nats$, with differences $\Delta_1,\ldots,\Delta_n$. Then, the corresponding sequence $u_i^*$ has differences $\Delta^*_j=(t_j+\Delta)-(t_{j-1}+\Delta)=\Delta_j$, for all $j\in\{1,\ldots,n\}$. Therefore, and by the definition of $\Phi_{u_i}$ and $\Phi_{u_i^*}$, we have that $\Phi_{u_i}=\Phi_{u_i^*}$. Hence, and because the $i\in\nats$ was arbitrary, we find that $\{\Phi_{u_i}\}_{i\in\nats}=\{\Phi_{u_i^*}\}_{i\in\nats}$. Because these sequences are identical, they have the same limit, and therefore
 We now have that
@@ -5257,6 +5239,30 @@ L_t^s=\lim_{i\to\infty}\Phi_{u_i}=\lim_{i\to\infty}\Phi_{u_i^*}=L_{t+\Delta}^{s+
 \end{equation*}
 where the first and last equality follow from Theorem~\ref{theo:convergencelowerbound}.
 \end{proof}
+
+The following lemma provides a bound on how well the operator $L_t^{t+\Delta}$ can be approximated using the much simpler operator $(I+\Delta\lrate)$. Note that this lemma states the general version of Lemma~\ref{lemma:linearpartofexponential}, which until this point has remained unproven. To see that the result below implies Lemma~\ref{lemma:linearpartofexponential}, simply recall our from Section~\ref{subsec:lowertrans_rate} that any rate matrix $Q$ is also a lower transition rate operator. Since it follows from our comments in Section~\ref{sec:properties_lower_trans} that the lower transition operator $L_t^{t+\Delta}$ corresponding to such a $\lrate=Q$ satisfies $L_t^{t+\Delta}=e^{Q\Delta}$, Lemma~\ref{lemma:linearpartofexponential} now follows from the following result.
+
+\begin{lemma}\label{lemma:quadraticboundonL}
+Let $\lrate$ be a lower transition rate operator. Then for any $t,\Delta\in\realsnonneg$:
+\begin{equation*}
+\norm{L_t^{t+\Delta}-(I+\Delta\lrate)}\leq\Delta^2\norm{\lrate}^2.\vspace{5pt}
+\end{equation*}
+\end{lemma}
+\begin{proof}
+Fix any $\epsilon>0$. Because of Definition~\ref{def:low_trans}, there is some $\smash{u\in\mathcal{U}_{[t,t+\Delta]}}$ such that $\sigma(u)\norm{\lrate}\leq1$ and $\norm{L_t^s-\Phi_{u}}<\epsilon$. By combining this with Lemma~\ref{lemma:justthelinearpart}, it follows that
+\begin{equation*}
+\norm{L_t^s-(I+\Delta\lrate)}
+\leq
+\norm{L_t^s-\Phi_{u}}
++
+\norm{\Phi_{u}-(I+\Delta\lrate)}
+<\epsilon+
+\Delta^2\norm{\lrate}^2.
+\end{equation*}
+Since $\epsilon>0$ is arbitrary, the result is now immediate.
+\end{proof}
+
+The final lemma of this section states how well we can approximate the operator $L_t^{t+\Delta}$ using the identity matrix $I$. Put differently, since it follows from Proposition~\ref{prop:lower_trans_system_is_system} that $L_t^t=I$, this tells us how quickly $L_t^{t+\Delta}$ changes as we increase $\Delta$.
 
 \begin{lemma}\label{lemma:linearboundonL}
 Let $\lrate$ be a lower transition rate operator. Then for any $t,\Delta\in\realsnonneg$:
