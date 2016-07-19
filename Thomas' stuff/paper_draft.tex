@@ -5552,7 +5552,7 @@ This implies that $Qf\not\geq\lrate f$, and therefore, that $Q\notin\rateset_{\l
 % This clearly implies that, for all $Q'\in\rateset$, it holds that $[Qf](x) \leq c_1 < c_2 \leq [Q'f](x)$. In turn, this implies the existence of some $\epsilon\in\realspos$ for which $[Qf](x) + \epsilon < [Q'f](x)$, for all $Q'\in\rateset$. Because $\lrate$ is the lower envelope of $\rateset$, by Equation~\eqref{eq:correspondinglowertrans}, we therefore find that $[Qf](x) < [\lrate f](x)$. Hence, we have found a $f\in\gamblesX$ and a $x\in\states$, such that for some $Q\in\rateset_{\lrate}$, it holds that $[Qf](x) < [\lrate f](x)$. By Equation~\eqref{eq:dominatingratematrices}, this is a contradiction, and hence $\rateset=\rateset_{\lrate}$.
 \end{proof}
 
-Recall from the definition of the lower envelope $\lrate$ of a given set $\rateset$ of rate matrices, *** blabla, is benaderbaar als ssr.
+Recall from the definition of the lower envelope $\lrate$ of a given set $\rateset$ of rate matrices, that $\lrate f$ is the greatest element of $\gamblesX$ that satisfies $\lrate f\leq Qf$ for all $Q\in\rateset$. Therefore, for all $x\in\states$ and all $\epsilon>0$, there is some $Q\in\rateset$ such that $[Qf](x)<[\lrate f](x)+\epsilon$. In other words, $[\lrate f](x)$ can be approximated arbitrarily closely using the elements of $\rateset$. The following lemma establishes that the \emph{entire} function $\lrate f$ can be approximated arbitrarily closely whenever $\rateset$ has separately specified rows.
 
 \begin{lemma}\label{lemma:rateset_has_arginf}
 Let $\rateset$ be an arbitrary non-empty bounded set of rate matrices that has separately specified rows, with corresponding lower transition rate operator $\lrate$. Then for all $f\in\gamblesX$ and $\epsilon\in\realspos$, there exists a $Q\in\rateset$ such that
@@ -5564,10 +5564,10 @@ Let $\rateset$ be an arbitrary non-empty bounded set of rate matrices that has s
 This is immediate from the definition of the lower envelope of $\rateset$, as given by Equation~\eqref{eq:correspondinglowertrans}, and the fact that $\rateset$ has separately specified rows.
 \end{proof}
 
-**** blabla, paar decompositie lemmas
+The following lemma provides a useful decomposition property for expectations $\mathbb{E}_P$ corresponding to (non-)Markov processes $P\in\wprocesses$, expressed in terms of transition matrices $T_{t,x_u}^s$ (using Remark~\ref{remark:expectationT}). We will use this result in the proof of Proposition~\ref{theorem:nonmarkov_single_var_lower_bounded}.
 
 \begin{lemma}\label{lemma:weirddecomposition}
-Consider any $P\in\wprocesses_\rateset$, any $t,s\in\realsnonneg$ such that $t<s$, any $u\in\mathcal{U}_{<t}$ and $x_u\in\states_u$ and any sequence $t=t_0<t_1<\cdots<t_n=s$, with $n\in\nats$.
+Consider any $P\in\wprocesses$, any $t,s\in\realsnonneg$ such that $t<s$, any $u\in\mathcal{U}_{<t}$ and $x_u\in\states_u$ and any sequence $t=t_0<t_1<\cdots<t_n=s$, with $n\in\nats$.
 Then for any $f\in\gamblesX$ and $x_t\in\states$:
 \begin{equation*}
 [T_{t,\,x_u}^sf](x_t)
@@ -5598,6 +5598,8 @@ T_{t_1,\,x_{u\cup\{t\}}}^{t_{2}}
 \end{align*}
 using the induction hypothesis for the first equality.
 \end{proof}
+
+Due to the definition of the lower transition rate operator $\lrate$ corresponding to a given $\rateset$, it holds for all $\Delta\in\realsnonneg$, all $Q\in\rateset$, and all $f\in\gamblesX$ that $(I+\Delta Q)f \geq (I+\Delta\lrate)f$. The following lemma, which we will use in the proof of Proposition~\ref{theorem:nonmarkov_single_var_lower_bounded}, establishes that this inequality extends to compositions of such operators $(I+\Delta Q)$ and $(I+\Delta\lrate)$.
 
 \begin{lemma}\label{lemma:productofQsdominatesproductoflrates}
 Consider a non-empty bounded set $\rateset$ of rate matrices and let $\lrate$ be the corresponding lower transition rate operator. Fix any $n\in\nats$ and, for all $i\in\{1,\dots,n\}$, consider some $\Delta_i\geq0$ and $Q_i\in\rateset$. Then for any $f\in\gamblesX$:
@@ -5864,8 +5866,6 @@ For all $i\in\{0,\ldots,n\}$, let $\mathcal{T}_{Q_i}$ denote the transition matr
 \mathcal{T}_P = \mathcal{T}_{Q_0}^{[0,t_0]}\otimes \mathcal{T}_{Q_1}^{[t_0,t_1]}\otimes \cdots \otimes \mathcal{T}_{Q_n}^{[t_{n-1},t_n]} \otimes \mathcal{T}_{Q_n}^{[t_{n},\infty)}\,.
 \end{equation*}
 
-**** kan het onderstaande niet direct via recursieve lemma?
-
 Due to Equation~\eqref{eq:theorem:lower_markov_bound_is_tight:localbound}, we know that the transition matrices of this process $P$ satisfy
 \begin{equation}\label{eq:theorem:lower_markov_bound_is_tight:localbounds}
 (\forall i\in\{1,\ldots,n\})~
@@ -5878,7 +5878,7 @@ Furthermore, we also know that
  %&\leq \norm{L_{t_0}^{t_{n-1}}L_{t_{n-1}}^{t_n}f - T_{t_0}^{t_{n-1}}L_{t_{n-1}}^{t_n}f} + \norm{{T_{t_0}^{t_{n-1}}}}\cdot\norm{L_{t_{n-1}}^{t_n}g_n - T_{t_{n-1}}^{t_n}g_n} \\
  &\leq \norm{L_{t_0}^{t_{n-1}}g_{n-1} - T_{t_0}^{t_{n-1}}g_{n-1}} + \norm{L_{t_{n-1}}^{t_n}g_n - T_{t_{n-1}}^{t_n}g_n},
 \end{align*}
-using Proposition~\ref{prop:lower_trans_system_is_system} and Equation~\eqref{eq:markovintermsofmatrices} for the first equality, and Proposition~\ref{prop:lower_trans_system_is_system} and \ref{LT:differencenorm} for the second one.
+using Proposition~\ref{prop:lower_trans_system_is_system} and Equation~\eqref{eq:markovintermsofmatrices} for the first inequality, and Proposition~\ref{prop:lower_trans_system_is_system} and \ref{LT:differencenorm} for the second one.
 Similarly, we also find that
 \begin{equation*}
 \norm{L_{t_0}^{t_{n-1}}g_{n-1} - T_{t_0}^{t_{n-1}}g_{n-1}}
