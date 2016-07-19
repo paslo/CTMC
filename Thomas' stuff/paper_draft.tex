@@ -2459,25 +2459,25 @@ and furthermore,
 
 \subsection{Multi-Variable Functions on Multiple Points in the Future}\label{sec:decomposition}
 
-We now consider functions $f\in\gambles(\states^{u\cup v})$, where $u=t_0,\ldots,t_n$ is a sequence of time points in a process' history, and $v=s_0,\ldots,s_m$ is a sequence of time points in a process' future; hence, we assume $s_0>t_n$. For functions of this kind, it---surprisingly---turns out that computing the lower expectation with respect to $\wprocesses_\rateset$ is easier than for $\wmprocesses_\rateset$. We will show in this section how to do this for the former set, and provide in the next section a counter example for the latter.
+We now consider functions $f\in\gambles(\states_{u\cup v})$, where $u=t_0,\ldots,t_n$ is a sequence of time points in a process' history, and $v=s_0,\ldots,s_m$ is a sequence of time points in a process' future; hence, we assume $s_0>t_n$. For functions of this kind, it---surprisingly---turns out that computing the lower expectation with respect to $\wprocesses_{\rateset,\,\mathcal{M}}$ is easier than for $\wmprocesses_{\rateset,\,\mathcal{M}}$. We will show in this section how to do this for the former set, and provide in the next section a counter example for the latter.
 
-We have seen in the previous sections that we can use the operator $L_t^s$ to compute lower expectations of functions $f\in\gamblesX$ and $f\in\gambles(\states^{u\cup\{s\}})$, whenever $\rateset$ is non-empty, bounded, and has separately specified rows. We here show that if $\rateset$ is additionally convex, then we can do the same for functions $f\in\gambles(\states^{u\cup v})$.
+We have seen in the previous sections that we can use the operator $L_t^s$ to compute lower expectations of functions $f\in\gamblesX$ and $f\in\gambles(\states_{u\cup s})$, whenever $\rateset$ is non-empty, bounded, and has separately specified rows. We here show that if $\rateset$ is additionally convex, then we can do the same for functions $f\in\gambles(\states_{u\cup v})$.
 
 Hence, we are now interested in computing the quantity
 \begin{equation*}
-\underline{\mathbb{E}}_\rateset^{\mathrm{W}}[f(x_u,X_v)\,\vert\,X_u=x_u]\,.
+\underline{\mathbb{E}}_{\rateset,\,\mathcal{M}}^{\mathrm{W}}[f(x_u,X_v)\,\vert\,X_u=x_u]\,.
 \end{equation*}
 Recall now from Theorem~\ref{theorem:decomposition_multivar} that if $\rateset$ is convex, we can decompose this lower expectation as
 \begin{equation}\label{eq:nested_lower_exp_single_step}
-\underline{\mathbb{E}}_\rateset^{\mathrm{W}}[f(x_u,X_v)\,\vert\,X_u=x_u] = \underline{\mathbb{E}}_\rateset^{\mathrm{W}}\bigl[ \underline{\mathbb{E}}_\rateset^{\mathrm{W}}[f(x_u,X_v)\,\vert\,X_u=x_u,X_{v\setminus\{s_m\}}] \,\big\vert\,X_u=x_u\bigr]\,,
+\underline{\mathbb{E}}_{\rateset,\,\mathcal{M}}^{\mathrm{W}}[f(x_u,X_v)\,\vert\,X_u=x_u] = \underline{\mathbb{E}}_{\rateset,\,\mathcal{M}}^{\mathrm{W}}\bigl[ \underline{\mathbb{E}}_{\rateset,\,\mathcal{M}}^{\mathrm{W}}[f(x_u,X_v)\,\vert\,X_u=x_u,X_{v\setminus\{s_m\}}] \,\big\vert\,X_u=x_u\bigr]\,,
 \end{equation}
-where we use the notation $v=s_0,\ldots,s_m$. Observe that the inner lower expectation on the right-hand side of this equality is conditioned on all the time points $u$ and $v\setminus\{s_m\}$. Therefore, this lower expectation is only taken at a single time $s_m$. It therefore follows from Corollary~\ref{cor:inf_works_for_single_future_var} that, for all $x_{v\setminus\{s_m\}}\in\states^{v\setminus\{s_m\}}$,
+where we use the notation $v=s_0,\ldots,s_m$. Observe that the inner lower expectation on the right-hand side of this equality is conditioned on all the time points $u$ and $v\setminus\{s_m\}$. Therefore, this lower expectation is only taken at a single time $s_m$. It therefore follows from Corollary~\ref{cor:inf_works_for_single_future_var} that, for all $x_{v\setminus\{s_m\}}\in\states_{v\setminus\{s_m\}}$,
 \begin{equation*}
-\left[L_{s_{m-1}}^{s_m}f\right]\left(x_u,x_{v\setminus\{s_m\}}\right) = \underline{\mathbb{E}}_\rateset^{\mathrm{W}}[f(x_u,X_v)\,\vert\,X_u=x_u,X_{v\setminus\{s_m\}}=x_{v\setminus\{s_m\}}]\,.
+\left[L_{s_{m-1}}^{s_m}f\right]\left(x_u,x_{v\setminus\{s_m\}}\right) = \underline{\mathbb{E}}_{\rateset,\,\mathcal{M}}^{\mathrm{W}}[f(x_u,X_v)\,\vert\,X_u=x_u,X_{v\setminus\{s_m\}}=x_{v\setminus\{s_m\}}]\,.
 \end{equation*}
-Because this holds for all $x_{v\setminus\{s_m\}}\in\states^{v\setminus\{s_m\}}$, we can now replace the inner lower expectation in Equation~\eqref{eq:nested_lower_exp_single_step}, to obtain
+Because this holds for all $x_{v\setminus\{s_m\}}\in\states_{v\setminus\{s_m\}}$, we can now replace the inner lower expectation in Equation~\eqref{eq:nested_lower_exp_single_step}, to obtain
 \begin{equation*}
-\underline{\mathbb{E}}_\rateset^{\mathrm{W}}[f(x_u,X_v)\,\vert\,X_u=x_u] = \underline{\mathbb{E}}_\rateset^{\mathrm{W}}\left[ \left[L_{s_{m-1}}^{s_m}f\right]\left(x_u,X_{v\setminus\{s_m\}}\right) \,\big\vert\,X_u=x_u\right]\,.
+\underline{\mathbb{E}}_{\rateset,\,\mathcal{M}}^{\mathrm{W}}[f(x_u,X_v)\,\vert\,X_u=x_u] = \underline{\mathbb{E}}_{\rateset,\,\mathcal{M}}^{\mathrm{W}}\left[ \left[L_{s_{m-1}}^{s_m}f\right]\left(x_u,X_{v\setminus\{s_m\}}\right) \,\big\vert\,X_u=x_u\right]\,.
 \end{equation*}
 If we now recursively apply this process, we can repeatedly factor out the latest remaining time point $s_{m-1}, s_{m-2},\ldots,s_{0}$, and at each step replace the inner lower expectation with the operator $L_{s_{m-2}}^{s_{m-1}},L_{s_{m-3}}^{s_{m-2}},\ldots,L_{t_n}^{s_0}$. Because $v$ is finite, this process eventually stops, and we then obtain the following result.
 
@@ -2494,22 +2494,22 @@ If we now recursively apply this process, we can repeatedly factor out the lates
 %*** blabla, dit kunnen we recursief doen totdat elke lower expectation nog maar een tijdpunt bevat. ergo, als $\rateset$ ook s.s.r. heeft, dan
 
 \begin{corollary}\label{cor:composition_lower_trans}
-Let $\rateset$ be an arbitrary non-empty, bounded, and convex set of rate matrices that has separately specified rows, with corresponding lower transition rate operator $\lrate$, and let $\underline{\mathcal{T}}_{\lrate}$ be the corresponding lower transition operator system. 
+Let $\mathcal{M}$ be an arbitrary non-empty set of probability mass functions on $\states$, let $\rateset$ be an arbitrary non-empty, bounded, and convex set of rate matrices that has separately specified rows, with corresponding lower transition rate operator $\lrate$, and let $\underline{\mathcal{T}}_{\lrate}$ be the corresponding lower transition operator system. 
 
-Consider any $t\in\realsnonneg$, any $u\in\mathcal{U}_{<t}$ and $v\in\mathcal{U}_{\geq t}$ with $u=t_0,\ldots,t_n$ and $v={s_0,\ldots,s_m}$. Then, for any $f\in\gambles(\states^{u\cup v})$ and any $x_u\in\states^u$,
+Consider any $t\in\realsnonneg$, any $u\in\mathcal{U}_{<t}$ and $v\in\mathcal{U}_{\geq t}$ with $u=t_0,\ldots,t_n$ and $v={s_0,\ldots,s_m}$. Then, for any $f\in\gambles(\states_{u\cup v})$ and any $x_u\in\states_u$,
 \begin{equation}\label{eq:composition_lower_trans}
-\left[L_{t_n}^{s_0}L_{s_0}^{s_1}\cdots L_{s_{m-1}}^{s_m}f\right](x_u) = \underline{\mathbb{E}}^{\mathrm{W}}_{\,\rateset}[f(x_u,X_v)\,\vert\,X_u=x_u]\,.
+\left[L_{t_n}^{s_0}L_{s_0}^{s_1}\cdots L_{s_{m-1}}^{s_m}f\right](x_u) = \underline{\mathbb{E}}^{\mathrm{W}}_{\,\rateset,\,\mathcal{M}}[f(x_u,X_v)\,\vert\,X_u=x_u]\,.
 \end{equation}
 \end{corollary}
 \begin{proof}
 Immediate consequence of Theorem~\ref{theorem:decomposition_multivar} and Corollary~\ref{cor:inf_works_for_single_future_var}.
 \end{proof}
 
-Observe, therefore, that we can use our lower transition operator to compute lower expectations of arbitrary functions $f\in\gambles(\states^{u\cup v})$ with respect to the set $\wprocesses_\rateset$, whenever $\rateset$ is at least non-empty, bounded, convex, and has separately specified rows. Due to Proposition~\ref{prop:dominating_unique_characterization}, this requires that $\rateset\supseteq\text{int}(\rateset_{\lrate})$, the interior of the set of rate matrices $\rateset_{\lrate}$ that dominate the lower envelope $\lrate$ of $\rateset$. In other words, for arbitrary functions, the smallest set of stochastic processes for which our lower transition operator can compute the lower expectation is given by $\wprocesses_{\text{int}(\rateset_{\lrate})}$.
+Observe, therefore, that we can use our lower transition operator to compute lower expectations of arbitrary functions $f\in\gambles(\states_{u\cup v})$ with respect to the set $\wprocesses_{\rateset,\,\mathcal{M}}$, whenever $\rateset$ is at least non-empty, bounded, convex, and has separately specified rows. Due to Proposition~\ref{prop:dominating_unique_characterization}, this requires that $\rateset\supseteq\text{int}(\rateset_{\lrate})$, the interior of the set of rate matrices $\rateset_{\lrate}$ that dominate the lower envelope $\lrate$ of $\rateset$. In other words, for arbitrary functions, the smallest set of stochastic processes---up to the initial distributions $\mathcal{M}$---for which our lower transition operator can compute the lower expectation is given by $\wprocesses_{\text{int}(\rateset_{\lrate})}$.
 
 If $\rateset$ is furthermore closed, then by Proposition~\ref{prop:dominating_unique_characterization}, we have that $\rateset=\rateset_{\lrate}$. In that case, the lower expectation is taken with respect to $\wprocesses_\rateset=\wprocesses_{\rateset_{\lrate}}$ which, by Theorem~\ref{theo:dominating_rate_processes_max_set}, is exactly the largest set of stochastic processes for which our lower transition operator computes the lower expectation.
 
-The difference between $\wprocesses_{\text{int}(\rateset_{\lrate})}$ and $\wprocesses_{\rateset_{\lrate}}$ is that the lower expectation of the latter set is actually a minimum---instead of an infimum---because, due to Proposition~\ref{prop:lower_expectation_reached_if_Q_closed}, Corollary~\ref{cor:inf_works_for_single_future_var} and Theorem~\ref{theo:aanelkaarplakken}---in that order---the left-hand side of Equation~\eqref{eq:composition_lower_trans} is always reached by some $P\in\wprocesses_{\rateset_{\lrate}}$.
+The difference between $\wprocesses_{\text{int}(\rateset_{\lrate})}$ and $\wprocesses_{\rateset_{\lrate}}$ is that the lower expectation of the latter set is actually a minimum---instead of an infimum---because, due to repeated applications of Corollary~\ref{cor:inf_works_for_single_future_var}, Proposition~\ref{prop:lower_expectation_reached_if_Q_closed} and Theorem~\ref{theo:aanelkaarplakken}, the left-hand side of Equation~\eqref{eq:composition_lower_trans} is always reached by some $P\in\wprocesses_{\rateset_{\lrate}}$.
 
 %**** rewrite most things (everything) below
 %
