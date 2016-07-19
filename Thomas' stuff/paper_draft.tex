@@ -2169,7 +2169,7 @@ Consider a lower transition rate operator $\lrate$ and let $\rateset_{\lrate}$ b
 
 \noindent
 Because of this result, and since---as discussed above---every non-empty bounded set of rate matrices that has $\lrate$ as its lower envelope is a subset of $\rateset_{\lrate}$, it follows that $\rateset_{\lrate}$ is the largest non-empty bounded set of rate matrices that has $\lrate$ as its lower envelope.
-Furthermore, as we will show in Proposition~\ref{prop:dominatingproperties} below, this set $\rateset_{\lrate}$ is also closed and convex, and has \emph{separately specified rows}. We say that a set of rate matrices has separately specified rows if it is closed under taking arbitrary combinations of rows from its elements. That is, if for every $x\in\states$ we let $\rateset_x\coloneqq\{Q(x,\cdot):Q\in\rateset\}$ denote the set of the $x$-th rows of the elements of $\rateset$, then we say that $\rateset$ has separately specified rows if $\rateset$ contains every matrix $Q$ that can be constructed by taking selecting, for all $x\in\states$, an arbitrary row $Q(x,\cdot)$ from $\rateset_x$.
+Furthermore, as we will show in Proposition~\ref{prop:dominatingproperties} below, this set $\rateset_{\lrate}$ is also closed and convex, and has \emph{separately specified rows}. We say that a set of rate matrices has separately specified rows if it is closed under taking arbitrary combinations of rows from its elements. That is, if for every $x\in\states$ we let $\rateset_x\coloneqq\{Q(x,\cdot):Q\in\rateset\}$ denote the set of the $x$-th rows of the elements of $\rateset$, then we say that $\rateset$ has separately specified rows if $\rateset$ contains every matrix $Q$ that can be constructed by selecting, for all $x\in\states$, an arbitrary row $Q(x,\cdot)$ from $\rateset_x$.
 
 \begin{definition}\label{def:separatelyspecifiedrows}
 A set of rate matrices $\rateset\subseteq\mathcal{R}$ has separately specified rows if
@@ -2247,29 +2247,31 @@ Having established a strong connection between the operator $\lrate$ and non-emp
 As the following result shows, the operator $L_t^s$ corresponding to a lower transition rate operator $\lrate$ computes a lower bound on the expectation of a function $f\in\gamblesX$, with respect to the set $\wprocesses_\rateset$ of well-behaved stochastic processes consistent with any set $\rateset$ of which $\lrate$ is the lower envelope.
 
 \begin{proposition}\label{theorem:nonmarkov_single_var_lower_bounded}
-Let $\rateset$ be an arbitrary non-empty bounded set of rate matrices with corresponding lower transition rate operator $\lrate$, and let $\smash{\underline{\mathcal{T}}_{\lrate}}$ be the corresponding lower transition operator system. Then, for any $P\in\wprocesses_\rateset$, any $t,s\in\realsnonneg$ such that $t\leq s$, any $u\in\mathcal{U}_{<t}$, any $x_t\in\states$ and $x_u\in\states^u$, and any $f\in\gamblesX$,
+Let $\rateset$ be an arbitrary non-empty bounded set of rate matrices with corresponding lower transition rate operator $\lrate$, and let $\smash{\underline{\mathcal{T}}_{\lrate}}$ be the corresponding lower transition operator system. Then, for any $P\in\wprocesses_\rateset$, any $t,s\in\realsnonneg$ such that $t\leq s$, any $u\in\mathcal{U}_{<t}$, any $x_t\in\states$ and $x_u\in\states_u$, and any $f\in\gamblesX$,
 \begin{equation*}
-[L_{t}^s f](x_t) \leq \mathbb{E}[f(X_s)\,\vert\,X_t=x_t,X_u=x_u]\,.
+[L_{t}^s f](x_t) \leq \mathbb{E}_P[f(X_s)\,\vert\,X_t=x_t,X_u=x_u]\,.
 \end{equation*}
 \end{proposition}
 
-As this result shows, $L_t^sf$ is a lower bound on the expectation of a function $f\in\gamblesX$, with respect to a set of stochastic processes $\wprocesses_\rateset$ induced by some non-empty bounded set of rate matrices $\rateset$. Our next result establishes that this bound is tight if $\rateset$ also has separately specified rows. Specifically, we show that $L_t^sf$ can then be approximated to arbitrary precision by carefully choosing a Markov process $P$ from the set $\wmprocesses_\rateset$.
+As this result shows, $L_t^sf$ is a lower bound on the expectation of a function $f\in\gamblesX$, with respect to a set of stochastic processes $\wprocesses_\rateset$ induced by some non-empty bounded set of rate matrices $\rateset$. Note also that this result uses the set $\wprocesses_{\rateset}$, and therefore does not depend on any set $\mathcal{M}$ of initial distributions. Therefore, and because $\wprocesses_{\rateset,\,\mathcal{M}}\subseteq\wprocesses_{\rateset}$, the same result holds for any choice of such $\mathcal{M}$.
+
+Our next result establishes that the bound in Proposition~\ref{theorem:nonmarkov_single_var_lower_bounded} is tight if $\rateset$ also has separately specified rows. Specifically, we show that $L_t^sf$ can then be approximated to arbitrary precision by carefully choosing a Markov process $P$ from the set $\wmprocesses_{\rateset,\,\mathcal{M}}$.
 
 \begin{proposition}\label{theorem:lower_markov_bound_is_tight}
-Let $\rateset$ be an arbitrary non-empty bounded set of rate matrices that has separately specified rows, with corresponding lower transition rate operator $\lrate$, and let $\underline{\mathcal{T}}_{\lrate}$ be the corresponding lower transition operator system. Then for all $t,s\in\realsnonneg$ such that $t\leq s$, all $f\in\gamblesX$, and all $\epsilon\in\realspos$, there is a $P\in\wmprocesses_{\rateset}$ such that
+Let $\mathcal{M}$ be an arbitrary non-empty set of probability mass functions on $\states$, let $\rateset$ be an arbitrary non-empty bounded set of rate matrices that has separately specified rows, with corresponding lower transition rate operator $\lrate$, and let $\underline{\mathcal{T}}_{\lrate}$ be the corresponding lower transition operator system. Then for all $t,s\in\realsnonneg$ such that $t\leq s$, all $f\in\gamblesX$, and all $\epsilon\in\realspos$, there is a $P\in\wmprocesses_{\rateset,\,\mathcal{M}}$ such that
 \begin{equation*}
-\norm{\lbound_t^sf-\mathbb{E}[f(X_s)\,\vert\,X_t]} < \epsilon\,.
+\norm{\lbound_t^sf-\mathbb{E}_P[f(X_s)\,\vert\,X_t]} < \epsilon\,.
 \end{equation*}
 \end{proposition}
 
 Together, Propositions~\ref{theorem:nonmarkov_single_var_lower_bounded} and~\ref{theorem:lower_markov_bound_is_tight} establish a strong connection between $L_t^s$ and lower expectations $\underline{\mathbb{E}}$. In particular, for functions defined on a single point in time, they turn out to be equivalent, as shown by the result below.
 
 \begin{corollary}\label{cor:lower_operator_is_infimum}
-Let $\rateset$ be an arbitrary non-empty bounded set of rate matrices that has separately specified rows, with corresponding lower transition rate operator $\lrate$, and let $\underline{\mathcal{T}}_{\lrate}$ be the corresponding lower transition operator system. Then, for all $t,s\in\realsnonneg$ such that $t\leq s$, all $u\in\mathcal{U}_{<t}$, $x_u\in\states^u$ and $x_t\in\states$, and all $f\in\gamblesX$:
+Let $\mathcal{M}$ be an arbitrary non-empty set of probability mass functions on $\states$, let $\rateset$ be an arbitrary non-empty bounded set of rate matrices that has separately specified rows, with corresponding lower transition rate operator $\lrate$, and let $\underline{\mathcal{T}}_{\lrate}$ be the corresponding lower transition operator system. Then, for all $t,s\in\realsnonneg$ such that $t\leq s$, all $u\in\mathcal{U}_{<t}$, $x_u\in\states_u$ and $x_t\in\states$, and all $f\in\gamblesX$:
 \begin{align*}
-\left[L_t^sf\right](x_t) = \underline{\mathbb{E}}^{\mathrm{WM}}_{\,\rateset}[f(X_s)\,\vert\,X_t=x_t,X_u=x_u] 
+\left[L_t^sf\right](x_t) = \underline{\mathbb{E}}^{\mathrm{WM}}_{\,\rateset,\,\mathcal{M}}[f(X_s)\,\vert\,X_t=x_t,X_u=x_u] 
 =
-\underline{\mathbb{E}}^{\mathrm{W}}_{\,\rateset}[f(X_s)\,\vert\,X_t=x_t,X_u=x_u].
+\underline{\mathbb{E}}^{\mathrm{W}}_{\,\rateset,\,\mathcal{M}}[f(X_s)\,\vert\,X_t=x_t,X_u=x_u].
  %&= \underline{\mathbb{E}}^{\mathrm{WM}}_{\,\rateset}[f(X_s)\,\vert\,X_t=x_t]\,,
 \end{align*}\\[-25pt]
 % and furthermore,
@@ -2289,7 +2291,7 @@ Thus, we find that there is a correspondence between the operator $L_t^s$ and lo
 Recall from Section~\ref{sec:connections_rate} that for a given lower transition rate operator $\lrate$, its set of dominating rate matrices $\rateset_{\lrate}$ is---by definition---the largest set of rate matrices which has $\lrate$ as its lower envelope. The following result shows that the set $\wprocesses_{\rateset_{\lrate}}$ of well-behaved stochastic processes consistent with $\rateset_{\lrate}$ is the largest set of stochastic processes for which $L_t^s$ computes the lower expectation.
 
 \begin{theorem}\label{theo:dominating_rate_processes_max_set}
-Let $\lrate$ be an arbitrary lower transition rate operator, with $\rateset_{\lrate}$ its set of dominating rate matrices, and let  $\underline{\mathcal{T}}_{\lrate}$ be the corresponding lower transition operator system. Then, the set $\wprocesses_{\rateset_{\lrate}}$ is the largest set of stochastic processes for which, for all $t,s\in\realsnonneg$ such that $t\leq s$, all $u\in\mathcal{U}_{<t}$, all $x_t\in\states$ and $x_u\in\states^u$, and all $f\in\gamblesX$,
+Let $\lrate$ be an arbitrary lower transition rate operator, with $\rateset_{\lrate}$ its set of dominating rate matrices, and let  $\underline{\mathcal{T}}_{\lrate}$ be the corresponding lower transition operator system. Then, the set $\wprocesses_{\rateset_{\lrate}}$ is the largest set of stochastic processes for which, for all $t,s\in\realsnonneg$ such that $t\leq s$, all $u\in\mathcal{U}_{<t}$, all $x_t\in\states$ and $x_u\in\states_u$, and all $f\in\gamblesX$,
 \begin{equation*}
 [L_t^sf](x_t) = \underline{\mathbb{E}}_{\,\rateset_{\lrate}}^{\mathrm{W}}[f(X_s)\,\vert\,X_t=x_t,X_u=x_u]\,.
 \end{equation*}
@@ -2301,7 +2303,7 @@ L_{t}^sf = \underline{\mathbb{E}}_{\,\rateset}^{\mathrm{WM}}[f(X_s)\,\vert\,X_{t
 \end{equation*}
 In other words, for functions defined on a single time point, the lower expectations with respect to the sets $\wmprocesses_{\rateset}$, $\wprocesses_{\rateset}$, and $\wprocesses_{\rateset_{\lrate}}$ are all the same! Consequently, the lower expectation will also be the same for any set $\mathcal{P}\subset\processes$ that satisfies $\wmprocesses_\rateset \subseteq \mathcal{P} \subseteq \wprocesses_{\rateset_{\lrate}}$.
 
-Another way of putting this is that, if one is interested in the lower expectation with respect to, say, $\wprocesses_{\rateset}$, and if $\rateset$ is non-empty and bounded with separately specified rows, that convexifying or closing $\rateset$ will not influence the lower expectation for functions defined on a single time point. This is due to Proposition~\ref{prop:dominating_unique_characterization}, which states that if you do this, you obtain $\rateset=\rateset_{\lrate}$.
+A useful consequence of this is that, if one is interested in the lower expectation with respect to, say, $\wprocesses_{\rateset}$, and if $\rateset$ is non-empty and bounded with separately specified rows, that convexifying or closing $\rateset$ will not influence the lower expectation for functions defined on a single time point. This is due to Proposition~\ref{prop:dominating_unique_characterization}, which states that if you do this, you obtain $\rateset=\rateset_{\lrate}$. This observation may be helpful for model specification, where a closed and/or convex specification of $\rateset$ might be easier to construct than a more ``fragmented'' parameter set.
 
 %Similar to our results from Section~\ref{sec:connections_rate}, we conclude from this that sets of stochastic processes are more informative than their corresponding lower expectations. In general, different sets $\wprocesses_\rateset$ of stochastic processes can have their lower expectations computed by the same lower transition operator $L_t^s$, and hence they necessarily have the same lower expectation. 
 %
@@ -4560,6 +4562,23 @@ with $\Delta_i\coloneqq t_{i}-t_{i-1}$. Since it follows from Proposition~\ref{p
 Since $\epsilon>0$ is arbitrary, it follows that $\norm{T_t^s-I}\leq(s-t)\norm{\rateset}$.
 \end{proof}
 
+\begin{lemma}\label{lemma:nonhomogeneous_in_process_set}
+Let $\rateset$ be a non-empty bounded set of rate matrices, and let $\mathcal{M}$ be a non-empty set of probability mass functions on $\states$. Then for any finite sequence of time points $u=t_0,\ldots,t_n$ and corresponding collection of rate matrices $Q_0,\ldots,Q_{n+1}\in\rateset$, there is a process $P\in\wmprocesses_{\rateset,\,\mathcal{M}}$ such that
+\begin{equation}\label{eq:nonhomogen_in_process_set_system_composition}
+\mathcal{T}_P = \mathcal{T}_{Q_0}^{[0,t_0]}\otimes \mathcal{T}_{Q_1}^{[t_0,t_1]} \otimes \cdots \otimes \mathcal{T}_{Q_n}^{[t_{n-1},t_n]} \otimes \mathcal{T}_{Q_{n+1}}^{[t_n,\infty)}\,.
+\end{equation}
+\end{lemma}
+\begin{proof}
+Proposition~\ref{prop:finite_different_rate_matrix_has_process} implies the existence of a process $P\in\wmprocesses$ that satisfies both Equation~\eqref{eq:nonhomogen_in_process_set_system_composition} and $P(X_0)\in\mathcal{M}$. It remains to show that $P\in\wmprocesses_{\rateset,\,\mathcal{M}}$, or equivalently, since we already have $P(X_0)\in\mathcal{M}$, that $\smash{\overline{\partial}}T_t^t\subseteq\rateset$ for all $t\in\realsnonneg$. To this end, consider any $t\in\realsnonneg$.
+
+We consider several cases. If $t<t_0$, then $\smash{\overline{\partial}}T_t^t$ corresponds to $\mathcal{T}_{Q_0}^{[0,t_0]}$, and hence $\smash{\overline{\partial}}T_t^t=\{Q_0\}\subseteq\rateset$. If $t>t_n$, then $\smash{\overline{\partial}}T_t^t$ corresponds to $\smash{\mathcal{T}_{Q_{n+1}}^{[t_n,\infty)}}$, in which case $\smash{\overline{\partial}}T_t^t=\{Q_{n+1}\}\subseteq\rateset$. Similarly, if $t\in(t_{i-1},t_i)$ for some $i\in\{1,\ldots,n\}$, then $\smash{\overline{\partial}}T_t^t$ corresponds to $\mathcal{T}_{Q_i}^{[t_{i-1},t_i]}$, and therefore $\smash{\overline{\partial}}T_t^t=\{Q_i\}\subseteq\rateset$. The only remaining case is when $t=t_i$ for some $i\in\{0,\ldots,n\}$. In this case, we have that $\smash{\overline{\partial}}_-T_t^t=\{Q_i\}$ and $\smash{\overline{\partial}}_+T_t^t=\{Q_{i+1}\}$, and therefore
+\begin{equation*}
+\smash{\overline{\partial}}T_t^t = \smash{\overline{\partial}}_-T_t^t\cup\smash{\overline{\partial}}_+T_t^t=\{Q_{i},Q_{i+1}\}\subseteq\rateset.
+\end{equation*}
+% Because this covers all the possible cases, in summary, we have found that $\smash{\overline{\partial}}T_t^t\subseteq\rateset$ for all $t\in\realsnonneg$, and hence $P\in\wmprocesses_\rateset$.
+\end{proof}
+
+
 Lemma~\ref{lemma:restricted_trans_mat_system_complete_if_Q_closed} and~\ref{lemma:restricted_trans_mat_system_totally_bounded_if_Q_bounded_convex} below essentially provide the bulk of the proof for Theorem~\ref{theorem:restricted_transmatsystem_space_compact_if_Q_closed}; these results are stated separately for ease of exposition.
 
 \begin{lemma}\label{lemma:restricted_trans_mat_system_complete_if_Q_closed}
@@ -4620,6 +4639,7 @@ Therefore, we can apply Equation~\eqref{eq:lemma:restricted_trans_mat_system_com
 \end{equation*}
 By repeating this procedure for every $m\in\nats$, we obtain a sequence $\{Q_m\}_{n\in\nats}$ in $\rateset$ such that $\norm{Q_*-Q_m}\leq\nicefrac{3}{m}$ for all $m\in\nats$, which clearly implies that $\lim_{m\to+\infty}Q_m=Q_*$. Since the sequence $\{Q_m\}_{m\in\nats}$ belongs to the closed set $\rateset$, we must therefore have that $Q_*\in\rateset$.
 \end{proof}
+
 
 \begin{lemma}\label{lemma:restricted_trans_mat_system_totally_bounded_if_Q_bounded_convex}
 Consider a non-empty, bounded and convex set of rate matrices $\rateset$ and any $t,s\in\realsnonneg$ such that $t\leq s$. Let $d$ be the metric that is defined in Equation~\eqref{eq:trans_mat_system_metric}. The metric space $\smash{(\mathbb{T}_\rateset^{[t,s]},d)}$ is then totally bounded.
@@ -5475,7 +5495,7 @@ We end this proof by showing that $\rateset_{\lrate}$ is bounded. Consider any $
 \begin{equation*}
 \inf\left\{Q(x,x)\colon Q\in\rateset_{\lrate}\right\}\geq(\lrate\ind{x})(x)>-\infty.
 \end{equation*}
-Since $x\in\states$ is arbitary, Proposition~\ref{prop:alternativedefforbounded} now guarantees that $\rateset_{\lrate}$ is bounded. 
+Since $x\in\states$ is arbitrary, Proposition~\ref{prop:alternativedefforbounded} now guarantees that $\rateset_{\lrate}$ is bounded. 
 \end{proof}
 
 \begin{proof}[Proof of Proposition~\ref{prop:dominatingproperties}]
@@ -5532,6 +5552,8 @@ This implies that $Qf\not\geq\lrate f$, and therefore, that $Q\notin\rateset_{\l
 % This clearly implies that, for all $Q'\in\rateset$, it holds that $[Qf](x) \leq c_1 < c_2 \leq [Q'f](x)$. In turn, this implies the existence of some $\epsilon\in\realspos$ for which $[Qf](x) + \epsilon < [Q'f](x)$, for all $Q'\in\rateset$. Because $\lrate$ is the lower envelope of $\rateset$, by Equation~\eqref{eq:correspondinglowertrans}, we therefore find that $[Qf](x) < [\lrate f](x)$. Hence, we have found a $f\in\gamblesX$ and a $x\in\states$, such that for some $Q\in\rateset_{\lrate}$, it holds that $[Qf](x) < [\lrate f](x)$. By Equation~\eqref{eq:dominatingratematrices}, this is a contradiction, and hence $\rateset=\rateset_{\lrate}$.
 \end{proof}
 
+Recall from the definition of the lower envelope $\lrate$ of a given set $\rateset$ of rate matrices, *** blabla, is benaderbaar als ssr.
+
 \begin{lemma}\label{lemma:rateset_has_arginf}
 Let $\rateset$ be an arbitrary non-empty bounded set of rate matrices that has separately specified rows, with corresponding lower transition rate operator $\lrate$. Then for all $f\in\gamblesX$ and $\epsilon\in\realspos$, there exists a $Q\in\rateset$ such that
 \begin{equation*}
@@ -5542,8 +5564,10 @@ Let $\rateset$ be an arbitrary non-empty bounded set of rate matrices that has s
 This is immediate from the definition of the lower envelope of $\rateset$, as given by Equation~\eqref{eq:correspondinglowertrans}, and the fact that $\rateset$ has separately specified rows.
 \end{proof}
 
+**** blabla, paar decompositie lemmas
+
 \begin{lemma}\label{lemma:weirddecomposition}
-Consider any $P\in\wprocesses_\rateset$, any $t,s\in\realsnonneg$ such that $t<s$, any $u\in\mathcal{U}_{<t}$ and $x_u\in\states^u$ and any sequence $t=t_0<t_1<\cdots<t_n=s$, with $n\in\nats$.
+Consider any $P\in\wprocesses_\rateset$, any $t,s\in\realsnonneg$ such that $t<s$, any $u\in\mathcal{U}_{<t}$ and $x_u\in\states_u$ and any sequence $t=t_0<t_1<\cdots<t_n=s$, with $n\in\nats$.
 Then for any $f\in\gamblesX$ and $x_t\in\states$:
 \begin{equation*}
 [T_{t,\,x_u}^sf](x_t)
@@ -5556,21 +5580,22 @@ For any $g\in\gamblesX$, we then find that
 \begin{align*}
 [T_{t_0,\,x_u}^{t_2}g](x_t)
 %=[T_{t,\,x_u}^{t_2}g](x_t)
-&=\mathbb{E}(g(X_{t_2})\vert\,X_{t}=x_t,X_u=x_u)\\
-&=\sum_{x_{t_1}\in\states}\mathbb{E}(g(X_{t_2})\vert\,X_{t_1}=x_{t_1},X_{t}=x_t,X_u=x_u)P(X_{t_1}=x_{t_1}\vert\,X_{t}=x_t,X_u=x_u)\\[-8pt]
+&=\mathbb{E}_P[g(X_{t_2})\vert\,X_{t}=x_t,X_u=x_u]\\
+&=\sum_{x_{t_1}\in\states}\mathbb{E}_P[g(X_{t_2})\vert\,X_{t_1}=x_{t_1},X_{t}=x_t,X_u=x_u]P(X_{t_1}=x_{t_1}\vert\,X_{t}=x_t,X_u=x_u)\\[-8pt]
 &\quad\quad\quad\quad\quad=\sum_{x_{t_1}\in\states}
 [T_{t_1,\,x_{u\cup\{t\}}}^{t_{2}}g](x_{t_1})P(X_{t_1}=x_{t_1}\vert\,X_{t}=x_t,X_u=x_u)\\[-6pt]
 &\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad=[T_{t_0,\,x_u}^{t_1}
 T_{t_1,\,x_{u\cup\{t\}}}^{t_{2}}g](x_t),
 \end{align*}
 and therefore, it follows that
-\begin{equation*}
+\begin{align*}
 [T_{t,\,x_u}^sf](x_t)
-=\Big[T_{t_0,\,x_u}^{t_2}\Bigg(\prod_{i=3}^{n}T_{t_{i-1},\,x_{u\cup\{t\}}}^{t_{i}}\Bigg)f\Big](x_t)
-=\Big[T_{t_0,\,x_u}^{t_1}
+&=\Big[T_{t_0,\,x_u}^{t_2}\Bigg(\prod_{i=3}^{n}T_{t_{i-1},\,x_{u\cup\{t\}}}^{t_{i}}\Bigg)f\Big](x_t)
+\\
+ &= \Big[T_{t_0,\,x_u}^{t_1}
 T_{t_1,\,x_{u\cup\{t\}}}^{t_{2}}
-\Bigg(\prod_{i=3}^{n}T_{t_{i-1},\,x_{u\cup\{t\}}}^{t_{i}}\Bigg)f\Big](x_t),
-\end{equation*}
+\Bigg(\prod_{i=3}^{n}T_{t_{i-1},\,x_{u\cup\{t\}}}^{t_{i}}\Bigg)f\Big](x_t) =\Big[T_{t_0,\,x_u}^{t_1}\Bigg(\prod_{i=2}^{n}T_{t_{i-1},\,x_{u\cup\{t\}}}^{t_{i}}\Bigg)f\Big](x_t),
+\end{align*}
 using the induction hypothesis for the first equality.
 \end{proof}
 
@@ -5677,7 +5702,7 @@ using Equation~\eqref{eq:theorem:nonmarkov_single_var_lower_bounded} to establis
 \left[\left(\prod_{i=1}^n(I+\Delta_i Q_i)\right)f\right](x_t)+\frac{\epsilon}{2}
 <[T_{t,\,x_u}^sf](x_t)+\epsilon.
 \end{multline*}\\[-0pt]
-Since $\epsilon>0$ was arbitrary, this allows us to infer that $[L_{t}^s f](x_t)\leq [T_{t,\,x_u}^sf](x_t)$. The result now follows from Remark~\ref{remark:expectationT}.
+Since $\epsilon>0$ was arbitrary, this allows us to infer that $[L_{t}^s f](x_t)\leq [T_{t,\,x_u}^sf](x_t)$. The result now follows because $[T_{t,x_u}^sf](x_t)=\mathbb{E}_P[f(X_s)\vert X_t=x_t,X_u=x_u]$, as noted in Remark~\ref{remark:expectationT}.
 % Now, observe that because $\tau_m=s$, it holds for all $y\in\states$ that
 % \begin{align*}
 % \left[T_{\tau_{m-1},x_{u\cup\{t\}}}^{\tau_{m}}f\right](y) &= \mathbb{E}[f(X_{\tau_m})\,\vert\,X_{\tau_{m-1}}=y,X_t=x,X_u=x_u]\\
@@ -5798,22 +5823,6 @@ Since $\epsilon>0$ was arbitrary, this allows us to infer that $[L_{t}^s f](x_t)
 %\end{proof}
 
 
-\begin{lemma}\label{lemma:nonhomogeneous_in_process_set}
-Let $\rateset$ be a non-empty bounded set of rate matrices. Then for any finite sequence of time points $u=t_0,\ldots,t_n$ and corresponding collection of rate matrices $Q_0,\ldots,Q_{n+1}\in\rateset$, there is a process $P\in\wmprocesses_\rateset$ such that
-\begin{equation}\label{eq:nonhomogen_in_process_set_system_composition}
-\mathcal{T}_P = \mathcal{T}_{Q_0}^{[0,t_0]}\otimes \mathcal{T}_{Q_1}^{[t_0,t_1]} \otimes \cdots \otimes \mathcal{T}_{Q_n}^{[t_{n-1},t_n]} \otimes \mathcal{T}_{Q_{n+1}}^{[t_n,\infty)}\,.
-\end{equation}
-\end{lemma}
-\begin{proof}
-Proposition~\ref{prop:finite_different_rate_matrix_has_process} implies the existence of a process $P\in\wmprocesses$ that satisfies Equation~\eqref{eq:nonhomogen_in_process_set_system_composition}. It remains to show that $P\in\wmprocesses_\rateset$, or equivalently, that $\smash{\overline{\partial}}T_t^t\subseteq\rateset$ for all $t\in\realsnonneg$. To this end, consider any $t\in\realsnonneg$.
-
-We consider several cases. If $t<t_0$, then $\smash{\overline{\partial}}T_t^t$ corresponds to $\mathcal{T}_{Q_0}^{[0,t_0]}$, and hence $\smash{\overline{\partial}}T_t^t=\{Q_0\}\subseteq\rateset$. If $t>t_n$, then $\smash{\overline{\partial}}T_t^t$ corresponds to $\smash{\mathcal{T}_{Q_{n+1}}^{[t_n,\infty)}}$, in which case $\smash{\overline{\partial}}T_t^t=\{Q_{n+1}\}\subseteq\rateset$. Similarly, if $t\in(t_{i-1},t_i)$ for some $i\in\{1,\ldots,n\}$, then $\smash{\overline{\partial}}T_t^t$ corresponds to $\mathcal{T}_{Q_i}^{[t_{i-1},t_i]}$, and therefore $\smash{\overline{\partial}}T_t^t=\{Q_i\}\subseteq\rateset$. The only remaining case is when $t=t_i$ for some $i\in\{0,\ldots,n\}$. In this case, we have that $\smash{\overline{\partial}}_-T_t^t=\{Q_i\}$ and $\smash{\overline{\partial}}_+T_t^t=\{Q_{i+1}\}$, and therefore
-\begin{equation*}
-\smash{\overline{\partial}}T_t^t = \smash{\overline{\partial}}_-T_t^t\cup\smash{\overline{\partial}}_+T_t^t=\{Q_{i},Q_{i+1}\}\subseteq\rateset.
-\end{equation*}
-% Because this covers all the possible cases, in summary, we have found that $\smash{\overline{\partial}}T_t^t\subseteq\rateset$ for all $t\in\realsnonneg$, and hence $P\in\wmprocesses_\rateset$.
-\end{proof}
-
 \begin{proof}[Proof of Proposition~\ref{theorem:lower_markov_bound_is_tight}]
 Fix any $t,s\in\realsnonneg$ such that $t\leq s$, any $f\in\gamblesX$ and any $\epsilon\in\realspos$. If $t=s$, the result is trivial. Hence, without loss of generality, we may assume that $t<s$. Let $C\coloneqq (s-t)$, choose any $\epsilon^*>0$ such that $\epsilon^*C<\epsilon$, choose any $\epsilon_1,\epsilon_2,\epsilon_3>0$ such that $\epsilon_1+\epsilon_2+\epsilon_3<\epsilon^*$, choose any $\delta>0$ such that $\delta\norm{\rateset}^2\norm{f}<\epsilon_3$ and $\smash{\delta\norm{\lrate}^2\norm{f}<\epsilon_1}$ (this is always possible because of~\ref{LR:normlratefinite}), and consider any $u\in\mathcal{U}_{[t,s]}$ such that $\sigma(u)<\delta$, with $u=t_0,\ldots,t_n$ and $n\in\nats$. 
 
@@ -5850,10 +5859,13 @@ where the second inequality holds because of~\ref{N:normAf}, the third inequalit
 
 
 
-For all $i\in\{0,\ldots,n\}$, let $\mathcal{T}_{Q_i}$ denote the transition matrix system corresponding to $Q_i$, as in Definition~\ref{def:systemfromQ}. Then, by Lemma~\ref{lemma:nonhomogeneous_in_process_set}, there is some $P\in\wmprocesses_\rateset$ with transition matrix system $\mathcal{T}_P$, such that
+For all $i\in\{0,\ldots,n\}$, let $\mathcal{T}_{Q_i}$ denote the transition matrix system corresponding to $Q_i$, as in Definition~\ref{def:systemfromQ}. Then, by Lemma~\ref{lemma:nonhomogeneous_in_process_set}, there is some $P\in\wmprocesses_{\rateset,\,\mathcal{M}}$ with transition matrix system $\mathcal{T}_P$, such that
 \begin{equation*}
 \mathcal{T}_P = \mathcal{T}_{Q_0}^{[0,t_0]}\otimes \mathcal{T}_{Q_1}^{[t_0,t_1]}\otimes \cdots \otimes \mathcal{T}_{Q_n}^{[t_{n-1},t_n]} \otimes \mathcal{T}_{Q_n}^{[t_{n},\infty)}\,.
 \end{equation*}
+
+**** kan het onderstaande niet direct via recursieve lemma?
+
 Due to Equation~\eqref{eq:theorem:lower_markov_bound_is_tight:localbound}, we know that the transition matrices of this process $P$ satisfy
 \begin{equation}\label{eq:theorem:lower_markov_bound_is_tight:localbounds}
 (\forall i\in\{1,\ldots,n\})~
@@ -5877,7 +5889,7 @@ By continuing in this way---applying induction---we eventually find that
 \norm{L_t^sf - T_t^sf}=\norm{L_{t_0}^{t_n}g_n - T_{t_0}^{t_n}g_n} 
 \leq \sum_{i=1}^{n} \norm{L_{t_{i-1}}^{t_i}g_i - T_{t_{i-1}}^{t_i}g_i}\leq\sum_{i=1}^n\Delta_i\epsilon^*=C\epsilon^*<\epsilon,
 \end{equation*}
-using Equation~\eqref{eq:theorem:lower_markov_bound_is_tight:localbounds} to establish the second inequality. The result now follows directly from Remark~\ref{remark:expectationT}.
+using Equation~\eqref{eq:theorem:lower_markov_bound_is_tight:localbounds} to establish the second inequality. The result now follows directly from Remark~\ref{remark:expectationT}, which states that $T_t^sf=\mathbb{E}_P[f(X_s)\vert X_t]$.
 % Consider now any $i\in\{1,\ldots,n\}$. Then, we find from Lemma~\ref{lemma:justthelinearpart} that
 % \begin{align*}
 % &\quad \norm{L_{t_{i-1}}^{t_i}\left[L_{t_i}^{t_n}f\right] - T_{t_{i-1}}^{t_i}\left[L_{t_i}^{t_n}f\right]} \\
@@ -5939,15 +5951,15 @@ using Equation~\eqref{eq:theorem:lower_markov_bound_is_tight:localbounds} to est
 \begin{proof}[Proof of Corollary~\ref{cor:lower_operator_is_infimum}]
 %We start by proving the first statement. By Proposition~\ref{theorem:nonmarkov_single_var_lower_bounded} and Proposition~\ref{prop:lower_exp_markov_bounded_by_nonmarkov}, we have that for all $P\in\wmprocesses_\rateset$ it holds that $\left[L_t^sf\right](x) \leq \mathbb{E}[f(X_s)\,\vert\,X_t=x]$. Furthermore,
 Fix any $\epsilon>0$.
-It then follows from Proposition~\ref{theorem:lower_markov_bound_is_tight} that there is some $P\in\wmprocesses_\rateset$ such that $\mathbb{E}[f(X_s)\vert\,X_t=x_t] < [L_t^sf](x_t)+\epsilon$, which implies that
+It then follows from Proposition~\ref{theorem:lower_markov_bound_is_tight} that there is some $P\in\wmprocesses_{\rateset,\,\mathcal{M}}$ such that $\mathbb{E}_P[f(X_s)\vert\,X_t=x_t] < [L_t^sf](x_t)+\epsilon$, which implies that
 \begin{align*}
-\underline{\mathbb{E}}^{\mathrm{WM}}_\rateset\left[f(X_s)\,\vert\,X_t=x_t,X_u=x_u\right]
+\underline{\mathbb{E}}^{\mathrm{WM}}_{\rateset,\,\mathcal{M}}\left[f(X_s)\,\vert\,X_t=x_t,X_u=x_u\right]
 &\leq
-\mathbb{E}[f(X_s)\vert\,X_t=x_t,X_u=x_u]\\
-&=\mathbb{E}[f(X_s)\vert\,X_t=x_t]
+\mathbb{E}_P[f(X_s)\vert\,X_t=x_t,X_u=x_u]\\
+&=\mathbb{E}_P[f(X_s)\vert\,X_t=x_t]
 < [L_t^sf](x_t)+\epsilon,
 \end{align*}
-using Definition~\ref{def:process_sets} for the first inequality and the Markov property of $P$ for the equality. Hence, since $\epsilon>0$ is arbitrary, we find that  $\underline{\mathbb{E}}^{\mathrm{WM}}_\rateset\left[f(X_s)\,\vert\,X_t=x_t,X_u=x_u\right]\leq[L_t^sf](x_t)$.
+using Definition~\ref{def:process_sets} for the first inequality and the Markov property of $P$ for the equality. Hence, since $\epsilon>0$ is arbitrary, we find that  $\underline{\mathbb{E}}^{\mathrm{WM}}_{\rateset,\,\mathcal{M}}\left[f(X_s)\,\vert\,X_t=x_t,X_u=x_u\right]\leq[L_t^sf](x_t)$.
 % Together this implies, using Definition~\ref{def:lower_exp}, that
 % \begin{equation*}
 % \left[L_t^sf\right](x) = \inf\left\{\left[T_t^sf\right](x)\,:\,P\in\wmprocesses_\rateset\right\} = \underline{\mathbb{E}}^{\mathrm{WM}}_\rateset\left[f(X_s)\,\vert\,X_t=x\right].
@@ -5962,10 +5974,10 @@ using Definition~\ref{def:process_sets} for the first inequality and the Markov 
 This implies the result because we also have that
 \begin{align*}
 \left[L_t^sf\right](x_t)
-&\leq\inf\left\{\mathbb{E}[f(X_s)\,\vert\,X_t=x_t,X_u=x_u]\colon P\in\wprocesses_{\rateset}\right\}\\
-&=\underline{\mathbb{E}}^{\mathrm{W}}_{\,\rateset}[f(X_s)\,\vert\,X_t=x_t,X_u=x_u] 
+&\leq\inf\left\{\mathbb{E}_P[f(X_s)\,\vert\,X_t=x_t,X_u=x_u]\colon P\in\wprocesses_{\rateset,\,\mathcal{M}}\right\}\\
+&=\underline{\mathbb{E}}^{\mathrm{W}}_{\,\rateset,\,\mathcal{M}}[f(X_s)\,\vert\,X_t=x_t,X_u=x_u] 
 \leq
-\underline{\mathbb{E}}^{\mathrm{WM}}_{\,\rateset}[f(X_s)\,\vert\,X_t=x_t,X_u=x_u],
+\underline{\mathbb{E}}^{\mathrm{WM}}_{\,\rateset,\,\mathcal{M}}[f(X_s)\,\vert\,X_t=x_t,X_u=x_u],
 \end{align*}
 where the first inequality follows from Proposition~\ref{theorem:nonmarkov_single_var_lower_bounded} and the last inequality follows from Proposition~\ref{prop:lower_exp_markov_bounded_by_nonmarkov}.
 \end{proof}
@@ -6054,18 +6066,18 @@ where the first inequality follows from Proposition~\ref{theorem:nonmarkov_singl
 % a contradiction with Equation~\eqref{eq:nonwellbehaved_limit_diagonal_left}. Therefore, if $P\notin\wprocesses$, Equation~\eqref{theo:largest_set_outside_process_lower} follows.
 
 % *** first attempt at shorter version  ***
-Clearly, it suffices to prove that for any $P\in\processes$ that is not well-behaved or not consistent with $\rateset_{\lrate}$, there are $t,s\in\realsnonneg$ with $t< s$, $u\in\mathcal{U}_{<t}$, $x_u\in\states^u$, $x_t\in\states$ and $f\in\gamblesX$ such that
+Clearly, it suffices to prove that for any $P\in\processes$ that is not well-behaved or not consistent with $\rateset_{\lrate}$, there are $t,s\in\realsnonneg$ with $t< s$, $u\in\mathcal{U}_{<t}$, $x_u\in\states_u$, $x_t\in\states$ and $f\in\gamblesX$ such that
 \begin{equation}\label{eq:theo:dominating_rate_processes_max_set:toprove}
 % (\exists t,s\in\realsnonneg\colon t\leq s)\,
 % (\exists u\in\mathcal{U}_{<t})\,
 % (\exists x_u\in\states^u)\,
 % (\exists x_t\in\states)\,
 % (\exists f\in\gamblesX)
-\mathbb{E}[f(X_s)\,\vert\,X_t=x_t,X_u=x_u] < [L_t^sf](x_t).\vspace{5pt}
+\mathbb{E}_P[f(X_s)\,\vert\,X_t=x_t,X_u=x_u] < [L_t^sf](x_t).\vspace{5pt}
 \end{equation}
 % We consider two cases: $P\in\processes\setminus\wprocesses$. and $P\in\wprocesses\setminus\wprocesses_{\rateset_{\lrate}}$
 
-We start with the case that $P$ is not well-behaved. Fix any $\epsilon>0$ and let $C\coloneqq\norm{\lrate}+\epsilon$. It then follows from Proposition~\ref{prop:stochasticprocess:simpleproperties} that there are $t,s\in\realsnonneg$ with $t< s$, $u\in\mathcal{U}_{<t}$ and $x_u\in\states^u$ such that $\nicefrac{1}{\Delta}\norm{T_{t,\,x_u}^s-I}>C$ and $\smash{\Delta\norm{\lrate}^2<\epsilon}$, with $\Delta\coloneqq s-t>0$. Let $Q\coloneqq\nicefrac{1}{\Delta}(T_{t,\,x_u}^s-I)$. Since $\norm{Q}>C$, it then follows that there is some $f'\in\gamblesX$ such that $\norm{Qf'}>C$, which in turn implies that there is some $x_t\in\states$ such that $\abs{[Qf'](x_t)}>C$. If $[Qf'](x_t)<0$, we let $f\coloneqq f'$, and if $[Qf'](x_t)>0$, we let $f\coloneqq -f'$. Clearly, this implies that $[Qf](x_t)<-C$, which, since $[\lrate f](x_t)\geq-\norm{\lrate}$, implies that $[Qf](x_t)\leq[\lrate f](x_t)-\epsilon$ and therefore that $[(I+\Delta Q)f](x_t)+\Delta\epsilon\leq [(I+\Delta\lrate)f](x_t)$. Hence, since we also know that
+We start with the case that $P$ is not well-behaved. Fix any $\epsilon>0$ and let $C\coloneqq\norm{\lrate}+\epsilon$. It then follows from Proposition~\ref{prop:stochasticprocess:simpleproperties} that there are $t,s\in\realsnonneg$ with $t< s$, $u\in\mathcal{U}_{<t}$ and $x_u\in\states_u$ such that $\nicefrac{1}{\Delta}\norm{T_{t,\,x_u}^s-I}>C$ and $\smash{\Delta\norm{\lrate}^2<\epsilon}$, with $\Delta\coloneqq s-t>0$. Let $Q\coloneqq\nicefrac{1}{\Delta}(T_{t,\,x_u}^s-I)$. Since $\norm{Q}>C$, it then follows that there is some $f'\in\gamblesX$ such that $\norm{Qf'}>C$, which in turn implies that there is some $x_t\in\states$ such that $\abs{[Qf'](x_t)}>C$. If $[Qf'](x_t)<0$, we let $f\coloneqq f'$, and if $[Qf'](x_t)>0$, we let $f\coloneqq -f'$. Clearly, this implies that $[Qf](x_t)<-C$, which, since $[\lrate f](x_t)\geq-\norm{\lrate}$, implies that $[Qf](x_t)\leq[\lrate f](x_t)-\epsilon$ and therefore that $[(I+\Delta Q)f](x_t)+\Delta\epsilon\leq [(I+\Delta\lrate)f](x_t)$. Hence, since we also know that
 \begin{align*}
 \abs{[L_t^sf](x_t)-[(I+\Delta\lrate)f](x_t)}
 \leq
@@ -6082,7 +6094,7 @@ using Lemma~\ref{lemma:quadraticboundonL} to establish the first inequality, it 
 \end{align*}
 which, because of Remark~\ref{remark:expectationT}, implies that Equation~\eqref{eq:theo:dominating_rate_processes_max_set:toprove} holds.
 
-Next, we consider the case that $P$ is well behaved, but not consistent with $\rateset_{\lrate}$. In that case, it follows from Definition~\ref{def:consistent_process} that there are $t^*\in\realsnonneg$, $u\in\mathcal{U}_{<t}$ and $x_u\in\states^u$ such that $\smash{\overline{\partial}T_{t^*,\,x_u}^{t^*} \not\subseteq \rateset_{\lrate}}$. Since we know that $\smash{\overline{\partial}T_{t^*,\,x_u}^{t^*}}$ is a non-empty set of rate matrices because of Proposition~\ref{prop:boundednon-emptyandclosed}, this implies the existence of a rate matrix $Q^*\in\smash{\overline{\partial}}T_{t^*,x_u}^{t^*}$ such that $Q^*\notin\rateset_{\lrate}$. Furthermore, since $Q^*\notin\rateset_{\lrate}$, Equation~\eqref{eq:dominatingratematrices} implies that there are $f\in\gamblesX$ and $x_t\in\states$ such that $[Q^*f](x_t)<[\lrate f](x_t)$. Consider now any $\epsilon>0$ such that $[Q^*f](x_t)\leq[\lrate f](x_t)-2\epsilon$ (this is clearly possible). Since $Q^*\in\smash{\overline{\partial}}T_{t^*,x_u}^{t^*}$, it then follows from Definition~\ref{def:outerpartialderivatives} that thare are $t,s\in\realsnonneg$ such that $u<t<s$, $\norm{\nicefrac{1}{\Delta}(T_{t,\,x_u}^s-I)-Q^*}\leq\epsilon$ and $\smash{\Delta\norm{\lrate}^2<\epsilon}$, with $\Delta\coloneqq s-t>0$. Let $Q\coloneqq\nicefrac{1}{\Delta}(T_{t,\,x_u}^s-I)$. Since $\norm{Q-Q^*}\leq\epsilon$, it then follows that $[Qf](x_t)\leq[Q^*f](x_t)+\epsilon\leq[\lrate f](x_t)-\epsilon$. Hence, using the exact same argument as in the first part of this proof, we find that Equation~\eqref{eq:theo:dominating_rate_processes_max_set:toprove} holds.
+Next, we consider the case that $P$ is well behaved, but not consistent with $\rateset_{\lrate}$. In that case, it follows from Definition~\ref{def:consistent_process} that there are $t^*\in\realsnonneg$, $u\in\mathcal{U}_{<t}$ and $x_u\in\states_u$ such that $\smash{\overline{\partial}T_{t^*,\,x_u}^{t^*} \not\subseteq \rateset_{\lrate}}$. Since we know that $\smash{\overline{\partial}T_{t^*,\,x_u}^{t^*}}$ is a non-empty set of rate matrices because of Proposition~\ref{prop:boundednon-emptyandclosed}, this implies the existence of a rate matrix $Q^*\in\smash{\overline{\partial}}T_{t^*,x_u}^{t^*}$ such that $Q^*\notin\rateset_{\lrate}$. Furthermore, since $Q^*\notin\rateset_{\lrate}$, Equation~\eqref{eq:dominatingratematrices} implies that there are $f\in\gamblesX$ and $x_t\in\states$ such that $[Q^*f](x_t)<[\lrate f](x_t)$. Consider now any $\epsilon>0$ such that $[Q^*f](x_t)\leq[\lrate f](x_t)-2\epsilon$ (this is clearly possible). Since $Q^*\in\smash{\overline{\partial}}T_{t^*,x_u}^{t^*}$, it then follows from Definition~\ref{def:outerpartialderivatives} that thare are $t,s\in\realsnonneg$ such that $u<t<s$, $\norm{\nicefrac{1}{\Delta}(T_{t,\,x_u}^s-I)-Q^*}\leq\epsilon$ and $\smash{\Delta\norm{\lrate}^2<\epsilon}$, with $\Delta\coloneqq s-t>0$. Let $Q\coloneqq\nicefrac{1}{\Delta}(T_{t,\,x_u}^s-I)$. Since $\norm{Q-Q^*}\leq\epsilon$, it then follows that $[Qf](x_t)\leq[Q^*f](x_t)+\epsilon\leq[\lrate f](x_t)-\epsilon$. Hence, using the exact same argument as in the first part of this proof, we find that Equation~\eqref{eq:theo:dominating_rate_processes_max_set:toprove} holds.
 \end{proof}
 
 \begin{proof}[Proof of Proposition~\ref{prop:approximation_error_bound}]
