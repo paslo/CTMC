@@ -1000,7 +1000,7 @@ P(X_t=x\,\vert\,X_0=x) = p(t)\,.
 If we had defined stochastic processes as any map $P:\mathcal{C}^\mathrm{SP}\to\reals$ satisfying properties~\ref{def:coh_prob_2}-\ref{def:coh_prob_6}, then answering this question would have been entirely non-trivial. This is because we are only given the behavior, specified by $p$, on the very limited set of events $\{(X_t=x,X_0=x):t\in\realspos\}\subset\mathcal{C}^\mathrm{SP}$. Proving that there is a well-defined probability function on $\mathcal{C}^\mathrm{SP}$ that coincides with $p$ on this subset of events would clearly be extremely involved. 
 
 In contrast, as illustrated by the following example, the introduction of full conditional probabilities and coherence takes care of most of the heavy lifting in such an existence proof.
-\begin{exmp}
+\begin{exmp}\label{exmp:coherence_constructs_process}
 We will assume for this example that $\states$ is not singleton, i.e., that there are at least two states $x,y\in\states$ such that $x\neq y$. Consider now any function $p:\realspos\to[0,1]$, fix any $x\in\states$, construct a set of events $\mathcal{C}\subset\mathcal{C}^\mathrm{SP}$ as
 \begin{equation*}
 \mathcal{C} \coloneqq \left\{ (X_t=x,X_0=x)\in\mathcal{C}^\mathrm{SP} : t\in\realspos \right\},
@@ -1013,7 +1013,7 @@ We will first show that $\tilde{P}$ is a coherent conditional probability on $\m
 \begin{equation}\label{exmp:coherence:eq:coherence}
 \max\left\{ \sum_{i=1}^n \lambda_i\ind{(X_0=x)}(\omega)\left(\tilde{P}(X_{t_i}=x\vert X_0=x) - \ind{(X_{t_i}=x)}(\omega)\right)\Big\vert \omega\in C_0 \right\} \geq 0\,,
 \end{equation}
-with $C_0\coloneqq \bigcup_{i=1}^n (X_0=x)=(X_0=x)$.
+with $C_0\coloneqq \bigcup_{i=1}^n (X_0=x)=(X_0=x)$. In order to show that this is true, we will construct a path $\omega\in C_0$ such that the sum in Equation~\eqref{exmp:coherence:eq:coherence} is non-negative when evaluated in $\omega$.
 
 Note that each of the conditional events $(X_{t_i}=x,X_0=x)$ depends only on the time points 0 and $t_i$. Observe that we can assume without loss of generality that $t_i\neq t_j$ for all $i,j\in\{1,\ldots,n\}$ such that $i\neq j$. This is due to the linearity of the term being maximized in Equation~\eqref{exmp:coherence:eq:coherence}---if $t_i=t_j$ for some $i\neq j$, we can simply add the two summands.
 
@@ -1024,7 +1024,7 @@ x & \text{if $\lambda_i<0$, and} \\
 y & \text{otherwise.}
 \end{array} \right.
 \end{equation*}
-Again because $n$ is finite, Equation~\eqref{eq:path_exists_for_finite_points} guarantees that there is some $\omega\in\Omega$ such that $\omega\vert_{u}=x_u$. Furthermore, because $\omega(0)=x$, we clearly have that $\omega\in (X_0=x)\subset\Omega$. Evaluating the summand in Equation~\eqref{exmp:coherence:eq:coherence} using this $\omega$, we find that
+Again because $n$ is finite, Equation~\eqref{eq:path_exists_for_finite_points} guarantees that there is some $\omega\in\Omega$ such that $\omega\vert_{u}=x_u$. Furthermore, because $\omega(0)=x$, we clearly have that $\omega\in (X_0=x)\subset\Omega$. Evaluating the sum in Equation~\eqref{exmp:coherence:eq:coherence} using this $\omega$, we find that
 \begin{align*}
  &\quad \sum_{i=1}^n \lambda_{i}\ind{(X_0=x)}(\omega)\left(\tilde{P}(X_{t_i}=x\vert X_0=x) - \ind{(X_{t_i}=x)}(\omega)\right) \\
  &= \sum_{i=1}^n \lambda_{i}\ind{x}(\omega(0))\left(\tilde{P}(X_{t_i}=x\vert X_0=x) - \ind{x}(\omega(t_i))\right) = \sum_{i=1}^n \lambda_{i}\left(\tilde{P}(X_{t_i}=x\vert X_0=x) - \ind{x}(\omega(t_i))\right) \\
@@ -1060,7 +1060,11 @@ Corollary~\ref{corol:coherentextendable} now implies that $\tilde{P}$ can be ext
 
 \subsection{Well-behaved stochastic processes}\label{sec:well_behaved}
 
-Stochastic processes, as they are defined in the previous section, can behave in rather extreme ways. For example, the transition probabilities can jump instantaneously. While we do not want to impose any differentiability assumptions on these processes, we do want this rate of change to be bounded. We call a stochastic process for which this holds \emph{well-behaved}, as follows.
+Stochastic processes, as they are defined in the previous section, can behave in rather extreme ways. For instance, Example~\ref{exmp:coherence_constructs_process} tells us that there exists a stochastic process for which $P(X_t=x\vert X_0=x)=\ind{\mathbb{Q}_{>0}}(t)$, where $\ind{\mathbb{Q}_{>0}}$ is the indicator on the positive rational numbers. 
+
+*** beetje bruggetje nog hier
+
+While we do not want to impose any differentiability assumptions on these processes, we do want this rate of change to be bounded. We call a stochastic process for which this holds \emph{well-behaved}, as follows.
 
 %*** explain that stochastic process can behave in rather extreme ways. For example, the transition probabilities can jump instantaneously. In order to avoid this behavior, we restrict our attention to a subclass of stochastic processes, which we call well-behaved. ***
 
