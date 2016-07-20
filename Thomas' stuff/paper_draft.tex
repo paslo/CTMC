@@ -2459,7 +2459,7 @@ and furthermore,
 
 \subsection{Multi-Variable Functions on Multiple Points in the Future}\label{sec:decomposition}
 
-We now consider functions $f\in\gambles(\states_{u\cup v})$, where $u=t_0,\ldots,t_n$ is a sequence of time points in a process' history, and $v=s_0,\ldots,s_m$ is a sequence of time points in a process' future; hence, we assume $s_0>t_n$. For functions of this kind, it---surprisingly---turns out that computing the lower expectation with respect to $\wprocesses_{\rateset,\,\mathcal{M}}$ is easier than for $\wmprocesses_{\rateset,\,\mathcal{M}}$. We will show in this section how to do this for the former set, and provide in the next section a counter example for the latter.
+We now consider functions $f\in\gambles(\states_{u\cup v})$, where $u=t_0,\ldots,t_n$ is a sequence of time points in a process' history, and $v=s_0,\ldots,s_m$ is a sequence of time points in a process' future; hence, we assume $s_0>t_n$. For functions of this kind, it---surprisingly---turns out that computing the lower expectation with respect to $\wprocesses_{\rateset,\,\mathcal{M}}$ is easier than for $\wmprocesses_{\rateset,\,\mathcal{M}}$. We will show in this section how to do this for the former set, and will provide a counter example for the latter in Section~\ref{sec:tractability}.
 
 We have seen in the previous sections that we can use the operator $L_t^s$ to compute lower expectations of functions $f\in\gamblesX$ and $f\in\gambles(\states_{u\cup s})$, whenever $\rateset$ is non-empty, bounded, and has separately specified rows. We here show that if $\rateset$ is additionally convex, then we can do the same for functions $f\in\gambles(\states_{u\cup v})$.
 
@@ -2509,7 +2509,7 @@ Observe, therefore, that we can use our lower transition operator to compute low
 
 If $\rateset$ is furthermore closed, then by Proposition~\ref{prop:dominating_unique_characterization}, we have that $\rateset=\rateset_{\lrate}$. In that case, the lower expectation is taken with respect to $\wprocesses_\rateset=\wprocesses_{\rateset_{\lrate}}$ which, by Theorem~\ref{theo:dominating_rate_processes_max_set}, is exactly the largest set of stochastic processes for which our lower transition operator computes the lower expectation.
 
-The difference between $\wprocesses_{\text{int}(\rateset_{\lrate})}$ and $\wprocesses_{\rateset_{\lrate}}$ is that the lower expectation of the latter set is actually a minimum---instead of an infimum---because, due to repeated applications of Corollary~\ref{cor:inf_works_for_single_future_var}, Proposition~\ref{prop:lower_expectation_reached_if_Q_closed} and Theorem~\ref{theo:aanelkaarplakken}, the left-hand side of Equation~\eqref{eq:composition_lower_trans} is always reached by some $P\in\wprocesses_{\rateset_{\lrate}}$.
+The difference between $\wprocesses_{\text{int}(\rateset_{\lrate})}$ and $\wprocesses_{\rateset_{\lrate}}$ is that the lower expectation of the latter set is actually a minimum---rather than an infimum---because, due to repeated applications of Corollary~\ref{cor:inf_works_for_single_future_var}, Proposition~\ref{prop:lower_expectation_reached_if_Q_closed} and Theorem~\ref{theo:aanelkaarplakken}, the left-hand side of Equation~\eqref{eq:composition_lower_trans} is always reached by some $P\in\wprocesses_{\rateset_{\lrate}}$.
 
 %**** rewrite most things (everything) below
 %
@@ -2541,7 +2541,48 @@ The difference between $\wprocesses_{\text{int}(\rateset_{\lrate})}$ and $\wproc
 
 \subsection{Marginal Lower Expectations}\label{sec:marginal_lower_exp}
 
-**** Dit moet nog helemaal, maar we gaan laten zien dat $\underline{\mathbb{E}}^\mathrm{W}_{\rateset,\,\mathcal{M}}[f(X_u)]$ berekenbaar is voor alle $f\in\gambles(\states_u)$.
+Having shown in Section~\ref{sec:decomposition} how to compute \emph{conditional} lower expectations of functions defined on an arbitrary number of time points, we now consider how to compute \emph{marginal}---that is, unconditional---lower expectations of such functions. Thus, we consider a function $f\in\gambles(\states_u)$, with $u\in\mathcal{U}_{\emptyset}$, and are interested in the quantity $\underline{\mathbb{E}}[f(X_u)]$.
+
+An astute reader may have noticed that all our previous results about computability with the operator $L_t^s$ hold for any choice of initial distributions $\mathcal{M}$. Therefore, and because the definition of $L_t^s$ does not rely on the choice of $\mathcal{M}$, it follows that conditional lower expectations with respect to $\wmprocesses_{\rateset,\,\mathcal{M}}$ and $\wprocesses_{\rateset,\,\mathcal{M}}$ are invariant to the choice of $\mathcal{M}$. In contrast, and unsurprisingly, marginal lower expectations do depend on this choice.
+
+
+Nevertheless, the computation of marginal lower expectations is relatively straightforward when they are taken with respect to $\wprocesses_{\rateset,\,\mathcal{M}}$, assuming that $\rateset$ is non-empty, bounded, convex, and has separately specified rows. Note that these are the same requirements that we mentioned in Section~\ref{sec:decomposition} are necessary for computing conditional lower expectations of arbitrary functions. In what follows, we will explain how to compute $\underline{\mathbb{E}}_{\rateset,\,\mathcal{M}}^\mathrm{W}[f(X_u)]$ if $\rateset$ satisfies these assumptions.
+
+Due to Theorem~\ref{theorem:decomposition_multivar}, we can rewrite\footnote{Technically, this requires that $f$ depends on the state at time $0$. However, if $0\notin u$, we can instead use the trivial extension of $f$ from $\states_{u}$ to a function $f^*$ on $\states_{0\cup u}$, such that $f(x_u)=f^*(x_0,x_u)$ for all $x_0\in\states_0$. Hence, we can assume without loss of generality that $0\in u$.} the marginal lower expectation $\underline{\mathbb{E}}_{\rateset,\,\mathcal{M}}^\mathrm{W}[f(X_u)]$ as
+\begin{equation}\label{eq:marginal_decomp}
+\underline{\mathbb{E}}_{\rateset,\,\mathcal{M}}^\mathrm{W}[f(X_u)] = \underline{\mathbb{E}}_{\rateset,\,\mathcal{M}}^\mathrm{W}[\underline{\mathbb{E}}_{\rateset,\,\mathcal{M}}^\mathrm{W}[f(X_u)\,\vert\,X_0]] = \underline{\mathbb{E}}_{\mathcal{M}}[\underline{\mathbb{E}}_{\rateset,\,\mathcal{M}}^\mathrm{W}[f(X_u)\,\vert\,X_0]]\,,
+\end{equation}
+where we have used $\underline{\mathbb{E}}_{\mathcal{M}}[g(X_0)]\coloneqq \inf\{\sum_{x\in\states}p(x)g(x)\,:\,p\in\mathcal{M}\}$. Note that the inner lower expectation in the right-hand side of Equation~\eqref{eq:marginal_decomp} is a conditional lower expectation which, due to Corollary~\ref{cor:composition_lower_trans}, is computable as
+\begin{equation*}
+\underline{\mathbb{E}}_{\rateset,\,\mathcal{M}}^\mathrm{W}[f(X_u)\,\vert\,X_0] = \left[L_{t_0}^{t_1}L_{t_1}^{t_2}\cdots L_{t_{n-1}}^{t_n}f\right](X_0) =: \hat{f}(X_0)\,,
+\end{equation*}
+with $u=t_0,\ldots,t_n$, and where we have assumed without loss of generality that $t_0=0$. Thus, we find that
+\begin{equation*}
+\underline{\mathbb{E}}_{\rateset,\,\mathcal{M}}^\mathrm{W}[f(X_u)] = \underline{\mathbb{E}}_{\mathcal{M}}[\hat{f}(X_0)] = \inf\left\{\sum_{x_0\in\states_0}p(x_0)\hat{f}(x_0)\,:\,p\in\mathcal{M} \right\}\,.
+\end{equation*}
+Hence, in order to compute the marginal lower expectation $\underline{\mathbb{E}}_{\rateset,\,\mathcal{M}}^\mathrm{W}[f(X_u)]$, it suffices to only compute the term $\hat{f}(X_0)$ once, which by Corollary~\ref{cor:composition_lower_trans} can be done with the operator $L_t^s$. What remains is a relatively straightforward linear optimization problem over the set $\mathcal{M}$, which is a well-known problem in the field of imprecise probability. We will therefore assume that this problem is solvable, although the difficulty clearly depends on the exact choice of $\mathcal{M}$.
+
+As two particular cases, we note that if $\mathcal{M}$ is the set of \emph{all} probability mass functions on $\states$, we find that
+\begin{equation*}
+\underline{\mathbb{E}}_{\rateset,\,\mathcal{M}}^\mathrm{W}[f(X_u)] = \underline{\mathbb{E}}_{\rateset}^\mathrm{W}[f(X_u)] = \min\Bigl\{  \underline{\mathbb{E}}_{\rateset}^\mathrm{W}[f(X_u)\,\vert\,X_0=x] \,:\,x\in\states\Bigr\}\,,
+\end{equation*}
+and, if instead $\mathcal{M}$ is a singleton set $\mathcal{M}=\{p\}$, then
+\begin{equation*}
+\underline{\mathbb{E}}_{\rateset,\,\{p\}}^\mathrm{W}[f(X_u)] = \sum_{x\in\states} \underline{\mathbb{E}}_{\rateset}^\mathrm{W}[f(X_u)\,\vert\,X_0=x]p(x)\,.
+\end{equation*}
+
+%**** Dit moet nog helemaal, maar we gaan laten zien dat $\underline{\mathbb{E}}^\mathrm{W}_{\rateset,\,\mathcal{M}}[f(X_u)]$ berekenbaar is voor alle $f\in\gambles(\states_u)$.
+%
+%*** paar observaties:
+%
+%als $0\in u$, dan
+%\begin{align*}
+%\underline{\mathbb{E}}[f(X_u)] &= \underline{\mathbb{E}}[\underline{\mathbb{E}}[f(X_u)\vert X_0]] \\
+% &= \underline{\mathbb{E}}_\mathcal{M}[\underline{\mathbb{E}}[f(X_u)\vert X_0]] \\
+% &= \inf\left\{ \sum_{x\in\states}\underline{\mathbb{E}}[f(X_u)\vert X_0=x]p(x) \,:\,p\in\mathcal{M} \right\}
+%\end{align*}
+%
+%als $0\notin u$, neem de triviale uitbreiding $f(x_0,x_u)=f(x_u)$ voor alle $x_0\in\states_0$, en pas bovenstaande toe.
 
 \subsection{Computational Aspects}\label{sec:tractability}
 
@@ -2605,7 +2646,7 @@ The reason that this is of interest to us, is the following result. This result 
 %*** we beginnen met een approximatie methode van de $L$ operator.
 
 \begin{proposition}\label{prop:approximation_error_bound}
-Let $\lrate$ be an arbitrary lower transition rate operator. Choose any $t,s\in\realsnonneg$ such that $t\leq s$, any $f\in\gamblesX$, and any $\epsilon\in\realspos$. Let $L_t^s$ be the lower transition operator corresponding to $\lrate$. Choose any $n\in\nats$ such that $n\geq\nicefrac{\left((s-t)^2\norm{\lrate}^2\norm{f}\right)}{\epsilon}$,
+Let $\lrate$ be an arbitrary lower transition rate operator. Choose any $t,s\in\realsnonneg$ such that $t\leq s$, any $f\in\gamblesX$, and any $\epsilon\in\realspos$. Let $L_t^s$ be the lower transition operator corresponding to $\lrate$. Choose any $n\in\nats$ such that $n\geq\nicefrac{\left((s-t)^2\norm{\lrate}^2\norm{f}\right)}{\epsilon}$ and $n\geq(s-t)\norm{\lrate}$,
 %\begin{equation*}
 %n > \frac{(s-t)^2\norm{\lrate}^2\norm{f}}{\epsilon}\,,
 %\end{equation*}
@@ -2626,7 +2667,7 @@ Proposition~\ref{prop:approximation_error_bound} tells us that we can compute th
 \begin{equation*}
 n = \frac{(s-t)^2\norm{\lrate}^2\norm{\ind{\text{Sick}}}}{\epsilon} = \frac{1^2\cdot 4^2\cdot 1}{10^{-3}} = 16\cdot 10^3\,,
 \end{equation*}
-resulting in a step size of $\Delta=\nicefrac{(s-t)}{n}=\nicefrac{1}{(16\cdot 10^{-3})}$. We now compute the quantity
+resulting in a step size of $\Delta=\nicefrac{(s-t)}{n}=16\cdot 10^{-3}$. We now compute the quantity
 \begin{equation*}
 \prod_{i=1}^n(I + \Delta\lrate)\ind{\text{{\tt sick}}} = \prod_{i=1}^{16000}(I + \Delta\lrate)\ind{\text{{\tt sick}}} = \left(\prod_{i=1}^{15999}(I + \Delta\lrate)\right)\left((I+\Delta\lrate)\ind{\text{{\tt sick}}}\right)\,.
 \end{equation*}
@@ -2668,7 +2709,7 @@ where the second equality is due to the error bound guaranteed by Proposition~\r
 \Ensure{A function $L_t^sf\pm \epsilon$ in $\gamblesX$.}
     \Statex
     \Function{ComputeLf}{$\rateset, t,s, f,\epsilon$}
-      \State $n\gets \lceil\nicefrac{((s-t)^2\norm{\lrate}^2\norm{f})}{\epsilon}\rceil$
+      \State $n\gets \max\{\lceil\nicefrac{((s-t)^2\norm{\lrate}^2\norm{f})}{\epsilon}\rceil,\,\lceil (s-t)\norm{\lrate} \rceil \}$
 		\State $\Delta\gets \nicefrac{(s-t)}{n}$
 		\State $g_0 \gets f$
 		\For{$i\in\{1,\ldots,n\}$}
