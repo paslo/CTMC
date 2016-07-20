@@ -991,37 +991,40 @@ We denote the set of all such stochastic processes by $\processes$.
 Let $P$ be a real-valued map from $\mathcal{C}^\mathrm{SP}$ to $\reals$. Then $P$ is a stochastic process if and only if it is a coherent conditional probability.
 \end{corollary}
 
-**** blabla, voorbeeldje voor waarom we zoveel moeite doen met de definitie
+One may wonder at this point why we go through this trouble of defining stochastic processes as restrictions of full conditional probabilities to the set $\mathcal{C}^\mathrm{SP}$. It might seem more straightforward to, for example, define a stochastic process as any function from $\mathcal{C}^\mathrm{SP}$ to $\reals$ that satisfies the axioms of probability, i.e., properties~\ref{def:coh_prob_2}-\ref{def:coh_prob_6}. Indeed, our exposition in Section~\ref{sec:cond_prob} suggests that this would have been equivalent.
 
+However, by explicitly introducing the notions of full conditional probabilities and coherence, some important results in this work can be stated much more succinctly. Perhaps most importantly, these are the results involving existence proofs. For instance, suppose that we are given an arbitrary function $p:\realspos\to [0,1]$, and we want to know if there is a stochastic process $P$ for which, for some $x\in\states$ and for all $t\in\realspos$,
+\begin{equation*}
+P(X_t=x\,\vert\,X_0=x) = p(t)\,.
+\end{equation*}
+If we had defined stochastic processes as any map $P:\mathcal{C}^\mathrm{SP}\to\reals$ satisfying properties~\ref{def:coh_prob_2}-\ref{def:coh_prob_6}, then answering this question would have been entirely non-trivial. This is because we are only given the behavior, specified by $p$, on the very limited set of events $\{(X_t=x,X_0=x):t\in\realspos\}\subset\mathcal{C}^\mathrm{SP}$. Proving that there is a well-defined probability function on $\mathcal{C}^\mathrm{SP}$ that coincides with $p$ on this subset of events would clearly be extremely involved. 
+
+In contrast, as illustrated by the following example, the introduction of full conditional probabilities and coherence takes care of most of the heavy lifting in such an existence proof.
 \begin{exmp}
-**** I'll construct a stochastic process $P$ that satisfies $P(X_t=x\,\vert\,X_0=x)=p(t)$ for all $t\in\realsnonneg$, for given $x\in\states$ and any given $p:\realsnonneg\to[0,1]$ that satisfies $p(0)=1$.
-
-We assume for this example that $\states$ is not singleton, i.e., there are at least two states $x,y\in\states$. Fix any $x\in\states$. Construct a set of events $\mathcal{C}\subset\mathcal{C}^\mathrm{SP}$ as
+We will assume for this example that $\states$ is not singleton, i.e., that there are at least two states $x,y\in\states$ such that $x\neq y$. Consider now any function $p:\realspos\to[0,1]$, fix any $x\in\states$, construct a set of events $\mathcal{C}\subset\mathcal{C}^\mathrm{SP}$ as
 \begin{equation*}
-\mathcal{C} \coloneqq \left\{ (X_t=x,X_0=x)\in\mathcal{C}^\mathrm{SP} : t\in\realsnonneg \right\}.
+\mathcal{C} \coloneqq \left\{ (X_t=x,X_0=x)\in\mathcal{C}^\mathrm{SP} : t\in\realspos \right\},
 \end{equation*}
-Let $p:\realsnonneg\to[0,1]$ be any function that satisfies $p(0)=1$. Consider a map $\tilde{P}:\mathcal{C}\to\reals$, defined for all $(X_t=x,X_0=x)\in\mathcal{C}$ as
-\begin{equation*}
+and consider the function $\tilde{P}:\mathcal{C}\to\reals$, defined for all $(X_t=x,X_0=x)\in\mathcal{C}$ as
+\begin{equation}\label{exmp:coherence:eq:probdef}
 \tilde{P}(X_t=x\vert X_0=x) \coloneqq p(t)\,.
-\end{equation*}
-We will now show that $\tilde{P}$ is a coherent conditional probability on $\mathcal{C}$. In order to show this, consider any $n\in\nats$ and, for all $i\in\{1,\ldots,n\}$, any $(X_{t_i}=x,X_0=x)\in\mathcal{C}$ and any $\lambda_i\in\reals$. According to Definition~\ref{def:coherence}, we now have to show that
-\begin{equation*}
+\end{equation}
+We will first show that $\tilde{P}$ is a coherent conditional probability on $\mathcal{C}$. In order to prove this, consider any $n\in\nats$ and, for all $i\in\{1,\ldots,n\}$, any $(X_{t_i}=x,X_0=x)\in\mathcal{C}$ and any $\lambda_i\in\reals$. According to Definition~\ref{def:coherence}, we now have to show that
+\begin{equation}\label{exmp:coherence:eq:coherence}
 \max\left\{ \sum_{i=1}^n \lambda_i\ind{(X_0=x)}(\omega)\left(\tilde{P}(X_{t_i}=x\vert X_0=x) - \ind{(X_{t_i}=x)}(\omega)\right)\Big\vert \omega\in C_0 \right\} \geq 0\,,
-\end{equation*}
+\end{equation}
 with $C_0\coloneqq \bigcup_{i=1}^n (X_0=x)=(X_0=x)$.
 
-Note that each of the conditional events $(X_{t_i}=x,X_0=x)$ depends only on the time points 0 and $t_i$. Observe that we can assume without loss of generality that $t_i\neq t_j$ for all $i,j\in\{1,\ldots,n\}$ such that $i\neq j$. **** maybe explain why, by taking $\lambda_{i'}\coloneqq \lambda_i+\lambda_j$ instead.
+Note that each of the conditional events $(X_{t_i}=x,X_0=x)$ depends only on the time points 0 and $t_i$. Observe that we can assume without loss of generality that $t_i\neq t_j$ for all $i,j\in\{1,\ldots,n\}$ such that $i\neq j$. This is due to the linearity of the term being maximized in Equation~\eqref{exmp:coherence:eq:coherence}---if $t_i=t_j$ for some $i\neq j$, we can simply add the two summands.
 
-**** also note that if $t_i=0$ for some $i$, the term cancels out because $p(0)=1$. explain this
-
-Because $n$ is finite, this implies the existence of a finite sequence of time points $u\in\mathcal{U}$ such that $0\in u$ and, for all $i\in\{1,\ldots,n\}$, $t_i\in u$. Let $y\in\states$ be any state such that $y\neq x$. Consider a state assignment $x_u\in\states_u$ such that $x_{0}\coloneqq x$ and, for all $i\in\{1,\ldots,n\}$,
+Now, because $n$ is finite, there exists a finite sequence of time points $u\in\mathcal{U}$ such that $0\in u$ and, for all $i\in\{1,\ldots,n\}$, $t_i\in u$. Let $y\in\states$ be any state such that $y\neq x$. Consider a state assignment $x_u\in\states_u$ such that $x_{0}\coloneqq x$ and, for all $i\in\{1,\ldots,n\}$,
 \begin{equation*}
 x_{t_i} \coloneqq \left\{\begin{array}{ll}
 x & \text{if $\lambda_i<0$, and} \\
 y & \text{otherwise.}
 \end{array} \right.
 \end{equation*}
-Now, Equation~\eqref{eq:path_exists_for_finite_points} guarantees that there is some $\omega\in\Omega$ such that $\omega\vert_{u}=x_u$. Furthermore, because $\omega(0)=x$, we clearly have that $\omega\in (X_0=x)\subset\Omega$. Therefore, we find that
+Again because $n$ is finite, Equation~\eqref{eq:path_exists_for_finite_points} guarantees that there is some $\omega\in\Omega$ such that $\omega\vert_{u}=x_u$. Furthermore, because $\omega(0)=x$, we clearly have that $\omega\in (X_0=x)\subset\Omega$. Evaluating the summand in Equation~\eqref{exmp:coherence:eq:coherence} using this $\omega$, we find that
 \begin{align*}
  &\quad \sum_{i=1}^n \lambda_{i}\ind{(X_0=x)}(\omega)\left(\tilde{P}(X_{t_i}=x\vert X_0=x) - \ind{(X_{t_i}=x)}(\omega)\right) \\
  &= \sum_{i=1}^n \lambda_{i}\ind{x}(\omega(0))\left(\tilde{P}(X_{t_i}=x\vert X_0=x) - \ind{x}(\omega(t_i))\right) = \sum_{i=1}^n \lambda_{i}\left(\tilde{P}(X_{t_i}=x\vert X_0=x) - \ind{x}(\omega(t_i))\right) \\
@@ -1029,9 +1032,9 @@ Now, Equation~\eqref{eq:path_exists_for_finite_points} guarantees that there is 
  &= \sum_{\lambda_i < 0}\lambda_{i}\left(\tilde{P}(X_{t_i}=x\vert X_0=x) - 1\right) + \sum_{\lambda_i \geq 0}\lambda_{i}\tilde{P}(X_{t_i}=x\vert X_0=x) \\
  &\geq \sum_{\lambda_i < 0}\lambda_{i}\left(\tilde{P}(X_{t_i}=x\vert X_0=x) - 1\right) = \sum_{\lambda_i < 0}\abs{\lambda_{i}}\left(1 - \tilde{P}(X_{t_i}=x\vert X_0=x)\right) \geq 0\,,
 \end{align*}
-where the last inequality follows from the fact that $\tilde{P}(X_{t_i}=x\vert X_0=x)=p(t_i)\in [0,1]$\,. Therefore, and because $\omega\in C_0$, we find that Equation~REF indeed holds. Hence, we conclude that $\tilde{P}$ is a coherent conditional probability on $\mathcal{C}$.
+where the two inequalities follow from the fact that $\tilde{P}(X_{t_i}=x\vert X_0=x)=p(t_i)\in [0,1]$\,. Therefore, and because $\omega\in (X_0=x)=C_0$, we find that Equation~\eqref{exmp:coherence:eq:coherence} indeed holds. Hence, we conclude that $\tilde{P}$ is a coherent conditional probability on $\mathcal{C}$.
 
-Corollary REF now implies that $\tilde{P}$ can be extended to a full conditional probability $\tilde{P}^*$. If we now let $P$ be the restriction of $\tilde{P}^*$ to $\mathcal{C}^\mathrm{SP}$, then due to Corollary REF, $P$ is a stochastic process that, because $\mathcal{C}\subset\mathcal{C}^\mathrm{SP}$, extends $\tilde{P}$. Therefore, Equation REF implies that the stochastic process $P$ satisfies $P(X_t=x\vert X_0=x)=p(t)$ for all $t\in\realspos$.
+Corollary~\ref{corol:coherentextendable} now implies that $\tilde{P}$ can be extended to a full conditional probability $\tilde{P}^*$. If we now let $P$ be the restriction of $\tilde{P}^*$ to $\mathcal{C}^\mathrm{SP}$, then due to Definition~\ref{def:stoch_process}, $P$ is a stochastic process that, because $\mathcal{C}\subset\mathcal{C}^\mathrm{SP}$, extends $\tilde{P}$. Therefore, Equation~\eqref{exmp:coherence:eq:probdef} implies that the stochastic process $P$ satisfies $P(X_t=x\vert X_0=x)=p(t)$ for all $t\in\realspos$.
 \exampleend
 \end{exmp}
 
@@ -2562,7 +2565,7 @@ with $u=t_0,\ldots,t_n$, and where we have assumed without loss of generality th
 \end{equation*}
 Hence, in order to compute the marginal lower expectation $\underline{\mathbb{E}}_{\rateset,\,\mathcal{M}}^\mathrm{W}[f(X_u)]$, it suffices to only compute the term $\hat{f}(X_0)$ once, which by Corollary~\ref{cor:composition_lower_trans} can be done with the operator $L_t^s$. What remains is a relatively straightforward linear optimization problem over the set $\mathcal{M}$, which is a well-known problem in the field of imprecise probability. We will therefore assume that this problem is solvable, although the difficulty clearly depends on the exact choice of $\mathcal{M}$.
 
-As two particular cases, we note that if $\mathcal{M}$ is the set of \emph{all} probability mass functions on $\states$, we find that
+As two particular cases, we note that if $\mathcal{M}$ is the set of \emph{all} probability mass functions on $\states$, we have that
 \begin{equation*}
 \underline{\mathbb{E}}_{\rateset,\,\mathcal{M}}^\mathrm{W}[f(X_u)] = \underline{\mathbb{E}}_{\rateset}^\mathrm{W}[f(X_u)] = \min\Bigl\{  \underline{\mathbb{E}}_{\rateset}^\mathrm{W}[f(X_u)\,\vert\,X_0=x] \,:\,x\in\states\Bigr\}\,,
 \end{equation*}
