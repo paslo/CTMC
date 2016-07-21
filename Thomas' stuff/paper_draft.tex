@@ -1015,16 +1015,16 @@ We will first show that $\tilde{P}$ is a coherent conditional probability on $\m
 \end{equation}
 with $C_0\coloneqq \bigcup_{i=1}^n (X_0=x)=(X_0=x)$. In order to show that this is true, we will construct a path $\omega\in C_0$ such that the sum in Equation~\eqref{exmp:coherence:eq:coherence} is non-negative when evaluated in $\omega$.
 
-Note that each of the conditional events $(X_{t_i}=x,X_0=x)$ depends only on the time points 0 and $t_i$. Observe that we can assume without loss of generality that $t_i\neq t_j$ for all $i,j\in\{1,\ldots,n\}$ such that $i\neq j$. This is due to the linearity of the term being maximized in Equation~\eqref{exmp:coherence:eq:coherence}---if $t_i=t_j$ for some $i\neq j$, we can simply add the two summands.
+Note that each of the conditional events $(X_{t_i}=x,X_0=x)$ depend only on the time points 0 and $t_i$. Observe that we can assume without loss of generality that $t_i\neq t_j$ for all $i,j\in\{1,\ldots,n\}$ such that $i\neq j$. This is due to the linearity of the term being maximized in Equation~\eqref{exmp:coherence:eq:coherence}---if $t_i=t_j$ for some $i\neq j$, we can simply add the two summands.
 
-Now, because $n$ is finite, there exists a finite sequence of time points $u\in\mathcal{U}$ such that $0\in u$ and, for all $i\in\{1,\ldots,n\}$, $t_i\in u$. Let $y\in\states$ be any state such that $y\neq x$. Consider a state assignment $x_u\in\states_u$ such that $x_{0}\coloneqq x$ and, for all $i\in\{1,\ldots,n\}$,
+Let $y\in\states$ be any state such that $y\neq x$. Let $u\in\mathcal{U}$ be the (finite) sequence of time points such that $u=0,t_1,\ldots,t_n$, and consider a state assignment $x_u\in\states_u$ such that $x_{0}\coloneqq x$ and, for all $i\in\{1,\ldots,n\}$,
 \begin{equation*}
 x_{t_i} \coloneqq \left\{\begin{array}{ll}
 x & \text{if $\lambda_i<0$, and} \\
 y & \text{otherwise.}
 \end{array} \right.
 \end{equation*}
-Again because $n$ is finite, Equation~\eqref{eq:path_exists_for_finite_points} guarantees that there is some $\omega\in\Omega$ such that $\omega\vert_{u}=x_u$. Furthermore, because $\omega(0)=x$, we clearly have that $\omega\in (X_0=x)\subset\Omega$. Evaluating the sum in Equation~\eqref{exmp:coherence:eq:coherence} using this $\omega$, we find that
+Because $n$ is finite, Equation~\eqref{eq:path_exists_for_finite_points} now guarantees that there is some $\omega\in\Omega$ such that $\omega\vert_{u}=x_u$. Furthermore, because $\omega(0)=x$, we clearly have that $\omega\in (X_0=x)\subset\Omega$. Evaluating the sum in Equation~\eqref{exmp:coherence:eq:coherence} using this $\omega$, we find that
 \begin{align*}
  &\quad \sum_{i=1}^n \lambda_{i}\ind{(X_0=x)}(\omega)\left(\tilde{P}(X_{t_i}=x\vert X_0=x) - \ind{(X_{t_i}=x)}(\omega)\right) \\
  &= \sum_{i=1}^n \lambda_{i}\ind{x}(\omega(0))\left(\tilde{P}(X_{t_i}=x\vert X_0=x) - \ind{x}(\omega(t_i))\right) = \sum_{i=1}^n \lambda_{i}\left(\tilde{P}(X_{t_i}=x\vert X_0=x) - \ind{x}(\omega(t_i))\right) \\
@@ -2592,6 +2592,10 @@ and, if instead $\mathcal{M}$ is a singleton set $\mathcal{M}=\{p\}$, then
 %als $0\notin u$, neem de triviale uitbreiding $f(x_0,x_u)=f(x_u)$ voor alle $x_0\in\states_0$, en pas bovenstaande toe.
 
 \subsection{Computational Aspects}\label{sec:tractability}
+
+We have in the previous sections shown that (conditional) lower expectations can be computed using the operator $L_t^s$. However, in order to make these results practicable, we still require a method to compute the function $L_t^sf$.
+
+**blabla
 
 We will in this section provide some results on computational aspects, along with a number of worked numerical examples. To this end, we consider again the two-state model from Example~\ref{ex:health_sick_exmp} in Section~\ref{sec:introduction}, describing how a person periodically becomes ill. We start by setting some (arbitrarily chosen) numerical parameters that we will use throughout this section.
 
