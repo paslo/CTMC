@@ -2742,6 +2742,29 @@ This iterative procedure for computing $L_t^sf$ is outlined in Algorithm~\ref{al
   \end{algorithmic}
 \end{algorithm}
 
+
+*** blabla, algoritme voor 1 tijdstip in de toekomst, meerdere in het verleden.
+
+\begin{algorithm}[H]
+  \caption{Numerically compute $L_{t_n}^sf$ for any $f\in\gambles(\states_{u\cup s})$.}
+    \label{alg:compute_singlevar_multiple_past}
+  \begin{algorithmic}[1]
+    \Require{A non-empty, bounded set of rate matrices $\rateset$ with separately specified rows, a time point $s\in\realsnonneg$, a sequence $u\in\mathcal{U}_{<s}$ with $u=t_0,\ldots,t_n$, a function $f\in\gambles(\states_{u\cup s})$, and a maximum numerical error $\epsilon\in\realspos$.}    
+\Ensure{A function $L_{t_n}^sf\pm \epsilon$ in $\gambles(\states_u)$.}
+    \Statex
+    \Function{ComputeLuf}{$\rateset, u,s, f,\epsilon$}
+      \State $g\gets g\in\gambles(\states_u)$ \Comment{Result will be a function $g\in\gambles(\states_u)$.}
+		\For{$x_u\in\states_u$} \Comment{Compute $g(x_u)$ for all $x_u\in\states_u$} 
+		\State $f_{x_u}\gets f(x_u,X_s)$ \Comment{Take restriction of $f$ to $\states_s$ for this $x_u$.}
+		\State $\hat{f}_{x_u} \gets$ {\tt ComputeLF($\rateset, t_n,s,f_{x_u},\epsilon$)} \Comment{Compute $L_{t_n}^sf(x_u,X_s)\pm\epsilon$.}
+		\State $g(x_u)\gets \hat{f}_{x_u}(x_{t_n})$ \Comment{Set $g(x_u)=[L_{t_n}^s f(x_u,X_s)](x_{t_n})\pm\epsilon$, with $x_{t_n}\in x_u$.}
+		\EndFor
+      \State \Return{$g$}
+    \EndFunction
+  \end{algorithmic}
+\end{algorithm}
+
+
 Continuing with the next example, we here illustrate the application of Corollary~\ref{cor:composition_lower_trans} for computing functions defined on multiple time points.
 
 \begin{exmp}\label{exmp:num_multivar_func_nonmarkov}
@@ -2810,36 +2833,24 @@ We therefore conclude that
     \label{alg:compute_multivar}
   \begin{algorithmic}[1]
     \Require{A non-empty, bounded, and convex set of rate matrices $\rateset$ with separately specified rows, two sets of time points $u,v\in\mathcal{U}_\emptyset$ such that $u\leq v$, a function $f\in\gambles(\states_{u\cup v})$, and a maximum numerical error per step of $\epsilon\in\realspos$.}
-\Ensure{An approximation of the function $\underline{\mathbb{E}}_\rateset^\mathrm{W}[f(X_u,X_v)\,\vert\,X_u]$ in $\gambles(\states^u)$.}
+\Ensure{An approximation of the function $\underline{\mathbb{E}}_\rateset^\mathrm{W}[f(X_u,X_v)\,\vert\,X_u]$ in $\gambles(\states_u)$.}
 	 \Statex
     \Function{ComputeLowerExp}{$\rateset, u,v, f,\epsilon$}
-		\State $m\gets \vert v\vert$ \Comment{We use the notation $v=s_0,s_1,\ldots,s_m$, and $\vert v\vert \coloneqq m$.}
 		\State $w \gets v$ \Comment{Buffer for remaining time points.}
 		\State $g_{m}\gets f$ \Comment{Buffer for function.}
-		\Statex
-		\For{$i\in\{m,m-1,\ldots,0\}$}	\Comment{Running index of latest remaining time point.}
-			\State $w \gets w\setminus s_i$ \Comment{Remove latest time point $s_i$ from $w$. If $i=0$ then $w=\emptyset$.}
-		
-			\State $r \gets s_{(i-1)}$ \Comment{Latest time point before $s_i$.}
-			\If{$i=0$} \Comment{If only $s_0$ remains, get latest time before that.}
-				\State $r \gets t_n$ \Comment{We use the notation $u=t_0,t_1,\ldots,t_n$.}
-			\EndIf
-			\Statex
-			\State $g_{(i-1)} \gets g_{(i-1)} \in \gambles(\states_{u\cup w})$ \Comment{Create new function $g_{(i-1)}\in\gambles(\states_{u\cup w})$.}
-			\For{$x_{u\cup w}\in\states_{u\cup w}$} \Comment{Compute all values for $g_{(i-1)}$.}
-				\Statex \Comment{Set $g_{(i-1)}(x_{u\cup w})\coloneqq \left[L_r^{s_i}g_i(x_{u\cup w},X_{s_i})\right](x_r)$, where $x_r\in x_{u\cup w}$.}
-				\State $h \gets$ {\tt ComputeLf}$\bigl(\rateset, r, s_i, g_i(x_{u\cup w}, X_{s_i}),\epsilon\bigr)$ %\Comment{Compute $L_r^sf(x_{u\cup w},X_s)\pm\epsilon$.}
-				\State $g_{(i-1)}(x_{u\cup w}) \gets h(x_r)$ 
-			\EndFor
+%		\Statex
+		\For{$i\in\{m,m-1,\ldots,0\}$}	\Comment{Iterate backward over $v=s_0,\ldots,s_m$.}
+			\State $w \gets w\setminus s_i$ \Comment{Remove latest time point $s_i$ from $w$.}
+			\State $g_{(i-1)}\gets ${\tt ComputeLuf}($\rateset,u\cup w,s_i,g_i,\epsilon$)  \Comment{Compute $g_{(i-1)}\in\gambles(\states_{u\cup w})$.}
 %			\Statex
 		\EndFor
-		\Statex
+%		\Statex
 		\State \Return{$g_{(-1)}$}\Comment{Result is a function in $\gambles(\states_u)$.}
     \EndFunction
   \end{algorithmic}
 \end{algorithm}
 
-{\bf TODO:} some explanation for algorithm. Maybe rewrite middle part into more general version of {\tt ComputeLf}. Also, the total computational error is not entirely trivial to compute (and rather outside the scope of this paper).
+{\bf TODO:} some explanation for algorithm.
 
 As noted above, the procedure outlined in Example~\ref{exmp:num_multivar_func_nonmarkov} does not work for computing lower expectations with respect to a set of Markov chains $\wmprocesses_\rateset$.
 
