@@ -2642,39 +2642,39 @@ with the unit-time again being one week. Note that $\rateset$ here is clearly no
 
 %We will now focus on how to compute lower expectations with respect to imprecise continuous-time Markov chains induced by the set $\rateset$ from Example~\ref{exmp:example_rateset_simple_model}. To this end, consider the lower transition rate operator $\lrate$ corresponding to this $\rateset$. It should be clear that, for any function $f\in\gamblesX$, computing the quantity $\lrate f$ is relatively easy.
 
-**** eerst gaan we $\lrate g$ berekenen.
+As mentioned above, Proposition~\ref{prop:approximation_error_bound} lets us reduce the computation of conditional lower expectations to a (finite) number of linear optimization problems to compute $\lrate g$, where $\lrate$ is the lower transition rate operator corresponding to $\rateset$, i.e.,
+\begin{equation}\label{eq:lrate_optimization}
+\lrate g = \inf\left\{ Qg : Q\in\rateset \right\}\,,
+\end{equation}
+as in Equation~\ref{eq:correspondinglowertrans} in Section~\ref{sec:connections_rate}.
 
-In general, for any set $\rateset$ with corresponding lower transition rate operator $\lrate$, and any function $f\in\gamblesX$, computing $\lrate f$ is a constrained linear optimization problem. The exact form of these constraints---and hence the difficulty of solving this optimization problem---clearly depends on the set $\rateset$.
+Clearly, therefore, computing $\lrate g$ is a constrained linear optimization problem, where the exact form of these constraints---and hence the difficulty of solving this optimization problem---depends on the set $\rateset$. Note that, in the context of computing conditional lower expectations, we require $\rateset$ to have separately specified rows. This already reduces the complexity of the optimization, because this implies that, for all $x\in\states$, $[\lrate g](x)$ is given by
+\begin{equation}\label{eq:lrate_optimization_separate}
+[\lrate g](x) = \inf\left\{ Q(x,\cdot)g : Q(x,\cdot)\in\rateset_x\right\}\,,
+\end{equation}
+where $\rateset_x\coloneqq \{Q(x,\cdot) : Q\in\rateset\}$. In other words, requiring that $\rateset$ has separately specified rows allows us to perform the optimization in Equation~\ref{eq:lrate_optimization} component-wise, i.e. separately for each $x\in\states$. We will henceforth assume that the optimization problem in Equation~\ref{eq:lrate_optimization_separate} is solvable, although as mentioned above, the complexity of this problem will depend on the exact form of $\rateset_x$.
 
-In the case of the set $\rateset$ from Example~\ref{exmp:example_rateset_simple_model}, as given by Equation~\eqref{eq:num_example_rateset_params}, these constraints are simple box-constraints. Furthermore, because the state-space $\states$ contains only two states in this specific example model, computing $\lrate f$ is particularly easy, regardless of the choice of $f\in\gamblesX$. This is illustrated by the following example.
+In the case of the set $\rateset$ from Example~\ref{exmp:example_rateset_simple_model}, as given by Equation~\eqref{eq:num_example_rateset_params}, the constraints that we are dealing with are simple box-constraints. Furthermore, because the state-space $\states$ contains only two states in this specific example model, computing $\lrate g$ is particularly easy, regardless of the choice of $g\in\gamblesX$. This is illustrated by the following example, where we also compute the quantity $\norm{\lrate}$ that is required for the numerical computations that follow.
 
 \begin{exmp}\label{exmp:numerical_lrate}
-Consider the set $\rateset$ from Example~\ref{exmp:example_rateset_simple_model}, given by Equation~\eqref{eq:num_example_rateset_params}. Let $\lrate$ be the lower transition rate operator corresponding to $\rateset$, and consider any $f\in\gamblesX$. We now want to solve
+Consider the set $\rateset$ from Example~\ref{exmp:example_rateset_simple_model}, given by Equation~\eqref{eq:num_example_rateset_params}. Let $\lrate$ be the lower transition rate operator corresponding to $\rateset$, and consider any $g\in\gamblesX$. We now want to solve
 \begin{align*}
-\lrate f &= \inf\{Qf\,:\,Q\in\rateset\} \\
- &= \inf\left\{\left[\begin{array}{rr}-a & a \\b & -b\end{array}\right]\left[\begin{array}{r} f(0) \\ f(1) \end{array}\right]\,:\,a\in\left[\frac{1}{52}, \frac{3}{52} \right],\,b\in\left[\frac{1}{2}, 2 \right]\right\} \\
- &= \inf\left\{ \left[\begin{array}{r} a\bigl(f(1) - f(0)\bigr) \\ b\bigl(f(0) - f(1) \bigr)\end{array} \right]\,:\,a\in\left[\frac{1}{52}, \frac{3}{52} \right],\,b\in\left[\frac{1}{2}, 2 \right]\right\}\,.
+\lrate g &= \inf\{Qg\,:\,Q\in\rateset\} \\
+ &= \inf\left\{\left[\begin{array}{rr}-a & a \\b & -b\end{array}\right]\left[\begin{array}{r} g(0) \\ g(1) \end{array}\right]\,:\,a\in\left[\frac{1}{52}, \frac{3}{52} \right],\,b\in\left[\frac{1}{2}, 2 \right]\right\} \\
+ &= \inf\left\{ \left[\begin{array}{r} a\bigl(g(1) - g(0)\bigr) \\ b\bigl(g(0) - g(1) \bigr)\end{array} \right]\,:\,a\in\left[\frac{1}{52}, \frac{3}{52} \right],\,b\in\left[\frac{1}{2}, 2 \right]\right\}\,.
 \end{align*}
-From the above, it is readily seen that $\lrate f$ is always given by some $Q f$, with $Q\in\rateset$ such that $a\in\{\nicefrac{1}{52}, \nicefrac{3}{52}\}$ and $b\in\{\nicefrac{1}{2},2\}$. Hence, we only need to consider four possible rate matrices $Q\in\rateset$ to find $\lrate f$ for any given $f\in\gamblesX$.
+From the above, it is readily seen that $\lrate g$ is always given by some $Q g$, with $Q\in\rateset$ such that $a\in\{\nicefrac{1}{52}, \nicefrac{3}{52}\}$ and $b\in\{\nicefrac{1}{2},2\}$. Hence, we only need to consider four different rate matrices $Q\in\rateset$ to find $\lrate g$ for any given $g\in\gamblesX$.
 
 Using these observations, we will next compute $\norm{\lrate}$. We have that
 \begin{align*}
-\norm{\lrate} &= \sup\left\{ \norm{\lrate f}\,:\,f\in\gamblesX,\, \norm{f}=1 \right\} \\
- &= \sup\left\{ \max\left\{\abs{\left[\lrate f\right](x)}\,:\,x\in\states\right\}\,:\,f\in\gamblesX,\, \norm{f}=1 \right\}\,.
+\norm{\lrate} &= \sup\left\{ \norm{\lrate g}\,:\,g\in\gamblesX,\, \norm{g}=1 \right\} \\
+ &= \sup\left\{ \max\left\{\abs{\left[\lrate g\right](x)}\,:\,x\in\states\right\}\,:\,g\in\gamblesX,\, \norm{g}=1 \right\}\,.
 \end{align*}
-Combining with the above expression for $\lrate f$, it should be clear that the supremum is in this case always reached by an $f\in\gamblesX$ such that either $f=[-1\,\,1]^\top$ or $f=[1\,\,-1]^\top$. Some arithmetic then reveals that $\norm{\lrate}=4$.
+Combining with the above expression for $\lrate g$, it should be clear that the supremum is in this case always reached by a $g\in\gamblesX$ such that either $g=[-1\,\,1]^\top$ or $g=[1\,\,-1]^\top$. Some arithmetic then reveals that $\norm{\lrate}=4$.
 \exampleend
 \end{exmp}
 
-*** herschrijf bruggetje een beetje
-The reason that this is of interest to us, is the following result. This result states how we can approximate the quantity $L_t^sf$ to an arbitrary precision $\epsilon$, using a fine enough partition of the interval $[t,s]$.
-%*** het is duidelijk dat, gegeven $\rateset$, we voor elke $f\in\gamblesX$ de vector $\lrate f$ makkelijk kunnen uitrekenen.
-
-%*** we beginnen met een approximatie methode van de $L$ operator.
-
-**** rework the below
-
-The following provides a worked numerical example.
+We now have everything in place to demonstrate the use of Proposition~\ref{prop:approximation_error_bound} for numerically computing conditional lower expectations. We start with the following example, where we compute the lower expectation of a specific function $f\in\gamblesX$ defined on a single time point.
 
 \begin{exmp}\label{exmp:single_time_numerical}
 Consider again the model and the set of rate matrices $\rateset$ from Example~\ref{exmp:example_rateset_simple_model}. We will here compute the lower probability of a person being sick one week from now, given that they are currently also sick. That is, we will be computing
@@ -2685,7 +2685,9 @@ Proposition~\ref{prop:approximation_error_bound} tells us that we can compute th
 \begin{equation*}
 n = \frac{(s-t)^2\norm{\lrate}^2\norm{\ind{\text{Sick}}}}{\epsilon} = \frac{1^2\cdot 4^2\cdot 1}{10^{-3}} = 16\cdot 10^3\,,
 \end{equation*}
-resulting in a step size of $\Delta=\nicefrac{(s-t)}{n}=16\cdot 10^{-3}$. We now compute the quantity
+resulting in a step size of $\Delta=\nicefrac{(s-t)}{n}=16\cdot 10^{-3}$. Note that this choice of $n$ here also satisfies the requirement $n\geq (s-t)\norm{\lrate}$ from Proposition~\ref{prop:approximation_error_bound}. 
+
+We now compute the quantity
 \begin{equation*}
 \prod_{i=1}^n(I + \Delta\lrate)\ind{\text{{\tt sick}}} = \prod_{i=1}^{16000}(I + \Delta\lrate)\ind{\text{{\tt sick}}} = \left(\prod_{i=1}^{15999}(I + \Delta\lrate)\right)\left((I+\Delta\lrate)\ind{\text{{\tt sick}}}\right)\,.
 \end{equation*}
@@ -2719,6 +2721,8 @@ where the second equality is due to the error bound guaranteed by Proposition~\r
 \exampleend
 \end{exmp}
 
+This iterative procedure for computing $L_t^sf$ is outlined in Algorithm~\ref{alg:compute_singlevar}. This algorithm first finds the number of steps required to reach the given precision $\epsilon$ (Line 2), and computes from this the corresponding step size $\Delta$ (Line 3). Starting with the function $g_0\coloneqq f$ (Line 4), the algorithm iteratively computes the function $g_i\coloneqq (I+\Delta\lrate)g_{(i-1)}$ (Line 6). After repeating this for $n$ steps (Line 5), the returned function $g_n$ (Line 8) corresponds to $L_t^sf\pm\epsilon$, due to Proposition~\ref{prop:approximation_error_bound}.
+
 \begin{algorithm}[H]
   \caption{Numerically compute $L_t^sf$ for any $f\in\gamblesX$.}
     \label{alg:compute_singlevar}
@@ -2737,9 +2741,8 @@ where the second equality is due to the error bound guaranteed by Proposition~\r
     \EndFunction
   \end{algorithmic}
 \end{algorithm}
-{\bf TODO:} some explanation for algorithm.
 
-Observe that in the previous example, we computed the term $\left[L_0^1\ind{\text{{\tt sick}}}\right](\text{{\tt sick}})$ which, due to Corollary~\ref{cor:lower_operator_is_infimum}, corresponds to the lower expectation taken with respect to both $\wmprocesses_\rateset$ and $\wprocesses_\rateset$. In Section~\ref{sec:decomposition}, we noted that we can also compute lower expectations of more complex functions with respect to the set $\wprocesses_\rateset$. The following provides a worked numerical example, which is followed by Example~\ref{exmp:num_counterexample_markov} below which shows that this approach does not work for the set of Markov models $\wmprocesses_\rateset$.
+Continuing with the next example, we here illustrate the application of Corollary~\ref{cor:composition_lower_trans} for computing functions defined on multiple time points.
 
 \begin{exmp}\label{exmp:num_multivar_func_nonmarkov}
 Consider again the model and set of rate matrices $\rateset$ from Example~\ref{exmp:example_rateset_simple_model}. Suppose that we are now interested in the lower probability of the model being in the same state at two different time points. That is, we will be computing
@@ -2803,10 +2806,10 @@ We therefore conclude that
 \end{exmp}
 
 \begin{algorithm}[H]
-  \caption{Numerically compute $\underline{\mathbb{E}}_\rateset^\mathrm{W}[f(X_u,X_v)\,\vert\,X_u]$ for any $f\in\gambles(\states^{u\cup v})$.}
+  \caption{Numerically compute $\underline{\mathbb{E}}_\rateset^\mathrm{W}[f(X_u,X_v)\,\vert\,X_u]$ for any $f\in\gambles(\states_{u\cup v})$.}
     \label{alg:compute_multivar}
   \begin{algorithmic}[1]
-    \Require{A non-empty, bounded, and convex set of rate matrices $\rateset$ with separately specified rows, two sets of time points $u,v\in\mathcal{U}_\emptyset$ such that $u\leq v$, a function $f\in\gambles(\states^{u\cup v})$, and a maximum numerical error per step of $\epsilon\in\realspos$.}
+    \Require{A non-empty, bounded, and convex set of rate matrices $\rateset$ with separately specified rows, two sets of time points $u,v\in\mathcal{U}_\emptyset$ such that $u\leq v$, a function $f\in\gambles(\states_{u\cup v})$, and a maximum numerical error per step of $\epsilon\in\realspos$.}
 \Ensure{An approximation of the function $\underline{\mathbb{E}}_\rateset^\mathrm{W}[f(X_u,X_v)\,\vert\,X_u]$ in $\gambles(\states^u)$.}
 	 \Statex
     \Function{ComputeLowerExp}{$\rateset, u,v, f,\epsilon$}
@@ -2822,8 +2825,8 @@ We therefore conclude that
 				\State $r \gets t_n$ \Comment{We use the notation $u=t_0,t_1,\ldots,t_n$.}
 			\EndIf
 			\Statex
-			\State $g_{(i-1)} \gets g_{(i-1)} \in \gambles(\states^{u\cup w})$ \Comment{Create new function $g_{(i-1)}\in\gambles(\states^{u\cup w})$.}
-			\For{$x_{u\cup w}\in\states^{u\cup w}$} \Comment{Compute all values for $g_{(i-1)}$.}
+			\State $g_{(i-1)} \gets g_{(i-1)} \in \gambles(\states_{u\cup w})$ \Comment{Create new function $g_{(i-1)}\in\gambles(\states_{u\cup w})$.}
+			\For{$x_{u\cup w}\in\states_{u\cup w}$} \Comment{Compute all values for $g_{(i-1)}$.}
 				\Statex \Comment{Set $g_{(i-1)}(x_{u\cup w})\coloneqq \left[L_r^{s_i}g_i(x_{u\cup w},X_{s_i})\right](x_r)$, where $x_r\in x_{u\cup w}$.}
 				\State $h \gets$ {\tt ComputeLf}$\bigl(\rateset, r, s_i, g_i(x_{u\cup w}, X_{s_i}),\epsilon\bigr)$ %\Comment{Compute $L_r^sf(x_{u\cup w},X_s)\pm\epsilon$.}
 				\State $g_{(i-1)}(x_{u\cup w}) \gets h(x_r)$ 
@@ -2831,7 +2834,7 @@ We therefore conclude that
 %			\Statex
 		\EndFor
 		\Statex
-		\State \Return{$g_{(-1)}$}\Comment{Result is a function in $\gambles(\states^u)$.}
+		\State \Return{$g_{(-1)}$}\Comment{Result is a function in $\gambles(\states_u)$.}
     \EndFunction
   \end{algorithmic}
 \end{algorithm}
