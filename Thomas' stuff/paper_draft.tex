@@ -2567,7 +2567,7 @@ with $u=t_0,\ldots,t_n$, and where we have assumed without loss of generality th
 \begin{equation*}
 \underline{\mathbb{E}}_{\rateset,\,\mathcal{M}}^\mathrm{W}[f(X_u)] = \underline{\mathbb{E}}_{\mathcal{M}}[\hat{f}(X_0)] = \inf\left\{\sum_{x_0\in\states_0}p(x_0)\hat{f}(x_0)\,:\,p\in\mathcal{M} \right\}\,.
 \end{equation*}
-Hence, in order to compute the marginal lower expectation $\underline{\mathbb{E}}_{\rateset,\,\mathcal{M}}^\mathrm{W}[f(X_u)]$, it suffices to only compute the term $\hat{f}(X_0)$ once, which by Corollary~\ref{cor:composition_lower_trans} can be done with the operator $L_t^s$. What remains is a relatively straightforward linear optimization problem over the set $\mathcal{M}$, which is a well-known problem in the field of imprecise probability. We will therefore assume that this problem is solvable, although the difficulty clearly depends on the exact choice of $\mathcal{M}$.
+Hence, in order to compute the marginal lower expectation $\underline{\mathbb{E}}_{\rateset,\,\mathcal{M}}^\mathrm{W}[f(X_u)]$, it suffices to only compute the term $\hat{f}(X_0)$ once, which by Corollary~\ref{cor:composition_lower_trans} can be done with the operator $L_t^s$. What remains is a relatively straightforward linear optimization problem over the set $\mathcal{M}$, which is a well-known problem in the field of imprecise probability. We will henceforth assume that this problem is solvable, although the difficulty clearly depends on the exact choice of $\mathcal{M}$.
 
 As two particular cases, we note that if $\mathcal{M}$ is the set of \emph{all} probability mass functions on $\states$, we have that
 \begin{equation*}
@@ -2593,20 +2593,34 @@ and, if instead $\mathcal{M}$ is a singleton set $\mathcal{M}=\{p\}$, then
 
 \subsection{Computational Aspects}\label{sec:tractability}
 
-We have in the previous sections shown that (conditional) lower expectations can be computed using the operator $L_t^s$. However, in order to make these results practicable, we still require a method to compute the function $L_t^sf$.
+We have in the previous sections shown that (conditional) lower expectations can be computed using the operator $L_t^s$. However, in order to make these results practicable, we still require a method to numerically compute the function $L_t^sf$. Because we are now interested in numerical methods, we will focus on computing such a quantity $L_t^sf$ within a guaranteed $\epsilon$-error bound. 
 
-**blabla
+The construction of the operator $L_t^s$ in Section~\ref{sec:lowertrans} already suggests how we can do this; namely, by using a finite-precision approximation of $L_t^s$ using the auxiliary operator $\Phi_u\coloneqq \prod_{i=1}^n(I+\Delta_i\lrate)$. Recall from Section~\ref{sec:lowertrans} that the approximation of $L_t^s$ by $\Phi_u$ becomes better as we take $u\in\mathcal{U}_{[t,s]}$ to be an increasingly finer partition of the interval $[t,s]$. The following result tells us exactly how fine this partition needs to be for a specific function $f\in\gamblesX$, in order to guarantee an $\epsilon$-error bound on $L_t^sf$.
 
-We will in this section provide some results on computational aspects, along with a number of worked numerical examples. To this end, we consider again the two-state model from Example~\ref{ex:health_sick_exmp} in Section~\ref{sec:introduction}, describing how a person periodically becomes ill. We start by setting some (arbitrarily chosen) numerical parameters that we will use throughout this section.
+\begin{proposition}\label{prop:approximation_error_bound}
+Let $\lrate$ be an arbitrary lower transition rate operator. Choose any $t,s\in\realsnonneg$ such that $t\leq s$, any $f\in\gamblesX$, and any $\epsilon\in\realspos$, and let $L_t^s$ be the lower transition operator corresponding to $\lrate$. Choose any $n\in\nats$ such that $n\geq\nicefrac{\left((s-t)^2\norm{\lrate}^2\norm{f}\right)}{\epsilon}$ and $n\geq(s-t)\norm{\lrate}$,
+%\begin{equation*}
+%n > \frac{(s-t)^2\norm{\lrate}^2\norm{f}}{\epsilon}\,,
+%\end{equation*}
+and let $\Delta\coloneqq \nicefrac{(s-t)}{n}$. Then,
+\begin{equation*}
+\norm{L_t^sf - \prod_{i=1}^n(I + \Delta\lrate)f} \leq \epsilon\,.
+\end{equation*}
+\end{proposition}
+
+Simply put, this result tells us that if we can compute the quantity $\lrate g$ for any $g\in\gamblesX$, then we can also approximate the quantity $L_t^sf$ to an arbitrary precision for any given $f\in\gamblesX$. Therefore, and due to our results in Section~\ref{sec:single_var_lower_exp}, by taking $\lrate$ to be the lower transition rate operator corresponding to a given set $\rateset$ that is non-empty and bounded and has separately specified rows, the non-linear optimization problem of computing $\underline{\mathbb{E}}_\rateset^\mathrm{WM}[f(X_s)\vert X_t]$ or $\underline{\mathbb{E}}_\rateset^\mathrm{W}[f(X_s)\vert X_t]$ reduces to a series of $n$ linear optimization problems to compute $\lrate g$, for certain $g\in\gamblesX$ and with $n\in\nats$ as in Proposition~\ref{prop:approximation_error_bound}.
+
+In the remainder of this section, we will numerically illustrate this method of computing conditional lower expectations for various functions. In order to make these examples less abstract, we will provide them in the context of the simple disease model put forward in Example~\ref{ex:health_sick_exmp} in Section~\ref{sec:introduction}. To this end, we first construct a parameter set $\rateset$ that we will use in the examples to come.
+
+%Due to the correspondence between $L_t^sf$ and lower expectations $\underline{\mathbb{E}}_\rateset^\mathrm{WM}[f(X_s)\vert X_t]$ and $\underline{\mathbb{E}}_\rateset^\mathrm{W}[f(X_s)\vert X_t]$, this therefore tells us how to compute---or at least approximate to arbitrary precision---these latter quantities.
+
+
+%We will in this section provide some results on computational aspects, along with a number of worked numerical examples. To this end, we consider again the two-state model from Example~\ref{ex:health_sick_exmp} in Section~\ref{sec:introduction}, describing how a person periodically becomes ill. We start by setting some (arbitrarily chosen) numerical parameters that we will use throughout this section.
 
 \begin{exmp}\label{exmp:example_rateset_simple_model}
-Consider again the binary-state disease model from Example~\ref{ex:health_sick_exmp}, given by
-\begin{equation*}
-(\text{{\tt healthy}}) \rightleftarrows (\text{{\tt sick}})
-\end{equation*}
-Thus, the state-space here is of the form $\states=\{\text{{\tt healthy}},\text{{\tt sick}}\}$. This models a person periodically becoming sick and recovering after some time. 
+Consider again the binary-state disease model from Example~\ref{ex:health_sick_exmp}, modeling a person periodically becoming sick and recovering after some time. The state-space here is of the form $\states=\{\text{{\tt healthy}},\text{{\tt sick}}\}$, and we wish to specify numerical values for the rate at which the two possible transitions occur; that is, the transitions from {\tt healthy} to {\tt sick}, and from {\tt sick} to {\tt healthy}.
 
-We now need to assign numerical values to the rate with which the process modeling this behavior moves between these states. If we were using a precise, time-homogeneous Markov chain $P\in\whmprocesses$, it would suffice to select a single rate matrix $Q\in\mathcal{R}$. In that case, and if we---arbitrarily---assume that the person becomes sick once a year, with illness lasting for one week, this rate matrix would be of the form
+If we were using a precise, time-homogeneous Markov chain $P\in\whmprocesses$, it would suffice to select a single rate matrix $Q\in\mathcal{R}$. In that case, and if we---arbitrarily---assume that the person becomes sick once a year, with sickness lasting for one week, this rate matrix would be of the form
 \begin{equation*}
 Q = \left[ \begin{array}{rr}
 -\frac{1}{52} & \frac{1}{52} \\
@@ -2615,7 +2629,7 @@ Q = \left[ \begin{array}{rr}
 \end{equation*}
 with the unit-time being one week. That is, the person on average becomes sick once every 52 weeks, and recovers after one week on average.
 
-However, instead of using a precise model, we now wish to use an imprecise continuous-time Markov chain to model this behavior. Hence, we need to select a set of rate matrices $\rateset$. Suppose therefore that we feel confident in saying that the person becomes sick anywhere between one and three times per year, with sickness lasting anywhere from half a week to two weeks on average. This set of rate matrices can then be expressed as
+However, instead of using a precise model, we here wish to use an imprecise continuous-time Markov chain to model this behavior. Hence, we need to select a set of rate matrices $\rateset$. Suppose therefore that we feel confident in saying that the person becomes sick anywhere between one and three times per year, with sickness lasting anywhere from half a week to two weeks on average. This set of rate matrices can then be expressed as
 \begin{equation}\label{eq:num_example_rateset_params}
 \rateset = \left\{\left[\begin{array}{rr}
 -a & a \\
@@ -2626,7 +2640,9 @@ with the unit-time again being one week. Note that $\rateset$ here is clearly no
 \exampleend
 \end{exmp}
 
-We will now focus on how to compute lower expectations with respect to imprecise continuous-time Markov chains induced by the set $\rateset$ from Example~\ref{exmp:example_rateset_simple_model}. To this end, consider the lower transition rate operator $\lrate$ corresponding to this $\rateset$. It should be clear that, for any function $f\in\gamblesX$, computing the quantity $\lrate f$ is relatively easy.
+%We will now focus on how to compute lower expectations with respect to imprecise continuous-time Markov chains induced by the set $\rateset$ from Example~\ref{exmp:example_rateset_simple_model}. To this end, consider the lower transition rate operator $\lrate$ corresponding to this $\rateset$. It should be clear that, for any function $f\in\gamblesX$, computing the quantity $\lrate f$ is relatively easy.
+
+**** eerst gaan we $\lrate g$ berekenen.
 
 In general, for any set $\rateset$ with corresponding lower transition rate operator $\lrate$, and any function $f\in\gamblesX$, computing $\lrate f$ is a constrained linear optimization problem. The exact form of these constraints---and hence the difficulty of solving this optimization problem---clearly depends on the set $\rateset$.
 
@@ -2656,18 +2672,9 @@ The reason that this is of interest to us, is the following result. This result 
 
 %*** we beginnen met een approximatie methode van de $L$ operator.
 
-\begin{proposition}\label{prop:approximation_error_bound}
-Let $\lrate$ be an arbitrary lower transition rate operator. Choose any $t,s\in\realsnonneg$ such that $t\leq s$, any $f\in\gamblesX$, and any $\epsilon\in\realspos$. Let $L_t^s$ be the lower transition operator corresponding to $\lrate$. Choose any $n\in\nats$ such that $n\geq\nicefrac{\left((s-t)^2\norm{\lrate}^2\norm{f}\right)}{\epsilon}$ and $n\geq(s-t)\norm{\lrate}$,
-%\begin{equation*}
-%n > \frac{(s-t)^2\norm{\lrate}^2\norm{f}}{\epsilon}\,,
-%\end{equation*}
-and let $\Delta\coloneqq \nicefrac{(s-t)}{n}$. Then,
-\begin{equation*}
-\norm{L_t^sf - \prod_{i=1}^n(I + \Delta\lrate)f} \leq \epsilon\,.
-\end{equation*}
-\end{proposition}
+**** rework the below
 
-Simply put, this result tells us that if we can compute the quantity $\lrate g$ for any $g\in\gamblesX$, then we can also approximate the quantity $L_t^sf$ to an arbitrary precision for any given $f\in\gamblesX$. Due to the correspondence between $L_t^sf$ and lower expectations $\underline{\mathbb{E}}_\rateset^\mathrm{WM}[f(X_s)\vert X_t]$ and $\underline{\mathbb{E}}_\rateset^\mathrm{W}[f(X_s)\vert X_t]$, this therefore tells us how to compute---or at least approximate to arbitrary precision---these latter quantities. The following provides a worked numerical example.
+The following provides a worked numerical example.
 
 \begin{exmp}\label{exmp:single_time_numerical}
 Consider again the model and the set of rate matrices $\rateset$ from Example~\ref{exmp:example_rateset_simple_model}. We will here compute the lower probability of a person being sick one week from now, given that they are currently also sick. That is, we will be computing
@@ -6157,15 +6164,13 @@ Next, we consider the case that $P$ is well behaved, but not consistent with $\r
 \end{proof}
 
 \begin{proof}[Proof of Proposition~\ref{prop:approximation_error_bound}]
-Let $u\in\mathcal{U}_{[t,s]}$ be such that $u=t_0,t_1,\ldots,t_n$, where, for all $i\in\{0,1,\ldots,n\}$, $t_i\coloneqq t + i\cdot\Delta$. Then, clearly, $t_0=t$, $t_n=s$, and $\sigma(u)=\Delta$. Let
-\begin{equation*}
-\Phi_u\coloneqq \prod_{i=1}^n (I + \Delta_i^u\lrate) = \prod_{i=1}^n(I+\Delta\lrate).
-\end{equation*}
-We have that
+Let $u\in\mathcal{U}_{[t,s]}$ be such that $u=t_0,t_1,\ldots,t_n$, where, for all $i\in\{0,1,\ldots,n\}$, $t_i\coloneqq t + i\cdot\Delta$. Then, because $\Delta=\nicefrac{(s-t)}{n}$, we have $t_0=t$, $t_n=s$, and, clearly,  $\sigma(u)=\Delta$. Let now $\Phi_u\coloneqq \prod_{i=1}^n (I + \Delta_i^u\lrate) = \prod_{i=1}^n(I+\Delta\lrate)$.
+
+Due to the choice of $n$, we have that
 \begin{align*}
-\Delta &= \frac{(s-t)}{n} \leq (s-t)\frac{\epsilon}{(s-t)^2\norm{\lrate}^2\norm{f}}  = \frac{\epsilon}{(s-t)\norm{\lrate}^2\norm{f}}.
+\Delta &= \frac{(s-t)}{n} \leq (s-t)\frac{\epsilon}{(s-t)^2\norm{\lrate}^2\norm{f}}  = \frac{\epsilon}{(s-t)\norm{\lrate}^2\norm{f}},
 \end{align*}
-It now follows from Property~\ref{N:normAf} and Lemma~\ref{lemma:limitboundonL} that
+and, because also $n\geq (s-t)\norm{\lrate}$, we have $\Delta\norm{\lrate}=\nicefrac{(s-t)}{n}\norm{\lrate}\leq 1$. It therefore follows from Property~\ref{N:normAf} and Lemma~\ref{lemma:limitboundonL} that
 \begin{align*}
 \norm{L_t^sf - \prod_{i=1}^n(I+\Delta\lrate)f} &= \norm{L_t^sf - \Phi_uf} \leq \norm{L_t^s - \Phi_u}\norm{f} \\
  &\leq \sigma(u)(s-t)\norm{\lrate}^2\norm{f} = \Delta(s-t)\norm{\lrate}^2\norm{f} \\
