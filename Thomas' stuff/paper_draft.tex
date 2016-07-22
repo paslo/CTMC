@@ -2724,7 +2724,7 @@ where the second equality is due to the error bound guaranteed by Proposition~\r
 
 This iterative procedure for computing $L_t^sf$ is outlined in Algorithm~\ref{alg:compute_singlevar}. This algorithm first finds the number of steps required to reach the given precision $\epsilon$ (Line 2), and computes from this the corresponding step size $\Delta$ (Line 3). Starting with the function $g_0\coloneqq f$ (Line 4), the algorithm iteratively computes the function $g_i\coloneqq (I+\Delta\lrate)g_{(i-1)}$ (Line 6). After repeating this for $n$ steps (Line 5), the returned function $g_n$ (Line 8) corresponds to $L_t^sf\pm\epsilon$, due to Proposition~\ref{prop:approximation_error_bound}.
 
-\begin{algorithm}[H]
+\begin{algorithm}[htb]
   \caption{Numerically compute $L_t^sf$ for any $f\in\gamblesX$.}
     \label{alg:compute_singlevar}
   \begin{algorithmic}[1]
@@ -2747,7 +2747,7 @@ Recall now from Section~\ref{sec:function_single_future_multiple_past} that we c
 
 The algorithm starts by constructing a new function $g\in\gambles(\states_u)$ (Line 2), which will be the result of the algorithm. Then, for each state assignment $x_u\in\states_u$ (Line 3), the value of $g(x_u)$ will be computed (Lines 4-6), as follows. First, we take the restriction of $f\in\gambles(\states_{u\cup s})$ to the state $\states_s$, for a specific state assignment $x_u$. Note that this $f_{x_u}\coloneqq f(x_u,X_s)$ is a function in $\gamblesX$, and we can therefore compute $L_{t_n}^sf_{x_u}$ using Algorithm~\ref{alg:compute_singlevar} (Line 5), where $t_n$ is the latest time point in $u$. The resulting function $\hat{f}_{x_u}\coloneqq L_{t_n}^sf_{x_u}$ is then a function in $\gambles(\states_{t_n})$, so it needs to be evaluated in $x_{t_n}\in x_u$ to find the correct value for $g(x_u)$ (Line 6). Using Proposition~\ref{prop:approximation_error_bound} and the notational convention stipulated in Section~\ref{sec:function_single_future_multiple_past}, the returned function $g$ (Line 8) then corresponds to $[L_{t_n}^sf \pm\epsilon]\in\gambles(\states_u)$, which, by Corollary~\ref{cor:inf_works_for_single_future_var}, corresponds to both $\underline{\mathbb{E}}_{\rateset}^\mathrm{WM}[f(x_u,X_s)\vert X_u=x_u]$ and $\underline{\mathbb{E}}_{\rateset}^\mathrm{W}[f(x_u,X_s)\vert X_u=x_u]$.
 
-\begin{algorithm}[H]
+\begin{algorithm}[htb]
   \caption{Numerically compute $L_{t_n}^sf$ for any $f\in\gambles(\states_{u\cup s})$.}
     \label{alg:compute_singlevar_multiple_past}
   \begin{algorithmic}[1]
@@ -2827,15 +2827,15 @@ We therefore conclude that
 \exampleend
 \end{exmp}
 
-The general method for computing conditional lower expectations of functions $f\in\gambles(\states_{u\cup v})$ is outlined in Algorithm~\ref{alg:compute_multivar}. This algorithm starts by constructing a buffer $w\coloneqq v=s_0,\ldots,s_m$ of the time points for which the operators $L_{t_n}^{s_0},L_{s_1}^{s_2},\ldots,L_{s_{m-1}}^{s_m}$ have not yet been resolved, which initially corresponds to just $v$ (Line 2). We rename the function $f$ to $g_m$ for indexing purposes (Line 3). The algorithm then iteratively resolves the composition of operators in a backward fashion, working from the latest time point in $v$ back to the earliest time point in $v$ (Line 4). One step here amounts to removing the current latest remaining time point $s_i$ from the buffer $w$ (Line 5), and then computing the lower expectation $\underline{\mathbb{E}}_{\rateset}^\mathrm{W}[g_i(X_u,X_w,X_{s_i})\vert X_u,X_w]$ using Algorithm~\ref{alg:compute_singlevar_multiple_past}. The result of this computation is therefore a function $g_{(i-1)}\in\gambles(\states_{u\cup w})$. This iterative process corresponds to the repeated decomposition and resolution of lower expectations,as explained in Section~\ref{sec:decomposition}. After all time points $s_m,s_{m-1},\ldots,s_0$ have been resolved, the returned function $g_{(-1)}$ (Line 8) corresponds to $\underline{\mathbb{E}}_{\rateset}^\mathrm{W}[f(X_u,X_v)\vert X_u]\pm\epsilon$, due to Corollary~\ref{cor:composition_lower_trans} and Proposition~\ref{prop:approximation_error_bound}.
+The general method for computing conditional lower expectations of functions $f\in\gambles(\states_{u\cup v})$ is outlined in Algorithm~\ref{alg:compute_multivar}. This algorithm starts by constructing a buffer $w\coloneqq v=s_0,\ldots,s_m$ of the time points for which the operators $L_{t_n}^{s_0},L_{s_1}^{s_2},\ldots,L_{s_{m-1}}^{s_m}$ have not yet been resolved, which initially corresponds to just $v$ (Line 2). We rename the function $f$ to $g_m$ for indexing purposes (Line 3). The algorithm then iteratively resolves the composition of operators in a backward fashion, working from the latest time point in $v$ back to the earliest time point in $v$ (Line 4). One step here amounts to removing the current latest remaining time point $s_i$ from the buffer $w$ (Line 5), and then computing the lower expectation $\underline{\mathbb{E}}_{\rateset}^\mathrm{W}[g_i(X_u,X_w,X_{s_i})\vert X_u,X_w]$ using Algorithm~\ref{alg:compute_singlevar_multiple_past}. The result of this computation is therefore a function $g_{(i-1)}\in\gambles(\states_{u\cup w})$. This iterative process corresponds to the repeated decomposition and resolution of lower expectations, as explained in Section~\ref{sec:decomposition}. After all time points $s_m,s_{m-1},\ldots,s_0$ have been resolved, the returned function $g_{(-1)}$ (Line 8) corresponds to $\underline{\mathbb{E}}_{\rateset}^\mathrm{W}[f(X_u,X_v)\vert X_u]\pm\epsilon$, due to Corollary~\ref{cor:composition_lower_trans} and Proposition~\ref{prop:approximation_error_bound}.
 
-Note that the error bound of $\pm\epsilon$ holds because we compute each step using a maximum error of $\nicefrac{\epsilon}{m}$ (Line 6). That is, the finite-precision approximation error scales linearly in the number of time points that have to be computed. We will not provide a formal proof of this claim, however this is easily verified by replacing $g_{(i-1)}$ in Line 6 with the true function $L_{s_{i-1}}^{s_i}g_i$, and keeping track of the compound error using Proposition~\ref{prop:approximation_error_bound}, Property~\ref{LT:differencenorm} in Proposition~\ref{prop:norm_properties_lrate_lt}, and triangle inequality of the norm $\norm{\cdot}$.
+Note that the error bound of $\pm\epsilon$ holds because we compute each step using a maximum error of $\nicefrac{\epsilon}{m}$ (Line 6). That is, the finite-precision approximation error scales linearly in the number of time points that have to be computed. We will not provide a formal proof of this claim, however this is easily verified by replacing $g_{(i-1)}$ in Line 6 with the true function $L_{s_{i-1}}^{s_i}g_i$, and keeping track of the compound error obtained from this substitution.
 
-\begin{algorithm}[H]
+\begin{algorithm}[htb]
   \caption{Numerically compute $\underline{\mathbb{E}}_\rateset^\mathrm{W}[f(X_u,X_v)\,\vert\,X_u]$ for any $f\in\gambles(\states_{u\cup v})$.}
     \label{alg:compute_multivar}
   \begin{algorithmic}[1]
-    \Require{A non-empty, bounded, and convex set of rate matrices $\rateset$ with separately specified rows, two sets of time points $u,v\in\mathcal{U}_\emptyset$ such that $u\leq v$, a function $f\in\gambles(\states_{u\cup v})$, and a maximum numerical error per step of $\epsilon\in\realspos$.}
+    \Require{A non-empty, bounded, and convex set of rate matrices $\rateset$ with separately specified rows, two sets of time points $u,v\in\mathcal{U}_\emptyset$ such that $u\leq v$, a function $f\in\gambles(\states_{u\cup v})$, and a maximum numerical error $\epsilon\in\realspos$.}
 \Ensure{A function $\underline{\mathbb{E}}_\rateset^\mathrm{W}[f(X_u,X_v)\,\vert\,X_u]\pm\epsilon$ in $\gambles(\states_u)$.}
 	 \Statex
     \Function{ComputeLowerExp}{$\rateset, u,v, f,\epsilon$}
@@ -2853,16 +2853,21 @@ Note that the error bound of $\pm\epsilon$ holds because we compute each step us
   \end{algorithmic}
 \end{algorithm}
 
-*** blabla
-As noted above, the procedure outlined in Example~\ref{exmp:num_multivar_func_nonmarkov} does not work for computing lower expectations with respect to a set of Markov chains $\wmprocesses_\rateset$.
+As mentioned in Section~\ref{sec:decomposition}, we cannot use Corollary~\ref{cor:composition_lower_trans}---nor, therefore, Algorithm~\ref{alg:compute_multivar}---to compute lower expectations of functions $f\in\gambles(\states_{u\cup v})$ with respect to a set of Markov chains $\wmprocesses_\rateset$. We will numerically show this in the example below, but will first provide some intuition.
 
-** some intuition first.
+The core of the problem can already be illustrated using Algorithm~\ref{alg:compute_singlevar_multiple_past} for functions $f\in\gambles(\states_{u\cup s})$. Here, for every state assignment $x_u\in\states_u$, we compute $L_{t_n}^sf(x_u,X_s)$. While Corollary~\ref{cor:inf_works_for_single_future_var} tells us that this does correspond to the lower expectation with respect to $\wmprocesses_{\rateset}$, that is, $[L_{t_n}^sf](x_{t_n})=\underline{\mathbb{E}}_\rateset^\mathrm{WM}[f(x_u,X_s)\vert X_u=x_u]$, this only holds for each specific history $x_u$ separately. That is, while there is a Markov chain $P\in\wmprocesses_\rateset$ with expectation $\mathbb{E}_P[f(x_u,X_s)\vert X_u=x_u]=[L_{t_n}^sf](x_{t_n})$---or at least approaching this infimum---there is not necessarily one Markov chain that does this for \emph{all} histories $x_u\in\states_u$ simultaneously.
 
-The example below will show that, indeed, the lower expectation of the function from Example~\ref{exmp:num_multivar_func_nonmarkov}, with respect to $\wmprocesses_\rateset$, is different from the one that was found for $\wprocesses_\rateset$. This therefore proves by counterexample that Algorithm~\ref{alg:compute_multivar} is not applicable when working with sets of Markov chains. Put differently, a composition of lower transition operators does not in general correspond to the lower expectation for such a set, i.e.,
-\begin{equation*}
-\left[L_{t_n}^{s_0}L_{s_0}^{s_1}\cdots L_{s_{m-1}}^{s_m}f\right](x_u) \neq \underline{\mathbb{E}}_\rateset^{\mathrm{WM}}[f(X_u,X_v)\,\vert\,X_u=x_u]\,,
-\end{equation*}
-in contrast to our results from Section~\ref{sec:decomposition} for the set $\wprocesses_\rateset$.
+In particular, for each $x_u\in\states_u$, we find $\underline{\mathbb{E}}_\rateset^\mathrm{WM}[f(x_u,X_s)\vert X_u=x_u]$ as a minimization over $\{\mathbb{E}_P[f(x_u,X_s)\vert X_u=x_u] : P\in\wmprocesses_\rateset\}$ for the specific restriction $f(x_u,X_s)$ of $f(X_u,X_s)$. Since $f(x_u,X_s)$ may take different values for each $x_u$, the minimizing process may therefore be different for each state assignment $x_u$. Therefore, in order to have a single minimizing process, we require in general that the probabilities of this process can depend on the entire state assignment $x_u$---and this is exactly what the Markov property prevents us from doing.
+
+Now, in the case of functions $f\in\gambles(\states_{u\cup s})$, the conditional lower expectation $\underline{\mathbb{E}}_\rateset^\mathrm{WM}[f(X_u,X_s)\vert X_u]$ is still correctly given by these (separate) minimizing processes, due to the definition of the infimum---that is, the infimum does not require that it actually be reached. In particular, $L_{t_n}^sf$ is the greatest element of $\gambles(\states_u)$ that is smaller than $\mathbb{E}_P[f(X_u,X_s)\vert X_u]$ for all $P\in\wmprocesses_\rateset$, under the natural ordering on $\gambles(\states_u)$ that, for all $g,h\in\gambles(\states_u)$, $g\leq h$ if and only if $g(x_u)\leq h(x_u)$ for all $x_u\in\states_u$.
+
+However, if we now consider functions $f\in\gambles(\states_{u\cup v})$, we also find a ``history''---or more aptly, \emph{trajectory}---dependence in the resolution of the time points in $v$. Non-Markov processes provide us with these additional degrees of freedom to let the probabilities depend on the specific trajectory $x_{u\cup v}\in\states_{u\cup v}$, which is why we \emph{can} use the operator $L_t^s$ to compute lower expectations of such functions for the set $\wprocesses_{\rateset}$.
+
+The example below will show that, indeed, the lower expectation of the function from Example~\ref{exmp:num_multivar_func_nonmarkov}, with respect to $\wmprocesses_\rateset$, is different from the one that was found for $\wprocesses_\rateset$. This therefore shows by counterexample that Algorithm~\ref{alg:compute_multivar} is not applicable when working with sets of Markov chains. %Put differently, a composition of lower transition operators does not in general correspond to the lower expectation for such a set, i.e.,
+%\begin{equation*}
+%\left[L_{t_n}^{s_0}L_{s_0}^{s_1}\cdots L_{s_{m-1}}^{s_m}f\right](x_u) \neq \underline{\mathbb{E}}_\rateset^{\mathrm{WM}}[f(X_u,X_v)\,\vert\,X_u=x_u]\,,
+%\end{equation*}
+%in contrast to our results from Section~\ref{sec:decomposition} for the set $\wprocesses_\rateset$.
 
 \begin{exmp} \label{exmp:num_counterexample_markov}
 Consider again the model and set of rate matrices $\rateset$ from Example~\ref{exmp:example_rateset_simple_model}, and the function $f\in\gambles(\states^{\{1,2\}})$ from Example~\ref{exmp:num_multivar_func_nonmarkov} given by
