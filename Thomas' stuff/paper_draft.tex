@@ -2870,7 +2870,7 @@ The example below will show that, indeed, the lower expectation of the function 
 %in contrast to our results from Section~\ref{sec:decomposition} for the set $\wprocesses_\rateset$.
 
 \begin{exmp} \label{exmp:num_counterexample_markov}
-Consider again the model and set of rate matrices $\rateset$ from Example~\ref{exmp:example_rateset_simple_model}, and the function $f\in\gambles(\states^{\{1,2\}})$ from Example~\ref{exmp:num_multivar_func_nonmarkov} given by
+Consider again the model and set of rate matrices $\rateset$ from Example~\ref{exmp:example_rateset_simple_model}, and the function $f\in\gambles(\states_{\{1,2\}})$ from Example~\ref{exmp:num_multivar_func_nonmarkov} given by
 \begin{equation*}
 f(X_1,X_2) \coloneqq \left\{\begin{array}{ll}
 1 & \text{if $X_1 = X_2$, and} \\
@@ -2881,7 +2881,7 @@ We will here compute the lower expectation $\underline{\mathbb{E}}_\rateset^{\ma
 
 One problem in doing this, is that we do not have a general method for computing such lower expectations for sets of Markov chains. Fortunately, in the very specific case of a binary-state model, as we use here, we can actually numerically solve the optimization problem given by the right-hand side of
 \begin{equation*}
-\underline{\mathbb{E}}_\rateset^{\mathrm{WM}}[f(X_1,X_2)\,\vert\,X_0] = \inf\left\{ \mathbb{E}[f(X_1,X_2)\,\vert\,X_0]\,:\,P\in\wmprocesses_\rateset\right\}.
+\underline{\mathbb{E}}_\rateset^{\mathrm{WM}}[f(X_1,X_2)\,\vert\,X_0] = \inf\left\{ \mathbb{E}_P[f(X_1,X_2)\,\vert\,X_0]\,:\,P\in\wmprocesses_\rateset\right\}.
 \end{equation*}
 
 This numerical approach was verified to work for simple functions $g\in\gamblesX$, i.e. functions defined on a single time point, for which Corollary~\ref{cor:lower_operator_is_infimum} tells us that the lower expectation should correspond to the quantity $L_t^sg$. Because Algorithm~\ref{alg:compute_singlevar} tells us how to compute this latter quantity, we could verify the precision of the numerical optimization employed here. In doing so, we found a numerical correspondence between the ``brute-force'' optimization over $\wmprocesses_\rateset$ and the computation using $L_t^s$, with deviations less than the $\epsilon$ error-bound used to compute the quantity $L_t^sg$.
@@ -2891,13 +2891,15 @@ Employing this ``brute-force'' optimization to the function $f$ that we are inte
 \underline{P}_{\rateset}^{\mathrm{WM}}(X_1 = X_2\,\vert\,X_0=\text{{\tt healthy}}) \approx 0.939,\quad\text{and,}\quad \underline{P}_{\rateset}^{\mathrm{WM}}(X_1 = X_2\,\vert\,X_0=\text{{\tt sick}}) \approx 0.467\,.
 \end{align*}
 
-Comparing to the lower expectation for the set $\wprocesses_\rateset$ that was found in Example~\ref{exmp:num_multivar_func_nonmarkov}, we see that the lower expectations are indeed different for these two sets of processes. Furthermore, as guaranteed by Proposition~\ref{prop:lower_exp_markov_bounded_by_nonmarkov}, the lower expectation for $\wprocesses_\rateset$ provides a lower bound on the lower expectation for $\wmprocesses_\rateset$.
+Comparing to the lower expectation for the set $\wprocesses_\rateset$ that was found in Example~\ref{exmp:num_multivar_func_nonmarkov}, we see that the lower expectations are indeed different for these two sets of processes. Furthermore, as was guaranteed by Proposition~\ref{prop:lower_exp_markov_bounded_by_nonmarkov}, the lower expectation for $\wprocesses_\rateset$ indeed provides a lower bound for the lower expectation with respect to $\wmprocesses_\rateset$.
 \exampleend
 \end{exmp}
 
-**** notes about computational aspects/tractability, observation that decomposition reduces the problem to discrete-time computations, reference earlier work containing algorithms to compute this
+We conclude this section with some remarks about the tractability of the algorithms presented in this section. In particular, observe that Algorithm~\ref{alg:compute_singlevar_multiple_past} and~\ref{alg:compute_multivar} have a runtime complexity that is exponential in the number of time points. That is, for the computation of the lower expectation of a function $f\in\gambles(\states_{u\cup v})$, this requires a separate execution of Algorithm~\ref{alg:compute_singlevar} for each $x_{u\cup v}\in\states_{u\cup v}$. If we write $u=t_0,\ldots,t_n$, $v=s_0,\ldots,s_m$, and let $\abs{\states}$ denote the number of states in $\states$, then, clearly, this requires $\abs{\states}^{n+m+2}$ executions of Algorithm~\ref{alg:compute_singlevar}. Of course, this should not really be surprising---even the simple enumeration of the different values of $f$ takes this many steps, so we cannot in general expect the computation of its lower expectation to be of a lower complexity.
 
-**** computation can also be brute-forced if state space and number of time points allow for it. Algorithm~\ref{alg:compute_multivar} does this, but this approach is exponential in the size of $v$; specifically the runtime is $O\left({\vert\states\vert}^{m+1}(s_m-t_0)^2\norm{\lrate}^2\norm{f}\epsilon^{-1}\right)$, with $u=t_0,t_1,\ldots,t_n$ and $v=s_0,s_1,\ldots,s_m$.
+%**** notes about computational aspects/tractability, observation that decomposition reduces the problem to discrete-time computations, reference earlier work containing algorithms to compute this
+
+%**** computation can also be brute-forced if state space and number of time points allow for it. Algorithm~\ref{alg:compute_multivar} does this, but this approach is exponential in the size of $v$; specifically the runtime is $O\left({\vert\states\vert}^{m+1}(s_m-t_0)^2\norm{\lrate}^2\norm{f}\epsilon^{-1}\right)$, with $u=t_0,t_1,\ldots,t_n$ and $v=s_0,s_1,\ldots,s_m$.
 
 \section{Relation to Previous Work}\label{sec:prev_work}
 
@@ -2918,7 +2920,7 @@ Our work extends these results in several ways. First, as shown by Proposition~\
 
 This earlier work also contains several results that are useful to us. In particular, {\v{S}}kulj discusses several practical techniques to numerically compute, or approximate to arbitrary precision, the quantity $\underline{f}_{\,s}$ for a given $f\in\gamblesX$. Hence, because of the correspondence between $\underline{f}_{\,s}$ and $L_0^sf$, these results can be applied when numerically working with our lower transition operator.
 
-**** our proof in Section~\ref{sec:lowertrans} shows that we can numerically approximate to arbitrary precision using a fine enough partition of the intervals *** (Lemma~\ref{lemma:limitboundonL} and Proposition~\ref{prop:approximation_error_bound} make this precision specific) (we should mention that this bound is better than the one that is provided by Damjan! For example, for the numerical example at the end of Section 4.1 in his paper, he finds that $N$ should be more than $6000$, whereas our bound only needs $N=100$) Also, using his bound for our Example~\ref{exmp:single_time_numerical}, he requires $N$ to be more than $2\times 10^9$, whereas we need $1.6\times 10^4$.
+**** our proof in Section~\ref{sec:lowertrans} shows that we can numerically approximate to arbitrary precision using a fine enough partition of the intervals *** (Lemma~\ref{lemma:limitboundonL} and Proposition~\ref{prop:approximation_error_bound} make this precision specific) (we should mention that this bound is better than the one that is provided by Damjan! For example, for the numerical example at the end of Section 4.1 in his paper, he finds that $N$ should be more than $6000$, whereas our bound only needs $N=100$) Also, using his bound for our Example~\ref{exmp:single_time_numerical}, he requires $N$ to be more than $2.2\times 10^9$, whereas we need $1.6\times 10^4$.
 
 Our present work furthermore adds to the literature in several ways. In~\cite{Skulj:2015cq}, the arguments were cast purely in terms of lower envelopes of expectation functionals; but side-stepped the question of which sets of processes these envelopes correspond to. In contrast, our work in Section~\ref{sec:iCTMC} makes explicit the sets of processes that we are dealing with, and Theorem~\ref{theo:dominating_rate_processes_max_set} exactly characterizes the largest set of processes for which our lower transition operator---and indeed the differential equation~\eqref{eq:damjans_diff}---computes a lower envelope.
 
@@ -2933,6 +2935,10 @@ Finally, previous work only focused on functions $f\in\gamblesX$ defined at a si
 *** wat kunnen we nog meer doen? Nou, bijvoorbeeld:
 
 *** I would discuss sigma-additivity things here: explain that this is possible with our approach by using Kolmogorovs extension theorem, say that this would allow us to consider for example the lower and upper expected time till absorbtion. ***
+
+***
+
+Recall from Section~\ref{sec:tractability} that the computation of lower expectations of functions defined on multiple time points has a runtime complexity that is exponential in the number of these time points. However, this exponential runtime holds for Algorithm~\ref{alg:compute_multivar}, which works for \emph{arbitrary} functions $f\in\gambles(\states_{u\cup v})$. That is, it does not assume any structure of the function. In contrast, in many practical applications there will be some underlying structure of the functions that we are interested in. For instance, there may be functions $g_i\in\gambles(\states_{s_i})$, $i\in\{0,\ldots,m\}$, such that $f\in\gambles(\states_v)$ is of the form $f(x_v) = \sum_{i=0}^m g_i(x_{s_i})$. It follows from {\bf JASPER'S PROEFSCHRIFT} that functions of this form can be computed in a runtime complexity that is \emph{linear} in the number of time points. We will aim in future work to **** blabla, dat doen we daar wel.
 
 *** mogelijk nog opmerking over dat dit Hidden-ICTMCs mogelijk maakt omdat GBR in subklasse van berekenbare functies zit
 
