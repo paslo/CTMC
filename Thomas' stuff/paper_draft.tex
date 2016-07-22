@@ -2683,9 +2683,9 @@ Consider again the model and the set of rate matrices $\rateset$ from Example~\r
 \end{equation*}
 Proposition~\ref{prop:approximation_error_bound} tells us that we can compute this quantity using a fine enough partition of the time interval $[0,1]$. We will be using a maximum error for this computation of $\epsilon\coloneqq 10^{-3}$. Furthermore, the length of the time interval $(s-t)=1$, the function norm $\norm{\ind{\text{Sick}}}=1$, and due to our choice of $\rateset$, we have $\norm{\lrate} = 4$, as in Example~\ref{exmp:numerical_lrate}. In order to reach the desired maximum error, we therefore need to subdivide the time interval into at least $n$ steps, where
 \begin{equation*}
-n = \frac{(s-t)^2\norm{\lrate}^2\norm{\ind{\text{Sick}}}}{\epsilon} = \frac{1^2\cdot 4^2\cdot 1}{10^{-3}} = 16\cdot 10^3\,,
+n = \frac{(s-t)^2\norm{\lrate}^2\norm{\ind{\text{Sick}}}}{\epsilon} = \frac{1^2\cdot 4^2\cdot 1}{10^{-3}} = 1.6\times 10^4\,,
 \end{equation*}
-resulting in a step size of $\Delta=\nicefrac{(s-t)}{n}=16\cdot 10^{-3}$. Note that this choice of $n$ here also satisfies the requirement $n\geq (s-t)\norm{\lrate}$ from Proposition~\ref{prop:approximation_error_bound}. 
+resulting in a step size of $\Delta=\nicefrac{(s-t)}{n}=1.6\times 10^{-4}$. Note that this choice of $n$ here also satisfies the requirement $n\geq (s-t)\norm{\lrate}$ from Proposition~\ref{prop:approximation_error_bound}. 
 
 We now compute the quantity
 \begin{equation*}
@@ -2697,9 +2697,10 @@ We start by computing the right-most factor on the right-hand side of this equat
  &= \inf\left\{ \left[\begin{array}{rr}-a&a\\b&-b \end{array}\right] \left[\begin{array}{c} 0\\ 1 \end{array}\right]\,:\, a\in[\nicefrac{1}{52},\nicefrac{3}{52}],\,b\in[\nicefrac{1}{2},2]\right\} = \left[\begin{array}{c}\nicefrac{1}{52}\\2\end{array}\right]\,.
 \end{align*}
 Let now
-\begin{equation*}
-g_1 \coloneqq (I + \Delta\lrate)\ind{\text{{\tt sick}}} = \ind{\text{{\tt sick}}} + \Delta\lrate\ind{\text{{\tt sick}}} = \left[\begin{array}{c}0\\1\end{array}\right] + 16\cdot 10^{-3}\cdot\left[\begin{array}{c}\nicefrac{1}{52}\\2\end{array}\right] = \left[\begin{array}{l} 0 + \nicefrac{1}{52}\cdot 16\cdot 10^{-3}\\ 1 + 2\cdot 16\cdot 10^{-3}\end{array}\right]\,.
-\end{equation*}
+\begin{align*}
+g_1 \coloneqq (I + \Delta\lrate)\ind{\text{{\tt sick}}} &= \ind{\text{{\tt sick}}} + \Delta\lrate\ind{\text{{\tt sick}}} \\
+ &= \left[\begin{array}{c}0\\1\end{array}\right] + 1.6\times 10^{-4}\cdot\left[\begin{array}{c}\nicefrac{1}{52}\\2\end{array}\right] = \left[\begin{array}{l} 0 + \nicefrac{1}{52}\cdot 1.6\times 10^{-4}\\ 1 + 2\cdot 1.6\times 10^{-4}\end{array}\right]\,.
+\end{align*}
 Having completed this first step, we have
 \begin{equation*}
 \prod_{i=1}^n(I + \Delta\lrate)\ind{\text{{\tt sick}}} = \prod_{i=1}^{15999}(I + \Delta\lrate)g_1 = \left(\prod_{i=1}^{15998}(I + \Delta\lrate)\right)\left((I+\Delta\lrate)g_1\right)\,.
@@ -2826,7 +2827,7 @@ We therefore conclude that
 \exampleend
 \end{exmp}
 
-The general method for computing conditional lower expectations of functions $f\in\gambles(\states_{u\cup v})$ is outlined in Algorithm~\ref{alg:compute_multivar}. **** this algorithm blabla
+The general method for computing conditional lower expectations of functions $f\in\gambles(\states_{u\cup v})$ is outlined in Algorithm~\ref{alg:compute_multivar}. This algorithm starts by constructing a buffer $w\coloneqq v=s_0,\ldots,s_m$ of the time points for which the operators $L_{t_n}^{s_0},L_{s_1}^{s_2},\ldots,L_{s_{m-1}}^{s_m}$ have not yet been resolved, which initially corresponds to just $v$ (Line 2). We rename the function $f$ to $g_m$ for indexing purposes (Line 3). The algorithm then iteratively resolves the composition of operators in a backward fashion, working from the latest time point in $v$ back to the earliest time point in $v$ (Line 4). One step here amounts to removing the current latest remaining time point $s_i$ from the buffer $w$ (Line 5), and then computing the lower expectation $\underline{\mathbb{E}}_{\rateset}^\mathrm{W}[g_i(X_u,X_w,X_{s_i})\vert X_u,X_w]$ using Algorithm~\ref{alg:compute_singlevar_multiple_past}. The result of this computation is therefore a function $g_{(i-1)}\in\gambles(\states_{u\cup w})$. This iterative process corresponds to the repeated decomposition and resolution of lower expectations,as explained in Section~\ref{sec:decomposition}. After all time points $s_m,s_{m-1},\ldots,s_0$ have been resolved, the returned function $g_{(i-1)}$ (Line 8) corresponds to $\underline{\mathbb{E}}_{\rateset}^\mathrm{W}[f(X_u,X_v)\vert X_u]$, due to Corollary~\ref{cor:composition_lower_trans}.
 
 \begin{algorithm}[H]
   \caption{Numerically compute $\underline{\mathbb{E}}_\rateset^\mathrm{W}[f(X_u,X_v)\,\vert\,X_u]$ for any $f\in\gambles(\states_{u\cup v})$.}
@@ -2850,8 +2851,7 @@ The general method for computing conditional lower expectations of functions $f\
   \end{algorithmic}
 \end{algorithm}
 
-{\bf TODO:} some explanation for algorithm.
-
+*** blabla
 As noted above, the procedure outlined in Example~\ref{exmp:num_multivar_func_nonmarkov} does not work for computing lower expectations with respect to a set of Markov chains $\wmprocesses_\rateset$.
 
 ** some intuition first.
@@ -2911,7 +2911,7 @@ Our work extends these results in several ways. First, as shown by Proposition~\
 
 This earlier work also contains several results that are useful to us. In particular, {\v{S}}kulj discusses several practical techniques to numerically compute, or approximate to arbitrary precision, the quantity $\underline{f}_{\,s}$ for a given $f\in\gamblesX$. Hence, because of the correspondence between $\underline{f}_{\,s}$ and $L_0^sf$, these results can be applied when numerically working with our lower transition operator.
 
-**** our proof in Section~\ref{sec:lowertrans} shows that we can numerically approximate to arbitrary precision using a fine enough partition of the intervals *** (Lemma~\ref{lemma:limitboundonL} and Proposition~\ref{prop:approximation_error_bound} make this precision specific) (we should mention that this bound is better than the one that is provided by Damjan! For example, for the numerical example at the end of Section 4.1 in his paper, he finds that $N$ should be more than $6000$, whereas our bound only needs $N=100$)
+**** our proof in Section~\ref{sec:lowertrans} shows that we can numerically approximate to arbitrary precision using a fine enough partition of the intervals *** (Lemma~\ref{lemma:limitboundonL} and Proposition~\ref{prop:approximation_error_bound} make this precision specific) (we should mention that this bound is better than the one that is provided by Damjan! For example, for the numerical example at the end of Section 4.1 in his paper, he finds that $N$ should be more than $6000$, whereas our bound only needs $N=100$) Also, using his bound for our Example~\ref{exmp:single_time_numerical}, he requires $N$ to be more than $2\times 10^9$, whereas we need $1.6\times 10^4$.
 
 Our present work furthermore adds to the literature in several ways. In~\cite{Skulj:2015cq}, the arguments were cast purely in terms of lower envelopes of expectation functionals; but side-stepped the question of which sets of processes these envelopes correspond to. In contrast, our work in Section~\ref{sec:iCTMC} makes explicit the sets of processes that we are dealing with, and Theorem~\ref{theo:dominating_rate_processes_max_set} exactly characterizes the largest set of processes for which our lower transition operator---and indeed the differential equation~\eqref{eq:damjans_diff}---computes a lower envelope.
 
