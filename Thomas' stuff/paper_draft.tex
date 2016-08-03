@@ -623,35 +623,35 @@ Consider some positive constant $c\in\realspos$ and let $\{Q_i\}_{i\in\nats_0}$ 
 We can then construct the following sequence. For $i=0$, we let $\smash{\mathcal{T}_{0}\coloneqq\mathcal{T}_{Q_0}}$, and for all $i\in\nats$, we let%\vspace{-2pt}
 \begin{equation}
 \mathcal{T}_i\coloneqq
-\mathcal{T}_{Q_i}^{[0,\Delta_i]}\otimes \mathcal{T}_{i-1}^{[\Delta_i,+\infty)}
+\mathcal{T}_{Q_i}^{[0,\delta_i]}\otimes \mathcal{T}_{i-1}^{[\delta_i,+\infty)}
 %\begin{cases}
 % \mathcal{T}_{Q_1}^{[0,\Delta_i]}\otimes \mathcal{T}_{i-1}^{[\Delta_i,+\infty)} & \text{if $i$ is odd;}\\
 % \mathcal{T}_{Q_2}^{[0,\Delta_i]}\otimes \mathcal{T}_{i-1}^{[\Delta_i,+\infty)} & \text{if $i$ is even,}
 %\end{cases}
 \label{eq:def:sequenceinexample3}
 \end{equation}
-where, for all $i\in\nats_0$, $\Delta_i\coloneqq 2^{-i}$. The resulting sequence $\smash{\{\mathcal{T}_i\}_{i\in\nats_0}}$ is then clearly a subset of $\mathbb{T}$. Furthermore, as we will explain in the rest of this example, $\{\mathcal{T}_i\}_{i\in\nats_0}$ is a Cauchy sequence. Loosely speaking, this means that its elements become arbitrarily close to each other as the sequence progresses. Formally, it means that
+where, for all $i\in\nats_0$, $\delta_i\coloneqq 2^{-i}$. The resulting sequence $\smash{\{\mathcal{T}_i\}_{i\in\nats_0}}$ is then clearly a subset of $\mathbb{T}$. Furthermore, as we will explain in the rest of this example, $\{\mathcal{T}_i\}_{i\in\nats_0}$ is a Cauchy sequence. Loosely speaking, this means that its elements become arbitrarily close to each other as the sequence progresses. Formally, it means that
 \begin{equation}\label{eq:cauchyexample}
 (\forall\epsilon\in\realspos)\,(\exists n_\epsilon\in\nats)\,(\forall k,\ell > n_\epsilon)~d(\mathcal{T}_{k},\mathcal{T}_\ell)<\epsilon.
 \end{equation}
 The reason why this is of interest to us is because in a complete metric space, every Cauchy sequence converges to a limit that belongs to the same space. Hence, since $\{\mathcal{T}_i\}_{i\in\nats_0}$ is Cauchy, Proposition~\ref{lemma:restricted_trans_mat_system_cauchy_converges} allow us to infer that $\{\mathcal{T}_i\}_{i\in\nats_0}$ converges to a limit in $\mathbb{T}$.
 
-So let us now show that $\{\mathcal{T}_i\}_{i\in\nats_0}$ is indeed Cauchy. In order to prove this, the first step is to notice that for any $i\in\nats$, the difference between $\mathcal{T}_{i}$ and $\mathcal{T}_{i-1}$ is essentially situated on the interval $[0,\Delta_i]$. It should therefore be intuitively clear that $d(\mathcal{T}_i,\mathcal{T}_{i-1})$ is proportional to $\Delta_i$. A more rigorous argument shows that $d(\mathcal{T}_i,\mathcal{T}_{i-1})\leq\Delta_i\norm{Q_i-Q_{i-1}}$; see the appendix for a formal proof.
+So let us now show that $\{\mathcal{T}_i\}_{i\in\nats_0}$ is indeed Cauchy. In order to prove this, the first step is to notice that for any $i\in\nats$, the difference between $\mathcal{T}_{i}$ and $\mathcal{T}_{i-1}$ is essentially situated on the interval $[0,\delta_i]$. It should therefore be intuitively clear that $d(\mathcal{T}_i,\mathcal{T}_{i-1})$ is proportional to $\delta_i$. A more rigorous argument shows that $d(\mathcal{T}_i,\mathcal{T}_{i-1})\leq\delta_i\norm{Q_i-Q_{i-1}}$; see the appendix for a formal proof.
 %a formal proof can be constructed by combining Equations~\eqref{eq:trans_mat_system_metric} and~\eqref{eq:transmatrixproduct} with Lemmas~\ref{lemma:recursive} and~\ref{lemma:linearpartofexponential} in the appendix; we leave this as an exercise. 
 Using this inequality, and because $d$ is a metric, Equation~\eqref{eq:cauchyexample} can now easily be proven. It suffices to choose $n_\epsilon$ in such a way that $c2^{-n_\epsilon}<\epsilon$. Indeed, in that case, for any $k,\ell>n_\epsilon$, if we assume---without loss of generality---that $k\leq\ell$, it follows that
  \begin{equation*}
 d(\mathcal{T}_{k},\mathcal{T}_\ell)
 \leq\sum_{i=k+1}^{\ell}d(\mathcal{T}_{i-1},\mathcal{T}_i)
-\leq\sum_{i=k+1}^{\ell}\Delta_i\norm{Q_i-Q_{i-1}}
-\leq c\sum_{i=k+1}^{\ell}\Delta_i
+\leq\sum_{i=k+1}^{\ell}\delta_i\norm{Q_i-Q_{i-1}}
+\leq c\sum_{i=k+1}^{\ell}\delta_i
 %\leq\norm{Q_1-Q_2}\sum_{i=k+1}^{\infty}\Delta_i
 %=\norm{Q_1-Q_2}
  \end{equation*}
 and therefore, since we also know that
 \begin{equation*}
-\sum_{i=k+1}^{\ell}\Delta_i
+\sum_{i=k+1}^{\ell}\delta_i
 \leq
-\sum_{i=k+1}^{+\infty}\Delta_i
+\sum_{i=k+1}^{+\infty}\delta_i
 =\sum_{i=k+1}^{+\infty}2^{-i}
 =2^{-k},
 %\leq2^{-n_\epsilon},
@@ -1599,7 +1599,8 @@ It then follows from Equation~\eqref{eq:ex4:def} that $\presuper{i}T_0^{\Delta}=
 &\geq i-\Delta_i i^2-\frac{1}{\Delta_{i+1}}2^{-i}\\
 &= i-2^{-i}i^2-\frac{1}{2^{-(i+1)}}2^{-i}
 \\
-&=i-2^{-i}i^2-2
+&=i-2^{-i}i^2-2\\
+&\geq i-\frac{1}{2}i-2=\frac{i}{2}-2\geq \frac{n}{2}-2
 \end{align*}
 
 The stuff above clearly implies that the process is not well-behaved.
@@ -3291,26 +3292,26 @@ The result now follows by taking the limit for $n$ going to infinity.
 \end{proof}
 
 \begin{proof}[Proof of Example~\ref{exmp:limit_trans_mat_system}]
-Fix any $i\in\nats$. We will prove that $d(\mathcal{T}_i,\mathcal{T}_{i-1})\leq\Delta_i\norm{Q_i-Q_{i-1}}$. Fix any $t,s\in\realsnonneg$ such that $t\leq s$, and let $\presuper{i}T_t^s$ and $\presuper{i-1}T_t^s$ be the transition matrices that correspond to $\mathcal{T}_i$ and $\mathcal{T}_{i-1}$, respectively. 
-We now consider three cases. The first case is $t\geq\Delta_i$. It then follows from Equation~\eqref{eq:def:sequenceinexample3} that $\norm{\presuper{i}T_t^s-\presuper{i-1}T_t^s}=0$. The second case is $s\leq\Delta_i$. It then follows from Equation~\eqref{eq:def:sequenceinexample3} and Lemma~\ref{lemma:differencebetweenexponentials} that
+Fix any $i\in\nats$. We will prove that $d(\mathcal{T}_i,\mathcal{T}_{i-1})\leq\delta_i\norm{Q_i-Q_{i-1}}$. Fix any $t,s\in\realsnonneg$ such that $t\leq s$, and let $\presuper{i}T_t^s$ and $\presuper{i-1}T_t^s$ be the transition matrices that correspond to $\mathcal{T}_i$ and $\mathcal{T}_{i-1}$, respectively. 
+We now consider three cases. The first case is $t\geq\delta_i$. It then follows from Equation~\eqref{eq:def:sequenceinexample3} that $\norm{\presuper{i}T_t^s-\presuper{i-1}T_t^s}=0$. The second case is $s\leq\delta_i$. It then follows from Equation~\eqref{eq:def:sequenceinexample3} and Lemma~\ref{lemma:differencebetweenexponentials} that
 \begin{equation*}
 \norm{\presuper{i}T_t^s-\presuper{i-1}T_t^s}
 =\norm{e^{Q_i(s-t)}-e^{Q_{i-1}(s-t)}}
-\leq (s-t)\norm{Q_i-Q_{i-1}}\leq\Delta_i\norm{Q_i-Q_{i-1}}.
+\leq (s-t)\norm{Q_i-Q_{i-1}}\leq\delta_i\norm{Q_i-Q_{i-1}}.
 %=\norm{e^{Q_1\Delta}-e^{Q_2\Delta}}
 \end{equation*}
-The third case is $t\leq\Delta_i\leq s$. We then find that
+The third case is $t\leq\delta_i\leq s$. We then find that
 \begin{align*}
 \norm{\presuper{i}T_t^s-\presuper{i-1}T_t^s}
-=\norm{\presuper{i}T_t^{\Delta_i}\presuper{i}T_{\Delta_i}^s-\presuper{i-1}T_t^{\Delta_i}\presuper{i-1}T_{\Delta_i}^s}
+=\norm{\presuper{i}T_t^{\delta_i}\presuper{i}T_{\delta_i}^s-\presuper{i-1}T_t^{\delta_i}\presuper{i-1}T_{\delta_i}^s}
 &\leq
-\norm{\presuper{i}T_t^{\Delta_i}-\presuper{i-1}T_t^{\Delta_i}}
+\norm{\presuper{i}T_t^{\delta_i}-\presuper{i-1}T_t^{\delta_i}}
 +
-\norm{\presuper{i}T_{\Delta_i}^s-\presuper{i-1}T_{\Delta_i}^s}\\
-&=\norm{\presuper{i}T_t^{\Delta_i}-\presuper{i-1}T_t^{\Delta_i}}
-\leq\Delta_i\norm{Q_i-Q_{i-1}},
+\norm{\presuper{i}T_{\delta_i}^s-\presuper{i-1}T_{\delta_i}^s}\\
+&=\norm{\presuper{i}T_t^{\delta_i}-\presuper{i-1}T_t^{\delta_i}}
+\leq\delta_i\norm{Q_i-Q_{i-1}},
 \end{align*}
-where the first inequality follows from Lemma~\ref{lemma:recursive}, the second equality follows from the first case above, and the last inequality follows from the second case above. Hence, in all three cases, we find that $\norm{\presuper{i}T_t^s-\presuper{i-1}T_t^s}\leq\Delta_i\norm{Q_i-Q_{i-1}}$. Since this inequality holds for any $t,s\in\realsnonneg$ such that $s\geq t$, it now follows from Equation~\eqref{eq:trans_mat_system_metric} that $d(\mathcal{T}_i,\mathcal{T}_{i-1})\leq\Delta_i\norm{Q_i-Q_{i-1}}$.
+where the first inequality follows from Lemma~\ref{lemma:recursive}, the second equality follows from the first case above, and the last inequality follows from the second case above. Hence, in all three cases, we find that $\norm{\presuper{i}T_t^s-\presuper{i-1}T_t^s}\leq\delta_i\norm{Q_i-Q_{i-1}}$. Since this inequality holds for any $t,s\in\realsnonneg$ such that $s\geq t$, it now follows from Equation~\eqref{eq:trans_mat_system_metric} that $d(\mathcal{T}_i,\mathcal{T}_{i-1})\leq\delta_i\norm{Q_i-Q_{i-1}}$.
 \end{proof}
 
 \section{Proofs and Lemmas for Section~\ref{sec:stochastic_processes}}\label{app:stoch_proc}
