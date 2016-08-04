@@ -670,121 +670,121 @@ In order to make this concept of a limit of transition matrix systems less abstr
 
 %This example is included mostly in preparation of some other examples further on.
 \begin{exmp}\label{exmp:limit_trans_mat_system_matrices}
-Let $Q_1,Q_2\in\mathcal{R}$ be two commuting rate matrices. For example, let $Q_1\in\mathcal{R}$ be an arbitrary rate matrix and let $Q_2\coloneqq\lambda Q_1$, with $\lambda\in\realsnonneg$. 
+Let $Q_1,Q_2\in\mathcal{R}$ be two commuting rate matrices. For example, let $Q_1\in\mathcal{R}$ be an arbitrary rate matrix and let $Q_2\coloneqq\alpha Q_1$, with $\alpha\in\realsnonneg$. 
 
-Now let $\{Q_i\}_{i\in\nats_0}$ be defined by $Q_i\coloneqq Q_1$ if $i$ is odd and $Q_i\coloneqq Q_2$ if $i$ is even, and consider the corresponding sequence of transition matrix systems $\{\mathcal{T}_i\}_{i\in\nats}$ that was defined in Example~\ref{exmp:limit_trans_mat_system}.  Since $\norm{Q_i-Q_{i-1}}=\norm{Q_1-Q_2}$ for all $i\in\nats$, the sequence $\{Q_i\}_{i\in\nats_0}$ clearly satisfies the conditions in Example~\ref{exmp:limit_trans_mat_system}---just choose $c=\norm{Q_1-Q_2}$---and therefore, as we have seen, $\{\mathcal{T}_i\}_{i\in\nats}$ converges to a limit in $\mathbb{T}$. Let us denote this limit by $\mathcal{T}_*\coloneqq \lim_{i\to\infty}\mathcal{T}_i$. 
+Now let $\{Q_i\}_{i\in\nats_0}$ be defined by $Q_i\coloneqq Q_1$ if $i$ is odd and $Q_i\coloneqq Q_2$ if $i$ is even, define $\delta_i\coloneqq 2^{-i}$ for all $i\in\nats_0$, and consider the corresponding sequence of transition matrix systems $\{\mathcal{T}_i\}_{i\in\nats}$ that was defined in Example~\ref{exmp:limit_trans_mat_system}.  Since $\norm{Q_i-Q_{i-1}}=\norm{Q_1-Q_2}$ for all $i\in\nats$, the sequence $\{Q_i\}_{i\in\nats_0}$ clearly satisfies the conditions in Example~\ref{exmp:limit_trans_mat_system}---just choose $c=\norm{Q_1-Q_2}$---and therefore, as we have seen, $\{\mathcal{T}_i\}_{i\in\nats}$ converges to a limit in $\mathbb{T}$. Let us denote this limit by $\mathcal{T}_*\coloneqq \lim_{i\to\infty}\mathcal{T}_i$. 
 
-As we will show in this example, for any $\Delta\in(0,1]$, the transition matrix that corresponds to the transition matrix system $\mathcal{T}_*$ is then equal to
+As we will show in this example, for any $t\in(0,1]$, the transition matrix from $0$ to $t$ that corresponds to the transition matrix system $\mathcal{T}_*$ is then equal to
 \vspace{4pt}
 \begin{equation}\label{eq:ex4:def}
-\presuper{*}T_0^\Delta=e^{Q_1\varphi_1(\Delta)+Q_2\varphi_2(\Delta)},
+\presuper{*}T_0^t=e^{Q_1\varphi_1(t)+Q_2\varphi_2(t)},
 \end{equation}
 with
 \begin{equation}\label{eq:ex4:phi1}
-\varphi_1(\Delta)
+\varphi_1(t)
 \coloneqq
 \begin{cases}
-\Delta-\nicefrac{2}{3}\Delta_{i+1}
-&\text{ if $\Delta_{i+1}\leq\Delta\leq\Delta_{i}$ with $i$ odd}\\
-\nicefrac{2}{3}\Delta_{i+1}
-&\text{ if $\Delta_{i+1}\leq\Delta\leq\Delta_{i}$ with $i$ even} 
+t-\nicefrac{2}{3}\delta_{i+1}
+&\text{ if $\delta_{i+1}\leq t\leq\delta_{i}$ with $i$ odd}\\
+\nicefrac{2}{3}\delta_{i+1}
+&\text{ if $\delta_{i+1}\leq t\leq\delta_{i}$ with $i$ even} 
 \end{cases}
 \end{equation}
 and
 \begin{equation}\label{eq:ex4:phi2}
-\varphi_2(\Delta)
+\varphi_2(t)
 \coloneqq
 %t-\varphi_1(t)
 %=
 \begin{cases}
-\nicefrac{2}{3}\Delta_{i+1}
-&\text{ if $\Delta_{i+1}\leq\Delta\leq\Delta_{i}$ with $i$ odd}\\
-\Delta-\nicefrac{2}{3}\Delta_{i+1}
-&\text{ if $\Delta_{i+1}\leq\Delta\leq\Delta_{i}$ with $i$ even.} 
+\nicefrac{2}{3}\delta_{i+1}
+&\text{ if $\delta_{i+1}\leq t\leq\delta_{i}$ with $i$ odd}\\
+t-\nicefrac{2}{3}\delta_{i+1}
+&\text{ if $\delta_{i+1}\leq t\leq\delta_{i}$ with $i$ even.} 
 \end{cases}
 \vspace{7pt}
 \end{equation}
 
 In order to prove this, we first establish some properties. 
-Consider any $t\in(0,1]$ and let $j$ be the unique element of $\nats_0$ such that $\Delta_{j+1}\leq t\leq\Delta_j$. Since $Q_1$ and $Q_2$ commute, it then follows from Equations~\eqref{eq:ex4:def}--\eqref{eq:ex4:phi2} that
+Consider any $t\in(0,1]$ and let $j$ be the unique element of $\nats_0$ such that $\delta_{j+1}\leq t\leq\delta_j$. Since $Q_1$ and $Q_2$ commute, it then follows from Equations~\eqref{eq:ex4:def}--\eqref{eq:ex4:phi2} that
 \begin{align}\label{eq:ex4:recursestar}
 \presuper{*}T_0^{t}
 =e^{Q_1\varphi_1(t)+Q_2\varphi_2(t)}
-&=e^{Q_1\varphi_1(\Delta_{j+1})+Q_2\varphi_2(\Delta_{j+1})+Q_j(t-\Delta_{j+1})}\notag\\
-&=e^{Q_1\varphi_1(\Delta_{j+1})+Q_2\varphi_2(\Delta_{j+1})}e^{Q_j(t-\Delta_{j+1})}
-=\presuper{*}T_0^{\Delta_{j+1}}e^{Q_j(t-\Delta_{j+1})}.
+&=e^{Q_1\varphi_1(\delta_{j+1})+Q_2\varphi_2(\delta_{j+1})+Q_j(t-\delta_{j+1})}\notag\\
+&=e^{Q_1\varphi_1(\delta_{j+1})+Q_2\varphi_2(\delta_{j+1})}e^{Q_j(t-\delta_{j+1})}
+=\presuper{*}T_0^{\delta_{j+1}}e^{Q_j(t-\delta_{j+1})}.
 \end{align}
 For large enough $k\in\nats$, a similar statement holds for the transition matrix $\presuper{k}T_0^{t}$ that corresponds to $\mathcal{T}_k$. In particular, Equation~\eqref{eq:def:sequenceinexample3} implies that
 \begin{equation}\label{eq:ex4:recursek}
 \presuper{k}T_0^{t}
-=\presuper{k}T_0^{\Delta_{j+1}}e^{Q_j(t-\Delta_{j+1})}
+=\presuper{k}T_0^{\delta_{j+1}}e^{Q_j(t-\delta_{j+1})}
 ~~\text{ for all $k\geq j$}
 \end{equation}
-Hence, for all $j\in\nats_0$, by choosing $t=\Delta_j$, and because $\Delta_j-\Delta_{j+1}=\Delta_{j+1}$, it follows that
+Hence, for all $j\in\nats_0$, by choosing $t=\delta_j$, and because $\delta_j-\delta_{j+1}=\delta_{j+1}$, it follows that
 \begin{equation}\label{eq:ex4:recursekandstar}
-\presuper{*}T_0^{\Delta_j}
-=\presuper{*}T_0^{\Delta_{j+1}}e^{Q_j\Delta_{j+1}}
+\presuper{*}T_0^{\delta_j}
+=\presuper{*}T_0^{\delta_{j+1}}e^{Q_j\delta_{j+1}}
 ~\text{ and }~
-\presuper{k}T_0^{\Delta_j}
-=\presuper{k}T_0^{\Delta_{j+1}}e^{Q_j\Delta_{j+1}}
+\presuper{k}T_0^{\delta_j}
+=\presuper{k}T_0^{\delta_{j+1}}e^{Q_j\delta_{j+1}}
 ~\text{ for all $k\geq j$.}
 \vspace{3pt}
 \end{equation}
 Finally, for all $k\in\nats_0$, it follows from Equations~\eqref{eq:ex4:def}--\eqref{eq:ex4:phi2} and~\eqref{eq:def:sequenceinexample3} that
 \begin{equation}\label{eq:ex4:finalstep}
-\presuper{*}T_0^{\Delta_{k}}
-=e^{Q_k\nicefrac{2}{3}\Delta_k+Q_{k+1}\nicefrac{1}{3}\Delta_k}
+\presuper{*}T_0^{\delta_{k}}
+=e^{Q_k\nicefrac{2}{3}\delta_k+Q_{k+1}\nicefrac{1}{3}\delta_k}
 ~\text{ and }~
-\presuper{k}T_0^{\Delta_{k}}
-=e^{Q_k\Delta_k}
+\presuper{k}T_0^{\delta_{k}}
+=e^{Q_k\delta_k}
 ~\text{ for all $k\in\nats_0$}.
 \end{equation}
 
 
-Using these properties, proving Equation~\eqref{eq:ex4:def} is now relatively easy. Consider any $\Delta\in(0,1]$, let $i$ be the unique element of $\nats_0$ such that $\Delta_{i+1}\leq\Delta\leq\Delta_i$, and fix any $k\geq i$. Then on the one hand, we find that
+Using these properties, proving Equation~\eqref{eq:ex4:def} is now relatively easy. Consider any $t\in(0,1]$, let $i$ be the unique element of $\nats_0$ such that $\delta_{i+1}\leq t\leq\delta_i$, and fix any $k\geq i$. Then on the one hand, we find that
 \begin{align*}
-\norm{\presuper{*}T_0^\Delta-\presuper{k}T_0^\Delta}
+\norm{\presuper{*}T_0^t-\presuper{k}T_0^t}
 &=
-\norm{\presuper{*}T_0^{\Delta_{i+1}}e^{Q_i(\Delta-\Delta_{i+1})}-\presuper{k}T_0^{\Delta_{i+1}}e^{Q_i(\Delta-\Delta_{i+1})}}\\
+\norm{\presuper{*}T_0^{\delta_{i+1}}e^{Q_i(t-\delta_{i+1})}-\presuper{k}T_0^{\delta_{i+1}}e^{Q_i(t-\delta_{i+1})}}\\
 &\leq
-\norm{\presuper{*}T_0^{\Delta_{i+1}}-\presuper{k}T_0^{\Delta_{i+1}}}
+\norm{\presuper{*}T_0^{\delta_{i+1}}-\presuper{k}T_0^{\delta_{i+1}}}
 +
-\norm{e^{Q_i(\Delta-\Delta_{i+1})}-e^{Q_i(\Delta-\Delta_{i+1})}}\\
+\norm{e^{Q_i(t-\delta_{i+1})}-e^{Q_i(t-\delta_{i+1})}}\\
 &=
-\norm{\presuper{*}T_0^{\Delta_{i+1}}-\presuper{k}T_0^{\Delta_{i+1}}}
+\norm{\presuper{*}T_0^{\delta_{i+1}}-\presuper{k}T_0^{\delta_{i+1}}}
 =
-\norm{\presuper{*}T_0^{\Delta_{i+2}}e^{Q_{i+1}\Delta_{i+2}}-\presuper{k}T_0^{\Delta_{i+2}}e^{Q_{i+1}\Delta_{i+2}}}\\
+\norm{\presuper{*}T_0^{\delta_{i+2}}e^{Q_{i+1}\delta_{i+2}}-\presuper{k}T_0^{\delta_{i+2}}e^{Q_{i+1}\delta_{i+2}}}\\
 &\quad\quad\quad\quad\quad\quad\quad\quad~\,\,\leq
-\norm{\presuper{*}T_0^{\Delta_{i+2}}-\presuper{k}T_0^{\Delta_{i+2}}}
+\norm{\presuper{*}T_0^{\delta_{i+2}}-\presuper{k}T_0^{\delta_{i+2}}}
 +
-\norm{e^{Q_{i+1}\Delta_{i+2}}-e^{Q_{i+1}\Delta_{i+2}}}\\
+\norm{e^{Q_{i+1}\delta_{i+2}}-e^{Q_{i+1}\delta_{i+2}}}\\
 &\quad\quad\quad\quad\quad\quad\quad\quad~\,\,=
-\norm{\presuper{*}T_0^{\Delta_{i+2}}-\presuper{k}T_0^{\Delta_{i+2}}}
+\norm{\presuper{*}T_0^{\delta_{i+2}}-\presuper{k}T_0^{\delta_{i+2}}}
 \leq\dots\leq
-\norm{\presuper{*}T_0^{\Delta_{k}}-\presuper{k}T_0^{\Delta_{k}}},
+\norm{\presuper{*}T_0^{\delta_{k}}-\presuper{k}T_0^{\delta_{k}}},
 \end{align*}
 where the first equality follows from Equations~\eqref{eq:ex4:recursestar} and~\eqref{eq:ex4:recursek}, the first inequality follows from Lemma~\ref{lemma:recursive} in the appendix, the third equality follows from Equation~\eqref{eq:ex4:recursekandstar}, the second equality is again due to Lemma~\ref{lemma:recursive}, and the remaining steps consist in repeating the last steps over and over again.
 On the other hand, we also know that
 \begin{align*}
-\norm{\presuper{*}T_0^{\Delta_{k}}-\presuper{k}T_0^{\Delta_{k}}}
+\norm{\presuper{*}T_0^{\delta_{k}}-\presuper{k}T_0^{\delta_{k}}}
 &=
-\norm{e^{Q_k\nicefrac{2}{3}\Delta_k+Q_{k+1}\nicefrac{1}{3}\Delta_k}
--e^{Q_k\Delta_k}}\\
+\norm{e^{Q_k\nicefrac{2}{3}\delta_k+Q_{k+1}\nicefrac{1}{3}\delta_k}
+-e^{Q_k\delta_k}}\\
 &=
-\norm{e^{Q_k\nicefrac{2}{3}\Delta_k}e^{Q_{k+1}\nicefrac{1}{3}\Delta_k}
--e^{Q_k\nicefrac{2}{3}\Delta_k}e^{Q_k\nicefrac{1}{3}\Delta_k}}\\
+\norm{e^{Q_k\nicefrac{2}{3}\delta_k}e^{Q_{k+1}\nicefrac{1}{3}\delta_k}
+-e^{Q_k\nicefrac{2}{3}\delta_k}e^{Q_k\nicefrac{1}{3}\delta_k}}\\
 &\leq
-\norm{e^{Q_k\nicefrac{2}{3}\Delta_k}
--e^{Q_k\nicefrac{2}{3}\Delta_k}}
+\norm{e^{Q_k\nicefrac{2}{3}\delta_k}
+-e^{Q_k\nicefrac{2}{3}\delta_k}}
 +
-\norm{e^{Q_{k+1}\nicefrac{1}{3}\Delta_k}
--e^{Q_k\nicefrac{1}{3}\Delta_k}}\\
-&=\norm{e^{Q_{k+1}\nicefrac{1}{3}\Delta_k}
--e^{Q_k\nicefrac{1}{3}\Delta_k}}
-\leq\Delta_k\norm{Q_k-Q_{k+1}}
-=\Delta_k\norm{Q_1-Q_2},
+\norm{e^{Q_{k+1}\nicefrac{1}{3}\delta_k}
+-e^{Q_k\nicefrac{1}{3}\delta_k}}\\
+&=\norm{e^{Q_{k+1}\nicefrac{1}{3}\delta_k}
+-e^{Q_k\nicefrac{1}{3}\delta_k}}
+\leq\delta_k\norm{Q_k-Q_{k+1}}
+=\delta_k\norm{Q_1-Q_2},
 \end{align*}
-where the first equality follows from Equation~\eqref{eq:ex4:recursekandstar}, the second equality holds because $Q_1$ and $Q_2$ commute, and the two inequalities follow from Lemmas~\ref{lemma:recursive} and~\ref{lemma:differencebetweenexponentials} in the appendix. Hence, we find that $\norm{\presuper{*}T_0^\Delta-\presuper{k}T_0^\Delta}\leq\Delta_k\norm{Q_1-Q_2}$. Since this is true for any $k\geq i$, it follows that $\lim_{k\to+\infty}\presuper{k}T_0^\Delta=\presuper{*}T_0^\Delta$. Therefore, because $\mathcal{T}_*\coloneqq \lim_{i\to\infty}\mathcal{T}_i$, we can conclude that $\presuper{*}T_0^\Delta$ indeed corresponds to $\mathcal{T}_*$.
+where the first equality follows from Equation~\eqref{eq:ex4:recursekandstar}, the second equality holds because $Q_1$ and $Q_2$ commute, and the two inequalities follow from Lemmas~\ref{lemma:recursive} and~\ref{lemma:differencebetweenexponentials} in the appendix. Hence, we find that $\norm{\presuper{*}T_0^t-\presuper{k}T_0^t}\leq\delta_k\norm{Q_1-Q_2}$. Since this is true for any $k\geq i$, it follows that $\lim_{k\to+\infty}\presuper{k}T_0^t=\presuper{*}T_0^t$. Therefore, because $\mathcal{T}_*\coloneqq \lim_{i\to\infty}\mathcal{T}_i$, we can conclude that $\presuper{*}T_0^t$ indeed corresponds to $\mathcal{T}_*$.
 % Assume without loss of generality that $j$ is odd. Then, the sequence $\presuper{j}T_0^{\Delta_j},\presuper{j+1}T_0^{\Delta_j},\presuper{j+2}T_0^{\Delta_j},\ldots$ is clearly given by
 % \begin{equation*}
 % \left(\presuper{j}T_0^{\Delta_j}\right), ~~\left(\presuper{j+1}T_0^{\Delta_{j+1}}\right)\left(\presuper{j}T_{\Delta_{j+1}}^{\Delta_j}\right), ~~\left(\presuper{j+2}T_0^{\Delta_{j+2}}\right)\left(\presuper{j+1}T_{\Delta_{j+2}}^{\Delta_{j+1}}\right)\left(\presuper{j}T_{\Delta_{j+1}}^{\Delta_j}\right), \ldots
@@ -1196,36 +1196,48 @@ For any stochastic process $P\in\processes$, any $t\in\realsnonneg$, any sequenc
 
 The following example established that these directional partial derivatives need not exist. In particular, they need not exist even for well-behaved processes.
 \begin{exmp}\label{exmp:well-behaved-no-deriv}
-Let $Q_1,Q_2\in\mathcal{R}$ be two commuting rate matrices such that $Q_1\neq Q_2$---for example, let $Q_1\neq0$ be an arbitrary rate matrix and let $Q_2\coloneqq\lambda Q_1$, with $\lambda\in\realsnonneg\setminus\{1\}$---and consider a stochastic process $P\in\processes$ of which, for all $\Delta\in(0,1]$, the transition matrix $T_0^\Delta$ is given by Equation~\eqref{eq:ex4:def} in Example~\ref{exmp:limit_trans_mat_system_matrices}. 
+Let $Q_1,Q_2\in\mathcal{R}$ be two commuting rate matrices such that $Q_1\neq Q_2$---for example, let $Q_1\neq0$ be an arbitrary rate matrix and let $Q_2\coloneqq\alpha Q_1$, with $\alpha\in\realsnonneg\setminus\{1\}$---and consider a stochastic process $P\in\processes$ of which, for all $t\in(0,1]$, the transition matrix $T_0^t$ is given by Equation~\eqref{eq:ex4:def} in Example~\ref{exmp:limit_trans_mat_system_matrices}. 
 
 For now, we simply assume that this is possible. A formal proof for the existence of such a process requires some additional machinery, and we therefore postpone it to Examples~\ref{exmp:markov_with_no_deriv} and~\ref{exmp:running:wellbehaved}, where we construct a continuous-time Markov chain that is compatible with Equation~\eqref{eq:ex4:def}, and prove that it is well-behaved.
 
-The aim of the present example is to show that for any such process, the right-sided partial derivative $\partial_{+}{T_{0}^0}$---which corresponds to choosing $t=0$ and $u=\emptyset$ in Definition~\ref{def:direc_partial_deriv}---does not exist. In order to do this, we assume \emph{ex absurdo} that $\partial_{+}{T_{0}^0}$ does exist. As we will see, this leads to a contradiction. 
+The aim of the present example is to show that for any such process, the right-sided partial derivative $\partial_{+}{T_{0}^0}$---which corresponds to choosing $t=0$ and $u=\emptyset$ in Definition~\ref{def:direc_partial_deriv}---does not exist. In order to do this, we will prove that for any $\lambda\in[\nicefrac{1}{3},\nicefrac{2}{3}]$, there is a sequence $\{\Delta_i\}_{i\in\nats_0}\to0^+$ such that
+\begin{equation}\label{eq:exmp:well-behaved-no-deriv}
+\lim_{i\to+\infty}
+\frac{1}{\Delta_i}
+(T^{\Delta_i}_{0}-I)=Q_\lambda
+\end{equation}
+with $Q_\lambda\coloneqq \lambda Q_1+(1-\lambda)Q_2$. The reason why this indeed implies that $\partial_{+}{T_{0}^0}$ does not exist, is because if it would exist, then Equation~\eqref{eq:exmp:well-behaved-no-deriv} would imply that $\partial_{+}{T_{0}^0}=Q_\lambda$ for all $\lambda\in[\nicefrac{1}{3},\nicefrac{2}{3}]$. The only way for this to be possible would be if $Q_1=Q_2$, but that case was excluded in the beginning of this example.
 
-For all $i\in\nats_0$, let $\Delta_i$ and $Q_i$ be defined as in Example~\ref{exmp:limit_trans_mat_system_matrices}. For all $k\in\nats_0$, it then follows from Equation~\eqref{eq:ex4:finalstep} that
+So fix any $\lambda\in[\nicefrac{1}{3},\nicefrac{2}{3}]$ and consider the sequence $\{\Delta_i\}_{i\in\nats_0}\to0^+$ whose elements are defined by $\Delta_i\coloneqq\nicefrac{(2\delta_{2i+1})}{(3\lambda)}$. For all $i\in\nats_0$, we then find that
+\begin{align*}
+\varphi_1(\Delta_i)Q_1+\varphi_2(\Delta_i)
+=\frac{2}{3}\delta_{2i+1}Q_1+(\Delta_i-\frac{2}{3}\delta_{2i+1})Q_2
+%&=\frac{1}{3}\delta_{2i}Q_1+(\Delta_i-\frac{1}{3}\delta_{2i})Q_2\\
+=\lambda\Delta_i Q_1+(1-\lambda)\Delta_i Q_2
+&=Q_\lambda \Delta_i,
+\end{align*}
+where the first equality follows from Equations~\eqref{eq:ex4:phi1} and~\eqref{eq:ex4:phi2}---because $\nicefrac{1}{3\lambda}\in[\nicefrac{1}{2},1]$ implies that $\delta_{2i+1}\leq\Delta_i\leq\delta_{2i}$.
+Hence, for all $i\in\nats_0$, Equation~\eqref{eq:ex4:def} now tells us that $\presuper{*}T_0^{\Delta_i}=e^{Q_\lambda\Delta_i}$.
+Therefore, and because $\{\Delta_{i}\}_{i\in\nats_0}\to0^+$, we find that indeed, as required,
 \begin{equation*}
-T_0^{\Delta_{2k}}
-=
-e^{Q_{2k}\nicefrac{2}{3}\Delta_{2k}+Q_{2k+1}\nicefrac{1}{3}\Delta_{2k}}
-=
-e^{(\nicefrac{2}{3}Q_2+\nicefrac{1}{3}Q_1)\Delta_{2k}}
-=
-e^{Q_e\Delta_{2k}},
-\end{equation*}
-with $Q_e\coloneqq\nicefrac{2}{3}Q_2+\nicefrac{1}{3}Q_1$. Therefore, and because $\Delta_{2k}\to0^+$, the existence $\partial_{+}{T_{0}^0}$ implies that
-\begin{equation*}
-\partial_{+}{T_{0}^0}
+%\partial_{+}{T_{0}^0}
 %=\lim_{\Delta\to 0^{+}}
 %\frac{1}{\Delta}
 %(T^{\Delta}_{0}-I)
-=\lim_{k\to+\infty}
-\frac{1}{\Delta_{2k}}
-(e^{Q_e\Delta_{2k}}-I)
-={\frac{d}{d \Delta}e^{Q_e\Delta}}\big\vert_{\Delta=0}
-=Q_e,
-\vspace{6pt}
+%=
+\lim_{i\to+\infty}
+\frac{1}{\Delta_i}
+(T^{\Delta_i}_{0}-I)
+=
+\lim_{i\to+\infty}
+\frac{1}{\Delta_{i}}
+(e^{Q_\lambda\Delta_{i}}-I)
+={\frac{d}{dt}e^{Q_\lambda t}}\big\vert_{t=0}
+=Q_\lambda,
+%\vspace{6pt}
 \end{equation*}
-where we use Lemma~\ref{lemma:deriv_exponential_trans} to establish the last equality. However, in a completely analogous way, we also find that $T_0^{\Delta_{2k+1}}=e^{Q_o\Delta_{2k+1}}$, with $Q_o\coloneqq\nicefrac{2}{3}Q_1+\nicefrac{1}{3}Q_2$, which then implies that $\partial_{+}{T_{0}^0}=Q_e$. Hence, we find that $Q_e=Q_o$. Since $Q_1\neq Q_2$, this is clearly a contradiction, and therefore, it follows that $\partial_{+}{T_{0}^0}$ does not exist.
+where we use Lemma~\ref{lemma:deriv_exponential_trans} to establish the last equality. 
+%However, in a completely analogous way, for $\Delta_i\coloneqq\delta_{2i+1}$, we find that $\smash{T_0^{\Delta_i}=e^{Q_o\Delta_i}}$, with $Q_o\coloneqq\nicefrac{2}{3}Q_1+\nicefrac{1}{3}Q_2$, which then implies that $\partial_{+}{T_{0}^0}=Q_e$. Hence, we find that $Q_e=Q_o$. Since $Q_1\neq Q_2$, this is clearly a contradiction, and therefore, it follows that $\partial_{+}{T_{0}^0}$ does not exist.
 % Suppose that, for some well-behaved stochastic process $P\in\wprocesses$, for some time $t$ and for some history $x_u$ such that $u<t$, there exist two different sequences $\{\Delta_i\}_{i\in\nats}$ and $\{\Delta_i'\}_{i\in\nats}$ such that $\{\Delta_i\}_{i\in\nats}\to0^+$ and $\{\Delta_i'\}_{i\in\nats}\to0^+$, for which
 % \begin{equation*}
 % \lim_{i\to\infty}~~\frac{1}{\Delta_i}\left(T_{t,x_u}^{t+\Delta_i} - I\right) = Q_1\,,~~\text{and,}~~ \lim_{i\to\infty}~~ \frac{1}{\Delta_i'}\left(T_{t,x_u}^{t+\Delta_i'} - I\right) = Q_2\,,
@@ -1325,10 +1337,10 @@ Consider again the Markov chain $P\in\wmprocesses$ from Example~\ref{exmp:markov
 \begin{equation*}
 {}^*T_0^\Delta = e^{Q_1\varphi_1(\Delta) + Q_2\varphi_2(\Delta)}\,,
 \end{equation*}
-with $\varphi_1$ and $\varphi_2$ as in Equation~REF and~REF, respectively. We now define two rate matrices $Q_o,Q_e\in\mathcal{R}$, as
-\begin{equation*}
-Q_o \coloneqq Q_1\frac{1}{3} + Q_2\frac{2}{3}\,,\quad\text{and,}\quad Q_e\coloneqq Q_1\frac{2}{3} + Q_2\frac{1}{3}\,.
-\end{equation*}
+% with $\varphi_1$ and $\varphi_2$ as in Equation~REF and~REF, respectively. We now define two rate matrices $Q_o,Q_e\in\mathcal{R}$, as
+% \begin{equation*}
+% Q_o \coloneqq Q_1\frac{1}{3} + Q_2\frac{2}{3}\,,\quad\text{and,}\quad Q_e\coloneqq Q_1\frac{2}{3} + Q_2\frac{1}{3}\,.
+% \end{equation*}
 For any $\lambda\in[0,1]$, we also define a rate matrix $Q_\lambda$ as
 \begin{equation*}
 Q_\lambda \coloneqq Q_o\lambda + Q_e(1-\lambda)\,.
@@ -1353,6 +1365,19 @@ and hence
 \end{equation*}
 
 ***** the above introduction of $Q_o,Q_e,Q_\lambda$ and the above equality using the given choice for $\lambda$ are probably useful/required for showing that $\overline{\partial}_+{}^*T_0^0$ contains the convex hull of $\{Q_o,Q_e\}$. Hence, I'm skipping nice introduction and justification here, and am just introducing the notation that I need. Will clean up later once examples in Section 4 are done.
+
+************
+
+The first step is to observe that $\nicefrac{1}{3}t\leq\varphi_1(t)\leq\nicefrac{2}{3}t$ and $\varphi_1(t)+\varphi_2(t)=t$ for every $t\in(0,1]$,; we leave this as an exercise. Given this observation, it follows that for all $t\in(0,1]$, there is some $\lambda_t\in[\nicefrac{1}{3},\nicefrac{2}{3}]$ such that $\varphi_1(t)=\lambda_t t$ and $\varphi_2(t)=(1-\lambda_t)t$. Hence, in particular, for every $i\in\nats$, there is some $\lambda_i\in[\nicefrac{1}{3},\nicefrac{2}{3}]$ such that $\varphi_1(\Delta_i)=\lambda_i \Delta_i$ and $\varphi_2(\Delta_i)=(1-\Delta_i)\Delta_i$. Furthermore, because of the Bolzano-Weierstrass theorem, the resulting sequence $\{\delta_i\}_{i\in\nats_0}$ contains a convergent subsequence $\{\delta_{i_k}\}_{k\in\nats_0}$ whose limit $\lambda\coloneqq\lim_{k\to+\infty}\delta_{i_k}$ clearly belongs to $[\nicefrac{1}{3},\nicefrac{2}{3}]$. In the remainder of this example, we will prove that $Q=Q_\lambda$.
+
+\begin{equation*}
+\norm{Q_\lambda-Q_{i_k}}
+%=\norm{\lambda Q_1+(1-\lambda)Q_2-(\lambda_{i_k}Q_1+(1-\lambda_{i_k})Q_2)}
+%=\norm{(\lambda-\lambda_{i_k})Q_1+(\lambda_{i_k}-\lambda)Q_2}
+=\norm{(\lambda-\lambda_{i_k})(Q_1-Q_2)}
+=\abs{\lambda-\lambda_{i_k}}\norm{Q_1-Q_2}\leq\nicefrac{\epsilon}{3}
+\end{equation*}
+************
 
 Consider now any $Q\in\overline{\partial}_+{}^*T_0^0$. Equation~REF then implies the existence of a sequence $\{\Delta_j'\}_{j\in\nats}\to 0^+$ such that $\lim_{j\to\infty}\nicefrac{1}{\Delta_j'}(T_0^{\Delta_j'}-I)=Q$, or in other words,
 \begin{equation}
