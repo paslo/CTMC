@@ -630,11 +630,11 @@ We can then construct the following sequence. For $i=0$, we let $\smash{\mathcal
 %\end{cases}
 \label{eq:def:sequenceinexample3}
 \end{equation}
-where, for all $i\in\nats_0$, $\delta_i\coloneqq 2^{-i}$. The resulting sequence $\smash{\{\mathcal{T}_i\}_{i\in\nats_0}}$ is then clearly a subset of $\mathbb{T}$. Furthermore, as we will explain in the rest of this example, $\{\mathcal{T}_i\}_{i\in\nats_0}$ is a Cauchy sequence. Loosely speaking, this means that its elements become arbitrarily close to each other as the sequence progresses. Formally, it means that
+where, for all $i\in\nats_0$, $\delta_i\coloneqq 2^{-i}$. The resulting sequence $\smash{\{\mathcal{T}_i\}_{i\in\nats_0}}$ is then clearly a subset of $\mathbb{T}$ and, because of Proposition~\ref{prop:systemQ} and~\ref{prop:concat_restr_trans_mat_systems_is_system}, every transition matrix system in this sequence is well-behaved. Furthermore, as we will explain in the rest of this example, $\{\mathcal{T}_i\}_{i\in\nats_0}$ is a Cauchy sequence. Loosely speaking, this means that its elements become arbitrarily close to each other as the sequence progresses. Formally, it means that
 \begin{equation}\label{eq:cauchyexample}
 (\forall\epsilon\in\realspos)\,(\exists n_\epsilon\in\nats)\,(\forall k,\ell > n_\epsilon)~d(\mathcal{T}_{k},\mathcal{T}_\ell)<\epsilon.
 \end{equation}
-The reason why this is of interest to us is because in a complete metric space, every Cauchy sequence converges to a limit that belongs to the same space. Hence, since $\{\mathcal{T}_i\}_{i\in\nats_0}$ is Cauchy, Proposition~\ref{lemma:restricted_trans_mat_system_cauchy_converges} allow us to infer that $\{\mathcal{T}_i\}_{i\in\nats_0}$ converges to a limit in $\mathbb{T}$.
+The reason why this is of interest to us is because in a complete metric space, every Cauchy sequence converges to a limit that belongs to the same space. Hence, since $\{\mathcal{T}_i\}_{i\in\nats_0}$ is Cauchy, Proposition~\ref{lemma:restricted_trans_mat_system_cauchy_converges} allow us to infer that $\{\mathcal{T}_i\}_{i\in\nats_0}$ converges to a limit $\mathcal{T}\coloneqq \lim_{i\to\infty}\mathcal{T}_i$ in $\mathbb{T}$.
 
 So let us now show that $\{\mathcal{T}_i\}_{i\in\nats_0}$ is indeed Cauchy. In order to prove this, the first step is to notice that for any $i\in\nats$, the difference between $\mathcal{T}_{i}$ and $\mathcal{T}_{i-1}$ is essentially situated on the interval $[0,\delta_i]$. It should therefore be intuitively clear that $d(\mathcal{T}_i,\mathcal{T}_{i-1})$ is proportional to $\delta_i$. A more rigorous argument shows that $d(\mathcal{T}_i,\mathcal{T}_{i-1})\leq\delta_i\norm{Q_i-Q_{i-1}}$; see the appendix for a formal proof.
 %a formal proof can be constructed by combining Equations~\eqref{eq:trans_mat_system_metric} and~\eqref{eq:transmatrixproduct} with Lemmas~\ref{lemma:recursive} and~\ref{lemma:linearpartofexponential} in the appendix; we leave this as an exercise. 
@@ -672,9 +672,9 @@ In order to make this concept of a limit of transition matrix systems less abstr
 \begin{exmp}\label{exmp:limit_trans_mat_system_matrices}
 Let $Q_1,Q_2\in\mathcal{R}$ be two commuting rate matrices. For example, let $Q_1\in\mathcal{R}$ be an arbitrary rate matrix and let $Q_2\coloneqq\alpha Q_1$, with $\alpha\in\realsnonneg$. 
 
-Now let $\{Q_i\}_{i\in\nats_0}$ be defined by $Q_i\coloneqq Q_1$ if $i$ is odd and $Q_i\coloneqq Q_2$ if $i$ is even, define $\delta_i\coloneqq 2^{-i}$ for all $i\in\nats_0$, and consider the corresponding sequence of transition matrix systems $\{\mathcal{T}_i\}_{i\in\nats}$ that was defined in Example~\ref{exmp:limit_trans_mat_system}.  Since $\norm{Q_i-Q_{i-1}}=\norm{Q_1-Q_2}$ for all $i\in\nats$, the sequence $\{Q_i\}_{i\in\nats_0}$ clearly satisfies the conditions in Example~\ref{exmp:limit_trans_mat_system}---just choose $c=\norm{Q_1-Q_2}$---and therefore, as we have seen, $\{\mathcal{T}_i\}_{i\in\nats}$ converges to a limit in $\mathbb{T}$. Let us denote this limit by $\mathcal{T}\coloneqq \lim_{i\to\infty}\mathcal{T}_i$. 
+Now let $\{Q_i\}_{i\in\nats_0}$ be defined by $Q_i\coloneqq Q_1$ if $i$ is odd and $Q_i\coloneqq Q_2$ if $i$ is even, define $\delta_i\coloneqq 2^{-i}$ for all $i\in\nats_0$, and consider the corresponding sequence of transition matrix systems $\{\mathcal{T}_i\}_{i\in\nats}$ that was defined in Example~\ref{exmp:limit_trans_mat_system}.  Since $\norm{Q_i-Q_{i-1}}=\norm{Q_1-Q_2}$ for all $i\in\nats$, the sequence $\{Q_i\}_{i\in\nats_0}$ clearly satisfies the conditions in Example~\ref{exmp:limit_trans_mat_system}---just choose $c=\norm{Q_1-Q_2}$---and therefore, as we have seen, $\{\mathcal{T}_i\}_{i\in\nats}$ converges to a limit $\mathcal{T}\coloneqq \lim_{i\to\infty}\mathcal{T}_i$ in $\mathbb{T}$. Furthermore, as we will show in Example~\ref{exmp:running:wellbehaved}, this transition matrix system $\mathcal{T}$ is well-behaved.
 
-As we will show in this example, for any $t\in(0,1]$, the transition matrix from $0$ to $t$ that corresponds to the transition matrix system $\mathcal{T}$ is then equal to
+In our current example, we aim to show that for any $t\in(0,1]$, the transition matrix from $0$ to $t$ that corresponds to this transition matrix system $\mathcal{T}$ is equal to
 \vspace{4pt}
 \begin{equation}\label{eq:ex4:def}
 T_0^t=e^{Q_1\varphi_1(t)+Q_2\varphi_2(t)},
@@ -817,6 +817,52 @@ where the first equality follows from Equation~\eqref{eq:ex4:recursekandstar}, t
 % \begin{proof}[Proof of Example~\ref{exmp:limit_trans_mat_system_matrices}]
 % *** STILL NEED TO ADD THIS ***
 % \end{proof}
+
+*** blabla, this was well-behaved, but the next one is not ***
+
+\begin{exmp}
+Consider any rate matrix $Q\in\mathcal{R}$ such that $\norm{Q}=1$ and, for all $i\in\nats_0$, let $Q_i\coloneqq iQ$ and let $\mathcal{T}_i$ be defined as in Example~\ref{exmp:limit_trans_mat_system}. Since $\{Q_i\}_{i\in\nats_0}$ satisfies the conditions of Example~\ref{exmp:limit_trans_mat_system} with $c=1$, the sequence $\{\mathcal{T}_i\}_{i\in\nats_0}$ then has a limit $\mathcal{T}\coloneqq \lim_{i\to\infty}\mathcal{T}_i$ in $\mathbb{T}$. The aim of this example is to show that, despite the fact that we know from Example~\ref{exmp:limit_trans_mat_system} that each of the transition matrix systems $\mathcal{T}_i$, $i\in\nats_0$, is well-behaved, this is not true for the limit $\mathcal{T}$.
+
+Consider any $k\in\nats$. Then for all $\ell\geq k$, as we have seen in Example~\ref{exmp:limit_trans_mat_system}, we have that $d(\mathcal{T}_k,\mathcal{T}_\ell)\leq c 2^{-k}$, and therefore, for any $\Delta\in\realsnonneg$, we find that
+\begin{equation*}
+\norm{\presuper{k}T_0^\Delta-\presuper{*}T_0^\Delta}
+\leq
+d(\mathcal{T}_k,\mathcal{T}_*)
+\leq d(\mathcal{T}_k,\mathcal{T}_\ell)+d(\mathcal{T}_\ell,\mathcal{T}_*)\leq c 2^{-k}+d(\mathcal{T}_\ell,\mathcal{T}_*).
+\end{equation*}
+Since this is true for any $\ell\geq k$, and because $\mathcal{T}_*=\lim_{\ell\to+\infty}\mathcal{T}_\ell$, it now follows that
+\begin{equation*}
+\norm{\presuper{k}T_0^\Delta-\presuper{*}T_0^\Delta}
+%d(\mathcal{T}_k,\mathcal{T}_*)
+\leq c 2^{-k}+\lim_{\ell\to+\infty}d(\mathcal{T}_\ell,\mathcal{T}_*)
+= c 2^{-k}=2^{-k}.
+\end{equation*}
+
+
+
+Consider now any $\Delta\in(0,\Delta_n]$ and let $i$ be the unique element of $\nats_0$ such that $\Delta_{i+1}\leq\Delta\leq\Delta_i$.
+It then follows from Equation~\eqref{eq:ex4:def} that $\presuper{i}T_0^{\Delta}=e^{Q_i\Delta}$, and therefore, we find that
+\begin{align*}
+\norm{\frac{1}{\Delta}(\presuper{*}T_0^\Delta-I)}
+&=\norm{\frac{1}{\Delta}\left(\presuper{*}T_0^\Delta-\presuper{i}T_0^\Delta+e^{Q_i\Delta}-(I+\Delta Q_i)\right)+Q_i}\\
+&\geq
+\norm{Q_i}
+-\norm{\frac{1}{\Delta}\left(e^{Q_i\Delta}-(I+\Delta Q_i)\right)}-\norm{\frac{1}{\Delta}(\presuper{*}T_0^\Delta-\presuper{i}T_0^\Delta)}\\
+&\geq
+\norm{Q_i}
+-\Delta\norm{Q_i}^2
+-\frac{1}{\Delta}2^{-i}\\
+&=i-\Delta i^2-\frac{1}{\Delta}2^{-i}\\
+&\geq i-\Delta_i i^2-\frac{1}{\Delta_{i+1}}2^{-i}\\
+&= i-2^{-i}i^2-\frac{1}{2^{-(i+1)}}2^{-i}
+\\
+&=i-2^{-i}i^2-2\\
+&\geq i-\frac{1}{2}i-2=\frac{i}{2}-2\geq \frac{n}{2}-2
+\end{align*}
+
+The stuff above clearly implies that the process is not well-behaved.
+\exampleend
+\end{exmp}
 
 \section{Continuous-Time Stochastic Processes}\label{sec:stochastic_processes}
 
@@ -1521,27 +1567,9 @@ The second equality, where $t=t_i$, is due to the definition $\smash{\overline{\
 Note that in the above, the directional outer partial derivatives $\smash{\overline{\partial}}_-T_t^t$ and $\smash{\overline{\partial}}_+T_t^t$ are always singletons. Due to Corollary~\ref{corol:outersingleton}, this implies that the ordinary directional partial derivatives also exist. The next example shows that this is not the case in general.
 
 \begin{exmp}\label{exmp:markov_with_no_deriv}
-*** dit wordt versimpeld tot: kijk, er is inderdaad een proces (zelfs een Markov proces) dat $\mathcal{T}_*$ als zijn transitiematrixsysteem heeft, en herhalen dat we later bewijzen dat het well-behaved is ***
+*** dit wordt versimpeld tot: kijk, er is inderdaad een proces (zelfs een Markov proces) dat $\mathcal{T}$ als zijn transitiematrixsysteem heeft, en herhalen dat we later bewijzen dat het well-behaved is ***
 
 Recall from Example~\ref{exmp:limit_trans_mat_system} the well-behaved transition matrix system $\mathcal{T}_*$ that was constructed as the limit of a sequence $\{\mathcal{T}_i\}_{i\in\nats}$ of (well-behaved) transition matrix systems. Theorem~\ref{theo:uniqueMarkovchain} now implies that there is some $P\in\wmprocesses$ such that $\mathcal{T}_P = \mathcal{T}_*$. Let $T_t^s$ denote the transition matrices corresponding to this $\mathcal{T}_P = \mathcal{T}_*$.
-
-Recall furthermore from Examples~\ref{exmp:limit_trans_mat_system} and~\ref{exmp:limit_trans_mat_system_matrices} that $\mathcal{T}_*$ was constructed using a sequence $\{\Delta_i\}_{i\in\nats}=\{\nicefrac{1}{2^i}\}_{i\in\nats}$, and that, for all $i\in\nats$,
-\begin{equation*}
-T_0^{\Delta_i} = \begin{cases}
-e^{\Delta_i(Q_1(\nicefrac{2}{3}) + Q_2(\nicefrac{1}{3}))} & \text{if $i$ is odd, and} \\
-e^{\Delta_i(Q_1(\nicefrac{1}{3}) + Q_2(\nicefrac{2}{3}))} & \text{otherwise,}
-\end{cases}
-\end{equation*}
-with $Q_1,Q_2\in\mathcal{R}$ and $Q_1\neq Q_2$. 
-
-Let now $Q_o\coloneqq Q_1(\nicefrac{2}{3}) + Q_2(\nicefrac{1}{3})$ and $Q_e\coloneqq Q_1(\nicefrac{1}{3}) + Q_2(\nicefrac{2}{3})$. Then, it clearly holds that $Q_o\neq Q_e$, and, for all $i\in\nats$, that $T_0^{\Delta_i}=e^{\Delta_i Q_o}$ if $i$ is odd, and $T_0^{\Delta_i}=e^{\Delta_iQ_e}$, otherwise.
-
-Let $\{\Delta_{i_j}\}_{j\in\nats}$ be the subsequence of $\{\Delta_i\}_{i\in\nats}$ corresponding to the odd terms. Then,
-\begin{equation*}
-\lim_{j\to\infty}\frac{1}{\Delta_{i_j}}\left(T_0^{\Delta_{i_j}}-I\right) = \lim_{j\to\infty}\frac{1}{\Delta_{i_j}}\left(e^{\Delta_{i_j}Q_o}-I\right) = Q_o\,.
-\end{equation*}
-Similarly, for the subsequence $\{\Delta_{i_k}\}_{k\in\nats}$ corresponding to the even terms, we have $\lim_{k\to\infty}\nicefrac{1}{\Delta_{i_k}}(T_0^{\Delta_{i_k}}-I)=Q_e$. It follows that for the directional outer partial derivative $\smash{\overline{\partial}}_+T_t^t$ corresponding to $P$, at $t=0$, it holds that $\{Q_o,Q_e\}\subseteq \smash{\overline{\partial}}_+T_t^t$.
-%**** Misschien voorbeeld dat we hiermee het bestaan van het tegenvoorbeeld in Example~\ref{exmp:well-behaved-no-deriv} kunnen bewijzen?
 \exampleend
 \end{exmp}
 
@@ -1550,49 +1578,12 @@ Thus, we have found that in general, the directional outer partial derivatives $
 However, this may not be the case if the process is not well-behaved...
 
 \begin{exmp}
-*** just a sketch for now ***
+Example~\ref{exmp:notwellbehaved}
 
+***
 Consider any rate matrix $Q\in\mathcal{R}$ such that $\norm{Q}=1$.
-Let $Q_i\coloneqq iQ$ and consider the corresponding sequence $\mathcal{T}_i$. Then $\{Q_i\}_{i\in\nats_0}$ clearly satisfies the conditions of Example~\ref{exmp:limit_trans_mat_system}---with $c=1$---and therefore $\{\mathcal{T}_i\}_{i\in\nats_0}$ has a limit $\mathcal{T}_*$ in $\mathbb{T}$.
-
-Consider any $k\in\nats$. Then for all $\ell\geq k$, as we have seen in Example~\ref{exmp:limit_trans_mat_system}, we have that $d(\mathcal{T}_k,\mathcal{T}_\ell)\leq c 2^{-k}$, and therefore, for any $\Delta\in\realsnonneg$, we find that
-\begin{equation*}
-\norm{\presuper{k}T_0^\Delta-\presuper{*}T_0^\Delta}
-\leq
-d(\mathcal{T}_k,\mathcal{T}_*)
-\leq d(\mathcal{T}_k,\mathcal{T}_\ell)+d(\mathcal{T}_\ell,\mathcal{T}_*)\leq c 2^{-k}+d(\mathcal{T}_\ell,\mathcal{T}_*).
-\end{equation*}
-Since this is true for any $\ell\geq k$, and because $\mathcal{T}_*=\lim_{\ell\to+\infty}\mathcal{T}_\ell$, it now follows that
-\begin{equation*}
-\norm{\presuper{k}T_0^\Delta-\presuper{*}T_0^\Delta}
-%d(\mathcal{T}_k,\mathcal{T}_*)
-\leq c 2^{-k}+\lim_{\ell\to+\infty}d(\mathcal{T}_\ell,\mathcal{T}_*)
-= c 2^{-k}=2^{-k}.
-\end{equation*}
-
-
-
-Consider now any $\Delta\in(0,\Delta_n]$ and let $i$ be the unique element of $\nats_0$ such that $\Delta_{i+1}\leq\Delta\leq\Delta_i$.
-It then follows from Equation~\eqref{eq:ex4:def} that $\presuper{i}T_0^{\Delta}=e^{Q_i\Delta}$, and therefore, we find that
-\begin{align*}
-\norm{\frac{1}{\Delta}(\presuper{*}T_0^\Delta-I)}
-&=\norm{\frac{1}{\Delta}\left(\presuper{*}T_0^\Delta-\presuper{i}T_0^\Delta+e^{Q_i\Delta}-(I+\Delta Q_i)\right)+Q_i}\\
-&\geq
-\norm{Q_i}
--\norm{\frac{1}{\Delta}\left(e^{Q_i\Delta}-(I+\Delta Q_i)\right)}-\norm{\frac{1}{\Delta}(\presuper{*}T_0^\Delta-\presuper{i}T_0^\Delta)}\\
-&\geq
-\norm{Q_i}
--\Delta\norm{Q_i}^2
--\frac{1}{\Delta}2^{-i}\\
-&=i-\Delta i^2-\frac{1}{\Delta}2^{-i}\\
-&\geq i-\Delta_i i^2-\frac{1}{\Delta_{i+1}}2^{-i}\\
-&= i-2^{-i}i^2-\frac{1}{2^{-(i+1)}}2^{-i}
-\\
-&=i-2^{-i}i^2-2\\
-&\geq i-\frac{1}{2}i-2=\frac{i}{2}-2\geq \frac{n}{2}-2
-\end{align*}
-
-The stuff above clearly implies that the process is not well-behaved.
+Let $Q_i\coloneqq iQ$ and consider the corresponding sequence $\mathcal{T}_i$. Then $\{Q_i\}_{i\in\nats_0}$ clearly satisfies the conditions of Example~\ref{exmp:limit_trans_mat_system}---with $c=1$---and therefore $\{\mathcal{T}_i\}_{i\in\nats_0}$ has a limit $\mathcal{T}$ in $\mathbb{T}$. The aim of this example is to show the 
+***
 
 Furthermore, the stuff above also provides a contradiction with saying that the outer partial derivative is non-empty... hence, it is empty!
 \exampleend
