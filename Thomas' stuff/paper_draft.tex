@@ -634,7 +634,7 @@ where, for all $i\in\nats_0$, $\delta_i\coloneqq 2^{-i}$. The resulting sequence
 \begin{equation}\label{eq:cauchyexample}
 (\forall\epsilon\in\realspos)\,(\exists n_\epsilon\in\nats)\,(\forall k,\ell > n_\epsilon)~d(\mathcal{T}_{k},\mathcal{T}_\ell)<\epsilon.
 \end{equation}
-The reason why this is of interest to us is because in a complete metric space, every Cauchy sequence converges to a limit that belongs to the same space. Hence, since $\{\mathcal{T}_i\}_{i\in\nats_0}$ is Cauchy, Proposition~\ref{lemma:restricted_trans_mat_system_cauchy_converges} allow us to infer that $\{\mathcal{T}_i\}_{i\in\nats_0}$ converges to a limit $\mathcal{T}\coloneqq \lim_{i\to\infty}\mathcal{T}_i$ in $\mathbb{T}$.
+The reason why this is of interest to us is because in a complete metric space, every Cauchy sequence converges to a limit that belongs to the same space. Hence, since $\{\mathcal{T}_i\}_{i\in\nats_0}$ is Cauchy, Proposition~\ref{lemma:restricted_trans_mat_system_cauchy_converges} allows us to infer that $\{\mathcal{T}_i\}_{i\in\nats_0}$ converges to a limit $\mathcal{T}\coloneqq \lim_{i\to\infty}\mathcal{T}_i$ in $\mathbb{T}$.
 
 So let us now show that $\{\mathcal{T}_i\}_{i\in\nats_0}$ is indeed Cauchy. In order to prove this, the first step is to notice that for any $i\in\nats$, the difference between $\mathcal{T}_{i}$ and $\mathcal{T}_{i-1}$ is essentially situated on the interval $[0,\delta_i]$. It should therefore be intuitively clear that $d(\mathcal{T}_i,\mathcal{T}_{i-1})$ is proportional to $\delta_i$. A more rigorous argument shows that $d(\mathcal{T}_i,\mathcal{T}_{i-1})\leq\delta_i\norm{Q_i-Q_{i-1}}$; see the appendix for a formal proof.
 %a formal proof can be constructed by combining Equations~\eqref{eq:trans_mat_system_metric} and~\eqref{eq:transmatrixproduct} with Lemmas~\ref{lemma:recursive} and~\ref{lemma:linearpartofexponential} in the appendix; we leave this as an exercise. 
@@ -656,7 +656,20 @@ and therefore, since we also know that
 =2^{-k},
 %\leq2^{-n_\epsilon},
 \end{equation*}
-it follows that $\smash{d(\mathcal{T}_{k},\mathcal{T}_\ell)\leq c 2^{-k}\leq c 2^{-n_\epsilon}}<\epsilon$, as required.\exampleend
+it follows that $\smash{d(\mathcal{T}_{k},\mathcal{T}_\ell)\leq c 2^{-k}\leq c 2^{-n_\epsilon}}<\epsilon$, as required.
+
+As a side result, we also obtain a similar bound on the distance between $\mathcal{T}_k$ and $\mathcal{T}$. For any $\ell\geq k$, we know that
+\begin{equation*}
+d(\mathcal{T}_k,\mathcal{T})
+\leq d(\mathcal{T}_k,\mathcal{T}_\ell)+d(\mathcal{T}_\ell,\mathcal{T})\leq c 2^{-k}+d(\mathcal{T}_\ell,\mathcal{T}),
+\end{equation*}
+and therefore, since $\mathcal{T}=\lim_{\ell\to+\infty}\mathcal{T}_\ell$, it follows that $d(\mathcal{T}_k,\mathcal{T})\leq c 2^{-k}$
+% \begin{equation*}
+% d(\mathcal{T}_k,\mathcal{T})
+% \leq c 2^{-k}+\lim_{\ell\to+\infty}d(\mathcal{T}_\ell,\mathcal{T})
+% = c 2^{-k}.
+% \end{equation*}
+\exampleend
 %Therefore, and because $\{\Delta_i\}_{i\in\nats}\to0^+$, the limit $\mathcal{T}_*\coloneqq \lim_{i\to\infty}\mathcal{T}_i$ clearly exists and, by Proposition~\ref{lemma:restricted_trans_mat_system_cauchy_converges}, is a transition matrix system. It should also be intuitively clear that $\mathcal{T}_*$ is well-behaved, however a formal proof is rather lengthy and left as an exercise.
 \end{exmp}
 
@@ -820,47 +833,63 @@ where the first equality follows from Equation~\eqref{eq:ex4:recursekandstar}, t
 
 *** blabla, this was well-behaved, but the next one is not ***
 
-\begin{exmp}
-Consider any rate matrix $Q\in\mathcal{R}$ such that $\norm{Q}=1$ and, for all $i\in\nats_0$, let $Q_i\coloneqq iQ$ and let $\mathcal{T}_i$ be defined as in Example~\ref{exmp:limit_trans_mat_system}. Since $\{Q_i\}_{i\in\nats_0}$ satisfies the conditions of Example~\ref{exmp:limit_trans_mat_system} with $c=1$, the sequence $\{\mathcal{T}_i\}_{i\in\nats_0}$ then has a limit $\mathcal{T}\coloneqq \lim_{i\to\infty}\mathcal{T}_i$ in $\mathbb{T}$. The aim of this example is to show that, despite the fact that we know from Example~\ref{exmp:limit_trans_mat_system} that each of the transition matrix systems $\mathcal{T}_i$, $i\in\nats_0$, is well-behaved, this is not true for the limit $\mathcal{T}$.
+\begin{exmp}\label{exmp:notwellbehavedMarkov}
+Consider any rate matrix $Q\in\mathcal{R}$ such that $\norm{Q}=1$ and, for all $i\in\nats_0$, define $Q_i\coloneqq iQ$ and let $\mathcal{T}_i$ and $\delta_i$ be defined as in Example~\ref{exmp:limit_trans_mat_system}. Then since $\{Q_i\}_{i\in\nats_0}$ satisfies the conditions of Example~\ref{exmp:limit_trans_mat_system} with $c=1$, the sequence $\{\mathcal{T}_i\}_{i\in\nats_0}$ has a limit $\mathcal{T}\coloneqq \lim_{i\to\infty}\mathcal{T}_i$ in $\mathbb{T}$. The aim of this example is to show that, despite the fact that we know from Example~\ref{exmp:limit_trans_mat_system} that each of the transition matrix systems $\mathcal{T}_i$, $i\in\nats_0$, is well-behaved, this is not true for the limit $\mathcal{T}$.
 
-Consider any $k\in\nats$. Then for all $\ell\geq k$, as we have seen in Example~\ref{exmp:limit_trans_mat_system}, we have that $d(\mathcal{T}_k,\mathcal{T}_\ell)\leq c 2^{-k}$, and therefore, for any $\Delta\in\realsnonneg$, we find that
+% Consider any $k\in\nats$. Then for all $\ell\geq k$, as we have seen in Example~\ref{exmp:limit_trans_mat_system}, we have that $d(\mathcal{T}_k,\mathcal{T}_\ell)\leq c 2^{-k}$, and therefore, for any $\Delta\in\realsnonneg$, we find that
+% \begin{equation*}
+% \norm{\presuper{k}T_0^\Delta-\presuper{*}T_0^\Delta}
+% \leq
+% d(\mathcal{T}_k,\mathcal{T}_*)
+% \leq d(\mathcal{T}_k,\mathcal{T}_\ell)+d(\mathcal{T}_\ell,\mathcal{T}_*)\leq c 2^{-k}+d(\mathcal{T}_\ell,\mathcal{T}_*).
+% \end{equation*}
+% Since this is true for any $\ell\geq k$, and because $\mathcal{T}_*=\lim_{\ell\to+\infty}\mathcal{T}_\ell$, it now follows that
+% \begin{equation*}
+% \norm{\presuper{k}T_0^\Delta-\presuper{*}T_0^\Delta}
+% %d(\mathcal{T}_k,\mathcal{T}_*)
+% \leq c 2^{-k}+\lim_{\ell\to+\infty}d(\mathcal{T}_\ell,\mathcal{T}_*)
+% = c 2^{-k}=2^{-k}.
+% \end{equation*}
+
+In order to do prove this, we first fix any $n\in\nats_0$ and any $\Delta\in(0,\delta_n]$, and we let $i\geq n$ be the unique element of $\nats_0$ such that $\delta_{i+1}\leq\Delta\leq\delta_i$. It then follows from Equation~\eqref{eq:def:sequenceinexample3} that $\presuper{i}T_0^{\Delta}=e^{Q_i\Delta}$, and therefore, we find that
 \begin{equation*}
-\norm{\presuper{k}T_0^\Delta-\presuper{*}T_0^\Delta}
+%\Delta\norm{Q_i}
+%=
+\norm{\Delta Q_i}
 \leq
-d(\mathcal{T}_k,\mathcal{T}_*)
-\leq d(\mathcal{T}_k,\mathcal{T}_\ell)+d(\mathcal{T}_\ell,\mathcal{T}_*)\leq c 2^{-k}+d(\mathcal{T}_\ell,\mathcal{T}_*).
+\norm{e^{Q_i\Delta}-(I+\Delta Q_i)}
++
+\norm{T_0^\Delta-\presuper{i}T_0^\Delta}
++
+\norm{T_0^\Delta-I}
+\leq\Delta^2\norm{Q_i}^2+2^{-i}+\norm{T_0^\Delta-I},
 \end{equation*}
-Since this is true for any $\ell\geq k$, and because $\mathcal{T}_*=\lim_{\ell\to+\infty}\mathcal{T}_\ell$, it now follows that
+where the first inequality holds because $\norm{\cdot}$ is a norm, and where the second inequality holds because of Lemma~\ref{lemma:linearpartofexponential} and because---as proved at the end of Example~\ref{exmp:limit_trans_mat_system}---$d(\mathcal{T}_i,\mathcal{T})\leq c2^{-i}=2^{-i}$. Hence, since $\norm{Q_i}=\norm{iQ}=i\norm{Q}=i$, we find that
 \begin{equation*}
-\norm{\presuper{k}T_0^\Delta-\presuper{*}T_0^\Delta}
-%d(\mathcal{T}_k,\mathcal{T}_*)
-\leq c 2^{-k}+\lim_{\ell\to+\infty}d(\mathcal{T}_\ell,\mathcal{T}_*)
-= c 2^{-k}=2^{-k}.
+\frac{1}{\Delta}\norm{T_0^\Delta-I}
+\geq
+\norm{Q_i}-\Delta\norm{Q_i}^2-\frac{1}{\Delta}2^{-i}
+=
+i-\Delta i^2-\frac{1}{\Delta}2^{-i}
+\geq
+i-\delta_i i^2-\frac{1}{\delta_{i+1}}2^{-i}
+%=i-2^{-i}i^2-2
 \end{equation*}
-
-
-
-Consider now any $\Delta\in(0,\Delta_n]$ and let $i$ be the unique element of $\nats_0$ such that $\Delta_{i+1}\leq\Delta\leq\Delta_i$.
-It then follows from Equation~\eqref{eq:ex4:def} that $\presuper{i}T_0^{\Delta}=e^{Q_i\Delta}$, and therefore, we find that
-\begin{align*}
-\norm{\frac{1}{\Delta}(\presuper{*}T_0^\Delta-I)}
-&=\norm{\frac{1}{\Delta}\left(\presuper{*}T_0^\Delta-\presuper{i}T_0^\Delta+e^{Q_i\Delta}-(I+\Delta Q_i)\right)+Q_i}\\
-&\geq
-\norm{Q_i}
--\norm{\frac{1}{\Delta}\left(e^{Q_i\Delta}-(I+\Delta Q_i)\right)}-\norm{\frac{1}{\Delta}(\presuper{*}T_0^\Delta-\presuper{i}T_0^\Delta)}\\
-&\geq
-\norm{Q_i}
--\Delta\norm{Q_i}^2
--\frac{1}{\Delta}2^{-i}\\
-&=i-\Delta i^2-\frac{1}{\Delta}2^{-i}\\
-&\geq i-\Delta_i i^2-\frac{1}{\Delta_{i+1}}2^{-i}\\
-&= i-2^{-i}i^2-\frac{1}{2^{-(i+1)}}2^{-i}
-\\
-&=i-2^{-i}i^2-2\\
-&\geq i-\frac{1}{2}i-2=\frac{i}{2}-2\geq \frac{n}{2}-2
-\end{align*}
-
-The stuff above clearly implies that the process is not well-behaved.
+and therefore, because $\delta_i=2^{-i}$, $\delta_{i+1}=2^{-i-1}$, $2^i\geq i$ and $i\geq n$, it follows that
+\begin{equation}\label{eq:exmp:notwellbehavedMarkov}
+\frac{1}{\Delta}\norm{T_0^\Delta-I}
+\geq
+i-2^{-i}i^2-2
+\geq
+i-\frac{1}{2}i-2
+=\frac{i}{2}-2
+\geq\frac{n}{2}-2.
+\end{equation}
+Since $\Delta\in(0,\delta_n]$ is arbitrary, this implies that
+\begin{equation*}
+\limsup_{\Delta\to 0^{+}}\frac{1}{\Delta}\norm{T_{0}^{\Delta}-I}\geq\frac{n}{2}-2.
+\end{equation*}
+Finally, since this is true for every $n\in\nats_0$, we infer from Definition~\ref{def:well_behaved_trans_mat_system} that $\mathcal{T}$ is not well-behaved, because the definition fails for $t=0$.
 \exampleend
 \end{exmp}
 
