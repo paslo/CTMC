@@ -895,7 +895,7 @@ and therefore, since this is true for every $n\in\nats_0$, we infer from Definit
 
 \section{Continuous-Time Stochastic Processes}\label{sec:stochastic_processes}
 
-We will in this section formalize the notion of continuous-time stochastic processes, using the framework of full conditional probabilities. This approach differs somewhat from the traditional one, which is motivated below.
+We will in this section formalize the notion of a continuous-time stochastic process, using the framework of full conditional probabilities. This approach differs somewhat from the traditional one, which is motivated below.
 
 In a classical---Kolmogorovian, measure-theoretic---setting, such a stochastic process is typically defined as a collection of random variables $\{X_t\}_{t\in\realsnonneg}$ taking values in the space $\states$. These random variables $X_t$ are then defined with respect to some probability space $(\Omega,\mathcal{F},P)$, with $P$ a probability measure on a measurable set of events $\mathcal{F}$, typically a $\sigma$-algebra on an outcome space $\Omega$. Under certain independence assumptions, this leads to the special case of continuous-time Markov chains. We refer to {\bf CITE CITE CITE} for examples of this approach.
 
@@ -1273,7 +1273,7 @@ The following example established that these directional partial derivatives nee
 \begin{exmp}\label{exmp:well-behaved-no-deriv}
 Let $Q_1,Q_2\in\mathcal{R}$ be two commuting rate matrices such that $Q_1\neq Q_2$---for example, let $Q_1\neq0$ be an arbitrary rate matrix and let $Q_2\coloneqq\alpha Q_1$, with $\alpha\in\realsnonneg\setminus\{1\}$---and consider a stochastic process $P\in\processes$ of which, for all $t\in(0,1]$, the transition matrix $T_0^t$ is given by Equation~\eqref{eq:ex4:def} in Example~\ref{exmp:limit_trans_mat_system_matrices}. 
 
-For now, we simply assume that this is possible. A formal proof for the existence of such a process requires some additional machinery, and we therefore postpone it to Examples~\ref{exmp:markov_with_no_deriv} and~\ref{exmp:running:wellbehaved}, where we construct a continuous-time Markov chain that is compatible with Equation~\eqref{eq:ex4:def}, and prove that it is well-behaved.
+For now, we simply assume that this is possible. A formal proof for the existence of such a process requires some additional machinery, and we therefore postpone it to Examples~\ref{exmp:twoexamplesofMarkovchains} and~\ref{exmp:running:wellbehaved}, where we construct a continuous-time Markov chain that is compatible with Equation~\eqref{eq:ex4:def}, and prove that it is well-behaved.
 
 The aim of the present example is to show that for any such process, the right-sided partial derivative $\partial_{+}{T_{0}^0}$---which corresponds to choosing $t=0$ and $u=\emptyset$ in Definition~\ref{def:direc_partial_deriv}---does not exist. In order to do this, we will prove that for any $\lambda\in[\nicefrac{1}{3},\nicefrac{2}{3}]$, there is a sequence $\{\Delta_i\}_{i\in\nats_0}\to0^+$ such that
 \begin{equation}\label{eq:exmp:well-behaved-no-deriv}
@@ -1398,13 +1398,15 @@ For any $P\in\wprocesses$, $\overline{\partial}_{+}
 {T^t_{t,\,x_u}}$ are non-empty, bounded and closed subsets of $\mathcal{R}$.
 \end{proposition}
 
+The following two examples provide this result with some intuition. Example~\ref{exmp:outerderivative} illustrates \ref{prop:boundednon-emptyandclosed} the validity of the result, while Example~\ref{exmp:emptyouterderivative} shows that the requirement that $P$ must be well-behaved is essential.
+
 \begin{exmp}\label{exmp:outerderivative}
 Consider again the stochastic process $P\in\wmprocesses$ from Example~\ref{exmp:well-behaved-no-deriv} of which, for all $t\in(0,1]$, the transition matrix $T_0^t$ is given by Equation~\eqref{eq:ex4:def}. 
 The aim of this example is to show that for this particular process,
 \begin{equation*}
 \smash{\overline{\partial}}_+T_0^0=\big\{Q_\lambda\colon \lambda\in[\nicefrac{1}{3},\nicefrac{2}{3}]\big\},
 \end{equation*}
-where, for every $\lambda\in[\nicefrac{1}{3},\nicefrac{2}{3}]$, $Q_\lambda\coloneqq\lambda Q_1+(1-\lambda)Q_2$ as in Example~\ref{exmp:markov_with_no_deriv}.
+where, for every $\lambda\in[\nicefrac{1}{3},\nicefrac{2}{3}]$, $Q_\lambda\coloneqq\lambda Q_1+(1-\lambda)Q_2$ as in Example~\ref{exmp:well-behaved-no-deriv}.
 
 Showing that $\{Q_\lambda\colon \lambda\in[\nicefrac{1}{3},\nicefrac{2}{3}]\}$ is a subset of $\smash{\overline{\partial}}_+T_0^0$ was, essentially, already done in Example~\ref{exmp:well-behaved-no-deriv}, because for every $\lambda\in[\nicefrac{1}{3},\nicefrac{2}{3}]$, it follows from Equation~\eqref{eq:exmp:well-behaved-no-deriv2} and Definition~\ref{def:direc_partial_deriv} that $Q_\lambda\in\smash{\overline{\partial}}_+T_0^0$. Therefore, we only need to show that $\smash{\overline{\partial}}_+T_0^0$ is a subset of $\{Q_\lambda\colon \lambda\in[\nicefrac{1}{3},\nicefrac{2}{3}]\}$, or equivalently, we need to show that for every $Q\in\smash{\overline{\partial}}_+T_0^0$, there is some $\lambda\in[\nicefrac{1}{3},\nicefrac{2}{3}]$ such that $Q=Q_\lambda$.
 
@@ -1446,6 +1448,10 @@ Consider now any $k\geq\max\{n_1,n_2,n_3\}$. Then since $\presuper{*}T_0^{\Delta
 \end{align*}
 Since this is true for every $\epsilon\in\realspos$, it follows that $\norm{Q-Q_{\lambda}}=0$, and therefore also, that $Q=Q_\lambda$, as desired.
 \exampleend
+\end{exmp}
+
+\begin{exmp}\label{exmp:emptyouterderivative}
+*** use Example~\ref{exmp:notwellbehavedMarkov} to show an empty outer derivative ***
 \end{exmp}
 
 \noindent Furthermore, these right- and left-sided outer partial derivatives are clearly related to the directional partial derivatives. The next statement makes this explicit for well-behaved stochastic processes, using an $\epsilon-\delta$ expression for the limits in Definition~\ref{def:direc_partial_deriv}.
@@ -1514,7 +1520,11 @@ Hence, at this point we know that every (well-behaved) Markov chain has a corres
 Let $p$ be an arbitrary probability mass function on $\states$ and let $\mathcal{T}$ be a transition matrix system. Then there is a unique Markov chain $P\in\mprocesses$ such that $\mathcal{T}_P=\mathcal{T}$ and, for all $y\in\states$, $P(X_0=y)=p(y)$. Furthermore, if $\mathcal{T}$ is well-behaved, then $P$ is also well-behaved.
 \end{theorem}
 
-Hence, Markov chains---and well-behaved Markov chains in particular---are completely characterized by their transition matrices and their initial distribution. 
+Hence, Markov chains---and well-behaved Markov chains in particular---are completely characterized by their transition matrices and their initial distribution.
+
+\begin{exmp}\label{exmp:twoexamplesofMarkovchains}
+*** add example where we introduce two Markov chains, one for each of the two transition matrix systems that we have introduced before, one of which is well-behaved and one of which is not ***
+\end{exmp}
 
 As a final note, observe that not only does the Markov property simplify the conditional probabilities of Markov chains, it also simplifies their dynamics. In particular, for any $t\in\realsnonneg$, any $u\in\mathcal{U}_{<t}$, and any $x_u\in\states^u$, it holds that $\smash{\overline{\partial}}T_{t,x_u}^t=\smash{\overline{\partial}}T_{t}^t$. We now focus on a number of special cases.
 
@@ -1596,7 +1606,7 @@ The second equality, where $t=t_i$, is due to the definition $\smash{\overline{\
 Note that in the above, the directional outer partial derivatives $\smash{\overline{\partial}}_-T_t^t$ and $\smash{\overline{\partial}}_+T_t^t$ are always singletons. Due to Corollary~\ref{corol:outersingleton}, this implies that the ordinary directional partial derivatives also exist. The next example shows that this is not the case in general.
 
 \begin{exmp}\label{exmp:markov_with_no_deriv}
-*** dit wordt versimpeld tot: kijk, er is inderdaad een proces (zelfs een Markov proces) dat $\mathcal{T}$ als zijn transitiematrixsysteem heeft, en herhalen dat we later bewijzen dat het well-behaved is ***
+*** combine Examples~\ref{exmp:outerderivative} and~\ref{exmp:twoexamplesofMarkovchains} ***
 
 Recall from Example~\ref{exmp:limit_trans_mat_system} the well-behaved transition matrix system $\mathcal{T}_*$ that was constructed as the limit of a sequence $\{\mathcal{T}_i\}_{i\in\nats}$ of (well-behaved) transition matrix systems. Theorem~\ref{theo:uniqueMarkovchain} now implies that there is some $P\in\wmprocesses$ such that $\mathcal{T}_P = \mathcal{T}_*$. Let $T_t^s$ denote the transition matrices corresponding to this $\mathcal{T}_P = \mathcal{T}_*$.
 \exampleend
@@ -1607,7 +1617,7 @@ Thus, we have found that in general, the directional outer partial derivatives $
 However, this may not be the case if the process is not well-behaved...
 
 \begin{exmp}
-Example~\ref{exmp:notwellbehaved}
+*** combine Examples~\ref{exmp:outerderivative} and~\ref{exmp:twoexamplesofMarkovchains} ***
 
 ***
 Consider any rate matrix $Q\in\mathcal{R}$ such that $\norm{Q}=1$.
