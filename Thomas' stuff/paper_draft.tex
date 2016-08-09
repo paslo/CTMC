@@ -918,9 +918,12 @@ We start in Section~\ref{sec:cond_prob} by introducing full conditional probabil
 
 %We will in Section~\ref{sec:def_stochastic_processes} define continuous-time stochastic processes using the framework of full conditional probabilities {\bf CITE}, which we describe here. 
 
-Consider some arbitrary random experiment, with some (non-empty, possibly infinite) \emph{outcome space} $\Omega$. An element $\omega\in\Omega$ of this set is then interpreted as one possible outcome of the random experiment. In order to describe multiple possible outcomes simultaneously, we use the notion of \emph{events}. Such an event $E$ is a subset of $\Omega$. We use $\power$ to denote the set of all events, and let $\nonemptypower\coloneqq\power\setminus\{\emptyset\}$. An element $(A,C)\in\power\times\nonemptypower$ is called \emph{the event $A$ conditional on the event $C$}, and the set $\power\times\nonemptypower$ is called the set of all \emph{conditional} events. 
-
-A full conditional probability $P$ is then a map from the set $\power\times\nonemptypower$ to $\reals$ that quantifies the uncertainty of the outcomes of the random experiment, as follows.
+Consider a variable $X$ that takes values $\omega$ in some non-empty---possibly infinite---\emph{outcome space} $\Omega$. The actual value of $X$ is taken to be uncertain, in the sense that it is unknown. This uncertainty may arise because $X$ is the outcome of a random experiment that has yet to be conducted, but it can also simply be a consequence of our lack of information about $X$. 
+%An element $\omega\in\Omega$ of this set is then interpreted as one possible outcome of the random experiment. In order to describe multiple possible outcomes simultaneously, we use the notion of \emph{events}. 
+We call any subset $E$ of $\Omega$ an event, we use $\power$ to denote the set of all such events, and we let $\nonemptypower\coloneqq\power\setminus\{\emptyset\}$ be the set of all non-empty events. 
+%An element $(A,C)\in\power\times\nonemptypower$ is called \emph{the event $A$ conditional on the event $C$}, and the set $\power\times\nonemptypower$ is called the set of all \emph{conditional} events. 
+A subject's uncertainty about the value of $X$ can then be described by means of a full conditional probability.
+%A full conditional probability $P$ is then a map from $\power\times\nonemptypower$ to $\reals$ that quantifies the uncertainty of the outcomes of the random experiment, as follows.
 
 \begin{definition}[Full conditional probability]\label{def:cond_prob}
 A full conditional probability $P$ is a real-valued map from $\power\times\nonemptypower$ to $\reals$ that satisfies the following axioms. For all $A,B\in\power$ and all \mbox{$C,D\in\nonemptypower$}:
@@ -955,46 +958,69 @@ $P(\Omega\vert C)=1$.\label{def:coh_prob_5}
 % \item
 % $P(A\vert C)=P(A\vert D)P(D\vert C)$ if $A\subseteq D\subseteq C$.\label{def:coh_prob_4}
 \end{enumerate}
-\vspace{5pt}
+\vspace{2pt}
 \end{definition}
 
-Note first of all that this definition takes conditional probabilities as the basic entity; $P(A\vert C)$ is well-defined even if $P(C)=0$. Furthermore, such a map $P$ is defined on the entire set $\power\times\nonemptypower$, and in particular not on a subset thereof that forms a (``conditional'') $\sigma$-algebra. Also, by property~\ref{def:coh_prob_3}, it only requires that the probability is finitely-additive; similar to the above, $\sigma$-additivity is not imposed by the axiomatization, regardless of the size of $\power$.  We refer to {\bf CITE CITE} for philosophical motivations behind this.
+Basically, \ref{def:coh_prob_2}--\ref{def:coh_prob_6} are just the standard rules of probability. However, there are four rather subtle differences with the more traditional approach. The first difference is that a full conditional probability takes conditional probabilities as its basic entities: $P(A\vert C)$ is well-defined even if $P(C)=0$. The second difference, which is related to the first, is that Bayes's rule---\ref{def:coh_prob_6}---is stated in a multiplicative form; it is not regarded as a definition of conditional probabilities, but rather as a property that connects conditional probabilities to unconditional ones. The third difference is that we consider all events, and do not restrict ourselves to some specific subset of events---such as a $\sigma$-algebra. The fourth difference, which is related to the third, is that we only require finite additivity---\ref{def:coh_prob_3}---and do not impose $\sigma$-additivity.
 
-However, note that because $\power$ is the set of all events---the power set of $\Omega$---it is somewhat unwieldy to work with for arbitrary $\Omega$. Specifically, if for a given map $P$ from $\power\times\nonemptypower$ to $\reals$ we want to check if $P$ is a full conditional probability, this is difficult to do from the definition alone.
+%Intuitively, this definition of a full conditional probability reflects all the main properties that are typically associated with probabilities.
 
-Therefore, we next introduce the notion of \emph{coherent conditional probabilities}~{\bf CITE}. %This notion was developed from DeFinetti's work on coherent (unconditional) probabilities~{\bf CITE}. We refer to {\bf CITE CITE CITE} for philosophical discussions on its merits, but will give some interpretation below.
-%The following notion of coherent conditional probabilities will be useful whenever we want to check if a given map $P$ from a set of events to $\reals$ is a well-defined conditional probability.
-This notion of coherence is perhaps easiest to understand in a gambling framework. In this framework, we first consider a set $\mathcal{C}\subseteq\power\times\nonemptypower$ of possible events. Gambles---lottery tickets, if you will---are then bought and sold prior to observing the outcome $\omega$ of a random experiment. 
+The `full' in full conditional probability refers to the fact that the domain of $P$ is the complete set $\power\times\nonemptypower$. At first sight, this might seem unimportant, and one might be inclined to introduce a similar definition for functions $P$ whose domain is some subset $\mathcal{C}$ of $\power\times\nonemptypower$. However, unfortunately, as our next example illustrates, such a definition would have the property that it does not guarantee the possibility of extending the function to a larger domain $\mathcal{C}^*$, with $\mathcal{C}\subseteq\mathcal{C}^*\subseteq\power\times\nonemptypower$.
 
-In particular, for each event $(A,C)\in\mathcal{C}$, a bettor will specify a price $P(A\vert C)$ for which she is always willing to either buy or sell the gamble that event $A$ will come true, given that event $C$ comes true. Such a gamble yields a reward of one currency unit to its holder---paid by the seller---if the event $A$ occurs. These gambles are then bought and sold under the proviso that, should event $C$ not happen, then all parties involved are refunded. 
-
-Suppose now that the outcome is $\omega$. For each ticket that the bettor sold, she has received $P(A\vert C)$ currency units in advance, but she must now pay one currency unit to the buyer if event $A$ came true. Hence, she must pay $\ind{A}(\omega)$ per ticket sold. Because this is conditional on event $C$ coming true, her remaining profit after paying is $\ind{C}(\omega)(P(A\vert C) - \ind{A}(\omega))$, with negative profit being loss. Note that if $\ind{C}(\omega)=0$, she neither gains nor loses anything. Allowing for fractional tickets, if she has sold a total of $\lambda\in\realsnonneg$ such tickets, her total profit is $\lambda \ind{C}(\omega)(P(A\vert C) - \ind{A}(\omega))$.
-
-Similarly, for each ticket that she bought, she will receive one unit of currency if event $A$ came true. Her profit is then $(\ind{A}(\omega) - P(A\vert C))$ per ticket. However, she only receives this profit if event $C$ also came to pass, and otherwise gets refunded. Hence, her actual profit is $\ind{C}(\omega)(\ind{A}(\omega) - P(A\vert C))$. Comparing to the above, it follows that for any given outcome $\omega$, her resulting profit from buying is equal to her loss from selling, and vice versa.
-
-Now, note that the bettor quoted prices for which she is \emph{always} willing to buy or sell these gambles. Therefore, the bettor can be forced---by an adversarial gambler---to buy and/or sell any number of gambles in any combination. That is, for any $n\in\nats$ and any $i\in\{1,\ldots,n\}$, she can be forced to sell him $\lambda_i\in\reals$ gambles on any event $(A_i,C_i)\in\mathcal{C}$ (which is equivalent to buying these gambles from him, if $\lambda_i$ is negative). After being forced into this combined gamble, her (possibly negative) profit on the outcome $\omega$ is
+\begin{exmp}\label{exmp:F1F4cannotbeextended}
+Let $\Omega=\{1,2,3,4,5,6\}$ be the set of possible values for the throw of a---possibly unfair---die and let $\mathcal{C}\coloneqq\{(E_{\mathrm{o}},\Omega),(E_{\mathrm{e}},\Omega)\}\subseteq\power\times\nonemptypower$, where the events $E_{\mathrm{o}}=\{1,3,5\}$ and $E_{\mathrm{e}}=\{2,4,6\}$ correspond to an odd or even outcome of the die throw, respectively. The map $P\colon\mathcal{C}\to\reals$ that is defined by
 \begin{equation*}
-\sum_{i=1}^n\lambda_i\ind{C_i}(\omega)\left(P(A_i\vert C_i) - \ind{A_i}(\omega)\right)\,.
+P(E_{\mathrm{o}})\coloneqq P(E_{\mathrm{o}}\vert\Omega)=\nicefrac{2}{3}
+~\text{ and }~
+P(E_{\mathrm{e}})\coloneqq P(E_{\mathrm{e}}\vert\Omega)=\nicefrac{2}{3}
 \end{equation*}
-%but \emph{only} if at least one of the conditioning events $C_i$ came true, i.e., if $\omega\in \cup_{i=1}^n C_i$. In particular, if $\omega\notin \cup_{i=1}^n C_i$, the bettor will get refunded for all tickets involved, and hence would not make a loss.
-The prices $P$ are now said to be \emph{coherent} if they \emph{avoid sure loss}. That is, if for any such combination of gambles, there exists a ``non-trivial'' outcome $\omega$ where she does not make a loss. The trivial case is when none of the events $C_i$ come true, i.e., if $\omega\notin\cup_{i=1}^n C_i$, because she then gets refunded on all the gambles. However, to be coherent, the prices specifically have to avoid sure loss if (some) of the conditioning events do come true; there must always be an $\omega\in\cup_{i=1}^n C_i$ that yields non-negative profit.
+then satisfies \ref{def:coh_prob_2}-\ref{def:coh_prob_6} on its domain. However, if we extend the domain by adding the trivial couple $(\Omega,\Omega)$, it becomes impossible to satisfy \ref{def:coh_prob_2}-\ref{def:coh_prob_6}, because~\ref{def:coh_prob_1} and~\ref{def:coh_prob_3} would then require that
+\begin{equation*}
+1=P(\Omega\vert\Omega)=P(E_{\mathrm{o}}\vert\Omega)+P(E_{\mathrm{e}}\vert\Omega)=\nicefrac{2}{3}+\nicefrac{2}{3}=\nicefrac{4}{3},
+\end{equation*}
+which is clearly a contradiction.
+\end{exmp}
 
-If the prices $P$ satisfy this criteria, they are called a coherent conditional probability.
+In order to avoid the situation in this example, that is, in order to guarantee the possibility of extending the domain of a conditional probability in a sensible way, we use the concept of coherence.
 
-\begin{definition}[Coherent conditional probability]\label{def:coherence}\footnote{*** Explain that most authors consider a supremum. However, since $n$ is finite and because, for every $i\in\{1,\dots,n\}$, $\ind{A_i}$ and $\ind{C_i}$ can only take two values---$0$ or $1$---it follows that this supremum is taken over a finite set of real numbers, which implies that it is actually a maximum. Also explain that some authors also require this with $\min$ and $\leq0$; this is not necessary because it is implied. ***}
-Let $P$ be a real-valued map from $\mathcal{C}\subseteq\power\times\nonemptypower$ to $\reals$. Then $P$ is said to be a \emph{coherent conditional probability} on $\mathcal{C}$ if, for all $n\in\mathbb{N}$ and every choice of $(A_i,C_i)\in\mathcal{C}$ and $\lambda_i\in\reals$, $i\in\{1,\dots,n\}$,
+%Furthermore, such a map $P$ is defined on the entire set $\power\times\nonemptypower$, and in particular not on a subset thereof that forms a (``conditional'') $\sigma$-algebra. Also, by property~\ref{def:coh_prob_3}, it only requires that the probability is finitely-additive; similar to the above, $\sigma$-additivity is not imposed by the axiomatization, regardless of the size of $\power$.  We refer to {\bf CITE CITE} for philosophical motivations behind this.
+
+%However, note that because $\power$ is the set of all events---the power set of $\Omega$---it is somewhat unwieldy to work with for arbitrary $\Omega$. Specifically, if for a given map $P$ from $\power\times\nonemptypower$ to $\reals$ we want to check if $P$ is a full conditional probability, this is difficult to do from the definition alone.
+
+% Therefore, we next introduce the notion of \emph{coherent conditional probabilities}~{\bf CITE}. %This notion was developed from DeFinetti's work on coherent (unconditional) probabilities~{\bf CITE}. We refer to {\bf CITE CITE CITE} for philosophical discussions on its merits, but will give some interpretation below.
+% %The following notion of coherent conditional probabilities will be useful whenever we want to check if a given map $P$ from a set of events to $\reals$ is a well-defined conditional probability.
+% This notion of coherence is perhaps easiest to understand in a gambling framework. In this framework, we first consider a set $\mathcal{C}\subseteq\power\times\nonemptypower$ of possible events. Gambles---lottery tickets, if you will---are then bought and sold prior to observing the outcome $\omega$ of a random experiment. 
+
+% In particular, for each event $(A,C)\in\mathcal{C}$, a bettor will specify a price $P(A\vert C)$ for which she is always willing to either buy or sell the gamble that event $A$ will come true, given that event $C$ comes true. Such a gamble yields a reward of one currency unit to its holder---paid by the seller---if the event $A$ occurs. These gambles are then bought and sold under the proviso that, should event $C$ not happen, then all parties involved are refunded. 
+
+% Suppose now that the outcome is $\omega$. For each ticket that the bettor sold, she has received $P(A\vert C)$ currency units in advance, but she must now pay one currency unit to the buyer if event $A$ came true. Hence, she must pay $\ind{A}(\omega)$ per ticket sold. Because this is conditional on event $C$ coming true, her remaining profit after paying is $\ind{C}(\omega)(P(A\vert C) - \ind{A}(\omega))$, with negative profit being loss. Note that if $\ind{C}(\omega)=0$, she neither gains nor loses anything. Allowing for fractional tickets, if she has sold a total of $\lambda\in\realsnonneg$ such tickets, her total profit is $\lambda \ind{C}(\omega)(P(A\vert C) - \ind{A}(\omega))$.
+
+% Similarly, for each ticket that she bought, she will receive one unit of currency if event $A$ came true. Her profit is then $(\ind{A}(\omega) - P(A\vert C))$ per ticket. However, she only receives this profit if event $C$ also came to pass, and otherwise gets refunded. Hence, her actual profit is $\ind{C}(\omega)(\ind{A}(\omega) - P(A\vert C))$. Comparing to the above, it follows that for any given outcome $\omega$, her resulting profit from buying is equal to her loss from selling, and vice versa.
+
+% Now, note that the bettor quoted prices for which she is \emph{always} willing to buy or sell these gambles. Therefore, the bettor can be forced---by an adversarial gambler---to buy and/or sell any number of gambles in any combination. That is, for any $n\in\nats$ and any $i\in\{1,\ldots,n\}$, she can be forced to sell him $\lambda_i\in\reals$ gambles on any event $(A_i,C_i)\in\mathcal{C}$ (which is equivalent to buying these gambles from him, if $\lambda_i$ is negative). After being forced into this combined gamble, her (possibly negative) profit on the outcome $\omega$ is
+% \begin{equation*}
+% \sum_{i=1}^n\lambda_i\ind{C_i}(\omega)\left(P(A_i\vert C_i) - \ind{A_i}(\omega)\right)\,.
+% \end{equation*}
+% %but \emph{only} if at least one of the conditioning events $C_i$ came true, i.e., if $\omega\in \cup_{i=1}^n C_i$. In particular, if $\omega\notin \cup_{i=1}^n C_i$, the bettor will get refunded for all tickets involved, and hence would not make a loss.
+% The prices $P$ are now said to be \emph{coherent} if they \emph{avoid sure loss}. That is, if for any such combination of gambles, there exists a ``non-trivial'' outcome $\omega$ where she does not make a loss. The trivial case is when none of the events $C_i$ come true, i.e., if $\omega\notin\cup_{i=1}^n C_i$, because she then gets refunded on all the gambles. However, to be coherent, the prices specifically have to avoid sure loss if (some) of the conditioning events do come true; there must always be an $\omega\in\cup_{i=1}^n C_i$ that yields non-negative profit.
+
+% If the prices $P$ satisfy this criteria, they are called a coherent conditional probability.
+
+\begin{definition}[Coherent conditional probability]\label{def:coherence}
+Let $P$ be a real-valued map from $\mathcal{C}\subseteq\power\times\nonemptypower$ to $\reals$. Then $P$ is said to be a \emph{coherent conditional probability} on $\mathcal{C}$ if, for all $n\in\mathbb{N}$ and every choice of $(A_i,C_i)\in\mathcal{C}$ and $\lambda_i\in\reals$, $i\in\{1,\dots,n\}$,\footnote{*** Explain that most authors consider a supremum. However, since $n$ is finite and because, for every $i\in\{1,\dots,n\}$, $\ind{A_i}$ and $\ind{C_i}$ can only take two values---$0$ or $1$---it follows that this supremum is taken over a finite set of real numbers, which implies that it is actually a maximum. Also explain that some authors also require this with $\min$ and $\leq0$; this is not necessary because it is implied. ***}
 \begin{equation*}
 \max\left\{\sum_{i=1}^n\lambda_i\ind{C_i}(\omega)\bigl(P(A_i\vert C_i)-\ind{A_i}(\omega)\bigr)~\Bigg\vert~\omega\in C_0\right\}\geq0,
 \end{equation*}
 with $C_0\coloneqq\cup_{i=1}^nC_i$.
 \end{definition}
 
-The reason that these prices $P$ are called \emph{probabilities} is due to the following well-known result from coherent probability theory; the bettor's prices $P$ are coherent if and only if they satisfy the axioms of probability, i.e., properties~\ref{def:coh_prob_2}-\ref{def:coh_prob_6} above.
-
+The interested reader is invited to take a look at Appendix~\ref{app:coherence}, where we provide this abstract concept with an intuitive gambling interpretation. However, for our present purposes, this interpretation is not required. Instead, our motivation for introducing coherence stems from the following two results. First, if $\mathcal{C}=\power\times\nonemptypower$, then coherence is equivalent to the axioms of probability, that is, properties~\ref{def:coh_prob_2}--\ref{def:coh_prob_6}.%conditional probability is the same as a full conditional probability.
 \begin{theorem}{\cite[Theorem 3]{regazzini1985finitely}}\label{theo:fullcoherent}
 Let $P$ be a real-valued map from $\power\times\nonemptypower$ to $\reals$. Then $P$ is a coherent conditional probability if and only if it is a full conditional probability.
 \end{theorem}
-Note that the result above assumes that the bettor quoted prices for the entire domain $\power\times\nonemptypower$. Contrariwise, our explanation started by considering a subset $\mathcal{C}$ of this domain. The reason for this is the following well-known result: if the prices $P$ are coherent on some subset $\mathcal{C}$ of $\power\times\nonemptypower$, it is always possible to extend the domain of these prices to some superset $\mathcal{C}^*\supseteq \mathcal{C}$, while maintaining coherence.
+%Note that the result above assumes that the bettor quoted prices for the entire domain $\power\times\nonemptypower$. Contrariwise, our explanation started by considering a subset $\mathcal{C}$ of this domain. The reason for this is the following well-known result: if the prices $P$ are coherent on some subset $\mathcal{C}$ of $\power\times\nonemptypower$, it is always possible to extend the domain of these prices to some superset $\mathcal{C}^*\supseteq \mathcal{C}$, while maintaining coherence.
+
+However, coherence is better suited for dealing with arbitrary domains, because it is always possible to extend the domain while preserving coherence.
 
 \begin{theorem}{\cite[Theorem 4]{regazzini1985finitely}}\label{theo:largerdomain}
 Let $P$ be a coherent conditional probability on $\mathcal{C}\subseteq\power\times\nonemptypower$. Then for any $\mathcal{C}\subseteq\mathcal{C}^*\subseteq\power\times\nonemptypower$, $P$ can be extended to a coherent conditional probability on $\mathcal{C}^*$.
@@ -1004,7 +1030,12 @@ In particular, it is therefore always possible to extend a coherent conditional 
 \begin{corollary}\label{corol:coherentextendable}
 Let $P$ be a real-valued map from $\mathcal{C}\subseteq\power\times\nonemptypower$ to $\reals$. Then $P$ is a coherent conditional probability if and only if it can be extended to a full conditional probability.
 \end{corollary}
-Note, therefore, that if $P$ is a coherent conditional probability on $\mathcal{C}$, we can equivalently say that it is the restriction of a full conditional probability. One only needs to check Definition~\ref{def:cond_prob} to see that $P$ will therefore satisfy properties~\ref{def:coh_prob_2}-\ref{def:coh_prob_6}.
+Note, therefore, that if $P$ is a coherent conditional probability on $\mathcal{C}$, we can equivalently say that it is the restriction of a full conditional probability. Hence, any coherent conditional probability on $\mathcal{C}$ is guaranteed to satisfy properties~\ref{def:coh_prob_2}-\ref{def:coh_prob_6}. However, as was essentially already illustrated in Example~\ref{exmp:F1F4cannotbeextended}, and as our next example makes explicit, the converse is not true.
+
+\begin{exmp}
+Let $\Omega$, $\mathcal{C}$, $E_{\mathrm{o}}$, $E_{\mathrm{e}}$ and $P\colon\mathcal{C}\to\reals$ be defined as in Example~\ref{exmp:F1F4cannotbeextended}. Then as we have seen in that example, $P$ satisfies \ref{def:coh_prob_2}-\ref{def:coh_prob_6} on its domain $\mathcal{C}$. However, $P$ is not a coherent conditional probability on $\mathcal{C}$, because if it was, then according to Corollary~\ref{corol:coherentextendable}, $P$ could be extended to a full conditional probability. Since $\power\times\nonemptypower$ includes $(\Omega,\Omega)$, the argument at the end of Example~\ref{exmp:F1F4cannotbeextended} implies that this is impossible.
+A similar conclusion can be reached by verifying Definition~\ref{def:coherence} directly; we leave this as an exercise.
+\end{exmp}
 
 \subsection{Stochastic Processes}\label{sec:def_stochastic_processes}
 
@@ -1058,7 +1089,7 @@ Furthermore, due to Equation~\eqref{eq:path_exists_for_finite_points}, for any $
 \end{equation*}
 is non-empty, and therefore satisfies $(X_u=x_u)\in\nonemptypower$. Observe that if $u=\emptyset$, then $\omega\vert_u=x_u$ is vacuously true, and hence in that case $(X_u=x_u)=\Omega$.
 
-Hence, for any $u\in\mathcal{U}$, any $x_u\in\states^u$, and any $A\in\mathcal{A}_u$, we find that the conditional event $(A,X_u=x_u)\coloneqq (A,(X_u=x_u))$ will satisfy $(A,X_u=x_u)\in\power\times\nonemptypower$.
+Hence, for any $u\in\mathcal{U}$, any $x_u\in\states^u$, and any $A\in\mathcal{A}_u$, we find that the ***conditional event*** $(A,X_u=x_u)\coloneqq (A,(X_u=x_u))$ will satisfy $(A,X_u=x_u)\in\power\times\nonemptypower$.
 
 \begin{definition}[Stochastic Process]\label{def:stoch_process}
 A \emph{stochastic process} is the restriction of a full conditional probability to
@@ -1099,7 +1130,7 @@ We will first show that $\tilde{P}$ is a coherent conditional probability on $\m
 \end{equation}
 with $C_0\coloneqq \bigcup_{i=1}^n (X_0=x)=(X_0=x)$. In order to show that this is true, we will construct a path $\omega\in C_0$ such that the sum in Equation~\eqref{exmp:coherence:eq:coherence} is non-negative when evaluated in $\omega$.
 
-Note that each of the conditional events $(X_{t_i}=x,X_0=x)$ depend only on the time points 0 and $t_i$. Observe that we can assume without loss of generality that $t_i\neq t_j$ for all $i,j\in\{1,\ldots,n\}$ such that $i\neq j$. This is due to the linearity of the term being maximized in Equation~\eqref{exmp:coherence:eq:coherence}---if $t_i=t_j$ for some $i\neq j$, we can simply add the two summands.
+Note that each of the ***conditional events*** $(X_{t_i}=x,X_0=x)$ depend only on the time points 0 and $t_i$. Observe that we can assume without loss of generality that $t_i\neq t_j$ for all $i,j\in\{1,\ldots,n\}$ such that $i\neq j$. This is due to the linearity of the term being maximized in Equation~\eqref{exmp:coherence:eq:coherence}---if $t_i=t_j$ for some $i\neq j$, we can simply add the two summands.
 
 Let $y\in\states$ be any state such that $y\neq x$. Let $u\in\mathcal{U}$ be the (finite) sequence of time points such that $u=0,t_1,\ldots,t_n$, and consider a state assignment $x_u\in\states_u$ such that $x_{0}\coloneqq x$ and, for all $i\in\{1,\ldots,n\}$,
 \begin{equation*}
@@ -2981,6 +3012,28 @@ Recall from Section~\ref{sec:tractability} that the computation of lower expecta
 
 %\section{Proofs of results in Section~\ref{sec:prelim}}\label{app:prelim}
 
+\section{A gambling interpretation for coherence}\label{app:coherence}
+
+***
+Therefore, we next introduce the notion of \emph{coherent conditional probabilities}~{\bf CITE}. %This notion was developed from DeFinetti's work on coherent (unconditional) probabilities~{\bf CITE}. We refer to {\bf CITE CITE CITE} for philosophical discussions on its merits, but will give some interpretation below.
+%The following notion of coherent conditional probabilities will be useful whenever we want to check if a given map $P$ from a set of events to $\reals$ is a well-defined conditional probability.
+This notion of coherence is perhaps easiest to understand in a gambling framework. In this framework, we first consider a set $\mathcal{C}\subseteq\power\times\nonemptypower$ of possible events. Gambles---lottery tickets, if you will---are then bought and sold prior to observing the outcome $\omega$ of a random experiment. 
+
+In particular, for each event $(A,C)\in\mathcal{C}$, a bettor will specify a price $P(A\vert C)$ for which she is always willing to either buy or sell the gamble that event $A$ will come true, given that event $C$ comes true. Such a gamble yields a reward of one currency unit to its holder---paid by the seller---if the event $A$ occurs. These gambles are then bought and sold under the proviso that, should event $C$ not happen, then all parties involved are refunded. 
+
+Suppose now that the outcome is $\omega$. For each ticket that the bettor sold, she has received $P(A\vert C)$ currency units in advance, but she must now pay one currency unit to the buyer if event $A$ came true. Hence, she must pay $\ind{A}(\omega)$ per ticket sold. Because this is conditional on event $C$ coming true, her remaining profit after paying is $\ind{C}(\omega)(P(A\vert C) - \ind{A}(\omega))$, with negative profit being loss. Note that if $\ind{C}(\omega)=0$, she neither gains nor loses anything. Allowing for fractional tickets, if she has sold a total of $\lambda\in\realsnonneg$ such tickets, her total profit is $\lambda \ind{C}(\omega)(P(A\vert C) - \ind{A}(\omega))$.
+
+Similarly, for each ticket that she bought, she will receive one unit of currency if event $A$ came true. Her profit is then $(\ind{A}(\omega) - P(A\vert C))$ per ticket. However, she only receives this profit if event $C$ also came to pass, and otherwise gets refunded. Hence, her actual profit is $\ind{C}(\omega)(\ind{A}(\omega) - P(A\vert C))$. Comparing to the above, it follows that for any given outcome $\omega$, her resulting profit from buying is equal to her loss from selling, and vice versa.
+
+Now, note that the bettor quoted prices for which she is \emph{always} willing to buy or sell these gambles. Therefore, the bettor can be forced---by an adversarial gambler---to buy and/or sell any number of gambles in any combination. That is, for any $n\in\nats$ and any $i\in\{1,\ldots,n\}$, she can be forced to sell him $\lambda_i\in\reals$ gambles on any event $(A_i,C_i)\in\mathcal{C}$ (which is equivalent to buying these gambles from him, if $\lambda_i$ is negative). After being forced into this combined gamble, her (possibly negative) profit on the outcome $\omega$ is
+\begin{equation*}
+\sum_{i=1}^n\lambda_i\ind{C_i}(\omega)\left(P(A_i\vert C_i) - \ind{A_i}(\omega)\right)\,.
+\end{equation*}
+%but \emph{only} if at least one of the conditioning events $C_i$ came true, i.e., if $\omega\in \cup_{i=1}^n C_i$. In particular, if $\omega\notin \cup_{i=1}^n C_i$, the bettor will get refunded for all tickets involved, and hence would not make a loss.
+The prices $P$ are now said to be \emph{coherent} if they \emph{avoid sure loss}. That is, if for any such combination of gambles, there exists a ``non-trivial'' outcome $\omega$ where she does not make a loss. The trivial case is when none of the events $C_i$ come true, i.e., if $\omega\notin\cup_{i=1}^n C_i$, because she then gets refunded on all the gambles. However, to be coherent, the prices specifically have to avoid sure loss if (some) of the conditioning events do come true; there must always be an $\omega\in\cup_{i=1}^n C_i$ that yields non-negative profit.
+
+If the prices $P$ satisfy this criteria, they are called a coherent conditional probability.***
+
 \section{Proofs of results in Section~\ref{sec:systems}}\label{app:systems}
 
 \begin{proof}[Proof of Proposition~\ref{lemma:compositiontransitionmatrix}]
@@ -3359,7 +3412,7 @@ P(A\cap C\vert C)
 =1-P(C\setminus A\vert C).
 \vspace{6pt}
 \end{equation}
-\ref{def:coh_prob_2b} follows from Equation~\eqref{eq:extracohprop1} and~\ref{def:coh_prob_2}. \ref{def:coh_prob_7} follows from Equations~\eqref{eq:extracohprop1} and~\eqref{eq:extracohprop2}. \ref{def:coh_prob_5} follows from \ref{def:coh_prob_8}, by letting $B\coloneqq\emptyset$. \ref{def:coh_prob_5} follows trivially from \ref{def:coh_prob_1}.
+\ref{def:coh_prob_2b} follows from Equation~\eqref{eq:extracohprop1} and~\ref{def:coh_prob_2}. \ref{def:coh_prob_7} follows from Equations~\eqref{eq:extracohprop1} and~\eqref{eq:extracohprop2}. \ref{def:coh_prob_8} follows from \ref{def:coh_prob_3}, by letting $B\coloneqq\emptyset$. \ref{def:coh_prob_5} follows trivially from \ref{def:coh_prob_1}.
 \end{proof}
 
 
