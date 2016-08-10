@@ -324,7 +324,7 @@ As a special case, we consider finite sequences of time points that partition a 
 
 \subsection{States and Functions}\label{sec:multivar_notation}
 
-Throughout this work, we will consider some fixed finite \emph{state space} $\states=\{1,\dots,m\}$, with $m\geq2$. A generic element of this set is called a state and will be denoted by $x$.
+Throughout this work, we will consider some fixed finite \emph{state space} $\states=\{1,\dots,m\}$. A generic element of this set is called a state and will be denoted by $x$.
 
 We use $\gamblesX$ to denote the set of all real-valued functions on $\states$. Because $\states$ is finite, a function $f\in\gamblesX$ can be interpreted as a vector in $\reals^m$. Hence, we will in the sequel use the terms `function' and `vector' interchangeably when referring to elements of $\gamblesX$.
 
@@ -909,7 +909,7 @@ Secondly, our approach does not suffer from some of the traditional issues with 
 
 Finally, and most importantly, in our `imprecise' setting, we will be working with a set of stochastic processes rather than with a single stochastic process. In this context, we will often need to prove that such a set contains a stochastic process that meets certain specific requirements.
 %most authors appear to simply assume the existence of such a probability space $(\Omega,\mathcal{F},P)$, and others even leave it implicit without making mention of it. While valid---because under some weak assumptions such a space can always be shown to exist---it does pose some problems for our present work. Specifically, we require for some existence results a rather exact characterization of stochastic processes and the structure of the space on which they are defined. 
-Full conditional probabilities provide a convenient framework for constructing such existence proofs, trough the notion of coherence.
+Full conditional probabilities provide a convenient framework for constructing such existence proofs, through the notion of coherence.
 %for working around these issues and providing this characterization.
 
 We start in Section~\ref{sec:cond_prob} by introducing full conditional probabilities and explaining their connection with coherence. In Section~\ref{sec:def_stochastic_processes}, we then use these concepts to formalize continuous-time stochastic processes. Section~\ref{sec:well_behaved} describes a specific subclass of stochastic processes, which we call well-behaved, and on which we will largely focus throughout this work. Finally, Section~\ref{sec:dynamics} provides some tools with which we can describe the dynamics of stochastic processes.
@@ -1122,56 +1122,72 @@ A \emph{stochastic process} is a coherent conditional probability on $\mathcal{C
 Let $P$ be a real-valued map from $\mathcal{C}^\mathrm{SP}$ to $\reals$. Then $P$ is a stochastic process if and only if it is the restriction of a full conditional probability.
 \end{corollary}
 
-
-There are two reason why we restrict ourselves to the domain $\mathcal{C}^\mathrm{SP}$. The most important reason is that all of the results in this paper can be expressed in this domain, because they are all concerned with events or functions that depend on a finite number of time points. The second reason is that this restriction will allow us to state  uniqueness results that would otherwise not hold; see for example~Corollary~\ref{cor:rate_has_unique_homogen_markov_process}. However, it is important to realise that our restriction of the domain does not imply any real limitations, because, as we know from Theorem~\ref{theo:largerdomain}, the domain of a coherent conditional probability---and hence also a stochastic process---can always be extended (although not uniquely). In fact, as discussed in the conclusions of this paper, it is even possible to consider extensions that are $\sigma$-additive.
+There are two reason why we restrict ourselves to the domain $\mathcal{C}^\mathrm{SP}$. The most important reason is simply that all of the results in this paper can be expressed using only this domain, because they are all concerned with events or functions that depend on a finite number of time points. The second reason is that this restriction will allow us to state  uniqueness results that do not extend to larger domains; see for example~Corollary~\ref{cor:rate_has_unique_homogen_markov_process}. However, it is important to realise that our restriction of the domain does not impose any real limitations, because, as we know from Theorem~\ref{theo:largerdomain}, the domain of a coherent conditional probability---and hence also a stochastic process---can always be extended (although not uniquely). In fact, as discussed in the conclusions of this paper, it is even possible to consider extensions that are $\sigma$-additive.
 
 
 %However, this extension may no be unique, in the sense that there may be multiple extensions whose restriction to $\mathcal{C}^\mathrm{SP}$ coincides with the same stochastic process.  For example, as the following alternative characterisation shows, every stochastic process can be extended to a full conditional probability. 
 
 %One may wonder at this point why we go through this trouble of defining stochastic processes as restrictions of full conditional probabilities to the set $\mathcal{C}^\mathrm{SP}$. It might seem more straightforward to, for example, define a stochastic process as any function from $\mathcal{C}^\mathrm{SP}$ to $\reals$ that satisfies the axioms of probability, i.e., properties~\ref{def:coh_prob_2}-\ref{def:coh_prob_6}. Indeed, our exposition in Section~\ref{sec:cond_prob} suggests that this would have been equivalent.
 
-However, by explicitly introducing the notions of full conditional probabilities and coherence, some important results in this work can be stated much more succinctly. Perhaps most importantly, these are the results involving existence proofs. For instance, suppose that we are given an arbitrary function $p:\realspos\to [0,1]$, and we want to know if there is a stochastic process $P$ for which, for some $x\in\states$ and for all $t\in\realspos$,
-\begin{equation*}
-P(X_t=x\,\vert\,X_0=x) = p(t)\,.
-\end{equation*}
-If we had defined stochastic processes as any map $P:\mathcal{C}^\mathrm{SP}\to\reals$ satisfying properties~\ref{def:coh_prob_2}-\ref{def:coh_prob_6}, then answering this question would have been entirely non-trivial. This is because we are only given the behavior, specified by $p$, on the very limited set of events $\{(X_t=x,X_0=x):t\in\realspos\}\subset\mathcal{C}^\mathrm{SP}$. Proving that there is a well-defined probability function on $\mathcal{C}^\mathrm{SP}$ that coincides with $p$ on this subset of events would clearly be extremely involved. 
+Finally, we would like to point out that it is also possible to use a different---yet equivalent---definition for stochastic processes. Indeed, due to Corollary~\ref{corol:processiffrestriction}, a stochastic process can also be defined as the restriction of a full conditional probability to $\mathcal{C}^{\mathrm{SP}}$. Of course, given this realisation, one may then start to wonder why we have gone through to the trouble of introducing coherence, because this alternative definition would not require any notion of coherence. The reason why we nevertheless need coherence, is because it allows us to establish the existence of stochastic processes that have certain properties, which will often be necessary in the proofs of our results.
 
-In contrast, as illustrated by the following example, the introduction of full conditional probabilities and coherence takes care of most of the heavy lifting in such an existence proof.
+For instance, by means of an example, suppose that we are given an arbitrary function $p:\realspos\to [0,1]$, and that we want to know if there is a stochastic process $P$ for which, for some $x\in\states$,
+\begin{equation}\label{eq:extendptoP}
+P(X_t=x\,\vert\,X_0=x) = p(t)
+~\text{ for all $t\in\realspos$.}
+\end{equation}
+If we had defined a stochastic process as the restriction of a full conditional probability to $\mathcal{C}^\mathrm{SP}$, without introducing coherence, then answering this question would have been entirely non-trivial, because it would essentially require us to construct a full conditional probability that coincides with $p$ on the relevant part of its domain.
+
+In contrast, as illustrated by the following example, the introduction of coherence takes care of most of the heavy lifting in such an existence proof.
 \begin{exmp}\label{exmp:coherence_constructs_process}
-We will assume for this example that $\states$ is not singleton, i.e., that there are at least two states $x,y\in\states$ such that $x\neq y$. Consider now any function $p:\realspos\to[0,1]$, fix any $x\in\states$, construct a set of events $\mathcal{C}\subset\mathcal{C}^\mathrm{SP}$ as
-\begin{equation*}
-\mathcal{C} \coloneqq \left\{ (X_t=x,X_0=x)\in\mathcal{C}^\mathrm{SP} : t\in\realspos \right\},
-\end{equation*}
-and consider the function $\tilde{P}:\mathcal{C}\to\reals$, defined for all $(X_t=x,X_0=x)\in\mathcal{C}$ as
+Let $\states$ be a state space that contains at least two states, fix some state $x\in\states$, and consider any function $p:\realspos\to[0,1]$. The aim of this example is to prove that there is a stochastic process $P$ that satisfies Equation~\eqref{eq:extendptoP}.
+
+The crucial step of the proof is to consider a function $\tilde{P}$ that is defined by
 \begin{equation}\label{exmp:coherence:eq:probdef}
-\tilde{P}(X_t=x\vert X_0=x) \coloneqq p(t)\,.
+\tilde{P}(X_t=x\vert X_0=x) \coloneqq p(t)
+~\text{ for all $(X_t=x,X_0=x)\in\mathcal{C}$},
 \end{equation}
-We will first show that $\tilde{P}$ is a coherent conditional probability on $\mathcal{C}$. In order to prove this, consider any $n\in\nats$ and, for all $i\in\{1,\ldots,n\}$, any $(X_{t_i}=x,X_0=x)\in\mathcal{C}$ and any $\lambda_i\in\reals$. According to Definition~\ref{def:coherence}, we now have to show that
-\begin{equation}\label{exmp:coherence:eq:coherence}
-\max\left\{ \sum_{i=1}^n \lambda_i\ind{(X_0=x)}(\omega)\left(\tilde{P}(X_{t_i}=x\vert X_0=x) - \ind{(X_{t_i}=x)}(\omega)\right)\Big\vert \omega\in C_0 \right\} \geq 0\,,
-\end{equation}
-with $C_0\coloneqq \bigcup_{i=1}^n (X_0=x)=(X_0=x)$. In order to show that this is true, we will construct a path $\omega\in C_0$ such that the sum in Equation~\eqref{exmp:coherence:eq:coherence} is non-negative when evaluated in $\omega$.
-
-Note that each of the ***conditional events*** $(X_{t_i}=x,X_0=x)$ depend only on the time points 0 and $t_i$. Observe that we can assume without loss of generality that $t_i\neq t_j$ for all $i,j\in\{1,\ldots,n\}$ such that $i\neq j$. This is due to the linearity of the term being maximized in Equation~\eqref{exmp:coherence:eq:coherence}---if $t_i=t_j$ for some $i\neq j$, we can simply add the two summands.
-
-Let $y\in\states$ be any state such that $y\neq x$. Let $u\in\mathcal{U}$ be the (finite) sequence of time points such that $u=0,t_1,\ldots,t_n$, and consider a state assignment $x_u\in\states_u$ such that $x_{0}\coloneqq x$ and, for all $i\in\{1,\ldots,n\}$,
+and to prove that this function is a coherent conditional probability on
 \begin{equation*}
-x_{t_i} \coloneqq \left\{\begin{array}{ll}
-x & \text{if $\lambda_i<0$, and} \\
-y & \text{otherwise.}
-\end{array} \right.
+\mathcal{C} \coloneqq \left\{ (X_t=x,X_0=x)\colon t\in\realspos \right\},
 \end{equation*}
-Because $n$ is finite, Equation~\eqref{eq:path_exists_for_finite_points} now guarantees that there is some $\omega\in\Omega$ such that $\omega\vert_{u}=x_u$. Furthermore, because $\omega(0)=x$, we clearly have that $\omega\in (X_0=x)\subset\Omega$. Evaluating the sum in Equation~\eqref{exmp:coherence:eq:coherence} using this $\omega$, we find that
-\begin{align*}
- &\quad \sum_{i=1}^n \lambda_{i}\ind{(X_0=x)}(\omega)\left(\tilde{P}(X_{t_i}=x\vert X_0=x) - \ind{(X_{t_i}=x)}(\omega)\right) \\
- &= \sum_{i=1}^n \lambda_{i}\ind{x}(\omega(0))\left(\tilde{P}(X_{t_i}=x\vert X_0=x) - \ind{x}(\omega(t_i))\right) = \sum_{i=1}^n \lambda_{i}\left(\tilde{P}(X_{t_i}=x\vert X_0=x) - \ind{x}(\omega(t_i))\right) \\
- &= \sum_{\lambda_i < 0}\lambda_{i}\left(\tilde{P}(X_{t_i}=x\vert X_0=x) - \ind{x}(\omega(t_i))\right) + \sum_{\lambda_i \geq 0}\lambda_{i}\left(\tilde{P}(X_{t_i}=x\vert X_0=x) - \ind{x}(\omega(t_i))\right) \\
- &= \sum_{\lambda_i < 0}\lambda_{i}\left(\tilde{P}(X_{t_i}=x\vert X_0=x) - 1\right) + \sum_{\lambda_i \geq 0}\lambda_{i}\tilde{P}(X_{t_i}=x\vert X_0=x) \\
- &\geq \sum_{\lambda_i < 0}\lambda_{i}\left(\tilde{P}(X_{t_i}=x\vert X_0=x) - 1\right) = \sum_{\lambda_i < 0}\abs{\lambda_{i}}\left(1 - \tilde{P}(X_{t_i}=x\vert X_0=x)\right) \geq 0\,,
-\end{align*}
-where the two inequalities follow from the fact that $\tilde{P}(X_{t_i}=x\vert X_0=x)=p(t_i)\in [0,1]$\,. Therefore, and because $\omega\in (X_0=x)=C_0$, we find that Equation~\eqref{exmp:coherence:eq:coherence} indeed holds. Hence, we conclude that $\tilde{P}$ is a coherent conditional probability on $\mathcal{C}$.
+or equivalently, that it satisfies Definition~\ref{def:coherence}.
 
-Corollary~\ref{corol:coherentextendable} now implies that $\tilde{P}$ can be extended to a full conditional probability $\tilde{P}^*$. If we now let $P$ be the restriction of $\tilde{P}^*$ to $\mathcal{C}^\mathrm{SP}$, then due to Definition~\ref{def:stoch_process}, $P$ is a stochastic process that, because $\mathcal{C}\subset\mathcal{C}^\mathrm{SP}$, extends $\tilde{P}$. Therefore, Equation~\eqref{exmp:coherence:eq:probdef} implies that the stochastic process $P$ satisfies $P(X_t=x\vert X_0=x)=p(t)$ for all $t\in\realspos$.
+So consider any $n\in\nats$ and, for all $i\in\{1,\ldots,n\}$, some $(X_{t_i}=x,X_0=x)\in\mathcal{C}$ and $\lambda_i\in\reals$. According to Definition~\ref{def:coherence}, we now have to show that
+\begin{equation}\label{exmp:coherence:eq:coherence}
+\max\left\{ \sum_{i=1}^n \lambda_i\ind{x}(\omega(0))\left(\tilde{P}(X_{t_i}=x\vert X_0=x) - \ind{x}(\omega(t_i))\right)~\Bigg\vert~ \omega\in C_0 \right\} \geq 0,
+\end{equation}
+with $C_0\coloneqq \bigcup_{i=1}^n (X_0=x)=(X_0=x)$. 
+%In order to prove that this is indeed the case, we will now construct path $\omega\in C_0$ such that the sum in Equation~\eqref{exmp:coherence:eq:coherence} is non-negative when evaluated in $\omega$.
+While doing so, we can assume without loss of generality that $i\neq j$ implies $t_i\neq t_j$, because if $t_i=t_j$ for some $i\neq j$, then we can simply add the corresponding two summands in Equation~\eqref{exmp:coherence:eq:coherence}.
+
+Let $y\in\states$ be any state such that $y\neq x$, let $u\coloneqq(0,t_1,\ldots,t_n)\in\mathcal{U}$, and let $x_u\in\states_u$ be the unique state assignment such that $x_{0}\coloneqq x$ and
+\begin{equation*}
+x_{t_i}\coloneqq
+\begin{cases}
+x & \text{if $\lambda_i<0$} \\
+y & \text{if $\lambda_i\geq0$}
+\end{cases}
+~~\text{ for all $i\in\{1,\ldots,n\}$.}
+\end{equation*}
+Furthermore, let $N_{<0}\coloneqq\{i\in\{1,\dots,n\}\colon \lambda_i<0\}$ and $N_{\geq0}\coloneqq\{i\in\{1,\dots,n\}\colon \lambda_i\geq0\}$.
+Since $n$ is finite, Equation~\eqref{eq:path_exists_for_finite_points} now guarantees that there is some $\omega\in\Omega$ such that $\omega\vert_{u}=x_u$. Evaluating the sum in Equation~\eqref{exmp:coherence:eq:coherence} using this $\omega$, we find that
+\begin{multline*}
+ %&\quad \sum_{i=1}^n \lambda_{i}\ind{(X_0=x)}(\omega)\left(\tilde{P}(X_{t_i}=x\vert X_0=x) - \ind{(X_{t_i}=x)}(\omega)\right) \\
+ %&= 
+ \sum_{i=1}^n \lambda_{i}\ind{x}(\omega(0))\left(\tilde{P}(X_{t_i}=x\vert X_0=x) - \ind{x}(\omega(t_i))\right)\\[-4pt]
+ \begin{aligned}
+ &= \sum_{i=1}^n \lambda_{i}\left(\tilde{P}(X_{t_i}=x\vert X_0=x) - \ind{x}(\omega(t_i))\right) \\
+ %&= \sum_{\lambda_i < 0}\lambda_{i}\left(\tilde{P}(X_{t_i}=x\vert X_0=x) - \ind{x}(\omega(t_i))\right) + \sum_{\lambda_i \geq 0}\lambda_{i}\left(\tilde{P}(X_{t_i}=x\vert X_0=x) - \ind{x}(\omega(t_i))\right) \\
+ &= \sum_{i\in N_{<0}}\lambda_{i}\left(\tilde{P}(X_{t_i}=x\vert X_0=x) - 1\right) + \sum_{i\in N_{\geq0}}\lambda_{i}\tilde{P}(X_{t_i}=x\vert X_0=x) \\
+ &\geq \sum_{i\in N_{<0}}\lambda_{i}\left(\tilde{P}(X_{t_i}=x\vert X_0=x) - 1\right) = \sum_{i\in N_{<0}}\abs{\lambda_{i}}\left(1 - \tilde{P}(X_{t_i}=x\vert X_0=x)\right) \geq 0,
+ \end{aligned}
+\end{multline*}
+where the two inequalities follow from the fact that $\tilde{P}(X_{t_i}=x\vert X_0=x)=p(t_i)\in [0,1]$\,.
+Furthermore, because $\omega(0)=x$, we also have that $\omega\in (X_0=x)=C_0$. Therefore, we find that Equation~\eqref{exmp:coherence:eq:coherence} indeed holds. Hence, we conclude that $\tilde{P}$ is a coherent conditional probability on $\mathcal{C}$.
+
+The rest of the proof is now straightforward. Since $\tilde{P}$ is a coherent conditional probability on $\mathcal{C}$, and because $\mathcal{C}$ is a subset of $\mathcal{C}^{\mathrm{SP}}$, it follows from Theorem~\ref{theo:largerdomain} that $\tilde{P}$ can be extended to a coherent conditional probability $P$ on $\mathcal{C}^{\mathrm{SP}}$, or equivalently, to a stochastic process $P$. Since this stochastic process $P$ is an extension of $\tilde{P}$, Equation~\eqref{eq:extendptoP} is now an immediate consequence of Equation~\eqref{exmp:coherence:eq:probdef}.
+%Corollary~\ref{corol:coherentextendable} now implies that $\tilde{P}$ can be extended to a full conditional probability $\tilde{P}^*$. If we now let $P$ be the restriction of $\tilde{P}^*$ to $\mathcal{C}^\mathrm{SP}$, then due to Definition~\ref{def:stoch_process}, $P$ is a stochastic process that, because $\mathcal{C}\subset\mathcal{C}^\mathrm{SP}$, extends $\tilde{P}$. Therefore, Equation~\eqref{exmp:coherence:eq:probdef} implies that the stochastic process $P$ satisfies $P(X_t=x\vert X_0=x)=p(t)$ for all $t\in\realspos$.
 \exampleend
 \end{exmp}
 
@@ -3476,7 +3492,7 @@ First assume that $P$ can be extended to a full conditional probability $P^*$. T
 
 Conversely, if $P$ is a coherent conditional probability on $\mathcal{C}$, it follows from Theorem~\ref{theo:largerdomain} that $P$ can be extended to a coherent conditional probability $P^*$ on $\power\times\nonemptypower$, which, because of Theorem~\ref{theo:fullcoherent}, is a full conditional probability.
 \end{proof}
-\begin{proof}[Proof of Corollary~\ref{corol:processiffcoherent}]
+\begin{proof}[Proof of Corollary~\ref{corol:processiffrestriction}]
 Trivial consequence of Corollary~\ref{corol:coherentextendable}.
 \end{proof}
 \begin{proof}[Proof of Proposition~\ref{prop:stochasticprocess:simpleproperties}]
