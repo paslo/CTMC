@@ -1131,42 +1131,42 @@ There are two reason why we restrict ourselves to the domain $\mathcal{C}^\mathr
 
 Finally, we would like to point out that it is also possible to use a different---yet equivalent---definition for stochastic processes. Indeed, due to Corollary~\ref{corol:processiffrestriction}, a stochastic process can also be defined as the restriction of a full conditional probability to $\mathcal{C}^{\mathrm{SP}}$. Of course, given this realisation, one may then start to wonder why we have gone through to the trouble of introducing coherence, because this alternative definition would not require any notion of coherence. The reason why we nevertheless need coherence, is because it allows us to establish the existence of stochastic processes that have certain properties, which will often be necessary in the proofs of our results.
 
-For instance, by means of an example, suppose that we are given an arbitrary function $p:\realspos\to [0,1]$, and that we want to know if there is a stochastic process $P$ for which, for some $x\in\states$,
+For instance, by means of an example, suppose that we are given an arbitrary function $p:\realspos\to [0,1]$, and that we want to know if there is a stochastic process $P$ for which, for some $x,y\in\states$,
 \begin{equation}\label{eq:extendptoP}
-P(X_t=x\,\vert\,X_0=x) = p(t)
+P(X_t=y\,\vert\,X_0=x) = p(t)
 ~\text{ for all $t\in\realspos$.}
 \end{equation}
 If we had defined a stochastic process as the restriction of a full conditional probability to $\mathcal{C}^\mathrm{SP}$, without introducing coherence, then answering this question would have been entirely non-trivial, because it would essentially require us to construct a full conditional probability that coincides with $p$ on the relevant part of its domain.
 
 In contrast, as illustrated by the following example, the introduction of coherence takes care of most of the heavy lifting in such an existence proof.
 \begin{exmp}\label{exmp:coherence_constructs_process}
-Let $\states$ be a state space that contains at least two states, fix some state $x\in\states$, and consider any function $p:\realspos\to[0,1]$. The aim of this example is to prove that there is a stochastic process $P$ that satisfies Equation~\eqref{eq:extendptoP}.
+Let $\states$ be a state space that contains at least two states, fix two---possibly equal---states $x,y\in\states$, and consider any function $p:\realspos\to[0,1]$. The aim of this example is to prove that there is a stochastic process $P$ that satisfies Equation~\eqref{eq:extendptoP}.
 
 The crucial step of the proof is to consider a function $\tilde{P}$ that is defined by
 \begin{equation}\label{exmp:coherence:eq:probdef}
-\tilde{P}(X_t=x\vert X_0=x) \coloneqq p(t)
-~\text{ for all $(X_t=x,X_0=x)\in\mathcal{C}$},
+\tilde{P}(X_t=y\vert X_0=x) \coloneqq p(t)
+~\text{ for all $(X_t=y,X_0=x)\in\mathcal{C}$},
 \end{equation}
 and to prove that this function is a coherent conditional probability on
 \begin{equation*}
-\mathcal{C} \coloneqq \left\{ (X_t=x,X_0=x)\colon t\in\realspos \right\},
+\mathcal{C} \coloneqq \left\{ (X_t=y,X_0=x)\colon t\in\realspos \right\},
 \end{equation*}
 or equivalently, that it satisfies Definition~\ref{def:coherence}.
 
-So consider any $n\in\nats$ and, for all $i\in\{1,\ldots,n\}$, some $(X_{t_i}=x,X_0=x)\in\mathcal{C}$ and $\lambda_i\in\reals$. According to Definition~\ref{def:coherence}, we now have to show that
+So consider any $n\in\nats$ and, for all $i\in\{1,\ldots,n\}$, some $(X_{t_i}=y,X_0=x)\in\mathcal{C}$ and $\lambda_i\in\reals$. According to Definition~\ref{def:coherence}, we now have to show that
 \begin{equation}\label{exmp:coherence:eq:coherence}
-\max\left\{ \sum_{i=1}^n \lambda_i\ind{x}(\omega(0))\left(\tilde{P}(X_{t_i}=x\vert X_0=x) - \ind{x}(\omega(t_i))\right)~\Bigg\vert~ \omega\in C_0 \right\} \geq 0,
+\max\left\{ \sum_{i=1}^n \lambda_i\ind{x}(\omega(0))\left(\tilde{P}(X_{t_i}=y\vert X_0=x) - \ind{y}(\omega(t_i))\right)~\Bigg\vert~ \omega\in C_0 \right\} \geq 0,
 \end{equation}
 with $C_0\coloneqq \bigcup_{i=1}^n (X_0=x)=(X_0=x)$. 
 %In order to prove that this is indeed the case, we will now construct path $\omega\in C_0$ such that the sum in Equation~\eqref{exmp:coherence:eq:coherence} is non-negative when evaluated in $\omega$.
 While doing so, we can assume without loss of generality that $i\neq j$ implies $t_i\neq t_j$, because if $t_i=t_j$ for some $i\neq j$, then we can simply add the corresponding two summands in Equation~\eqref{exmp:coherence:eq:coherence}.
 
-Let $y\in\states$ be any state such that $y\neq x$, let $u\coloneqq(0,t_1,\ldots,t_n)\in\mathcal{U}$, and let $x_u\in\states_u$ be the unique state assignment such that $x_{0}\coloneqq x$ and
+Let $z\in\states$ be any state such that $z\neq y$, let $u\coloneqq(0,t_1,\ldots,t_n)\in\mathcal{U}$, and let $x_u\in\states_u$ be the unique state assignment such that $x_{0}\coloneqq x$ and
 \begin{equation*}
 x_{t_i}\coloneqq
 \begin{cases}
-x & \text{if $\lambda_i<0$} \\
-y & \text{if $\lambda_i\geq0$}
+y & \text{if $\lambda_i<0$} \\
+z & \text{if $\lambda_i\geq0$}
 \end{cases}
 ~~\text{ for all $i\in\{1,\ldots,n\}$.}
 \end{equation*}
@@ -1175,15 +1175,15 @@ Since $n$ is finite, Equation~\eqref{eq:path_exists_for_finite_points} now guara
 \begin{multline*}
  %&\quad \sum_{i=1}^n \lambda_{i}\ind{(X_0=x)}(\omega)\left(\tilde{P}(X_{t_i}=x\vert X_0=x) - \ind{(X_{t_i}=x)}(\omega)\right) \\
  %&= 
- \sum_{i=1}^n \lambda_{i}\ind{x}(\omega(0))\left(\tilde{P}(X_{t_i}=x\vert X_0=x) - \ind{x}(\omega(t_i))\right)\\[-4pt]
+ \sum_{i=1}^n \lambda_{i}\ind{x}(\omega(0))\left(\tilde{P}(X_{t_i}=y\vert X_0=x) - \ind{y}(\omega(t_i))\right)\\[-4pt]
  \begin{aligned}
- &= \sum_{i=1}^n \lambda_{i}\left(\tilde{P}(X_{t_i}=x\vert X_0=x) - \ind{x}(\omega(t_i))\right) \\
+ &= \sum_{i=1}^n \lambda_{i}\left(\tilde{P}(X_{t_i}=y\vert X_0=x) - \ind{y}(\omega(t_i))\right) \\
  %&= \sum_{\lambda_i < 0}\lambda_{i}\left(\tilde{P}(X_{t_i}=x\vert X_0=x) - \ind{x}(\omega(t_i))\right) + \sum_{\lambda_i \geq 0}\lambda_{i}\left(\tilde{P}(X_{t_i}=x\vert X_0=x) - \ind{x}(\omega(t_i))\right) \\
- &= \sum_{i\in N_{<0}}\lambda_{i}\left(\tilde{P}(X_{t_i}=x\vert X_0=x) - 1\right) + \sum_{i\in N_{\geq0}}\lambda_{i}\tilde{P}(X_{t_i}=x\vert X_0=x) \\
- &\geq \sum_{i\in N_{<0}}\lambda_{i}\left(\tilde{P}(X_{t_i}=x\vert X_0=x) - 1\right) = \sum_{i\in N_{<0}}\abs{\lambda_{i}}\left(1 - \tilde{P}(X_{t_i}=x\vert X_0=x)\right) \geq 0,
+ &= \sum_{i\in N_{<0}}\lambda_{i}\left(\tilde{P}(X_{t_i}=y\vert X_0=x) - 1\right) + \sum_{i\in N_{\geq0}}\lambda_{i}\tilde{P}(X_{t_i}=y\vert X_0=x) \\
+ &\geq \sum_{i\in N_{<0}}\lambda_{i}\left(\tilde{P}(X_{t_i}=y\vert X_0=x) - 1\right) = \sum_{i\in N_{<0}}\abs{\lambda_{i}}\left(1 - \tilde{P}(X_{t_i}=y\vert X_0=x)\right) \geq 0,
  \end{aligned}
 \end{multline*}
-where the two inequalities follow from the fact that $\tilde{P}(X_{t_i}=x\vert X_0=x)=p(t_i)\in [0,1]$\,.
+where the two inequalities follow from the fact that $\tilde{P}(X_{t_i}=y\vert X_0=x)=p(t_i)\in [0,1]$\,.
 Furthermore, because $\omega(0)=x$, we also have that $\omega\in (X_0=x)=C_0$. Therefore, we find that Equation~\eqref{exmp:coherence:eq:coherence} indeed holds. Hence, we conclude that $\tilde{P}$ is a coherent conditional probability on $\mathcal{C}$.
 
 The rest of the proof is now straightforward. Since $\tilde{P}$ is a coherent conditional probability on $\mathcal{C}$, and because $\mathcal{C}$ is a subset of $\mathcal{C}^{\mathrm{SP}}$, it follows from Theorem~\ref{theo:largerdomain} that $\tilde{P}$ can be extended to a coherent conditional probability $P$ on $\mathcal{C}^{\mathrm{SP}}$, or equivalently, to a stochastic process $P$. Since this stochastic process $P$ is an extension of $\tilde{P}$, Equation~\eqref{eq:extendptoP} is now an immediate consequence of Equation~\eqref{exmp:coherence:eq:probdef}.
@@ -1213,17 +1213,15 @@ The rest of the proof is now straightforward. Since $\tilde{P}$ is a coherent co
 
 \subsection{Well-behaved stochastic processes}\label{sec:well_behaved}
 
-Stochastic processes, as they are defined in the previous section, can behave in rather extreme ways. For instance, Example~\ref{exmp:coherence_constructs_process} tells us that there exists a stochastic process for which $P(X_t=x\vert X_0=x)=\ind{\mathbb{Q}_{>0}}(t)$, where $\ind{\mathbb{Q}_{>0}}$ is the indicator on the positive rational numbers. 
+Stochastic processes, as they are defined in the previous section, can behave in rather extreme ways. For instance, Example~\ref{exmp:coherence_constructs_process} tells us that for any two states $x,y\in\mathcal{X}$, there exists a stochastic process $P$ such that $P(X_t=y\vert X_0=x)=\ind{\mathbb{Q}_{>0}}(t)$, where $\ind{\mathbb{Q}_{>0}}$ is the indicator of the positive rational numbers.
 
-*** beetje bruggetje nog hier
-
-While we do not want to impose any differentiability assumptions on these processes, we do want this rate of change to be bounded. We call a stochastic process for which this holds \emph{well-behaved}, as follows.
+In order to avoid this kind of extreme behaviour, we will require that the rate of change of a stochastic processes remains bounded. We formalize this requirement through the notion of \emph{well-behavedness}. 
 
 %*** explain that stochastic process can behave in rather extreme ways. For example, the transition probabilities can jump instantaneously. In order to avoid this behavior, we restrict our attention to a subclass of stochastic processes, which we call well-behaved. ***
 
 \begin{definition}[Well-Behaved Stochastic Process]
 \label{def:well-behaved}
-A stochastic process $P\in\processes$ is said to be \emph{well-behaved} if, for any (possibly empty) time sequence $u\in\mathcal{U}$, any $x_u\in\states^u$ and any $x,y\in\states$:
+A stochastic process $P\in\processes$ is said to be \emph{well-behaved} if, for any---possibly empty---time sequence $u\in\mathcal{U}$, any $x_u\in\states_u$ and any $x,y\in\states$:
 \begin{equation}\label{eq:def:well-behaved:right}
 (\forall t\in\reals_{\geq0}
 \colon t> u)~~
@@ -1238,36 +1236,51 @@ and
 The set of all well-behaved stochastic processes is denoted by $\wprocesses$.
 \end{definition}
 
-This definition of well-behavedness is related to continuity and differentiability, but stronger than the former and weaker than the latter. Example~\ref{exmp:well-behaved} below, and Example~\ref{exmp:well-behaved-no-deriv} in Section~\ref{sec:dynamics}, provide some intuition on this.
+This definition of well-behavedness is related to continuity and differentiability, but stronger than the former and weaker than the latter. Our next example provides some intuition on this.
 
-**** maybe use example from previous section to show that discontinuous processes also exist, but are not well-behaved? ***
+%Example~\ref{exmp:well-behaved} below, and Example~\ref{exmp:well-behaved-no-deriv} in Section~\ref{sec:dynamics}, provide some intuition on this.
 
-*** extend the example below by considering three functions $p(t)$
+%**** maybe use example from previous section to show that discontinuous processes also exist, but are not well-behaved? ***
 
-- a discontinuous one that is not well-behaved
+% *** extend the example below by considering three functions $p(t)$
 
-- a continuous one that is not well-behaved
+% - a discontinuous one that is not well-behaved
 
-- a well-behaved one that is not differentiable (although this one is perhaps too complicated to define shortly...)
+% - a continuous one that is not well-behaved
+
+% - a well-behaved one that is not differentiable (although this one is perhaps too complicated to define shortly...)
 
 \begin{exmp}\label{exmp:well-behaved}
-**** use new example from previous section to show that this process indeed exists, by taking $p(t)\coloneqq 1-\sqrt{t}$ if $t\in[0,1]$, and $p(t)\coloneqq 0$, otherwise.
+Let $\states$ be a state space that contains at least two states, fix two states $x,y\in\states$ such that $x\neq y$, and consider any function $p:\reals_{>0}\to[0,1]$. Then as we know from Example~\ref{exmp:coherence_constructs_process}, there is a stochastic process $P$ such that
+\begin{equation*}
+P(X_\Delta=y\vert X_0=x)=p(\Delta)
+~\text{ for all $\Delta\in\realspos$.}
+\end{equation*}
+Furthermore, since $x\neq y$, it follows from~\ref{def:coh_prob_7} and \ref{def:coh_prob_8} that $P(X_0=y\vert X_0=x)=0$. We now consider two specific choices for $p$.
 
-Suppose that a stochastic process $P\in\processes$ is such that, at some time $t\in\realsnonneg$ and for some history $x_u\in\states^u$, $u<t$, for some $x\in\states$ it satisfies for all $\Delta\in[0,1]$,
+If we let $p(\Delta)\coloneqq\sqrt\Delta$ for $\Delta\in(0,1]$ and $p(\Delta)\coloneqq 1$ for $\Delta\geq1$, then $P(X_\Delta=x\vert X_0=y)$ is a continuous on $\reals_{\geq0}$ because $P(X_0=y\vert X_0=x)=0$. However, we also find that
 \begin{equation*}
-P(X_{t+\Delta}=x\,\vert\,X_{t}=x,X_u=x_u) = 1-\sqrt{\Delta}\,.
+\lim\sup_{\Delta\to0^+}\frac{1}{\Delta}\abs{P(X_{\Delta}=y\vert X_{0}=x) - \ind{x}(y)}
+=
+\lim\sup_{\Delta\to0^+}\frac{1}{\Delta}\sqrt\Delta
+=+\infty
 \end{equation*}
-This is a probability that is continuous in $\Delta$, and $P(X_{t}=x\,\vert\,X_{t}=x,X_u=x_u) = 1$. However, we clearly have that
+and therefore, it follows from Equation~\eqref{eq:def:well-behaved:right}---with $t=0$ and $u=\emptyset$---that $P$ is not well-behaved.
+
+On the other hand, if we let $p(\Delta)\coloneqq \Delta\abs{\sin(\nicefrac{1}{\Delta})}$ for $\Delta\in\realspos$, we find that
 \begin{equation*}
-\frac{1}{\Delta}\abs{P(X_{t+\Delta}=x\,\vert\,X_{t}=x,X_u=x_u) - \ind{x}(x)} \to +\infty\,,\quad\text{as}\quad \Delta\to0^+\,,
+\lim\sup_{\Delta\to0^+}\frac{1}{\Delta}\abs{P(X_{\Delta}=y\vert X_{0}=x) - \ind{x}(y)}
+=
+\lim\sup_{\Delta\to0^+}\abs{\sin(\nicefrac{1}{\Delta})}
+=1.
 \end{equation*}
-and hence $P$ is not well-behaved.
+In this case---at least for $t=0$ and $u=\emptyset$---$P$ does exhibit the behaviour that we associate with a well-behaved stochastic process. Furthermore, as we invite the reader to check, $P(X_\Delta=x\vert X_0=y)$ is again continuous on $\reals_{\geq0}$. However, $P(X_\Delta=x\vert X_0=y)$ is not differentiable in $\Delta=0$, because $\nicefrac{1}{\Delta}P(X_\Delta=x\vert X_0=y)=\abs{\sin(\nicefrac{1}{\Delta})}$ oscillates as $\Delta$ approaches zero.
 \exampleend
 \end{exmp}
 
 \subsection{Process Dynamics}\label{sec:dynamics}
 
-We will now introduce some tools to describe the behavior of stochastic processes. Rather than work with the individual probabilities, it will be convenient to jointly consider probabilities that are related by the same conditioning event. To this end, we will next introduce the notion of transition matrices corresponding to a given stochastic process.
+We end this section by introducing some tools to describe the behaviour of stochastic processes. Rather than work with the individual probabilities, it will be convenient to jointly consider probabilities that are related by the same conditioning event. To this end, we will next introduce the notion of transition matrices corresponding to a given stochastic process.
 
 \begin{definition}[Corresponding Transition Matrix]\label{def:trans_matrix}
 Consider any stochastic process $P\in\processes$. Then, for any $t,s\in\realsnonneg$ such that $t\leq s$, the \emph{corresponding transition matrix} $T_t^s$ is a matrix that is defined by
