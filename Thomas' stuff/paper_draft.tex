@@ -1293,7 +1293,7 @@ We denote this family of matrices by $\mathcal{T}_P$.%, and call it the \emph{sy
 Because we will also want to work with conditioning events that contain more than a single time point, we furthermore introduce the following generalization.
 
 \begin{definition}[History-Dependent Corresponding Transition Matrix]
-Let $P\in\processes$ be any stochastic process. Then, for any $t,s\in\realsnonneg$ such that $t\leq s$, any sequence of time points $u\in\mathcal{U}_{<t}$, and any state assignment $x_u\in\states^u$, the corresponding \emph{history-dependent} transition matrix $T_{t,\,x_u}^s$ is a matrix that is defined by
+Let $P\in\processes$ be any stochastic process. Then, for any $t,s\in\realsnonneg$ such that $t\leq s$, any sequence of time points $u\in\mathcal{U}_{<t}$, and any state assignment $x_u\in\states_u$, the corresponding \emph{history-dependent} transition matrix $T_{t,\,x_u}^s$ is a matrix that is defined by
 \begin{equation*}
 T^s_{t,\,x_u}(x_t,x_s)
 \coloneqq
@@ -1312,13 +1312,29 @@ Let $P\in\processes$ be a stochastic process.  %Then for any $t,s\in\realsnonneg
 %\lim_{\Delta\to 0^{+}}\frac{1}{\Delta}\norm{T_{t-\Delta}^t-I}<+\infty.
 %\end{equation}
 %Similarly, 
-Then, for any $t,s\in\realsnonneg$ such that $t\leq s$, any sequence of time points $u\in\mathcal{U}_{<t}$, and any state assignment $x_u\in\states^u$, the corresponding (history dependent) transition matrix $T_{t,\,x_u}^s$ is---as its name suggests---a transition matrix, and $T_{t,\,x_u}^t=I$. Furthermore, $P$ is well-behaved if and only if
-\begin{equation}\label{eq:wellbehavedtransitionmatrix}%\label{eq:wellbehavedhistorictransitionmatrix}
-\limsup_{\Delta\to 0^{+}}\frac{1}{\Delta}\norm{T_{t,x_u}^{t+\Delta}-I}<+\infty\,,
-\text{~~~~and,~~~~}
-\limsup_{\Delta\to 0^{+}}\frac{1}{\Delta}\norm{T_{t-\Delta,x_u}^t-I}<+\infty\,,
+Then, for any $t,s\in\realsnonneg$ such that $t\leq s$, any sequence of time points $u\in\mathcal{U}_{<t}$, and any state assignment $x_u\in\states_u$, the corresponding (history dependent) transition matrix $T_{t,\,x_u}^s$ is---as its name suggests---a transition matrix, and $T_{t,\,x_u}^t=I$. Furthermore, $P$ is well-behaved if and only if, for every---possibly empty---time sequence $u\in\mathcal{U}$ and every $x_u\in\states_u$:
+\begin{equation}\label{eq:def:well-behaved:right:matrix}
+(\forall t\in\reals_{\geq0}
+\colon t> u)~~
+\limsup_{\Delta\to 0^{+}}\frac{1}{\Delta}\norm{T_{t,\,x_u}^{t+\Delta}-I}<+\infty
 \end{equation}
-for all $u\in\mathcal{U}$, $x_u\in\states^u$ and $t\in\reals_{\geq0}$ such that $t>u$.
+and
+\begin{equation}\label{eq:def:well-behaved:left:matrix}
+(\forall t\in\reals_{>0}
+\colon t> u)~~
+\limsup_{\Delta\to 0^{+}}\frac{1}{\Delta}\norm{T_{t-\Delta,x_u}^{t}-I}<+\infty.
+\end{equation}
+% \begin{equation}\label{eq:wellbehavedtransitionmatrix}%\label{eq:wellbehavedhistorictransitionmatrix}
+% \limsup_{\Delta\to 0^{+}}\frac{1}{\Delta}\norm{T_{t,x_u}^{t+\Delta}-I}<+\infty\,,
+% \text{~~~~and,~~~~}
+% \limsup_{\Delta\to 0^{+}}\frac{1}{\Delta}\norm{T_{t-\Delta,x_u}^t-I}<+\infty\,,
+% \end{equation}
+% \begin{equation}%\label{eq:wellbehavedtransitionmatrixsystem}%\label{eq:wellbehavedhistorictransitionmatrix}
+% (\forall t\in\realsnonneg)~\limsup_{\Delta\to 0^{+}}\frac{1}{\Delta}\norm{T_{t}^{t+\Delta}-I}<+\infty\,
+% \text{~and~}
+% (\forall t\in\realspos)~\limsup_{\Delta\to 0^{+}}\frac{1}{\Delta}\norm{T_{t-\Delta}^t-I}<+\infty\,.
+% \end{equation}
+% for all $u\in\mathcal{U}$, $x_u\in\states^u$ and $t\in\reals_{\geq0}$ such that $t>u$.
 \end{proposition}
 
 \begin{remark}\label{remark:expectationT}
@@ -3517,7 +3533,7 @@ Conversely, if $P$ is a coherent conditional probability on $\mathcal{C}$, it fo
 Trivial consequence of Corollary~\ref{corol:coherentextendable}.
 \end{proof}
 \begin{proof}[Proof of Proposition~\ref{prop:stochasticprocess:simpleproperties}]
-Trivial consequence of Definitions~\ref{def:stoch_matrix}, \ref{def:cond_prob}, and \ref{def:well-behaved}.
+The first part of the statement follows trivially from Definitions~\ref{def:stoch_matrix} and \ref{def:cond_prob}. The second part is an immediate consequence of Definition~\ref{def:well-behaved} and Equation~\eqref{eq:normofmatrix}.
 \end{proof}
 
 
