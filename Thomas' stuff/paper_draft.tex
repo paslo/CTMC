@@ -1381,7 +1381,7 @@ and, if $t\neq0$, the \emph{left-sided partial derivative} of $T_{t,x_u}^t$ is d
 \frac{1}{\Delta}
 (T^{t}_{t-\Delta,\,x_u}-I).
 \end{equation*}
-If these partial derivatives exist, then because of Proposition~\ref{prop:rate_from_stochastic_matrix}, they are guaranteed to belong to the set of rate matrices  $\mathcal{R}$. If they both exist and coincide, we write $\partial{T_{t,\,x_u}^t}$ to denote their common value.
+If these partial derivatives exist, then because of Proposition~\ref{prop:rate_from_stochastic_matrix}, they are guaranteed to belong to the set of rate matrices  $\mathcal{R}$. If they both exist and coincide, we write $\partial{T_{t,\,x_u}^t}$ to denote their common value. If $t=0$, we let $\partial{T_{t,\,x_u}^t}\coloneqq\partial_{+}{T_{t,\,x_u}^t}$.
 \end{definition}
 
 The following example established that these directional partial derivatives need not exist. In particular, they need not exist even for well-behaved processes.
@@ -1517,10 +1517,10 @@ Furthermore, the \emph{outer partial derivative} of $T_{t,x_u}^t$ is defined as
 For well-behaved processes $P\in\wprocesses$, as our next result shows, these outer partial derivatives are always non-empty, bounded and closed.
 
 \begin{proposition}\label{prop:boundednon-emptyandclosed}
-Consider any $P\in\wprocesses$. Then every $\overline{\partial}_{+}
+Consider any $P\in\wprocesses$. Then $\overline{\partial}_{+}
 {T^t_{t,\,x_u}}$, $\overline{\partial}_{-}
 {T^t_{t,\,x_u}}$ and $\overline{\partial}
-{T^t_{t,\,x_u}}$ is a non-empty, bounded and closed subset of $\mathcal{R}$.
+{T^t_{t,\,x_u}}$ are non-empty, bounded and closed subsets of $\mathcal{R}$.
 \end{proposition}
 
 The following two examples provide this result with some intuition. Example~\ref{exmp:outerderivative} illustrates the validity of the result, while Example~\ref{exmp:emptyouterderivative} shows that the requirement that $P$ must be well-behaved is essential for the result to be true.
@@ -1671,7 +1671,7 @@ For example, for any rate matrix $Q\in\mathcal{R}$ such that $\norm{Q}=1$, if we
 As another example, for any two commuting rate matrices $Q_1,Q_2\in\mathcal{R}$, if we let $\mathcal{T}$ be the well-behaved transition matrix system of Example~\ref{exmp:limit_trans_mat_system_matrices}, we find---as already claimed in Example~\ref{exmp:well-behaved-no-deriv}---that there is a well-behaved continuous-time Markov chain $P\in\wmprocesses\subseteq\mprocesses\subseteq\processes$ such that, for all $t\in(0,1]$, the transition matrix $T_0^t$ is given by Equation~\eqref{eq:ex4:def} in Example~\ref{exmp:limit_trans_mat_system_matrices}.
 \end{exmp}
 
-As a final note, observe that not only does the Markov property simplify the conditional probabilities of a Markov chain, it also simplifies its dynamics. In particular, for any $t\in\realsnonneg$, any $u\in\mathcal{U}_{<t}$, and any $x_u\in\states_u$, it holds that $\smash{\overline{\partial}}T_{t,x_u}^t=\smash{\overline{\partial}}T_{t}^t$. We now focus on a number of special cases.
+As a final note, observe that not only does the Markov property simplify the conditional probabilities of a Markov chain, it also simplifies its dynamics. In particular, for any $t\in\realsnonneg$, any $u\in\mathcal{U}_{<t}$, and any $x_u\in\states_u$, it holds that $\smash{\overline{\partial}_-}T_{t,\,x_u}^t=\smash{\overline{\partial}_-}T_{t}^t$, $\smash{\overline{\partial}_+}T_{t,\,x_u}^t=\smash{\overline{\partial}_+}T_{t}^t$ and $\smash{\overline{\partial}}T_{t,\,x_u}^t=\smash{\overline{\partial}}T_{t}^t$. We now focus on a number of special cases.
 
 \subsection{Homogeneous Markov chains}\label{sec:homogen_markov_chain}
 
@@ -1684,7 +1684,7 @@ T_t^s=T_0^{s-t}
 We denote the set of all homogeneous Markov chains by $\hmprocesses$ and use $\whmprocesses$ to refer to the subset that consists of the well-behaved homogeneous Markov chains.
 \end{definition}
 
-Recall now from Section~\ref{sec:systems} the exponential transition matrix system $\mathcal{T}_Q$ corresponding to some $Q\in\mathcal{R}$. In particular, the transition matrices of such a system were defined by $T_t^s = e^{Q(s-t)}$. This family $\mathcal{T}_Q$ therefore clearly satisfies Equation~\ref{eq:homogeneousMarkov}. Furthermore, by Proposition~\ref{prop:systemQ}, $\mathcal{T}_Q$ is well-behaved. Hence, we have the following result.
+Recall now from Section~\ref{sec:systems} the exponential transition matrix system $\mathcal{T}_Q$ corresponding to some $Q\in\mathcal{R}$. As we have seen, the transition matrices of such a system were defined by $T_t^s = e^{Q(s-t)}$. This family $\mathcal{T}_Q$ therefore clearly satisfies Equation~\ref{eq:homogeneousMarkov}. Furthermore, by Proposition~\ref{prop:systemQ}, $\mathcal{T}_Q$ is well-behaved. Hence, we have the following result.
 
 \begin{corollary}\label{cor:rate_has_unique_homogen_markov_process}
 Consider any rate matrix $Q\in\mathcal{R}$ and let $p$ be an arbitrary probability mass function on $\states$. Then there is a unique Markov chain $P\in\mprocesses$ such that $\mathcal{T}_P=\mathcal{T}_Q$ and $P(X_0)=p(X_0)$ and, furthermore, this unique Markov chain is well-behaved and homogeneous.
@@ -1704,11 +1704,8 @@ Hence, any well-behaved homogeneous Markov chain $P\in\whmprocesses$ is complete
 
 The dynamic behaviour of well-behaved homogeneous Markov chains is furthermore particularly easy to describe, as shown by the next result.
 \begin{proposition}\label{prop:Q_is_singleton_deriv_for_homogen}
-Consider any well-behaved homogeneous Markov chain $P\in\whmprocesses$, and let $Q_P\in\mathcal{R}$ be its corresponding rate matrix. Then, for all $t\in\realsnonneg$, it holds that the outer partial derivative satisfies $\smash{\overline{\partial}}T_t^t=\{Q_P\}$.
+Consider any well-behaved homogeneous Markov chain $P\in\whmprocesses$ and let $Q_P\in\mathcal{R}$ be its corresponding rate matrix. Then $\partial T_t^t=\partial_+T_t^t=\partial_-T_t^t=Q_P$ and $\smash{\overline{\partial}}T_t^t=\smash{\overline{\partial}_+}T_t^t=\smash{\overline{\partial}_-}T_t^t=\{Q_P\}$.% for all $t\in\realsnonneg$.
 \end{proposition}
-\begin{proof}
-*** still need to check this *** {\bf TODO} (I THINK THAT I HAVE ALREADY USED THIS PROPERTY IN SOME PROOFS WITHOUT REFERRING TO IT)
-\end{proof}
 
 \subsection{Non-homogeneous Markov chains}\label{sec:nonhomogen_markov}
 
@@ -4057,7 +4054,11 @@ T_t^s=T_0^{s-t}=e^{Q(s-t)}
 \end{equation}
 or equivalently, that $\mathcal{T}_P=\mathcal{T}_Q$.
 
-Finally, we prove that $Q$ is unique. Assume \emph{ex absurdo} that this is not the case, or equivalently, that there are rate matrices $Q_1$ and $Q_2$, with $Q_1\neq Q_2$, such that $\mathcal{T}_P=\mathcal{T}_{Q_1}$ and $\mathcal{T}_P=\mathcal{T}_{Q_2}$. It then follows from Definition~\ref{def:systemfromQ} that $\partial_{+}{T^0_{0}}=Q_1$ and $\partial_{+}{T^0_{0}}=Q_2$, which implies that $Q_1=Q_2$. From this contradiction, it follows that $Q$ is indeed unique.
+Finally, we prove that $Q$ is unique. Assume \emph{ex absurdo} that this is not the case, or equivalently, that there are rate matrices $Q_1$ and $Q_2$, with $Q_1\neq Q_2$, such that $\mathcal{T}_P=\mathcal{T}_{Q_1}$ and $\mathcal{T}_P=\mathcal{T}_{Q_2}$. For all $\Delta>0$, we then have that $T_0^\Delta=e^{Q_1\Delta}=e^{Q_2\Delta}$, and therefore, it follows from Lemma~\ref{lemma:deriv_exponential_trans} that $\partial_+T_0^0=Q_1$ and $\partial_+T_0^0=Q_2$, which implies that $Q_1=Q_2$. From this contradiction, it follows that $Q$ is indeed unique.
+\end{proof}
+
+\begin{proof}[Proof of Proposition~\ref{prop:Q_is_singleton_deriv_for_homogen}]
+The result about the partial derivatives is an immediate consequence of Lemma~\ref{lemma:deriv_exponential_trans} and the fact that $T^{t+\Delta}_{t}=T^{t}_{t-\Delta}=e^{Q\Delta}$. The result about the outer partial derivatives then follows from Corollary~\ref{corol:outersingleton}.
 \end{proof}
 
 
