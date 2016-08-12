@@ -3740,10 +3740,10 @@ y\in\states,~
 x_u\in\states_u
 \right\}
 \end{equation*}
-such that, for any $j\in\{0,\dots,m\}$, $u=\{w_0,\dots,w_{j-1}\}$ and $x_u\in\states_u$, $P_w(X_{w_j}=\cdot\,\vert X_u=x_u)$ is a probability mass function on $\states$. Then $P_w$ is a coherent conditional probability.% on $\mathcal{C}_w$.
+such that, for any $j\in\{0,\dots,m\}$, $u=\{w_0,\dots,w_{j-1}\}$ and $x_u\in\states_u$, $P_w(X_{w_j}=x\,\vert X_u=x_u)$, as a function of $x\in\states$, is a probability mass function on $\states$. Then $P_w$ is a coherent conditional probability.% on $\mathcal{C}_w$.
 \end{lemma}
 \begin{proof}
-We provide a proof by induction. Assume that this statement is true for any $m<k$, with $k\in\nats_\emptyset$. We will show that this implies that it is also true for $m=k$.
+We provide a proof by induction. Assume that this statement is true for any $m'<m$---this is trivially the case for $m=0$. We will show that this implies that it is also true for $m$.
 
 Consider any $n\in\nats$ and, for all $i\in\{1,\dots,n\}$, choose $(A_i,C_i)\in\mathcal{C}_w$ and $\lambda_i\in\reals$. We need to show that
 \begin{equation}\label{eq:lemma:simplechaincoherence:TB}
@@ -3761,7 +3761,7 @@ Let $S=\left\{i\in\{1,\dots,n\}\colon j_i<m\right\}$. If $S\neq\emptyset$, then 
 \begin{equation*}
 \max\left\{\sum_{i\in S}\lambda_i\ind{C_i}(\omega)\bigl(P_w(A_i\vert C_i)-\ind{A_i}(\omega)\bigr)~\Bigg\vert~\omega\in C_0^*\right\}\geq0,
 \end{equation*}
-with $C_0^*\coloneqq\cup_{i\in S}C_i$. It follows that there is some $\omega^*\in C_0^*$ such that
+with $C_0^*\coloneqq\cup_{i\in S}C_i$. It follows that there is some $\omega^*\in C_0^*\subseteq C_0$ such that
 \begin{equation}\label{eq:lemma:simplechaincoherence:supremumreached}
 \sum_{i\in S}\lambda_i\ind{C_i}(\omega^*)\bigl(P_w(A_i\vert C_i)-\ind{A_i}(\omega^*)\bigr)\geq0.
 \end{equation}
@@ -3784,12 +3784,13 @@ Since $p$ is a probability mass function, it then follows that
 \end{equation*}
 Now let $y^*$ be any element of $\states$ such that $\min_{y\in\states}\lambda_y=\lambda_{y^*}$ (since $\states$ is finite, this is always possible). Let $\omega^{**}$ be any path in $\Omega$ such that $\omega^{**}\in C^*$ and $\omega^{**}(w_m)=y^*$; Equation~\eqref{eq:path_exists_for_finite_points} guarantees that this $\omega^{**}\in\Omega$ exists. Then
 \begin{equation*}
-\sum_{i\in S^*}\lambda_i\bigl(P_w(A_i\vert C_i)-\ind{A_i}(\omega^{**})\bigr)
+\sum_{i\in S^*}\lambda_i\bigl(P_w(A_i\vert C^*)-\ind{A_i}(\omega^{**})\bigr)
 \geq
 \min_{y\in\states}\lambda_y
 -\sum_{i\in S^*}\lambda_i\ind{A_i}(\omega^{**})
-=\lambda_{y^*}-\lambda_{y^*}=0.
+=\lambda_{y^*}-\lambda_{y^*}=0,
 \end{equation*}
+where the first equality holds because, for every $i\in S^*$, $A_i=(X_{w_m}=z_{m,i})$.
 
 Let $S^{**}\coloneqq\{1,\dots,n\}\setminus(S\cup S^*)$. Since $\omega^{**}\in C^*$, we find that $\ind{C_i}(\omega^{**})=\ind{C_i}(\omega^{*})$ and $\ind{A_i}(\omega^{**})=\ind{A_i}(\omega^{*})$ for all $i\in S$, that $\ind{C_i}(\omega^{**})=1$ for all $i\in S^{*}$, and that $\ind{C_i}(\omega^{**})=0$ for all $i\in S^{**}$. Hence, it follows from Equation~\eqref{eq:lemma:simplechaincoherence:supremumreached} that
 \begin{equation*}
