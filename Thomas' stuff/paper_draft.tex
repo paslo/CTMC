@@ -235,7 +235,7 @@ From a practical point of view, once a probabilistic model has been formulated a
 Similarly, for expectations, one might for example like to know the expected utility of some financial strategy~\cite{sass2004optimizing}; the expected time until some component in a system breaks down~\cite{besnard2010approach}; or the expected speed with which clinical symptoms of a disease develop~\cite{duffy1995estimation}. However, these inferences might depend crucially on the specific value of the model parameters, and on the defining assumptions of the model.
 It is of interest, therefore, to study the robustness of such inferences with respect to parameter changes and relaxations of the defining assumptions of the model.
 
-In our approach, we investigate this type of robustness as follows: we simply consider the probability or expectation of interest for each of the stochastic processes in $\mathcal{P}$, and to then report the corresponding lower and upper bound. Intuitively, this can be regarded as providing best- and worst-case scenarios with respect to all the models in $\mathcal{P}$.
+In our approach, we investigate this type of robustness as follows: we simply consider the probability or expectation of interest for each of the stochastic processes in $\mathcal{P}$, and then report the corresponding lower and upper bound. Intuitively, this can be regarded as providing best- and worst-case scenarios with respect to all the models in $\mathcal{P}$.
 %It suffices to focus on lower and upper expectations, because lower and upper probabilities can be obtained as a special case.
 Of course, since the stochastic processes in $\mathcal{P}$ are not required to satisfy the Markov condition, a naive optimisation method will be highly inefficient, and in most cases not even possible. However, as we will see, it is possible to develop other, more efficient methods for computing the lower and upper bounds that we are after. If the lower and upper bounds that we obtain are similar, we can conclude that the corresponding inference is robust with respect to the variations that are represented by $\mathcal{P}$. However, if the lower and upper bound are substantially different, then the inference is clearly sensitive to these variations, and policy may then have to be adapted accordingly. 
 %In our specific setting, such a set might contain not only models under various parameter estimates, but also models for which, e.g., the Markov assumption does not hold. 
@@ -306,7 +306,7 @@ Section~\ref{sec:conclusions}, we conclude the paper and provide pointers to pos
 
 \section{Preliminaries}\label{sec:prelim}
 
-We denote the reals as $\reals$, the non-negative reals as $\realsnonneg$, and the positive reals as $\realspos$. For any $c\in\reals$, $\reals_{\geq c}$ and $\reals_{>c}$ have a similar meaning. The natural numbers are denoted by $\nats$, and we also define $\nats_0\coloneqq\nats\cup\{0\}$. The rationals will be denoted by $\mathbb{Q}$.
+We denote the reals as $\reals$, the non-negative reals as $\realsnonneg$, the positive reals as $\realspos$ and the negative reals as $\reals_{<0}$. For any $c\in\reals$, $\reals_{\geq c}$, $\reals_{>c}$ and $\reals_{<c}$ have a similar meaning. The natural numbers are denoted by $\nats$, and we also define $\nats_0\coloneqq\nats\cup\{0\}$. The rationals will be denoted by $\mathbb{Q}$.
 
 Infinite sequences of quantities will be denoted $\{a_i\}_{i\in\nats}$, possibly with limit statements of the form $\{a_i\}_{i\in\nats}\to c$, which should be interpreted as $\lim_{i\to\infty}a_i=c$. If the elements of such a sequence belong to a space that is endowed with an ordering relation, we may write $\{a_i\}_{i\in\nats}\to c^+$ or $\{a_i\}_{i\in\nats}\to c^-$ if the limit is approached from above or below, respectively.
 
@@ -1456,7 +1456,7 @@ where we use Lemma~\ref{lemma:deriv_exponential_trans} to establish the last equ
 Observe, therefore, that the problem is essentially that the finite-difference expressions $\nicefrac{1}{\Delta}(T_{t,x_u}^{t+\Delta} - I)$ and $\nicefrac{1}{\Delta}(T_{t-\Delta,x_u}^{t} - I)$, parameterized in $\Delta$, can have multiple accumulation points as we take $\Delta$ to $0$. Therefore, it will be more convenient to instead work with what we call \emph{outer partial derivatives}. These can be seen as a kind of set-valued derivatives, containing all these accumulation points obtained as $\Delta\to0^+$.
 
 \begin{definition}[Outer Partial Derivatives]\label{def:outerpartialderivatives}
-For any stochastic process $P\in\processes$, any $t\in\realsnonneg$, any sequence of time points $u\in\mathcal{U}_{<t}$, and any state assignment $x_u\in\states^u$, the \emph{right-sided outer partial derivative} of $T_{t,x_u}^t$ is defined by
+For any stochastic process $P\in\processes$, any $t\in\realsnonneg$, any sequence of time points $u\in\mathcal{U}_{<t}$, and any state assignment $x_u\in\states_u$, the \emph{right-sided outer partial derivative} of $T_{t,x_u}^t$ is defined by
 \begin{equation}
 \overline{\partial}_{+}
 {T^t_{t,\,x_u}}
@@ -1511,7 +1511,7 @@ Furthermore, the \emph{outer partial derivative} of $T_{t,x_u}^t$ is defined as
 \overline{\partial}_{+}
 {T^t_{t,\,x_u}}
 \text{ if $t=0$}.
-\end{equation*}
+\end{equation*}\vspace{-10pt}
 \end{definition}
 
 For well-behaved processes $P\in\wprocesses$, as our next result shows, these outer partial derivatives are always non-empty, bounded and closed.
@@ -1579,10 +1579,10 @@ Since this is true for every $\epsilon\in\realspos$, it follows that $\norm{Q-Q_
 *** use Example~\ref{exmp:notwellbehavedMarkov} to show an empty outer derivative ***
 \end{exmp}
 
-\noindent Furthermore, these right- and left-sided outer partial derivatives are clearly related to the directional partial derivatives. The next statement makes this explicit for well-behaved stochastic processes, using an $\epsilon-\delta$ expression for the limits in Definition~\ref{def:direc_partial_deriv}.
+We end this section with two additional properties of the outer partial derivatives of well-behaved stochastic processes. First, as we establish in our next result, they satisfy an $\epsilon-\delta$ expression that is similar to the limit expression of a partial derivative.
 
 \begin{proposition}\label{prop:outerderivativebehaveslikelimit}
-Consider any well-behaved stochastic process $P\in\wprocesses$. Then, for any $t\in\realsnonneg$, any sequence of time points $u\in\mathcal{U}_{<t}$, any state assignment $x_u\in\states^u$, and any $\epsilon>0$, there is some $\delta>0$ such that, for all $0<\Delta<\delta$:
+Consider any well-behaved stochastic process $P\in\wprocesses$. Then, for any $t\in\realsnonneg$, any sequence of time points $u\in\mathcal{U}_{<t}$, any state assignment $x_u\in\states_u$, and any $\epsilon>0$, there is some $\delta>0$ such that, for all $0<\Delta<\delta$:
 \begin{equation}
 \label{eq:outerderivativebehaveslikelimit1}
 (\exists Q\in\overline{\partial}_{+}
@@ -1596,11 +1596,11 @@ and
 (\exists Q\in\overline{\partial}_{-}
 {T^t_{t,\,x_u}})
 \norm{\frac{1}{\Delta}
-(T^{t}_{t-\Delta,\,x_u}-I)-Q}<\epsilon
-\end{equation}
+(T^{t}_{t-\Delta,\,x_u}-I)-Q}<\epsilon.
+\end{equation}\vspace{-5pt}
 \end{proposition}
 
-We conclude this section by establishing that, for well-behaved processes, the outer partial derivatives are a proper generalization of the directional partial derivatives. In particular, if the latter exist, their values correspond exactly to the elements of the former.
+Secondly, these outer partial derivatives are a proper generalization of directional partial derivatives. In particular, if the latter exist, their values correspond exactly to the single element of the former.
 
 \begin{corollary}\label{corol:outersingleton}
 Consider any $P\in\wprocesses$. Then $\smash{\overline{\partial}_{+}
