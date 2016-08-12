@@ -1633,10 +1633,10 @@ Consider any $P\in\wprocesses$. Then $\smash{\overline{\partial}_{+}
 
 \section{Continuous-Time Markov Chains}\label{sec:cont_time_markov_chains}
 
-Having introduced continuous-time stochastic processes in Section~\ref{sec:stochastic_processes}, we will in this section focus on a specific class of such processes: the \emph{continuous-time Markov chains}.
+Having introduced continuous-time stochastic processes in Section~\ref{sec:stochastic_processes}, we will in this section focus on a specific class of such processes: \emph{continuous-time Markov chains}.
 
 \begin{definition}[Markov Property, Markov Chain]\label{def:markov_property}
-A stochastic process $P\in\processes$ satisfies the \emph{Markov property} if for any $t,s\in\realsnonneg$ such that $t\leq s$, any time sequence $u\in\mathcal{U}_{<t}$, any $x_u\in\states^u$, and any states $x,y\in\states$:
+A stochastic process $P\in\processes$ satisfies the \emph{Markov property} if for any $t,s\in\realsnonneg$ such that $t\leq s$, any time sequence $u\in\mathcal{U}_{<t}$, any $x_u\in\states_u$, and any states $x,y\in\states$:
 \begin{equation*}
 P(X_s=y\,\vert\,X_t=x,X_u=x_u) = P(X_s=y\,\vert\, X_{t}=x)\,.
 \end{equation*}
@@ -1645,20 +1645,20 @@ A stochastic process that satisfies this property is called a \emph{Markov chain
 
 %\subsection{Transition Matrix Systems}\label{sec:trans_mat_systems}
 
-We already know from Proposition~\ref{prop:stochasticprocess:simpleproperties} that the transition matrices of a stochastic process---and therefore also, in particular, of a Markov chain---satisfy a number of simple properties. For the specific case of a Markov chain $P\in\mprocesses$, the family of transition matrices $\mathcal{T}_P$ also satisfies an additional property. In particular, for any $t,r,s\in\realsnonneg$ such that $t\leq r\leq s$, these transition matrices satisfy
+We already know from Proposition~\ref{prop:stochasticprocess:simpleproperties} that the transition matrices of a stochastic process---and therefore also, in particular, of a Markov chain---satisfy some simple properties. For the specific case of a Markov chain $P\in\mprocesses$, the family of transition matrices $\mathcal{T}_P$ also satisfies an additional property. In particular, for any $t,r,s\in\realsnonneg$ such that $t\leq r\leq s$, these transition matrices satisfy
 \begin{equation}\label{eq:markovintermsofmatrices}
-T_t^s = T_t^rT_r^s\,.
+T_t^s = T_t^rT_r^s.
 \end{equation}
-In this context, this property is known as the \emph{Chapman-Kolmogorov equation}~{\bf CITE}, or alternatively as the semi-group property~{\bf CITE}. Indeed, this is the same semi-group property that we defined in Section~\ref{sec:systems} to hold for transition matrix systems $\mathcal{T}$. We therefore have the following result.
+In this context, this property is known as the \emph{Chapman-Kolmogorov equation} or the semi-group property~\cite{liggett2010continuous}. Indeed, this is the same semi-group property that we defined in Section~\ref{sec:systems} to hold for transition matrix systems $\mathcal{T}$. The following result should therefore not be surprising.
 
 \begin{proposition}\label{prop:Markovhassystem}
 Consider a Markov chain $P\in\mprocesses$ and let $\mathcal{T}_P$ be the corresponding family of transition matrices. Then $\mathcal{T}_P$ is a transition matrix system. Furthermore, $\mathcal{T}_P$ is well-behaved if and only if $P$ is well-behaved.
 \end{proposition}
 
-Hence, at this point we know that every (well-behaved) Markov chain has a corresponding (well-behaved) transition matrix system. Our next result establishes that the converse is true as well: every (well-behaved) transition matrix system has a corresponding (well-behaved) Markov chain, and for a given initial distribution, this Markov chain is even unique.
+At this point we know that every (well-behaved) Markov chain has a corresponding (well-behaved) transition matrix system. Our next result establishes that the converse is true as well: every (well-behaved) transition matrix system has a corresponding (well-behaved) Markov chain, and for a given initial distribution, this Markov chain is even unique.
 
 \begin{theorem}\label{theo:uniqueMarkovchain}
-Let $p$ be an arbitrary probability mass function on $\states$ and let $\mathcal{T}$ be a transition matrix system. Then there is a unique Markov chain $P\in\mprocesses$ such that $\mathcal{T}_P=\mathcal{T}$ and, for all $y\in\states$, $P(X_0=y)=p(y)$. Furthermore, if $\mathcal{T}$ is well-behaved, then $P$ is also well-behaved.
+Let $p$ be an arbitrary probability mass function on $\states$ and let $\mathcal{T}$ be a transition matrix system. Then there is a unique Markov chain $P\in\mprocesses$ such that $\mathcal{T}_P=\mathcal{T}$ and, for all $y\in\states$, $P(X_0=y)=p(y)$. Furthermore, $\mathcal{T}$ is well-behaved if and only if $P$ is well-behaved.
 \end{theorem}
 
 Hence, Markov chains---and well-behaved Markov chains in particular---are completely characterized by their transition matrices and their initial distribution.
@@ -1667,7 +1667,7 @@ Hence, Markov chains---and well-behaved Markov chains in particular---are comple
 *** add example where we introduce two Markov chains, one for each of the two transition matrix systems that we have introduced before, one of which is well-behaved and one of which is not ***
 \end{exmp}
 
-As a final note, observe that not only does the Markov property simplify the conditional probabilities of Markov chains, it also simplifies their dynamics. In particular, for any $t\in\realsnonneg$, any $u\in\mathcal{U}_{<t}$, and any $x_u\in\states^u$, it holds that $\smash{\overline{\partial}}T_{t,x_u}^t=\smash{\overline{\partial}}T_{t}^t$. We now focus on a number of special cases.
+As a final note, observe that not only does the Markov property simplify the conditional probabilities of a Markov chain, it also simplifies its dynamics. In particular, for any $t\in\realsnonneg$, any $u\in\mathcal{U}_{<t}$, and any $x_u\in\states_u$, it holds that $\smash{\overline{\partial}}T_{t,x_u}^t=\smash{\overline{\partial}}T_{t}^t$. We now focus on a number of special cases.
 
 \subsection{Homogeneous Markov chains}\label{sec:homogen_markov_chain}
 
@@ -3559,7 +3559,7 @@ Conversely, if $P$ is a coherent conditional probability on $\mathcal{C}$, it fo
 Trivial consequence of Corollary~\ref{corol:coherentextendable}.
 \end{proof}
 \begin{proof}[Proof of Proposition~\ref{prop:stochasticprocess:simpleproperties}]
-The first part of the statement follows trivially from Definitions~\ref{def:stoch_matrix} and \ref{def:cond_prob}. The second part is an immediate consequence of Definition~\ref{def:well-behaved} and Equation~\eqref{eq:normofmatrix}.
+The first part of the statement follows trivially from Corollary~\ref{corol:processiffrestriction} and Definitions~\ref{def:stoch_matrix} and \ref{def:cond_prob}. The second part is an immediate consequence of Definition~\ref{def:well-behaved} and Equation~\eqref{eq:normofmatrix}.
 \end{proof}
 
 
@@ -3654,12 +3654,12 @@ Consider now any $t,r,s\in\realsnonneg$ with $t\leq r\leq s$. We need to show th
 \begin{equation*}
 P(X_s=x_s\,\vert\,X_r=x_r,X_t=x_t) = P(X_s=x_s\,\vert\,X_r=x_r)\,.
 \end{equation*}
-Furthermore, because $P$ is a stochastic process, it follows from~\ref{def:coh_prob_6} that
+Furthermore, because $P$ is a stochastic process, it follows from Corollary~\ref{corol:processiffrestriction} that $P$ satisfies~\ref{def:coh_prob_6} and~\ref{def:coh_prob_3} on its domain. From~\ref{def:coh_prob_6}, we infer that
 \begin{align*}
 P(X_s=x_s,X_r=x_r\,\vert\,X_t=x_t) &= P(X_s=x_s\,\vert\,X_r=x_r,X_t=x_t)P(X_r=x_r\,\vert\,X_t=x_t) \\
  &= P(X_s=x_s\,\vert\,X_r=x_r)P(X_r=x_r\,\vert\,X_t=x_t)\,,
 \end{align*}
-where the second equality used the Markov property. From~\ref{def:coh_prob_3}, it then follows that
+where the second equality used the Markov property. From~\ref{def:coh_prob_3}, we infer that
 \begin{equation*}
 P(X_s=x_s\,\vert\,X_t=x_t) = \sum_{x_r\in\states} P(X_s=x_s,X_r=x_r\,\vert\,X_t=x_t)\,.
 \end{equation*}
@@ -3670,7 +3670,7 @@ T_t^s(x_t,x_s) &= P(X_s=x_s\,\vert\,X_t=x_t) = \sum_{x_r\in\states} P(X_s=x_s,X_
 \end{align*}
 and hence, by the rules of matrix multiplication, we find that $T_t^s=T_t^rT_r^s$. Therefore, and because the $t,r,s\in\realsnonneg$ were arbitrary, $\mathcal{T}_P$ is a transition matrix system.
 
-The fact that $\mathcal{T}_P$ is well-behaved if and only if $P$ is well-behaved follows immediately from Definition~\ref{def:trans_matrix} and Proposition~\ref{prop:stochasticprocess:simpleproperties}.
+The fact that $\mathcal{T}_P$ is well-behaved if and only if $P$ is well-behaved follows immediately from Definition~\ref{def:well_behaved_trans_mat_system} and Proposition~\ref{prop:stochasticprocess:simpleproperties} because the Markov property implies that $T_{t,\,x_u}^{t+\Delta}=T_{t}^{t+\Delta}$ and $T_{t-\Delta,\,x_u}^{t}=T_{t-\Delta}^{t}$.
 \end{proof}
 
 \begin{proof}[Proof of Theorem~\ref{theo:uniqueMarkovchain}]
@@ -3679,7 +3679,7 @@ Let
 \mathcal{C}\coloneqq\{
 (X_s=y,X_u=x_u)\in\mathcal{C}^{\mathrm{SP}}
 \colon 
-u\in\mathcal{U}_\emptyset,~s>u,~x_u\in\states^u,~y\in\states
+u\in\mathcal{U}_\emptyset,~s>u,~x_u\in\states_u,~y\in\states
 \}\\
 \cup
 \{
@@ -3706,11 +3706,11 @@ We first prove that $\tilde{P}$ is a coherent conditional probability on $\mathc
 \end{equation}
 with $C_0\coloneqq\cup_{i=1}^nC_i$.
 Since every sequence $u_i$ is finite, there is some finite set $w=\{w_0,w_1,\dots,w_m\}\subset\reals_{\geq0}$ of time points, with $m\in\nats$, such that $0=w_0<w_1<\dots<w_m$ and, for all $i\in\{1,\dots,n\}$, $u_i\subseteq w$ and $s_i\in w$.
-Let $P_w$ be the restriction of $\tilde{P}$ to $\mathcal{C}_w$, with $\mathcal{C}_w$ defined as in Lemma~\ref{lemma:simplechaincoherence}. Then since $P_w$ clearly satisfies the conditions of Lemma~\ref{lemma:simplechaincoherence}, it follows that $P_w$ is a coherent conditional probability. Because of Theorem~\ref{theo:largerdomain}, this implies that $P_w$ is the restriction to $\mathcal{C}_w$ of a coherent conditional probability $\tilde{P}_w$ on $\power\times\nonemptypower$. It now follows from Definition~\ref{def:coherence} that
+Let $P_w$ be the restriction of $\tilde{P}$ to $\mathcal{C}_w$, with $\mathcal{C}_w$ defined as in Lemma~\ref{lemma:simplechaincoherence}. Then since $P_w$ clearly satisfies the conditions of Lemma~\ref{lemma:simplechaincoherence}, it follows that $P_w$ is a coherent conditional probability. Because of Theorem~\ref{theo:largerdomain}, this implies that $P_w$ can be extended to a coherent conditional probability $\tilde{P}_w$ on $\power\times\nonemptypower$, which, because of Theorem~\ref{theo:fullcoherent}, is also a full conditional probability. Since $\tilde{P}_w$ is a coherent conditional probability, it now follows from Definition~\ref{def:coherence} that
 \begin{equation}\label{eq:theo:uniqueMarkovchain:coh2}
 \max\left\{\sum_{i=1}^n\lambda_i\ind{C_i}(\omega)\bigl(\tilde{P}_w(A_i\vert C_i)-\ind{A_i}(\omega)\bigr)~\Bigg\vert~\omega\in C_0\right\}\geq0.
 \end{equation}
-By comparing Equations~\eqref{eq:theo:uniqueMarkovchain:coh1} and~\eqref{eq:theo:uniqueMarkovchain:coh2}, we see that in order to prove that $\tilde{P}$ is coherent, it suffices to show that, for all $i\in\{1,\dots,n\}$, $\tilde{P}_w(A_i\vert C_i)=\tilde{P}(A_i\vert C_i)$. So fix any $i\in\{1,\dots,n\}$. If $u_i=\emptyset$, then $s_i=0=w_0$ and therefore $(A_i,C_i)\in\mathcal{C}_w$, which implies that $\tilde{P}_w(A_i\vert C_i)=P_w(A_i\vert C_i)=\tilde{P}(A_i\vert C_i)$. If $u_i\neq\emptyset$, then since $u_i\subseteq w$, $s_i\in w$ and $s_i>u_i$, it follows from Lemma~\ref{lemma:simplechainextend} that $\tilde{P}_w(A_i\vert C_i)=\tilde{P}(A_i\vert C_i)$. Hence, $\tilde{P}$ is coherent.
+By comparing Equations~\eqref{eq:theo:uniqueMarkovchain:coh1} and~\eqref{eq:theo:uniqueMarkovchain:coh2}, we see that in order to prove that $\tilde{P}$ is coherent, it suffices to show that, for all $i\in\{1,\dots,n\}$, $\tilde{P}_w(A_i\vert C_i)=\tilde{P}(A_i\vert C_i)$. So fix any $i\in\{1,\dots,n\}$. If $u_i=\emptyset$, then $s_i=0=w_0$ and therefore $(A_i,C_i)\in\mathcal{C}_w$, which implies that $\tilde{P}_w(A_i\vert C_i)=P_w(A_i\vert C_i)=\tilde{P}(A_i\vert C_i)$. If $u_i\neq\emptyset$, then since $u_i\subseteq w$, $s_i\in w$ and $s_i>u_i$, it follows from Lemma~\ref{lemma:simplechainextend} that $\tilde{P}_w(A_i\vert C_i)=\tilde{P}(A_i\vert C_i)$. Hence, $\tilde{P}$ is a coherent conditional probability on $\mathcal{C}$.
 
 % \begin{equation*}
 % \tilde{P}_w(A_i\vert C_i)
@@ -3723,7 +3723,7 @@ By comparing Equations~\eqref{eq:theo:uniqueMarkovchain:coh1} and~\eqref{eq:theo
 % \end{equation*}
 
 
-Therefore, and because of Corollary~\ref{corol:coherentextendable}, $\tilde{P}$ can be extended to a full conditional probability $\tilde{P}^*$. If we now let $P$ be the restriction of $\tilde{P}^*$ to $\mathcal{C}^\mathrm{SP}$, then clearly, because $\mathcal{C}\subseteq\mathcal{C}^\mathrm{SP}$, $P$ is a stochastic process that extends $\tilde{P}$. Due to Equation~\eqref{eq:theo:uniqueMarkovchain:prob_func}, this implies that $P$ is a Markov chain such that $\mathcal{T}_P=\mathcal{T}$ and, for all $y\in\states$, $P(X_0=y)=p(y)$. Lemma~\ref{lemma:samepandTissameP} implies that this Markov chain is unique. If $\mathcal{T}$ is well-behaved, then since $\mathcal{T}_P=\mathcal{T}$, it follows from Proposition~\ref{prop:Markovhassystem} that $P$ is well-behaved.
+Therefore, due to Theorem~\ref{theo:largerdomain}, and because $\mathcal{C}\subseteq\mathcal{C}^\mathrm{SP}$, $\tilde{P}$ can be extended to a coherent conditional probability $P$ on $\mathcal{C}^\mathrm{SP}$, which, according to Definition~\ref{def:stoch_process}, is a stochastic process. Due to Equation~\eqref{eq:theo:uniqueMarkovchain:prob_func}, this implies that $P$ is a Markov chain such that $\mathcal{T}_P=\mathcal{T}$ and, for all $y\in\states$, $P(X_0=y)=p(y)$. Lemma~\ref{lemma:samepandTissameP} implies that this Markov chain is unique and, since $\mathcal{T}_P=\mathcal{T}$, Proposition~\ref{prop:Markovhassystem} implies that $\mathcal{T}$ is well-behaved if and only if $P$ is well-behaved.
 \end{proof}
 
 \begin{lemma}\label{lemma:simplechaincoherence}
@@ -3737,10 +3737,10 @@ Let $P_w$ be a real-valued function on
 j\in\{0,\dots,m\},~
 u=\{w_0,\dots,w_{j-1}\},~
 y\in\states,~
-x_u\in\states^u
+x_u\in\states_u
 \right\}
 \end{equation*}
-such that, for any $j\in\{0,\dots,m\}$, $u=\{w_0,\dots,w_{j-1}\}$ and $x_u\in\states^u$, $P_w(X_{w_j}=\cdot\,\vert X_u=x_u)$ is a probability mass function on $\states$. Then $P_w$ is a coherent conditional probability on $\mathcal{C}_w$.
+such that, for any $j\in\{0,\dots,m\}$, $u=\{w_0,\dots,w_{j-1}\}$ and $x_u\in\states_u$, $P_w(X_{w_j}=\cdot\,\vert X_u=x_u)$ is a probability mass function on $\states$. Then $P_w$ is a coherent conditional probability.% on $\mathcal{C}_w$.
 \end{lemma}
 \begin{proof}
 We provide a proof by induction. Assume that this statement is true for any $m<k$, with $k\in\nats_\emptyset$. We will show that this implies that it is also true for $m=k$.
@@ -3896,13 +3896,13 @@ s\in\reals_{>0},~y\in\states
 =&\{
 (X_s=y,X_u=x_u)
 \colon 
-u\in\mathcal{U},~s\in\reals_{\geq0},~s>u,~x_u\in\states^u,~y\in\states
+u\in\mathcal{U},~s\in\reals_{\geq0},~s>u,~x_u\in\states_u,~y\in\states
 \}
 \end{align*}
 are identical. We denote this common restriction by $\tilde{P}^*$.
 
-Consider now any $(A,X_u=x_u)\in\mathcal{C}^\mathrm{SP}$. Then since $A\in\mathcal{A}_u$, there is some finite set of time points $v=\{v_1,v_2,\dots,v_n\}\subseteq\reals_{\geq0}$, with $n\in\nats_0$, such that $\max u<v_1<v_2<\dots<v_n$, and some set $S\subseteq\states^{u\cup v}$ such that $A=\cup_{z_{u\cup v}\in S}(X_{u\cup v}=z_{u\cup v})$. 
-Let $S_v\coloneqq\{s_v\in\states^v\colon (x_u,z_v)\in S\}$.
+Consider now any $(A,X_u=x_u)\in\mathcal{C}^\mathrm{SP}$. Then since $A\in\mathcal{A}_u$, there is some finite set of time points $v=\{v_1,v_2,\dots,v_n\}\subseteq\reals_{\geq0}$, with $n\in\nats$, such that $\max u<v_1<v_2<\dots<v_n$, and some set $S\subseteq\states_{u\cup v}$ such that $A=\cup_{z_{u\cup v}\in S}(X_{u\cup v}=z_{u\cup v})$. 
+Let $S_v\coloneqq\{z_v\in\states_v\colon (x_u,z_v)\in S\}$.
 For any $j\in\{1,2\}$, we then find that
 \begin{align*}
 P_j(A\vert X_u=x_u)
