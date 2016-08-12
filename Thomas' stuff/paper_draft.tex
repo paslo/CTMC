@@ -1576,7 +1576,23 @@ Since this is true for every $\epsilon\in\realspos$, it follows that $\norm{Q-Q_
 \end{exmp}
 
 \begin{exmp}\label{exmp:emptyouterderivative}
-*** use Example~\ref{exmp:notwellbehavedMarkov} to show an empty outer derivative ***
+Fix any rate matrix $Q\in\mathcal{R}$ such that $\norm{Q}=1$, let $\mathcal{T}$ be the transition matrix system of Example~\ref{exmp:notwellbehavedMarkov}, and consider any stochastic process $P\in\mathbb{P}$ of which the corresponding family of transition matrices $\mathcal{T}_P$ is equal to $\mathcal{T}$.
+
+For now, we simply assume that such a process exists. A formal proof again requires some additional machinery---as in Example~\ref{exmp:well-behaved-no-deriv}---and we therefore postpone it to Example~\ref{exmp:twoexamplesofMarkovchains}, where we construct a continuous-time Markov chain whose family of transition matrices $\mathcal{T}_P$ is equal to the transition matrix system $\mathcal{T}$.
+
+The aim of the present example is to show that for any such process, the right-sided outer partial derivative $\smash{\overline{\partial}}_+T_0^0$ is empty. To this end, assume \emph{ex absurdo} that it is not empty, and consider any $Q\in\smash{\overline{\partial}}_+T_0^0$. It then follows from Equation~\eqref{eq:rightouterderivative} that there is a sequence $\{\Delta_i\}_{i\in\nats}\to0^+$ such that $\smash{\lim_{i\to+\infty}\nicefrac{1}{\Delta_i}
+(T^{t+\Delta_i}_{t,\,x_u}-I)
+=Q}$. Consider now any $\epsilon>0$, any $n\in\nats_0$ such that $n\geq4+2\norm{Q}+2\epsilon$, let $\delta_n\coloneqq 2^{-n}$ as in Example~\ref{exmp:notwellbehavedMarkov}, and consider any $i^*\in\nats$ such that, for all $i\geq i^*$, $\Delta_i\in(0,\delta_n)$---such an $i^*$ always exists because $\{\Delta_i\}_{i\in\nats}\to0^+$. For all $i\geq i^*$, we then find that
+\begin{equation*}
+\norm{\frac{1}{\Delta_i}(T_0^{\Delta_i}-I)-Q}
+\geq
+\norm{\frac{1}{\Delta_i}(T_0^{\Delta_i}-I)}-\norm{Q}
+\geq
+\frac{n}{2}-2-\norm{Q}\geq\epsilon,
+\end{equation*}
+which, since $\epsilon>0$, contradicts the fact that $\smash{\lim_{i\to+\infty}\nicefrac{1}{\Delta_i}
+(T^{t+\Delta_i}_{t,\,x_u}-I)
+=Q}$. Hence, our assumption must be wrong, and it follows that $\smash{\overline{\partial}}_+T_0^0$ is indeed empty.
 \end{exmp}
 
 We end this section with two additional properties of the outer partial derivatives of well-behaved stochastic processes. First, as we establish in our next result, they satisfy an $\epsilon-\delta$ expression that is similar to the limit expression of a partial derivative.
