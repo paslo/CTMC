@@ -3807,7 +3807,7 @@ Let $w=\{w_0,w_1,\dots,w_m\}\subset\reals_{\geq0}$ be a finite set of time point
 \begin{equation*}
 \tilde{P}_w(X_{w_j}=x_{w_j}\vert X_{w_0}=x_{w_0},\dots,X_{w_{j-1}}=x_{w_{j-1}})=T_{w_{j-1}}^{w_j}(x_{w_{j-1}},x_{w_j}).
 \end{equation*}
-Then for any $s\in w$ and $u\subseteq w$ such that $s>u$ and $u\neq\emptyset$, any $y\in\states$ and any $x_u\in\states^u$, we have that
+Then for any $s\in w$ and $u\subseteq w$ such that $s>u$ and $u\neq\emptyset$, any $y\in\states$ and any $x_u\in\states_u$, we have that
 \begin{equation*}
 \tilde{P}_w(X_s=y\vert X_u=x_u)
 =T_{\max u}^s(x_{\max u},y).
@@ -3821,16 +3821,16 @@ We provide a proof by induction. If $s=w_1$, then $u=\{w_0\}$, and therefore, th
 If $\max u=w_j$, then with $v\coloneqq\{w_0,\dots,w_j\}\setminus u$:
 \begin{align*}
 \tilde{P}_w(X_{w_{j+1}}=y\vert X_u=x_u)
-&=\sum_{z_{v}\in\states^{v}}\tilde{P}_w(X_{w_{j+1}}=y, X_{v}=z_{v}\vert X_u=x_u)\\
-&=\sum_{z_{v}\in\states^{v}}
+&=\sum_{z_{v}\in\states_{v}}\tilde{P}_w(X_{w_{j+1}}=y, X_{v}=z_{v}\vert X_u=x_u)\\
+&=\sum_{z_{v}\in\states_{v}}
 \tilde{P}_w(X_{w_{j+1}}=y\vert X_u=x_u, X_{v}=z_{v})
 \tilde{P}_w(X_{v}=z_{v}\vert X_u=x_u)\\
-&=\sum_{z_{v}\in\states^{v}}
+&=\sum_{z_{v}\in\states_{v}}
 T_{\max u}^{w_{j+1}}(x_{\max u},y)
 \tilde{P}_w(X_{v}=z_{v}\vert X_u=x_u)\\[-1mm]
 &\quad\quad\quad\quad\quad\quad
 =T_{\max u}^{w_{j+1}}(x_{\max u},y)
-\sum_{z_{v}\in\states^{v}}
+\sum_{z_{v}\in\states_{v}}
 \tilde{P}_w(X_{v}=z_{v}\vert X_u=x_u)\\[-1mm]
 &\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad~~~
 =T_{\max u}^{w_{j+1}}(x_{\max u},y),
@@ -3841,28 +3841,28 @@ If $\max u<w_j$, then with $v\coloneqq\{w_0,\dots,w_{j-1}\}\setminus u$:
 \begin{align*}
 &\tilde{P}_w(X_{w_{j+1}}=y\vert X_u=x_u)\\[1,5mm]
 &=\sum_{z_{w_j}\in\states}
-\sum_{z_{v}\in\states^{v}}
+\sum_{z_{v}\in\states_{v}}
 \tilde{P}_w(X_{w_{j+1}}=y, X_{w_j}=z_{w_j}, X_v=z_v\vert X_u=x_u)\\
 &=\sum_{z_{w_j}\in\states}
-\sum_{z_{v}\in\states^{v}}
+\sum_{z_{v}\in\states_{v}}
 \tilde{P}_w(X_{w_{j+1}}=y\vert X_u=x_u, X_{w_j}=z_{w_j}, X_v=z_v)\\[-4mm]
 &\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad~\,
 \tilde{P}_w(X_v=z_v\vert X_u=x_u, X_{w_j}=z_{w_j})
 \tilde{P}_w(X_{w_j}=z_{w_j}\vert X_u=x_u)\\[4mm]
 &=\sum_{z_{w_j}\in\states}
-\sum_{z_{v}\in\states^{v}}
+\sum_{z_{v}\in\states_{v}}
 T_{w_j}^{w_{j+1}}(z_{w_j},y)
 \tilde{P}_w(X_v=z_v\vert X_u=x_u, X_{w_j}=z_{w_j})
 \tilde{P}_w(X_{w_j}=z_{w_j}\vert X_u=x_u)\\
 &=\sum_{z_{w_j}\in\states}
-\sum_{z_{v}\in\states^{v}}
+\sum_{z_{v}\in\states_{v}}
 T_{w_j}^{w_{j+1}}(z_{w_j},y)
 \tilde{P}_w(X_v=z_v\vert X_u=x_u, X_{w_j}=z_{w_j})
 T_{\max u}^{w_{j}}(x_{\max u},z_{w_j})\\
 &=\sum_{z_{w_j}\in\states}
 T_{w_j}^{w_{j+1}}(z_{w_j},y)
 T_{\max u}^{w_{j}}(x_{\max u},z_{w_j})
-\sum_{z_{v}\in\states^{v}}
+\sum_{z_{v}\in\states_{v}}
 \tilde{P}_w(X_v=z_v\vert X_u=x_u, X_{w_j}=z_{w_j})
 \\
 &=\sum_{z_{w_j}\in\states}
