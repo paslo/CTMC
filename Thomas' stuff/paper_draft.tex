@@ -531,7 +531,7 @@ For any $Q\in\mathcal{R}$, $\mathcal{T}_Q$ is a well-behaved transition matrix s
 
 This exponential transition matrix system corresponding to a $Q\in\mathcal{R}$ will turn out to play a large role in the context of continuous-time Markov chains. We return to this in Section~\ref{sec:cont_time_markov_chains}.
 
-\subsection{Restricted Transition Matrix Systems}
+\subsection{Restricted Transition Matrix Systems}\label{sec:restricted}
 
 We finally consider yet another construct that will be useful later: the restriction of a transition matrix system $\mathcal{T}$ to a closed interval $\mathbf{I}$ in the time-line $\realsnonneg$.
 
@@ -596,7 +596,7 @@ where $r\coloneqq\max\mathbf{I}=\min\mathbf{J}$, and $\presuper{i}T_t^s$ and $\p
 Consider two closed intervals $\mathbf{I},\mathbf{J}\subseteq\realsnonneg$ such that $\max\mathbf{I}=\min\mathbf{J}$, and any two restricted transition matrix systems $\mathcal{T}^{\mathbf{I}}$ and $\mathcal{T}^{\mathbf{J}}$. Then their concatenation $\mathcal{T}^{\mathbf{I}\cup \mathbf{J}} \coloneqq \mathcal{T}^{\mathbf{I}}\otimes \mathcal{T}^{\mathbf{J}}$ is a restricted transition matrix system on $\mathbf{I}\cup\mathbf{J}$. Furthermore, if both $\mathcal{T}^{\mathbf{I}}$ and $\mathcal{T}^{\mathbf{J}}$ are well behaved, then $\mathcal{T}^{\mathbf{I}\cup\mathbf{J}}$ is also well-behaved.
 \end{proposition}
 
-\begin{exmp}
+\begin{exmp}\label{exmp:combinetwoexponentials}
 Consider any two rate matrices $Q_1,Q_2\in\mathcal{R}$ such that $Q_1\neq Q_2$, and let $\mathcal{T}_{Q_1}$ and $\mathcal{T}_{Q_2}$ be their exponential transition matrix systems, which, as we know from Proposition~\ref{prop:systemQ}, are well-behaved. Now choose any $r\in\realsnonneg$ and define
 \begin{equation*}
 \mathcal{T} \coloneqq \mathcal{T}_{Q_1}^{[0,r]} \otimes \mathcal{T}_{Q_2}^{[r,+\infty)}\,.
@@ -1709,13 +1709,39 @@ Consider any well-behaved homogeneous Markov chain $P\in\whmprocesses$ and let $
 
 \subsection{Non-homogeneous Markov chains}\label{sec:nonhomogen_markov}
 
-In contrast to homogeneous Markov chains, a Markov chain for which Equation~\eqref{eq:homogeneousMarkov} does not hold is called---rather obviously---\emph{non-homogeneous}. While we know from Theorem~\ref{theo:homogeneoushasQ} that homogeneous Markov chains can be characterized (up to an initial distribution) by a fixed rate matrix $Q\in\mathcal{R}$, this does not hold for non-homogeneous Markov chains. 
+In contrast to homogeneous Markov chains, a Markov chain for which Equation~\eqref{eq:homogeneousMarkov} does not hold is called---rather obviously---\emph{non-homogeneous}. While we know from Theorem~\ref{theo:homogeneoushasQ} that well-behaved homogeneous Markov chains can be characterized (up to an initial distribution) by a fixed rate matrix $Q\in\mathcal{R}$, this is not the case for well-behaved non-homogeneous Markov chains. 
 
 Instead, such systems are typically described by a function $Q_t$ that gives for each time point $t\in\realsnonneg$ a rate matrix $Q_t\in\mathcal{R}$. For any such function $Q_t$, the existence and uniqueness of a corresponding non-homogeneous Markov chain then depend on the specific properties of $Q_t$. Rather than attempt to treat all these different cases here, we instead refer to some examples from the literature. 
 
-Typically, some kind of continuity of $Q_t$ in terms of $t$ is assumed. The specifics of these assumptions may then depend on the intended generality of the results, computational considerations, the domain of application, and so forth. For example,~\cite{aalen1978empirical} assumes that $Q_t$ is left-continuous and has bounded right-hand limits. As a stronger restriction,~\cite{johnson1989nonhomogeneous} uses a collection $Q_1,\ldots,Q_n$ of commuting rate matrices, and defines $Q_t$ as a weighted linear combination of these component rate matrices wherein the weights vary continuously with $t$. In~\cite{rindos1995exact}, a right-continuous and piecewise-constant $Q_t$ is used, meaning that $Q_t$ takes different values on various (half-open) intervals of $\realsnonneg$, but fixed values within those intervals.
+Typically, some kind of continuity of $Q_t$ in terms of $t$ is assumed. The specifics of these assumptions may then depend on the intended generality of the results, computational considerations, the domain of application, and so forth. For example, Reference~\cite{aalen1978empirical} assumes that $Q_t$ is left-continuous and has bounded right-hand limits. As a stronger restriction, Reference~\cite{johnson1989nonhomogeneous} uses a collection $Q_1,\ldots,Q_n$ of commuting rate matrices, and defines $Q_t$ as a weighted linear combination of these component rate matrices wherein the weights vary continuously with $t$. In Reference~\cite{rindos1995exact}, a right-continuous and piecewise-constant $Q_t$ is used, meaning that $Q_t$ takes different values on various (half-open) intervals of $\realsnonneg$, but fixed values within those intervals.
 
-Also for our present work, we will require some tools to describe non-homogeneous Markov chains for which the function $Q_t$ differs on at most a finite number of intervals. We use to this end the \emph{restricted} transition matrix systems defined in Section~\ref{sec:systems}.
+This idea of using a time-dependent rate matrix $Q_t$ has the advantage of being rather intuitive, but it is rather difficult to formalize. Essentially, the problem with this approach is that it does not allow us to distinguish between left and right derivatives. Intuitively, $Q_t$ is supposed to be `the' derivative. However, this is impossible if $Q_t$ is discontinuous---for example in the piecewise constant case. Therefore, in our present work, instead of using a function $Q_t$, we will characterise non-homogeneous Markov chains by means of their transition matrix system and their initial distribution, making use of the results in Proposition~\ref{prop:Markovhassystem} and Theorem~\ref{theo:uniqueMarkovchain}.
+
+Two techniques for constructing transition matrix systems will be particularly important for our work, and especially in our proofs. The first technique is to combine restrictions of exponential transition matrix systems to form a new transition matrix system that is, loosely speaking, piecewise constant. Example~\ref{exmp:combinetwoexponentials} provided a simple illustration of this technique. More generally, these transition matrix systems will be of the form
+\begin{equation}\label{eq:piecewiseconstanttransmatsys}
+\mathcal{T}_{Q_0}^{[0,t_0]}\otimes \mathcal{T}_{Q_1}^{[t_0,t_1]} \otimes \cdots \otimes \mathcal{T}_{Q_n}^{[t_{n-1},t_n]} \otimes \mathcal{T}_{Q_{n+1}}^{[t_n,\infty)}.
+\vspace{4pt}
+\end{equation}
+As we know from Propositions~\ref{prop:systemQ} and~\ref{prop:concat_restr_trans_mat_systems_is_system}, transition matrix systems that are constructed in this way are always well-behaved. 
+%Lemma~\ref{lemma:nonhomogeneous_in_process_set}
+The second technique is to obtain a new transition matrix system as a limit of existing ones. We already illustrated this in Example~\ref{exmp:limit_trans_mat_system}, where we considered a sequence of transition matrix systems $\{\mathcal{T}_i\}_{i\in\nats_0}$, the elements of which were all of the form in Equation~\eqref{eq:piecewiseconstanttransmatsys}, and proved that this sequence converges to a limit $\mathcal{T}\coloneqq\lim_{i\to+\infty}\mathcal{T}_i$. The same type of argument will also be used in our proof for Proposition~\ref{prop:lower_expectation_reached_if_Q_closed}, be it in a more abstract form, where the sequence $\{\mathcal{T}_i\}_{i\in\nats_0}$ is constructed explicitly, and where the convergence to a limit---and the well-behavedness of this limit---is not proven directly, but guaranteed by the compactness result in Theorem~\ref{theorem:restricted_transmatsystem_space_compact_if_Q_closed} further on.
+
+
+
+
+%However, in general, even if every $\mathcal{T}_i$ is well-behaved, this may not be the case for the limit $\mathcal{T}\coloneqq\lim_{i\to+\infty}\mathcal{T}_i$; see Example~\ref{exmp:notwellbehavedMarkov} for a counterexample. 
+
+
+
+%Equation~\eqref{eq:def:sequenceinexample3}
+
+%Example~\ref{exmp:limit_trans_mat_system}
+
+
+
+%and Theorem~\ref{theo:uniqueMarkovchain}.
+
+%Also for our present work, we will require some tools to describe non-homogeneous Markov chains for which the function $Q_t$ differs on at most a finite number of intervals. We use to this end the \emph{restricted} transition matrix systems defined in Section~\ref{sec:systems}.
 
 %However, it will be convenient to define these tools in a slightly more general way, so that we can re-use them later. The basic idea in what follows is to construct a transition matrix system $\mathcal{T}$ out of various ``restricted transition matrix systems'' defined on given intervals. Theorem~\ref{theo:uniqueMarkovchain} then guarantees that there is a Markov chain that corresponds to such a $\mathcal{T}$.
 
@@ -1725,50 +1751,53 @@ Also for our present work, we will require some tools to describe non-homogeneou
 
 %We now have the required tools for the construction of the non-homogeneous Markov chains in which we will be mostly interested. 
 
-In particular, if for any interval $\mathbf{I}\subseteq\realsnonneg$ and any rate matrix $Q\in\mathcal{R}$ we now let $\mathcal{T}_Q^{\mathbf{I}}$ be the restriction of $\mathcal{T}_Q$ to $\mathbf{I}$, we immediately obtain the following result.
+%In particular, if for any interval $\mathbf{I}\subseteq\realsnonneg$ and any rate matrix $Q\in\mathcal{R}$ we now let $\mathcal{T}_Q^{\mathbf{I}}$ be the restriction of $\mathcal{T}_Q$ to $\mathbf{I}$, we immediately obtain the following result.
 
-\begin{proposition}\label{prop:finite_different_rate_matrix_has_process}
-Consider any non-empty finite sequence of time points $u=t_0,\ldots,t_n$, and a corresponding collection of rate matrices $Q_0,\ldots,Q_{n+1}\in\mathcal{R}$. Then, there exists a well-behaved continuous-time Markov chain $P\in\wmprocesses$ with transition matrix system $\mathcal{T}_P$, such that
-\begin{equation*}
-\mathcal{T}_P = \mathcal{T}_{Q_0}^{[0,t_0]}\otimes \mathcal{T}_{Q_1}^{[t_0,t_1]} \otimes \cdots \otimes \mathcal{T}_{Q_n}^{[t_{n-1},t_n]} \otimes \mathcal{T}_{Q_{n+1}}^{[t_n,\infty)}\,.
-\end{equation*}
-\end{proposition}
-\begin{proof}
-*** still need to check this *** Trivial consequence of Propositions~\ref{prop:systemQ} and~\ref{prop:concat_restr_trans_mat_systems_is_system}, and Theorem~\ref{theo:uniqueMarkovchain}.
-\end{proof}
+% \begin{proposition}\label{prop:finite_different_rate_matrix_has_process}
+% Consider any non-empty finite sequence of time points $u=t_0,\ldots,t_n$, and a corresponding collection of rate matrices $Q_0,\ldots,Q_{n+1}\in\mathcal{R}$. Then, there exists a well-behaved continuous-time Markov chain $P\in\wmprocesses$ with transition matrix system $\mathcal{T}_P$, such that
+% \begin{equation*}
+% \mathcal{T}_P = \mathcal{T}_{Q_0}^{[0,t_0]}\otimes \mathcal{T}_{Q_1}^{[t_0,t_1]} \otimes \cdots \otimes \mathcal{T}_{Q_n}^{[t_{n-1},t_n]} \otimes \mathcal{T}_{Q_{n+1}}^{[t_n,\infty)}\,.
+% \end{equation*}
+% \end{proposition}
+% \begin{proof}
+% *** still need to check this *** Trivial consequence of Propositions~\ref{prop:systemQ} and~\ref{prop:concat_restr_trans_mat_systems_is_system}, and Theorem~\ref{theo:uniqueMarkovchain}.
+% \end{proof}
 
-The dynamic behaviour of Markov chains constructed as in Proposition~\ref{prop:finite_different_rate_matrix_has_process} is conveniently described as follows. Taking some small liberties with the index notation, the outer partial derivatives of such a process will satisfy, for all $t\in\realsnonneg$,
-\begin{equation*}
-\smash{\overline{\partial}} T_t^t = \{Q_i\}\quad\text{if $t\in(t_{i-1},t_i)$,~~~~and}\quad \smash{\overline{\partial}} T_t^t = \{Q_i,Q_{i+1}\}\quad\text{if $t=t_i$.}
-\end{equation*}
-The first equality, where $t\in(t_{i-1},t_i)$, is explained by Proposition~\ref{prop:Q_is_singleton_deriv_for_homogen}. In particular, the behaviour on the interval $[t_{i-1},t_i]$ is homogeneous, and fully characterized by $\mathcal{T}_{Q_i}^{[t_{i-1},t_i]}$.
 
-The second equality, where $t=t_i$, is due to the definition $\smash{\overline{\partial}}T_t^t\coloneqq \smash{\overline{\partial}}_-T_t^t\cup \smash{\overline{\partial}}_+T_t^t$. To see this, note that $\smash{\overline{\partial}}_-T_t^t$ will here correspond to the interval $[t_{i-1}, t_i]$, and hence satisfies $\smash{\overline{\partial}}_-T_t^t=\{Q_i\}$. On the other hand, $\smash{\overline{\partial}}_+T_t^t$ corresponds to $[t_i,t_{i+1}]$, and is therefore given by $\smash{\overline{\partial}}_+T_t^t=\{Q_{i+1}\}$.
+% *** remove everything below? Just say that the dynamic behaviour of the Markov chains in the above Proposition is relatively simple, but that there are more complicated examples, such as in Example 10,11,12 and 13...? ***
 
-Note that in the above, the directional outer partial derivatives $\smash{\overline{\partial}}_-T_t^t$ and $\smash{\overline{\partial}}_+T_t^t$ are always singletons. Due to Corollary~\ref{corol:outersingleton}, this implies that the ordinary directional partial derivatives also exist. The next example shows that this is not the case in general.
+% The dynamic behaviour of Markov chains constructed as in Proposition~\ref{prop:finite_different_rate_matrix_has_process} is conveniently described as follows. Taking some small liberties with the index notation, the outer partial derivatives of such a process will satisfy, for all $t\in\realsnonneg$,
+% \begin{equation*}
+% \smash{\overline{\partial}} T_t^t = \{Q_i\}\quad\text{if $t\in(t_{i-1},t_i)$,~~~~and}\quad \smash{\overline{\partial}} T_t^t = \{Q_i,Q_{i+1}\}\quad\text{if $t=t_i$.}
+% \end{equation*}
+% The first equality, where $t\in(t_{i-1},t_i)$, is explained by Proposition~\ref{prop:Q_is_singleton_deriv_for_homogen}. In particular, the behaviour on the interval $[t_{i-1},t_i]$ is homogeneous, and fully characterized by $\mathcal{T}_{Q_i}^{[t_{i-1},t_i]}$.
 
-\begin{exmp}\label{exmp:markov_with_no_deriv}
-*** combine Examples~\ref{exmp:outerderivative} and~\ref{exmp:twoexamplesofMarkovchains} ***
+% The second equality, where $t=t_i$, is due to the definition $\smash{\overline{\partial}}T_t^t\coloneqq \smash{\overline{\partial}}_-T_t^t\cup \smash{\overline{\partial}}_+T_t^t$. To see this, note that $\smash{\overline{\partial}}_-T_t^t$ will here correspond to the interval $[t_{i-1}, t_i]$, and hence satisfies $\smash{\overline{\partial}}_-T_t^t=\{Q_i\}$. On the other hand, $\smash{\overline{\partial}}_+T_t^t$ corresponds to $[t_i,t_{i+1}]$, and is therefore given by $\smash{\overline{\partial}}_+T_t^t=\{Q_{i+1}\}$.
 
-Recall from Example~\ref{exmp:limit_trans_mat_system} the well-behaved transition matrix system $\mathcal{T}_*$ that was constructed as the limit of a sequence $\{\mathcal{T}_i\}_{i\in\nats}$ of (well-behaved) transition matrix systems. Theorem~\ref{theo:uniqueMarkovchain} now implies that there is some $P\in\wmprocesses$ such that $\mathcal{T}_P = \mathcal{T}_*$. Let $T_t^s$ denote the transition matrices corresponding to this $\mathcal{T}_P = \mathcal{T}_*$.
-\exampleend
-\end{exmp}
+% Note that in the above, the directional outer partial derivatives $\smash{\overline{\partial}}_-T_t^t$ and $\smash{\overline{\partial}}_+T_t^t$ are always singletons. Due to Corollary~\ref{corol:outersingleton}, this implies that the ordinary directional partial derivatives also exist. The next example shows that this is not the case in general.
 
-Thus, we have found that in general, the directional outer partial derivatives $\smash{\overline{\partial}}_-T_t^t$ and $\smash{\overline{\partial}}_+T_t^t$ can be non-singleton sets of rate matrices. Furthermore, we know from Proposition~\ref{prop:boundednon-emptyandclosed} that, for well-behaved stochastic processes, these sets are always non-empty, bounded, and closed. 
+% \begin{exmp}\label{exmp:markov_with_no_deriv}
+% *** combine Examples~\ref{exmp:outerderivative} and~\ref{exmp:twoexamplesofMarkovchains} ***
 
-However, this may not be the case if the process is not well-behaved...
+% Recall from Example~\ref{exmp:limit_trans_mat_system} the well-behaved transition matrix system $\mathcal{T}_*$ that was constructed as the limit of a sequence $\{\mathcal{T}_i\}_{i\in\nats}$ of (well-behaved) transition matrix systems. Theorem~\ref{theo:uniqueMarkovchain} now implies that there is some $P\in\wmprocesses$ such that $\mathcal{T}_P = \mathcal{T}_*$. Let $T_t^s$ denote the transition matrices corresponding to this $\mathcal{T}_P = \mathcal{T}_*$.
+% \exampleend
+% \end{exmp}
 
-\begin{exmp}
-*** combine Examples~\ref{exmp:outerderivative} and~\ref{exmp:twoexamplesofMarkovchains} ***
+% Thus, we have found that in general, the directional outer partial derivatives $\smash{\overline{\partial}}_-T_t^t$ and $\smash{\overline{\partial}}_+T_t^t$ can be non-singleton sets of rate matrices. Furthermore, we know from Proposition~\ref{prop:boundednon-emptyandclosed} that, for well-behaved stochastic processes, these sets are always non-empty, bounded, and closed. 
 
-***
-Consider any rate matrix $Q\in\mathcal{R}$ such that $\norm{Q}=1$.
-Let $Q_i\coloneqq iQ$ and consider the corresponding sequence $\mathcal{T}_i$. Then $\{Q_i\}_{i\in\nats_0}$ clearly satisfies the conditions of Example~\ref{exmp:limit_trans_mat_system}---with $c=1$---and therefore $\{\mathcal{T}_i\}_{i\in\nats_0}$ has a limit $\mathcal{T}$ in $\mathbb{T}$. The aim of this example is to show the 
-***
+% However, this may not be the case if the process is not well-behaved...
 
-Furthermore, the stuff above also provides a contradiction with saying that the outer partial derivative is non-empty... hence, it is empty!
-\exampleend
-\end{exmp}
+% \begin{exmp}
+% *** combine Examples~\ref{exmp:outerderivative} and~\ref{exmp:twoexamplesofMarkovchains} ***
+
+% ***
+% Consider any rate matrix $Q\in\mathcal{R}$ such that $\norm{Q}=1$.
+% Let $Q_i\coloneqq iQ$ and consider the corresponding sequence $\mathcal{T}_i$. Then $\{Q_i\}_{i\in\nats_0}$ clearly satisfies the conditions of Example~\ref{exmp:limit_trans_mat_system}---with $c=1$---and therefore $\{\mathcal{T}_i\}_{i\in\nats_0}$ has a limit $\mathcal{T}$ in $\mathbb{T}$. The aim of this example is to show the 
+% ***
+
+% Furthermore, the stuff above also provides a contradiction with saying that the outer partial derivative is non-empty... hence, it is empty!
+% \exampleend
+% \end{exmp}
 
 %********** DO WE WANT TO KEEP THE BELOW EXAMPLE? COULD ALSO REPLACE WITH JUST MENTIONING THAT THEY WILL BE CONNECTED, ALTHOUGH WE DONT HAVE TO PROVIDE A PROOF.
 
