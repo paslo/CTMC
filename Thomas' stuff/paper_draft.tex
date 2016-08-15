@@ -663,7 +663,7 @@ As a side result, we also obtain a similar bound on the distance between $\mathc
 d(\mathcal{T}_k,\mathcal{T})
 \leq d(\mathcal{T}_k,\mathcal{T}_\ell)+d(\mathcal{T}_\ell,\mathcal{T})\leq c 2^{-k}+d(\mathcal{T}_\ell,\mathcal{T}),
 \end{equation*}
-and therefore, since $\mathcal{T}=\lim_{\ell\to+\infty}\mathcal{T}_\ell$, it follows that $d(\mathcal{T}_k,\mathcal{T})\leq c 2^{-k}$
+and therefore, since $\mathcal{T}=\lim_{\ell\to+\infty}\mathcal{T}_\ell$, it follows that $d(\mathcal{T}_k,\mathcal{T})\leq c 2^{-k}$.
 % \begin{equation*}
 % d(\mathcal{T}_k,\mathcal{T})
 % \leq c 2^{-k}+\lim_{\ell\to+\infty}d(\mathcal{T}_\ell,\mathcal{T})
@@ -2036,11 +2036,27 @@ Consider a non-empty, bounded, convex and closed set of rate matrices $\rateset$
 The reason that this result is of interest to us, is that it allows us to prove the existence of certain processes $P\in\wmprocesses_{\rateset,\,\mathcal{M}}$. In particular, it allows us to establish the existence of limits of sequences $\left\{P_i\right\}_{i\in\nats}$ in $\wmprocesses_{\rateset,\,\mathcal{M}}$ that satisfy certain behaviour on a specified interval $[t,s]$. This works because, since the space $\mathbb{T}^{[t,s]}_\rateset$ is compact, not only do convergent sequences converge within this set, but furthermore, any sequence in this set will always have a convergent subsequence.
 
 \begin{exmp}\label{exmp:running:wellbehaved}
-**** I'm leaving this example until some of the earlier ones are finished...
+We have in Example~\ref{exmp:limit_trans_mat_system_matrices} constructed a transition matrix system $\mathcal{T}$ as the limit of a sequence $\{\mathcal{T}_i\}_{i\in\nats}$ of transition matrix systems. We there claimed that $\mathcal{T}$ was well-behaved, and have repeatedly used this property for illustration in Examples~REF, REF, and REF. However, up until this point, no proof of this fact was given.
 
-***** TODO: final part of running example for non-differentiable Markov chain. Show that $\mathcal{T}_*$ is indeed well-behaved, using Theorem~\ref{theorem:restricted_transmatsystem_space_compact_if_Q_closed}. 
+Therefore, we will in this example illustrate the use of Theorem~\ref{theorem:restricted_transmatsystem_space_compact_if_Q_closed} to prove that $\mathcal{T}$ is indeed well-behaved. To this end, let $Q_1,Q_2\in\mathcal{R}$ be the two commuting rate matrices from Example~\ref{exmp:limit_trans_mat_system_matrices}, and let $\rateset$ be the convex hull of $\{Q_1,Q_2\}$. Then, clearly, $\rateset$ is a non-empty, bounded, convex and closed set of rate matrices.
 
-Also argue that convexity of that outer partial derivative illustrates the requirement of convexity in that theorem.
+Because the sequence $\{\mathcal{T}_i\}_{i\in\nats}$ is constructed as in Equation REF in Example~\ref{exmp:limit_trans_mat_system}, it follows from Propositions CONCAT and EXPONENTIAL that, for all $i\in\nats$, $\mathcal{T}_i$ is a well-behaved transition matrix system. Furthermore, due to Theorem MARKOV FROM TRANSMAT, there is some $P_i\in\wmprocesses$ such that $\mathcal{T}_{P_i}=\mathcal{T}_i$.
+
+**** my comments about the outer partials for $P_i$ got removed...
+
+See also Lemma REF to confirm that $P_i\in\wmprocesses_{\rateset}$.
+
+Finally, we note that due to Equation SEQUENCEDEF and Proposition CONCAT, for all $i\in\nats$, $\mathcal{T}_i^{[\nicefrac{1}{2},\infty)}=\mathcal{T}_{Q_0}^{[\nicefrac{1}{2},\infty)}$, and therefore that also $\mathcal{T}^{[\nicefrac{1}{2},\infty)}=\mathcal{T}_{Q_0}^{[\nicefrac{1}{2},\infty)}$. Since we know from Proposition REF that $\mathcal{T}_{Q_0}^{[\nicefrac{1}{2},\infty)}$ is well-behaved, it suffices to show that $\mathcal{T}^{[0,\nicefrac{1}{2}]}$ is well-behaved since, due to Proposition CONCAT, this would imply that $\mathcal{T}=\mathcal{T}^{[0,\nicefrac{1}{2}]}\otimes \mathcal{T}_{Q_0}^{[\nicefrac{1}{2},\infty)}$ is well-behaved, which is what we intent to show.
+
+Now, observe that because $P_i\in\wmprocesses_\rateset$ and $\mathcal{T}_{P_i}=\mathcal{T}_i$, it must hold that also $\mathcal{T}_i^{[0,\nicefrac{1}{2}]}\in\mathbb{T}_\rateset^{[0,\nicefrac{1}{2}]}$. Therefore, since the sequence $\{\mathcal{T}_i^{[0,\nicefrac{1}{2}]}\}_{i\in\nats}$ is in $\mathbb{T}_\rateset^{[0,\nicefrac{1}{2}]}$, Theorem COMPACT implies the existence of a convergent subsequence $\{\mathcal{T}_{i_k}^{[0,\nicefrac{1}{2}]}\}_{k\in\nats}$ of which the limit $\mathcal{T}_*^{[0,\nicefrac{1}{2}]}$ also belongs to $\mathbb{T}_\rateset^{[0,\nicefrac{1}{2}]}$.
+
+**** Blabla, $\mathcal{T}_*^{[0,\nicefrac{1}{2}]}=\mathcal{T}^{[0,\nicefrac{1}{2}]}$ omdat deelrij.
+
+Because $\mathcal{T}^{[0,\nicefrac{1}{2}]}\in\mathbb{T}_\rateset^{[0,\nicefrac{1}{2}]}$, this implies the existence of some $P\in\wmprocesses_\rateset$ with transition matrix system $\mathcal{T}_P$, such that $\mathcal{T}_P^{[0,\nicefrac{1}{2}]}=\mathcal{T}^{[0,\nicefrac{1}{2}]}$. Since $P\in\wmprocesses_\rateset$ is well-behaved, it follows from Theorem REF that $\mathcal{T}_P$ is well-behaved and therefore, that $\mathcal{T}^{[0,\nicefrac{1}{2}]}=\mathcal{T}_P^{[0,\nicefrac{1}{2}]}$ is well-behaved. As mentioned above, it now follows from Proposition CONCAT that $\mathcal{T}=\mathcal{T}^{[0,\nicefrac{1}{2}]}\otimes \mathcal{T}_{Q_0}^{[\nicefrac{1}{2},\infty)}$ is also well-behaved, as claimed.
+
+%Furthermore, since $\{\mathcal{T}_i\}_{i\in\nats}\to\mathcal{T}$, due to the definition of the metric $d$ in Equation REF, we clearly also have $\{\mathcal{T}_i^{[0,\nicefrac{1}{2}]}\}_{i\in\nats}\to \mathcal{T}^{[0,\nicefrac{1}{2}]}$. **** can also use total-boundedness here to find the sequence explicitly
+
+**** Also argue that convexity of that outer partial derivative illustrates the requirement of convexity in that theorem.
 \exampleend
 \end{exmp}
 
