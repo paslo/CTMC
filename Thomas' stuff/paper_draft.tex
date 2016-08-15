@@ -1346,7 +1346,7 @@ Note that for any $P\in\processes$, the corresponding transition matrix $T_{t, x
 %= \mathbb{E}\left[f(X_s)\,\vert\,X_t=x_t\right]\,,
 %\end{align*}
 \begin{align*}
-\left[T_{t,x_u}^sf\right](x_t) &= \sum_{x_s\in\states}f(x_s)P(X_s=x_s\,\vert\,X_t=x_t,X_u=x_u)= \mathbb{E}\left[f(X_s)\,\vert\,X_t=x_t, X_u=x_u\right]\,,
+\left[T_{t,x_u}^sf\right](x_t) &= \sum_{x_s\in\states}f(x_s)P(X_s=x_s\,\vert\,X_t=x_t,X_u=x_u)= \mathbb{E}_P\left[f(X_s)\,\vert\,X_t=x_t, X_u=x_u\right]\,,
 \end{align*}
 where the expectation is taken with respect to $P(X_s\,\vert\,X_t=x_t,X_u=x_u)$. This observation will be useful when we later focus on expectations with respect to stochastic processes; for functions $f\in\gamblesX$, their corresponding transition matrices serve as an alternative representation for the expectation operator.  %Similarly, for any history-dependent transition matrix $T_{t,x_u}^s$, we have that
 \exampleend
@@ -1359,7 +1359,7 @@ One seemingly obvious way to describe these dynamics is to use the derivatives o
 %Unfortunately, for general stochastic processes, these derivatives do not necessarily exist. In fact, also the slightly weaker directional derivatives---which we define below---are not guaranteed to exist. Worse still, they are not even guaranteed to exist for well-behaved processes.
 
 \begin{definition}[Directional Partial Derivatives]\label{def:direc_partial_deriv}
-For any stochastic process $P\in\processes$, any $t\in\realsnonneg$, any sequence of time points $u\in\mathcal{U}_{<t}$, and any state assignment $x_u\in\states^u$, the \emph{right-sided partial derivative} of $T_{t,x_u}^t$ is by
+For any stochastic process $P\in\processes$, any $t\in\realsnonneg$, any sequence of time points $u\in\mathcal{U}_{<t}$, and any state assignment $x_u\in\states_u$, the \emph{right-sided partial derivative} of $T_{t,x_u}^t$ is by
 \begin{equation*}
 \partial_{+}{T_{t,\,x_u}^t}
 \coloneqq
@@ -1388,7 +1388,7 @@ If these partial derivatives exist, then because of Proposition~\ref{prop:rate_f
 
 The following example established that these directional partial derivatives need not exist. In particular, they need not exist even for well-behaved processes.
 \begin{exmp}\label{exmp:well-behaved-no-deriv}
-Let $Q_1,Q_2\in\mathcal{R}$ be two commuting rate matrices such that $Q_1\neq Q_2$---for example, let $Q_1\neq0$ be an arbitrary rate matrix and let $Q_2\coloneqq\alpha Q_1$, with $\alpha\in\realsnonneg\setminus\{1\}$---and consider a well-behaved stochastic process $P\in\processes$ of which, for all $t\in(0,1]$, the transition matrix $T_0^t$ is given by Equation~\eqref{eq:ex4:def} in Example~\ref{exmp:limit_trans_mat_system_matrices}. 
+Let $Q_1,Q_2\in\mathcal{R}$ be two commuting rate matrices such that $Q_1\neq Q_2$---for example, let $Q_1\neq0$ be an arbitrary rate matrix and let $Q_2\coloneqq\alpha Q_1$, with $\alpha\in\realsnonneg\setminus\{1\}$---and consider a well-behaved stochastic process $P\in\wprocesses$ of which, for all $t\in(0,1]$, the transition matrix $T_0^t$ is given by Equation~\eqref{eq:ex4:def} in Example~\ref{exmp:limit_trans_mat_system_matrices}. 
 
 For now, we simply assume that this is possible. A formal proof for the existence of such a process requires some additional machinery, and we therefore postpone it to Example~\ref{exmp:twoexamplesofMarkovchains}, where we construct a well-behaved continuous-time Markov chain that is compatible with Equation~\eqref{eq:ex4:def}.
 
@@ -1528,7 +1528,7 @@ Consider any $P\in\wprocesses$. Then $\overline{\partial}_{+}
 The following two examples provide this result with some intuition. Example~\ref{exmp:outerderivative} illustrates the validity of the result, while Example~\ref{exmp:emptyouterderivative} shows that the requirement that $P$ must be well-behaved is essential for the result to be true.
 
 \begin{exmp}\label{exmp:outerderivative}
-Consider again the stochastic process $P\in\wmprocesses$ from Example~\ref{exmp:well-behaved-no-deriv} of which, for all $t\in(0,1]$, the transition matrix $T_0^t$ is given by Equation~\eqref{eq:ex4:def}. 
+Consider again the stochastic process $P\in\wprocesses$ from Example~\ref{exmp:well-behaved-no-deriv} of which, for all $t\in(0,1]$, the transition matrix $T_0^t$ is given by Equation~\eqref{eq:ex4:def}. 
 The aim of this example is to show that for this particular process,
 \begin{equation*}
 \smash{\overline{\partial}}_+T_0^0=\big\{Q_\lambda\colon \lambda\in[\nicefrac{1}{3},\nicefrac{2}{3}]\big\},
@@ -1539,15 +1539,15 @@ Showing that $\{Q_\lambda\colon \lambda\in[\nicefrac{1}{3},\nicefrac{2}{3}]\}$ i
 
 So consider any $Q\in\overline{\partial}_+T_0^0$. Definition~\ref{def:outerpartialderivatives} then implies the existence of a sequence $\{\Delta_i\}_{i\in\nats_0}\to 0^+$ such that 
 \begin{equation}\label{eq:exmp:outerderivative}
-\lim_{i\to+\infty}\nicefrac{1}{\Delta_i}(\presuper{*}T_0^{\Delta_i}-I)=Q.
+\lim_{i\to+\infty}\nicefrac{1}{\Delta_i}(T_0^{\Delta_i}-I)=Q.
 \end{equation}
 
-The first step of the proof is to observe that, for every $t\in(0,1]$, $\varphi_1(t)+\varphi_2(t)=t$ and $\nicefrac{1}{3}t\leq\varphi_1(t)\leq\nicefrac{2}{3}t$; we leave this as an exercise. Given this observation, it follows that for all $t\in(0,1]$, there is some $\lambda_t\in[\nicefrac{1}{3},\nicefrac{2}{3}]$ such that $\varphi_1(t)=\lambda_t t$ and $\varphi_2(t)=(1-\lambda_t)t$. Hence, in particular, for every $i\in\nats$, there is some $\lambda_i\in[\nicefrac{1}{3},\nicefrac{2}{3}]$ such that $\varphi_1(\Delta_i)=\lambda_i \Delta_i$ and $\varphi_2(\Delta_i)=(1-\lambda_i)\Delta_i$ and therefore also, due Equation~\eqref{eq:ex4:def}, $\presuper{*}T_0^{\Delta_i}=e^{Q_{\lambda_i}\Delta_i}$.
+The first step of the proof is to observe that, for every $t\in(0,1]$, $\varphi_1(t)+\varphi_2(t)=t$ and $\nicefrac{1}{3}t\leq\varphi_1(t)\leq\nicefrac{2}{3}t$; we leave this as an exercise. Given this observation, it follows that for all $t\in(0,1]$, there is some $\lambda_t\in[\nicefrac{1}{3},\nicefrac{2}{3}]$ such that $\varphi_1(t)=\lambda_t t$ and $\varphi_2(t)=(1-\lambda_t)t$. Hence, in particular, for every $i\in\nats$, there is some $\lambda_i\in[\nicefrac{1}{3},\nicefrac{2}{3}]$ such that $\varphi_1(\Delta_i)=\lambda_i \Delta_i$ and $\varphi_2(\Delta_i)=(1-\lambda_i)\Delta_i$ and therefore also, due Equation~\eqref{eq:ex4:def}, $T_0^{\Delta_i}=e^{Q_{\lambda_i}\Delta_i}$.
 Furthermore, because of the Bolzano-Weierstrass theorem, the sequence $\{\lambda_i\}_{i\in\nats_0}$ contains a convergent subsequence $\{\lambda_{i_k}\}_{k\in\nats_0}$ whose limit $\lambda\coloneqq\lim_{k\to+\infty}\lambda_{i_k}$ clearly belongs to $[\nicefrac{1}{3},\nicefrac{2}{3}]$. 
 
-In the remainder of this example, we will prove that $Q=Q_\lambda$. To this end, let us fix any $\epsilon>0$ and prove that $\norm{Q-Q_\lambda}<\epsilon$. First of all, since $\lambda=\lim_{k\to+\infty}\delta_{i_k}$, there is some $n_1\in\nats_0$ such that, for all $k\geq n_1$, $\abs{\lambda-\lambda_{i_k}}\norm{Q_1-Q_2}<\nicefrac{\epsilon}{3}$ and therefore also
+In the remainder of this example, we will prove that $Q=Q_\lambda$. To this end, let us fix any $\epsilon>0$ and prove that $\norm{Q-Q_\lambda}<\epsilon$. First of all, since $\lambda=\lim_{k\to+\infty}\lambda_{i_k}$, there is some $n_1\in\nats_0$ such that, for all $k\geq n_1$, $\abs{\lambda-\lambda_{i_k}}\norm{Q_1-Q_2}<\nicefrac{\epsilon}{3}$ and therefore also
 \begin{equation}\label{eq:exmp:outerderivative1}
-\norm{Q_\lambda-Q_{i_k}}
+\norm{Q_\lambda-Q_{\lambda_{i_k}}}
 %=\norm{\lambda Q_1+(1-\lambda)Q_2-(\lambda_{i_k}Q_1+(1-\lambda_{i_k})Q_2)}
 %=\norm{(\lambda-\lambda_{i_k})Q_1+(\lambda_{i_k}-\lambda)Q_2}
 =\norm{(\lambda-\lambda_{i_k})(Q_1-Q_2)}
@@ -1555,7 +1555,7 @@ In the remainder of this example, we will prove that $Q=Q_\lambda$. To this end,
 \end{equation}
 Secondly, Equation~\eqref{eq:exmp:outerderivative} implies that there is some $n_2\in\nats_0$ such that
 \begin{equation}\label{eq:exmp:outerderivative2}
-\norm{\nicefrac{1}{\Delta_{i_k}}(\presuper{*}T_0^{\Delta_{i_k}}-I)-Q}<\frac{\epsilon}{3}
+\norm{\nicefrac{1}{\Delta_{i_k}}(T_0^{\Delta_{i_k}}-I)-Q}<\frac{\epsilon}{3}
 ~\text{ for all $k\geq n_2$}.
 \end{equation}
 Thirdly, Lemma~\ref{lemma:deriv_exponential_trans} implies that there is some $n_3\in\nats_0$ such that
@@ -1563,14 +1563,14 @@ Thirdly, Lemma~\ref{lemma:deriv_exponential_trans} implies that there is some $n
 \norm{\nicefrac{1}{\Delta_{i_k}}(e^{Q_{\lambda_{i_k}}\Delta_{i_k}}-I)-Q_{\lambda_{i_k}}} < \frac{\epsilon}{3}
 ~\text{ for all $k\geq n_3$.}
 \end{equation}
-Consider now any $k\geq\max\{n_1,n_2,n_3\}$. Then since $\presuper{*}T_0^{\Delta_{i_k}}=e^{Q_{\lambda_{i_k}}\Delta_{i_k}}$, it follows from Equations~\eqref{eq:exmp:outerderivative1}--\eqref{eq:exmp:outerderivative3} that
+Consider now any $k\geq\max\{n_1,n_2,n_3\}$. Then since $T_0^{\Delta_{i_k}}=e^{Q_{\lambda_{i_k}}\Delta_{i_k}}$, it follows from Equations~\eqref{eq:exmp:outerderivative1}--\eqref{eq:exmp:outerderivative3} that
 \begin{align*}
 \norm{Q - Q_{\lambda}} \leq 
-\norm{Q-\nicefrac{1}{\Delta_{i_k}}(\presuper{*}T_0^{\Delta_{i_k}}-I)}
+\norm{Q-\nicefrac{1}{\Delta_{i_k}}(T_0^{\Delta_{i_k}}-I)}
 +
 \norm{\nicefrac{1}{\Delta_{i_k}}(e^{Q_{\lambda_{i_k}}\Delta_{i_k}}-I)-Q_{\lambda_{i_k}}}
 +
-\norm{Q_{i_k}-Q_\lambda}
+\norm{Q_{\lambda_{i_k}}-Q_\lambda}
 \leq\epsilon.
 \end{align*}
 Since this is true for every $\epsilon\in\realspos$, it follows that $\norm{Q-Q_{\lambda}}=0$, and therefore also, that $Q=Q_\lambda$, as desired.
