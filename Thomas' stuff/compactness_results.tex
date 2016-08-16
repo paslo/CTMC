@@ -1,0 +1,759 @@
+\documentclass[10pt,a4paper]{paper}
+%\documentclass[3p]{elsarticle}
+%\documentclass[a4paper,reqno]{amsart}
+\usepackage[british]{babel}
+%\usepackage[garamond]{mathdesign}
+
+\usepackage{hyperref,url}
+
+\usepackage{mathptmx}
+\usepackage{amsmath}
+\usepackage{courier}
+\usepackage{amssymb}
+%\usepackage{mathtools}
+\usepackage{amsthm}
+\usepackage{enumerate}
+\usepackage{enumitem,multicol}
+\usepackage{tikz}
+\usepackage{nicefrac}
+\usepackage{bm}
+\usepackage{algorithm}
+\usepackage{algorithmicx}
+\usepackage{algpseudocode}
+
+%\usepackage{hyperref}
+%\usepackage{pdfsync}
+%\usepackage{authblk}
+
+\theoremstyle{definition}
+\newtheorem{exmp}{Example}%[section]
+ 
+\renewcommand{\ttdefault}{cmtt}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{definition}{Definition}
+\newtheorem{remark}{Remark}
+\newtheorem*{remark*}{Remark}
+
+\newtheorem{claim}{Claim}[theorem]
+\newtheorem*{claim*}{Claim}
+
+\algrenewcommand\algorithmicrequire{\textbf{Input:}}
+\algrenewcommand\algorithmicensure{\textbf{Output:}}
+
+% - macros
+
+\newcommand{\nats}{\mathbb{N}}
+\newcommand{\natswith}{\nats_{0}}
+\newcommand{\reals}{\mathbb{R}}
+
+\newcommand{\realspos}{\reals_{>0}}
+\newcommand{\realsnonneg}{\reals_{\geq 0}}
+
+\newcommand{\states}{\mathcal{X}}
+
+\newcommand{\paths}{\Omega}
+%\newcommand{\path}{\omega}
+
+\newcommand{\power}{\mathcal{P}(\paths)}
+\newcommand{\nonemptypower}{\power_{\emptyset}}
+\newcommand{\events}{\mathcal{E}}
+%\newcommand{\nonemptyevents}{\events^{\emptyset}}
+\newcommand{\filter}[1][t]{\mathcal{F}_{#1}}
+\newcommand{\eventst}[1][t]{\events_{#1}}
+
+\newcommand{\processes}{\mathbb{P}}
+\newcommand{\mprocesses}{\processes^{\mathrm{M}}}
+
+\newcommand{\hmprocesses}{\processes^{\mathrm{HM}}}
+
+\newcommand{\wprocesses}{\processes^{\mathrm{W}}}
+\newcommand{\wmprocesses}{\processes^{\mathrm{WM}}}
+
+\newcommand{\whmprocesses}{\processes^{\mathrm{WHM}}}
+
+
+\newcommand{\lt}{\underline{T}}
+\newcommand{\lbound}{L}
+
+\newcommand{\gambles}{\mathcal{L}}
+\newcommand{\gamblesX}{\gambles(\states)} 
+
+\newcommand{\ind}[1]{\mathbb{I}_{#1}}
+
+\newcommand{\rateset}{\mathcal{Q}}
+\newcommand{\lrate}{\underline{Q}}
+
+\newcommand{\asa}{\Leftrightarrow}
+\newcommand{\then}{\Rightarrow}
+
+\newcommand{\norm}[1]{\left\lVert #1 \right\rVert}
+\newcommand{\abs}[1]{\left\vert #1 \right\vert}
+
+\newcommand{\coloneqq}{:\!=}
+
+\newcommand{\opinset}{\,\,\widetilde{\in}\,\,}
+
+\newcommand{\argmin}{\arg\min}
+
+\newcommand{\exampleend}{\hfill$\Diamond$}
+
+\def\presuper#1#2%
+  {\mathop{}%
+   \mathopen{\vphantom{#2}}^{#1}%
+   \kern-\scriptspace%
+   #2}
+
+\title{Compactness of set of restricted transition-matrix systems for sets of consistent Markov processes.}
+
+%\author[1]{Thomas E. Krak\thanks{t.e.krak@uu.nl}}
+%\author[2]{Jasper de Bock\thanks{jasper.debock@ugent.be}}
+%\affil[1]{Universiteit Utrecht}
+%\affil[2]{Ghent University}
+
+\author{Thomas Krak \and Jasper De Bock}
+%\author{Thomas Krak and Jasper de Bock}
+
+\begin{document}
+
+%\author{{\bf Thomas E. Krak} \\ Utrecht}
+%\address{Utrecht University}
+%\curraddr{}
+%\email{t.e.krak@uu.nl}
+%\thanks{}
+
+%\author{{\bf Jasper de Bock} \\ Ghent}
+%\address{Ghent University}
+
+%\author{
+	%{\bf Thomas E. Krak} \quad\quad {\bf Jasper de Bock} \\
+%	Utrecht University \quad Ghent University \\
+	%Department of Information and Computing Sciences \\
+	%Princetonplein 5, De Uithof \\
+	%3584 CC Utrecht \\
+	%The Netherlands \\
+%	\texttt{\quad\quad t.e.krak@uu.nl} \quad\quad \texttt{jasper.debock@ugent.be}
+%\and
+	%{\bf Jasper de Bock} \\
+%	Ghent University \\
+	%SYSTeMS Research Group \\
+	%Technologiepark -- Zwijnaarde 914 \\
+	%9052 Zwijnaarde \\ 
+	%Belgium \\
+%	\texttt{jasper.debock@ugent.be}
+%}
+\date{}
+\maketitle
+
+\begin{abstract}
+Contains references that are in paper\_draft.tex
+\end{abstract}
+
+\section{Compactness Statement}
+
+We also introduce a metric $d$ between restricted transition matrix systems that are defined on the same interval $\mathbf{I}$. For any two such restricted transition matrix systems $\mathcal{T}^\mathbf{I}$ and $\mathcal{S}^\mathbf{I}$, we let
+\begin{equation}\label{eq:trans_mat_system_metric}
+d(\mathcal{T}^{\mathbf{I}},\mathcal{S}^{\mathbf{I}}) \coloneqq \sup\left\{\norm{T_t^s - S_t^s}\,:\,t,s\in\mathbf{I},\,t\leq s\right\},
+\end{equation}
+where, for all $t,s\in\mathbf{I}$, it is understood that $T_t^s$ corresponds to $\mathcal{T}^{\mathbf{I}}$ and $S_t^s$ to $\mathcal{S}^{\mathbf{I}}$. This metric allows us to state the following result.
+
+\begin{proposition}\label{lemma:restricted_trans_mat_system_cauchy_converges}
+Consider any interval $\mathbf{I}\subseteq\realsnonneg$ and let $d$ be the metric that is defined in Equation~\eqref{eq:trans_mat_system_metric}. The metric space $\smash{(\mathbb{T}^{\mathbf{I}},d)}$ is then complete.
+\end{proposition}
+Note that this result includes as a special case that the set $\mathbb{T}$ of all (unrestricted) transition matrix systems is complete. The following example illustrates how this result can be used.
+
+
+We next consider the case where $\rateset$ is both convex and closed, and consider the set $\wmprocesses_{\rateset,\,\mathcal{M}}$. Recall from Section~\ref{sec:dynamics} that for any function $f\in\gamblesX$, its expectation with respect to a process $P\in\wmprocesses_{\rateset,\,\mathcal{M}}$ can alternatively be expressed using the transition matrix corresponding to this process. Specifically, it holds that $\mathbb{E}_P[f(X_s)\,\vert\,X_t]=T_t^sf$. Note furthermore that a lower expectation $\underline{\mathbb{E}}_{\rateset,\,\mathcal{M}}^{\mathrm{WM}}$ is an infimum over the set of expectations $\mathbb{E}_P$ corresponding to all $P\in\wmprocesses_{\rateset,\,\mathcal{M}}$. It should therefore be clear that the set of transition matrices $T_t^s$ corresponding to all $P\in\wmprocesses_{\rateset,\,\mathcal{M}}$ is also of interest to us.
+
+Recall from Section~\ref{sec:cont_time_markov_chains} that for each $P\in\wmprocesses_{\rateset,\,\mathcal{M}}$, there is a transition matrix system $\mathcal{T}_P$ specifying all transition matrices corresponding to $P$. Furthermore, this $\mathcal{T}_P$ has a restriction $\mathcal{T}_P^{[t,s]}$ to the interval $[t,s]$, and this restriction also specifies $T_t^s$. 
+
+We have already seen in Section~\ref{sec:systems} that the space $\mathbb{T}^{[t,s]}$ of \emph{all} restricted transition matrix systems on $[t,s]$ is complete. We will now look at the subspace of $\mathbb{T}^{[t,s]}$ corresponding to all $P\in\wmprocesses_{\rateset,\,\mathcal{M}}$. To this end, for any non-empty bounded set of rate matrices $\rateset$ and any $t,s\in\realsnonneg$ such that $t\leq s$, let
+\begin{equation*}
+\mathbb{T}_\rateset^{[t,s]} \coloneqq \left\{\mathcal{T}_P^{[t,s]}\,:\,P\in\wmprocesses_\rateset\right\}\,.
+\end{equation*}
+Note that this set $\mathbb{T}_\rateset^{[t,s]}$ does not depend on a set $\mathcal{M}$ of initial distributions. This makes sense because we are only interested in the transition matrix systems $\mathcal{T}_P$ corresponding to the Markov chains $P\in\wmprocesses_{\rateset,\,\mathcal{M}}$, and clearly the set of these (restricted) transition matrix systems would be invariant to any choice of $\mathcal{M}$. Hence, we simply define $\mathbb{T}_\rateset^{[t,s]}$ to depend on $\wmprocesses_\rateset$.
+
+Now, if $\rateset$ is closed and convex, we obtain the following result.
+
+\begin{theorem}\label{theorem:restricted_transmatsystem_space_compact_if_Q_closed}
+Consider a non-empty, bounded, convex and closed set of rate matrices $\rateset$ and any $t,s\in\realsnonneg$ such that $t\leq s$. Let $d$ be the metric that is defined in Equation~\eqref{eq:trans_mat_system_metric}. The metric space $\smash{(\mathbb{T}_\rateset^{[t,s]},d)}$ is then compact.
+\end{theorem}
+
+The reason that this result is of interest to us, is that it allows us to prove the existence of certain processes $P\in\wmprocesses_{\rateset,\,\mathcal{M}}$. In particular, it allows us to establish the existence of limits of sequences $\left\{P_i\right\}_{i\in\nats}$ in $\wmprocesses_{\rateset,\,\mathcal{M}}$ that satisfy certain behaviour on a specified interval $[t,s]$. This works because, since the space $\mathbb{T}^{[t,s]}_\rateset$ is compact, not only do convergent sequences converge within this set, but furthermore, any sequence in this set will always have a convergent subsequence.
+
+
+Below, we prove a number of lemmas that are required for the proof of Theorem~\ref{theorem:restricted_transmatsystem_space_compact_if_Q_closed}, as well as for some other results in later sections. Lemmas~\ref{lemma:bound_on_linear_approx_partition}-\ref{lemma:uniformelywellbehaved} give a number of norm inequalities that provide bounds on how well we can approximate the transition matrices of stochastic processes consistent with some set of rate matrices $\rateset$, using linear approximations of the form $(I+\Delta Q)$.
+
+\begin{lemma}\label{lemma:bound_on_linear_approx_partition}
+Consider any $P\in\wprocesses_{\rateset,\,\mathcal{M}}$, any $0\leq t<s$, any $u\in\mathcal{U}_{<t}$ and any $x_u\in\states_u$. Then for all $\epsilon>0$ and $\delta>0$, there is some $v\in\mathcal{U}_{[t,s]}$ such that $\sigma(v)<\delta$ and, for all $i\in\{0,\dots,n-1\}$:
+\begin{equation*}
+(\exists Q\in\rateset)
+~
+\norm{
+T^{t_{i+1}}_{t_i,\,x_u}-(I+\Delta_{i+1}Q)
+}<\Delta_{i+1}\epsilon
+\end{equation*}
+\end{lemma}
+\begin{proof}
+Fix any $\epsilon>0$ and $\delta>0$. It then follows from Proposition~\ref{prop:outerderivativebehaveslikelimit} and Definition~\ref{def:consistent_process} that there is some $0<\delta^*<\min\{\delta,\nicefrac{1}{2}(s-t)\}$ such that, for all $0<\Delta<\delta^*$:
+\begin{equation}\label{eq:epsilonboundsforboundsinlemma}
+(\exists Q\in\rateset)
+\norm{\frac{1}{\Delta}
+(T^{t+\Delta}_{t,\,x_u}-I)-Q}<\epsilon
+\text{~~and~~}
+(\exists Q\in\rateset)
+\norm{\frac{1}{\Delta}
+(T^{s}_{s-\Delta,\,x_u}-I)-Q}<\epsilon.
+\end{equation}
+Let $t^*\coloneqq t+\epsilon^*$ and $s^*\coloneqq s-\epsilon^*$. Then clearly, $t<t^*<s^*<s$.
+For any $r\in[t^*,s^*]$, it follows from Proposition~\ref{prop:outerderivativebehaveslikelimit} and Definition~\ref{def:consistent_process} that there is some $0<\delta_r<\delta^*$ such that, for all $0<\Delta<\delta_r$:
+\begin{equation}\label{eq:epsilonboundsforlemma}
+(\exists Q\in\rateset)
+\norm{\frac{1}{\Delta}
+(T^{r+\Delta}_{r,\,x_u}-I)-Q}<\epsilon
+\text{~~and~~}
+(\exists Q\in\rateset)
+\norm{\frac{1}{\Delta}
+(T^{r}_{r-\Delta,\,x_u}-I)-Q}<\epsilon.
+\end{equation}
+Let $U_r\coloneqq(r-\delta_r,r+\delta_r)$. Then the set $C\coloneqq\{U_r\colon r\in[t^*,s^*]\}$ is an open cover of $[t^*,s^*]$. By the Heine-Borel theorem, $C$ contains a finite subcover $C^*$ of $[t^*,s^*]$. Without loss of generality, we can take this subcover to be minimal, in the sense that if we remove any of its elements, it is no longer a cover. Let $m$ be the cardinality of $C^*$ and let $r_1<r_2<\dots<r_m$ be the ordered sequence of the midpoints of the intervals in $C^*$.
+
+We will now prove that
+\begin{equation}\label{eq:orderingofbounds}
+r_i-\delta_{r_i}<r_j-\delta_{r_j}
+\text{~~and~~}
+r_i+\delta_{r_i}<r_j+\delta_{r_j}
+\text{~~for all $1\leq i<j\leq m$.}
+\end{equation}
+Assume \emph{ex absurdo} that this statement is not true. Then this implies that there are $1\leq i<j\leq m$ such that either $r_i-\delta_{r_i}\geq r_j-\delta_{r_j}$ or $r_i+\delta_{r_i}\geq r_j+\delta_{r_j}$. If $r_i-\delta_{r_i}\geq r_j-\delta_{r_j}$, then since $i<j$ implies that $r_i<r_j$, it follows that $\delta_{r_j}\geq\delta_{r_i}+r_j-r_i>\delta_{r_i}$ and therefore, that $r_j+\delta_{r_j}>r_i+\delta_{r_i}$. 
+Hence, we find that $U_{r_i}\subseteq U_{r_j}$. Since $C^*$ was taken to be a minimal cover, this is a contradiction.
+Similarly, if $r_i+\delta_{r_i}\geq r_j+\delta_{r_j}$, then since $i<j$ implies that $r_i<r_j$, it follows that $\delta_{r_i}\geq\delta_{r_j}+r_j-r_i>\delta_{r_j}$ and therefore, that $r_i-\delta_{r_i}<r_j-\delta_{r_i}$. Hence, we find that $U_{r_j}\subseteq U_{r_i}$. Since $C^*$ was taken to be a minimal cover, this is again a contradiction. From these two contradictions, it follows that Equation~\eqref{eq:orderingofbounds} is indeed true.
+
+Next, we prove that
+\begin{equation}\label{eq:overlapasyouwantit}
+r_{k+1}-\delta_{r_{k+1}}<r_k+\delta_{r_k}
+\text{~~for all $k\in\{1,\dots,m-1\}$.}
+\end{equation}
+Assume \emph{ex absurdo} that this statement is not true or, equivalently, that there is some $k\in\{1,\dots,m-1\}$ such that $r_k+\delta_{r_k}\leq r_{k+1}-\delta_{r_{k+1}}$. For all $i\in\{k+1,\dots, m\}$, it then follows from Equation~\eqref{eq:orderingofbounds} that $r_k+\delta_{r_k}\leq r_i-\delta_{r_i}$, which implies that $r_k+\delta_{r_k}\notin U_{r_i}$. Similarly, for all $i\in\{1,\dots,k\}$, it follows from Equation~\eqref{eq:orderingofbounds} that $r_i+\delta_{r_i}\leq r_k+\delta_{r_k}$, which again implies that $r_k+\delta_{r_k}\notin U_{r_i}$. 
+Hence, for all $i\in\{1,\dots,m\}$, we have found that $r_k+\delta_{r_k}\notin U_{r_i}$. 
+Since $C^*$ is a cover of $[t^*,s^*]$, this implies that $r_k+\delta_{r_k}\notin[t^*,s^*]$, which, since $r_k\in[t^*,s^*]$, implies that $r_k+\delta_{r_k}>s^*$. Hence, since we know from Equation~\eqref{eq:orderingofbounds} that $r_k-\delta_{r_k}<r_m-\delta_{r_m}$, it follows that $U_{r_m}\cap[t^*,s^*]\subseteq U_{r_k}\cap[t^*,s^*]$. This contradicts the fact that $C^*$ was taken to be a minimal cover.
+
+For all $k\in\{1,\dots,m-1\}$, we now define $q_k\coloneqq\nicefrac{1}{2}(r_k+\delta_{r_k}+r_{k+1}-\delta_{r_{k+1}})$.
+Using Equation~\eqref{eq:orderingofbounds}, it then follows that
+\begin{equation*}
+q_k<\frac{r_{k+1}+\delta_{r_{k+1}}+r_{k+1}-\delta_{r_{k+1}}}{2}=r_{k+1}
+\text{~~and~~}
+q_k>\frac{r_{k}+\delta_{r_{k}}+r_{k}-\delta_{r_{k}}}{2}=r_{k},
+\end{equation*}
+and Equation~\eqref{eq:overlapasyouwantit} trivially implies that $r_{k+1}-\delta_{r_{k+1}}<q_k<r_k+\delta_{r_k}$. Hence,
+\begin{equation*}
+r_k<q_k<r_k+\delta_{r_k}
+\text{~~and~~}
+r_{k+1}-\delta_{r_{k+1}}<q_k<r_{k+1}.
+\end{equation*}
+Due to Equation~\eqref{eq:epsilonboundsforlemma}, and with $\Delta^*_k\coloneqq q_k-r_k$ and $\Delta^{**}_k\coloneqq r_{k+1}-q_k$, this implies that
+\begin{equation}\label{eq:epsilonboundsforqk}
+(\exists Q\in\rateset)
+\norm{\frac{1}{\Delta^*_k}
+(T^{q_k}_{r_k,\,x_u}-I)-Q}<\epsilon
+\text{~~and~~}
+(\exists Q\in\rateset)
+\norm{\frac{1}{\Delta^{**}_k}
+(T^{r_{k+1}}_{q_k,\,x_u}-I)-Q}<\epsilon.
+\end{equation}
+
+For all $k\in\{1,\dots,m\}$, we now let $t_{2k}\coloneqq r_k$ and, for all $k\in\{1,\dots,m-1\}$, we let $t_{2k+1}\coloneqq q_k$. For the resulting sequence $t_2<t_3<\dots<t_{2m-1}<t_{2m}$, it then follows from Equation~\eqref{eq:epsilonboundsforqk} and~\ref{N:homogeneous} that, for all $i\in\{2,\dots,2m-1\}$:
+\begin{equation}\label{eq:opencoverproofresult} 
+(\exists Q\in\rateset)
+~
+\norm{
+T^{t_{i+1}}_{t_i,\,x_u}-(I+\Delta_{i+1}Q)
+}<\Delta_{i+1}\epsilon,
+\end{equation}
+with $\Delta_{i+1}\coloneqq t_{i+1}-t_i<\delta$.  
+
+Next, since $C^*$ is a minimal cover, and because of Equation~\eqref{eq:orderingofbounds}, we know that $r_1-\delta_{r_1}<t^*\leq r_1=t_2$ and, since $\delta_{r_1}<\delta^*$, we also know that $r_1-\delta_{r_1}>t$. Therefore, it follows that there is some $t_1\in\reals$ such that $t<r_1-\delta_{r_1}<t_1<t^*\leq r_1$. If we now let $t_0\coloneqq t$, then $\Delta_1\coloneqq t_1-t_0<\delta^*$ and $\Delta_2\coloneqq t_2-t_1=r_1-t_1<\delta_{r_1}$, and therefore, it follows from Equations~\eqref{eq:epsilonboundsforboundsinlemma} and~\eqref{eq:epsilonboundsforlemma} and~\ref{N:homogeneous} that Equation~\eqref{eq:opencoverproofresult} is also true for $i=0$ and $i=1$.
+% \begin{equation*}
+% (\exists Q\in\rateset)
+% ~
+% \norm{
+% T^{t_1}_{t_0,\,x_u}-(I+\Delta_{1}Q)
+% }<\Delta_{1}\epsilon
+% \text{~~and~~}
+% (\exists Q\in\rateset)
+% ~
+% \norm{
+% T^{t_2}_{t_1,\,x_u}-(I+\Delta_{2}Q)
+% }<\Delta_{2}\epsilon
+% \end{equation*}
+
+Finally, again since $C^*$ is a minimal cover and because of Equation~\eqref{eq:orderingofbounds}, we know that $t_{2m}=r_m\leq s^*<r_m+\delta_{r_m}$ and, since $\delta_{r_m}<\delta^*$, we also know that $r_m+\delta_{r_m}<s$. Therefore, it follows that there is some $t_{2m+1}\in\reals$ such that $t_{2m}=r_m\leq s^*<t_{2m+1}<r_m+\delta_{r_m}<s$. If we now let $t_{2m+2}\coloneqq s$, then $\Delta_{2m+2}\coloneqq t_{2m+2}-t_{2m+1}<\delta^*$ and $\Delta_{2m+1}\coloneqq t_{2m+1}-t_{2m}=t_{2m+1}-r_m<\delta_{r_m}$, and therefore, it follows from Equations~\eqref{eq:epsilonboundsforboundsinlemma} and~\eqref{eq:epsilonboundsforlemma} and~\ref{N:homogeneous} that Equation~\eqref{eq:opencoverproofresult} is also true for $i=2m$ and $i=2m+1$.
+
+Hence, we conclude that Equation~\eqref{eq:opencoverproofresult} holds for all $i\in\{0,1,\dots,2m,2m+1\}$. The result now follows by letting $n\coloneqq2m+2$.
+% \begin{equation*}
+% (\exists Q\in\rateset)
+% ~
+% \norm{
+% T^{t_1}_{t_0,\,x_u}-(I+\Delta_{1}Q)
+% }<\Delta_{1}\epsilon
+% \text{~~and~~}
+% (\exists Q\in\rateset)
+% ~
+% \norm{
+% T^{t_2}_{t_1,\,x_u}-(I+\Delta_{2}Q)
+% }<\Delta_{2}\epsilon
+% \end{equation*}
+% If $s_{2m-1}\neq s$, we also define $s_{2m}\coloneqq s$ and $\Delta'_{2m}\coloneqq s_{2m}-s_{2m-1}=s-r_m>0$. Since $C^*$ is a minimal cover, and because of Equation~\eqref{eq:orderingofbounds}, it follows that $r_m<s<r_m+\delta_{r_m}$, which, because of Equation~\eqref{eq:epsilonboundsforlemma} and~\ref{N:homogeneous}, implies that
+% \begin{equation*}
+% (\exists Q\in\rateset)
+% ~
+% \norm{
+% T^{s_{2m}}_{s_{2m-1},\,x_u}-(I+\Delta'_{2m}Q)
+% }<\Delta'_{2m}\epsilon.
+% \end{equation*}
+% We now consider four cases.
+% If $s_1=t$ and $s_{2m-1}=s$, the result follows by letting $n\coloneqq 2m-2$ and defining $t_i\coloneqq s_{i+1}$ for all $i\in\{0,\dots,n\}$. 
+% If $s_1=t$ and $s_{2m-1}\neq s$, the result follows by letting $n\coloneqq 2m-1$ and defining $t_i\coloneqq s_{i+1}$ for all $i\in\{0,\dots,n\}$.
+% If $s_1\neq t$ and $s_{2m-1}=s$, the result follows by letting $n\coloneqq 2m-1$ and defining $t_i\coloneqq s_{i}$ for all $i\in\{0,\dots,n\}$.
+% If $s_1\neq t$ and $s_{2m-1}\neq s$, the result follows by letting $n\coloneqq 2m$ and defining $t_i\coloneqq s_{i}$ for all $i\in\{0,\dots,n\}$.
+\end{proof}
+
+
+\begin{lemma}\label{lemma:convex_rate_set_contains_approximation}
+Consider a non-empty, bounded, convex set of rate matrices $\rateset$ and, for all $i\in\{1,\ldots,n\}$, some $\Delta_i\geq0$ and $Q_i\in\rateset$ such that $\Delta_i\norm{Q_i}\leq1$. Let $\Delta\coloneqq\sum_{i=1}^n\Delta_i$. Then
+\begin{equation*}
+\norm{\prod_{i=1}^n(I+\Delta_iQ_i) - (I+\sum_{i=1}^n\Delta_iQ_i)} \leq \Delta^2\norm{\rateset}^2.
+\end{equation*}
+\end{lemma}
+\begin{proof}
+We provide a proof by induction. For $n=1$, the result is trivial. So consider the case $n\geq2$ and assume that the result is true for $n-1$. 
+
+For all $i\in\{2,\dots,n\}$, since $\Delta_i\norm{Q_i}\leq 1$, it follows from Proposition~\ref{prop:stochastic_from_rate_matrix} that $(I+\Delta_iQ_i)$ and $I$ are transition matrices. Therefore,
+\begin{multline*}
+\norm{\prod_{i=1}^n(I+\Delta_iQ_i)-(I+\sum_{i=1}^n\Delta_iQ_i)}\\
+\begin{aligned}
+&=\norm{\prod_{i=2}^n(I+\Delta_iQ_i)+\Delta_1Q_1\prod_{i=2}^n(I-\Delta_iQ_i)-(I+\sum_{i=2}^n\Delta_iQ_i)-\Delta_1Q_1}\\
+&\leq\norm{\prod_{i=2}^n(I+\Delta_iQ_i)-(I+\sum_{i=2}^n\Delta_iQ_i)}+\norm{\Delta_1Q_1\prod_{i=2}^n(I-\Delta_iQ_i)-\Delta_1Q_1}\\
+&\leq(\sum_{i=2}^n\Delta_i)^2\norm{\rateset}^2
++\Delta_1\norm{Q_1}
+\norm{\prod_{i=2}^n(I+\Delta_iQ_i)-I}\\
+&\leq(\sum_{i=2}^n\Delta_i)^2\norm{\rateset}^2
++\Delta_1\norm{Q_1}
+\sum_{i=2}^n
+\norm{(I+\Delta_iQ_i)-I}\\
+&=(\sum_{i=2}^n\Delta_i)^2\norm{\rateset}^2
++\Delta_1\norm{Q_1}
+\sum_{i=2}^n
+\Delta_i\norm{Q_i}\\
+&\leq(\sum_{i=2}^n\Delta_i)^2\norm{\rateset}^2
++\Big(\Delta_1
+\sum_{i=2}^n
+\Delta_i\Big)\norm{\rateset}^2
+\leq\Big(
+\Delta_1+\sum_{i=2}^n\Delta_i
+\Big)^2\norm{\rateset}^2
+=\Delta^2\norm{\rateset}^2,
+\end{aligned}
+\end{multline*}\\[3pt]
+where the second inequality follows from the induction hypothesis and the third inequality follows from Lemma~\ref{lemma:recursive}.
+\end{proof}
+
+
+
+% \begin{proof}
+% The claim that $Q\in\rateset$ follows trivially from the fact that $\rateset$ is convex.
+
+% Now, consider the following product expansion:
+% \begin{align*}
+% \prod_{i=1}^n(I+\Delta_iQ_i) &= I + \sum_{i=1}^n\Delta_iQ_i + \sum_{i=1}^{n-1}\sum_{j=i+1}^n\Delta_i\Delta_jQ_iQ_j + \sum_{i=1}^{n-2}\sum_{j=i+1}^{n-1}\sum_{k=j+1}^n\Delta_i\Delta_j\Delta_kQ_iQ_jQ_k + \cdots \\
+% % &= I + \sum_{i=1}^n\Delta_iQ_i + \sum_{k=1}^n\left[\sum_{i_1=1}^{n-k}\cdots\sum_{i_k=i_{k-1}+1}^n XXX \right]
+% \end{align*}
+% It follows that
+% \begin{align*}
+%  &\quad \norm{\prod_{i=1}^n(I+\Delta_iQ_i)} \\
+%  &= \norm{I + \sum_{i=1}^n\Delta_iQ_i + \sum_{i=1}^{n-1}\sum_{j=i+1}^n\Delta_i\Delta_jQ_iQ_j + \sum_{i=1}^{n-2}\sum_{j=i+1}^{n-1}\sum_{k=j+1}^n\Delta_i\Delta_j\Delta_kQ_iQ_jQ_k + \cdots} \\
+%  &\leq \norm{I} + \norm{\sum_{i=1}^n\Delta_iQ_i} + \norm{\sum_{i=1}^{n-1}\sum_{j=i+1}^n\Delta_i\Delta_jQ_iQ_j} + \norm{\sum_{i=1}^{n-2}\sum_{j=i+1}^{n-1}\sum_{k=j+1}^n\Delta_i\Delta_j\Delta_kQ_iQ_jQ_k} + \cdots \\
+%  &\leq \norm{I} + \sum_{i=1}^n\Delta_i\norm{Q_i} + \sum_{i=1}^{n-1}\sum_{j=i+1}^n\Delta_i\Delta_j\norm{Q_iQ_j} + \sum_{i=1}^{n-2}\sum_{j=i+1}^{n-1}\sum_{k=j+1}^n\Delta_i\Delta_j\Delta_k\norm{Q_iQ_jQ_k} + \cdots \\
+%  &\leq \norm{I} + \sum_{i=1}^n\Delta_i\norm{Q_i} + \sum_{i=1}^{n-1}\sum_{j=i+1}^n\Delta_i\Delta_j\norm{Q_i}\norm{Q_j} + \sum_{i=1}^{n-2}\sum_{j=i+1}^{n-1}\sum_{k=j+1}^n\Delta_i\Delta_j\Delta_k\norm{Q_i}\norm{Q_j}\norm{Q_k} + \cdots \\
+%  &\leq 1 + \sum_{i=1}^n\Delta_i\norm{\rateset} + \sum_{i=1}^{n-1}\sum_{j=i+1}^n\Delta_i\Delta_j\norm{\rateset}^2 + \sum_{i=1}^{n-2}\sum_{j=i+1}^{n-1}\sum_{k=j+1}^n\Delta_i\Delta_j\Delta_k\norm{\rateset}^3 + \cdots \\
+%  &= 1 + \Delta\norm{\rateset} + \sum_{i=1}^{n-1}\sum_{j=i+1}^n\Delta_i\Delta_j\norm{\rateset}^2 + \sum_{i=1}^{n-2}\sum_{j=i+1}^{n-1}\sum_{k=j+1}^n\Delta_i\Delta_j\Delta_k\norm{\rateset}^3 + \cdots
+% \end{align*}
+% Consider next the product expansion of the scalar product:
+% \begin{align*}
+% \prod_{i=1}^n(1+\Delta_i\norm{\rateset}) = 1 + \sum_{i=1}^n\Delta_i\norm{\rateset} + \sum_{i=1}^{n-1}\sum_{j=i+1}^n\Delta_i\Delta_j\norm{\rateset}^2 + \sum_{i=1}^{n-2}\sum_{j=i+1}^{n-1}\sum_{k=j+1}^n\Delta_i\Delta_j\Delta_k\norm{\rateset}^3 + \cdots
+% \end{align*}
+% Clearly, these have the same form. Hence, we find that
+% \begin{equation*}
+% \norm{\prod_{i=1}^n(I+\Delta_iQ_i)} \leq \prod_{i=1}^n(1+\Delta_i\norm{\rateset})\,.
+% \end{equation*}
+
+% We are now ready to start proving the inequality of interest. We start by expanding the product term:
+% \begin{align*}
+%  &\quad \norm{\prod_{i=1}^n(I+\Delta_iQ_i) - (I+\Delta Q)} \\
+%  &= \norm{I + \sum_{i=1}^n\Delta_iQ_i + \sum_{i=1}^{n-1}\sum_{j=i+1}^n\Delta_i\Delta_jQ_iQ_j + \sum_{i=1}^{n-2}\sum_{j=i+1}^{n-1}\sum_{k=j+1}^n\Delta_i\Delta_j\Delta_kQ_iQ_jQ_k + \cdots - (I+\Delta Q)} \\
+%  &\leq \norm{I + \sum_{i=1}^n\Delta_iQ_i - (I+\Delta Q)} + \norm{\sum_{i=1}^{n-1}\sum_{j=i+1}^n\Delta_i\Delta_jQ_iQ_j + \sum_{i=1}^{n-2}\sum_{j=i+1}^{n-1}\sum_{k=j+1}^n\Delta_i\Delta_j\Delta_kQ_iQ_jQ_k + \cdots} \\
+%  &\leq \norm{I + \sum_{i=1}^n\Delta_iQ_i - (I+\Delta Q)} + \prod_{i=1}^n(1+\Delta_i\norm{\rateset}) - (1 + \Delta\norm{\rateset}) \\
+%  &= \norm{\sum_{i=1}^n\Delta_iQ_i - \Delta Q} + \prod_{i=1}^n(1+\Delta_i\norm{\rateset}) - (1 + \Delta\norm{\rateset}) \\
+%  &= \norm{\sum_{i=1}^n\Delta_iQ_i - \Delta \sum_{i=1}^n\frac{\Delta_i}{\Delta}Q_i} + \prod_{i=1}^n(1+\Delta_i\norm{\rateset}) - (1 + \Delta\norm{\rateset}) \\
+%  &= \prod_{i=1}^n(1+\Delta_i\norm{\rateset}) - (1 + \Delta\norm{\rateset})\,.
+% \end{align*}
+
+% We next give an upper bound on the remaining product term. Consider the exponential function $e^a$. It is well known that this function has the series representation
+% \begin{equation*}
+% e^a = \sum_{i=0}^\infty\frac{a^i}{i!} = 1 + a + \frac{a^2}{2!} + \frac{a^3}{3!} + \cdots
+% \end{equation*}
+% Hence, it follows that $(1+a)<e^a$ for all $a\in\realspos$. Therefore in particular, we find that $(1+\Delta_i\norm{\rateset})<e^{\Delta_i\norm{\rateset}}$ for all $i\in\{1,\ldots,n\}$. Hence,
+% \begin{align*}
+% \norm{\prod_{i=1}^n(I+\Delta_iQ_i) - (I+\Delta Q)} &\leq \prod_{i=1}^n(1+\Delta_i\norm{\rateset}) - (1 + \Delta\norm{\rateset}) \\
+% % &< e^{\Delta_1\norm{\rateset}}\prod_{i=2}^n(1+\Delta_i\norm{\rateset}) - (1 + \Delta\norm{\rateset}) \\
+% % &\quad\vdots \\
+%  &< \prod_{i=1}^n e^{\Delta_i\norm{\rateset}} - (1 + \Delta\norm{\rateset}) \\
+%  &= e^{\sum_{i=1}^n\Delta_i\norm{\rateset}} - (1 + \Delta\norm{\rateset}) \\
+%  &= e^{\Delta\norm{\rateset}} - (1 + \Delta\norm{\rateset})\,.
+% \end{align*}
+% We now use the following claim.
+% \begin{claim}\label{claim:bound_on_exp}
+% For all $a\in\realspos$ with $a<1$, it holds that $e^a - (1 + a) < a^2$.
+% \end{claim}
+% Hence, because $\Delta<\nicefrac{1}{\norm{\rateset}}$, we find that
+% \begin{align*}
+% \norm{\prod_{i=1}^n(I+\Delta_iQ_i) - (I+\Delta Q)} &< e^{\Delta\norm{\rateset}} - (1 + \Delta\norm{\rateset}) \\
+%  &< \Delta^2\norm{\rateset}^2\,.
+% \end{align*}
+% \end{proof}
+
+% \begin{proof}[Proof of Claim~\ref{claim:bound_on_exp}]
+% We have to show that $e^a-(1+a)<a^2$ for all $a\in\realspos$ such that $a<1$. To this end, consider the function
+% \begin{equation*}
+% f(a) \coloneqq 1 + a + a^2 - e^a\,.
+% \end{equation*}
+% Clearly, the inequality of interest holds whenever $f(a)>0$. Now, we clearly have that $f(0)=0$. Furthermore, if we consider the first and second derivatives,
+% \begin{equation*}
+% \frac{d f(a)}{d a}=1+2a-e^a\,,\quad\text{and,}\quad\frac{d^2 f(a)}{da^2}=2-e^a\,,
+% \end{equation*}
+% we see that at $a=0$, the function is in a local minimum, because $\nicefrac{df(a)}{da}=0$ and $\nicefrac{d^2f(a)}{da^2}>0$. Hence, $f(a)>0$ will hold close to $a=0$. Furthermore, inspection of the second derivative shows that the first derivative increases until $a=\ln(2)$, after which it remains decreasing. Therefore, $f(a)$ is monotonically increasing on $(0,b)$, for some value $b>\ln(2)$ at which the first derivative becomes negative. To prove the claim, we therefore only have to note that $\nicefrac{df(a)}{da} > 0$ still holds at $a=1$.
+% \end{proof}
+
+\begin{lemma}\label{lemma:uniform_delta_for_convex_markov_set}
+Let $\rateset$ be any non-empty, bounded and convex set of rate matrices, and choose any $\epsilon\in\realspos$. Then there is some $\delta\in\realspos$ such that for all $P\in\wmprocesses_{\rateset,\,\mathcal{M}}$, all $t\in\realsnonneg$, and all $\Delta\in\realsnonneg$ such that $\Delta<\delta$:
+\begin{equation*}
+(\exists Q\in\rateset)\,\norm{T_{t}^{t+\Delta} - (I+\Delta Q)} \leq \Delta\epsilon.
+\end{equation*}
+\end{lemma}
+\begin{proof}
+Choose $\delta\in\realspos$ such that $\delta\norm{\rateset}<1$ and $\delta\norm{\rateset}^2<\nicefrac{\epsilon}{2}$ [this is clearly always possible] and consider any $P\in\wmprocesses_{\rateset,\,\mathcal{M}}$, any $t\in\realsnonneg$ and any $\Delta<\delta$. If $\Delta=0$, the result is trivial because we know from Proposition~\ref{prop:Markovhassystem} and Definition~\ref{def:trans_mat_system} that $T_t^t=I$. Hence, without loss of generality, we may assume that $\Delta>0$.
+
+It now follows from Lemma~\ref{lemma:bound_on_linear_approx_partition} that there is some $v\in\mathcal{U}_{[t,t+\Delta]}$ with $v=t_0,\ldots,t_n$ and $t=t_0<t_1<\dots<t_n=t+\Delta$ and, for all $i\in\{1,\ldots,n\}$, some $Q_i\in\rateset$ such that
+\begin{equation*}
+\norm{T_{t_{i-1}}^{t_i} - (I+\Delta_iQ_i)} < \Delta_i\frac{\epsilon}{2}
+\text{~~and~~}
+\Delta_i\norm{Q_i}\leq \Delta\norm{\rateset}\leq \delta\norm{\rateset}<1.
+\end{equation*}
+Therefore, it follows from Propositions~\ref{prop:stochastic_from_rate_matrix} and~\ref{prop:Markovhassystem}, Definition~\ref{def:trans_mat_system} and Lemma~\ref{lemma:recursive} that
+\begin{equation*}%\label{lemma:uniform_delta_for_convex_markov_set:firstinequality}
+\norm{T_t^{t+\Delta} - \prod_{i=1}^n(I+\Delta_iQ_i)} = \norm{\prod_{i=1}^nT_{t_{i-1}}^{t_i} - \prod_{i=1}^n(I+\Delta_iQ_i)}
+ < \sum_{i=1}^n\Delta_i\frac{\epsilon}{2} 
+ = \Delta\frac{\epsilon}{2}.
+\end{equation*}
+and, with $Q\coloneqq\nicefrac{1}{\Delta}\sum_{i=1}^n \Delta_i Q_i$, it follows from Lemma~\ref{lemma:convex_rate_set_contains_approximation} that
+\begin{equation*}%\label{lemma:uniform_delta_for_convex_markov_set:secondinequality}
+\norm{\prod_{i=1}^n(I+\Delta_iQ_i)-(I+\Delta Q)}=
+\norm{\prod_{i=1}^n(I+\Delta_iQ_i) - (I+\sum_{i=1}^n\Delta_i Q_i)} \leq \Delta^2\norm{\rateset}^2.
+\end{equation*}
+%It then follows from Equations~\eqref{lemma:uniform_delta_for_convex_markov_set:firstinequality} and~\eqref{lemma:uniform_delta_for_convex_markov_set:secondinequality} that
+By combining these two inequalities, we find that
+\begin{equation*}
+\norm{T_t^{t+\Delta} - (I+\Delta Q)} %\leq \norm{T_t^{t+\Delta} - \prod_{i=1}^n(I+\Delta_iQ_i)} + \norm{\prod_{i=1}^n(I+\Delta_iQ_i) - (I+\sum_{i=1}^n\Delta_i Q_i)}
+<\Delta\frac{\epsilon}{2}+\Delta^2\norm{\rateset}^2
+\leq\Delta\frac{\epsilon}{2}+\Delta\delta\norm{\rateset}^2
+<\Delta\frac{\epsilon}{2}+\Delta\frac{\epsilon}{2}=\Delta\epsilon.
+\end{equation*}
+The result now follows because the convexity of $\rateset$ implies that $Q\in\rateset$.
+\end{proof}
+
+
+\begin{lemma}\label{lemma:uniformelywellbehaved}
+Consider a non-empty bounded set $\rateset$ of rate matrices and let $P\in\wmprocesses_{\rateset,\,\mathcal{M}}$ be a well-behaved Markov chain that is consistent with $\rateset$. 
+Then, for any $t,s\in\realsnonneg$ such that $t\leq s$, we have that $\norm{T_t^s-I}\leq(s-t)\norm{\rateset}$.
+\end{lemma}
+\begin{proof}
+If $t=s$, the result is trivial because we know from Proposition~\ref{prop:Markovhassystem} and Definition~\ref{def:trans_mat_system} that $T_t^s=I$. Hence, without loss of generality, we may assume that $t<s$. Fix any $\epsilon>0$. Since $t<s$, it follows from Lemma~\ref{lemma:bound_on_linear_approx_partition} that there is some $u\in\mathcal{U}_{[t,t+\Delta]}$ with $u=t_0,\ldots,t_n$ and $t=t_0<\ldots< t_n=s$ such that, for all $i\in\{1,\ldots,n\}$, there is some $Q_i\in\rateset$ such that $\norm{T_{t_{i-1}}^{t_i} - (I+\Delta_iQ_i)} < \Delta_i\epsilon$, and therefore also
+\begin{equation*}
+\norm{T_{t_{i-1}}^{t_i} - I}
+\leq\norm{T_{t_{i-1}}^{t_i} - (I+\Delta_iQ_i)}+\Delta_i\norm{Q_i} < \Delta_i\epsilon+\Delta_i\norm{\rateset}=\Delta_i(\epsilon+\norm{\rateset}),
+\end{equation*}
+with $\Delta_i\coloneqq t_{i}-t_{i-1}$. Since it follows from Proposition~\ref{prop:Markovhassystem} and Definition~\ref{def:trans_mat_system} that $T_t^s=\prod_{i=1}^n T_{t_{i-1}}^{t_i}$ and that, for all $i\in\{1,\dots,n\}$, $T_{t_{i-1}}^{t_i}$ and $I$ are transition matrices, we infer from Lemma~\ref{lemma:recursive} that
+\begin{align*}
+\norm{T_t^s-I}
+=\norm{\prod_{i=1}^nT_{t_{i-1}}^{t_i}-\prod_{i=1}^n I}
+\leq\sum_{i=1}^n\norm{T_{t_{i-1}}^{t_i}-I}
+<
+\sum_{i=1}^n
+\Delta_i(\epsilon+\norm{\rateset})
+%=\left(\sum_{i=1}^n\Delta_i\right)
+%(\epsilon+\norm{\rateset})
+=(s-t)(\epsilon+\norm{\rateset}).
+\end{align*}
+Since $\epsilon>0$ is arbitrary, it follows that $\norm{T_t^s-I}\leq(s-t)\norm{\rateset}$.
+\end{proof}
+
+\begin{lemma}\label{lemma:nonhomogeneous_in_process_set}
+Let $\rateset$ be a non-empty bounded set of rate matrices, and let $\mathcal{M}$ be a non-empty set of probability mass functions on $\states$. Then for any finite sequence of time points $u=t_0,\ldots,t_n$ and corresponding collection of rate matrices $Q_0,\ldots,Q_{n+1}\in\rateset$, there is a process $P\in\wmprocesses_{\rateset,\,\mathcal{M}}$ such that
+\begin{equation}\label{eq:nonhomogen_in_process_set_system_composition}
+\mathcal{T}_P = \mathcal{T}_{Q_0}^{[0,t_0]}\otimes \mathcal{T}_{Q_1}^{[t_0,t_1]} \otimes \cdots \otimes \mathcal{T}_{Q_n}^{[t_{n-1},t_n]} \otimes \mathcal{T}_{Q_{n+1}}^{[t_n,\infty)}\,.
+\end{equation}
+\end{lemma}
+\begin{proof}
+Proposition~\ref{prop:finite_different_rate_matrix_has_process} implies the existence of a process $P\in\wmprocesses$ that satisfies both Equation~\eqref{eq:nonhomogen_in_process_set_system_composition} and $P(X_0)\in\mathcal{M}$. It remains to show that $P\in\wmprocesses_{\rateset,\,\mathcal{M}}$, or equivalently, since we already have $P(X_0)\in\mathcal{M}$, that $\smash{\overline{\partial}}T_t^t\subseteq\rateset$ for all $t\in\realsnonneg$. To this end, consider any $t\in\realsnonneg$.
+
+We consider several cases. If $t<t_0$, then $\smash{\overline{\partial}}T_t^t$ corresponds to $\mathcal{T}_{Q_0}^{[0,t_0]}$, and hence $\smash{\overline{\partial}}T_t^t=\{Q_0\}\subseteq\rateset$. If $t>t_n$, then $\smash{\overline{\partial}}T_t^t$ corresponds to $\smash{\mathcal{T}_{Q_{n+1}}^{[t_n,\infty)}}$, in which case $\smash{\overline{\partial}}T_t^t=\{Q_{n+1}\}\subseteq\rateset$. Similarly, if $t\in(t_{i-1},t_i)$ for some $i\in\{1,\ldots,n\}$, then $\smash{\overline{\partial}}T_t^t$ corresponds to $\mathcal{T}_{Q_i}^{[t_{i-1},t_i]}$, and therefore $\smash{\overline{\partial}}T_t^t=\{Q_i\}\subseteq\rateset$. The only remaining case is when $t=t_i$ for some $i\in\{0,\ldots,n\}$. In this case, we have that $\smash{\overline{\partial}}_-T_t^t=\{Q_i\}$ and $\smash{\overline{\partial}}_+T_t^t=\{Q_{i+1}\}$, and therefore
+\begin{equation*}
+\smash{\overline{\partial}}T_t^t = \smash{\overline{\partial}}_-T_t^t\cup\smash{\overline{\partial}}_+T_t^t=\{Q_{i},Q_{i+1}\}\subseteq\rateset.
+\end{equation*}
+% Because this covers all the possible cases, in summary, we have found that $\smash{\overline{\partial}}T_t^t\subseteq\rateset$ for all $t\in\realsnonneg$, and hence $P\in\wmprocesses_\rateset$.
+\end{proof}
+
+
+Lemma~\ref{lemma:restricted_trans_mat_system_complete_if_Q_closed} and~\ref{lemma:restricted_trans_mat_system_totally_bounded_if_Q_bounded_convex} below essentially provide the bulk of the proof for Theorem~\ref{theorem:restricted_transmatsystem_space_compact_if_Q_closed}; these results are stated separately for ease of exposition.
+
+\begin{lemma}\label{lemma:restricted_trans_mat_system_complete_if_Q_closed}
+Consider a non-empty, bounded, convex and closed set of rate matrices $\rateset$ and any $t,s\in\realsnonneg$ such that $t\leq s$. Let $d$ be the metric that is defined in Equation~\eqref{eq:trans_mat_system_metric}. The metric space $\smash{(\mathbb{T}_\rateset^{[t,s]},d)}$ is then complete.
+\end{lemma}
+\begin{proof}
+Consider any sequence $\{\mathcal{T}_i^{[t,s]}\}_{i\in\nats}$ in $\mathbb{T}_{\rateset}^{[t,s]}$ that is Cauchy. We need to prove that this sequence converges to a limit $\mathcal{T}_*^{[t,s]}$ that belongs to $\mathbb{T}_{\rateset}^{[t,s]}$. Since we already know from Proposition~\ref{lemma:restricted_trans_mat_system_cauchy_converges} that this limit exists and belongs to $\mathbb{T}^{[t,s]}$, the only thing that remains to be shown is that $\mathcal{T}_*^{[t,s]}\in\mathbb{T}_{\rateset}^{[t,s]}$. 
+Throughout this proof, for any $q,r\in[t,s]$ such that $q\leq r$, we will use $\smash{\presuper{*}T_q^r}$ to denote the transition matrix that corresponds to $\mathcal{T}_*^{[t,s]}$ and, for all $i\in\nats$, we will use $\presuper{i}T_q^r$ to denote the transition matrix that corresponds to $\mathcal{T}_i^{[t,s]}$. 
+
+Fix any $r\in[t,s]$ and consider any $\Delta>0$. Then due to Lemma~\ref{lemma:uniformelywellbehaved}, for all $i\in\nats$:
+\begin{equation*}
+\norm{\presuper{*}T_r^{r+\Delta}-I}
+\leq\norm{\presuper{*}T_r^{r+\Delta}-\presuper{i}T_r^{r+\Delta}}+\norm{\presuper{i}T_r^{r+\Delta}-I}
+\leq
+\norm{\presuper{*}T_r^{r+\Delta}-\presuper{i}T_r^{r+\Delta}}+\Delta\norm{\rateset}.
+\end{equation*}
+Since $\lim_{i\to+\infty}\presuper{i}T_r^{r+\Delta}=\presuper{*}T_r^{r+\Delta}$, this implies that $\norm{\presuper{*}T_r^{r+\Delta}-I}\leq\Delta\norm{\rateset}$. Similarly, if $r-\Delta\geq0$, we also find that $\norm{\presuper{*}T_{r-\Delta}^{r}-I}\leq\Delta\norm{\rateset}$. Hence, it follows that
+\begin{equation*}
+\limsup_{\Delta\to0^+}\norm{\frac{1}{\Delta}\left(\presuper{*}T_r^{r+\Delta}-I\right)}\leq\norm{\rateset}\text{~~~and~~~}
+\limsup_{\Delta\to0^+}\norm{\frac{1}{\Delta}\left(\presuper{*}T_{r-\Delta}^{r}-I\right)}\leq\norm{\rateset},
+\end{equation*}
+which implies that $\mathcal{T}_*^{[t,s]}$ is well-behaved.
+
+It remains to be show that $\mathcal{T}_*^{[t,s]}\in\mathbb{T}_\rateset^{[t,s]}$. To this end, consider any $Q\in\rateset$, and let $\mathcal{T}_Q$ be the corresponding transition matrix system, as given by Definition~\ref{def:systemfromQ}. Let 
+\begin{equation*}
+\mathcal{T}_*\coloneqq \mathcal{T}_Q^{[0,t]}\otimes \mathcal{T}_*^{[t,s]} \otimes \mathcal{T}_Q^{[s,\infty)}\,.
+\end{equation*}
+Then clearly, $\mathcal{T}_*$ is a transition matrix system and, since $\mathcal{T}_*^{[t,s]}$ is well-behaved, it follows from Proposition~\ref{prop:systemQ} and~\ref{prop:concat_restr_trans_mat_systems_is_system} that $\mathcal{T}_*$ is also well-behaved. Therefore, and because of Theorem~\ref{theo:uniqueMarkovchain}, there is some $P_*\in\wmprocesses$ such that $\mathcal{T}_{P_*}=\mathcal{T}_*$. In the remainder of this proof, we will show that $P_*\in\wmprocesses_\rateset$, which then implies that $\mathcal{T}_*^{[t,s]}\in\mathbb{T}_\rateset^{[t,s]}$.
+
+Fix any $r\in\realsnonneg$. We need to show that $\smash{\overline{\partial}}\presuper{*}T_r^r\subseteq\rateset$, or equivalently, that $\smash{\overline{\partial}_{+}}\hspace{-3pt}\presuper{*}T_r^r\subseteq\rateset$ and $\smash{\overline{\partial}_{-}}\hspace{-3pt}\presuper{*}T_r^r\subseteq\rateset$. We will only prove that $\smash{\overline{\partial}_{+}}\hspace{-3pt}\presuper{*}T_r^r\subseteq\rateset$. The proof for $\smash{\overline{\partial}_{-}}\hspace{-3pt}\presuper{*}T_r^r\subseteq\rateset$ is completely analogous. 
+So fix any $Q_*\in\smash{\overline{\partial}_{+}}\hspace{-3pt}\presuper{*}T_r^r$. We will show that $Q_*\in\rateset$. If $r<t$ or $s\leq r$, this holds trivially because in that case, we know that $\smash{\partial}_+\presuper{*}T_r^r=Q$, which, because of Corollary~\ref{corol:outersingleton}, implies that $\smash{\overline{\partial}}_+\presuper{*}T_r^r=\{Q\}\subseteq\rateset$.
+Therefore, without loss of generality, we may assume that $r\in[t,s)$. 
+
+Fix any $m\in\nats$. Lemma~\ref{lemma:uniform_delta_for_convex_markov_set} then implies the existence of some $\delta\in\realspos$ such that
+\begin{equation}\label{eq:lemma:restricted_trans_mat_system_complete_if_Q_closed:uniformdelta}
+(\forall 0<\Delta<\delta)\,
+(\forall i\in\nats)\,
+(\exists Q\in\rateset)~\norm{\frac{\presuper{i}T_{r}^{r+\Delta} - I}{\Delta}- Q} \leq\frac{1}{m}.
+\end{equation}
+Since $Q_*\in \smash{\overline{\partial}}_+\hspace{-3pt}\presuper{*}T_r^r$, Equation~\eqref{eq:rightouterderivative} implies the existence of some $0<\Delta_m<\delta$ such that
+\begin{equation*}%\label{eq:lemma:restricted_trans_mat_system_complete_if_Q_closed:deltam}
+\norm{\frac{\presuper{*}T_r^{r+\Delta_m} - I}{\Delta_m}-Q_*}<\frac{1}{m}
+\end{equation*}
+and, since $\lim_{i\to+\infty}\presuper{i}T_r^{r+\Delta_m}=\presuper{*}T_r^{r+\Delta_m}$, there is some $i_m\in\nats$ such that
+\begin{equation*}%\label{eq:lemma:restricted_trans_mat_system_complete_if_Q_closed:im}
+\norm{\frac{\presuper{*}T_r^{r+\Delta_m}-\presuper{i_m}T_r^{r+\Delta_m}}{\Delta_m}}\leq\frac{1}{m}.
+\end{equation*}
+Therefore, we can apply Equation~\eqref{eq:lemma:restricted_trans_mat_system_complete_if_Q_closed:uniformdelta}---with $\Delta\coloneqq\Delta_m$ and $i\coloneqq i_m$---to infer that there is some $Q_m\in\rateset$ such that
+\begin{equation*}
+\norm{Q_*-Q_m}
+\leq
+\norm{Q_*-\frac{\presuper{*}T_r^{r+\Delta_m} - I}{\Delta_m}}
++
+\norm{\frac{\presuper{*}T_r^{r+\Delta_m}-\presuper{i_m}T_r^{r+\Delta_m}}{\Delta_m}}
++
+\norm{\frac{\presuper{i_m}T_{r}^{r+\Delta_m} - I}{\Delta_m}- Q_m}
+\leq\frac{3}{m}.
+\end{equation*}
+By repeating this procedure for every $m\in\nats$, we obtain a sequence $\{Q_m\}_{n\in\nats}$ in $\rateset$ such that $\norm{Q_*-Q_m}\leq\nicefrac{3}{m}$ for all $m\in\nats$, which clearly implies that $\lim_{m\to+\infty}Q_m=Q_*$. Since the sequence $\{Q_m\}_{m\in\nats}$ belongs to the closed set $\rateset$, we must therefore have that $Q_*\in\rateset$.
+\end{proof}
+
+
+\begin{lemma}\label{lemma:restricted_trans_mat_system_totally_bounded_if_Q_bounded_convex}
+Consider a non-empty, bounded and convex set of rate matrices $\rateset$ and any $t,s\in\realsnonneg$ such that $t\leq s$. Let $d$ be the metric that is defined in Equation~\eqref{eq:trans_mat_system_metric}. The metric space $\smash{(\mathbb{T}_\rateset^{[t,s]},d)}$ is then totally bounded.
+\end{lemma}
+\begin{proof}
+In order to prove that $(\mathbb{T}_\rateset^{[t,s]},d)$ is totally bounded, it suffices to prove that, for all $\epsilon\in\realspos$, there is a finite collection of open $\epsilon$-balls centered on elements of $\smash{\mathbb{T}_\rateset^{[t,s]}}$, such that this collection covers $\smash{\mathbb{T}_\rateset^{[t,s]}}$, or equivalently, that there is a finite subset $\mathbb{C}_\epsilon$ of $\smash{\mathbb{T}_\rateset^{[t,s]}}$ such that
+\begin{equation}\label{lemma:restricted_trans_mat_system_totally_bounded_if_Q_bounded_convex:thereisacover}
+(\forall \mathcal{T}^{[t,s]}\in\mathbb{T}_\rateset^{[t,s]})\,(\exists \mathcal{S}^{[t,s]}\in \mathbb{C}_\epsilon)~d(\mathcal{T}^{[t,s]},\mathcal{S}^{[t,s]}) < \epsilon\,.
+\end{equation}
+Fix any $\epsilon>0$. We will now construct such a set $\mathbb{C}_\epsilon$ and prove that it satisfies Equation~\eqref{lemma:restricted_trans_mat_system_totally_bounded_if_Q_bounded_convex:thereisacover}.
+
+%In other words: for any $\epsilon>0$, we need to construct a finite set $\mathbb{C}_\epsilon\subseteq\mathbb{T}_\rateset^{[t,s]}$ such that $\mathbb{T}_\rateset^{[t,s]}\subseteq\cup$
+
+% Equivalently, we need to show that for all $\epsilon\in\realspos$, there is some set
+% \begin{equation*}
+% \mathbb{C}_\epsilon\coloneqq \left\{\mathcal{T}_i^{[t,s]}\in\mathbb{T}_\rateset^{[t,s]}\,:\,i\in\{1,\ldots,N\}\right\}\,,
+% \end{equation*}
+% with $N\in\nats$, such that
+% \begin{equation*}
+% (\forall \mathcal{T}^{[t,s]}\in\mathbb{T}_\rateset^{[t,s]})(\exists \mathcal{S}^{[t,s]}\in \mathbb{C}_\epsilon)\,:\,d(\mathcal{T}^{[t,s]},\mathcal{S}^{[t,s]}) < \epsilon\,.
+% \end{equation*}
+
+Choose $\epsilon_1,\epsilon_2,\epsilon_3,\epsilon_4\in\reals_{>0}$ such that 
+$(s-t)(\epsilon_1+\epsilon_2+\epsilon_3)+2\epsilon_4<\nicefrac{\epsilon}{2}$ and choose $\delta_3,\delta_4\in\reals_{>0}$ such that $\delta_3\norm{\rateset}^2<\epsilon_3$ and $2\delta_4\norm{\rateset}<\epsilon_4$ [this is clearly always possible].
+
+
+Because $\rateset$ is bounded and finite-dimensional, it is totally bounded under the metric induced by our usual norm $\norm{\cdot}$. Therefore, $\rateset$ admits a finite cover of open balls with radius $\epsilon_2$. In other words, there is some finite set $\rateset_{\epsilon_2}\subseteq\rateset$ such that
+\begin{equation}\label{lemma:restricted_trans_mat_system_totally_bounded_if_Q_bounded_convex:epsilon2}
+(\forall Q\in\rateset)(\exists \tilde{Q}\in\rateset_{\epsilon_2})\,:\,\norm{Q - \tilde{Q}} < \epsilon_2.
+\end{equation}
+Furthermore, because $\rateset$ is non-empty, bounded and convex, we know from Lemma~\ref{lemma:uniform_delta_for_convex_markov_set} that there is some $\delta_1\in\realspos$ such that for all $P\in\wmprocesses_\rateset$, all $t\in\realsnonneg$, and all $\Delta\in\realsnonneg$ such that $\Delta<\delta_1$:
+\begin{equation}\label{lemma:restricted_trans_mat_system_totally_bounded_if_Q_bounded_convex:epsilon1}
+(\exists Q\in\rateset)\,\norm{T_t^{t+\Delta} - (I+\Delta Q)} \leq \Delta\epsilon_1.
+\end{equation}
+
+Now let $\delta\coloneqq\min\{\delta_1,\delta_3,\delta_4\}$ and consider any $u\in\mathcal{U}_{[t,s]}$ such that $\sigma(u)<\delta$. Then, without loss of generality, there is some $n\in\nats$ such that $u=t_0,\ldots,t_n$. 
+%Then, let $\mathbb{T}_i$ be the set of restricted transition matrix systems defined by
+% \begin{equation*}
+% \mathbb{T}_i \coloneqq \left\{ \mathcal{T}_{Q_j}^{[t_{i-1},t_i]} \,:\,Q_j\in\rateset_{\epsilon'} \right\}\,.
+% \end{equation*}
+%Because $\rateset_{\epsilon'}$ is finite, $\mathbb{T}_i$ is also clearly finite.
+%We now use the following claim, which is proved below.
+%Because each $\mathbb{T}_i$ is finite, there are only finitely many ways in which the product in Claim~\ref{claim:composition_restricted_trans_mat_sys_in_set} can be constructed. Therefore, if we now let
+Let
+\begin{equation*}
+\mathbb{C}_\epsilon \coloneqq \left\{\mathcal{T}_{\tilde{Q}_1}^{[t_{0},t_1]} \otimes \mathcal{T}_{\tilde{Q}_2}^{[t_{1},t_2]}\otimes~ \cdots ~\otimes \mathcal{T}_{\tilde{Q}_n}^{[t_{n-1},t_n]}\,:\,\left(\forall i\in\{1,\ldots,n\}\right)\,\tilde{Q}_i\in\rateset_{\epsilon_2}\right\},
+\end{equation*}
+where, for any $\tilde{Q}\in\rateset_{\epsilon_2}$, we let $\mathcal{T}_{\tilde{Q}}^{[t_{i-1},t_i]}$ be the restriction of $\mathcal{T}_{\tilde{Q}}$ to the interval $[t_{i-1},t_i]$, with $\mathcal{T}_{\tilde{Q}}$ as in Definition~\ref{def:systemfromQ}.
+Since $n$ and $\abs{\rateset_{\epsilon_2}}$ are finite, $\mathbb{C}_\epsilon$ is clearly finite and, due to Lemma~\ref{lemma:nonhomogeneous_in_process_set}, $\mathbb{C}_\epsilon$ is a subset of $\smash{\mathbb{T}_\rateset^{[t,s]}}$. The only thing that we still need to prove is that $\mathbb{C}_\epsilon$ satisfies Equation~\eqref{lemma:restricted_trans_mat_system_totally_bounded_if_Q_bounded_convex:thereisacover}.
+
+So fix any $\mathcal{T}^{[t,s]}\in\mathbb{T}_\rateset^{[t,s]}$. For any $q,r\in[t,s]$ such that $q\leq r$, we will use $T_q^r$ to denote the corresponding transition matrix. %We will show that there is some $\mathcal{S}^{[t,s]}\in \mathbb{C}_{\epsilon}$ such that $d(\mathcal{T}^{[t,s]},\mathcal{S}^{[t,s]})<\epsilon$. We start by constructing this $\mathcal{S}^{[t,s]}$.
+
+For all $i\in\{1,\dots,n\}$, since $\Delta_i\leq\sigma(u)<\delta\leq\delta_1$, 
+%Because $\mathcal{T}^{[t,s]}\in\mathbb{T}_\rateset^{[t,s]}$, it follows that there is some corresponding $P\in\wmprocesses_\rateset$ which agrees with $\mathcal{T}^{[t,s]}$ on all transition matrices $T_q^r\in\mathcal{T}^{[t,s]}$. 
+it follows from Equations~\eqref{lemma:restricted_trans_mat_system_totally_bounded_if_Q_bounded_convex:epsilon1} and~\eqref{lemma:restricted_trans_mat_system_totally_bounded_if_Q_bounded_convex:epsilon2}---in that order---and Lemma~\ref{lemma:linearpartofexponential} that there are $Q_i\in\rateset$ and $\tilde{Q}_i^*\in\rateset_{\epsilon_2}$ such that 
+\begin{align}
+\norm{T_{t_{i-1}}^{t_i}-e^{\tilde{Q}_i^*\Delta_i}}
+&\leq
+\norm{T_{t_{i-1}}^{t_i}-(I+\Delta_i Q_i)}
++\norm{\Delta_i(Q_i-\tilde{Q}_i^*)}
++
+\big\lVert I+\Delta_i\tilde{Q}_i^*-e^{\tilde{Q}_i^*\Delta_i}
+\big\lVert\notag\\
+&\leq
+\Delta_i\epsilon_1
++\Delta_i\epsilon_2
++\Delta_i^2\norm{\rateset}^2
+\leq\Delta_i(\epsilon_1+\epsilon_2+\epsilon_3),\label{lemma:restricted_trans_mat_system_totally_bounded_if_Q_bounded_convex:epsilon123}
+\end{align}
+where the final inequality holds because $\Delta_i\norm{\rateset}^2\leq\delta\norm{\rateset}^2\leq\delta_3\norm{\rateset}^2<\epsilon_3$. We now use these $\tilde{Q}_i^*\in\rateset_{\epsilon_2}$, $i\in\{1,\dots,n\}$, to define
+\begin{equation*}
+\mathcal{S}^{[t,s]}\coloneqq \mathcal{T}_{\tilde{Q}_1^*}^{[t_{0},t_1]} \otimes\mathcal{T}_{\tilde{Q}_1^*}^{[t_{0},t_1]} \otimes ~\cdots~ \otimes \mathcal{T}_{\tilde{Q}_n^*}^{[t_{n-1},t_n]} \in \mathbb{C}_\epsilon.
+\end{equation*}
+For any $q,r\in[t,s]$ such that $q\leq r$, we will use $S_q^r$ to denote transition matrix that corresponds to the restricted transition matrix system $\smash{\mathcal{S}^{[t,s]}}$.
+
+For any $i\in\{1,\dots,n\}$, it follows from Definition~\ref{def:systemfromQ} and Equation~\eqref{lemma:restricted_trans_mat_system_totally_bounded_if_Q_bounded_convex:epsilon123} that
+\begin{equation}\label{lemma:restricted_trans_mat_system_totally_bounded_if_Q_bounded_convex:firstlocal}
+\norm{T_{t_{i-1}}^{t_i} - S_{t_{i-1}}^{t_i}} 
+=\norm{T_{t_{i-1}}^{t_i} - e^{\tilde{Q}_i^*\Delta_i}} 
+\leq \Delta_i(\epsilon_1+\epsilon_2+\epsilon_3)
+\end{equation}
+and from Lemma~\ref{lemma:uniformelywellbehaved} that, for all $q,r\in[t_{i-1},t_i]$ such that $q\leq r$,
+\begin{equation}\label{lemma:restricted_trans_mat_system_totally_bounded_if_Q_bounded_convex:secondlocal}
+\norm{T_q^r - S_q^r} 
+\leq
+\norm{T_q^r - I}+\norm{S_q^r-I} 
+\leq 2(r-q)\norm{\rateset}
+%\leq 2(t_i-t_{i-1})\norm{\rateset}
+%\leq 2\Delta_i\norm{\rateset}
+<\epsilon_4,
+\end{equation}
+where the final inequality holds because $r-q\leq t_i-t_{i-1}\leq\Delta_i\leq\sigma(u)\leq\delta\leq\delta_4$ and because $2\delta_4\norm{\rateset}<\epsilon_4$.
+
+Consider now any $q,r\in[t,s]$ such that $q\leq r$. We will prove that $\norm{T_q^r - S_q^r} < \nicefrac{\epsilon}{2}$. If $q,r\in[t_{i-1},t_i]$ for some $i\in\{1,\ldots,n\}$, this follows trivially from Equation~\eqref{lemma:restricted_trans_mat_system_totally_bounded_if_Q_bounded_convex:secondlocal}. In any other case, there must be some $k,\ell\in\{1,\ldots,n\}$ such that $k\leq\ell$, $q\in[t_{k-1},t_k]$ and $r\in[t_{\ell},t_{\ell+1}]$, and we then find that, again,
+\begin{align*}
+\norm{T_q^r - S_q^r} &= \norm{T_q^{t_k}\left(\prod_{i=k+1}^{\ell}T_{t_{i-1}}^{t_i}\right)T_{t_{\ell}}^r - S_q^{t_k}\left(\prod_{i=k+1}^{\ell}S_{t_{i-1}}^{t_i}\right)S_{t_{\ell}}^r} \\
+&\leq
+\norm{T_q^{t_k}-S_q^{t_k}}
++\sum_{i=k+1}^\ell\norm{T_{t_{i-1}}^{t_i}-S_{t_{i-1}}^{t_i}}
++\norm{T_{t_{\ell}}^r-S_{t_{\ell}}^r}\\
+&\leq
+2\epsilon_4+\sum_{i=k+1}^\ell\Delta_i(\epsilon_1+\epsilon_2+\epsilon_3)<\frac{\epsilon}{2},
+\end{align*}
+where the equality follows from Definition~\ref{def:trans_mat_system}, the first inequality follows from Definition~\ref{def:trans_mat_system} and Lemma~\ref{lemma:recursive}, the second inequality follows from Equations~\eqref{lemma:restricted_trans_mat_system_totally_bounded_if_Q_bounded_convex:firstlocal} and~\eqref{lemma:restricted_trans_mat_system_totally_bounded_if_Q_bounded_convex:secondlocal}, and the final inequality holds because $\sum_{i=k+1}^\ell\Delta_i=t_\ell-t_k\leq s-t$.
+Hence, in all cases: $\norm{T_q^r - S_q^r} < \nicefrac{\epsilon}{2}$.
+
+Since this is true for all $q,r\in[t,s]$ such that $q\leq r$, we immediately find that
+\begin{equation*}
+d(\mathcal{T}^{[t,s]},\mathcal{S}^{[t,s]}) = \sup\{\norm{T_q^r - S_q^r}\,:\,q,r\in[t,s], q\leq r\} \leq \frac{\epsilon}{2}<\epsilon.
+\end{equation*}
+Since $\mathcal{T}^{[t,s]}\in\mathbb{T}_\rateset^{[t,s]}$ is arbitrary, it follows that $\mathbb{C}_\epsilon$ satisfies Equation~\eqref{lemma:restricted_trans_mat_system_totally_bounded_if_Q_bounded_convex:thereisacover}.
+\end{proof}
+
+% \begin{claim}\label{claim:composition_restricted_trans_mat_sys_in_set}
+% For all $i\in\{1,\ldots,n\}$, choose some $\mathcal{T}_i^{[t_{i-1},t_i]}\in\mathbb{T}_i$. Then,
+% \begin{equation*}
+% \left(\mathcal{T}_1^{[t_{0},t_1]} \otimes \mathcal{T}_2^{[t_{1},t_2]} \cdots \otimes \mathcal{T}_n^{[t_{n-1},t_n]}\right) \in \mathbb{T}_\rateset^{[t,s]}\,.
+% \end{equation*}
+% \end{claim}
+% \begin{proof}[Proof of Claim~\ref{claim:composition_restricted_trans_mat_sys_in_set}]
+% For all $i\in\{1,\ldots,n\}$, choose some $\mathcal{T}_i^{[t_{i-1},t_i]}\in\mathbb{T}_i$. Let
+% \begin{equation*}
+% \mathcal{T}^{[t,s]}\coloneqq \mathcal{T}_1^{[t_{0},t_1]} \otimes \mathcal{T}_2^{[t_{1},t_2]} \cdots \otimes \mathcal{T}_n^{[t_{n-1},t_n]}\,.
+% \end{equation*}
+% Because for all $i\in\{1,\ldots,n\}$ we have that $\mathcal{T}_i^{[t_{i-1},t_i]}$ is a well-behaved restricted transition matrix system, it follows from Proposition~\ref{prop:concat_restr_trans_mat_systems_is_system} that $\mathcal{T}^{[t,s]}$ is a well-behaved restricted transition matrix system defined on $[t,s]$.
+
+% We now have to show that $\mathcal{T}^{[t,s]} \in \mathbb{T}_\rateset^{[t,s]}$. To this end, consider any $Q\in\rateset$, and let $\mathcal{T}_Q$ be the transition matrix system corresponding to $Q$, defined as in Definition~\ref{def:systemfromQ}. Let
+% \begin{align*}
+% \mathcal{T} &\coloneqq \mathcal{T}_Q^{[0,t]}\otimes \mathcal{T}^{[t,s]} \otimes \mathcal{T}_Q^{[s,\infty)} \\
+%  &= \mathcal{T}_Q^{[0,t]}\otimes \mathcal{T}_1^{[t_{0},t_1]} \otimes \mathcal{T}_2^{[t_{1},t_2]} \cdots \otimes \mathcal{T}_n^{[t_{n-1},t_n]} \otimes \mathcal{T}_Q^{[s,\infty)} \\
+%  &= \mathcal{T}_Q^{[0,t]}\otimes \mathcal{T}_{Q_1}^{[t_{0},t_1]} \otimes \mathcal{T}_{Q_2}^{[t_{1},t_2]} \cdots \otimes \mathcal{T}_{Q_n}^{[t_{n-1},t_n]} \otimes \mathcal{T}_Q^{[s,\infty)} \,,
+% \end{align*}
+% for the corresponding rate matrices $Q_1,\ldots,Q_n\in\rateset_{\epsilon'}\subseteq\rateset$. Then, it follows from Lemma~\ref{lemma:nonhomogeneous_in_process_set} that there is some $P\in\wmprocesses_\rateset$ such that $\mathcal{T}_P=\mathcal{T}$. Because $P\in\wmprocesses_\rateset$, it follows that the restricted transition matrix system satisfies $\mathcal{T}^{[t,s]}=\mathcal{T}_P^{[t,s]}\in\mathbb{T}_\rateset^{[t,s]}$.
+% \end{proof}
+
+% \begin{proof}[Proof of Claim~\ref{claim:lemma_total_bounded_full_interval_error}]
+% Consider any $i\in\{1,\ldots,n\}$. Then, with $T_{t_{i-1}}^{t_i}\in\mathcal{T}^{[t,s]}$ and $S_{t_{i-1}}^{t_i}\in\mathcal{S}^{[t,s]}$, it follows from Equation~\eqref{eq:lemma_total_bounded_full_interval_error_linear} that there is some $Q_i\in\rateset$ such that
+% \begin{align*}
+% \norm{T_{t_{i-1}}^{t_i} - S_{t_{i-1}}^{t_i}} &\leq \norm{T_{t_{i-1}}^{t_i} - (I+\Delta_iQ_i)} + \norm{(I+\Delta_iQ_i) - S_{t_{i-1}}^{t_i}} \\
+%  &\leq \norm{T_{t_{i-1}}^{t_i} - (I+\Delta_iQ_i)} + \norm{(I+\Delta_iQ_i) - (I+\Delta_i\widetilde{Q}_i)} + \norm{(I+\Delta_i\widetilde{Q}_i) - S_{t_{i-1}}^{t_i}} \\
+%  &< \frac{\Delta_i\epsilon^*}{6C} + \Delta_i\epsilon' + \norm{(I+\Delta_i\widetilde{Q}_i) - S_{t_{i-1}}^{t_i}} \\
+%  &= \frac{\Delta_i\epsilon^*}{6C} + \Delta_i\epsilon' + \norm{(I+\Delta_i\widetilde{Q}_i) - e^{\widetilde{Q}_i\cdot\Delta_i}} \\
+%  &\leq \frac{\Delta_i\epsilon^*}{6C} + \Delta_i\epsilon' + \Delta_i^2\norm{\rateset}^2\,,
+% \end{align*}
+% where the strict equality follows from the definition of $\mathcal{S}^{[t,s]}$, and the final inequality follows from Lemma~\ref{lemma:linearpartofexponential}. Furthermore, because $\Delta_i\leq\sigma(u)<\delta^*\leq\nicefrac{\epsilon^*}{(6C\norm{\rateset}^2)}$, we have that
+% \begin{equation*}
+% \norm{T_{t_{i-1}}^{t_i} - S_{t_{i-1}}^{t_i}} < \frac{\Delta_i\epsilon^*}{6C} + \Delta_i\epsilon' + \Delta_i^2\norm{\rateset}^2 < 2\frac{\Delta_i\epsilon^*}{6C} + \Delta_i\epsilon' = \frac{\Delta_i\epsilon^*}{3C} + \Delta_i\epsilon'\,.
+% \end{equation*}
+% \end{proof}
+
+% \begin{proof}[Proof of Claim~\ref{claim:lemma_total_bounded_sub_interval_error}]
+% Consider any $i\in\{1,\ldots,n\}$, and any $q,r\in[t_{i-1},t_i]$ such that $q\leq r$. Consider the transition matrices $T_q^r\in\mathcal{T}^{[t,s]}$ and $S_q^r\in\mathcal{S}^{[t,s]}$. Then, because $(r-q)\leq\Delta_i\leq\sigma(u)<\delta^*\leq\delta$, it follows from Equation~\ref{eq:lemma_total_bounded_uniform_delta} that there is some $Q\in\rateset$ such that
+% \begin{align*}
+% \norm{T_q^r - S_q^r} &< \frac{(r-q)\epsilon^*}{6C} + \norm{(I+(r-q)Q) - S_q^r} \\
+%  &\leq \frac{(r-q)\epsilon^*}{6C} + \norm{(I+(r-q)Q) - (I+(r-q)\widetilde{Q}_i)} + \norm{(I+(r-q)\widetilde{Q}_i) - S_q^r} \\
+%  &\leq \frac{(r-q)\epsilon^*}{6C} + 2(r-q)\norm{\rateset} + \norm{(I+(r-q)\widetilde{Q}_i) - S_q^r} \\
+%  &= \frac{(r-q)\epsilon^*}{6C} + 2(r-q)\norm{\rateset} + \norm{(I+(r-q)\widetilde{Q}_i) - e^{\widetilde{Q}_i\cdot(r-q)}} \\
+%  &\leq \frac{(r-q)\epsilon^*}{6C} + 2(r-q)\norm{\rateset} + (r-q)^2\norm{\rateset}^2 \\
+%  &\leq \frac{\Delta_i\epsilon^*}{6C} + 2(r-q)\norm{\rateset} + \Delta_i^2\norm{\rateset}^2 \\
+%  &\leq \frac{\Delta_i\epsilon^*}{6C} + 2(r-q)\norm{\rateset} + \frac{\Delta_i\epsilon^*}{6C}\,,
+% \end{align*}
+% where the last inequality follows from the fact that $\Delta_i\leq\sigma(u)<\delta^*\leq\nicefrac{\epsilon^*}{(6C\norm{\rateset}^2)}$. Hence, and because $(r-q)\leq\Delta_i\leq\sigma(u)<\delta^*\leq\nicefrac{\epsilon^*}{12\norm{\rateset}}$, we have
+% \begin{equation*}
+% \norm{T_q^r - S_q^r} < \frac{\Delta_i\epsilon^*}{3C} + 2\Delta_i\norm{\rateset} < \frac{\Delta_i\epsilon^*}{3C} + \frac{\epsilon^*}{6}\,.
+% \end{equation*}
+% \end{proof}
+
+\begin{corollary}\label{cor:restricted_trans_mat_system_totally_bounded_if_Q_bounded}
+Consider a non-empty bounded set of rate matrices $\rateset$ and any $t,s\in\realsnonneg$ such that $t\leq s$. Let $d$ be the metric that is defined in Equation~\eqref{eq:trans_mat_system_metric}. The metric space $\smash{(\mathbb{T}_\rateset^{[t,s]},d)}$ is then totally bounded.
+\end{corollary}
+\begin{proof}
+Let $\rateset'$ denote the convex hull of $\rateset$. Then, clearly, $\rateset'$ is a non-empty, bounded, and convex set of rate matrices. Furthermore, since $\rateset\subseteq\rateset'$, we know that $\mathbb{T}_\rateset^{[t,s]}\subseteq \mathbb{T}_{\rateset'}^{[t,s]}$. Because any subspace of a totally bounded metric space is itself totally bounded \cite[top of p.175]{book:metricspaces}, the result now follows trivially from Lemma~\ref{lemma:restricted_trans_mat_system_totally_bounded_if_Q_bounded_convex}.
+% $\mathbb{T}_{\widetilde{\rateset}}^{[t,s]}$ is totally bounded. Therefore, and because any subset of a totally bounded set is itself totally bounded~*** {\bf CITE} ***, it follows that $\mathbb{T}_\rateset^{[t,s]}$ is totally bounded as well.
+\end{proof}
+
+\begin{proof}[Proof of Theorem~\ref{theorem:restricted_transmatsystem_space_compact_if_Q_closed}]
+Since a metric space is compact if and only if it is complete and totally bounded~\cite[Theorem 5.1.7]{book:metricspaces}, this result is an immediate consequence of Lemma~\ref{lemma:restricted_trans_mat_system_complete_if_Q_closed} and Corollary~\ref{cor:restricted_trans_mat_system_totally_bounded_if_Q_bounded}.
+\end{proof}
+
+\end{document}
