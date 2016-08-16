@@ -1717,6 +1717,8 @@ Typically, some kind of continuity of $Q_t$ in terms of $t$ is assumed. The spec
 
 This idea of using a time-dependent rate matrix $Q_t$ has the advantage of being rather intuitive, but it is rather difficult to formalize. Essentially, the problem with this approach is that it does not allow us to distinguish between left and right derivatives. Intuitively, $Q_t$ is supposed to be `the' derivative. However, this is impossible if $Q_t$ is discontinuous---for example in the piecewise constant case. Therefore, in our present work, instead of using a function $Q_t$, we will characterise non-homogeneous Markov chains by means of their transition matrix system and their initial distribution, making use of the results in Proposition~\ref{prop:Markovhassystem} and Theorem~\ref{theo:uniqueMarkovchain}.
 
+*** the next paragraph may have to be adapted depending on whether we keep the whole compactness story further on in the paper ***
+
 Two techniques for constructing transition matrix systems will be particularly important for our work, and especially in our proofs. The first technique is to combine restrictions of exponential transition matrix systems to form a new transition matrix system that is, loosely speaking, piecewise constant. Example~\ref{exmp:combinetwoexponentials} provided a simple illustration of this technique. More generally, these transition matrix systems will be of the form
 \begin{equation}\label{eq:piecewiseconstanttransmatsys}
 \mathcal{T}_{Q_0}^{[0,t_0]}\otimes \mathcal{T}_{Q_1}^{[t_0,t_1]} \otimes \cdots \otimes \mathcal{T}_{Q_n}^{[t_{n-1},t_n]} \otimes \mathcal{T}_{Q_{n+1}}^{[t_n,\infty)}.
@@ -1817,6 +1819,8 @@ The second technique is to obtain a new transition matrix system as a limit of e
 
 \section{Imprecise Continuous-Time Markov chains}
 \label{sec:iCTMC}
+
+*** I have skipped this for now... I have quite some questions and suggestions for this section ***
 
 In Sections~\ref{sec:stochastic_processes} and~\ref{sec:cont_time_markov_chains}, we formalized stochastic processes, and provided ways to characterize them. We now turn to the field of \emph{imprecise probability}~\cite{Walley:1991vk} {\bf CITE CITE}, and will formalize in this section the notion of \emph{imprecise continuous-time Markov chains}. Here, rather than look at a single stochastic process $P\in\processes$, we instead consider jointly some \emph{set} of processes $\mathcal{P}\subseteq\processes$. Our main object of consideration will be the \emph{lower expectation} with respect to such a set $\mathcal{P}$.
 
@@ -2050,7 +2054,7 @@ Let $\rateset$ be an arbitrary non-empty, bounded, convex and closed set of rate
 \end{proposition}
 %In summary, then, closedness of $\rateset$ allows us to construct processes $P\in\wmprocesses_\rateset$ as limits of sequences of processes.
 
-\section{A Lower Transition Operator for Imprecise Continuous-Time Markov Chains}
+\section{Some crucial non-linear operators}
 \label{sec:lowertrans}
 
 Having introduced the notion of lower expectation for sets of (non-)Markov processes, one might wonder how to compute this, either numerically or for analytical purposes. Indeed, one of the aims of this paper is to provide methods with which such lower expectations can be tractably computed.
@@ -2200,7 +2204,7 @@ The metric space $(\underline{\mathcal{T}},d)$ is complete under the metric $d$ 
 % *** {\bf TODO } *** This can be shown to follow from coherence.
 % \end{proof}
 
-\subsection{Lower Transition Operators Corresponding to Lower Transition Rate Operators}
+\subsection{Corresponding Lower Transition Operators}
 
 We will in this section introduce a specific lower transition operator on which we will focus for the remainder of this work. In particular, we will introduce the lower transition operator corresponding to a given lower transition rate operator.
 
@@ -2313,7 +2317,7 @@ Interestingly, then, the family $\underline{\mathcal{T}}_{\lrate}$ maintains the
 
 One of the objectives of this paper is to establish a connection between the operator $\lbound_t^s$ that we have just introduced, and the different types of imprecise continous-time Markov chains that were discussed in Section~\ref{sec:iCTMC}. Since the former is derived from a lower transition rate operator $\lrate$ and the latter are derived from a non-empty bounded set of rate matrices $\rateset$, an obvious first step is to investigate the connection between lower transition rate operators and non-empty bounded sets of rate matrices.
 
-\subsection{Connections Between Lower Transition Rate Operators and Sets of Rate Matrices}\label{sec:connections_rate}
+\subsection{Lower Transition Rate Operators versus Sets of Rate Matrices}\label{sec:connections_rate}
 
 % $\rateset$ and $\lrate$. 
 %In order to do that, we start by discussing some properties of sets of rate matrices.
@@ -4914,7 +4918,7 @@ Lemma~\ref{lemma:restricted_trans_mat_system_complete_if_Q_closed} and~\ref{lemm
 Consider a non-empty, bounded, convex and closed set of rate matrices $\rateset$ and any $t,s\in\realsnonneg$ such that $t\leq s$. Let $d$ be the metric that is defined in Equation~\eqref{eq:trans_mat_system_metric}. The metric space $\smash{(\mathbb{T}_\rateset^{[t,s]},d)}$ is then complete.
 \end{lemma}
 \begin{proof}
-Consider any sequence $\{\mathcal{T}_i^{[t,s]}\}_{i\in\nats}$ in $\mathbb{T}_{\rateset}^{[t,s]}$ that is Cauchy. We need to prove that this sequence converges to a limit $\mathcal{T}_*^{[t,s]}$ that belongs to $\mathbb{T}_{\rateset}^{[t,s]}$. Since we already know from Proposition~\ref{lemma:restricted_trans_mat_system_cauchy_converges} this limit exists and belongs to $\mathbb{T}^{[t,s]}$, the only thing that remains to be shown is that $\mathcal{T}_*^{[t,s]}\in\mathbb{T}_{\rateset}^{[t,s]}$. 
+Consider any sequence $\{\mathcal{T}_i^{[t,s]}\}_{i\in\nats}$ in $\mathbb{T}_{\rateset}^{[t,s]}$ that is Cauchy. We need to prove that this sequence converges to a limit $\mathcal{T}_*^{[t,s]}$ that belongs to $\mathbb{T}_{\rateset}^{[t,s]}$. Since we already know from Proposition~\ref{lemma:restricted_trans_mat_system_cauchy_converges} that this limit exists and belongs to $\mathbb{T}^{[t,s]}$, the only thing that remains to be shown is that $\mathcal{T}_*^{[t,s]}\in\mathbb{T}_{\rateset}^{[t,s]}$. 
 Throughout this proof, for any $q,r\in[t,s]$ such that $q\leq r$, we will use $\smash{\presuper{*}T_q^r}$ to denote the transition matrix that corresponds to $\mathcal{T}_*^{[t,s]}$ and, for all $i\in\nats$, we will use $\presuper{i}T_q^r$ to denote the transition matrix that corresponds to $\mathcal{T}_i^{[t,s]}$. 
 
 Fix any $r\in[t,s]$ and consider any $\Delta>0$. Then due to Lemma~\ref{lemma:uniformelywellbehaved}, for all $i\in\nats$:
