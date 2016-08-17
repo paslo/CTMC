@@ -3488,6 +3488,17 @@ This is a special case of Lemma~\ref{lemma:quadraticboundonL}, which states a mo
 %Because this holds for any $\epsilon\in\realspos$, the statement in the lemma  follows.
 \end{proof}
 
+\begin{lemma}\label{lemma:linearboundonexponential}
+Consider any $Q\in\mathcal{R}$ and any $\Delta\geq0$. Then,
+\begin{equation*}
+\norm{e^{Q\Delta}-I}\leq
+\Delta\norm{Q}.
+\end{equation*}
+\end{lemma}
+\begin{proof}
+This is a special case of Lemma~\ref{lemma:linearboundonL}, which states a more general version. We have included this version separately because Lemma~\ref{lemma:linearboundonL} uses concepts that, on a chronological reading of this paper, would be undefined at this point.
+\end{proof}
+
 \begin{lemma}\label{lemma:differencebetweenexponentials}
 If $Q_1,Q_2\in\mathcal{R}$ and $\Delta\in\realsnonneg$, then $\norm{e^{Q_1\Delta}-e^{Q_2\Delta}}\leq\Delta\norm{Q_1-Q_2}$.
 \end{lemma}
@@ -3550,30 +3561,30 @@ The third case is $t\leq\delta_i\leq s$. We then find that
 where the first inequality follows from Lemma~\ref{lemma:recursive}, the second equality follows from the first case above, and the last inequality follows from the second case above. Hence, in all three cases, we find that $\norm{\presuper{i}T_t^s-\presuper{i-1}T_t^s}\leq\delta_i\norm{Q_i-Q_{i-1}}$. Since this inequality holds for any $t,s\in\realsnonneg$ such that $s\geq t$, it now follows from Equation~\eqref{eq:trans_mat_system_metric} that $d(\mathcal{T}_i,\mathcal{T}_{i-1})\leq\delta_i\norm{Q_i-Q_{i-1}}$.
 \end{proof}
 
-\begin{lemma}\label{lemma:uniformelywellbehaved}
-Consider a non-empty bounded set $\rateset$ of rate matrices and let $P\in\wmprocesses_{\rateset,\,\mathcal{M}}$ be a well-behaved Markov chain that is consistent with $\rateset$. 
-Then, for any $t,s\in\realsnonneg$ such that $t\leq s$, we have that $\norm{T_t^s-I}\leq(s-t)\norm{\rateset}$.
-\end{lemma}
-\begin{proof}
-If $t=s$, the result is trivial because we know from Proposition~\ref{prop:Markovhassystem} and Definition~\ref{def:trans_mat_system} that $T_t^s=I$. Hence, without loss of generality, we may assume that $t<s$. Fix any $\epsilon>0$. Since $t<s$, it follows from Lemma~\ref{lemma:bound_on_linear_approx_partition} that there is some $u\in\mathcal{U}_{[t,t+\Delta]}$ with $u=t_0,\ldots,t_n$ and $t=t_0<\ldots< t_n=s$ such that, for all $i\in\{1,\ldots,n\}$, there is some $Q_i\in\rateset$ such that $\norm{T_{t_{i-1}}^{t_i} - (I+\Delta_iQ_i)} < \Delta_i\epsilon$, and therefore also
-\begin{equation*}
-\norm{T_{t_{i-1}}^{t_i} - I}
-\leq\norm{T_{t_{i-1}}^{t_i} - (I+\Delta_iQ_i)}+\Delta_i\norm{Q_i} < \Delta_i\epsilon+\Delta_i\norm{\rateset}=\Delta_i(\epsilon+\norm{\rateset}),
-\end{equation*}
-with $\Delta_i\coloneqq t_{i}-t_{i-1}$. Since it follows from Proposition~\ref{prop:Markovhassystem} and Definition~\ref{def:trans_mat_system} that $T_t^s=\prod_{i=1}^n T_{t_{i-1}}^{t_i}$ and that, for all $i\in\{1,\dots,n\}$, $T_{t_{i-1}}^{t_i}$ and $I$ are transition matrices, we infer from Lemma~\ref{lemma:recursive} that
-\begin{align*}
-\norm{T_t^s-I}
-=\norm{\prod_{i=1}^nT_{t_{i-1}}^{t_i}-\prod_{i=1}^n I}
-\leq\sum_{i=1}^n\norm{T_{t_{i-1}}^{t_i}-I}
-<
-\sum_{i=1}^n
-\Delta_i(\epsilon+\norm{\rateset})
-%=\left(\sum_{i=1}^n\Delta_i\right)
-%(\epsilon+\norm{\rateset})
-=(s-t)(\epsilon+\norm{\rateset}).
-\end{align*}
-Since $\epsilon>0$ is arbitrary, it follows that $\norm{T_t^s-I}\leq(s-t)\norm{\rateset}$.
-\end{proof}
+% \begin{lemma}\label{lemma:uniformelywellbehaved}
+% Consider a non-empty bounded set $\rateset$ of rate matrices and let $P\in\wmprocesses_{\rateset,\,\mathcal{M}}$ be a well-behaved Markov chain that is consistent with $\rateset$. 
+% Then, for any $t,s\in\realsnonneg$ such that $t\leq s$, we have that $\norm{T_t^s-I}\leq(s-t)\norm{\rateset}$.
+% \end{lemma}
+% \begin{proof}
+% If $t=s$, the result is trivial because we know from Proposition~\ref{prop:Markovhassystem} and Definition~\ref{def:trans_mat_system} that $T_t^s=I$. Hence, without loss of generality, we may assume that $t<s$. Fix any $\epsilon>0$. Since $t<s$, it follows from Lemma~\ref{lemma:bound_on_linear_approx_partition} that there is some $u\in\mathcal{U}_{[t,t+\Delta]}$ with $u=t_0,\ldots,t_n$ and $t=t_0<\ldots< t_n=s$ such that, for all $i\in\{1,\ldots,n\}$, there is some $Q_i\in\rateset$ such that $\norm{T_{t_{i-1}}^{t_i} - (I+\Delta_iQ_i)} < \Delta_i\epsilon$, and therefore also
+% \begin{equation*}
+% \norm{T_{t_{i-1}}^{t_i} - I}
+% \leq\norm{T_{t_{i-1}}^{t_i} - (I+\Delta_iQ_i)}+\Delta_i\norm{Q_i} < \Delta_i\epsilon+\Delta_i\norm{\rateset}=\Delta_i(\epsilon+\norm{\rateset}),
+% \end{equation*}
+% with $\Delta_i\coloneqq t_{i}-t_{i-1}$. Since it follows from Proposition~\ref{prop:Markovhassystem} and Definition~\ref{def:trans_mat_system} that $T_t^s=\prod_{i=1}^n T_{t_{i-1}}^{t_i}$ and that, for all $i\in\{1,\dots,n\}$, $T_{t_{i-1}}^{t_i}$ and $I$ are transition matrices, we infer from Lemma~\ref{lemma:recursive} that
+% \begin{align*}
+% \norm{T_t^s-I}
+% =\norm{\prod_{i=1}^nT_{t_{i-1}}^{t_i}-\prod_{i=1}^n I}
+% \leq\sum_{i=1}^n\norm{T_{t_{i-1}}^{t_i}-I}
+% <
+% \sum_{i=1}^n
+% \Delta_i(\epsilon+\norm{\rateset})
+% %=\left(\sum_{i=1}^n\Delta_i\right)
+% %(\epsilon+\norm{\rateset})
+% =(s-t)(\epsilon+\norm{\rateset}).
+% \end{align*}
+% Since $\epsilon>0$ is arbitrary, it follows that $\norm{T_t^s-I}\leq(s-t)\norm{\rateset}$.
+% \end{proof}
 
 \section{Proofs and Lemmas for Section~\ref{sec:stochastic_processes}}\label{app:stoch_proc}
 
@@ -5366,7 +5377,7 @@ Fix any $\epsilon>0$. Because of Definition~\ref{def:low_trans}, there is some $
 Since $\epsilon>0$ is arbitrary, the result is now immediate.
 \end{proof}
 
-The final lemma of this section states how well we can approximate the operator $L_t^{t+\Delta}$ using the identity matrix $I$. Put differently, since it follows from Proposition~\ref{prop:lower_trans_system_is_system} that $L_t^t=I$, this tells us how quickly $L_t^{t+\Delta}$ changes as we increase $\Delta$.
+The final lemma of this section states how well we can approximate the operator $L_t^{t+\Delta}$ using the identity matrix $I$. Put differently, since it follows from Proposition~\ref{prop:lower_trans_system_is_system} that $L_t^t=I$, this tells us how quickly $L_t^{t+\Delta}$ changes as we increase $\Delta$. This result is a generalised version of Lemma~\ref{lemma:linearpartofexponential}, which has so far remained unproven. The reason why Lemma~\ref{lemma:linearpartofexponential} is a special case is again because for $\lrate=Q$, we have that $L_t^{t+\Delta}=e^{Q\Delta}$.
 
 \begin{lemma}\label{lemma:linearboundonL}
 Let $\lrate$ be a lower transition rate operator. Then for any $t,\Delta\in\realsnonneg$:
