@@ -100,7 +100,7 @@
 
 \newcommand{\exampleend}{\hfill$\Diamond$}
 
-\newcommand{\ictmc}{ICTMC}
+\newcommand{\ictmc}{{ICTMC}}
 
 \def\presuper#1#2%
   {\mathop{}%
@@ -2015,8 +2015,9 @@ P(A\vert X_u=x_u)=P_{x_u}(A\vert X_u=x_u).
 \end{theorem}
 
 
-\subsection{Lower Expectations for Imprecise Continuous-Time Markov Chains} 
-Our main object of consideration will be the \emph{lower expectation} with respect to such a set $\mathcal{P}$.
+\subsection{Lower Expectations for \ictmc's} 
+
+From a practical point of view, after having specified a (precise) stochastic process, one is typically interested in the expected value of some function of interest. Similarly, in this work, our main object of consideration will be the \emph{lower expectation} with respect to the \ictmc's that we introduced in the previous section.
 
 \begin{definition}[Lower Expectation]\label{def:lower_exp}
 For any set of stochastic processes $\mathcal{P}\subseteq\processes$, the \emph{(conditional) lower expectation with respect to $\mathcal{P}$} is defined as
@@ -2049,9 +2050,11 @@ As specific cases, we will denote the lower expectation with respect to $\wproce
 
 %In summary, we conclude that for a given non-empty bounded set $\rateset$ of rate matrices, there are many stochastic processes consistent with this $\rateset$. We will in the sequel focus on such sets of processes. 
 
+In particular, one of the main aims of this paper is to provide methods to compute lower expectations for the different types of \ictmc's that we have introduced in Section~\ref{subsec:types_ictmc}. To this end, we start by giving some useful properties of these lower expectations.
 
+First of all, it can be shown that if $\rateset$ is a non-empty, bounded, convex and closed set of rate matrices, then the conditional lower expectations $\underline{\mathbb{E}}_{\rateset}^\mathrm{W}, \underline{\mathbb{E}}_{\rateset}^\mathrm{WM},$ and $\underline{\mathbb{E}}_{\rateset}^\mathrm{WHM}$ are actually minima---rather than infima---because they are always reached by some element of their corresponding \ictmc. However, the proof of this claim is extremely involved and requires some machinery that is rather outside the scope of this paper; we intend to publish these and related results separately in future work.
 
-
+Moving on, we noted in Section~\ref{subsec:types_ictmc} that the sets $\whmprocesses_{\rateset,\mathcal{M}}, \wmprocesses_{\rateset,\mathcal{M}},$ and $\wprocesses_{\rateset,\mathcal{M}}$ are nested subsets of each other. As an immediate consequence, their corresponding lower expectations provide (lower) bounds for each other.
 \begin{proposition}\label{prop:lower_exp_markov_bounded_by_nonmarkov}
 Consider any bounded set of rate matrices $\rateset$, and any non-empty set $\mathcal{M}$ of probability mass functions on $\states$. Then,
 \begin{equation*}
@@ -2064,11 +2067,29 @@ Consider any bounded set of rate matrices $\rateset$, and any non-empty set $\ma
 *** still need to check this *** This is immediate from Definition~\ref{def:lower_exp} and Proposition \ref{prop:markov_set_subset_of_nonmarkov_set}.
 \end{proof}
 
-One of the main aims of this paper is to provide methods to compute the lower expectations for these different types of imprecise continuous-time Markov chains that we have just introduced. While Proposition~\ref{prop:lower_exp_markov_bounded_by_nonmarkov} states that these lower expectations provide bounds for each other, it thereby also implies that these lower expectations are not always the same. Furthermore, due to their qualitative differences, one might expect that some of these lower expectations are harder to compute than others. We will show that this is indeed the case.
+Now, while Proposition~\ref{prop:lower_exp_markov_bounded_by_nonmarkov} states that these lower expectations provide bounds for each other, it thereby also implies that these lower expectations are not always the same. This is indeed the case, although we do not feel that a formal argument would be of much value. However, a numerical example will be given in Example~\ref{exmp:num_counterexample_markov} later on.
 
-Ironically, it turns out that computing lower expectations for the set $\whmprocesses_{\rateset\,,\mathcal{M}}$ is in general much harder than for the sets $\wmprocesses_{\rateset\,,\mathcal{M}}$ or $\wprocesses_{\rateset\,,\mathcal{M}}$. In fact, we will show in Section~\ref{sec:funcs_multi_time_points} that $\wprocesses_{\rateset\,,\mathcal{M}}$ is in some sense the easiest set to do this for, for arbitrary functions. 
+%\subsection{Closure Properties for Sets of Consistent Processes}
 
-The problem is, essentially, that while homogeneous Markov chains are easy to work with numerically, the set $\whmprocesses_{\rateset\,,\mathcal{M}}$ does not provide enough ``degrees of freedom'' to make the optimization problem involved in computing $\underline{\mathbb{E}}^\mathrm{WHM}_{\rateset\,,\mathcal{M}}$ tractable. The following serves as an illustration. 
+%We have in the previous section defined imprecise continuous-time Markov chains as sets of stochastic processes consistent with some set $\rateset$ of rate matrices. An obvious question, therefore, is to see if we can express properties of these sets $\wmprocesses_{\rateset,\,\mathcal{M}}$ and $\wprocesses_{\rateset,\,\mathcal{M}}$ in relation to properties of the set $\rateset$. We have by assumption stated that such a $\rateset$ must be non-empty and bounded, and will here consider the cases where $\rateset$ is additionally closed or convex.
+
+For now, we first provide a useful property of the lower expectation $\underline{\mathbb{E}}_{\rateset,\mathcal{M}}^\mathrm{W}$ for $\wprocesses_{\rateset,\mathcal{M}}$. To this end, consider a function $f\in\gambles(\states_{u\cup v\cup w})$ defined on an arbitrary number of time points $u,v,w\in\mathcal{U}$. It follows from the basic properties of expectation that for any process $P\in\wprocesses_{\rateset,\,\mathcal{M}}$, the expectation $\mathbb{E}_P$ of such a function satisfies,
+\begin{equation*}
+\mathbb{E}_P[f(X_u,X_v,X_w)\,\vert\,X_u] = \mathbb{E}_P\bigl[\mathbb{E}_P[f(X_u,X_v,X_w)\,\vert\,X_u,X_v]\,\big\vert\,X_u\bigr]\,,
+\end{equation*}
+assuming without loss of generality that $u<v<w$. This equality is the well-known \emph{law of iterated expectation}. As shown by our next result, it follows from Theorem~\ref{theo:aanelkaarplakken} that, if $\rateset$ is convex, the same decomposition property holds for lower expectations $\underline{\mathbb{E}}^{\mathrm{W}}_{\rateset,\,\mathcal{M}}$; this is the law of iterated \emph{lower} expectation {\bf CITE?}.
+
+\begin{theorem}\label{theorem:decomposition_multivar}
+Let $\rateset$ be an arbitrary non-empty, bounded, and convex set of rate matrices, and consider any non-empty set $\mathcal{M}$ of probability mass functions on $\states$. Then for any $u,v,w\in\mathcal{U}$ such that $u<v<w$ and any $f\in\gambles(\states_{u\cup v\cup w})$:
+\begin{equation}\label{eq:lower_exp_factorizes}
+\underline{\mathbb{E}}^{\mathrm{W}}_{\rateset,\,\mathcal{M}}\left[f(X_u,X_v,X_w)\,\vert\,X_u\right] = \underline{\mathbb{E}}^{\mathrm{W}}_{\rateset,\,\mathcal{M}}\Bigl[\underline{\mathbb{E}}^{\mathrm{W}}_{\rateset,\,\mathcal{M}}\left[f(X_u,X_v,X_w)\,\vert\,X_u,X_v\right] \Big\vert\,X_u\Bigr]\,. 
+\end{equation}
+\end{theorem}
+The reason that this result is useful, is that it essentially allows us to compute the lower expectation of such functions recursively. In particular, instead of computing the lower expectation on all time-points simultaneously, we can focus on subsets of the time-points separately. We will revisit this idea in Section~\ref{sec:funcs_multi_time_points}.
+
+This property stated by Theorem~\ref{theorem:decomposition_multivar} relies on the fact that the elements of $\wprocesses_{\rateset,\mathcal{M}}$ can have history-dependent probabilities, which is why it does not in general hold for $\underline{\mathbb{E}}_{\rateset,\mathcal{M}}^\mathrm{WM}$ or $\underline{\mathbb{E}}_{\rateset,\mathcal{M}}^\mathrm{WHM}$. Because, as mentioned above, this property does simplify the process of computing the lower expectation $\underline{\mathbb{E}}_{\rateset,\mathcal{M}}^\mathrm{W}$, this suggests that the qualitative differences between our various \ictmc's make some of these lower expectations harder to compute than others. In fact, we will show in Section~\ref{sec:funcs_multi_time_points} that $\wprocesses_{\rateset\,,\mathcal{M}}$ is in some sense the easiest set to do this for, exactly because of Theorem~\ref{theorem:decomposition_multivar}.
+
+Furthermore, it---ironically---turns out that computing lower expectations for the set $\whmprocesses_{\rateset\,,\mathcal{M}}$ is in general much harder than for the sets $\wmprocesses_{\rateset\,,\mathcal{M}}$ or $\wprocesses_{\rateset\,,\mathcal{M}}$. The problem is, essentially, that while homogeneous Markov chains are easy to work with numerically, the set $\whmprocesses_{\rateset\,,\mathcal{M}}$ does not provide enough ``degrees of freedom'' to make the optimization problem involved in computing $\underline{\mathbb{E}}^\mathrm{WHM}_{\rateset\,,\mathcal{M}}$ tractable. The following serves as an illustration. 
 
 %*** Known to be difficult: even finding an $\epsilon$-approximation takes at least exponential time~\cite[Theorem 20.1]{kreinovich2013computational}.
 
@@ -2085,40 +2106,12 @@ The problem, then, is that for lower expectations $\underline{\mathbb{E}}_{\rate
 %\exampleend
 %\end{exmp}
 
-Therefore, we will in the sequel focus on the sets $\wmprocesses_{\rateset,\,\mathcal{M}}$ and $\wprocesses_{\rateset,\,\mathcal{M}}$, having introduced $\whmprocesses_{\rateset,\,\mathcal{M}}$ only for the sake of completeness. Note that Proposition~\ref{prop:lower_exp_markov_bounded_by_nonmarkov} guarantees that the lower expectation for either $\wmprocesses_{\rateset,\,\mathcal{M}}$ or $\wprocesses_{\rateset,\,\mathcal{M}}$ suffices to compute a lower bound for $\underline{\mathbb{E}}_{\rateset,\,\mathcal{M}}^\mathrm{WHM}$. Of course, this bound will in general not be tight if one insists that any analysis should be done with respect to the set $\whmprocesses_{\rateset,\,\mathcal{M}}$. However, because this latter set does make the strictest---and, we would argue, most unrealistic---assumptions about the domain of interest, we do not consider this particularly problematic.
+Therefore, we will in the sequel focus on the \ictmc's $\wmprocesses_{\rateset,\,\mathcal{M}}$ and $\wprocesses_{\rateset,\,\mathcal{M}}$, having introduced $\whmprocesses_{\rateset,\,\mathcal{M}}$ only for the sake of completeness. Note that Proposition~\ref{prop:lower_exp_markov_bounded_by_nonmarkov} guarantees that the lower expectation for either $\wmprocesses_{\rateset,\,\mathcal{M}}$ or $\wprocesses_{\rateset,\,\mathcal{M}}$ suffices to compute a lower bound for $\underline{\mathbb{E}}_{\rateset,\,\mathcal{M}}^\mathrm{WHM}$. Of course, this bound will in general not be tight if one insists that any analysis should be done with respect to $\whmprocesses_{\rateset,\,\mathcal{M}}$. However, since this latter \ictmc~does make the strictest---and, we would argue, most unrealistic---assumptions about the domain of interest, we do not consider this particularly problematic.
 
-%\subsection{Closure Properties for Sets of Consistent Processes}
-
-%We have in the previous section defined imprecise continuous-time Markov chains as sets of stochastic processes consistent with some set $\rateset$ of rate matrices. An obvious question, therefore, is to see if we can express properties of these sets $\wmprocesses_{\rateset,\,\mathcal{M}}$ and $\wprocesses_{\rateset,\,\mathcal{M}}$ in relation to properties of the set $\rateset$. We have by assumption stated that such a $\rateset$ must be non-empty and bounded, and will here consider the cases where $\rateset$ is additionally closed or convex.
-
-*** blabla
-
-This result is particularly useful when we consider functions $f\in\gambles(\states_{u\cup v\cup w})$ defined on an arbitrary number of time points $u,v,w\in\mathcal{U}$. Specifically, it follows from the basic properties of expectation that for any process $P\in\wprocesses_{\rateset,\,\mathcal{M}}$, the expectation $\mathbb{E}_P$ of such a function satisfies,
-\begin{equation*}
-\mathbb{E}_P[f(X_u,X_v,X_w)\,\vert\,X_u] = \mathbb{E}_P\bigl[\mathbb{E}_P[f(X_u,X_v,X_w)\,\vert\,X_u,X_v]\,\big\vert\,X_u\bigr]\,,
-\end{equation*}
-assuming without loss of generality that $u<v<w$. This equality is the well-known \emph{law of iterated expectation}. As shown by our next result, it follows from Theorem~\ref{theo:aanelkaarplakken} that, if $\rateset$ is convex, the same decomposition property holds for lower expectations $\underline{\mathbb{E}}^{\mathrm{W}}_{\rateset,\,\mathcal{M}}$; this is the law of iterated \emph{lower} expectation {\bf CITE?}.
-
-\begin{theorem}\label{theorem:decomposition_multivar}
-Let $\rateset$ be an arbitrary non-empty, bounded, and convex set of rate matrices, and consider any non-empty set $\mathcal{M}$ of probability mass functions on $\states$. Then for any $u,v,w\in\mathcal{U}$ such that $u<v<w$ and any $f\in\gambles(\states_{u\cup v\cup w})$:
-\begin{equation}\label{eq:lower_exp_factorizes}
-\underline{\mathbb{E}}^{\mathrm{W}}_{\rateset,\,\mathcal{M}}\left[f(X_u,X_v,X_w)\,\vert\,X_u\right] = \underline{\mathbb{E}}^{\mathrm{W}}_{\rateset,\,\mathcal{M}}\Bigl[\underline{\mathbb{E}}^{\mathrm{W}}_{\rateset,\,\mathcal{M}}\left[f(X_u,X_v,X_w)\,\vert\,X_u,X_v\right] \Big\vert\,X_u\Bigr]\,. 
-\end{equation}
-\end{theorem}
-The reason that this result is useful, is that it essentially allows us to compute the lower expectation of such functions recursively. In particular, instead of computing the lower expectation on all time-points simultaneously, we can focus on subsets of the time-points separately. We will revisit this idea in Section~\ref{sec:funcs_multi_time_points}.
-
-
-Finally, we conclude this section with a rather profound result that follows immediately from Theorem~\ref{theorem:restricted_transmatsystem_space_compact_if_Q_closed}. This result establishes that, if $\rateset$ is closed and convex, the conditional lower expectation $\underline{\mathbb{E}}_{\rateset,\,\mathcal{M}}^{\mathrm{WM}}$ of functions $f\in\gamblesX$ is actually a minimum---rather than an infimum---because it is always reached by some $P\in\wmprocesses_{\rateset,\,\mathcal{M}}$.
-\begin{proposition}\label{prop:lower_expectation_reached_if_Q_closed}
-Let $\rateset$ be an arbitrary non-empty, bounded, convex and closed set of rate matrices, and let $\mathcal{M}$ be an arbitrary non-empty set of probability mass functions on $\states$. Then, for all $t,s\in\realsnonneg$ such that $t\leq s$, all $f\in\gamblesX$, and all $x\in\states$, there is some $P\in\wmprocesses_{\rateset,\,\mathcal{M}}$ with expectation operator $\mathbb{E}_P$, such that
-\begin{equation*}
-\underline{\mathbb{E}}^{\mathrm{WM}}_{\rateset,\,\mathcal{M}}[f(X_s)\,\vert\,X_t=x] = \mathbb{E}_P[f(X_s)\,\vert\,X_t=x]\,.
-\end{equation*}
-\end{proposition}
-%In summary, then, closedness of $\rateset$ allows us to construct processes $P\in\wmprocesses_\rateset$ as limits of sequences of processes.
-
-\section{Some crucial non-linear operators}
+\section{Toward Lower Transition Operators for \ictmc's}
 \label{sec:lowertrans}
+
+**** still need to re-do intro
 
 Having introduced the notion of lower expectation for sets of (non-)Markov processes, one might wonder how to compute this, either numerically or for analytical purposes. Indeed, one of the aims of this paper is to provide methods with which such lower expectations can be tractably computed.
 
@@ -2129,7 +2122,7 @@ We have in Section~\ref{sec:stochastic_processes} seen that the transition matri
 We focus in this section on introducing the relevant concepts, and deriving this operator of interest. We end in Section~\ref{sec:properties_lower_trans} by showing that this operator satisfies a number of convenient properties.
 %We will in this section introduce a \emph{lower transition operator}, which is a map from $\gamblesX$ to $\gamblesX$ that generalizes the notion of a transition matrix. We will here focus on introducing the relevant concepts, and showing that this operator of interest is well-defined. We end this section by establishing that this (family) of operators is in many ways intuitively comparable to the transition matrix system of a well-behaved homogeneous Markov chain. In Section~\ref{sec:connections} we will then establish the relation between this operator and lower expectations, and show that we can indeed use it to compute the quantities of interest. In Section~\ref{sec:prev_work} we will show how this operator is related to previous work from the literature.
 
-\subsection{Lower Transition (Rate) Operators}\label{subsec:lowertrans_rate}
+\subsection{Lower Transition Operators}\label{subsec:lowertrans_rate}
 
 We start in this section by generalizing transition matrices $T$ to lower transition operators $\lt$, as follows.
 
@@ -2166,26 +2159,6 @@ Our consideration of the coherent lower prevision $\lt_x$  above is essentially 
 
 Because for any lower transition operator $\lt$ and any $x\in\states$, the map $\lt_x$ is a coherent lower prevision, it follows that the lower transition operator $\lt$ can be seen as a vector of coherent lower previsions. 
 
-We next focus on the generalization of transition rate matrices $Q$ to lower transition rate operators $\lrate$, as follows.
-\begin{definition}[Lower Transition Rate Operator]\label{def:coh_low_trans_rate}
-We will call a map $\lrate$ from $\gamblesX$ to $\gamblesX$ a \emph{lower transition rate operator} if, for all $f,g\in\gamblesX$, all $\lambda\in\realsnonneg$, all constant functions $\mu\in\gamblesX$, and all $x\in\states$:
-
-%\vspace{5pt}
-\begin{enumerate}[label=LR\arabic*:,ref=LR\arabic*]
-\item\label{LR:constantzero}
-$\left[\lrate\mu\right](x)=0$;
-\item\label{LR:nondiagpos}
-$\left[\lrate\ind{y}\right](x)\geq0$ for all $y\in\states$ such that $x\neq y$;
-\item\label{LR:subadditive}
-$\left[\lrate(f+g)\right](x)\geq\left[\lrate f\right](x)+\left[\lrate g\right](x)$;
-\item\label{LR:homo}
-$\left[\lrate(\lambda f)\right](x)= \lambda\left[\lrate f\right](x)$.
-\end{enumerate}
-%\vspace{5pt}
-\end{definition}
-
-Note that properties~\ref{LR:constantzero} and~\ref{LR:nondiagpos} essentially preserve properties~\ref{def:Q:sumzero} and~\ref{def:Q:nonnegoffdiagonal} from Definition~\ref{def:rate_matrix}. However, where any rate matrix $Q$ represents a linear map, properties~\ref{LR:subadditive} and~\ref{LR:homo} merely require that a lower transition rate operator $\lrate$ is super-additive and non-negatively homogeneous. Hence, any rate matrix is in fact also a lower transition rate operator, with the latter concept providing a generalization of the former.
-
 %\begin{proposition}\label{lem:normlratefinite}
 %For any lower transition rate operator $\lrate$, we have that $0\leq\norm{\lrate}<+\infty$.
 %\end{proposition}
@@ -2193,17 +2166,8 @@ Note that properties~\ref{LR:constantzero} and~\ref{LR:nondiagpos} essentially p
 %\begin{proposition}\label{lemma:normofcoherenttrans}
 %For any lower transition operator $\lt$, we have that $0\leq \norm{\lt}\leq 1$.
 %\end{proposition}
-The reason that this specific generalization is of interest, is that it preserves the relation between transition matrices and rate matrices, as stated by Propositions~\ref{prop:stochastic_from_rate_matrix} and~\ref{prop:rate_from_stochastic_matrix}. The following two propositions make this explicit in our current setting.
 
-%**** We next establish that there is a correspondence between lower transition rate operators and lower transition operators that is analogous to the one found in Section~\ref{sec:trans_rate_matrices}.
-
-\begin{proposition}[Reference \cite{DeBock:2016}]\label{lemma:normQsmallenough}
-Consider any lower transition rate operator $\lrate$, and any $\Delta\in\realsnonneg$ such that $\Delta\norm{\lrate}\leq 1$. Then, the operator $(I+\Delta\lrate)$ is a lower transition operator.
-\end{proposition}
-
-\begin{proposition}[Reference \cite{DeBock:2016}]\label{lemma:lower_trans_to_lower_rate}
-Consider any lower transition operator $\lt$, and any $\Delta\in\realspos$. Then, the operator $\nicefrac{1}{\Delta}(\lt - I)$ is a lower transition rate operator.
-\end{proposition}
+*** blabla
 
 \noindent We next give some additional useful properties of the norm of these operators.
 
@@ -2238,6 +2202,160 @@ For any $\lt,\underline{S}\in\underline{\mathcal{T}}$, it holds that $\left(\lt\
 \begin{proposition}\label{lemma:completemetricspace}
 The metric space $(\underline{\mathcal{T}},d)$ is complete under the metric $d$ induced by our usual norm $\norm{\cdot}$.
 \end{proposition}
+
+
+\subsection{Lower Transition Rate Operators and Sets of Rate Matrices}\label{sec:connections_rate}
+
+*** blaba
+
+We next focus on the generalization of transition rate matrices $Q$ to lower transition rate operators $\lrate$, as follows.
+\begin{definition}[Lower Transition Rate Operator]\label{def:coh_low_trans_rate}
+We will call a map $\lrate$ from $\gamblesX$ to $\gamblesX$ a \emph{lower transition rate operator} if, for all $f,g\in\gamblesX$, all $\lambda\in\realsnonneg$, all constant functions $\mu\in\gamblesX$, and all $x\in\states$:
+
+%\vspace{5pt}
+\begin{enumerate}[label=LR\arabic*:,ref=LR\arabic*]
+\item\label{LR:constantzero}
+$\left[\lrate\mu\right](x)=0$;
+\item\label{LR:nondiagpos}
+$\left[\lrate\ind{y}\right](x)\geq0$ for all $y\in\states$ such that $x\neq y$;
+\item\label{LR:subadditive}
+$\left[\lrate(f+g)\right](x)\geq\left[\lrate f\right](x)+\left[\lrate g\right](x)$;
+\item\label{LR:homo}
+$\left[\lrate(\lambda f)\right](x)= \lambda\left[\lrate f\right](x)$.
+\end{enumerate}
+%\vspace{5pt}
+\end{definition}
+
+Note that properties~\ref{LR:constantzero} and~\ref{LR:nondiagpos} essentially preserve properties~\ref{def:Q:sumzero} and~\ref{def:Q:nonnegoffdiagonal} from Definition~\ref{def:rate_matrix}. However, where any rate matrix $Q$ represents a linear map, properties~\ref{LR:subadditive} and~\ref{LR:homo} merely require that a lower transition rate operator $\lrate$ is super-additive and non-negatively homogeneous. Hence, any rate matrix is in fact also a lower transition rate operator, with the latter concept providing a generalization of the former.
+
+The reason that this specific generalization is of interest, is that it preserves the relation between transition matrices and rate matrices, as stated by Propositions~\ref{prop:stochastic_from_rate_matrix} and~\ref{prop:rate_from_stochastic_matrix}. The following two propositions make this explicit in our current setting.
+
+%**** We next establish that there is a correspondence between lower transition rate operators and lower transition operators that is analogous to the one found in Section~\ref{sec:trans_rate_matrices}.
+
+\begin{proposition}[Reference \cite{DeBock:2016}]\label{lemma:normQsmallenough}
+Consider any lower transition rate operator $\lrate$, and any $\Delta\in\realsnonneg$ such that $\Delta\norm{\lrate}\leq 1$. Then, the operator $(I+\Delta\lrate)$ is a lower transition operator.
+\end{proposition}
+
+\begin{proposition}[Reference \cite{DeBock:2016}]\label{lemma:lower_trans_to_lower_rate}
+Consider any lower transition operator $\lt$, and any $\Delta\in\realspos$. Then, the operator $\nicefrac{1}{\Delta}(\lt - I)$ is a lower transition rate operator.
+\end{proposition}
+
+***blabla
+
+We start by considering a non-empty bounded set $\rateset\subseteq\mathcal{R}$ of rate matrices. For any $f\in\gamblesX$,
+\begin{equation}\label{eq:correspondinglowertrans}
+\lrate f\coloneqq\inf\{Qf\colon Q\in\rateset\}\\[2mm]
+\end{equation}
+is then again an element of $\gamblesX$.\footnote{%Since $\rateset$ is non-empty, the components of $\lrate f$ cannot be $+\infty$.
+Since $\rateset$ is bounded,~\ref{N:normAf} implies that, for all $Q\in\rateset$, $\norm{Qf}\leq\norm{Q}\norm{f}\leq\norm{\rateset}\norm{f}<+\infty$. Therefore, and since $\rateset$ is non-empty, the components of $\lrate f$ are bounded below by $-\norm{\rateset}\norm{f}$, which implies that $\lrate f$ is a real-valued function on $\states$.}
+Therefore, $\lrate$ is a map from $\gamblesX$ to $\gamblesX$. We call this operator $\lrate$, as defined by Equation~\eqref{eq:correspondinglowertrans}, the \emph{lower envelope} of $\rateset$. It is a matter of straightforward verification to see that $\lrate$ is a lower transition rate operator.
+
+\begin{proposition}\label{prop:lowerenvelopeislowertrans}
+For any non-empty bounded set $\rateset\subseteq\mathcal{R}$ of rate matrices, the corresponding operator $\lrate\colon\gamblesX\to\gamblesX$, as defined by Equation~\eqref{eq:correspondinglowertrans}, is a lower transition rate operator.
+\end{proposition}
+
+\noindent
+Inspired by this result, we will also refer to the lower envelope of $\rateset$ as the \emph{lower transition rate operator that corresponds to $\rateset$}. %As we have just seen, every non-empty bounded set $\rateset\subseteq\mathcal{R}$ of rate matrices has such a corresponding lower transition rate operator $\lrate$. 
+However, this correspondence is not one-to-one. As the following example establishes, different non-empty bounded sets of rate matrices may have the same corresponding lower transition rate operator.
+
+\begin{exmp}\label{example:different_sets_same_lower_rate}
+For the sake of simplicity, we assume that the state space $\states\coloneqq\{1,2\}$ has only two elements, which allows us to work with $2\times 2$ matrices. Consider now two rate matrices
+\begin{equation*}
+A\coloneqq\left[\begin{array}{rr}-1 & 1 \\2 & -2\end{array}\right]\quad\text{and}\quad
+B\coloneqq\left[\begin{array}{rr}-3 & 3 \\1 & -1\end{array}\right]\,,
+\vspace{7pt}
+\end{equation*}
+let $C\coloneqq \nicefrac{1}{2}(A+B)$ be their convex mixture, which is clearly also a rate matrix, and use these matrices to define the sets $\rateset_1\coloneqq\{A,B\}$ and $\rateset_2\coloneqq\{A,B,C\}$. Then clearly, $\rateset_1$ and $\rateset_2$ are two different, non-empty and bounded sets of rate matrices. Nevertheless, as we are about to show, the corresponding lower transition rate operators are identical.
+
+Let $\lrate_1$ and $\lrate_2$ be the lower transition rate operators that correspond to $\rateset_1$ and $\rateset_2$, respectively, %We will show that $\lrate_1=\lrate_2$.
+and consider any $f\in\gamblesX$. Equation~\eqref{eq:correspondinglowertrans} then implies that $\lrate_1f\leq Af$ and $\lrate_1f\leq Bf$, which in turn implies that $\lrate_1f\leq Cf$. Therefore, by applying Equation~\eqref{eq:correspondinglowertrans} once more, we find that $\lrate_1 f\leq\lrate_2 f$. Hence, since Equation~\eqref{eq:correspondinglowertrans} also trivially implies that $\lrate_2 f\leq\lrate_1 f$, we find that $\lrate_1 f=\lrate_2 f$. Since this is true for any $f\in\gamblesX$, we conclude that $\lrate_1=\lrate_2$.
+\exampleend
+\end{exmp}
+Of course, this should not really be surprising---Example~\ref{example:different_sets_same_lower_rate} essentially establishes that different sets can have the same infimum. However, it does lead to a natural question: what do these different sets have in common?
+
+Therefore, we next consider some fixed lower transition rate operator $\lrate$.
+All the non-empty bounded sets $\rateset$ of rate matrices that have $\lrate$ as their lower envelope then share this common property: they consist of rate matrices $Q$ that dominate $\lrate$, in the sense that $Qf\geq\lrate f$ for all $f\in\gamblesX$. Therefore, each of these sets $\rateset$ is contained in the following set of dominating rate matrices:
+\begin{equation}\label{eq:dominatingratematrices}
+\rateset_{\lrate}\coloneqq
+\left\{
+Q\in\mathcal{R}
+\colon
+Qf\geq\lrate f\text{ for all $f\in\gamblesX$}
+\right\}.
+\end{equation}
+As our next result shows, this set $\rateset_{\lrate}$ is non-empty and bounded, and has $\lrate$ as its lower envelope. Even stronger, the infimum in Equation~\eqref{eq:correspondinglowertrans} is reached---can be replaced by a minimum.
+
+\begin{proposition}\label{prop:dominating_nonempty_bounded}
+Consider a lower transition rate operator $\lrate$ and let $\rateset_{\lrate}$ be the corresponding set of dominating rate matrices, as defined by Equation~\eqref{eq:dominatingratematrices}. Then $\rateset_{\lrate}$ is non-empty and bounded and, for all $f\in\gamblesX$, there is some $Q\in\rateset_{\lrate}$ such that $\lrate f=Qf$.
+\end{proposition}
+
+\noindent
+Because of this result, and since---as discussed above---every non-empty bounded set of rate matrices that has $\lrate$ as its lower envelope is a subset of $\rateset_{\lrate}$, it follows that $\rateset_{\lrate}$ is the largest non-empty bounded set of rate matrices that has $\lrate$ as its lower envelope.
+Furthermore, as we will show in Proposition~\ref{prop:dominatingproperties} below, this set $\rateset_{\lrate}$ is also closed and convex, and has \emph{separately specified rows}. We say that a set of rate matrices has separately specified rows if it is closed under taking arbitrary combinations of rows from its elements. That is, if for every $x\in\states$ we let $\rateset_x\coloneqq\{Q(x,\cdot):Q\in\rateset\}$ denote the set of the $x$-th rows of the elements of $\rateset$, then we say that $\rateset$ has separately specified rows if $\rateset$ contains every matrix $Q$ that can be constructed by selecting, for all $x\in\states$, an arbitrary row $Q(x,\cdot)$ from $\rateset_x$.
+
+\begin{definition}\label{def:separatelyspecifiedrows}
+A set of rate matrices $\rateset\subseteq\mathcal{R}$ has separately specified rows if
+\begin{equation*}
+\rateset=\left\{
+Q\in\mathcal{R}
+\colon
+(\forall x\in\states)~Q(x,\cdot)\in\rateset_x\right\},
+\end{equation*}
+where, for every $x\in\states$, $\rateset_x\coloneqq\{Q(x,\cdot)\colon Q\in\rateset\}$ is some set of rows from which the $x$-th row of the rate matrices in $\rateset$ are taken.
+\end{definition}
+
+\begin{proposition}\label{prop:dominatingproperties}
+Consider a lower transition rate operator $\lrate$ and let $\rateset_{\lrate}$ be the corresponding set of dominating rate matrices, as defined by Equation~\eqref{eq:dominatingratematrices}. Then $\rateset_{\lrate}$ is closed and convex, and has separately specified rows.
+\end{proposition}
+
+\noindent
+These additional properties characterize $\rateset_{\lrate}$ completely, in the sense that no other set satisfies them.
+
+\begin{proposition}\label{prop:dominating_unique_characterization}
+Consider any non-empty, bounded, closed and convex set of rate matrices $\rateset\subseteq\mathcal{R}$ with separately specified rows that has $\lrate$ as its lower envelope. Then $\rateset=\rateset_{\lrate}$.
+\end{proposition}
+
+\begin{exmp}\label{ex:dominatingset}
+Let $\rateset_1$ and $\rateset_2$ be constructed as in Example~\ref{example:different_sets_same_lower_rate}, and let $\lrate\coloneqq\lrate_1=\lrate_2$ be their common lower transition rate operator. As we are about to show, the corresponding set of dominating rate matrices $\rateset_{\lrate}$ is then equal to
+\begin{equation}\label{eq:ex:dominatingset:globaldef}
+\rateset^* \coloneqq \{Q\in\mathcal{R}\,:\,(\forall x\in\states)\, Q(x,\cdot)\in\rateset_x\},
+\end{equation}
+where, for all $x\in\states$, $\rateset_x$ is given by
+\begin{equation*}
+\rateset_x \coloneqq \left\{\lambda A(x,\cdot)+(1-\lambda)B(x,\cdot)\,:\,\lambda\in[0,1]\right\}.
+\end{equation*}
+
+First of all, for any $Q\in\rateset^*$, $f\in\gamblesX$ and $x\in\states$, it follows from Equation~\eqref{eq:ex:dominatingset:globaldef} that there is some $\lambda\in[0,1]$ such that
+\begin{equation*}
+[Qf](x)=\lambda[Af](x)+(1-\lambda)[Bf](x)
+\geq\lambda[\lrate f](x)+(1-\lambda)[\lrate f](x)
+=[\lrate f](x),
+\end{equation*}
+where the inequality holds because $\lrate$ is the lower envelope of $\rateset_1$. Since this is true for all $x\in\states$, we find that $Qf\geq\lrate f$. Since this is true for all $f\in\gamblesX$ and all $Q\in\rateset^*$, it follows that $\rateset^*\subseteq\rateset_{\lrate}$. 
+
+
+Let now $\lrate^*$ be the lower transition rate operator that corresponds to $\rateset^*$. Consider any $f\in\gamblesX$. Then, because $\rateset^*\subseteq\rateset_{\lrate}$, we find that $\lrate^*f\geq\lrate f$. Similarly, since $\rateset_1$ is clearly a subset of $\rateset^*$, we find that $\lrate^*f\leq\lrate_1f$. Since $\lrate_1=\lrate$, it follows that $\lrate f\leq \lrate^*f\leq \lrate f$, and because this holds for any $f\in\gamblesX$, we conclude that $\lrate^*=\lrate$.
+
+
+% Recall from Example~\ref{example:different_sets_same_lower_rate} that for all $f\in\gamblesX$, it holds that either $\lrate f=Af$, or $\lrate f=Bf$. Using a similar argument as we used there for the rate matrix $C$, it is clear that any convex combination $Q_\lambda\coloneqq \lambda A+(1-\lambda)B$, with $\lambda\in[0,1]$, is a rate matrix that dominates $\lrate$. Furthermore, because we there found that $[Af](1)\leq [Bf](1)$ if and only if $[Af](2)\leq[Bf](2)$, any matrix constructed by combining rows from $A$ and $B$ will dominate $\lrate$. For example, let $D$ be a rate matrix such that $D(1,\cdot)\coloneqq A(1,\cdot)$ and $D(2,\cdot)\coloneqq B(2,\cdot)$. Then, if $Af\leq Bf$, it also holds that $Af\leq Df$. Similarly, if $Bf\leq Af$, then also $Bf\leq Df$. A similar argument shows that the same is true for any matrix constructed by combining rows from different convex combinations of $A$ and $B$.
+
+% From these ideas, we first construct two sets of rows. For all $x\in\states$, let
+% \begin{equation*}
+% \rateset_x \coloneqq \left\{\lambda A(x,\cdot)+(1-\lambda)B(x,\cdot)\,:\,\lambda\in[0,1]\right\}\,.
+% \end{equation*}
+% Let now $\rateset \coloneqq \{Q\in\mathcal{R}\,:\,(\forall x\in\states)\, Q(x,\cdot)\in\rateset_x\}$. Then, for all $Q\in\rateset$, $Q$ is such that
+% \begin{equation*}
+% Q=\left[\begin{array}{rr}-a & a \\ b& -b\end{array}\right]\,,\quad\text{where $a\in[1,3]$ and $b\in[1,2]$.}
+% \end{equation*}
+% The converse also holds; for all $a\in[1,3]$ and $b\in[1,2]$, there is a $Q\in\rateset$ that takes the above form. From this, it is clear that for all $Q\in\rateset$, it holds that $\lrate f\leq Qf$, for all $f\in\gamblesX$. 
+%Furthermore, $\rateset^1\subset\rateset$ and $\rateset^2\subset\rateset$. Hence, $\rateset$ has $\lrate$ as its corresponding lower transition rate operator. 
+
+It remains to determine that $\rateset^*=\rateset_{\lrate}$. One way to verify this is to consider any $Q'\notin\rateset^*$ and show that there is some $f\in\gamblesX$ and some $x\in\states$ such that $[Q'f](x)<[\lrate f](x)$. We leave this method as an exercise for the reader, and note instead the following. $\rateset^*$ is clearly non-empty, bounded, closed, convex, has separately specified rows and, as we have just shown, has $\lrate$ as its lower transition rate operator. Therefore, by Proposition~\ref{prop:dominating_unique_characterization}, we find that indeed $\rateset=\rateset_{\lrate}$.
+\exampleend
+\end{exmp}
+
+We conclude from all of this that non-empty bounded sets of rate matrices are more informative than lower transition rate operators, in the following sense. Different non-empty bounded sets of rate matrices $\rateset$ may have the same lower transition rate operator $\lrate$ and therefore, in general, knowledge of $\lrate$ does not suffice to reconstruct $\rateset$; we can only reconstruct an outer approximation $\rateset_{\lrate}$, which is guaranteed to include $\rateset$. This changes if, besides non-empty and bounded, $\rateset$ is also closed and convex and has separately specified rows. In that case, $\lrate$ serves as an alternative representation for $\rateset$ because, since $\rateset=\rateset_{\lrate}$, we can use $\lrate$ to reconstruct $\rateset$. In other words: there is a one-to-one correspondence between lower transition rate operators and non-empty, bounded, closed and convex sets of rate matrices that have separately specified rows.
+
 
 % \noindent We conclude this section with the following result.
 % \begin{proposition}\label{lemma:productiscoherent}
@@ -2378,126 +2496,14 @@ Interestingly, then, the family $\underline{\mathcal{T}}_{\lrate}$ maintains the
 
 \section{Connections Between Lower Transition (Rate) Operators and Imprecise Continuous-Time Markov Chains}\label{sec:connections}
 
-One of the objectives of this paper is to establish a connection between the operator $\lbound_t^s$ that we have just introduced, and the different types of imprecise continous-time Markov chains that were discussed in Section~\ref{sec:iCTMC}. Since the former is derived from a lower transition rate operator $\lrate$ and the latter are derived from a non-empty bounded set of rate matrices $\rateset$, an obvious first step is to investigate the connection between lower transition rate operators and non-empty bounded sets of rate matrices.
+*** blabla
 
-\subsection{Lower Transition Rate Operators versus Sets of Rate Matrices}\label{sec:connections_rate}
+One of the objectives of this paper is to establish a connection between the operator $\lbound_t^s$ that we have just introduced, and the different types of imprecise continous-time Markov chains that were discussed in Section~\ref{sec:iCTMC}. Since the former is derived from a lower transition rate operator $\lrate$ and the latter are derived from a non-empty bounded set of rate matrices $\rateset$, an obvious first step is to investigate the connection between lower transition rate operators and non-empty bounded sets of rate matrices.
 
 % $\rateset$ and $\lrate$. 
 %In order to do that, we start by discussing some properties of sets of rate matrices.
 
-We start by considering a non-empty bounded set $\rateset\subseteq\mathcal{R}$ of rate matrices. For any $f\in\gamblesX$,
-\begin{equation}\label{eq:correspondinglowertrans}
-\lrate f\coloneqq\inf\{Qf\colon Q\in\rateset\}\\[2mm]
-\end{equation}
-is then again an element of $\gamblesX$.\footnote{%Since $\rateset$ is non-empty, the components of $\lrate f$ cannot be $+\infty$.
-Since $\rateset$ is bounded,~\ref{N:normAf} implies that, for all $Q\in\rateset$, $\norm{Qf}\leq\norm{Q}\norm{f}\leq\norm{\rateset}\norm{f}<+\infty$. Therefore, and since $\rateset$ is non-empty, the components of $\lrate f$ are bounded below by $-\norm{\rateset}\norm{f}$, which implies that $\lrate f$ is a real-valued function on $\states$.}
-Therefore, $\lrate$ is a map from $\gamblesX$ to $\gamblesX$. We call this operator $\lrate$, as defined by Equation~\eqref{eq:correspondinglowertrans}, the \emph{lower envelope} of $\rateset$. It is a matter of straightforward verification to see that $\lrate$ is a lower transition rate operator.
 
-\begin{proposition}\label{prop:lowerenvelopeislowertrans}
-For any non-empty bounded set $\rateset\subseteq\mathcal{R}$ of rate matrices, the corresponding operator $\lrate\colon\gamblesX\to\gamblesX$, as defined by Equation~\eqref{eq:correspondinglowertrans}, is a lower transition rate operator.
-\end{proposition}
-
-\noindent
-Inspired by this result, we will also refer to the lower envelope of $\rateset$ as the \emph{lower transition rate operator that corresponds to $\rateset$}. %As we have just seen, every non-empty bounded set $\rateset\subseteq\mathcal{R}$ of rate matrices has such a corresponding lower transition rate operator $\lrate$. 
-However, this correspondence is not one-to-one. As the following example establishes, different non-empty bounded sets of rate matrices may have the same corresponding lower transition rate operator.
-
-\begin{exmp}\label{example:different_sets_same_lower_rate}
-For the sake of simplicity, we assume that the state space $\states\coloneqq\{1,2\}$ has only two elements, which allows us to work with $2\times 2$ matrices. Consider now two rate matrices
-\begin{equation*}
-A\coloneqq\left[\begin{array}{rr}-1 & 1 \\2 & -2\end{array}\right]\quad\text{and}\quad
-B\coloneqq\left[\begin{array}{rr}-3 & 3 \\1 & -1\end{array}\right]\,,
-\vspace{7pt}
-\end{equation*}
-let $C\coloneqq \nicefrac{1}{2}(A+B)$ be their convex mixture, which is clearly also a rate matrix, and use these matrices to define the sets $\rateset_1\coloneqq\{A,B\}$ and $\rateset_2\coloneqq\{A,B,C\}$. Then clearly, $\rateset_1$ and $\rateset_2$ are two different, non-empty and bounded sets of rate matrices. Nevertheless, as we are about to show, the corresponding lower transition rate operators are identical.
-
-Let $\lrate_1$ and $\lrate_2$ be the lower transition rate operators that correspond to $\rateset_1$ and $\rateset_2$, respectively, %We will show that $\lrate_1=\lrate_2$.
-and consider any $f\in\gamblesX$. Equation~\eqref{eq:correspondinglowertrans} then implies that $\lrate_1f\leq Af$ and $\lrate_1f\leq Bf$, which in turn implies that $\lrate_1f\leq Cf$. Therefore, by applying Equation~\eqref{eq:correspondinglowertrans} once more, we find that $\lrate_1 f\leq\lrate_2 f$. Hence, since Equation~\eqref{eq:correspondinglowertrans} also trivially implies that $\lrate_2 f\leq\lrate_1 f$, we find that $\lrate_1 f=\lrate_2 f$. Since this is true for any $f\in\gamblesX$, we conclude that $\lrate_1=\lrate_2$.
-\exampleend
-\end{exmp}
-Of course, this should not really be surprising---Example~\ref{example:different_sets_same_lower_rate} essentially establishes that different sets can have the same infimum. However, it does lead to a natural question: what do these different sets have in common?
-
-Therefore, we next consider some fixed lower transition rate operator $\lrate$.
-All the non-empty bounded sets $\rateset$ of rate matrices that have $\lrate$ as their lower envelope then share this common property: they consist of rate matrices $Q$ that dominate $\lrate$, in the sense that $Qf\geq\lrate f$ for all $f\in\gamblesX$. Therefore, each of these sets $\rateset$ is contained in the following set of dominating rate matrices:
-\begin{equation}\label{eq:dominatingratematrices}
-\rateset_{\lrate}\coloneqq
-\left\{
-Q\in\mathcal{R}
-\colon
-Qf\geq\lrate f\text{ for all $f\in\gamblesX$}
-\right\}.
-\end{equation}
-As our next result shows, this set $\rateset_{\lrate}$ is non-empty and bounded, and has $\lrate$ as its lower envelope. Even stronger, the infimum in Equation~\eqref{eq:correspondinglowertrans} is reached---can be replaced by a minimum.
-
-\begin{proposition}\label{prop:dominating_nonempty_bounded}
-Consider a lower transition rate operator $\lrate$ and let $\rateset_{\lrate}$ be the corresponding set of dominating rate matrices, as defined by Equation~\eqref{eq:dominatingratematrices}. Then $\rateset_{\lrate}$ is non-empty and bounded and, for all $f\in\gamblesX$, there is some $Q\in\rateset_{\lrate}$ such that $\lrate f=Qf$.
-\end{proposition}
-
-\noindent
-Because of this result, and since---as discussed above---every non-empty bounded set of rate matrices that has $\lrate$ as its lower envelope is a subset of $\rateset_{\lrate}$, it follows that $\rateset_{\lrate}$ is the largest non-empty bounded set of rate matrices that has $\lrate$ as its lower envelope.
-Furthermore, as we will show in Proposition~\ref{prop:dominatingproperties} below, this set $\rateset_{\lrate}$ is also closed and convex, and has \emph{separately specified rows}. We say that a set of rate matrices has separately specified rows if it is closed under taking arbitrary combinations of rows from its elements. That is, if for every $x\in\states$ we let $\rateset_x\coloneqq\{Q(x,\cdot):Q\in\rateset\}$ denote the set of the $x$-th rows of the elements of $\rateset$, then we say that $\rateset$ has separately specified rows if $\rateset$ contains every matrix $Q$ that can be constructed by selecting, for all $x\in\states$, an arbitrary row $Q(x,\cdot)$ from $\rateset_x$.
-
-\begin{definition}\label{def:separatelyspecifiedrows}
-A set of rate matrices $\rateset\subseteq\mathcal{R}$ has separately specified rows if
-\begin{equation*}
-\rateset=\left\{
-Q\in\mathcal{R}
-\colon
-(\forall x\in\states)~Q(x,\cdot)\in\rateset_x\right\},
-\end{equation*}
-where, for every $x\in\states$, $\rateset_x\coloneqq\{Q(x,\cdot)\colon Q\in\rateset\}$ is some set of rows from which the $x$-th row of the rate matrices in $\rateset$ are taken.
-\end{definition}
-
-\begin{proposition}\label{prop:dominatingproperties}
-Consider a lower transition rate operator $\lrate$ and let $\rateset_{\lrate}$ be the corresponding set of dominating rate matrices, as defined by Equation~\eqref{eq:dominatingratematrices}. Then $\rateset_{\lrate}$ is closed and convex, and has separately specified rows.
-\end{proposition}
-
-\noindent
-These additional properties characterize $\rateset_{\lrate}$ completely, in the sense that no other set satisfies them.
-
-\begin{proposition}\label{prop:dominating_unique_characterization}
-Consider any non-empty, bounded, closed and convex set of rate matrices $\rateset\subseteq\mathcal{R}$ with separately specified rows that has $\lrate$ as its lower envelope. Then $\rateset=\rateset_{\lrate}$.
-\end{proposition}
-
-\begin{exmp}\label{ex:dominatingset}
-Let $\rateset_1$ and $\rateset_2$ be constructed as in Example~\ref{example:different_sets_same_lower_rate}, and let $\lrate\coloneqq\lrate_1=\lrate_2$ be their common lower transition rate operator. As we are about to show, the corresponding set of dominating rate matrices $\rateset_{\lrate}$ is then equal to
-\begin{equation}\label{eq:ex:dominatingset:globaldef}
-\rateset^* \coloneqq \{Q\in\mathcal{R}\,:\,(\forall x\in\states)\, Q(x,\cdot)\in\rateset_x\},
-\end{equation}
-where, for all $x\in\states$, $\rateset_x$ is given by
-\begin{equation*}
-\rateset_x \coloneqq \left\{\lambda A(x,\cdot)+(1-\lambda)B(x,\cdot)\,:\,\lambda\in[0,1]\right\}.
-\end{equation*}
-
-First of all, for any $Q\in\rateset^*$, $f\in\gamblesX$ and $x\in\states$, it follows from Equation~\eqref{eq:ex:dominatingset:globaldef} that there is some $\lambda\in[0,1]$ such that
-\begin{equation*}
-[Qf](x)=\lambda[Af](x)+(1-\lambda)[Bf](x)
-\geq\lambda[\lrate f](x)+(1-\lambda)[\lrate f](x)
-=[\lrate f](x),
-\end{equation*}
-where the inequality holds because $\lrate$ is the lower envelope of $\rateset_1$. Since this is true for all $x\in\states$, we find that $Qf\geq\lrate f$. Since this is true for all $f\in\gamblesX$ and all $Q\in\rateset^*$, it follows that $\rateset^*\subseteq\rateset_{\lrate}$. 
-
-
-Let now $\lrate^*$ be the lower transition rate operator that corresponds to $\rateset^*$. Consider any $f\in\gamblesX$. Then, because $\rateset^*\subseteq\rateset_{\lrate}$, we find that $\lrate^*f\geq\lrate f$. Similarly, since $\rateset_1$ is clearly a subset of $\rateset^*$, we find that $\lrate^*f\leq\lrate_1f$. Since $\lrate_1=\lrate$, it follows that $\lrate f\leq \lrate^*f\leq \lrate f$, and because this holds for any $f\in\gamblesX$, we conclude that $\lrate^*=\lrate$.
-
-
-% Recall from Example~\ref{example:different_sets_same_lower_rate} that for all $f\in\gamblesX$, it holds that either $\lrate f=Af$, or $\lrate f=Bf$. Using a similar argument as we used there for the rate matrix $C$, it is clear that any convex combination $Q_\lambda\coloneqq \lambda A+(1-\lambda)B$, with $\lambda\in[0,1]$, is a rate matrix that dominates $\lrate$. Furthermore, because we there found that $[Af](1)\leq [Bf](1)$ if and only if $[Af](2)\leq[Bf](2)$, any matrix constructed by combining rows from $A$ and $B$ will dominate $\lrate$. For example, let $D$ be a rate matrix such that $D(1,\cdot)\coloneqq A(1,\cdot)$ and $D(2,\cdot)\coloneqq B(2,\cdot)$. Then, if $Af\leq Bf$, it also holds that $Af\leq Df$. Similarly, if $Bf\leq Af$, then also $Bf\leq Df$. A similar argument shows that the same is true for any matrix constructed by combining rows from different convex combinations of $A$ and $B$.
-
-% From these ideas, we first construct two sets of rows. For all $x\in\states$, let
-% \begin{equation*}
-% \rateset_x \coloneqq \left\{\lambda A(x,\cdot)+(1-\lambda)B(x,\cdot)\,:\,\lambda\in[0,1]\right\}\,.
-% \end{equation*}
-% Let now $\rateset \coloneqq \{Q\in\mathcal{R}\,:\,(\forall x\in\states)\, Q(x,\cdot)\in\rateset_x\}$. Then, for all $Q\in\rateset$, $Q$ is such that
-% \begin{equation*}
-% Q=\left[\begin{array}{rr}-a & a \\ b& -b\end{array}\right]\,,\quad\text{where $a\in[1,3]$ and $b\in[1,2]$.}
-% \end{equation*}
-% The converse also holds; for all $a\in[1,3]$ and $b\in[1,2]$, there is a $Q\in\rateset$ that takes the above form. From this, it is clear that for all $Q\in\rateset$, it holds that $\lrate f\leq Qf$, for all $f\in\gamblesX$. 
-%Furthermore, $\rateset^1\subset\rateset$ and $\rateset^2\subset\rateset$. Hence, $\rateset$ has $\lrate$ as its corresponding lower transition rate operator. 
-
-It remains to determine that $\rateset^*=\rateset_{\lrate}$. One way to verify this is to consider any $Q'\notin\rateset^*$ and show that there is some $f\in\gamblesX$ and some $x\in\states$ such that $[Q'f](x)<[\lrate f](x)$. We leave this method as an exercise for the reader, and note instead the following. $\rateset^*$ is clearly non-empty, bounded, closed, convex, has separately specified rows and, as we have just shown, has $\lrate$ as its lower transition rate operator. Therefore, by Proposition~\ref{prop:dominating_unique_characterization}, we find that indeed $\rateset=\rateset_{\lrate}$.
-\exampleend
-\end{exmp}
-
-We conclude from all of this that non-empty bounded sets of rate matrices are more informative than lower transition rate operators, in the following sense. Different non-empty bounded sets of rate matrices $\rateset$ may have the same lower transition rate operator $\lrate$ and therefore, in general, knowledge of $\lrate$ does not suffice to reconstruct $\rateset$; we can only reconstruct an outer approximation $\rateset_{\lrate}$, which is guaranteed to include $\rateset$. This changes if, besides non-empty and bounded, $\rateset$ is also closed and convex and has separately specified rows. In that case, $\lrate$ serves as an alternative representation for $\rateset$ because, since $\rateset=\rateset_{\lrate}$, we can use $\lrate$ to reconstruct $\rateset$. In other words: there is a one-to-one correspondence between lower transition rate operators and non-empty, bounded, closed and convex sets of rate matrices that have separately specified rows.
 
 %\section{Imprecise Continuous-Time Markov Chains}\label{sec:imp_markov}
 
