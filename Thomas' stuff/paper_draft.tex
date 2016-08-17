@@ -689,24 +689,8 @@ Let $Q_1,Q_2\in\mathcal{R}$ be two commuting rate matrices. For example, let $Q_
 
 Now let $\{Q_i\}_{i\in\nats_0}$ be defined by $Q_i\coloneqq Q_1$ if $i$ is odd and $Q_i\coloneqq Q_2$ if $i$ is even, define $\delta_i\coloneqq 2^{-i}$ for all $i\in\nats_0$, and consider the corresponding sequence of transition matrix systems $\{\mathcal{T}_i\}_{i\in\nats}$ that was defined in Example~\ref{exmp:limit_trans_mat_system}.  Since $\norm{Q_i-Q_{i-1}}=\norm{Q_1-Q_2}$ for all $i\in\nats$, the sequence $\{Q_i\}_{i\in\nats_0}$ clearly satisfies the conditions in Example~\ref{exmp:limit_trans_mat_system}---just choose $c=\norm{Q_1-Q_2}$---and therefore, as we have seen, $\{\mathcal{T}_i\}_{i\in\nats}$ converges to a limit $\mathcal{T}\coloneqq \lim_{i\to\infty}\mathcal{T}_i$ in $\mathbb{T}$. 
 
-Further on in this example, we will establish closed-form expression for some of the transition matrices $T_t^s$ that correspond to this limit $\mathcal{T}$, but first, let us prove that $\mathcal{T}$ is well-behaved.
 
-
-*** Fix any $r\in[t,s]$ and consider any $\Delta>0$. Then due to Lemma~\ref{lemma:uniformelywellbehaved} (STILL NEED TO FIX THE FORWARD DEPENDENCIES IN THAT LEMMA), for all $i\in\nats$:
-\begin{equation*}
-\norm{T_r^{r+\Delta}-I}
-\leq\norm{T_r^{r+\Delta}-\presuper{i}T_r^{r+\Delta}}+\norm{\presuper{i}T_r^{r+\Delta}-I}
-\leq
-\norm{T_r^{r+\Delta}-\presuper{i}T_r^{r+\Delta}}+\Delta\norm{\rateset}.
-\end{equation*}
-Since $\lim_{i\to+\infty}\presuper{i}T_r^{r+\Delta}=T_r^{r+\Delta}$, this implies that $\norm{T_r^{r+\Delta}-I}\leq\Delta\norm{\rateset}$. Similarly, if $r-\Delta\geq0$, we also find that $\norm{T_{r-\Delta}^{r}-I}\leq\Delta\norm{\rateset}$. Hence, it follows that
-\begin{equation*}
-\limsup_{\Delta\to0^+}\norm{\frac{1}{\Delta}\left(T_r^{r+\Delta}-I\right)}\leq\norm{\rateset}\text{~~~and~~~}
-\limsup_{\Delta\to0^+}\norm{\frac{1}{\Delta}\left(T_{r-\Delta}^{r}-I\right)}\leq\norm{\rateset},
-\end{equation*}
-which implies that $\mathcal{T}_*^{[t,s]}$ is well-behaved. ***
-
-In the remainder of this example, we aim to show that for any $t\in(0,1]$, the transition matrix from $0$ to $t$ that corresponds to the transition matrix system $\mathcal{T}$ is equal to
+In the first part of this example, we aim to show that for any $t\in(0,1]$, the transition matrix from $0$ to $t$ that corresponds to the transition matrix system $\mathcal{T}$ is equal to
 \vspace{4pt}
 \begin{equation}\label{eq:ex4:def}
 T_0^t=e^{Q_1\varphi_1(t)+Q_2\varphi_2(t)},
@@ -843,6 +827,50 @@ where the first equality follows from Equation~\eqref{eq:ex4:recursekandstar}, t
 % \presuper{*}T_0^{\Delta_j} = \lim_{i\to\infty} \presuper{i}T_0^{\Delta_j} = \lim_{k\to\infty} \presuper{j+2k}T_{0}^{\Delta_j} = \lim_{k\to\infty} e^{\Delta_j\left(Q_1(1-s_k) + Q_2s_k\right)} = e^{\Delta_j(Q_1(\nicefrac{2}{3}) + Q_2(\nicefrac{1}{3}))}\,,
 % \end{equation*}
 % where the first equality follows from the proof of Proposition~\ref{lemma:restricted_trans_mat_system_cauchy_converges}. Using a completely analogous argument, if $j$ was taken to be even instead of odd, then instead $Q_2$ will dominate the limiting behaviour, and $\presuper{*}T_0^{\Delta_j}=e^{\Delta_j(Q_1(\nicefrac{1}{3}) + Q_2(\nicefrac{2}{3}))}$. Note that the mixing proportion between $Q_1$ and $Q_2$ is then reversed. We will use these observations in other examples later in this work.
+
+We end this example by showing that the transition matrix system $\mathcal{T}$ is well-behaved. Let $M\coloneqq\max\{\norm{Q_1},\norm{Q_2}\}$. We will prove that
+\begin{equation*}
+\frac{1}{\Delta}\norm{T_t^s-I}\leq M
+~~\text{for all $t,s,\Delta\in\reals_{\geq0}$ such that $s=t+\Delta$.}
+\end{equation*}
+According to Definition~\ref{def:well_behaved_trans_mat_system}, this clearly implies that $\mathcal{T}$ is well-behaved.
+
+So fix any $t,s,\Delta\in\reals_{\geq0}$ such that $s=t+\Delta$ and consider any $\epsilon>0$. Then since $\lim_{i\to+\infty}\presuper{i}T_t^s=T_t^s$, there is some $j\in\nats$ such that $\norm{T_t^s-\presuper{j}T_t^s}\leq\epsilon$. Furthermore, since $Q_1$ and $Q_2$ commute, it follows from Equation~\eqref{eq:def:sequenceinexample3} that there are $\Delta_1,\Delta_2\in\reals_{\geq0}$ such that $\Delta_1+\Delta_2=\Delta$ and $\presuper{j}T_t^s=e^{Q_1\Delta_1}e^{Q_2\Delta_2}$. Therefore, we find that
+\begin{align*}
+\norm{T_t^s-I}
+\leq
+\norm{T_t^s-\presuper{j}T_t^s}
++
+\norm{e^{Q_1\Delta_1}e^{Q_2\Delta_2}-I}
+%&\leq
+%\epsilon+
+%\norm{e^{Q_1\Delta_1}e^{Q_2\Delta_2}-I}
+&\leq
+\epsilon
++
+\norm{e^{Q_1\Delta_1}-I}
++\norm{e^{Q_2\Delta_2}-I}\\
+&\leq
+\epsilon+
+\Delta_1\norm{Q_1}
++
+\Delta_2\norm{Q_2}
+\leq\Delta M,
+\end{align*}
+where the second and third inequality follows from Lemma~\ref{lemma:recursive} and~\ref{lemma:linearboundonexponential} in the appendix, respectively.
+% for all $i\in\nats$:
+% \begin{equation*}
+% \norm{T_r^{r+\Delta}-I}
+% \leq\norm{T_r^{r+\Delta}-\presuper{i}T_r^{r+\Delta}}+\norm{\presuper{i}T_r^{r+\Delta}-I}
+% \leq
+% \norm{T_r^{r+\Delta}-\presuper{i}T_r^{r+\Delta}}+\Delta\norm{\rateset}.
+% \end{equation*}
+% Since $\lim_{i\to+\infty}\presuper{i}T_r^{r+\Delta}=T_r^{r+\Delta}$, this implies that $\norm{T_r^{r+\Delta}-I}\leq\Delta\norm{\rateset}$. Similarly, if $r-\Delta\geq0$, we also find that $\norm{T_{r-\Delta}^{r}-I}\leq\Delta\norm{\rateset}$. Hence, it follows that
+% \begin{equation*}
+% \limsup_{\Delta\to0^+}\norm{\frac{1}{\Delta}\left(T_r^{r+\Delta}-I\right)}\leq\norm{\rateset}\text{~~~and~~~}
+% \limsup_{\Delta\to0^+}\norm{\frac{1}{\Delta}\left(T_{r-\Delta}^{r}-I\right)}\leq\norm{\rateset},
+% \end{equation*}
+% which implies that $\mathcal{T}_*^{[t,s]}$ is well-behaved. ***
 \exampleend
 \end{exmp}
 
@@ -1547,7 +1575,7 @@ Consider any $P\in\wprocesses$. Then $\overline{\partial}_{+}
 The following two examples provide this result with some intuition. Example~\ref{exmp:outerderivative} illustrates the validity of the result, while Example~\ref{exmp:emptyouterderivative} shows that the requirement that $P$ must be well-behaved is essential for the result to be true.
 
 \begin{exmp}\label{exmp:outerderivative}
-Consider again the stochastic process $P\in\wprocesses$ from Example~\ref{exmp:well-behaved-no-deriv} of which, for all $t\in(0,1]$, the transition matrix $T_0^t$ is given by Equation~\eqref{eq:ex4:def}. 
+Consider again the well-behaved stochastic process $P\in\wprocesses$ from Example~\ref{exmp:well-behaved-no-deriv} of which, for all $t\in(0,1]$, the transition matrix $T_0^t$ is given by Equation~\eqref{eq:ex4:def}. 
 The aim of this example is to show that for this particular process,
 \begin{equation*}
 \smash{\overline{\partial}}_+T_0^0=\big\{Q_\lambda\colon \lambda\in[\nicefrac{1}{3},\nicefrac{2}{3}]\big\},
