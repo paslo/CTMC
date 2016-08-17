@@ -100,6 +100,8 @@
 
 \newcommand{\exampleend}{\hfill$\Diamond$}
 
+\newcommand{\ictmc}{ICTMC}
+
 \def\presuper#1#2%
   {\mathop{}%
    \mathopen{\vphantom{#2}}^{#1}%
@@ -1840,9 +1842,7 @@ The second technique is to obtain a new transition matrix system as a limit of e
 \section{Imprecise Continuous-Time Markov chains}
 \label{sec:iCTMC}
 
-In Sections~\ref{sec:stochastic_processes} and~\ref{sec:cont_time_markov_chains}, we formalized stochastic processes, and provided ways to characterize them. We now turn to the field of \emph{imprecise probability}~\cite{Walley:1991vk} {\bf CITE CITE}, and will formalize in this section the notion of \emph{imprecise continuous-time Markov chains}. Here, rather than look at a single stochastic process $P\in\processes$, we instead consider jointly some \emph{set} of processes $\mathcal{P}\subseteq\processes$.
-
-*** blabla
+In Sections~\ref{sec:stochastic_processes} and~\ref{sec:cont_time_markov_chains}, we formalized stochastic processes, and provided ways to characterize them. We now turn to the field of \emph{imprecise probability}~\cite{Walley:1991vk} {\bf CITE CITE}, and will formalize in this section the notion of \emph{imprecise continuous-time Markov chains}. Here, rather than look at a single stochastic process $P\in\processes$, we instead consider jointly some \emph{set} of processes $\mathcal{P}\subseteq\processes$. We start by looking at how such sets can be described.
 
 \subsection{Sets of Stochastic Processes}
 
@@ -1861,13 +1861,15 @@ Consider any non-empty bounded set $\rateset$ of rate matrices, and any stochast
 If $P$ is consistent with $\rateset$, we will write $P\sim\rateset$.
 \end{definition}
 
-Thus, when a process $P\in\processes$ is consistent with some $\rateset\subset\mathcal{R}$, we know that its behaviour over time can always be described using the elements of $\rateset$. However, we do not know which of these elements $Q\in\rateset$ describe this behaviour at any given time  $t\in\realsnonneg$ or for any given history $x_u\in\states_u$. Furthermore, consistency of a process with some set $\rateset$ only asserts ``consistency in behaviour"; in particular, it does not tell us anything about the initial distribution of the process. It should therefore be clear that there will be many processes consistent with any non-empty bounded set $\rateset\subset\mathcal{R}$. The next example shows that this is already the case when $\rateset$ is singleton.
+Thus, when a process $P\in\processes$ is consistent with some $\rateset\subset\mathcal{R}$, we know that its behaviour over time can always be described using the elements of $\rateset$. However, we do not know which of these elements $Q\in\rateset$ describe this behaviour at any given time  $t\in\realsnonneg$ or for any given history $x_u\in\states_u$. Furthermore, consistency of a process with some set $\rateset$ only asserts ``consistency in behaviour"; in particular, it does not tell us anything about the initial distribution of the process. %It should therefore be clear that there will be many processes consistent with any non-empty bounded set $\rateset\subset\mathcal{R}$. The next example shows that this is already the case when $\rateset$ is singleton.
 
-*** blabla
+%*** blabla
 
-However, as noted above, consistency with some $\rateset$ does not allow us to specify the initial distributions of the processes in such a set. Therefore, we first briefly introduce the notion of consistency of initial distributions. To this end, let $\mathcal{M}$ be an arbitrary set of probability mass functions on $\states$. We will then say that a process $P$ is \emph{consistent with $\mathcal{M}$ in initial distribution}, whenever $P(X_0)\in\mathcal{M}$. We now focus on sets of processes that are jointly consistent with some given $\rateset$ and $\mathcal{M}$.
+%However, as noted above, consistency with some $\rateset$ does not allow us to specify the initial distributions of the processes in such a set. 
 
-However, rather than look at the set of \emph{all} processes consistent with such $\rateset$ and $\mathcal{M}$, we will for the sake of generality and ease of notation consider the consistent subset of a given set of processes $\mathcal{P}\subseteq\processes$.
+Therefore, we also introduce the notion of consistency of initial distributions. To this end, let $\mathcal{M}$ be an arbitrary set of probability mass functions on $\states$. We will then say that a process $P$ is \emph{consistent with $\mathcal{M}$ in initial distribution}, whenever $P(X_0)\in\mathcal{M}$. We now focus on sets of processes that are jointly consistent with some given $\rateset$ and $\mathcal{M}$.
+
+However, rather than look at the set of \emph{all} processes consistent with such $\rateset$ and $\mathcal{M}$, we will for the sake of generality and ease of notation consider the consistent subset of a given set of processes $\mathcal{P}\subseteq\processes$. The usefulness of this notational convention will be made clear momentarily.
 
 %*** dit leidt dan voor een gegeven $\rateset$ naar het idee om naar de verzameling van alle $P\in\processes$ te kijken die consistent zijn met $\rateset$. Voor notationeel gemak en generiekheid kijken we echter liever naar de subset van een gegeven $\mathcal{P}\subseteq\processes$ die consistent is met $\rateset$:
 
@@ -1878,11 +1880,11 @@ Consider any non-empty bounded set of rate matrices $\rateset$, any non-empty se
 \end{equation*}
 When $\mathcal{M}$ is the set of \emph{all} probability mass functions on $\states$, we will write $\mathcal{P}_{\rateset}$ for the sake of brevity.
 \end{definition}
-Such a set $\mathcal{P}_{\rateset,\mathcal{M}}$ will also be called an \emph{imprecise continuous-time Markov chain}. We will next focus on some specific cases.
+Such a set $\mathcal{P}_{\rateset,\mathcal{M}}$ will also be called an \emph{imprecise continuous-time Markov chain} (\ictmc). We will next focus on some specific cases.
 
 \subsection{Types of Imprecise Continuous-Time Markov Chains}\label{subsec:types_ictmc}
 
-It is clear from Example~\ref{example:rateset_not_singleton} that, for arbitrary $\rateset$, the entire consistent set $\processes_\rateset$ contains processes that differ not only quantitatively---differing in which $Q\in\rateset$ they use---but also qualitatively: differing in whether they satisfy homogeneity or Markov properties. We will therefore find it convenient to focus on the following sets of processes, which make explicit this qualitative difference.
+In Sections~\ref{sec:stochastic_processes} and~\ref{sec:cont_time_markov_chains}, we introduced the sets $\wprocesses, \wmprocesses,$ and $\whmprocesses$ of well-behaved stochastic processes with different qualitative properties. In particular, $\wprocesses$ is the set of \emph{all} well-behaved stochastic processes. $\wmprocesses$ is a subset of $\wprocesses$, the elements of which satisfy the Markov property. $\whmprocesses$ is the set of time-homogeneous Markov chains, which is therefore a subset of $\wmprocesses$. We will use the notational convention from Definition~\ref{def:consistent_process_set} to focus on \ictmc's which also have these different qualitative properties, as follows.
 
 \begin{definition}\label{def:process_sets}
 For any non-empty bounded set of rate matrices $\rateset$, and any non-empty set $\mathcal{M}$ of probability mass functions on $\states$, we define the following sets of stochastic processes that are jointly consistent with $\rateset$ and $\mathcal{M}$:
@@ -1891,8 +1893,20 @@ For any non-empty bounded set of rate matrices $\rateset$, and any non-empty set
 \item $\wmprocesses_{\rateset,\mathcal{M}}\subset\wmprocesses$ is the consistent set of all well-behaved Markov chains;
 \item $\whmprocesses_{\rateset,\mathcal{M}}\subset\whmprocesses$ is the consistent set of all well-behaved homogeneous Markov chains.
 \end{itemize}
-We will denote the lower expectation with respect to $\wprocesses_{\rateset,\mathcal{M}}$ as $\underline{\mathbb{E}}_{\rateset,\mathcal{M}}^{\mathrm{W}}$, with respect to $\wmprocesses_{\rateset,\mathcal{M}}$ as $\underline{\mathbb{E}}_{\rateset,\mathcal{M}}^{\mathrm{WM}}$, and with respect to  $\whmprocesses_{\rateset,\mathcal{M}}$ as $\underline{\mathbb{E}}_{\rateset,\mathcal{M}}^{\mathrm{WHM}}$. Following Definition~\ref{def:consistent_process_set}, we will write $\wprocesses_{\rateset}$, with lower expectation $\underline{\mathbb{E}}_{\rateset}^{\mathrm{W}}$, when we take $\mathcal{M}$ to be the set of \emph{all} probability mass functions on $\states$ (and similarly for these other sets). 
+Following Definition~\ref{def:consistent_process_set}, we will write $\wprocesses_{\rateset}$ when we take $\mathcal{M}$ to be the set of \emph{all} probability mass functions on $\states$ (and similarly for these other sets). 
 \end{definition}
+
+Because the sets $\wprocesses, \wmprocesses,$ and $\whmprocesses$ are subsets of each other, it should be clear that this also holds for the different types of \ictmc's introduced above.
+
+\begin{proposition}\label{prop:markov_set_subset_of_nonmarkov_set}
+Consider any bounded set of rate matrices $\rateset$, and any non-empty set $\mathcal{M}$ of probability mass functions on $\states$. Then,
+\begin{equation*}
+\whmprocesses_{\rateset,\mathcal{M}} \subseteq \wmprocesses_{\rateset,\mathcal{M}} \subseteq \wprocesses_{\rateset,\mathcal{M}}\,.
+\end{equation*}
+\end{proposition}
+\begin{proof}
+*** still need to check this *** This is immediate from Definition~\ref{def:process_sets} and the fact that $\whmprocesses\subset\wmprocesses\subset\wprocesses$.
+\end{proof}
 
 %However, we will in the sequel focus almost exclusively on sets of processes consistent only with a given set $\rateset$, and \emph{conditional} lower expectations with respect to those sets. Restrictions to specific sets $\mathcal{M}$ of initial distributions are then revisited in Section~{\bf REF}, where we will show how to compute (conditional) lower expectations when we do take into consideration such sets $\mathcal{M}$. In particular, we will there show that conditional lower expectations are invariant to the choice of $\mathcal{M}$, so that all our results up to that point remain valid for any choice of $\mathcal{M}$. Furthermore, we will show how to use these earlier results to compute \emph{unconditional} lower expectations, for which the choice of $\mathcal{M}$ does matter.
 
@@ -1918,7 +1932,7 @@ We will denote the lower expectation with respect to $\wprocesses_{\rateset,\mat
 %\begin{proof}
 %*** {\bf TODO}, but trivial.
 %\end{proof}
-Observe that the qualitative differences between these sets simplify the notion of consistency from Definition~\ref{def:consistent_process}. In particular, it holds that
+Observe furthermore that the qualitative differences between these sets simplify the notion of consistency from Definition~\ref{def:consistent_process}. In particular, it holds that
 \begin{equation*}
 \wmprocesses_{\rateset,\mathcal{M}} = \left\{P\in\wmprocesses\,:\,(\forall t\in\realsnonneg)~~ \smash{\overline{\partial}}T_t^t\subseteq\rateset,\,P(X_0)\in\mathcal{M}\right\}\,,
 \end{equation*}
@@ -1928,30 +1942,34 @@ and
 \end{equation*}
 This first equality follows from the Markov property of the elements of $\wmprocesses$, ensuring that $\smash{\overline{\partial}}T_{t,x_u}^t=\smash{\overline{\partial}}T_t^t$ for all $u\in\mathcal{U}_{<t}$ and all $x_u\in\states_u$. The second equality follows from the Markov property and the homogeneity of the elements $P\in\whmprocesses$, which, by Proposition~\ref{prop:Q_is_singleton_deriv_for_homogen}, ensures that $\smash{\overline{\partial}}T_t^t=\{Q_P\}$ for all $t\in\realsnonneg$.
 
-It should furthermore be clear that these different sets are nested, and, as an immediate consequence, that their corresponding lower expectations provide bounds for each other.
-
-\begin{proposition}\label{prop:markov_set_subset_of_nonmarkov_set}
-Consider any bounded set of rate matrices $\rateset$, and any non-empty set $\mathcal{M}$ of probability mass functions on $\states$. Then,
-\begin{equation*}
-\whmprocesses_{\rateset,\mathcal{M}} \subseteq \wmprocesses_{\rateset,\mathcal{M}} \subseteq \wprocesses_{\rateset,\mathcal{M}}\,.
-\end{equation*}
-\end{proposition}
-\begin{proof}
-*** still need to check this *** This is immediate from Definition~\ref{def:process_sets} and the fact that $\whmprocesses\subset\wmprocesses\subset\wprocesses$.
-\end{proof}
-
+The following example further illustrates the difference between these different types of \ictmc's.
 
 \begin{exmp}\label{example:rateset_not_singleton}
-**** rework this
+Let $Q_1,Q_2\in\mathcal{R}$ be two rate matrices such that $Q_1\neq Q_2$, and consider the set $\rateset\coloneqq \{Q_1, Q_2\}$. Let furthermore $\mathcal{M}\coloneqq\{p\}$, with $p$ an arbitrary probability mass function on $\states$.
 
-Suppose that $\rateset=\{Q_1,Q_2\}$ for some $Q_1,Q_2\in\mathcal{R}$ with $Q_1\neq Q_2$. Then, clearly, all well-behaved homogeneous Markov chains described by either $Q_1$ or $Q_2$ are consistent with $\rateset$. Furthermore, there will also be different non-homogeneous Markov chains consistent with $\rateset$. In particular, not only can such processes differ in their initial distribution, there will be non-homogeneous Markov chains with the same initial distribution but which differ in the choice of $Q_1$ or $Q_2$ for any given time $t\in\realsnonneg$. 
+The set $\whmprocesses_{\rateset,\mathcal{M}}$ then contains exactly two processes. In particular, these are the well-behaved time-homogeneous Markov chains $P_1,P_2\in\whmprocesses$ for which $P_1(X_0)=P_2(X_0)=p$, $Q_{P_1}=Q_1$, and $Q_{P_2}=Q_2$, where $Q_{P_1},Q_{P_2}$ are the two rate matrices that characterize $P_1$ and $P_2$, respectively, as in Theorem~\ref{theo:homogeneoushasQ}. The transition matrices of $P_1$ and $P_2$ are therefore given, respectively, by ${}^1T_t^s=e^{Q_1(s-t)}$ and ${}^2T_t^s=e^{Q_2(s-t)}$. Put differently, the families of transition matrices of these processes are given by the exponential transition matrix systems $\mathcal{T}_{Q_1}$ and $\mathcal{T}_{Q_2}$, respectively.
 
-Furthermore, various non-homogeneous, non-Markov processes will be consistent with $\rateset$ as well. For example, for any $t\in\realsnonneg$ and any $x_u,y_u\in\states_u$ such that $x_u\neq y_u$, there will be a process that satisfies $\smash{\overline{\partial}}T_{t,x_u}^t=\{Q_1\}$ and $\smash{\overline{\partial}}T_{t,y_u}^t=\{Q_2\}$.
+Furthermore, since $\whmprocesses_{\rateset,\mathcal{M}}\subseteq \wmprocesses_{\rateset,\mathcal{M}}$, these time-homogeneous processes also satisfy $P_1,P_2\in\wmprocesses_{\rateset,\mathcal{M}}$. However, $\wmprocesses_{\rateset,\mathcal{M}}$ also contains different processes, which are not time-homogeneous and therefore not in $\whmprocesses_{\rateset,\mathcal{M}}$. 
+
+For instance, for any $r\in\realsnonneg$, there will be some $P_r\in\wmprocesses_{\rateset,\mathcal{M}}$ such that, for all $t<r$, $\overline{\partial}T_t^t=\{Q_1\}$ and, for all $t>r$, $\overline{\partial}T_t^t=\{Q_2\}$. Therefore, $P_r$ will be ``piecewise'' time-homogeneous on the intervals $[0,r]$ and $[r,+\infty)$, and its family of transition matrices $\mathcal{T}_{P_r}$ will be given by the transition matrix system $\mathcal{T}_{Q_1}^{[0,r]}\otimes\mathcal{T}_{Q_2}^{[r,+\infty)}$. It is readily verified that this $P_r$ therefore satisfies $\overline{\partial}T_r^r=\{Q_1,Q_2\}$, since in this case $\overline{\partial}_-T_r^r=\{Q_1\}$ and $\overline{\partial}_+T_r^r=\{Q_2\}$.
+
+Of course, $\wmprocesses_{\rateset,\mathcal{M}}$ contains more complicated Markov processes still. For instance, for every $r,q\in\realsnonneg$ such that $r<q$, it contains a process $P_{rq}$ with transition matrix system $\mathcal{T}_{Q_1}^{[0,r]}\otimes \mathcal{T}_{Q_2}^{[r,q]}\otimes \mathcal{T}_{Q_1}^{[q,+\infty)}$. Other such processes can be found in a similar manner.
+
+In turn, all these elements of $\wmprocesses_{\rateset,\mathcal{M}}$ are also in $\wprocesses_{\rateset,\mathcal{M}}$, but this latter set contains more complicated processes still. For instance, for any $u\in\mathcal{U}$ and any $x_u,y_u\in\states_u$ such that $x_u\neq y_u$, there will be some $P\in\wprocesses_{\rateset,\mathcal{M}}$ such that, for all $t>u$, $\smash{\overline{\partial}}T_{t,x_u}^t=\{Q_1\}$ and $\smash{\overline{\partial}}T_{t,y_u}^t=\{Q_2\}$. Therefore, for all $s>t>u$, the history-dependent transition matrices of this $P$ will be given by $T_{t,x_u}^s=e^{Q_1(s-t)}$ and $T_{t,y_u}^s=e^{Q_2(s-t)}$.
+%Suppose that $\rateset=\{Q_1,Q_2\}$ for some $Q_1,Q_2\in\mathcal{R}$ with $Q_1\neq Q_2$. Then, clearly, all well-behaved homogeneous Markov chains described by either $Q_1$ or $Q_2$ are consistent with $\rateset$. Furthermore, there will also be different non-homogeneous Markov chains consistent with $\rateset$. In particular, not only can such processes differ in their initial distribution, there will be non-homogeneous Markov chains with the same initial distribution but which differ in the choice of $Q_1$ or $Q_2$ for any given time $t\in\realsnonneg$. 
+%Furthermore, various non-homogeneous, non-Markov processes will be consistent with $\rateset$ as well. For example, for any $t\in\realsnonneg$ and any $x_u,y_u\in\states_u$ such that $x_u\neq y_u$, there will be a process that satisfies $\smash{\overline{\partial}}T_{t,x_u}^t=\{Q_1\}$ and $\smash{\overline{\partial}}T_{t,y_u}^t=\{Q_2\}$.
 \exampleend
 \end{exmp}
 
+We conclude this section with some notes about closure properties of these different \ictmc's, which provide powerful tools for existence proofs. In particular, we focus on closure properties under recombination of known elements---colloquially, the ``piecing together'' of two or more processes to construct a new process that belongs to the same \ictmc.
 
-We start with considering the case where $\rateset$ is convex, in relation to the set $\wprocesses_{\rateset,\,\mathcal{M}}$. It turns out that this leads to a powerful construction tool for stochastic processes. In particular, this allows us to construct a new stochastic process by ``piecing together'' other processes from the set $\wprocesses_{\rateset,\,\mathcal{M}}$. The next result ensures that this new process will then also belong to $\wprocesses_{\rateset,\,\mathcal{M}}$.
+The example above already suggests how to do this for $\wmprocesses_{\rateset,\mathcal{M}}$. Using the transition matrix systems $\mathcal{T}_{P_1}, \mathcal{T}_{P_2}$ of any two $P_1,P_2\in\wmprocesses_{\rateset,\mathcal{M}}$, we can construct a new transition matrix system $\mathcal{T}\coloneqq \mathcal{T}_{P_1}^{[0,t]}\otimes \mathcal{T}_{P_2}^{[t,+\infty)}$, for any $t\in\realsnonneg$. Theorem~\ref{theo:uniqueMarkovchain} then guarantees that there exists a Markov chain $P$ for which $\mathcal{T}_P=\mathcal{T}$ and such that $P(X_0)\in\mathcal{M}$. It is straightforward to verify that, because $P_1,P_2\in\wmprocesses_{\rateset,\mathcal{M}}$, also $P\in\wmprocesses_{\rateset,\mathcal{M}}$; we leave this as an exercise for the reader.
+
+Now, clearly, a similar procedure is impossible for $\whmprocesses_{\rateset,\mathcal{M}}$, since the combination of two processes would make the resultant one lose the homogeneity property which is required to be an element of this set.
+
+However, for the most general set $\wprocesses_{\rateset,\mathcal{M}}$, it turns out to be possible to recombine elements in a history-dependent way, under the assumption that $\rateset$ is convex. That is, under this assumption it is possible, for fixed time points $u\in\mathcal{U}$, to choose for every history $x_u\in\states_u$ a different process $P_{x_u}\in\wprocesses_{\rateset,\mathcal{M}}$, and to recombine these into a process $P$ that agrees with these $P_{x_u}$ conditional on the specific history $x_u$. Furthermore, the distribution on the time points $u$ can be chosen to agree with any element $P_{\emptyset}\in \wprocesses_{\rateset,\mathcal{M}}$. The following result then guarantees that this new process $P$ also belongs to $\wprocesses_{\rateset,\mathcal{M}}$.
+
+%We start with considering the case where $\rateset$ is convex, in relation to the set $\wprocesses_{\rateset,\,\mathcal{M}}$. It turns out that this leads to a powerful construction tool for stochastic processes. In particular, this allows us to construct a new stochastic process by ``piecing together'' other processes from the set $\wprocesses_{\rateset,\,\mathcal{M}}$. The next result ensures that this new process will then also belong to $\wprocesses_{\rateset,\,\mathcal{M}}$.
 \begin{theorem}\label{theo:aanelkaarplakken}
 Consider a non-empty convex set of rate matrices $\rateset\subseteq\mathcal{R}$, and any non-empty set $\mathcal{M}$ of probability mass functions on $\states$.
 Fix a finite sequence of time points $u$. Choose any $P_\emptyset\in\wprocesses_{\rateset,\,\mathcal{M}}$ and, for all $x_u\in\states_u$, choose some $P_{x_u}\in\wprocesses_{\rateset,\,\mathcal{M}}$. Then there is a stochastic process $P\in\wprocesses_{\rateset,\,\mathcal{M}}$ such that, for all $u_1,u_2\subseteq u$ such that $u_1<u_2$, all $x_u\in\states_u$ and all $A\in\mathcal{A}_u$:
@@ -1969,7 +1987,8 @@ P(A\vert X_u=x_u)=P_{x_u}(A\vert X_u=x_u).
 \end{theorem}
 
 
-\subsection{Lower Expectations} Our main object of consideration will be the \emph{lower expectation} with respect to such a set $\mathcal{P}$.
+\subsection{Lower Expectations for Imprecise Continuous-Time Markov Chains} 
+Our main object of consideration will be the \emph{lower expectation} with respect to such a set $\mathcal{P}$.
 
 \begin{definition}[Lower Expectation]\label{def:lower_exp}
 For any set of stochastic processes $\mathcal{P}\subseteq\processes$, the \emph{(conditional) lower expectation with respect to $\mathcal{P}$} is defined as
@@ -1977,7 +1996,8 @@ For any set of stochastic processes $\mathcal{P}\subseteq\processes$, the \emph{
 \underline{\mathbb{E}}[\cdot\,\vert\,\cdot] \coloneqq \inf\left\{\mathbb{E}_P[\cdot\,\vert\,\cdot]\,:\,P\in\mathcal{P}\right\}\,,
 \end{equation*}
 where $\mathbb{E}_P[\cdot\,\vert\,\cdot]$ denotes the (conditional) expectation taken with respect to $P$.
-\vspace{0pt}
+
+As specific cases, we will denote the lower expectation with respect to $\wprocesses_{\rateset,\mathcal{M}}$ as $\underline{\mathbb{E}}_{\rateset,\mathcal{M}}^{\mathrm{W}}$, with respect to $\wmprocesses_{\rateset,\mathcal{M}}$ as $\underline{\mathbb{E}}_{\rateset,\mathcal{M}}^{\mathrm{WM}}$, and with respect to  $\whmprocesses_{\rateset,\mathcal{M}}$ as $\underline{\mathbb{E}}_{\rateset,\mathcal{M}}^{\mathrm{WHM}}$. Following Definition~\ref{def:consistent_process_set}, we will write $\underline{\mathbb{E}}_{\rateset}^{\mathrm{W}}$ when we take $\mathcal{M}$ to be the set of \emph{all} probability mass functions on $\states$ (and similarly for these other lower expectations).
 \end{definition}
 
 \noindent The corresponding \emph{upper expectation}, $\overline{\mathbb{E}}[\cdot\,\vert\,\cdot]\coloneqq \sup\{\mathbb{E}_P[\cdot\,\vert\,\cdot]\,:\,P\in\mathcal{P}\}$ can, as is well-known~{\bf CITE}, always be defined through the conjugacy relation $\overline{\mathbb{E}}[\cdot\,\vert\,\cdot]=-\underline{\mathbb{E}}[-\cdot\,\vert\,\cdot]$. Therefore, we will in the remainder of this work focus only on the lower expectation with respect to some set $\mathcal{P}$.
