@@ -100,7 +100,7 @@
 
 \newcommand{\exampleend}{\hfill$\Diamond$}
 
-\newcommand{\ictmc}{ICTMC}
+\newcommand{\ictmc}{{ICTMC}}
 
 \def\presuper#1#2%
   {\mathop{}%
@@ -1987,8 +1987,9 @@ P(A\vert X_u=x_u)=P_{x_u}(A\vert X_u=x_u).
 \end{theorem}
 
 
-\subsection{Lower Expectations for Imprecise Continuous-Time Markov Chains} 
-Our main object of consideration will be the \emph{lower expectation} with respect to such a set $\mathcal{P}$.
+\subsection{Lower Expectations for \ictmc's} 
+
+From a practical point of view, after having specified a (precise) stochastic process, one is typically interested in the expected value of some function of interest. Similarly, in this work, our main object of consideration will be the \emph{lower expectation} with respect to the \ictmc's that we introduced in the previous section.
 
 \begin{definition}[Lower Expectation]\label{def:lower_exp}
 For any set of stochastic processes $\mathcal{P}\subseteq\processes$, the \emph{(conditional) lower expectation with respect to $\mathcal{P}$} is defined as
@@ -2021,9 +2022,11 @@ As specific cases, we will denote the lower expectation with respect to $\wproce
 
 %In summary, we conclude that for a given non-empty bounded set $\rateset$ of rate matrices, there are many stochastic processes consistent with this $\rateset$. We will in the sequel focus on such sets of processes. 
 
+In particular, one of the main aims of this paper is to provide methods to compute lower expectations for the different types of \ictmc's that we have introduced in Section~\ref{subsec:types_ictmc}. To this end, we start by giving some useful properties of these lower expectations.
 
+First of all, it can be shown that if $\rateset$ is a non-empty, bounded, convex and closed set of rate matrices, then the conditional lower expectations $\underline{\mathbb{E}}_{\rateset}^\mathrm{W}, \underline{\mathbb{E}}_{\rateset}^\mathrm{WM},$ and $\underline{\mathbb{E}}_{\rateset}^\mathrm{WHM}$ are actually minima---rather than infima---because they are always reached by some element of their corresponding \ictmc. However, the proof of this claim is extremely involved and requires some machinery that is rather outside the scope of this paper; we intend to publish these and related results separately in future work.
 
-
+Moving on, we noted in Section~\ref{subsec:types_ictmc} that the sets $\whmprocesses_{\rateset,\mathcal{M}}, \wmprocesses_{\rateset,\mathcal{M}},$ and $\wprocesses_{\rateset,\mathcal{M}}$ are nested subsets of each other. As an immediate consequence, their corresponding lower expectations provide (lower) bounds for each other.
 \begin{proposition}\label{prop:lower_exp_markov_bounded_by_nonmarkov}
 Consider any bounded set of rate matrices $\rateset$, and any non-empty set $\mathcal{M}$ of probability mass functions on $\states$. Then,
 \begin{equation*}
@@ -2036,11 +2039,29 @@ Consider any bounded set of rate matrices $\rateset$, and any non-empty set $\ma
 *** still need to check this *** This is immediate from Definition~\ref{def:lower_exp} and Proposition \ref{prop:markov_set_subset_of_nonmarkov_set}.
 \end{proof}
 
-One of the main aims of this paper is to provide methods to compute the lower expectations for these different types of imprecise continuous-time Markov chains that we have just introduced. While Proposition~\ref{prop:lower_exp_markov_bounded_by_nonmarkov} states that these lower expectations provide bounds for each other, it thereby also implies that these lower expectations are not always the same. Furthermore, due to their qualitative differences, one might expect that some of these lower expectations are harder to compute than others. We will show that this is indeed the case.
+Now, while Proposition~\ref{prop:lower_exp_markov_bounded_by_nonmarkov} states that these lower expectations provide bounds for each other, it thereby also implies that these lower expectations are not always the same. This is indeed the case, although we do not feel that a formal argument would be of much value. However, a numerical example will be given in Example~\ref{exmp:num_counterexample_markov} later on.
 
-Ironically, it turns out that computing lower expectations for the set $\whmprocesses_{\rateset\,,\mathcal{M}}$ is in general much harder than for the sets $\wmprocesses_{\rateset\,,\mathcal{M}}$ or $\wprocesses_{\rateset\,,\mathcal{M}}$. In fact, we will show in Section~\ref{sec:funcs_multi_time_points} that $\wprocesses_{\rateset\,,\mathcal{M}}$ is in some sense the easiest set to do this for, for arbitrary functions. 
+%\subsection{Closure Properties for Sets of Consistent Processes}
 
-The problem is, essentially, that while homogeneous Markov chains are easy to work with numerically, the set $\whmprocesses_{\rateset\,,\mathcal{M}}$ does not provide enough ``degrees of freedom'' to make the optimization problem involved in computing $\underline{\mathbb{E}}^\mathrm{WHM}_{\rateset\,,\mathcal{M}}$ tractable. The following serves as an illustration. 
+%We have in the previous section defined imprecise continuous-time Markov chains as sets of stochastic processes consistent with some set $\rateset$ of rate matrices. An obvious question, therefore, is to see if we can express properties of these sets $\wmprocesses_{\rateset,\,\mathcal{M}}$ and $\wprocesses_{\rateset,\,\mathcal{M}}$ in relation to properties of the set $\rateset$. We have by assumption stated that such a $\rateset$ must be non-empty and bounded, and will here consider the cases where $\rateset$ is additionally closed or convex.
+
+For now, we first provide a useful property of the lower expectation $\underline{\mathbb{E}}_{\rateset,\mathcal{M}}^\mathrm{W}$ for $\wprocesses_{\rateset,\mathcal{M}}$. To this end, consider a function $f\in\gambles(\states_{u\cup v\cup w})$ defined on an arbitrary number of time points $u,v,w\in\mathcal{U}$. It follows from the basic properties of expectation that for any process $P\in\wprocesses_{\rateset,\,\mathcal{M}}$, the expectation $\mathbb{E}_P$ of such a function satisfies,
+\begin{equation*}
+\mathbb{E}_P[f(X_u,X_v,X_w)\,\vert\,X_u] = \mathbb{E}_P\bigl[\mathbb{E}_P[f(X_u,X_v,X_w)\,\vert\,X_u,X_v]\,\big\vert\,X_u\bigr]\,,
+\end{equation*}
+assuming without loss of generality that $u<v<w$. This equality is the well-known \emph{law of iterated expectation}. As shown by our next result, it follows from Theorem~\ref{theo:aanelkaarplakken} that, if $\rateset$ is convex, the same decomposition property holds for lower expectations $\underline{\mathbb{E}}^{\mathrm{W}}_{\rateset,\,\mathcal{M}}$; this is the law of iterated \emph{lower} expectation {\bf CITE?}.
+
+\begin{theorem}\label{theorem:decomposition_multivar}
+Let $\rateset$ be an arbitrary non-empty, bounded, and convex set of rate matrices, and consider any non-empty set $\mathcal{M}$ of probability mass functions on $\states$. Then for any $u,v,w\in\mathcal{U}$ such that $u<v<w$ and any $f\in\gambles(\states_{u\cup v\cup w})$:
+\begin{equation}\label{eq:lower_exp_factorizes}
+\underline{\mathbb{E}}^{\mathrm{W}}_{\rateset,\,\mathcal{M}}\left[f(X_u,X_v,X_w)\,\vert\,X_u\right] = \underline{\mathbb{E}}^{\mathrm{W}}_{\rateset,\,\mathcal{M}}\Bigl[\underline{\mathbb{E}}^{\mathrm{W}}_{\rateset,\,\mathcal{M}}\left[f(X_u,X_v,X_w)\,\vert\,X_u,X_v\right] \Big\vert\,X_u\Bigr]\,. 
+\end{equation}
+\end{theorem}
+The reason that this result is useful, is that it essentially allows us to compute the lower expectation of such functions recursively. In particular, instead of computing the lower expectation on all time-points simultaneously, we can focus on subsets of the time-points separately. We will revisit this idea in Section~\ref{sec:funcs_multi_time_points}.
+
+This property stated by Theorem~\ref{theorem:decomposition_multivar} relies on the fact that the elements of $\wprocesses_{\rateset,\mathcal{M}}$ can have history-dependent probabilities, which is why it does not in general hold for $\underline{\mathbb{E}}_{\rateset,\mathcal{M}}^\mathrm{WM}$ or $\underline{\mathbb{E}}_{\rateset,\mathcal{M}}^\mathrm{WHM}$. Because, as mentioned above, this property does simplify the process of computing the lower expectation $\underline{\mathbb{E}}_{\rateset,\mathcal{M}}^\mathrm{W}$, this suggests that the qualitative differences between our various \ictmc's make some of these lower expectations harder to compute than others. In fact, we will show in Section~\ref{sec:funcs_multi_time_points} that $\wprocesses_{\rateset\,,\mathcal{M}}$ is in some sense the easiest set to do this for, exactly because of Theorem~\ref{theorem:decomposition_multivar}.
+
+Furthermore, it---ironically---turns out that computing lower expectations for the set $\whmprocesses_{\rateset\,,\mathcal{M}}$ is in general much harder than for the sets $\wmprocesses_{\rateset\,,\mathcal{M}}$ or $\wprocesses_{\rateset\,,\mathcal{M}}$. The problem is, essentially, that while homogeneous Markov chains are easy to work with numerically, the set $\whmprocesses_{\rateset\,,\mathcal{M}}$ does not provide enough ``degrees of freedom'' to make the optimization problem involved in computing $\underline{\mathbb{E}}^\mathrm{WHM}_{\rateset\,,\mathcal{M}}$ tractable. The following serves as an illustration. 
 
 %*** Known to be difficult: even finding an $\epsilon$-approximation takes at least exponential time~\cite[Theorem 20.1]{kreinovich2013computational}.
 
@@ -2057,39 +2078,9 @@ The problem, then, is that for lower expectations $\underline{\mathbb{E}}_{\rate
 %\exampleend
 %\end{exmp}
 
-Therefore, we will in the sequel focus on the sets $\wmprocesses_{\rateset,\,\mathcal{M}}$ and $\wprocesses_{\rateset,\,\mathcal{M}}$, having introduced $\whmprocesses_{\rateset,\,\mathcal{M}}$ only for the sake of completeness. Note that Proposition~\ref{prop:lower_exp_markov_bounded_by_nonmarkov} guarantees that the lower expectation for either $\wmprocesses_{\rateset,\,\mathcal{M}}$ or $\wprocesses_{\rateset,\,\mathcal{M}}$ suffices to compute a lower bound for $\underline{\mathbb{E}}_{\rateset,\,\mathcal{M}}^\mathrm{WHM}$. Of course, this bound will in general not be tight if one insists that any analysis should be done with respect to the set $\whmprocesses_{\rateset,\,\mathcal{M}}$. However, because this latter set does make the strictest---and, we would argue, most unrealistic---assumptions about the domain of interest, we do not consider this particularly problematic.
+Therefore, we will in the sequel focus on the \ictmc's $\wmprocesses_{\rateset,\,\mathcal{M}}$ and $\wprocesses_{\rateset,\,\mathcal{M}}$, having introduced $\whmprocesses_{\rateset,\,\mathcal{M}}$ only for the sake of completeness. Note that Proposition~\ref{prop:lower_exp_markov_bounded_by_nonmarkov} guarantees that the lower expectation for either $\wmprocesses_{\rateset,\,\mathcal{M}}$ or $\wprocesses_{\rateset,\,\mathcal{M}}$ suffices to compute a lower bound for $\underline{\mathbb{E}}_{\rateset,\,\mathcal{M}}^\mathrm{WHM}$. Of course, this bound will in general not be tight if one insists that any analysis should be done with respect to $\whmprocesses_{\rateset,\,\mathcal{M}}$. However, since this latter \ictmc~does make the strictest---and, we would argue, most unrealistic---assumptions about the domain of interest, we do not consider this particularly problematic.
 
-%\subsection{Closure Properties for Sets of Consistent Processes}
-
-%We have in the previous section defined imprecise continuous-time Markov chains as sets of stochastic processes consistent with some set $\rateset$ of rate matrices. An obvious question, therefore, is to see if we can express properties of these sets $\wmprocesses_{\rateset,\,\mathcal{M}}$ and $\wprocesses_{\rateset,\,\mathcal{M}}$ in relation to properties of the set $\rateset$. We have by assumption stated that such a $\rateset$ must be non-empty and bounded, and will here consider the cases where $\rateset$ is additionally closed or convex.
-
-*** blabla
-
-This result is particularly useful when we consider functions $f\in\gambles(\states_{u\cup v\cup w})$ defined on an arbitrary number of time points $u,v,w\in\mathcal{U}$. Specifically, it follows from the basic properties of expectation that for any process $P\in\wprocesses_{\rateset,\,\mathcal{M}}$, the expectation $\mathbb{E}_P$ of such a function satisfies,
-\begin{equation*}
-\mathbb{E}_P[f(X_u,X_v,X_w)\,\vert\,X_u] = \mathbb{E}_P\bigl[\mathbb{E}_P[f(X_u,X_v,X_w)\,\vert\,X_u,X_v]\,\big\vert\,X_u\bigr]\,,
-\end{equation*}
-assuming without loss of generality that $u<v<w$. This equality is the well-known \emph{law of iterated expectation}. As shown by our next result, it follows from Theorem~\ref{theo:aanelkaarplakken} that, if $\rateset$ is convex, the same decomposition property holds for lower expectations $\underline{\mathbb{E}}^{\mathrm{W}}_{\rateset,\,\mathcal{M}}$; this is the law of iterated \emph{lower} expectation {\bf CITE?}.
-
-\begin{theorem}\label{theorem:decomposition_multivar}
-Let $\rateset$ be an arbitrary non-empty, bounded, and convex set of rate matrices, and consider any non-empty set $\mathcal{M}$ of probability mass functions on $\states$. Then for any $u,v,w\in\mathcal{U}$ such that $u<v<w$ and any $f\in\gambles(\states_{u\cup v\cup w})$:
-\begin{equation}\label{eq:lower_exp_factorizes}
-\underline{\mathbb{E}}^{\mathrm{W}}_{\rateset,\,\mathcal{M}}\left[f(X_u,X_v,X_w)\,\vert\,X_u\right] = \underline{\mathbb{E}}^{\mathrm{W}}_{\rateset,\,\mathcal{M}}\Bigl[\underline{\mathbb{E}}^{\mathrm{W}}_{\rateset,\,\mathcal{M}}\left[f(X_u,X_v,X_w)\,\vert\,X_u,X_v\right] \Big\vert\,X_u\Bigr]\,. 
-\end{equation}
-\end{theorem}
-The reason that this result is useful, is that it essentially allows us to compute the lower expectation of such functions recursively. In particular, instead of computing the lower expectation on all time-points simultaneously, we can focus on subsets of the time-points separately. We will revisit this idea in Section~\ref{sec:funcs_multi_time_points}.
-
-
-Finally, we conclude this section with a rather profound result that follows immediately from Theorem~\ref{theorem:restricted_transmatsystem_space_compact_if_Q_closed}. This result establishes that, if $\rateset$ is closed and convex, the conditional lower expectation $\underline{\mathbb{E}}_{\rateset,\,\mathcal{M}}^{\mathrm{WM}}$ of functions $f\in\gamblesX$ is actually a minimum---rather than an infimum---because it is always reached by some $P\in\wmprocesses_{\rateset,\,\mathcal{M}}$.
-\begin{proposition}\label{prop:lower_expectation_reached_if_Q_closed}
-Let $\rateset$ be an arbitrary non-empty, bounded, convex and closed set of rate matrices, and let $\mathcal{M}$ be an arbitrary non-empty set of probability mass functions on $\states$. Then, for all $t,s\in\realsnonneg$ such that $t\leq s$, all $f\in\gamblesX$, and all $x\in\states$, there is some $P\in\wmprocesses_{\rateset,\,\mathcal{M}}$ with expectation operator $\mathbb{E}_P$, such that
-\begin{equation*}
-\underline{\mathbb{E}}^{\mathrm{WM}}_{\rateset,\,\mathcal{M}}[f(X_s)\,\vert\,X_t=x] = \mathbb{E}_P[f(X_s)\,\vert\,X_t=x]\,.
-\end{equation*}
-\end{proposition}
-%In summary, then, closedness of $\rateset$ allows us to construct processes $P\in\wmprocesses_\rateset$ as limits of sequences of processes.
-
-\section{Some crucial non-linear operators}
+\section{Toward Lower Transition Operators for \ictmc's}
 \label{sec:lowertrans}
 
 Having introduced the notion of lower expectation for sets of (non-)Markov processes, one might wonder how to compute this, either numerically or for analytical purposes. Indeed, one of the aims of this paper is to provide methods with which such lower expectations can be tractably computed.
