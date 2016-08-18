@@ -1773,8 +1773,13 @@ One technique for constructing transition matrix systems that is particularly im
 \vspace{4pt}
 \end{equation*}
 As we know from Propositions~\ref{prop:systemQ} and~\ref{prop:concat_restr_trans_mat_systems_is_system}, transition matrix systems that are constructed in this way are always well-behaved. For example, the transition matrix systems $\mathcal{T}_i$, $i\in\nats_0$, that we defined in Equation~\eqref{eq:def:sequenceinexample3} are all of this form.
+
+\begin{proposition}\label{prop:finite_different_rate_matrix_has_process}
+*** er bestaat een proces dat stuksgewijs is ***
+\end{proposition}
+
 %the form in Equation~\eqref{eq:piecewiseconstanttransmatsys}
-%Lemma~\ref{lemma:nonhomogeneous_in_process_set}
+%Proposition~\ref{prop:nonhomogeneous_in_process_set}
 %The second technique is to obtain a new transition matrix system as a limit of existing ones. We already illustrated this in Example~\ref{exmp:limit_trans_mat_system}, where we considered a sequence of transition matrix systems $\{\mathcal{T}_i\}_{i\in\nats_0}$, the elements of which were all of the form in Equation~\eqref{eq:piecewiseconstanttransmatsys}, and proved that this sequence converges to a limit $\mathcal{T}\coloneqq\lim_{i\to+\infty}\mathcal{T}_i$. The same type of argument will also be used in our proof for Proposition~\ref{prop:lower_expectation_reached_if_Q_closed}, be it in a more abstract form, where the sequence $\{\mathcal{T}_i\}_{i\in\nats_0}$ is constructed explicitly, and where the convergence to a limit---and the well-behavedness of this limit---is not proven directly, but guaranteed by the compactness result in Theorem~\ref{theorem:restricted_transmatsystem_space_compact_if_Q_closed} further on.
 
 
@@ -1987,6 +1992,13 @@ In turn, all these elements of $\wmprocesses_{\rateset,\mathcal{M}}$ are also in
 %Furthermore, various non-homogeneous, non-Markov processes will be consistent with $\rateset$ as well. For example, for any $t\in\realsnonneg$ and any $x_u,y_u\in\states_u$ such that $x_u\neq y_u$, there will be a process that satisfies $\smash{\overline{\partial}}T_{t,x_u}^t=\{Q_1\}$ and $\smash{\overline{\partial}}T_{t,y_u}^t=\{Q_2\}$.
 \exampleend
 \end{exmp}
+
+\begin{proposition}\label{prop:nonhomogeneous_in_process_set}
+Let $\rateset$ be a non-empty bounded set of rate matrices, and let $\mathcal{M}$ be a non-empty set of probability mass functions on $\states$. Then for any finite sequence of time points $u=t_0,\ldots,t_n$ and corresponding collection of rate matrices $Q_0,\ldots,Q_{n+1}\in\rateset$, there is a process $P\in\wmprocesses_{\rateset,\,\mathcal{M}}$ such that
+\begin{equation}\label{eq:nonhomogen_in_process_set_system_composition}
+\mathcal{T}_P = \mathcal{T}_{Q_0}^{[0,t_0]}\otimes \mathcal{T}_{Q_1}^{[t_0,t_1]} \otimes \cdots \otimes \mathcal{T}_{Q_n}^{[t_{n-1},t_n]} \otimes \mathcal{T}_{Q_{n+1}}^{[t_n,\infty)}\,.
+\end{equation}
+\end{proposition}
 
 We conclude this section with some notes about closure properties of these different \ictmc's, which provide powerful tools for existence proofs. In particular, we focus on closure properties under recombination of known elements---colloquially, the ``piecing together'' of two or more processes to construct a new process that belongs to the same \ictmc.
 
@@ -4205,8 +4217,24 @@ Finally, we prove that $Q$ is unique. Assume \emph{ex absurdo} that this is not 
 The result about the partial derivatives is an immediate consequence of Lemma~\ref{lemma:deriv_exponential_trans} and the fact that $T^{t+\Delta}_{t}=T^{t}_{t-\Delta}=e^{Q\Delta}$. The result about the outer partial derivatives then follows from Corollary~\ref{corol:outersingleton}.
 \end{proof}
 
+\begin{proof}[Proof of Proposition~\ref{prop:finite_different_rate_matrix_has_process}]
+*** MOET IK NOG DOEN ***
+\end{proof}
+
 
 \section{Proofs and Lemmas for Section~\ref{sec:iCTMC}}
+
+\begin{proof}[Proof of Proposition~\ref{prop:nonhomogeneous_in_process_set}]
+**** NOW NEEDS FIRST PART
+
+Proposition~\ref{prop:finite_different_rate_matrix_has_process} implies the existence of a process $P\in\wmprocesses$ that satisfies both Equation~\eqref{eq:nonhomogen_in_process_set_system_composition} and $P(X_0)\in\mathcal{M}$. It remains to show that $P\in\wmprocesses_{\rateset,\,\mathcal{M}}$, or equivalently, since we already have $P(X_0)\in\mathcal{M}$, that $\smash{\overline{\partial}}T_t^t\subseteq\rateset$ for all $t\in\realsnonneg$. To this end, consider any $t\in\realsnonneg$.
+
+We consider several cases. If $t<t_0$, then $\smash{\overline{\partial}}T_t^t$ corresponds to $\mathcal{T}_{Q_0}^{[0,t_0]}$, and hence $\smash{\overline{\partial}}T_t^t=\{Q_0\}\subseteq\rateset$. If $t>t_n$, then $\smash{\overline{\partial}}T_t^t$ corresponds to $\smash{\mathcal{T}_{Q_{n+1}}^{[t_n,\infty)}}$, in which case $\smash{\overline{\partial}}T_t^t=\{Q_{n+1}\}\subseteq\rateset$. Similarly, if $t\in(t_{i-1},t_i)$ for some $i\in\{1,\ldots,n\}$, then $\smash{\overline{\partial}}T_t^t$ corresponds to $\mathcal{T}_{Q_i}^{[t_{i-1},t_i]}$, and therefore $\smash{\overline{\partial}}T_t^t=\{Q_i\}\subseteq\rateset$. The only remaining case is when $t=t_i$ for some $i\in\{0,\ldots,n\}$. In this case, we have that $\smash{\overline{\partial}}_-T_t^t=\{Q_i\}$ and $\smash{\overline{\partial}}_+T_t^t=\{Q_{i+1}\}$, and therefore
+\begin{equation*}
+\smash{\overline{\partial}}T_t^t = \smash{\overline{\partial}}_-T_t^t\cup\smash{\overline{\partial}}_+T_t^t=\{Q_{i},Q_{i+1}\}\subseteq\rateset.
+\end{equation*}
+% Because this covers all the possible cases, in summary, we have found that $\smash{\overline{\partial}}T_t^t\subseteq\rateset$ for all $t\in\realsnonneg$, and hence $P\in\wmprocesses_\rateset$.
+\end{proof}
 
 
 \begin{proof}[Proof of Theorem~\ref{theo:aanelkaarplakken}]
@@ -4717,7 +4745,7 @@ $\underline{\mathbb{E}}^{\mathrm{W}}_{\rateset,\,\mathcal{M}}\left[f(X_u,X_v,X_w
 %  &= \mathcal{T}_Q^{[0,t]}\otimes \mathcal{T}_1^{[t_{0},t_1]} \otimes \mathcal{T}_2^{[t_{1},t_2]} \cdots \otimes \mathcal{T}_n^{[t_{n-1},t_n]} \otimes \mathcal{T}_Q^{[s,\infty)} \\
 %  &= \mathcal{T}_Q^{[0,t]}\otimes \mathcal{T}_{Q_1}^{[t_{0},t_1]} \otimes \mathcal{T}_{Q_2}^{[t_{1},t_2]} \cdots \otimes \mathcal{T}_{Q_n}^{[t_{n-1},t_n]} \otimes \mathcal{T}_Q^{[s,\infty)} \,,
 % \end{align*}
-% for the corresponding rate matrices $Q_1,\ldots,Q_n\in\rateset_{\epsilon'}\subseteq\rateset$. Then, it follows from Lemma~\ref{lemma:nonhomogeneous_in_process_set} that there is some $P\in\wmprocesses_\rateset$ such that $\mathcal{T}_P=\mathcal{T}$. Because $P\in\wmprocesses_\rateset$, it follows that the restricted transition matrix system satisfies $\mathcal{T}^{[t,s]}=\mathcal{T}_P^{[t,s]}\in\mathbb{T}_\rateset^{[t,s]}$.
+% for the corresponding rate matrices $Q_1,\ldots,Q_n\in\rateset_{\epsilon'}\subseteq\rateset$. Then, it follows from Lemma~\ref{prop:nonhomogeneous_in_process_set} that there is some $P\in\wmprocesses_\rateset$ such that $\mathcal{T}_P=\mathcal{T}$. Because $P\in\wmprocesses_\rateset$, it follows that the restricted transition matrix system satisfies $\mathcal{T}^{[t,s]}=\mathcal{T}_P^{[t,s]}\in\mathbb{T}_\rateset^{[t,s]}$.
 % \end{proof}
 
 % \begin{proof}[Proof of Claim~\ref{claim:lemma_total_bounded_full_interval_error}]
@@ -5691,23 +5719,7 @@ Hence, we conclude that Equation~\eqref{eq:opencoverproofresult} holds for all $
 
 
 
-\begin{lemma}\label{lemma:nonhomogeneous_in_process_set}
-Let $\rateset$ be a non-empty bounded set of rate matrices, and let $\mathcal{M}$ be a non-empty set of probability mass functions on $\states$. Then for any finite sequence of time points $u=t_0,\ldots,t_n$ and corresponding collection of rate matrices $Q_0,\ldots,Q_{n+1}\in\rateset$, there is a process $P\in\wmprocesses_{\rateset,\,\mathcal{M}}$ such that
-\begin{equation}\label{eq:nonhomogen_in_process_set_system_composition}
-\mathcal{T}_P = \mathcal{T}_{Q_0}^{[0,t_0]}\otimes \mathcal{T}_{Q_1}^{[t_0,t_1]} \otimes \cdots \otimes \mathcal{T}_{Q_n}^{[t_{n-1},t_n]} \otimes \mathcal{T}_{Q_{n+1}}^{[t_n,\infty)}\,.
-\end{equation}
-\end{lemma}
-\begin{proof}
-**** NOW NEEDS FIRST PART
 
-Proposition~\ref{prop:finite_different_rate_matrix_has_process} implies the existence of a process $P\in\wmprocesses$ that satisfies both Equation~\eqref{eq:nonhomogen_in_process_set_system_composition} and $P(X_0)\in\mathcal{M}$. It remains to show that $P\in\wmprocesses_{\rateset,\,\mathcal{M}}$, or equivalently, since we already have $P(X_0)\in\mathcal{M}$, that $\smash{\overline{\partial}}T_t^t\subseteq\rateset$ for all $t\in\realsnonneg$. To this end, consider any $t\in\realsnonneg$.
-
-We consider several cases. If $t<t_0$, then $\smash{\overline{\partial}}T_t^t$ corresponds to $\mathcal{T}_{Q_0}^{[0,t_0]}$, and hence $\smash{\overline{\partial}}T_t^t=\{Q_0\}\subseteq\rateset$. If $t>t_n$, then $\smash{\overline{\partial}}T_t^t$ corresponds to $\smash{\mathcal{T}_{Q_{n+1}}^{[t_n,\infty)}}$, in which case $\smash{\overline{\partial}}T_t^t=\{Q_{n+1}\}\subseteq\rateset$. Similarly, if $t\in(t_{i-1},t_i)$ for some $i\in\{1,\ldots,n\}$, then $\smash{\overline{\partial}}T_t^t$ corresponds to $\mathcal{T}_{Q_i}^{[t_{i-1},t_i]}$, and therefore $\smash{\overline{\partial}}T_t^t=\{Q_i\}\subseteq\rateset$. The only remaining case is when $t=t_i$ for some $i\in\{0,\ldots,n\}$. In this case, we have that $\smash{\overline{\partial}}_-T_t^t=\{Q_i\}$ and $\smash{\overline{\partial}}_+T_t^t=\{Q_{i+1}\}$, and therefore
-\begin{equation*}
-\smash{\overline{\partial}}T_t^t = \smash{\overline{\partial}}_-T_t^t\cup\smash{\overline{\partial}}_+T_t^t=\{Q_{i},Q_{i+1}\}\subseteq\rateset.
-\end{equation*}
-% Because this covers all the possible cases, in summary, we have found that $\smash{\overline{\partial}}T_t^t\subseteq\rateset$ for all $t\in\realsnonneg$, and hence $P\in\wmprocesses_\rateset$.
-\end{proof}
 
 Recall from the definition of the lower envelope $\lrate$ of a given set $\rateset$ of rate matrices, that $\lrate f$ is the greatest element of $\gamblesX$ that satisfies $\lrate f\leq Qf$ for all $Q\in\rateset$. Therefore, for all $x\in\states$ and all $\epsilon>0$, there is some $Q\in\rateset$ such that $[Qf](x)<[\lrate f](x)+\epsilon$. In other words, $[\lrate f](x)$ can be approximated arbitrarily closely using the elements of $\rateset$. The following lemma establishes that the \emph{entire} function $\lrate f$ can be approximated arbitrarily closely whenever $\rateset$ has separately specified rows.
 
@@ -6018,7 +6030,7 @@ where the second inequality holds because of~\ref{N:normAf}, the third inequalit
 
 
 
-For all $i\in\{0,\ldots,n\}$, let $\mathcal{T}_{Q_i}$ denote the transition matrix system corresponding to $Q_i$, as in Definition~\ref{def:systemfromQ}. Then, by Lemma~\ref{lemma:nonhomogeneous_in_process_set}, there is some $P\in\wmprocesses_{\rateset,\,\mathcal{M}}$ with transition matrix system $\mathcal{T}_P$, such that
+For all $i\in\{0,\ldots,n\}$, let $\mathcal{T}_{Q_i}$ denote the transition matrix system corresponding to $Q_i$, as in Definition~\ref{def:systemfromQ}. Then, by Proposition~\ref{prop:nonhomogeneous_in_process_set}, there is some $P\in\wmprocesses_{\rateset,\,\mathcal{M}}$ with transition matrix system $\mathcal{T}_P$, such that
 \begin{equation*}
 \mathcal{T}_P = \mathcal{T}_{Q_0}^{[0,t_0]}\otimes \mathcal{T}_{Q_1}^{[t_0,t_1]}\otimes \cdots \otimes \mathcal{T}_{Q_n}^{[t_{n-1},t_n]} \otimes \mathcal{T}_{Q_n}^{[t_{n},\infty)}\,.
 \end{equation*}
