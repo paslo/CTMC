@@ -2110,8 +2110,6 @@ Therefore, we will in the sequel focus on the \ictmc's $\wmprocesses_{\rateset,\
 \section{Toward Lower Transition Operators for \ictmc's}
 \label{sec:lowertrans}
 
-**** still need to re-do intro
-
 Having introduced the notion of lower expectation for sets of (non-)Markov processes, one might wonder how to compute this, either numerically or for analytical purposes. Indeed, one of the aims of this paper is to provide methods with which such lower expectations can be tractably computed.
 
 Obviously, one way to compute a lower expectation is to work directly with the definition. That is, explicitly generate the entire set $\wmprocesses_{\rateset,\,\mathcal{M}}$ (or $\wprocesses_{\rateset,\,\mathcal{M}}$) for a given $\rateset$ and $\mathcal{M}$, compute expectations of a function $f$ for each element of this set, and then find the infimum of these expectations. It should be clear that this approach is fairly unwieldy, not in the least because for arbitrary $\rateset$ the corresponding set of processes may be infinite. Therefore, we will instead provide an alternative characterization of this lower expectation.
@@ -2154,9 +2152,13 @@ For the reader that is unfamiliar with this notion of coherent lower previsions,
 \end{equation*}
 It should be clear that this map $\underline{\mathbb{E}}$ computes a lower expectation with respect to $\mathcal{M}$. Furthermore, note that for any $p\in\mathcal{M}$, the quantity $\sum_{x\in\states}p(x)f(x)$ is bounded from below by $\min\{f(y):y\in\states\}$. Because this holds for any $p\in\mathcal{M}$, it follows that $\underline{\mathbb{E}}$ is also bounded below by this minimum operator. Furthermore, it is easily verified that $\underline{\mathbb{E}}$ is super-additive and non-negatively homogeneous, due to the properties of the $\inf$ operator. Hence, by the definition cited above, this lower expectation operator corresponding to $\mathcal{M}$ is a coherent lower prevision on $\gamblesX$. 
 
-Our consideration of the coherent lower prevision $\lt_x$  above is essentially the same idea, but \emph{without} considering explicitly any link to sets $\mathcal{M}$ of probability mass functions. Suffice it to say that, for any coherent lower prevision, such a set $\mathcal{M}$ will always exist. It should furthermore be noted that the qualifier ``coherent'' here has connections to the notion of \emph{coherence} that we mentioned in Section~\ref{sec:cond_prob}. We refer to {\bf CITE CITE CITE} for further discussion on this.
+Our consideration of the coherent lower prevision $\lt_x$  above is essentially the same idea, but \emph{without} considering explicitly any link to sets $\mathcal{M}$ of probability mass functions. Suffice it to say that, for any coherent lower prevision, such a set $\mathcal{M}$ will always exist {\bf CITE}. It should furthermore be noted that the qualifier ``coherent'' here has connections to the notion of \emph{coherence} that we mentioned in Section~\ref{sec:cond_prob}. We refer to {\bf CITE CITE CITE} for further discussion on this.
 
-Because for any lower transition operator $\lt$ and any $x\in\states$, the map $\lt_x$ is a coherent lower prevision, it follows that the lower transition operator $\lt$ can be seen as a vector of coherent lower previsions. 
+Because for any lower transition operator $\lt$ and any $x\in\states$, the map $\lt_x$ is a coherent lower prevision, it follows that the lower transition operator $\lt$ can be seen as a vector of coherent lower previsions. Furthermore, as mentioned above, each coherent lower prevision $\lt_x$ has some set $\mathcal{M}_x$ of probability mass functions of which $\lt_x$ computes the lower envelope {\bf CITE}. Therefore, and since the set $\mathcal{M}_{\lt}\coloneqq \times_{x\in\states}\mathcal{M}_x$ can be interpreted as a set of transition matrices, the operator $\lt$ can intuitively be seen as a lower envelope operator over this set. That is, for every lower transition operator $\lt$, there is some set $\mathcal{M}_{\lt}$ of transition matrices, such that for any $f\in\gamblesX$,
+\begin{equation*}
+\lt f = \inf\{ Tf\,:\, T\in\mathcal{M}_{\lt} \}\,.
+\end{equation*}
+Due to the correspondence between transition matrices and conditional expectation operators, as noted by Remark~\ref{remark:expectationT}, it should therefore be clear that lower transition operators are an intuitive starting point for alternative characterizations of lower expectations for \ictmc's. In particular, what remains is to find the specific lower transition operator $\lt$, whose set of dominating transition matrices $\mathcal{M}_{\lt}$ corresponds to the set of transition matrices induced by a given \ictmc; the remainder of this section will provide the machinery required to do this.
 
 %\begin{proposition}\label{lem:normlratefinite}
 %For any lower transition rate operator $\lrate$, we have that $0\leq\norm{\lrate}<+\infty$.
@@ -2166,9 +2168,7 @@ Because for any lower transition operator $\lt$ and any $x\in\states$, the map $
 %For any lower transition operator $\lt$, we have that $0\leq \norm{\lt}\leq 1$.
 %\end{proposition}
 
-*** {\bf Hier iets over dat $\lt$ daarom een verzamling dominerende transitie matrices heeft (dit om de vergelijking in volgende sectie explicieter te maken)}
-
-We conclude this section with two results about the set $\underline{\mathcal{T}}$ of all lower transition operators. As the first result shows, this set is closed under composition.
+We conclude with two results about the set $\underline{\mathcal{T}}$ of all lower transition operators. As the first result shows, this set is closed under composition.
 \begin{proposition}\label{lemma:compositioncoherence}
 For any $\lt,\underline{S}\in\underline{\mathcal{T}}$, it holds that $\left(\lt\,\underline{S}\right)\in\underline{\mathcal{T}}$.
 \end{proposition}
