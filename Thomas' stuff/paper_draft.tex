@@ -2123,7 +2123,7 @@ We focus in this section on introducing the relevant concepts, and deriving this
 
 \subsection{Lower Transition Operators}\label{subsec:lowertrans_rate}
 
-We start in this section by generalizing transition matrices $T$ to lower transition operators $\lt$, as follows.
+We start by generalizing transition matrices $T$ to lower transition operators $\lt$, as follows.
 
 \begin{definition}[Lower Transition Operator]\label{def:coh_low_trans}
 We will call a map $\lt$ from $\gamblesX$ to $\gamblesX$ a \emph{lower transition operator} if, for all $f,g\in\gamblesX$, all $\lambda\in\realsnonneg$, and all $x\in\states$:
@@ -2154,7 +2154,7 @@ For the reader that is unfamiliar with this notion of coherent lower previsions,
 \end{equation*}
 It should be clear that this map $\underline{\mathbb{E}}$ computes a lower expectation with respect to $\mathcal{M}$. Furthermore, note that for any $p\in\mathcal{M}$, the quantity $\sum_{x\in\states}p(x)f(x)$ is bounded from below by $\min\{f(y):y\in\states\}$. Because this holds for any $p\in\mathcal{M}$, it follows that $\underline{\mathbb{E}}$ is also bounded below by this minimum operator. Furthermore, it is easily verified that $\underline{\mathbb{E}}$ is super-additive and non-negatively homogeneous, due to the properties of the $\inf$ operator. Hence, by the definition cited above, this lower expectation operator corresponding to $\mathcal{M}$ is a coherent lower prevision on $\gamblesX$. 
 
-Our consideration of the coherent lower prevision $\lt_x$  above is essentially the same idea, but \emph{without} considering explicitly any link to sets $\mathcal{M}$ of probability mass functions. Suffice it to say that, for any coherent lower prevision, such a set $\mathcal{M}$ will always exist. It should furthermore be noted that the qualifier ``coherent'' here has connections to the notions of \emph{coherence} and \emph{avoiding sure loss} that we explained in Section~\ref{sec:cond_prob}. We refer to {\bf CITE CITE CITE} for further discussion on this.
+Our consideration of the coherent lower prevision $\lt_x$  above is essentially the same idea, but \emph{without} considering explicitly any link to sets $\mathcal{M}$ of probability mass functions. Suffice it to say that, for any coherent lower prevision, such a set $\mathcal{M}$ will always exist. It should furthermore be noted that the qualifier ``coherent'' here has connections to the notion of \emph{coherence} that we mentioned in Section~\ref{sec:cond_prob}. We refer to {\bf CITE CITE CITE} for further discussion on this.
 
 Because for any lower transition operator $\lt$ and any $x\in\states$, the map $\lt_x$ is a coherent lower prevision, it follows that the lower transition operator $\lt$ can be seen as a vector of coherent lower previsions. 
 
@@ -2166,9 +2166,23 @@ Because for any lower transition operator $\lt$ and any $x\in\states$, the map $
 %For any lower transition operator $\lt$, we have that $0\leq \norm{\lt}\leq 1$.
 %\end{proposition}
 
-*** blabla
+*** {\bf Hier iets over dat $\lt$ daarom een verzamling dominerende transitie matrices heeft (dit om de vergelijking in volgende sectie explicieter te maken)}
 
-\noindent We next give some additional useful properties of the norm of these operators.
+We conclude this section with two results about the set $\underline{\mathcal{T}}$ of all lower transition operators. As the first result shows, this set is closed under composition.
+\begin{proposition}\label{lemma:compositioncoherence}
+For any $\lt,\underline{S}\in\underline{\mathcal{T}}$, it holds that $\left(\lt\,\underline{S}\right)\in\underline{\mathcal{T}}$.
+\end{proposition}
+\begin{proof}
+*** still need to check this *** Simply check each of the properties.
+\end{proof}
+
+\noindent Furthermore, this set is a complete metric space under our usual norm.
+
+\begin{proposition}\label{lemma:completemetricspace}
+The metric space $(\underline{\mathcal{T}},d)$ is complete under the metric $d$ induced by our usual norm $\norm{\cdot}$.
+\end{proposition}
+
+\noindent {\bf Dit ding moeten we ergens kwijt. Misschien lemma van maken en in appendix droppen?} We next give some additional useful properties of the norm of these operators.
 
 \begin{proposition}[Reference \cite{DeBock:2016}]\label{prop:norm_properties_lrate_lt}
 For any lower transition operator $\lt$, any lower transition rate operator $\lrate$, and any two non-negatively homogeneous operators $A,B$ from $\gamblesX$ to $\gamblesX$,
@@ -2188,24 +2202,7 @@ $\norm{\lrate A - \lrate B} \leq 2\norm{\lrate}\norm{A - B}.$ \label{LR:differen
 \end{multicols}
 \end{proposition}
 
-We now have two results about the set $\underline{\mathcal{T}}$ of all lower transition operators. As the first result shows, this set is closed under composition.
-\begin{proposition}\label{lemma:compositioncoherence}
-For any $\lt,\underline{S}\in\underline{\mathcal{T}}$, it holds that $\left(\lt\,\underline{S}\right)\in\underline{\mathcal{T}}$.
-\end{proposition}
-\begin{proof}
-*** still need to check this *** Simply check each of the properties.
-\end{proof}
-
-\noindent Furthermore, this set is a complete metric space under our usual norm.
-
-\begin{proposition}\label{lemma:completemetricspace}
-The metric space $(\underline{\mathcal{T}},d)$ is complete under the metric $d$ induced by our usual norm $\norm{\cdot}$.
-\end{proposition}
-
-
 \subsection{Lower Transition Rate Operators and Sets of Rate Matrices}\label{sec:connections_rate}
-
-*** blaba
 
 We next focus on the generalization of transition rate matrices $Q$ to lower transition rate operators $\lrate$, as follows.
 \begin{definition}[Lower Transition Rate Operator]\label{def:coh_low_trans_rate}
@@ -2227,7 +2224,7 @@ $\left[\lrate(\lambda f)\right](x)= \lambda\left[\lrate f\right](x)$.
 
 Note that properties~\ref{LR:constantzero} and~\ref{LR:nondiagpos} essentially preserve properties~\ref{def:Q:sumzero} and~\ref{def:Q:nonnegoffdiagonal} from Definition~\ref{def:rate_matrix}. However, where any rate matrix $Q$ represents a linear map, properties~\ref{LR:subadditive} and~\ref{LR:homo} merely require that a lower transition rate operator $\lrate$ is super-additive and non-negatively homogeneous. Hence, any rate matrix is in fact also a lower transition rate operator, with the latter concept providing a generalization of the former.
 
-The reason that this specific generalization is of interest, is that it preserves the relation between transition matrices and rate matrices, as stated by Propositions~\ref{prop:stochastic_from_rate_matrix} and~\ref{prop:rate_from_stochastic_matrix}. The following two propositions make this explicit in our current setting.
+The first reason that this specific generalization is of interest, is that it preserves the relation between transition matrices and rate matrices, as stated by Propositions~\ref{prop:stochastic_from_rate_matrix} and~\ref{prop:rate_from_stochastic_matrix}. The following two propositions make this explicit in our current setting.
 
 %**** We next establish that there is a correspondence between lower transition rate operators and lower transition operators that is analogous to the one found in Section~\ref{sec:trans_rate_matrices}.
 
@@ -2239,7 +2236,7 @@ Consider any lower transition rate operator $\lrate$, and any $\Delta\in\realsno
 Consider any lower transition operator $\lt$, and any $\Delta\in\realspos$. Then, the operator $\nicefrac{1}{\Delta}(\lt - I)$ is a lower transition rate operator.
 \end{proposition}
 
-***blabla
+Now, in our discussion of lower transition operators in Section~\ref{subsec:lowertrans_rate}, we mentioned that lower transition operators can intuitively be interpreted as a lower envelope over some set of transition matrices. As we are about to show, there is a similar connection between lower transition rate operators and sets of rate matrices.
 
 We start by considering a non-empty bounded set $\rateset\subseteq\mathcal{R}$ of rate matrices. For any $f\in\gamblesX$,
 \begin{equation}\label{eq:correspondinglowertrans}
@@ -2386,9 +2383,9 @@ We conclude from all of this that non-empty bounded sets of rate matrices are mo
 
 \subsection{Corresponding Lower Transition Operators}
 
-We will in this section introduce a specific lower transition operator on which we will focus for the remainder of this work. In particular, we will introduce the lower transition operator corresponding to a given lower transition rate operator.
+Proposition~\ref{lemma:normQsmallenough} already established that we can fairly easily construct a lower transition operator from a given lower transition rate operator. In this section, we construct a somewhat more complicated lower transition operator from a given lower transition rate operator, and it is this specific lower transition operator on which we will focus for the remainder of this work. In particular, we will introduce the \emph{lower transition operator corresponding to a given lower transition rate operator}.
 
-Therefore, we will assume here that we are given some arbitrary lower transition rate operator $\lrate$, and any two time points $t,s\in\realsnonneg$ such that $t\leq s$. For any $u\in\mathcal{U}_{[t,s]}$ such that $u=t_0,\ldots,t_n$, we then define the auxiliary operator
+To this end, we will assume here that we are given some arbitrary lower transition rate operator $\lrate$, and any two time points $t,s\in\realsnonneg$ such that $t\leq s$. For any $u\in\mathcal{U}_{[t,s]}$ such that $u=t_0,\ldots,t_n$, we then define the auxiliary operator
 \begin{equation}\label{eq:aux_lower_trans}
 \Phi_u\coloneqq\prod_{i=1}^n(I+\Delta_i\lrate)\,,
 \end{equation}
