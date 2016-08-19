@@ -2133,7 +2133,7 @@ We focus in this section on introducing the relevant concepts, and deriving this
 
 \subsection{Lower Transition Operators}\label{subsec:lowertrans_rate}
 
-We start by generalizing transition matrices $T$ to lower transition operators $\lt$, as follows.
+We start by generalizing transition matrices $T$ to lower transition operators $\lt$.
 
 \begin{definition}[Lower Transition Operator]\label{def:coh_low_trans}
 We will call a map $\lt$ from $\gamblesX$ to $\gamblesX$ a \emph{lower transition operator} if, for all $f,g\in\gamblesX$, all $\lambda\in\realsnonneg$, and all $x\in\states$:
@@ -2148,8 +2148,24 @@ $\left[\lt(\lambda f)\right](x)=\lambda\left[\lt\,f\right](x)$. \label{LT:homo}
 \end{enumerate}
 %\vspace{5pt}
 \noindent We use $\underline{\mathcal{T}}$ to denote the set of all lower transition operators.
+
+Such lower transition operators furthermore satisfy the following properties---see Reference~\cite{DeBock:2016} for a proof. For any lower transition operator $\lt$ and any two non-negatively homogeneous operators $A,B$ from $\gamblesX$ to $\gamblesX$,
+\begin{enumerate}[label=LT\arabic*:,ref=LT\arabic*,start=4]
+\item
+$\norm{\lt} \leq 1$; \label{LT:norm_at_most_one}
+\item
+$\norm{\lt A - \lt B} \leq \norm{A - B}$. \label{LT:differencenorm}
+\end{enumerate}
 \vspace{5pt}
 \end{definition}
+
+\begin{proposition}\label{lemma:compositioncoherence}
+For any two lower transition operators $\lt,\underline{S}\in\underline{\mathcal{T}}$, their composition is also a lower transition operator  $\left(\lt\,\underline{S}\right)\in\underline{\mathcal{T}}$.
+\end{proposition}
+\begin{proof}
+*** still need to check this *** Simply check each of the properties.
+\end{proof}
+
 The first thing to note is that any transition matrix $T$ will also satisfy properties~\ref{LT:bounded_min}-\ref{LT:homo}, and hence is also a lower transition operator. It is therefore clear that lower transition operators are a generalization of transition matrices.
 
 A first way to motivate this specific generalization is to note the following. For any lower transition operator $\lt$ and any $x\in\states$, consider the map $\lt_x:\gamblesX\to\reals$, defined for all $f\in\gamblesX$ as
@@ -2162,11 +2178,11 @@ For the reader that is unfamiliar with this notion of coherent lower previsions,
 \begin{equation*}
 \underline{\mathbb{E}}f \coloneqq \inf\left\{\sum_{x\in\states} p(x)f(x)\,:\,p\in\mathcal{M}\right\}\,.
 \end{equation*}
-It should be clear that this map $\underline{\mathbb{E}}$ computes a lower expectation with respect to $\mathcal{M}$. Furthermore, note that for any $p\in\mathcal{M}$, the quantity $\sum_{x\in\states}p(x)f(x)$ is bounded from below by $\min\{f(y):y\in\states\}$. Because this holds for any $p\in\mathcal{M}$, it follows that $\underline{\mathbb{E}}$ is also bounded below by this minimum operator. Furthermore, it is easily verified that $\underline{\mathbb{E}}$ is super-additive and non-negatively homogeneous, due to the properties of the $\inf$ operator. Hence, by the definition cited above, this lower expectation operator corresponding to $\mathcal{M}$ is a coherent lower prevision on $\gamblesX$. 
+We call this map $\underline{\mathbb{E}}$ the \emph{lower envelope} of $\mathcal{M}$, and it should be clear that this map computes a lower expectation with respect to $\mathcal{M}$. Furthermore, note that for any $p\in\mathcal{M}$, the quantity $\sum_{x\in\states}p(x)f(x)$ is bounded from below by $\min\{f(y):y\in\states\}$. Because this holds for any $p\in\mathcal{M}$, it follows that $\underline{\mathbb{E}}$ is also bounded below by this minimum operator. Furthermore, it is easily verified that $\underline{\mathbb{E}}$ is super-additive and non-negatively homogeneous, due to the properties of the $\inf$ operator. Hence, by the definition cited above, this lower expectation operator corresponding to $\mathcal{M}$ is a coherent lower prevision on $\gamblesX$. 
 
 Our consideration of the coherent lower prevision $\lt_x$  above is essentially the same idea, but \emph{without} considering explicitly any link to sets $\mathcal{M}$ of probability mass functions. Suffice it to say that, for any coherent lower prevision, such a set $\mathcal{M}$ will always exist {\bf CITE}. It should furthermore be noted that the qualifier ``coherent'' here has connections to the notion of \emph{coherence} that we mentioned in Section~\ref{sec:cond_prob}. We refer to {\bf CITE CITE CITE} for further discussion on this.
 
-Because for any lower transition operator $\lt$ and any $x\in\states$, the map $\lt_x$ is a coherent lower prevision, it follows that the lower transition operator $\lt$ can be seen as a vector of coherent lower previsions. Furthermore, as mentioned above, each coherent lower prevision $\lt_x$ has some set $\mathcal{M}_{\lt_x}$ of probability mass functions of which $\lt_x$ computes the lower envelope {\bf CITE}. Therefore, and since the set $\mathcal{M}_{\lt}\coloneqq \times_{x\in\states}\mathcal{M}_{\lt_x}$ can be interpreted as a set of transition matrices, the operator $\lt$ can intuitively be seen as a lower envelope operator over this set. That is, for every lower transition operator $\lt$, there is some set $\mathcal{M}_{\lt}$ of transition matrices, such that for any $f\in\gamblesX$,
+Because for any lower transition operator $\lt$ and any $x\in\states$, the map $\lt_x$ is a coherent lower prevision, it follows that the lower transition operator $\lt$ can be seen as a vector of coherent lower previsions. Furthermore, as mentioned above, each coherent lower prevision $\lt_x$ has some set $\mathcal{M}_{\lt_x}$ of probability mass functions of which $\lt_x$ computes the lower envelope {\bf CITE}. Therefore, and since the set $\mathcal{M}_{\lt}\coloneqq \times_{x\in\states}\mathcal{M}_{\lt_x}$ can be interpreted as a set of transition matrices---the elements $T\in\mathcal{M}_{\lt}$ are row-stochastic, with $T(x,\cdot)\in\mathcal{M}_{\lt_x}$ for all $x\in\states$---the operator $\lt$ can intuitively be seen as a lower envelope operator over this set. That is, for every lower transition operator $\lt$, there is some set $\mathcal{M}_{\lt}$ of transition matrices, such that for any $f\in\gamblesX$,
 \begin{equation*}
 \lt f = \inf\{ Tf\,:\, T\in\mathcal{M}_{\lt} \}\,.
 \end{equation*}
@@ -2180,38 +2196,10 @@ Due to the correspondence between transition matrices and conditional expectatio
 %For any lower transition operator $\lt$, we have that $0\leq \norm{\lt}\leq 1$.
 %\end{proposition}
 
-We conclude with two results about the set $\underline{\mathcal{T}}$ of all lower transition operators. As the first result shows, this set is closed under composition.
-\begin{proposition}\label{lemma:compositioncoherence}
-For any $\lt,\underline{S}\in\underline{\mathcal{T}}$, it holds that $\left(\lt\,\underline{S}\right)\in\underline{\mathcal{T}}$.
-\end{proposition}
-\begin{proof}
-*** still need to check this *** Simply check each of the properties.
-\end{proof}
-
-\noindent Furthermore, this set is a complete metric space under our usual norm.
+We conclude with a powerful result about the set $\underline{\mathcal{T}}$ of all lower transition operators; this set is a complete metric space under our usual norm.
 
 \begin{proposition}\label{lemma:completemetricspace}
 The metric space $(\underline{\mathcal{T}},d)$ is complete under the metric $d$ induced by our usual norm $\norm{\cdot}$.
-\end{proposition}
-
-\noindent {\bf Dit ding moeten we ergens kwijt. Misschien lemma van maken en in appendix droppen?} We next give some additional useful properties of the norm of these operators.
-
-\begin{proposition}[Reference \cite{DeBock:2016}]\label{prop:norm_properties_lrate_lt}
-For any lower transition operator $\lt$, any lower transition rate operator $\lrate$, and any two non-negatively homogeneous operators $A,B$ from $\gamblesX$ to $\gamblesX$,
-\begin{multicols}{2}
-\begin{enumerate}[label=LT\arabic*:,ref=LT\arabic*,start=4]
-\item
-$\norm{\lt} \leq 1$; \label{LT:norm_at_most_one}
-\item
-$\norm{\lt A - \lt B} \leq \norm{A - B}$. \label{LT:differencenorm}
-\end{enumerate}
-\begin{enumerate}[label=LR\arabic*:,ref=LR\arabic*,start=5]
-\item
-$\norm{\lrate} < +\infty$ \label{LR:normlratefinite};
-\item
-$\norm{\lrate A - \lrate B} \leq 2\norm{\lrate}\norm{A - B}.$ \label{LR:differenceofnorm}
-\end{enumerate}
-\end{multicols}
 \end{proposition}
 
 \subsection{Lower Transition Rate Operators and Sets of Rate Matrices}\label{sec:connections_rate}
@@ -2232,6 +2220,13 @@ $\left[\lrate(f+g)\right](x)\geq\left[\lrate f\right](x)+\left[\lrate g\right](x
 $\left[\lrate(\lambda f)\right](x)= \lambda\left[\lrate f\right](x)$.
 \end{enumerate}
 %\vspace{5pt}
+Such lower transition rate operators furthermore satisfy the following properties---see Reference~\cite{DeBock:2016} for a proof. For any lower transition rate operator $\lrate$ and any two non-negatively homogeneous operators $A,B$ from $\gamblesX$ to $\gamblesX$,
+\begin{enumerate}[label=LR\arabic*:,ref=LR\arabic*,start=5]
+\item
+$\norm{\lrate} < +\infty$ \label{LR:normlratefinite};
+\item
+$\norm{\lrate A - \lrate B} \leq 2\norm{\lrate}\norm{A - B}.$ \label{LR:differenceofnorm}
+\end{enumerate}
 \end{definition}
 
 Note that properties~\ref{LR:constantzero} and~\ref{LR:nondiagpos} essentially preserve properties~\ref{def:Q:sumzero} and~\ref{def:Q:nonnegoffdiagonal} from Definition~\ref{def:rate_matrix}. However, where any rate matrix $Q$ represents a linear map, properties~\ref{LR:subadditive} and~\ref{LR:homo} merely require that a lower transition rate operator $\lrate$ is super-additive and non-negatively homogeneous. Hence, any rate matrix is in fact also a lower transition rate operator, with the latter concept providing a generalization of the former.
@@ -4985,7 +4980,7 @@ We provide a proof by induction. Clearly, Equation~\eqref{eq:lemma_recursive_ine
  &\leq \norm{\underline{T}_n - \underline{S}_n} + \norm{\prod_{i=1}^{n-1}\underline{T}_i - \prod_{i=1}^{n-1}\underline{S}_i} \\
  &\leq \norm{\underline{T}_n - \underline{S}_n} + \sum_{i=1}^{n-1}\norm{\underline{T}_i - \underline{S}_i} = \sum_{i=1}^{n}\norm{\underline{T}_i - \underline{S}_i}\,.
 \end{align*}
-Here, in the second inequality, we applied Proposition~\ref{lemma:compositioncoherence} and properties~\ref{N:normAB} and~\ref{LT:differencenorm} from Proposition~\ref{prop:norm_properties_lrate_lt}. In the third inequality, we used property~\ref{LT:norm_at_most_one} from Proposition~\ref{prop:norm_properties_lrate_lt}. In the final inequality, we used the induction hypothesis.
+Here, in the second inequality, we applied Proposition~\ref{lemma:compositioncoherence} and properties~\ref{N:normAB} and~\ref{LT:differencenorm}. In the third inequality, we used property~\ref{LT:norm_at_most_one}. In the final inequality, we used the induction hypothesis.
 \end{proof}
 
 \begin{lemma}\label{lemma:justthelinearpart}
@@ -5025,7 +5020,7 @@ For all $i\in\{2,\dots,n\}$, since $\Delta_i\norm{\lrate}\leq1$, it follows from
 =\Delta^2\norm{\lrate}^2,
 \end{aligned}
 \end{multline*}\\[3pt]
-where the second inequality follows from the induction hypothesis and property~\ref{LR:differenceofnorm} from Proposition~\ref{prop:norm_properties_lrate_lt}, and the third inequality follows from Lemma~\ref{lemma:recursive_lower_trans}.
+where the second inequality follows from the induction hypothesis and property~\ref{LR:differenceofnorm}, and the third inequality follows from Lemma~\ref{lemma:recursive_lower_trans}.
 \end{proof}
 
 
@@ -5140,7 +5135,7 @@ Therefore, fix any $\epsilon\in\realspos$, and choose $\delta\in\realspos$ such 
 \end{proof}
 
 \begin{proof}[Proof of Corollary~\ref{corol:limitexistsandiscoherent}]
-Since $\lim_{i\to\infty}\sigma(u_i)=0$, and because of Propositions~\ref{lemma:normQsmallenough} and~\ref{lemma:compositioncoherence} and property~\ref{LR:normlratefinite} from Proposition~\ref{prop:norm_properties_lrate_lt}, there is some index $n$ such that the sequence $\Phi_{u_n},\Phi_{u_{n+1}},\ldots$ consists of lower transition operators. Due to Corollary~\ref{corol:cauchy}, this sequence is Cauchy and therefore, because of Proposition~\ref{lemma:completemetricspace}, this sequence has a limit that is also a lower transition operator. Since the limit starting from $n$ and the limit starting from $1$ are identical (initial elements do not influence the limit), we find that the sequence $\left\{\Phi_{u_i}\right\}_{i\in\nats}$ has a limit, and that this limit is a lower transition operator.
+Since $\lim_{i\to\infty}\sigma(u_i)=0$, and because of Propositions~\ref{lemma:normQsmallenough} and~\ref{lemma:compositioncoherence} and property~\ref{LR:normlratefinite}, there is some index $n$ such that the sequence $\Phi_{u_n},\Phi_{u_{n+1}},\ldots$ consists of lower transition operators. Due to Corollary~\ref{corol:cauchy}, this sequence is Cauchy and therefore, because of Proposition~\ref{lemma:completemetricspace}, this sequence has a limit that is also a lower transition operator. Since the limit starting from $n$ and the limit starting from $1$ are identical (initial elements do not influence the limit), we find that the sequence $\left\{\Phi_{u_i}\right\}_{i\in\nats}$ has a limit, and that this limit is a lower transition operator.
 \end{proof}
 
 \begin{proof}[Proof of Theorem~\ref{theo:convergencelowerbound}]
