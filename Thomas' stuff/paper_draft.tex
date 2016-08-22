@@ -2507,9 +2507,9 @@ Interestingly, then, the family $\underline{\mathcal{T}}_{\lrate}$ maintains the
 
 \section{\ictmc's and Corresponding Lower Transition Operators}\label{sec:connections}
 
-*** blabla
+In the previous section, we introduced the lower transition operator $L_t^s$ corresponding to a given lower transition rate operator $\lrate$. As mentioned in the beginning of Section~\ref{sec:lowertrans}, we aim to use this lower transition operator as an alternative characterization of the lower expectation of a given \ictmc, with which this lower expectation can be tractably computed. We show in this section how to do this. Specifically, we explain in Section~\ref{sec:single_var_lower_exp} how the operator $L_t^s$ can be used as an alternative representation of lower expectations, and provide in Section~\ref{subsec:compute_single_var} a simple algorithm for the numerical computation of lower expectations using this operator.
 
-One of the objectives of this paper is to establish a connection between the operator $\lbound_t^s$ that we have just introduced, and the different types of imprecise continous-time Markov chains that were discussed in Section~\ref{sec:iCTMC}. Since the former is derived from a lower transition rate operator $\lrate$ and the latter are derived from a non-empty bounded set of rate matrices $\rateset$, an obvious first step is to investigate the connection between lower transition rate operators and non-empty bounded sets of rate matrices.
+%One of the objectives of this paper is to establish a connection between the operator $\lbound_t^s$ that we have just introduced, and the different types of imprecise continous-time Markov chains that were discussed in Section~\ref{sec:iCTMC}. Since the former is derived from a lower transition rate operator $\lrate$ and the latter are derived from a non-empty bounded set of rate matrices $\rateset$, an obvious first step is to investigate the connection between lower transition rate operators and non-empty bounded sets of rate matrices.
 
 % $\rateset$ and $\lrate$. 
 %In order to do that, we start by discussing some properties of sets of rate matrices.
@@ -2524,11 +2524,13 @@ One of the objectives of this paper is to establish a connection between the ope
 
 \subsection{Lower Expectations and Corresponding Lower Transition Operators}\label{sec:single_var_lower_exp}
 
-*** blabla
+%*** blabla
 
-Having established a strong connection between the operator $\lrate$ and non-empty bounded sets of rate matrices $\rateset$, we will now turn to the connection between the operator $L_t^s$ and lower expectations $\underline{\mathbb{E}}$ with respect to sets of (non-)Markov processes. Specifically, we will in this section focus on the lower expectation of functions defined on the state space at a single point in time. In Section~\ref{sec:funcs_multi_time_points} we will then use and generalize these results when we consider functions defined on the state space at multiple time points.
+We first turn to the connection between the operator $L_t^s$ and lower expectations $\underline{\mathbb{E}}$ with respect to sets of (non-)Markov processes. Specifically, we will in this section focus on the lower expectation of functions defined on the state space at a single point in time. In Section~\ref{sec:funcs_multi_time_points} we will then use and generalize these results when we consider functions defined on the state space at multiple time points.
 
-As the following result shows, the operator $L_t^s$ corresponding to a lower transition rate operator $\lrate$ computes a lower bound on the expectation of a function $f\in\gamblesX$, with respect to the set $\wprocesses_\rateset$ of well-behaved stochastic processes consistent with any set $\rateset$ of which $\lrate$ is the lower envelope.
+In order to establish the connection between lower expectations and lower transition operators $L_t^s$, we first recall that lower expectations are defined with respect to a given \ictmc, which in turn is derived from a given set $\rateset$ of transition rate matrices, as in Definition~\ref{def:process_sets}. In contrast, the lower transition operator $L_t^s$ is derived from a given lower transition rate operator $\lrate$. We have already seen in Section~\ref{sec:connections_rate} that there is a strong connection between sets of rate matrices $\rateset$ and lower transition rate operators $\lrate$. In particular, any set $\rateset$ has a corresponding lower transition rate operator $\lrate$, which computes the lower envelope with respect to $\rateset$, as in Equation~\eqref{eq:correspondinglowertrans}. It is this connection between sets of rate matrices and lower transition rate operators that we will use to establish the connection between $L_t^s$ and lower expectations.
+
+To start with, as the following result shows, the operator $L_t^s$ corresponding to a lower transition rate operator $\lrate$ computes a lower bound on the expectation of a function $f\in\gamblesX$, with respect to the set $\wprocesses_\rateset$ of well-behaved stochastic processes consistent with any set $\rateset$ of which $\lrate$ is the lower envelope.
 
 \begin{proposition}\label{theorem:nonmarkov_single_var_lower_bounded}
 Let $\rateset$ be an arbitrary non-empty bounded set of rate matrices with corresponding lower transition rate operator $\lrate$, and let $\smash{\underline{\mathcal{T}}_{\lrate}}$ be the corresponding lower transition operator system. Then, for any $P\in\wprocesses_\rateset$, any $t,s\in\realsnonneg$ such that $t\leq s$, any $u\in\mathcal{U}_{<t}$, any $x_t\in\states$ and $x_u\in\states_u$, and any $f\in\gamblesX$,
@@ -2564,7 +2566,15 @@ Let $\mathcal{M}$ be an arbitrary non-empty set of probability mass functions on
 % \end{equation*}
 \end{corollary}
 
-Thus, we find that there is a correspondence between the operator $L_t^s$ and lower expectations with respect to sets of stochastic processes. However, we also find that this correspondence is not one-to-one. Clearly, Corollary~\ref{cor:lower_operator_is_infimum} shows that $L_t^s$ computes the lower expectation for the different sets $\wmprocesses_\rateset$ and $\wprocesses_\rateset$. Furthermore, we know from Section~\ref{sec:connections_rate} that different sets $\rateset_1$ and $\rateset_2$ may have the same corresponding lower transition rate operator $\lrate$. Hence, whenever this is the case, $L_t^s$ would---assuming the conditions in Corollary~\ref{cor:lower_operator_is_infimum} are met by both $\rateset_1$ and $\rateset_2$---then compute the lower expectation with respect to both $\wmprocesses_{\rateset_1}$ and $\wmprocesses_{\rateset_2}$ (and also, furthermore, for $\wprocesses_{\rateset_1}$ and $\wprocesses_{\rateset_2}$). An obvious question, therefore, would be what the largest set of stochastic processes is for which $L_t^s$ computes the lower expectation.
+Thus, we find that there is indeed a correspondence between the operator $L_t^s$ and lower expectations for \ictmc's.
+
+Furthermore, observe that Corollary~\ref{cor:lower_operator_is_infimum} states that $L_t^sf = \underline{\mathbb{E}}_{\rateset,\mathcal{M}}^\mathrm{W}[f(X_s)\,\vert\,X_t,X_u]$ for \emph{all} histories $u\in\mathcal{U}_{<t}$. Therefore, and since the definition of $L_t^s$ does not depend on this choice of $u$, it follows that
+\begin{equation*}
+\underline{\mathbb{E}}_{\rateset,\mathcal{M}}^\mathrm{W}[f(X_s)\,\vert\,X_t,X_u] = \underline{\mathbb{E}}_{\rateset,\mathcal{M}}^\mathrm{W}[f(X_s)\,\vert\,X_t].
+\end{equation*}
+This equality explains why we call $\wprocesses_{\rateset,\mathcal{M}}$ an imprecise continuous-time Markov chain. That is, the conditional lower expectation $\underline{\mathbb{E}}_{\rateset,\mathcal{M}}^\mathrm{W}[f(X_s)\,\vert\,X_t,X_u]$ depends only on the state at time $t$---it satisfies the Markov property---\emph{even though} $\wprocesses_{\rateset,\mathcal{M}}$ \emph{contains non-Markov processes}! 
+
+Now, Corollary~\ref{cor:lower_operator_is_infimum} also establishes that the correspondence between $L_t^s$ and lower expectations is not one-to-one. Clearly, $L_t^s$ computes the lower expectation for the different sets $\wmprocesses_\rateset$ and $\wprocesses_\rateset$. Furthermore, we know from Section~\ref{sec:connections_rate} that different sets $\rateset_1$ and $\rateset_2$ may have the same corresponding lower transition rate operator $\lrate$. Hence, whenever this is the case, $L_t^s$ would---assuming the conditions in Corollary~\ref{cor:lower_operator_is_infimum} are met by both $\rateset_1$ and $\rateset_2$---then compute the lower expectation with respect to both $\wmprocesses_{\rateset_1}$ and $\wmprocesses_{\rateset_2}$ (and also, furthermore, for $\wprocesses_{\rateset_1}$ and $\wprocesses_{\rateset_2}$). An obvious question, therefore, would be what the largest set of stochastic processes is for which $L_t^s$ computes the lower expectation.
 
 %*** This needs some rewording ***
 %
@@ -2589,7 +2599,7 @@ In other words, for functions defined on a single time point, the lower expectat
 
 A useful consequence of this is that, if one is interested in the lower expectation with respect to, say, $\wprocesses_{\rateset}$, and if $\rateset$ is non-empty and bounded with separately specified rows, that convexifying or closing $\rateset$ will not influence the lower expectation for functions defined on a single time point. This is due to Proposition~\ref{prop:dominating_unique_characterization}, which states that if you do this, you obtain $\rateset=\rateset_{\lrate}$. This observation may be helpful for model specification, where a closed and/or convex specification of $\rateset$ might be easier to construct than a more ``fragmented'' parameter set.
 
-A second conclusion that we can draw from Theorem~\ref{theo:dominating_rate_processes_max_set}, is that it vindicates our choice to focus on \emph{well-behaved} stochastic processes---rather than, say, continuous or differentiable stochastic processes. ***blabla
+A second conclusion that we can draw from Theorem~\ref{theo:dominating_rate_processes_max_set}, is that it vindicates our choice to focus on \emph{well-behaved} stochastic processes---rather than, say, continuous or differentiable stochastic processes. In particular, since we aim to use $L_t^s$ as a computational tool for lower expectations, the notion of well-behavedness allows us to characterize exactly those sets of stochastic processes for which we can do this. 
 
 %Similar to our results from Section~\ref{sec:connections_rate}, we conclude from this that sets of stochastic processes are more informative than their corresponding lower expectations. In general, different sets $\wprocesses_\rateset$ of stochastic processes can have their lower expectations computed by the same lower transition operator $L_t^s$, and hence they necessarily have the same lower expectation. 
 %
@@ -2621,7 +2631,7 @@ A second conclusion that we can draw from Theorem~\ref{theo:dominating_rate_proc
 %\lrate &\Rightarrow \underline{\mathcal{T}}_{\lrate} \Rightarrow L_t^s,\quad\text{and,}\quad \lrate\Rightarrow \rateset_{\lrate} \Rightarrow \wprocesses_{\rateset_{\lrate}} = \mathcal{P}
 %\end{align*}
 
-\subsection{Computing Lower Expectations with Corresponding Lower Transition Operators}
+\subsection{Computing Lower Expectations with Corresponding Lower Transition Operators}\label{subsec:compute_single_var}
 
 We have in the previous section shown that (conditional) lower expectations can be computed using the operator $L_t^s$. However, in order to make these results practicable, we still require a method to numerically compute the function $L_t^sf$. Because we are now interested in numerical methods, we will focus on computing such a quantity $L_t^sf$ within a guaranteed $\epsilon$-error bound. 
 
