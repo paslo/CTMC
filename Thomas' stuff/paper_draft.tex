@@ -1874,45 +1874,53 @@ As we know from Propositions~\ref{prop:systemQ} and~\ref{prop:concat_restr_trans
 \section{Imprecise Continuous-Time Markov chains}
 \label{sec:iCTMC}
 
-In Sections~\ref{sec:stochastic_processes} and~\ref{sec:cont_time_markov_chains}, we formalized stochastic processes, and provided ways to characterize them. We now turn to the field of \emph{imprecise probability}~\cite{Walley:1991vk} {\bf CITE CITE}, and will formalize in this section the notion of \emph{imprecise continuous-time Markov chains}. Here, rather than look at a single stochastic process $P\in\processes$, we instead consider jointly some \emph{set} of processes $\mathcal{P}\subseteq\processes$. We start by looking at how such sets can be described.
+In Sections~\ref{sec:stochastic_processes} and~\ref{sec:cont_time_markov_chains}, we formalized stochastic processes and provided ways to characterize them. We now turn to the field of \emph{imprecise probability}~\cite{augustin2013:itip,Walley:1991vk} to formalize the notion of an \emph{imprecise continuous-time Markov chain}. Basically, rather than look at a single stochastic process $P\in\processes$, we instead consider jointly some \emph{set} of processes $\mathcal{P}\subseteq\processes$. We start by looking at how such sets can be described.
 
-\subsection{Sets of Stochastic Processes}
+\subsection{Sets of Consistent Stochastic Processes}
 
-Recall from Section~\ref{sec:dynamics} that for a given stochastic process $P\in\processes$, its behaviour can be described using the outer partial derivatives $\smash{\overline{\partial}}T_{t,\,x_u}^t$ of its transition matrices $T_{t,\,x_u}^t$ at each time $t\in\realsnonneg$ and for each history $x_u\in\states_u$. There, we found that---at least for well-behaved processes---these outer partial derivatives are non-empty bounded sets of rate matrices. Hence, because individual stochastic processes can be described using sets of rate matrices, this is also a natural starting point for describing sets of processes.
+Recall from Section~\ref{sec:dynamics} that for a given stochastic process $P\in\processes$, its dynamics can be described by means of the outer partial derivatives $\smash{\overline{\partial}}T_{t,\,x_u}^t$ of its transition matrices, which can depend both on the time $t\in\realsnonneg$ and on the history $x_u\in\states_u$. %$T_{t,\,x_u}^t$ 
+ Furthermore, we also found that---at least for well-behaved processes---these outer partial derivatives are non-empty bounded sets of rate matrices. If all the partial derivatives of a process belong to the same non-empty bounded set of rate matrices $\rateset$, we call this proces consistent with $\rateset$.
 
-Therefore, consider some non-empty bounded set $\rateset\subset\mathcal{R}$ of rate matrices. We can then ask if there are any processes that are described by this set $\rateset$. Indeed, we found in Section~\ref{sec:homogen_markov_chain} that for every $Q\in\rateset$, there is a well-behaved homogeneous Markov chain that is characterized---up to its initial distribution---by this $Q$. Hence, an obvious way to construct a set $\mathcal{P}$ from a given set $\rateset$ is as the set of well-behaved homogeneous Markov chains characterized by elements of $\rateset$. This idea will be formalized in Section~\ref{subsec:types_ictmc}.
+%Therefore, consider some non-empty bounded set $\rateset\subset\mathcal{R}$ of rate matrices. We can then ask if there are any processes that are described by this set $\rateset$. Indeed, we found in Section~\ref{sec:homogen_markov_chain} that for every $Q\in\rateset$, there is a well-behaved homogeneous Markov chain that is characterized---up to its initial distribution---by this $Q$. Hence, an obvious way to construct a set $\mathcal{P}$ from a given set $\rateset$ is as the set of well-behaved homogeneous Markov chains characterized by elements of $\rateset$. This idea will be formalized in Section~\ref{subsec:types_ictmc}.
 
-For now, we next consider whether we can also describe sets of non-homogeneous, (non-)Markov processes using a given set $\rateset$ of rate matrices. However, it should be clear that this is less straightforward than in the homogeneous, Markovian case. In particular, because such a set $\rateset$ is not explicitly connected to any time $t$ or history $x_u$, asking if a (non-homogeneous, non-Markov) process is described by this set is in some sense an ill-posed question.
-Therefore, rather than asking if a process can be described by some set of rate matrices, we will now introduce the following weaker notion of \emph{consistency} of a stochastic process with a given set of rate matrices.
+%For now, we next consider whether we can also describe sets of non-homogeneous, (non-)Markov processes using a given set $\rateset$ of rate matrices. However, it should be clear that this is less straightforward than in the homogeneous, Markovian case. In particular, because such a set $\rateset$ is not explicitly connected to any time $t$ or history $x_u$, asking if a (non-homogeneous, non-Markov) process is described by this set is in some sense an ill-posed question.
+%Therefore, rather than asking if a process can be described by some set of rate matrices, we will now introduce the following weaker notion of \emph{consistency} of a stochastic process with a given set of rate matrices.
 
-\begin{definition}[Consistent Process]\label{def:consistent_process}
-Consider any non-empty bounded set $\rateset$ of rate matrices, and any stochastic process $P\in\processes$. Then $P$ is said to be \emph{consistent} with $\rateset$, if
+\begin{definition}[Consistency with a set of rate matrices]\label{def:consistent_process}
+Consider a non-empty bounded set of rate matrices $\rateset$ and a stochastic process $P\in\processes$. Then $P$ is said to be \emph{consistent} with $\rateset$ if
 \begin{equation*}
-(\forall t\in\realsnonneg)(\forall u\in\mathcal{U}_{<t})(\forall x_u\in\states_u)\,:\, \smash{\overline{\partial}}T_{t,x_u}^t \subseteq \rateset\,.
+(\forall t\in\realsnonneg)(\forall u\in\mathcal{U}_{<t})(\forall x_u\in\states_u)\,:\, \smash{\overline{\partial}}T_{t,x_u}^t \subseteq \rateset.
+\vspace{4pt}
 \end{equation*}
 If $P$ is consistent with $\rateset$, we will write $P\sim\rateset$.
 \end{definition}
 
-Thus, when a process $P\in\processes$ is consistent with some $\rateset\subset\mathcal{R}$, we know that its behaviour over time can always be described using the elements of $\rateset$. However, we do not know which of these elements $Q\in\rateset$ describe this behaviour at any given time  $t\in\realsnonneg$ or for any given history $x_u\in\states_u$. Furthermore, consistency of a process with some set $\rateset$ only asserts ``consistency in behaviour"; in particular, it does not tell us anything about the initial distribution of the process. %It should therefore be clear that there will be many processes consistent with any non-empty bounded set $\rateset\subset\mathcal{R}$. The next example shows that this is already the case when $\rateset$ is singleton.
 
+Thus, when a process is consistent with a set of rate matrices $\rateset$, we know that its dynamics can always be described using the rate matrices in that set. However, we do not know which of these rate matrices $Q\in\rateset$ describe the dynamics at any given time $t\in\realsnonneg$ or for any given history $x_u\in\states_u$. Furthermore, consistency of a process with a set of rate matrices $\rateset$ does not tell us anything about the initial distribution of the process. %It should therefore be clear that there will be many processes consistent with any non-empty bounded set $\rateset\subset\mathcal{R}$. The next example shows that this is already the case when $\rateset$ is singleton.
 %*** blabla
-
+%Hence, because individual stochastic processes can be described using sets of rate matrices, this is also a natural starting point for describing sets of processes.
 %However, as noted above, consistency with some $\rateset$ does not allow us to specify the initial distributions of the processes in such a set. 
+Therefore, we also introduce the concept of consistency with a set of initial distributions~$\mathcal{M}$.
+%of initial distributions. To this end, let $\mathcal{M}$ be an arbitrary set of probability mass functions on $\states$. We will then say that a process $P$ is \emph{consistent with $\mathcal{M}$ in initial distribution}, whenever $P(X_0)\in\mathcal{M}$. 
 
-Therefore, we also introduce the notion of consistency of initial distributions. To this end, let $\mathcal{M}$ be an arbitrary set of probability mass functions on $\states$. We will then say that a process $P$ is \emph{consistent with $\mathcal{M}$ in initial distribution}, whenever $P(X_0)\in\mathcal{M}$. We now focus on sets of processes that are jointly consistent with some given $\rateset$ and $\mathcal{M}$.
+\begin{definition}[Consistency with a set of initial distributions]\label{def:consistent_process_initialdistribution}
+Consider any non-empty bounded set $\mathcal{M}$ of probability mass functions on $\states$ and any stochastic process $P\in\processes$. We then say that $P$ is \emph{consistent} with $\mathcal{M}$, and write $P\sim\rateset$, if $P(X_0)\in\mathcal{M}$.
+\end{definition}
 
-However, rather than look at the set of \emph{all} processes consistent with such $\rateset$ and $\mathcal{M}$, we will for the sake of generality and ease of notation consider the consistent subset of a given set of processes $\mathcal{P}\subseteq\processes$. The usefulness of this notational convention will be made clear momentarily.
+In the remainder of this paper, we will focuss on sets of processes that are jointly consistent with some given $\rateset$ and $\mathcal{M}$. However, rather than look at the set of \emph{all} processes consistent with some $\rateset$ and $\mathcal{M}$, we will instead consider the consistent subset of some given set of processes $\mathcal{P}\subseteq\processes$.
 
 %*** dit leidt dan voor een gegeven $\rateset$ naar het idee om naar de verzameling van alle $P\in\processes$ te kijken die consistent zijn met $\rateset$. Voor notationeel gemak en generiekheid kijken we echter liever naar de subset van een gegeven $\mathcal{P}\subseteq\processes$ die consistent is met $\rateset$:
 
-\begin{definition}[Consistent Subset of Processes]\label{def:consistent_process_set}
-Consider any non-empty bounded set of rate matrices $\rateset$, any non-empty set $\mathcal{M}$ of probability mass functions on $\states$, and any set of stochastic processes $\mathcal{P}\subseteq\processes$. Then, the \emph{subset of $\mathcal{P}$ consistent with} $\rateset$ \emph{and} $\mathcal{M}$ is denoted $\mathcal{P}_{\rateset,\mathcal{M}}$, and defined as
+\begin{definition}[Consistent subset of processes]\label{def:consistent_process_set}
+Consider a non-empty bounded set of rate matrices $\rateset$ and a non-empty set $\mathcal{M}$ of probability mass functions on $\states$ and a set of stochastic processes $\mathcal{P}\subseteq\processes$. Then, the \emph{subset of $\mathcal{P}$ consistent with} $\rateset$ \emph{and} $\mathcal{M}$ is denoted $\mathcal{P}_{\rateset,\mathcal{M}}$, and defined as
 \begin{equation*}
-\mathcal{P}_{\rateset,\mathcal{M}} \coloneqq \left\{P\in\mathcal{P}\,:\,P\sim\rateset,\,P(X_0)\in\mathcal{M}\right\}\,.
+\mathcal{P}_{\rateset,\mathcal{M}} \coloneqq \left\{P\in\mathcal{P}\,:\,P\sim\rateset,\,P\sim\mathcal{M}\right\}\,.
 \end{equation*}
 When $\mathcal{M}$ is the set of \emph{all} probability mass functions on $\states$, we will write $\mathcal{P}_{\rateset}$ for the sake of brevity.
 \end{definition}
 Such a set $\mathcal{P}_{\rateset,\mathcal{M}}$ will also be called an \emph{imprecise continuous-time Markov chain} (\ictmc). We will next focus on some specific cases.
+
+The usefulness of this notational convention will be made clear momentarily.
 
 \subsection{Types of Imprecise Continuous-Time Markov Chains}\label{subsec:types_ictmc}
 
