@@ -2026,7 +2026,7 @@ P(A\vert X_u=x_u)=P_{x_u}(A\vert X_u=x_u).
 \end{theorem}
 
 
-\subsection{Lower Expectations for \ictmc's} 
+\subsection{Lower Expectations for \ictmc's}\label{subsec:ictmc_types}
 
 From a practical point of view, after having specified a (precise) stochastic process, one is typically interested in the expected value of some function of interest. Similarly, in this work, our main object of consideration will be the \emph{lower expectation} with respect to the \ictmc's that we introduced in the previous section.
 
@@ -2785,8 +2785,6 @@ In Section~\ref{sec:function_single_future_multiple_past}, we first consider fun
 
 This is then generalized in Section~\ref{sec:decomposition} to arbitrary functions $f\in\gambles(\states_{u\cup v})$ and lower expectations $\underline{\mathbb{E}}[f(x_u,X_v)\,\vert\,X_u=x_u]$, where the expectation is taken over an arbitrary number of time points. These results are then used in Section~\ref{sec:marginal_lower_exp} to show that we can also compute marginal lower expectations $\underline{\mathbb{E}}[f(X_u)]$ of arbitrary functions.
 
-We finally apply these results with some worked examples in Section~\ref{sec:tractability}, where we also provide some comments on tractability and computational aspects.
-
 %First, in Section~\ref{sec:function_single_future_multiple_past}, we will consider functions defined on a single time point in a chain's future, and multiple time points in the chain's history. Thus, we will consider functions $f\in\gambles(\states^{u\cup\{s\}})$, and lower expectations of the form
 %\begin{equation*}
 %\underline{\mathbb{E}}\left[f(X_{t_0},\ldots,X_{t_n},X_s)\,\vert\,X_{t_0},\ldots,X_{t_n}\right]\,.
@@ -2924,7 +2922,7 @@ The algorithm starts by constructing a new function $g\in\gambles(\states_u)$ (L
 
 \subsection{Multi-Variable Functions on Multiple Points in the Future}\label{sec:decomposition}
 
-We now consider functions $f\in\gambles(\states_{u\cup v})$, where $u=t_0,\ldots,t_n$ is a sequence of time points in a process' history, and $v=s_0,\ldots,s_m$ is a sequence of time points in a process' future; hence, we assume $s_0>t_n$. For functions of this kind, it---surprisingly---turns out that computing the lower expectation with respect to $\wprocesses_{\rateset,\,\mathcal{M}}$ is easier than for $\wmprocesses_{\rateset,\,\mathcal{M}}$. We will show in this section how to do this for the former set, and will provide a counter example for the latter in Section~\ref{sec:tractability}.
+We now consider functions $f\in\gambles(\states_{u\cup v})$, where $u=t_0,\ldots,t_n$ is a sequence of time points in a process' history, and $v=s_0,\ldots,s_m$ is a sequence of time points in a process' future; hence, we assume $s_0>t_n$. For functions of this kind, it---surprisingly---turns out that computing the lower expectation with respect to $\wprocesses_{\rateset,\,\mathcal{M}}$ is easier than for $\wmprocesses_{\rateset,\,\mathcal{M}}$. We will show in this section how to do this for the former set, as well as provide a counter example for the latter.
 
 We have seen in the previous sections that we can use the operator $L_t^s$ to compute lower expectations of functions $f\in\gamblesX$ and $f\in\gambles(\states_{u\cup s})$, whenever $\rateset$ is non-empty, bounded, and has separately specified rows. We here show that if $\rateset$ is additionally convex, then we can do the same for functions $f\in\gambles(\states_{u\cup v})$.
 
@@ -2974,7 +2972,7 @@ Observe, therefore, that we can use our lower transition operator to compute low
 
 If $\rateset$ is furthermore closed, then by Proposition~\ref{prop:dominating_unique_characterization}, we have that $\rateset=\rateset_{\lrate}$. In that case, the lower expectation is taken with respect to $\wprocesses_\rateset=\wprocesses_{\rateset_{\lrate}}$ which, by Theorem~\ref{theo:dominating_rate_processes_max_set}, is exactly the largest set of stochastic processes for which our lower transition operator computes the lower expectation.
 
-The difference between $\wprocesses_{\text{int}(\rateset_{\lrate})}$ and $\wprocesses_{\rateset_{\lrate}}$ is that the lower expectation of the latter set is actually a minimum---rather than an infimum---because, due to repeated applications of Corollary~\ref{cor:inf_works_for_single_future_var}, Proposition~\ref{prop:lower_expectation_reached_if_Q_closed} and Theorem~\ref{theo:aanelkaarplakken}, the left-hand side of Equation~\eqref{eq:composition_lower_trans} is always reached by some $P\in\wprocesses_{\rateset_{\lrate}}$.
+The difference between $\wprocesses_{\text{int}(\rateset_{\lrate})}$ and $\wprocesses_{\rateset_{\lrate}}$ is that the lower expectation of the latter set is actually a minimum---rather than an infimum---because, as mentioned in Section~\ref{subsec:ictmc_types}, this lower expectation is always reached by some $P\in\wprocesses_{\rateset_{\lrate}}$ since $\rateset_{\lrate}$ is non-empty, bounded, closed and convex.
 
 
 *** blabla
