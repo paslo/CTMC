@@ -3229,7 +3229,7 @@ Finally, previous work only focused on functions $f\in\gamblesX$ defined at a si
 
 ***
 
-Recall from Section~\ref{sec:tractability} that the computation of lower expectations of functions defined on multiple time points has a runtime complexity that is exponential in the number of these time points. However, this exponential runtime holds for Algorithm~\ref{alg:compute_multivar}, which works for \emph{arbitrary} functions $f\in\gambles(\states_{u\cup v})$. That is, it does not assume any structure of the function. In contrast, in many practical applications there will be some underlying structure of the functions that we are interested in. For instance, there may be functions $g_i\in\gambles(\states_{s_i})$, $i\in\{0,\ldots,m\}$, such that $f\in\gambles(\states_v)$ is of the form $f(x_v) = \sum_{i=0}^m g_i(x_{s_i})$. It follows from {\bf JASPER'S PROEFSCHRIFT} that functions of this form can be computed in a runtime complexity that is \emph{linear} in the number of time points. We will aim in future work to **** blabla, dat doen we daar wel.
+Recall from Section ALGS that the computation of lower expectations of functions defined on multiple time points has a runtime complexity that is exponential in the number of these time points. However, this exponential runtime holds for Algorithm~\ref{alg:compute_multivar}, which works for \emph{arbitrary} functions $f\in\gambles(\states_{u\cup v})$. That is, it does not assume any structure of the function. In contrast, in many practical applications there will be some underlying structure of the functions that we are interested in. For instance, there may be functions $g_i\in\gambles(\states_{s_i})$, $i\in\{0,\ldots,m\}$, such that $f\in\gambles(\states_v)$ is of the form $f(x_v) = \sum_{i=0}^m g_i(x_{s_i})$. It follows from {\bf JASPER'S PROEFSCHRIFT} that functions of this form can be computed in a runtime complexity that is \emph{linear} in the number of time points. We will aim in future work to **** blabla, dat doen we daar wel.
 
 *** mogelijk nog opmerking over dat dit Hidden-ICTMCs mogelijk maakt omdat GBR in subklasse van berekenbare functies zit
 
@@ -5294,7 +5294,7 @@ L_t^s=\lim_{i\to\infty}\Phi_{u_i}=\lim_{i\to\infty}\Phi_{u_i^*}=L_{t+\Delta}^{s+
 where the first and last equality follow from Theorem~\ref{theo:convergencelowerbound}.
 \end{proof}
 
-The following lemma provides a bound on how well the operator $L_t^{t+\Delta}$ can be approximated using the much simpler operator $(I+\Delta\lrate)$. Note that this lemma states the general version of Lemma~\ref{lemma:linearpartofexponential}, which until this point has remained unproven. To see that the result below implies Lemma~\ref{lemma:linearpartofexponential}, simply recall our from Section~\ref{subsec:lowertrans_rate} that any rate matrix $Q$ is also a lower transition rate operator. Since it follows from our comments in Section~\ref{sec:properties_lower_trans} that the lower transition operator $L_t^{t+\Delta}$ corresponding to such a $\lrate=Q$ satisfies $L_t^{t+\Delta}=e^{Q\Delta}$, Lemma~\ref{lemma:linearpartofexponential} now follows from the following result.
+The following lemma provides a bound on how well the operator $L_t^{t+\Delta}$ can be approximated using the much simpler operator $(I+\Delta\lrate)$. Note that this lemma states the general version of Lemma~\ref{lemma:linearpartofexponential}, which until this point has remained unproven. To see that the result below implies Lemma~\ref{lemma:linearpartofexponential}, simply recall from Section~\ref{sec:connections_rate} that any rate matrix $Q$ is also a lower transition rate operator. Since it follows from our comments in Section~\ref{sec:properties_lower_trans} that the lower transition operator $L_t^{t+\Delta}$ corresponding to such a $\lrate=Q$ satisfies $L_t^{t+\Delta}=e^{Q\Delta}$, Lemma~\ref{lemma:linearpartofexponential} now follows from the following result.
 
 \begin{lemma}\label{lemma:quadraticboundonL}
 Let $\lrate$ be a lower transition rate operator. Then for any $t,\Delta\in\realsnonneg$:
@@ -5316,7 +5316,7 @@ Fix any $\epsilon>0$. Because of Definition~\ref{def:low_trans}, there is some $
 Since $\epsilon>0$ is arbitrary, the result is now immediate.
 \end{proof}
 
-The final lemma of this section states how well we can approximate the operator $L_t^{t+\Delta}$ using the identity matrix $I$. Put differently, since it follows from Proposition~\ref{prop:lower_trans_system_is_system} that $L_t^t=I$, this tells us how quickly $L_t^{t+\Delta}$ changes as we increase $\Delta$. This result is a generalised version of Lemma~\ref{lemma:linearpartofexponential}, which has so far remained unproven. The reason why Lemma~\ref{lemma:linearpartofexponential} is a special case is again because for $\lrate=Q$, we have that $L_t^{t+\Delta}=e^{Q\Delta}$.
+The final lemma of this section states how well we can approximate the operator $L_t^{t+\Delta}$ using the identity matrix $I$. Put differently, since it follows from Proposition~\ref{prop:lower_trans_system_is_system} that $L_t^t=I$, this tells us how quickly $L_t^{t+\Delta}$ changes as we increase $\Delta$. This result is a generalised version of Lemma~\ref{lemma:linearboundonexponential}, which has so far remained unproven. The reason why Lemma~\ref{lemma:linearboundonexponential} is a special case is again because for $\lrate=Q$, we have that $L_t^{t+\Delta}=e^{Q\Delta}$.
 
 \begin{lemma}\label{lemma:linearboundonL}
 Let $\lrate$ be a lower transition rate operator. Then for any $t,\Delta\in\realsnonneg$:
@@ -5514,7 +5514,11 @@ where the first equality follows from Proposition~\ref{prop:lower_transition_is_
 
 \section{Proofs and Lemmas for Section~\ref{sec:connections}}
 
-**** THE NEXT TWO LEMMAS STILL NEED SOME INTRO. ALSO NOT SURE IF THIS LOCATION IS OPTIMAL, STILL NEED TO CHECK
+Before giving the proof of Proposition~\ref{theorem:nonmarkov_single_var_lower_bounded}, we first prove some crucial steps of the proof separately in the lemmas below.
+
+First of all, recall from Proposition~\ref{prop:outerderivativebehaveslikelimit} that, for any $\epsilon\in\realspos$ and over a small enough time step $\Delta$, the transition matrix $T_{t,x_u}^{t+\Delta}$ of any stochastic process $P\in\wprocesses_{\rateset,\mathcal{M}}$ can be approximated by $(I+\Delta Q)$ with an error of at most $\Delta \epsilon$, using some rate matrix $Q\in\overline{\partial}T_{t,x_u}^t\subseteq \mathcal{Q}$. The following lemma states that, for any time interval $[t,s]$, there exists a finite partition $u\in\mathcal{U}_{[t,s]}$, $u=t_0,\ldots,t_n$, such that the transition matrices $T_{t_i,x_u}^{t_{i+1}}$ can all be similarly approximated by $(I+\Delta_iQ_i)$, for some $Q_i\in\rateset$ and with $\Delta_i=t_{i+1}-t_i$. 
+
+The reason that this result is not entirely straightforward is the ``small enough'' requirement to approximate $T_{t,x_u}^{t+\Delta}$; this only works for $\Delta<\delta_t$, for some $\delta_t\in\realspos$ that is specific to the time $t$. Because we are now looking at multiple time points simultaneously, we need a guarantee that these $\delta_t$ do not vanish as we change $t$---this is what the following lemma essentially establishes.
 
 \begin{lemma}\label{lemma:bound_on_linear_approx_partition}
 Consider any $P\in\wprocesses_{\rateset,\,\mathcal{M}}$, any $0\leq t<s$, any $u\in\mathcal{U}_{<t}$ and any $x_u\in\states_u$. Then for all $\epsilon>0$ and $\delta>0$, there is some $v\in\mathcal{U}_{[t,s]}$ such that $\sigma(v)<\delta$ and, for all $i\in\{0,\dots,n-1\}$:
@@ -5727,22 +5731,9 @@ Hence, we conclude that Equation~\eqref{eq:opencoverproofresult} holds for all $
 % \end{proof}
 
 
-
-
-
-Recall from the definition of the lower envelope $\lrate$ of a given set $\rateset$ of rate matrices, that $\lrate f$ is the greatest element of $\gamblesX$ that satisfies $\lrate f\leq Qf$ for all $Q\in\rateset$. Therefore, for all $x\in\states$ and all $\epsilon>0$, there is some $Q\in\rateset$ such that $[Qf](x)<[\lrate f](x)+\epsilon$. In other words, $[\lrate f](x)$ can be approximated arbitrarily closely using the elements of $\rateset$. The following lemma establishes that the \emph{entire} function $\lrate f$ can be approximated arbitrarily closely whenever $\rateset$ has separately specified rows.
-
-\begin{lemma}\label{lemma:rateset_has_arginf}
-Let $\rateset$ be an arbitrary non-empty bounded set of rate matrices that has separately specified rows, with corresponding lower transition rate operator $\lrate$. Then for all $f\in\gamblesX$ and $\epsilon\in\realspos$, there exists a $Q\in\rateset$ such that
-\begin{equation*}
-\norm{\lrate f - Qf} < \epsilon\,.
-\end{equation*}
-\end{lemma}
-\begin{proof}
-This is immediate from the definition of the lower envelope of $\rateset$, as given by Equation~\eqref{eq:correspondinglowertrans}, and the fact that $\rateset$ has separately specified rows.
-\end{proof}
-
 The following lemma provides a useful decomposition property for expectations $\mathbb{E}_P$ corresponding to (non-)Markov processes $P\in\wprocesses$, expressed in terms of transition matrices $T_{t,x_u}^s$ (using Remark~\ref{remark:expectationT}). We will use this result in the proof of Proposition~\ref{theorem:nonmarkov_single_var_lower_bounded}.
+
+Roughly speaking, this result establishes that the transition matrix $T_{t,x_u}^s$ of any well-behaved stochastic process $P\in\wprocesses$ can be decomposed into a number of other transition matrices corresponding to this $P$, such that---crucially---these other transition matrices do not depend on the exact way that the decomposition was performed, despite $P$ not necessarily being a Markov process.
 
 \begin{lemma}\label{lemma:weirddecomposition}
 Consider any $P\in\wprocesses$, any $t,s\in\realsnonneg$ such that $t<s$, any $u\in\mathcal{U}_{<t}$ and $x_u\in\states_u$ and any sequence $t=t_0<t_1<\cdots<t_n=s$, with $n\in\nats$.
@@ -5777,7 +5768,7 @@ T_{t_1,\,x_{u\cup\{t\}}}^{t_{2}}
 using the induction hypothesis for the first equality.
 \end{proof}
 
-Due to the definition of the lower transition rate operator $\lrate$ corresponding to a given $\rateset$, it holds for all $\Delta\in\realsnonneg$, all $Q\in\rateset$, and all $f\in\gamblesX$ that $(I+\Delta Q)f \geq (I+\Delta\lrate)f$. The following lemma, which we will use in the proof of Proposition~\ref{theorem:nonmarkov_single_var_lower_bounded}, establishes that this inequality extends to compositions of such operators $(I+\Delta Q)$ and $(I+\Delta\lrate)$.
+The final result that we require has to do with the connection between $\rateset$ and $\lrate$. Due to the definition of the lower transition rate operator $\lrate$ corresponding to a given $\rateset$, it holds for all $\Delta\in\realsnonneg$, all $Q\in\rateset$, and all $f\in\gamblesX$ that $(I+\Delta Q)f \geq (I+\Delta\lrate)f$. The following lemma establishes that this inequality extends to compositions of such operators $(I+\Delta Q)$ and $(I+\Delta\lrate)$.
 
 \begin{lemma}\label{lemma:productofQsdominatesproductoflrates}
 Consider a non-empty bounded set $\rateset$ of rate matrices and let $\lrate$ be the corresponding lower transition rate operator. Fix any $n\in\nats$ and, for all $i\in\{1,\dots,n\}$, consider some $\Delta_i\geq0$ and $Q_i\in\rateset$. Then for any $f\in\gamblesX$:
@@ -6002,6 +5993,17 @@ Since $\epsilon>0$ was arbitrary, this allows us to infer that $[L_{t}^s f](x_t)
 %Because the $\epsilon\in\realspos$ was arbitrary, this concludes the proof.
 %\end{proof}
 
+The following lemma is required for the proof of Proposition~\ref{theorem:lower_markov_bound_is_tight}. Recall from the definition of the lower envelope $\lrate$ of a given set $\rateset$ of rate matrices, that $\lrate f$ is the greatest element of $\gamblesX$ that satisfies $\lrate f\leq Qf$ for all $Q\in\rateset$. Therefore, for all $x\in\states$ and all $\epsilon>0$, there is some $Q\in\rateset$ such that $[Qf](x)<[\lrate f](x)+\epsilon$. In other words, $[\lrate f](x)$ can be approximated arbitrarily closely using the elements of $\rateset$. The following lemma establishes that the \emph{entire} function $\lrate f$ can be approximated arbitrarily closely whenever $\rateset$ has separately specified rows.
+
+\begin{lemma}\label{lemma:rateset_has_arginf}
+Let $\rateset$ be an arbitrary non-empty bounded set of rate matrices that has separately specified rows, with corresponding lower transition rate operator $\lrate$. Then for all $f\in\gamblesX$ and $\epsilon\in\realspos$, there exists a $Q\in\rateset$ such that
+\begin{equation*}
+\norm{\lrate f - Qf} < \epsilon\,.
+\end{equation*}
+\end{lemma}
+\begin{proof}
+This is immediate from the definition of the lower envelope of $\rateset$, as given by Equation~\eqref{eq:correspondinglowertrans}, and the fact that $\rateset$ has separately specified rows.
+\end{proof}
 
 \begin{proof}[Proof of Proposition~\ref{theorem:lower_markov_bound_is_tight}]
 Fix any $t,s\in\realsnonneg$ such that $t\leq s$, any $f\in\gamblesX$ and any $\epsilon\in\realspos$. If $t=s$, the result is trivial. Hence, without loss of generality, we may assume that $t<s$. Let $C\coloneqq (s-t)$, choose any $\epsilon^*>0$ such that $\epsilon^*C<\epsilon$, choose any $\epsilon_1,\epsilon_2,\epsilon_3>0$ such that $\epsilon_1+\epsilon_2+\epsilon_3<\epsilon^*$, choose any $\delta>0$ such that $\delta\norm{\rateset}^2\norm{f}<\epsilon_3$ and $\smash{\delta\norm{\lrate}^2\norm{f}<\epsilon_1}$ (this is always possible because of~\ref{LR:normlratefinite}), and consider any $u\in\mathcal{U}_{[t,s]}$ such that $\sigma(u)<\delta$, with $u=t_0,\ldots,t_n$ and $n\in\nats$. 
