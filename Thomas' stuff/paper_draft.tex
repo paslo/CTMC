@@ -3194,7 +3194,7 @@ and, if instead $\mathcal{M}$ is a singleton set $\mathcal{M}=\{p\}$, then
 
 \section{Relation to Previous Work}\label{sec:prev_work}
 
-**** other related work: Markov Decision Processes, controlled Markov processes, differential inclusions, ....
+%**** other related work: Markov Decision Processes, controlled Markov processes, differential inclusions, ....
 
 To the best of our knowledge, the concept of imprecise continuous-time Markov chains was first introduced in the literature by the work of {\v{S}}kulj~\cite{Skulj:2015cq}. There, the idea was used to define $\lrate$ as a lower envelope of a set of rate matrices $\rateset$ that has separately specified rows. It was shown that then, for a given $f\in\gamblesX$, the differential equation
 \begin{align}\label{eq:damjans_diff}
@@ -3209,13 +3209,25 @@ has a unique solution, and that this solution satisfies
 \end{equation}
 Our work extends these results in several ways. First, as shown by Proposition~\ref{prop:lower_transition_has_deriv}, the differential equation~\eqref{eq:damjans_diff} has a uniform solution, i.e. one that is independent of $f$, and this solution is given by the operator $L_0^s$ corresponding to $\lrate$. Second, Corollary~\ref{cor:lower_operator_is_infimum} confirms Equation~\eqref{eq:damjans_lower}, but furthermore shows that the solution $\underline{f}_{\,s}$ also corresponds to the lower expectation with respect to a set of non-Markov processes.
 
-This earlier work also contains several results that are useful to us. In particular, {\v{S}}kulj discusses several practical techniques to numerically compute, or approximate to arbitrary precision, the quantity $\underline{f}_{\,s}$ for a given $f\in\gamblesX$. Hence, because of the correspondence between $\underline{f}_{\,s}$ and $L_0^sf$, these results can be applied when numerically working with our lower transition operator.
+Our present work adds to these earlier results in several more ways. In~\cite{Skulj:2015cq}, the arguments were cast purely in terms of lower envelopes of expectation functionals; but side-stepped the question of which sets of processes these lower envelopes correspond to. In contrast, our work in Section~\ref{sec:iCTMC} makes explicit the sets of processes that we are dealing with, and Theorem~\ref{theo:dominating_rate_processes_max_set} exactly characterizes the largest set of processes for which our lower transition operator---and indeed the differential equation~\eqref{eq:damjans_diff}---computes a lower envelope.
 
-**** our proof in Section~\ref{sec:lowertrans} shows that we can numerically approximate to arbitrary precision using a fine enough partition of the intervals *** (Lemma~\ref{lemma:limitboundonL} and Proposition~\ref{prop:approximation_error_bound} make this precision specific) (we should mention that this bound is better than the one that is provided by Damjan! For example, for the numerical example at the end of Section 4.1 in his paper, he finds that $N$ should be more than $6000$, whereas our bound only needs $N=100$) Also, using his bound for our Example~\ref{exmp:single_time_numerical}, he requires $N$ to be more than $2.2\times 10^9$, whereas we need $1.6\times 10^4$.
+Furthermore, this previous work only focused on functions $f\in\gamblesX$ defined at a single point in time. In contrast, our work in Section~\ref{sec:funcs_multi_time_points} extends these results to functions $f\in\gambles(\states_{u\cup v})$ defined at an arbitrary number of time points. We there also showed that it was, in fact, crucial to be aware of the exact set of processes with respect to which one is taking the lower expectation, because this influences whether or not this lower expectation can be computed using the operator $L_t^s$.
 
-Our present work furthermore adds to the literature in several ways. In~\cite{Skulj:2015cq}, the arguments were cast purely in terms of lower envelopes of expectation functionals; but side-stepped the question of which sets of processes these envelopes correspond to. In contrast, our work in Section~\ref{sec:iCTMC} makes explicit the sets of processes that we are dealing with, and Theorem~\ref{theo:dominating_rate_processes_max_set} exactly characterizes the largest set of processes for which our lower transition operator---and indeed the differential equation~\eqref{eq:damjans_diff}---computes a lower envelope.
+Finally, this earlier work provided two different algorithms to numerically compute the solution of the differential equation~\eqref{eq:damjans_diff}. The first algorithm presented therein works similarly to our Algorithm~\ref{alg:compute_singlevar}, in that it computes a uniform partition $u=t_0,t_1,\ldots,t_n$ of the time interval $[0,s]$, so that at each step $t_i$, one only has to solve a relatively straightforward linear optimization problem. However, it turns out that our Algorithm~\ref{alg:compute_singlevar} is much more efficient, because the number of steps $n$ that we require in this partition is much smaller. 
 
-Finally, previous work only focused on functions $f\in\gamblesX$ defined at a single point in time. In contrast, our work in Section~\ref{sec:funcs_multi_time_points} extends these results to functions $f\in\gambles(\states^{u\cup v})$ defined at an arbitrary number of time points. We there also found that it was, in fact, crucial to be aware of the exact set of processes with respect to which one is taking the lower expectation.
+For instance, for the numerical example presented at the end of~\cite[Section 4.1]{Skulj:2015cq}, {\v{S}}kulj finds that this partition requires at least $n=6000$ steps. In contrast, due to Proposition~\ref{prop:approximation_error_bound}, Algorithm~\ref{alg:compute_singlevar} requires only $n=100$ steps for that particular example. Similarly, in our Example~\ref{exmp:single_time_numerical} we found that we required $n=1.6\times 10^{4}$ steps. Applying the algorithm from~\cite{Skulj:2015cq}, by comparison, requires that $n\approx 2.2\times 10^9$.
+
+These observations may go some way in explaining a comment made by the authors of Reference~\cite{troffaes2015using}, in which they applied this algorithm from Reference~\cite{Skulj:2015cq} in a practical application. In particular, they observed that the number of steps required to obtain good results, was much lower than was expected from the theoretical bound used to derive their algorithm.
+
+*** nog een opmerking over zijn tweede algorithme, en dat het wat moeilijker bruikbaar is en zn eerste gebruikt.
+
+*** bruggetje naar convergentie paper, daar wat opmerkingen over
+
+%This earlier work also contains several results that are useful to us. In particular, {\v{S}}kulj discusses several practical techniques to numerically compute, or approximate to arbitrary precision, the quantity $\underline{f}_{\,s}$ for a given $f\in\gamblesX$. Hence, because of the correspondence between $\underline{f}_{\,s}$ and $L_0^sf$, these results can be applied when numerically working with our lower transition operator.
+
+%**** our proof in Section~\ref{sec:lowertrans} shows that we can numerically approximate to arbitrary precision using a fine enough partition of the intervals *** (Lemma~\ref{lemma:limitboundonL} and Proposition~\ref{prop:approximation_error_bound} make this precision specific) (we should mention that this bound is better than the one that is provided by Damjan! For example, for the numerical example at the end of Section 4.1 in his paper, he finds that $N$ should be more than $6000$, whereas our bound only needs $N=100$) Also, using his bound for our Example~\ref{exmp:single_time_numerical}, he requires $N$ to be more than $2.2\times 10^9$, whereas we need $1.6\times 10^4$.
+
+
 
 \section{Conclusions \& Future Work}\label{sec:conclusions}
 
