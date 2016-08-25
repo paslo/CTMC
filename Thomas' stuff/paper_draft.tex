@@ -1912,31 +1912,39 @@ In the remainder of this paper, we will focus on sets of processes that are join
 %*** dit leidt dan voor een gegeven $\rateset$ naar het idee om naar de verzameling van alle $P\in\processes$ te kijken die consistent zijn met $\rateset$. Voor notationeel gemak en generiekheid kijken we echter liever naar de subset van een gegeven $\mathcal{P}\subseteq\processes$ die consistent is met $\rateset$:
 
 \begin{definition}[Consistent subset of processes]\label{def:consistent_process_set}
-Consider a non-empty bounded set of rate matrices $\rateset$ and a non-empty set $\mathcal{M}$ of probability mass functions on $\states$ and a set of stochastic processes $\mathcal{P}\subseteq\processes$. Then, the \emph{subset of $\mathcal{P}$ consistent with} $\rateset$ \emph{and} $\mathcal{M}$ is denoted $\mathcal{P}_{\rateset,\mathcal{M}}$, and defined as
+Consider a non-empty bounded set of rate matrices $\rateset$ and a non-empty set $\mathcal{M}$ of probability mass functions on $\states$ and a set of stochastic processes $\mathcal{P}\subseteq\processes$. Then, the \emph{subset of $\mathcal{P}$ consistent with} $\rateset$ \emph{and} $\mathcal{M}$ is denoted by $\mathcal{P}_{\rateset,\mathcal{M}}$, and defined as
 \begin{equation*}
 \mathcal{P}_{\rateset,\mathcal{M}} \coloneqq \left\{P\in\mathcal{P}\,:\,P\sim\rateset,\,P\sim\mathcal{M}\right\}\,.
 \end{equation*}
 When $\mathcal{M}$ is the set of \emph{all} probability mass functions on $\states$, we will write $\mathcal{P}_{\rateset}$ for the sake of brevity.
 \end{definition}
-Such a set $\mathcal{P}_{\rateset,\mathcal{M}}$ will also be called an \emph{imprecise continuous-time Markov chain} (\ictmc). We will next focus on some specific cases.
+For some fixed $\mathcal{Q}$ and $\mathcal{M}$, different choices for $\mathcal{P}$ will result in different sets of consistent processes $\mathcal{P}_{\rateset,\mathcal{M}}$. Three specific choices of $\mathcal{P}$ will be particularly important in this paper because, as we will now show, they lead to three different types of imprecise continuous-time Markov chains.
 
-The usefulness of this notational convention will be made clear momentarily.
+%Such a set $\mathcal{P}_{\rateset,\mathcal{M}}$ will also be called an \emph{imprecise continuous-time Markov chain} (\ictmc). We will next focus on some specific cases.
+
+%The usefulness of this notational convention will be made clear momentarily.
 
 \subsection{Types of Imprecise Continuous-Time Markov Chains}\label{subsec:types_ictmc}
 
-In Sections~\ref{sec:stochastic_processes} and~\ref{sec:cont_time_markov_chains}, we introduced the sets $\wprocesses, \wmprocesses,$ and $\whmprocesses$ of well-behaved stochastic processes with different qualitative properties. In particular, $\wprocesses$ is the set of \emph{all} well-behaved stochastic processes. $\wmprocesses$ is a subset of $\wprocesses$, the elements of which satisfy the Markov property. $\whmprocesses$ is the set of time-homogeneous Markov chains, which is therefore a subset of $\wmprocesses$. We will use the notational convention from Definition~\ref{def:consistent_process_set} to focus on \ictmc's which also have these different qualitative properties, as follows.
+In Sections~\ref{sec:stochastic_processes} and~\ref{sec:cont_time_markov_chains}, we introduced three sets $\wprocesses$, $\wmprocesses$ and $\whmprocesses$ of well-behaved stochastic processes with different qualitative properties. $\wprocesses$ is the set of all well-behaved stochastic processes, $\wmprocesses$ consists of the processes in $\wprocesses$ that are continuous-time Markov chains, and $\whmprocesses$ is the set of all time-homogeneous Markov chains that are well-behaved, which is therefore a subset of $\wmprocesses$. We now use Definition~\ref{def:consistent_process_set} to define three sets of consistent process that also have these respective qualitative properties. 
 
-\begin{definition}\label{def:process_sets}
-For any non-empty bounded set of rate matrices $\rateset$, and any non-empty set $\mathcal{M}$ of probability mass functions on $\states$, we define the following sets of stochastic processes that are jointly consistent with $\rateset$ and $\mathcal{M}$:
+\begin{definition}[Imprecise continuous-time Markov chain]\label{def:process_sets}
+For any non-empty bounded set of rate matrices $\rateset$, and any non-empty set $\mathcal{M}$ of probability mass functions on $\states$, we define the following three sets of stochastic processes that are jointly consistent with $\rateset$ and $\mathcal{M}$:
 \begin{itemize}
-\item $\wprocesses_{\rateset,\mathcal{M}}\subset\wprocesses$ is the consistent set of all well-behaved stochastic processes;
-\item $\wmprocesses_{\rateset,\mathcal{M}}\subset\wmprocesses$ is the consistent set of all well-behaved Markov chains;
-\item $\whmprocesses_{\rateset,\mathcal{M}}\subset\whmprocesses$ is the consistent set of all well-behaved homogeneous Markov chains.
+\item $\wprocesses_{\rateset,\mathcal{M}}$ is the consistent set of all well-behaved stochastic processes;
+\item $\wmprocesses_{\rateset,\mathcal{M}}$ is the consistent set of all well-behaved Markov chains;
+\item $\whmprocesses_{\rateset,\mathcal{M}}$ is the consistent set of all well-behaved homogeneous Markov chains.
 \end{itemize}
-Following Definition~\ref{def:consistent_process_set}, we will write $\wprocesses_{\rateset}$ when we take $\mathcal{M}$ to be the set of \emph{all} probability mass functions on $\states$ (and similarly for these other sets). 
+We call each of these three sets 
+ an \emph{imprecise continuous-time Markov chain}, and abbreviate this as \ictmc. 
+Following Definition~\ref{def:consistent_process_set}, we will write $\wprocesses_{\rateset}$ when we take $\mathcal{M}$ to be the set of \emph{all} probability mass functions on $\states$, and similarly for $\wmprocesses_{\rateset}$ and $\whmprocesses_{\rateset}$.
 \end{definition}
 
-Because the sets $\wprocesses, \wmprocesses,$ and $\whmprocesses$ are subsets of each other, it should be clear that this also holds for the different types of \ictmc's introduced above.
+%If $\mathcal{Q}=\{Q\}$ and $\mathcal{M}=\{p\}$, then these three sets $\whmprocesses$, $\wmprocesses$ and $\wprocesses$ are identical, and contain only a single well-behaved stochastic process, which is the unique homogeneous Markov chain that has $Q$ as its transition rate matrix and $p$ as its initial distribution. Therefore, each of these sets can be regarded as a generalised 
+%We call each of these three sets $\whmprocesses$, $\wmprocesses$ and $\wprocesses$
+ %an \emph{imprecise continuous-time Markov chain}, and abbreviate this as \ictmc.
+ Since the sets $\whmprocesses$, $\wmprocesses$ and $\wprocesses$
+ are nested, it should be clear that this also true for the corresponding types of \ictmc's.
 
 \begin{proposition}\label{prop:markov_set_subset_of_nonmarkov_set}
 Consider any bounded set of rate matrices $\rateset$, and any non-empty set $\mathcal{M}$ of probability mass functions on $\states$. Then,
@@ -1944,9 +1952,7 @@ Consider any bounded set of rate matrices $\rateset$, and any non-empty set $\ma
 \whmprocesses_{\rateset,\mathcal{M}} \subseteq \wmprocesses_{\rateset,\mathcal{M}} \subseteq \wprocesses_{\rateset,\mathcal{M}}\,.
 \end{equation*}
 \end{proposition}
-\begin{proof}
-*** still need to check this *** This is immediate from Definition~\ref{def:process_sets} and the fact that $\whmprocesses\subset\wmprocesses\subset\wprocesses$.
-\end{proof}
+
 
 %However, we will in the sequel focus almost exclusively on sets of processes consistent only with a given set $\rateset$, and \emph{conditional} lower expectations with respect to those sets. Restrictions to specific sets $\mathcal{M}$ of initial distributions are then revisited in Section~{\bf REF}, where we will show how to compute (conditional) lower expectations when we do take into consideration such sets $\mathcal{M}$. In particular, we will there show that conditional lower expectations are invariant to the choice of $\mathcal{M}$, so that all our results up to that point remain valid for any choice of $\mathcal{M}$. Furthermore, we will show how to use these earlier results to compute \emph{unconditional} lower expectations, for which the choice of $\mathcal{M}$ does matter.
 
@@ -1972,17 +1978,18 @@ Consider any bounded set of rate matrices $\rateset$, and any non-empty set $\ma
 %\begin{proof}
 %*** {\bf TODO}, but trivial.
 %\end{proof}
-Observe furthermore that the qualitative differences between these sets simplify the notion of consistency from Definition~\ref{def:consistent_process}. In particular, it holds that
+Observe furthermore that for $\whmprocesses_{\rateset,\mathcal{M}}$ and $\wmprocesses_{\rateset,\mathcal{M}}$, the extra properties of their elements allow us to simplify the notion of consistency in Definition~\ref{def:consistent_process}, which leads to the following alternative characterisations:
 \begin{equation*}
-\wmprocesses_{\rateset,\mathcal{M}} = \left\{P\in\wmprocesses\,:\,(\forall t\in\realsnonneg)~~ \smash{\overline{\partial}}T_t^t\subseteq\rateset,\,P(X_0)\in\mathcal{M}\right\}\,,
+\wmprocesses_{\rateset,\mathcal{M}} = \left\{P\in\wmprocesses\,:\,(\forall t\in\realsnonneg)~~ \smash{\overline{\partial}}T_t^t\subseteq\rateset,\,P(X_0)\in\mathcal{M}\right\},
 \end{equation*}
 and
 \begin{equation*}
-\whmprocesses_{\rateset,\mathcal{M}} = \left\{P\in\whmprocesses\,:\,Q_P\in\rateset,\,P(X_0)\in\mathcal{M}\right\}\,.
+\whmprocesses_{\rateset,\mathcal{M}} = \left\{P\in\whmprocesses\,:\,Q_P\in\rateset,\,P(X_0)\in\mathcal{M}\right\}.
 \end{equation*}
-This first equality follows from the Markov property of the elements of $\wmprocesses$, ensuring that $\smash{\overline{\partial}}T_{t,x_u}^t=\smash{\overline{\partial}}T_t^t$ for all $u\in\mathcal{U}_{<t}$ and all $x_u\in\states_u$. The second equality follows from the Markov property and the homogeneity of the elements $P\in\whmprocesses$, which, by Proposition~\ref{prop:Q_is_singleton_deriv_for_homogen}, ensures that $\smash{\overline{\partial}}T_t^t=\{Q_P\}$ for all $t\in\realsnonneg$.
+This first equality follows from the Markov property of the elements of $\wmprocesses$, which ensures that $\smash{\overline{\partial}}T_{t,x_u}^t=\smash{\overline{\partial}}T_t^t$. % for all $u\in\mathcal{U}_{<t}$ and all $x_u\in\states_u$. 
+The second equality follows from the Markov property and the homogeneity of the processes $\smash{P\in\whmprocesses}$, which, by Proposition~\ref{prop:Q_is_singleton_deriv_for_homogen}, ensures that $\smash{\overline{\partial}}T_t^t=\{Q_P\}$ for all $t\in\realsnonneg$.
 
-The following example further illustrates the difference between these different types of \ictmc's.
+The following example further illustrates the difference between the three types of \ictmc's that we consider.
 
 \begin{exmp}\label{example:rateset_not_singleton}
 Let $Q_1,Q_2\in\mathcal{R}$ be two rate matrices such that $Q_1\neq Q_2$, and consider the set $\rateset\coloneqq \{Q_1, Q_2\}$. Let furthermore $\mathcal{M}\coloneqq\{p\}$, with $p$ an arbitrary probability mass function on $\states$.
@@ -4232,6 +4239,9 @@ The result about the partial derivatives is an immediate consequence of Lemma~\r
 
 
 \section{Proofs and Lemmas for Section~\ref{sec:iCTMC}}
+
+\begin{proof}[Proof of Proposition~\ref{prop:markov_set_subset_of_nonmarkov_set}]This is immediate from Definitions~\ref{def:consistent_process_set} and~\ref{def:process_sets} and the fact that $\whmprocesses\subseteq\wmprocesses\subseteq\wprocesses$.
+\end{proof}
 
 \begin{proof}[Proof of Proposition~\ref{prop:nonhomogeneous_in_process_set}]
 **** NOW NEEDS FIRST PART
