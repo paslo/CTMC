@@ -4278,7 +4278,7 @@ The only remaining case is when $t=t_i\neq0$ for some $i\in\{0,\ldots,n\}$. In t
 
 
 \begin{proof}[Proof of Theorem~\ref{theo:aanelkaarplakken}]
-The proof works as follows. First, we will show that there exists a stochastic process $P$ that satisfies Equations~\eqref{eq:theo:aanelkaarplakken:equalsfirst} and~\eqref{eq:theo:aanelkaarplakken:equalssecond}, by constructing it as the extension of a coherent conditional probability on a set of events $\mathcal{C}\subset\mathcal{C}^\mathrm{SP}$. The proof is then finished by showing that $P\in\wprocesses_{\rateset,\,\mathcal{M}}$, as desired.
+This proof is rather lengthy, and consists of two parts. First, we will show that there exists a stochastic process $P$ that satisfies Equations~\eqref{eq:theo:aanelkaarplakken:equalsfirst} and~\eqref{eq:theo:aanelkaarplakken:equalssecond}, by constructing it as the extension of a coherent conditional probability on a set of events $\mathcal{C}\subset\mathcal{C}^\mathrm{SP}$. Next, we will finish the proof by showing that $P\in\wprocesses_{\rateset,\,\mathcal{M}}$, as desired.
 
 Let $\mathcal{C}\coloneqq\mathcal{C}_\emptyset\cup(\bigcup_{x_u\in\states_u}\mathcal{C}_{x_u})$, with
 \begin{multline}\label{eq:theo:aanelkaarplakken:firstpartofdomain}
@@ -4319,7 +4319,7 @@ We first prove that $\tilde{P}$ is a coherent conditional probability on $\mathc
 \end{equation}
 with $C_0\coloneqq\cup_{i=1}^nC_i$.
 
-Let $S^*\coloneqq\left\{i\in\{1,\dots,n\}\colon(A_i,C_i)\in\mathcal{C}_\emptyset\right\}$. We first consider the case $S^*\neq\emptyset$. Then since $P_\emptyset$ is a stochastic process, it follows from Corollary~\ref{corol:processiffcoherent} and Equation~\eqref{eq:theo:aanelkaarplakken:defPtilde} that
+Let $S^*\coloneqq\left\{i\in\{1,\dots,n\}\colon(A_i,C_i)\in\mathcal{C}_\emptyset\right\}$. We first consider the case $S^*\neq\emptyset$. Then since $P_\emptyset$ is a stochastic process, it follows from Equation~\eqref{eq:theo:aanelkaarplakken:defPtilde} and Definitions~\ref{def:stoch_process} and~\ref{def:coherence} that
 \begin{equation*}%\label{eq:theo:aanelkaarplakken:cohfirstpart}
 \max\left\{\sum_{i\in S^*}\lambda_i\ind{C_i}(\omega)\bigl(\tilde{P}(A_i\vert C_i)-\ind{A_i}(\omega)\bigr)~\Bigg\vert~\omega\in C^*\right\}\geq0,
 \end{equation*}
@@ -4327,15 +4327,17 @@ with $C^*\coloneqq\cup_{i\in S^*}C_i$. Therefore, there is some $\omega^*\in C^*
 \begin{equation}\label{eq:theo:aanelkaarplakken:geqfirstpart}
 \sum_{i\in S^*}\lambda_i\ind{C_i}(\omega^*)\bigl(\tilde{P}(A_i\vert C_i)-\ind{A_i}(\omega^*)\bigr)\geq0.
 \end{equation}
-If $S^*=\emptyset$, we let $\omega^*$ be any element of $C_0$ (this is always possible, because $C_0\neq\emptyset$). Clearly, this path $\omega^*$ will then also satisfy Equation~\eqref{eq:theo:aanelkaarplakken:geqfirstpart}.
+If $S^*=\emptyset$, we let $\omega^*$ be any element of $C_0$ (this is always possible, because $C_0\neq\emptyset$). Clearly, this path $\omega^*$ will then also satisfy Equation~\eqref{eq:theo:aanelkaarplakken:geqfirstpart}---because the left-hand side is a sum over an empty set and therefore zero.
 
 
-Let $x_u^*\in\states_u$ be defined by $x_u^*\coloneqq \omega^*\vert_u$.
+Now let $x_u^*\in\states_u$ be defined by $x_u^*\coloneqq \omega^*\vert_u$.
 Then for all $i\in\{1,\dots,n\}$ such that $(A_i,C_i)\in\mathcal{C}_{x_u^*}$, we know from Equation~\eqref{eq:theo:aanelkaarplakken:secondpartofdomain} that there are $u\subseteq v_i\in\mathcal{U}$ and $x_{v_i\setminus u}\in\states_{v_i\setminus u}$ such that
 \begin{equation}\label{eq:theo:aanelkaarplakken:Cisplit}
 C_i=(X_u=x_u^*)\cap(X_{v_i\setminus u}=x_{v_i\setminus u})=C_i^*\cap C_i^{**},\vspace{2mm}
 \end{equation}
-with $C_i^{*}\coloneqq(X_{v_i\cap [0,\max u]}=x_{v_i\cap [0,\max u]})$, and
+with $C_i^{*}\coloneqq
+%(X_u=x_u^*)\cap
+(X_{(v_i\setminus u)\cap [0,\max u]}=x_{(v_i\setminus u)\cap [0,\max u]})$, and
 \begin{equation}\label{eq:theo:aanelkaarplakken:Cistarstar}
 C_i^{**}\coloneqq(X_u=x_u^*)\cap(X_{v_i\setminus [0,\max u]}=x_{v_i\setminus [0,\max u]})\,.
 \end{equation}
@@ -4352,7 +4354,7 @@ i\in\{1,\dots,n\}
 \end{equation}
 
 
-We first consider the case $S^{**}\neq\emptyset$. Since $P_{x_u^*}$ is a stochastic process, it then follows from Corollary~\ref{corol:processiffcoherent} that
+We first consider the case $S^{**}\neq\emptyset$. Since $P_{x_u^*}$ is a stochastic process, it then follows from Definitions~\ref{def:stoch_process} and~\ref{def:coherence} that
 \begin{equation*}%\label{eq:theo:aanelkaarplakken:secondpart}
 \max\left\{\sum_{i\in S^{**}}\lambda_i\ind{C_i^{**}}(\omega)\bigl(P_{x_u^*}(A_i\vert C_i^{**})-\ind{A_i}(\omega)\bigr)~\Bigg\vert~\omega\in C^{**}\right\}\geq0,
 \end{equation*}
