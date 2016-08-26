@@ -1737,7 +1737,7 @@ We denote the set of all homogeneous Markov chains by $\hmprocesses$ and use $\w
 Recall now from Section~\ref{sec:systems} the exponential transition matrix system $\mathcal{T}_Q$ corresponding to some $Q\in\mathcal{R}$. As we have seen, the transition matrices of such a system were defined by $T_t^s = e^{Q(s-t)}$. This family $\mathcal{T}_Q$ therefore clearly satisfies Equation~\ref{eq:homogeneousMarkov}. Furthermore, by Proposition~\ref{prop:systemQ}, $\mathcal{T}_Q$ is well-behaved. Hence, we have the following result.
 
 \begin{corollary}\label{cor:rate_has_unique_homogen_markov_process}
-Consider any rate matrix $Q\in\mathcal{R}$ and let $p$ be an arbitrary probability mass function on $\states$. Then there is a unique Markov chain $P\in\mprocesses$ such that $\mathcal{T}_P=\mathcal{T}_Q$ and $P(X_0)=p(X_0)$ and, furthermore, this unique Markov chain is well-behaved and homogeneous.
+Consider any rate matrix $Q\in\mathcal{R}$ and let $p$ be an arbitrary probability mass function on $\states$. Then there is a unique Markov chain $P\in\mprocesses$ such that $\mathcal{T}_P=\mathcal{T}_Q$ and, for all $y\in\mathcal{X}$, $P(X_0=y)=p(y)$. Furthermore, this unique Markov chain is well-behaved and homogeneous.
 \end{corollary}
 
 %As our next result shows, the converse is true as well: not only does each $\mathcal{T}_Q$ characterize%: every well-behaved homogeneous Markov chain can be characterized---up to its initial distribution---by the family $\mathcal{T}_Q$, for some unique $Q\in\mathcal{R}$.
@@ -1772,10 +1772,11 @@ One technique for constructing transition matrix systems that is particularly im
 \mathcal{T}_{Q_0}^{[0,t_0]}\otimes \mathcal{T}_{Q_1}^{[t_0,t_1]} \otimes \cdots \otimes \mathcal{T}_{Q_n}^{[t_{n-1},t_n]} \otimes \mathcal{T}_{Q_{n+1}}^{[t_n,\infty)}.
 \vspace{4pt}
 \end{equation}
-As we know from Propositions~\ref{prop:systemQ} and~\ref{prop:concat_restr_trans_mat_systems_is_system}, transition matrix systems that are constructed in this way are always well-behaved. For example, the transition matrix systems $\mathcal{T}_i$, $i\in\nats_0$, that we defined in Equation~\eqref{eq:def:sequenceinexample3} are all of this form.
+For example, the transition matrix systems $\mathcal{T}_i$, $i\in\nats_0$, that we defined in Equation~\eqref{eq:def:sequenceinexample3} are all of this form.
+As we know from Propositions~\ref{prop:systemQ} and~\ref{prop:concat_restr_trans_mat_systems_is_system}, transition matrix systems that are of this form are always well-behaved. The following result is therefore a trivial consequence of Theorem~\ref{theo:uniqueMarkovchain}.
 
 \begin{proposition}\label{prop:finite_different_rate_matrix_has_process}
-Let $\rateset$ be a non-empty bounded set of rate matrices, and let $\mathcal{M}$ be a non-empty set of probability mass functions on $\states$. Then for any finite sequence of time points $u=t_0,\ldots,t_n$ and any collection of rate matrices $Q_0,\ldots,Q_{n+1}\in\rateset$, there is a well-behaved continuous-time Markov chain $P$ such that $\mathcal{T}_P$ is given by Equation~\eqref{eq:nonhomogen_in_process_set_system_composition}.
+Let $p$ be an arbitrary probability mass function on $\states$, let $u=t_0,\ldots,t_n$ be a finite sequence of time points in $\mathcal{U}_\emptyset$, and let $Q_0,\ldots,Q_{n+1}\in\rateset$ be a collection of rate matrices. Then there is a well-behaved continuous-time Markov chain $P\in\wmprocesses$ such that $P(X_0=y)=p(y)$ for all $y\in\mathcal{X}$ and such that $\mathcal{T}_P$ is given by Equation~\eqref{eq:nonhomogen_in_process_set_system_composition}.
 % \begin{equation}\label{prop:finite_different_rate_matrix_has_process}
 % \mathcal{T}_P = \mathcal{T}_{Q_0}^{[0,t_0]}\otimes \mathcal{T}_{Q_1}^{[t_0,t_1]} \otimes \cdots \otimes \mathcal{T}_{Q_n}^{[t_{n-1},t_n]} \otimes \mathcal{T}_{Q_{n+1}}^{[t_n,\infty)}.
 % \vspace{4pt}
@@ -1984,9 +1985,9 @@ Consider any bounded set of rate matrices $\rateset$, and any non-empty set $\ma
 %\end{proof}
 Observe furthermore that for $\whmprocesses_{\rateset,\mathcal{M}}$ and $\wmprocesses_{\rateset,\mathcal{M}}$, the extra properties of their elements allow us to simplify the notion of consistency in Definition~\ref{def:consistent_process}, which leads to the following alternative characterisations:
 \vspace{3pt}
-\begin{equation*}
+\begin{equation}\label{eq:consistentwmprocessesalternative}
 \wmprocesses_{\rateset,\mathcal{M}} = \left\{P\in\wmprocesses\,:\,(\forall t\in\realsnonneg)~~ \smash{\overline{\partial}}T_t^t\subseteq\rateset,\,P(X_0)\in\mathcal{M}\right\},
-\end{equation*}
+\end{equation}
 and
 \begin{equation*}
 \whmprocesses_{\rateset,\mathcal{M}} = \left\{P\in\whmprocesses\,:\,Q_P\in\rateset,\,P(X_0)\in\mathcal{M}\right\}.
@@ -2018,7 +2019,7 @@ Since $\wmprocesses_{\rateset,\mathcal{M}}$ is a subset of $\wprocesses_{\ratese
 \end{exmp}
 
 \begin{proposition}\label{prop:nonhomogeneous_in_process_set}
-Let $\rateset$ be a non-empty bounded set of rate matrices, and let $\mathcal{M}$ be a non-empty set of probability mass functions on $\states$. Then for any finite sequence of time points $u=t_0,\ldots,t_n$ and any collection of rate matrices $Q_0,\ldots,Q_{n+1}\in\rateset$, there is a well-behaved continuous-time Markov chain $P\in\wmprocesses_{\rateset,\,\mathcal{M}}$ such that $\mathcal{T}_P$ is given by Equation~\eqref{eq:nonhomogen_in_process_set_system_composition}
+Consider any non-empty bounded set of rate matrices $\rateset$ and let $\mathcal{M}$ be any non-empty set of probability mass functions on $\states$. Then for any $p\in\mathcal{M}$, any ordered finite sequence of time points $u=t_0,\ldots,t_n$ in $\mathcal{U}_\emptyset$ and any collection of rate matrices $Q_0,\ldots,Q_{n+1}\in\rateset$, there is a well-behaved continuous-time Markov chain $P\in\wmprocesses_{\rateset,\,\mathcal{M}}$ such that $P(X_0=y)=p(y)$ for all $y\in\mathcal{X}$ and such that $\mathcal{T}_P$ is given by Equation~\eqref{eq:nonhomogen_in_process_set_system_composition}.
 % \begin{equation}%\label{eq:nonhomogen_in_process_set_system_composition}
 % \mathcal{T}_P = \mathcal{T}_{Q_0}^{[0,t_0]}\otimes \mathcal{T}_{Q_1}^{[t_0,t_1]} \otimes \cdots \otimes \mathcal{T}_{Q_n}^{[t_{n-1},t_n]} \otimes \mathcal{T}_{Q_{n+1}}^{[t_n,\infty)}.
 % \vspace{4pt}
@@ -2027,18 +2028,18 @@ Let $\rateset$ be a non-empty bounded set of rate matrices, and let $\mathcal{M}
 
 We conclude this section with some notes about closure properties of the different types of \ictmc's that we consider, which are particularly useful for existence proofs. In particular, we focus on closure properties under recombination of known elements---colloquially, the ``piecing together'' of two or more processes to construct a new process that belongs to the same \ictmc.
 
-The example above already suggested how to do this for $\smash{\wmprocesses_{\rateset,\mathcal{M}}}$, by combining two well-behaved homogeneous Markov chains $P_1,P_2\in\whmprocesses$ to form a new process $P\in\wmprocesses$. Similarly, but more generally, for any two processes $P_1,P_2\in\wmprocesses_{\rateset,\mathcal{M}}$, we can combine their transition matrix systems $\mathcal{T}_{P_1}$ and $\mathcal{T}_{P_2}$ to construct a new transition matrix system $\mathcal{T}\coloneqq \mathcal{T}_{P_1}^{[0,t]}\otimes \mathcal{T}_{P_2}^{[t,+\infty)}$, with $r>0$ chosen arbitrarily. Theorem~\ref{theo:uniqueMarkovchain} then guarantees that there exists a Markov chain $P$ for which $\mathcal{T}_P=\mathcal{T}$ and such that $P(X_0)\in\mathcal{M}$. It is straightforward to verify that, because $P_1,P_2\in\wmprocesses_{\rateset,\mathcal{M}}$, also $P\in\wmprocesses_{\rateset,\mathcal{M}}$; we leave this as an exercise for the reader.
+The example above already suggested how to do this for $\smash{\wmprocesses_{\rateset,\mathcal{M}}}$, by combining two well-behaved homogeneous Markov chains $P_1,P_2\in\whmprocesses$ to form a new process $P\in\wmprocesses$. Similarly, but more generally, for any two processes $P_1,P_2\in\wmprocesses_{\rateset,\mathcal{M}}$, we can combine their transition matrix systems $\mathcal{T}_{P_1}$ and $\mathcal{T}_{P_2}$ to construct a new transition matrix system $\smash{\mathcal{T}\coloneqq \mathcal{T}_{P_1}^{[0,t]}\otimes \mathcal{T}_{P_2}^{[t,+\infty)}}$, with $r>0$ chosen arbitrarily. Theorem~\ref{theo:uniqueMarkovchain} then guarantees that there exists a Markov chain $P$ such that $\mathcal{T}_P=\mathcal{T}$ and $P(X_0)=P_1(X_0)$. It is straightforward to verify that, because $P_1,P_2\in\wmprocesses_{\rateset,\mathcal{M}}$, also $P\in\wmprocesses_{\rateset,\mathcal{M}}$; we leave this as an exercise for the reader.
 
 
 
-Now, clearly, a similar procedure is impossible for $\whmprocesses_{\rateset,\mathcal{M}}$, since the combination of two processes would make the resultant one lose the homogeneity property, which is required to be an element of $\whmprocesses_{\rateset,\mathcal{M}}$.
+Clearly, a similar procedure is impossible for $\whmprocesses_{\rateset,\mathcal{M}}$, because the combination of two processes would make the resultant one lose the homogeneity property, which is required to be an element of $\whmprocesses_{\rateset,\mathcal{M}}$.
 
-However, for the most general set, which is $\wprocesses_{\rateset,\mathcal{M}}$, it turns out to be possible to recombine elements in a more general, history-dependent way, provided that $\rateset$ is convex. That is, if $\rateset$ is convex, then it is possible, for fixed time points $u\in\mathcal{U}$, to choose for every history $x_u\in\states_u$ a different process $P_{x_u}\in\wprocesses_{\rateset,\mathcal{M}}$, and to recombine these into a process $P$ that agrees with these $P_{x_u}$ conditional on the specific history $x_u$. Furthermore, the distribution on the time points $u$ can be chosen to agree with any element $P_{\emptyset}\in \wprocesses_{\rateset,\mathcal{M}}$. The following result guarantees that this new process $P$ will again belong to $\wprocesses_{\rateset,\mathcal{M}}$.
+However, for our most general type of \ictmc, which is $\wprocesses_{\rateset,\mathcal{M}}$, it turns out to be possible to recombine elements in an even more general, history-dependent way. That is, if $\rateset$ is convex, then it is possible, for fixed time points $u\in\mathcal{U}$, to choose for every history $x_u\in\states_u$ a different process $P_{x_u}\in\wprocesses_{\rateset,\mathcal{M}}$, and to recombine these into a process $P$ that agrees with these $P_{x_u}$ conditional on the specific history $x_u$. Furthermore, the distribution on the time points $u$ can be chosen to agree with any element $\smash{P_{\emptyset}\in \wprocesses_{\rateset,\mathcal{M}}}$. The following result guarantees that this new process $P$ will again belong to $\wprocesses_{\rateset,\mathcal{M}}$.
 
 %We start with considering the case where $\rateset$ is convex, in relation to the set $\wprocesses_{\rateset,\,\mathcal{M}}$. It turns out that this leads to a powerful construction tool for stochastic processes. In particular, this allows us to construct a new stochastic process by ``piecing together'' other processes from the set $\wprocesses_{\rateset,\,\mathcal{M}}$. The next result ensures that this new process will then also belong to $\wprocesses_{\rateset,\,\mathcal{M}}$.
 \begin{theorem}\label{theo:aanelkaarplakken}
 Consider a non-empty convex set of rate matrices $\rateset\subseteq\mathcal{R}$, and any non-empty set $\mathcal{M}$ of probability mass functions on $\states$.
-Fix a finite sequence of time points $u$. Choose any $P_\emptyset\in\wprocesses_{\rateset,\,\mathcal{M}}$ and, for all $x_u\in\states_u$, choose some $P_{x_u}\in\wprocesses_{\rateset,\,\mathcal{M}}$. Then there is a stochastic process $P\in\wprocesses_{\rateset,\,\mathcal{M}}$ such that, for all $u_1,u_2\subseteq u$ such that $u_1<u_2$, all $x_u\in\states_u$ and all $A\in\mathcal{A}_u$:
+Fix a finite sequence of time points $u\in\mathcal{U}$. Choose any $P_\emptyset\in\wprocesses_{\rateset,\,\mathcal{M}}$ and, for all $x_u\in\states_u$, choose some $\smash{P_{x_u}\in\wprocesses_{\rateset,\,\mathcal{M}}}$. Then there is a stochastic process $\smash{P\in\wprocesses_{\rateset,\,\mathcal{M}}}$ such that, for all $u_1,u_2\subseteq u$ such that $u_1<u_2$, all $x_u\in\states_u$ and all $A\in\mathcal{A}_u$:
 \begin{equation}\label{eq:theo:aanelkaarplakken:equalsfirst}
 P(X_{u_2}=x_{u_2}\vert X_{u_1}=x_{u_1})=P_{\emptyset}(X_{u_2}=x_{u_2}\vert X_{u_1}=x_{u_1})
 %\text{~for all $x_u\in\states^u$}
@@ -4127,7 +4128,7 @@ which implies that $P_1(A\vert X_u=x_u)=P_2(A\vert X_u=x_u)$. Since this is the 
 \end{proof}
 
 \begin{proof}[Proof of Corollary~\ref{cor:rate_has_unique_homogen_markov_process}]
-Since we know from Proposition~\ref{prop:systemQ} that $\mathcal{T}_Q$ is a well-behaved transition matrix system, it follows from Theorem~\ref{theo:uniqueMarkovchain} that there is a unique Markov chain $P\in\mprocesses$ such that $\mathcal{T}_P=\mathcal{T}_Q$ and $P(X_0)=p(X_0)$, and that this Markov chain is furthermore well-behaved. Since it---trivially---follows from Definition~\ref{def:systemfromQ} that $\mathcal{T}_Q$ satisfies Equation~\eqref{eq:homogeneousMarkov}, Definition~\ref{def:homogeneousMarkov} implies that $P$ is homogeneous.
+Since we know from Proposition~\ref{prop:systemQ} that $\mathcal{T}_Q$ is a well-behaved transition matrix system, it follows from Theorem~\ref{theo:uniqueMarkovchain} that there is a unique Markov chain $P\in\mprocesses$ such that $\mathcal{T}_P=\mathcal{T}_Q$ and, for all $y\in\mathcal{X}$, $P(X_0=y)=p(y)$, and that this Markov chain is furthermore well-behaved. Since it---trivially---follows from Definition~\ref{def:systemfromQ} that $\mathcal{T}_Q$ satisfies Equation~\eqref{eq:homogeneousMarkov}, Definition~\ref{def:homogeneousMarkov} implies that $P$ is homogeneous.
 \end{proof}
 
 \begin{proof}[Proof of Theorem~\ref{theo:homogeneoushasQ}]
@@ -4257,9 +4258,9 @@ Finally, we prove that $Q$ is unique. Assume \emph{ex absurdo} that this is not 
 The result about the partial derivatives is an immediate consequence of Lemma~\ref{lemma:deriv_exponential_trans} and the fact that $T^{t+\Delta}_{t}=T^{t}_{t-\Delta}=e^{Q\Delta}$. The result about the outer partial derivatives then follows from Corollary~\ref{corol:outersingleton}.
 \end{proof}
 
-\begin{proof}[Proof of Proposition~\ref{prop:finite_different_rate_matrix_has_process}]
-*** MOET IK NOG DOEN ***
-\end{proof}
+% \begin{proof}[Proof of Proposition~\ref{prop:finite_different_rate_matrix_has_process}]
+% *** MOET IK NOG DOEN ***
+% \end{proof}
 
 
 \section{Proofs and Lemmas for Section~\ref{sec:iCTMC}}
@@ -4268,14 +4269,10 @@ The result about the partial derivatives is an immediate consequence of Lemma~\r
 \end{proof}
 
 \begin{proof}[Proof of Proposition~\ref{prop:nonhomogeneous_in_process_set}]
-**** NOW NEEDS FIRST PART
+Proposition~\ref{prop:finite_different_rate_matrix_has_process} implies the existence of a process $P\in\wmprocesses$ such that $P(X_0=y)$ for all $y\in\mathcal{X}$ and such that $\mathcal{T}_P$ satisfies Equation~\eqref{eq:nonhomogen_in_process_set_system_composition}. It remains to show that $P\in\wmprocesses_{\rateset,\,\mathcal{M}}$. Because of Equation~\eqref{eq:consistentwmprocessesalternative}, and since we already know that $p\in\mathcal{M}$, this means that we have to show that $\smash{\overline{\partial}}T_t^t\subseteq\rateset$ for all $t\in\realsnonneg$. To this end, consider any $t\in\realsnonneg$.
 
-Proposition~\ref{prop:finite_different_rate_matrix_has_process} implies the existence of a process $P\in\wmprocesses$ that satisfies both Equation~\eqref{eq:nonhomogen_in_process_set_system_composition} and $P(X_0)\in\mathcal{M}$. It remains to show that $P\in\wmprocesses_{\rateset,\,\mathcal{M}}$, or equivalently, since we already have $P(X_0)\in\mathcal{M}$, that $\smash{\overline{\partial}}T_t^t\subseteq\rateset$ for all $t\in\realsnonneg$. To this end, consider any $t\in\realsnonneg$.
-
-We consider several cases. If $t<t_0$, then $\smash{\overline{\partial}}T_t^t$ corresponds to $\mathcal{T}_{Q_0}^{[0,t_0]}$, and hence $\smash{\overline{\partial}}T_t^t=\{Q_0\}\subseteq\rateset$. If $t>t_n$, then $\smash{\overline{\partial}}T_t^t$ corresponds to $\smash{\mathcal{T}_{Q_{n+1}}^{[t_n,\infty)}}$, in which case $\smash{\overline{\partial}}T_t^t=\{Q_{n+1}\}\subseteq\rateset$. Similarly, if $t\in(t_{i-1},t_i)$ for some $i\in\{1,\ldots,n\}$, then $\smash{\overline{\partial}}T_t^t$ corresponds to $\mathcal{T}_{Q_i}^{[t_{i-1},t_i]}$, and therefore $\smash{\overline{\partial}}T_t^t=\{Q_i\}\subseteq\rateset$. The only remaining case is when $t=t_i$ for some $i\in\{0,\ldots,n\}$. In this case, we have that $\smash{\overline{\partial}}_-T_t^t=\{Q_i\}$ and $\smash{\overline{\partial}}_+T_t^t=\{Q_{i+1}\}$, and therefore
-\begin{equation*}
-\smash{\overline{\partial}}T_t^t = \smash{\overline{\partial}}_-T_t^t\cup\smash{\overline{\partial}}_+T_t^t=\{Q_{i},Q_{i+1}\}\subseteq\rateset.
-\end{equation*}
+We consider several cases. If $t<t_0$, then $\smash{\overline{\partial}}T_t^t$ corresponds to $\mathcal{T}_{Q_0}^{[0,t_0]}$, and it then follows from Proposition~\ref{prop:Q_is_singleton_deriv_for_homogen} that $\smash{\overline{\partial}}T_t^t=\{Q_0\}\subseteq\rateset$. If $t>t_n$, then $\smash{\overline{\partial}}T_t^t$ corresponds to $\smash{\mathcal{T}_{Q_{n+1}}^{[t_n,\infty)}}$, in which case $\smash{\overline{\partial}}T_t^t=\{Q_{n+1}\}\subseteq\rateset$. Similarly, if there is some $i\in\{1,\ldots,n\}$ such that $t\in(t_{i-1},t_i)$, then $\smash{\overline{\partial}}T_t^t$ corresponds to $\smash{\mathcal{T}_{Q_i}^{[t_{i-1},t_i]}}$, and therefore $\smash{\overline{\partial}}T_t^t=\{Q_i\}\subseteq\rateset$. 
+The only remaining case is when $t=t_i\neq0$ for some $i\in\{0,\ldots,n\}$. In this case, we have that $\smash{\overline{\partial}}_+T_t^t=\{Q_{i+1}\}$ and, if $t\neq0$, that $\smash{\overline{\partial}}_-T_t^t=\{Q_i\}$, and therefore, it follows from Definition~\ref{def:direc_partial_deriv} that $\smash{\overline{\partial}}T_t^t\subseteq\rateset$.
 % Because this covers all the possible cases, in summary, we have found that $\smash{\overline{\partial}}T_t^t\subseteq\rateset$ for all $t\in\realsnonneg$, and hence $P\in\wmprocesses_\rateset$.
 \end{proof}
 
