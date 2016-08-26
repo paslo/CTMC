@@ -4441,42 +4441,56 @@ Next, assume that $S^*=\emptyset$. In that case, we have that $\omega^*\in C_0$,
 So, in all cases, we find that $\omega^{***}\in C_0$. By combining this with Equation~\eqref{eq:theo:aanelkaarplakken:geqtotal}, it follows that Equation~\eqref{eq:theo:aanelkaarplakken:coh} holds, and therefore, that $\tilde{P}$ is coherent.
 
 
-Since $\tilde{P}$ is coherent, and because of Corollary~\ref{corol:coherentextendable}, $\tilde{P}$ can be extended to a full conditional probability $\tilde{P}^*$. If we now let $P$ be the restriction of $\tilde{P}^*$ to $\mathcal{C}^\mathrm{SP}$, then $P$ is a stochastic process that, because $\mathcal{C}\subseteq\mathcal{C}^\mathrm{SP}$, extends $\tilde{P}$. Due to Equation~\eqref{eq:theo:aanelkaarplakken:defPtilde}, this implies that $P$ satisfies Equations~\eqref{eq:theo:aanelkaarplakken:equalsfirst} and~\eqref{eq:theo:aanelkaarplakken:equalssecond}. This concludes the first part of this proof.
+Since $\tilde{P}$ is coherent, and because $\mathcal{C}\subseteq\mathcal{C}^\mathrm{SP}$, it now follows from Theorem~\ref{theo:largerdomain} and Definition~\ref{def:stoch_process} that $\tilde{P}$ can be extended to a stochastic process $P$. Furthermore, since $P$ coincides with $\tilde{P}$ on $\mathcal{C}$, it follows from Equation~\eqref{eq:theo:aanelkaarplakken:defPtilde} that $P$ satisfies Equations~\eqref{eq:theo:aanelkaarplakken:equalsfirst} and~\eqref{eq:theo:aanelkaarplakken:equalssecond}. This concludes the first part of this proof.
 
-In the remainder of this proof, we will show that $P\in\wprocesses_{\rateset,\,\mathcal{M}}$ as desired. Observe that due to Equation~\eqref{eq:theo:aanelkaarplakken:firstpartofdomain}, we have for all $x\in\states$ that $(X_0=x,X_{\emptyset}=x_{\emptyset})\in\mathcal{C}_{\emptyset}$. Therefore, and because of Equation~\eqref{eq:theo:aanelkaarplakken:defPtilde}, we find $P(X_0)=P(X_0\,\vert\,X_{\emptyset}=x_{\emptyset})=P_{\emptyset}(X_0\,\vert\,X_{\emptyset}=x_{\emptyset})=P_{\emptyset}(X_0)$, which together with the fact that $P_{\emptyset}\in\wprocesses_{\rateset,\,\mathcal{M}}$ implies $P(X_0)\in\mathcal{M}$. Hence, in order to prove that $P\in\wprocesses_{\rateset,\,\mathcal{M}}$, it remains to show that $P$ is both well-behaved and consistent with $\rateset$.
+In the remainder of this proof, we will show that $P\in\wprocesses_{\rateset,\,\mathcal{M}}$, as desired. To this end, let $P^*$ be any full conditional probability that coincides with $P$ on $\smash{\mathcal{C}^{\mathrm{SP}}}$; Corollary~\ref{corol:processiffrestriction} implies that such a full conditional probability always exists.
+
+Now observe that due to Equation~\eqref{eq:theo:aanelkaarplakken:firstpartofdomain}, we have for all $x\in\states$ that $(X_0=y,X_{\emptyset}=x_{\emptyset})\in\mathcal{C}_{\emptyset}$. Therefore, and because of Equation~\eqref{eq:theo:aanelkaarplakken:defPtilde}, we find that
+\begin{equation*}
+P(X_0=y)=P(X_0=y\,\vert\,X_{\emptyset}=x_{\emptyset})=P_{\emptyset}(X_0=y\,\vert\,X_{\emptyset}=x_{\emptyset})=P_{\emptyset}(X_0=y)
+\text{ for all $y\in\states$,}
+\end{equation*}
+which together with the fact that $P_{\emptyset}\in\wprocesses_{\rateset,\,\mathcal{M}}$, implies that $P(X_0)\in\mathcal{M}$. Hence, in order to prove that $\smash{P\in\wprocesses_{\rateset,\,\mathcal{M}}}$, it remains to show that $P$ is well-behaved as well as consistent with $\rateset$.
 
 In order to do this, we start by establishing an important equality.
 Consider any $w\in\mathcal{U}$ and $s\in\reals_{\geq0}$ such that $w<s$ and $u<s$. Then for all $x_w\in\states_w$ and $y\in\states$, we have that
 \begin{align}\label{eq:theo:aanelkaarplakken:convexcombo}
 P&(X_s=y\vert X_w=x_w)
-=
+=P^*(X_s=y\vert X_w=x_w)\notag\\
+&=
 \sum_{x_{u\setminus w}\in\states_{u\setminus w}}
-P(X_s=y,
+P^*(X_s=y,
 X_{u\setminus w}=x_{u\setminus w}
 \vert X_w=x_w)\notag\\
 &=
 \sum_{x_{u\setminus w}\in\states_{u\setminus w}}
-P(X_s=y\vert
+P^*(X_s=y\vert
 X_{u\setminus w}=x_{u\setminus w}, X_w=x_w)
-P(X_{u\setminus w}=x_{u\setminus w}
+P^*(X_{u\setminus w}=x_{u\setminus w}
+\vert X_w=x_w)\notag\\
+&=
+\sum_{x_{u\setminus w}\in\states_{u\setminus w}}
+P^*(X_s=y\vert
+X_{u}=x_{u}, X_{w\setminus u}=x_{w\setminus u})
+P^*(X_{u\setminus w}=x_{u\setminus w}
 \vert X_w=x_w)\notag\\
 &=
 \sum_{x_{u\setminus w}\in\states_{u\setminus w}}
 P(X_s=y\vert
 X_{u}=x_{u}, X_{w\setminus u}=x_{w\setminus u})
-P(X_{u\setminus w}=x_{u\setminus w}
+P^*(X_{u\setminus w}=x_{u\setminus w}
 \vert X_w=x_w)\notag\\
 &=
 \sum_{x_{u\setminus w}\in\states_{u\setminus w}}
 \tilde{P}(X_s=y\vert
 X_{u}=x_{u}, X_{w\setminus u}=x_{w\setminus u})
-P(X_{u\setminus w}=x_{u\setminus w}
+P^*(X_{u\setminus w}=x_{u\setminus w}
 \vert X_w=x_w)\notag\\
 &=
 \sum_{x_{u\setminus w}\in\states_{u\setminus w}}
 P_{x_u}(X_s=y\vert
 X_{u}=x_{u}, X_{w\setminus [0,\max u]}=x_{w\setminus [0,\max u]})
-P(X_{u\setminus w}=x_{u\setminus w}
+P^*(X_{u\setminus w}=x_{u\setminus w}
 \vert X_w=x_w)\notag\\[-3mm]
 %&=
 %\sum_{x_{u\setminus w}\in\states^{u\setminus w}}
@@ -4486,7 +4500,7 @@ P(X_{u\setminus w}=x_{u\setminus w}
 %\vert X_w=x_w)
 \end{align}
 
-Using this equality, we will next show that for small enough $\Delta\in\realspos$, the transition matrices $T_{t,x_v}^{t+\Delta}$ and $T_{t-\Delta,x_v}^t$ corresponding to $P$ can each be written as a (different) convex combination of transition matrices corresponding to processes in $\wprocesses_{\rateset,\,\mathcal{M}}$.
+Using this equality, we will next show that for small enough $\Delta\in\realspos$, the transition matrices $T_{t,x_v}^{t+\Delta}$ and $T_{t-\Delta,x_v}^t$ corresponding to $P$ can each be written as a (different) convex combination of transition matrices corresponding to processes in $\smash{\wprocesses_{\rateset,\,\mathcal{M}}}$.
 
 Formally, we will show that for any $t\geq0$, $v\in\mathcal{U}_{<t}$ and $x_v\in\states_v$, there is some finite index set $\mathcal{I}$, some $v^*\in\mathcal{U}_{<t}$, a set of non-negative coefficients $(\lambda_i)_{i\in \mathcal{I}}$ that sum to one, a set of stochastic processes $({}^iP\in\wprocesses_{\rateset,\,\mathcal{M}})_{i\in \mathcal{I}}$ and a set of state instantiations $({}^ix_{v^*}\in\states_{v^*})_{i\in \mathcal{I}}$ such that
 \begin{equation}\label{eq:theo:aanelkaarplakken:convexTright}
@@ -4519,13 +4533,13 @@ P_{x_u}(X_{t+\Delta}=y\vert X_t=x,
 X_{(u\setminus t)\cup(v\setminus [0,\max u])}= 
 x_{(u\setminus t)\cup(v\setminus [0,\max u])})\\[-4mm]
 &\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad
-P(X_{u\setminus(v\cup t)}=x_{u\setminus(v\cup t)}
+P^*(X_{u\setminus(v\cup t)}=x_{u\setminus(v\cup t)}
 \vert X_t=x, X_v=x_v).
 \end{align*}
 Therefore, if we let $\mathcal{I}\coloneqq\states_{u\setminus(v\cup t)}$, $v^*\coloneqq (u\setminus t)\cup(v\setminus [0,\max u])$ and, for all $x_{u\setminus(v\cup t)}\in \mathcal{I}$,
 \begin{equation*}
 \lambda_{x_{u\setminus(v\cup t)}}
-\coloneqq P(X_{u\setminus(v\cup t)}=x_{u\setminus(v\cup t)}
+\coloneqq P^*(X_{u\setminus(v\cup t)}=x_{u\setminus(v\cup t)}
 \vert X_t=x, X_v=x_v),
 \end{equation*}
 ${}^{x_{u\setminus(v\cup t)}}P=P_{x_u}$ and ${}^{x_{u\setminus(v\cup t)}}x_{v^*}\coloneqq
@@ -4548,13 +4562,13 @@ P_{x_u}(X_{t}=y\vert X_{t-\Delta}=x,
 X_{u\cup(v\setminus [0,\max u])}= 
 x_{u\cup(v\setminus [0,\max u])})\\[-4mm]
 &\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad
-P(X_{u\setminus v}=x_{u\setminus v}
+P^*(X_{u\setminus v}=x_{u\setminus v}
 \vert X_{t-\Delta}=x, X_v=x_v).
 \end{align*}
 Therefore, if we let $\mathcal{I}\coloneqq\states_{u\setminus v}$, $v^*\coloneqq u\cup(v\setminus [0,\max u])$ and, for all $x_{u\setminus v}\in \mathcal{I}$,
 \begin{equation*}
 \lambda_{x_{u\setminus v}}
-\coloneqq P(X_{u\setminus v}=x_{u\setminus v}
+\coloneqq P^*(X_{u\setminus v}=x_{u\setminus v}
 \vert X_{t-\Delta}=x, X_v=x_v),
 \end{equation*}
 ${}^{x_{u\setminus v}}P=P_{x_u}$ and ${}^{x_{u\setminus v}}x_{v^*}\coloneqq
@@ -4562,8 +4576,8 @@ x_{ u\cup(v\setminus [0,\max u])}$, Equation~\eqref{eq:theo:aanelkaarplakken:con
 Hence, Equation~\eqref{eq:theo:aanelkaarplakken:convexTleft} can be satisfied both when $t\leq \max u$ and when $t>\max u$.
 
 
-Therefore, indeed, as claimed before, both $T_{t,x_v}^{t+\Delta}$ and $T_{t-\Delta,x_v}^t$ can be written as a convex combination of transition matrices corresponding to elements of $\wprocesses_{\rateset,\,\mathcal{M}}$---assuming that $\Delta$ is small enough.
-We will use this fact to prove that $P$ is well-behaved and consistent with $\mathcal{Q}$.
+Therefore, indeed, as claimed before, both $T_{t,x_v}^{t+\Delta}$ and $T_{t-\Delta,x_v}^t$ can be written as a convex combination of transition matrices corresponding to elements of $\smash{\wprocesses_{\rateset,\,\mathcal{M}}}$---assuming that $\Delta$ is small enough.
+We will now use this fact to prove that $P$ is well-behaved and consistent with $\mathcal{Q}$.
 
 We start by proving that $P$ is well-behaved. First consider any $t\geq0$, $v\in\mathcal{U}_{<t}$ and $x_v\in\states_v$, and consider the indexed set $\{{}^iP\in\wprocesses_{\rateset,\,\mathcal{M}}\}_{i\in \mathcal{I}}$ of stochastic processes whose transition matrices appear in the convex combination that satisfies  Equation~\eqref{eq:theo:aanelkaarplakken:convexTright}. Then,
 \begin{equation}\label{eq:theo:aanelkaarplakken:wellbehavedTright}
@@ -4630,9 +4644,11 @@ which, because of Equation~\eqref{eq:theo:aanelkaarplakken:Qstar}, implies that 
 {T^t_{t,\,x_v}}$.
 
 If instead $\smash{Q^*\in\overline{\partial}_{-}
-{T^t_{t,\,x_v}}}$, a completely analogous argument leads to the same contradiction: simply use Equations~\eqref{eq:leftouterderivative} and~\eqref{eq:theo:aanelkaarplakken:convexTleft} instead of Equations~\eqref{eq:rightouterderivative} and~\eqref{eq:theo:aanelkaarplakken:convexTright}, respectively, and adapt the rest of the argument accordingly. Because both $Q^*\in\overline{\partial}_{+}
+{T^t_{t,\,x_v}}}$, a completely analogous argument leads to the same contradiction: simply use Equations~\eqref{eq:leftouterderivative} and~\eqref{eq:theo:aanelkaarplakken:convexTleft} instead of Equations~\eqref{eq:rightouterderivative} and~\eqref{eq:theo:aanelkaarplakken:convexTright}, respectively, and adapt the rest of the argument accordingly. Since the two cases $Q^*\in\overline{\partial}_{+}
 {T^t_{t,\,x_v}}$ and $\smash{Q^*\in\overline{\partial}_{-}
-{T^t_{t,\,x_v}}}$ lead to a contradiction with the assumption that $Q^*\notin\rateset$, we find that, indeed, $P$ is consistent with $\rateset$, and hence that $P\in\wprocesses_{\rateset,\,\mathcal{M}}$.
+{T^t_{t,\,x_v}}}$ both lead to a contradiction, we conclude that our ex absurdo assumption must be false, or equivalently, that $P$ is consistent with $\rateset$. 
+
+Hence, since we already know that $P$ is a well-behaved stochastic process such that $P(X_0)\in\mathcal{M}$, it follows that $P\in\wprocesses_{\rateset,\,\mathcal{M}}$.
 \end{proof}
 
 \begin{proof}[Proof of Theorem~\ref{theorem:decomposition_multivar}]
