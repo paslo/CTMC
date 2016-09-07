@@ -3239,7 +3239,7 @@ The connection to ``imprecise continuous-time Markov chains'', then, was the ide
 \begin{equation}\label{eq:damjans_lower}
 \underline{f}_{\,s} = \underline{\mathbb{E}}_{\rateset}^{\mathrm{WM}}[f(X_s)\,\vert\,X_0]\,.
 \end{equation}
-However, the concept of a ``precise'' continuous-time Markov chain was never rigorously defined in Reference~\cite{Skulj:2015cq}, and no characterization or definition was given for how such a set of Markov chains would be induced by $\rateset$. In other words, the connection between $\underline{f}_s$ and \ictmc's---in the sense of sets of ``precise'' continuous-time Markov chains---was largely based on intuition.
+However, the concept of a ``precise'' continuous-time Markov chain was never rigorously defined in Reference~\cite{Skulj:2015cq}, and no characterization or definition was given for how such a set of Markov chains would be induced by $\rateset$. As such, the connection between $\underline{f}_s$ and \ictmc's---in the sense of sets of ``precise'' continuous-time Markov chains---was largely based on intuition.
 
 Our current work, then, extends these results in several ways. First, as shown by Proposition~\ref{prop:lower_transition_has_deriv}, the differential equation~\eqref{eq:damjans_diff} has a uniform solution, i.e. one that is independent of $f$, and this solution is given by the operator $L_0^s$ corresponding to $\lrate$. Second, Corollary~\ref{cor:lower_operator_is_infimum} confirms that Equation~\eqref{eq:damjans_lower} indeed holds, but furthermore shows that the solution $\underline{f}_{\,s}$ also corresponds to the lower expectation with respect to a set of non-Markov processes.
 
@@ -3253,18 +3253,17 @@ For instance, for the numerical example presented at the end of~\cite[Section 4.
 
 These observations may go some way in explaining a comment made by the authors of Reference~\cite{troffaes2015using}, in which they applied this method from Reference~\cite{Skulj:2015cq} in a practical application. In particular, they observed that the number of steps required to obtain empirically good results was much lower than was expected from the theoretical bound used to derive their algorithm. {\bf nog even dubbelchecken voor hun exacte woorden.}
 
-The inefficiency of the above-mentioned uniform discretization method was also noted by {\v{S}}kulj himself, who therefore introduced two more methods to numerically compute $\underline{f}_s$. 
+The inefficiency of the above-mentioned uniform discretization method was also noted by {\v{S}}kulj himself, who therefore introduced two more methods to numerically compute $\underline{f}_s$. Recall that in the first method, the time interval $[0,s]$ was uniformly discretized, and at each time step $t_i$ an optimization was performed to find the $Q_{t_i}\in\rateset$ satisfying $Q_{t_i}\underline{f}_{t_i}=\lrate \underline{f}_{t_i}$. This $Q_{t_i}$ was then kept fixed over the interval $[t_i,t_{i+1}]$, so that $\underline{f}_{t_{i+1}}$ could be approximated as $\underline{\hat{f}}_{t_{i+1}} = e^{Q_{t_i}(t_{i+1}-t_i)}\underline{\hat{f}}_{t_{i}}$\footnote{Note that our Algorithm~\ref{alg:compute_singlevar} instead uses the linear approximation $\underline{\hat{f}}_{t_{i+1}} = \left(I+(t_{i+1}-t_i)Q_{t_i}\right)\underline{\hat{f}}_{t_{i}}$.}. 
 
-In the first method, the time interval $[0,s]$ was uniformly discretized, and at each time step $t_i$ an optimization was performed to find the $Q_{t_i}\in\rateset$ satisfying $Q_{t_i}\underline{f}_{t_i}=\lrate \underline{f}_{t_i}$. This $Q_{t_i}$ was then kept fixed over the interval $[t_i,t_{i+1}]$, so that $\underline{f}_{t_{i+1}}$ could be computed as $\underline{f}_{t_{i+1}} = e^{Q_{t_i}(t_{i+1}-t_i)}\underline{f}_{t_{i}}$. 
+Both {\v{S}}kulj's second and third method work with an adaptive discretization, which is based on the idea that the minimizing rate matrices $Q_{t_i}$ and $Q_{t_{i+1}}$ might be the same, assuming that $\underline{f}_{t_{i}}$ and $\underline{f}_{t_{i+1}}$ are sufficiently close. That is, the adaptive method tries to use the same rate matrix for as long as possible, which reduces the number of optimizations that need to be performed to find the $Q\in\rateset$ for which $Qf=\lrate \underline{f}_{s}$.
 
-The second method works with an adaptive discretization, which is based on the idea that the minimizing rate matrices $Q_{t_i}$ and $Q_{t_{i+1}}$ might be the same, assuming that $\underline{f}_{t_{i}}$ and $\underline{f}_{t_{i+1}}$ are sufficiently close. That is, the adaptive method tries to use the same rate matrix for as long as possible, which reduces the number of optimizations that need to be performed to find the $Q\in\rateset$ for which $Qf=\lrate \underline{f}_{s}$.
+Because this adaptive discretization method is based on the idea that the $Q_{t_i}$ might remain relatively stable over some interval, this approach may have connections to the 
+%**** bovenstaande iets preciezer uitleggen, even ref op naslaan nog
 
-**** bovenstaande iets preciezer uitleggen, even ref op naslaan nog
-
-The third method, presented in {\bf SKULJ SECTION REF}, combines the uniform and adaptive discretization techniques into a single algorithm. In particular, this algorithm dynamically tries to partition the interval $[0,s]$, until a partition is either small enough to apply the second method, i.e. use a fixed $Q\in\rateset$ for the entire sub-interval, or until the sub-interval is sufficiently small so that the application of the first, i.e. uniform, method becomes more efficient than continuing the dynamic discretization.
+%The third method, presented in {\bf SKULJ SECTION REF}, combines the uniform and adaptive discretization techniques into a single algorithm. In particular, this algorithm dynamically tries to partition the interval $[0,s]$, until a partition is either small enough to apply the second method, i.e. use a fixed $Q\in\rateset$ for the entire sub-interval, or until the sub-interval is sufficiently small so that the application of the first, i.e. uniform, method becomes more efficient than continuing the dynamic discretization.
 
 
-*** bruggetje naar convergentie paper, daar wat opmerkingen over
+%*** bruggetje naar convergentie paper, daar wat opmerkingen over
 
 %This earlier work also contains several results that are useful to us. In particular, {\v{S}}kulj discusses several practical techniques to numerically compute, or approximate to arbitrary precision, the quantity $\underline{f}_{\,s}$ for a given $f\in\gamblesX$. Hence, because of the correspondence between $\underline{f}_{\,s}$ and $L_0^sf$, these results can be applied when numerically working with our lower transition operator.
 
@@ -3274,7 +3273,11 @@ The third method, presented in {\bf SKULJ SECTION REF}, combines the uniform and
 
 \section{Conclusions \& Future Work}\label{sec:conclusions}
 
-*** kijk, dit hebben we besproken
+In this work, continuous-time stochastic processes were defined within the framework of full conditional probabilities, and using the notion of coherent conditional probabilities. Using the concept of well-behaved stochastic processes, we introduced a way to characterize the dynamics of such stochastic processes by means of their outer partial derivatives---without imposing differentiability assumptions on the conditional state-transition probabilities of these processes. We have seen that by imposing the Markov property on such stochastic processes, we derive continuous-time Markov chains. Under the further assumption of time-homogeneity of the state-transition probabilities, we have re-derived the well known time-homogeneous continuous-time Markov chains, which are those stochastic processes whose matrix of conditional state-transition probabilities $T_t^s$ is given by the matrix exponential $e^{Q(s-t)}$, for some rate matrix $Q\in\mathcal{R}$.
+
+Using these definitions, we have defined \emph{imprecise continuous-time Markov chains} as sets of stochastic processes which are in a specific sense consistent with a given set of rate matrices $\rateset$. In particular, an \ictmc~is a set of stochastic processes whose outer partial derivatives are contained within such a set $\rateset$. We focused in this work on three specific types of \ictmc, namely the sets $\wprocesses_{\rateset}, \wmprocesses_{\rateset}$, and $\whmprocesses_{\rateset}$, which are the sets of all stochastic processes consistent with $\rateset$ and in addition, cumulatively satisfying well-behavedness, the Markov property, and time-homogeneity. We have investigated closure-properties of such sets of stochastic processes, in particular closure under recombination of known elements.
+
+The concept of \emph{lower expectation} for \ictmc's was defined as the infimum expected value with respect to the set of expected values of some function $f$, induced by an \ictmc. *** verschillende moeilijkheid voor verschillende ictmcs, decompositie eigenschap, alternatieve karakterisatie, introductie $\lrate$ en canonical verzameling, definitie $L$, eigenschappen $L$, gebruik van $L$ voor uitrekenen, algoritmes voor uitrekenen $L$ en uitbreiding arbitraire functies, kleinste en grootste verzameling waarvoor ie werkt
 
 *** wat hebben we daarvan geleerd?
 
