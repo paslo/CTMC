@@ -1945,7 +1945,7 @@ For any non-empty bounded set of rate matrices $\rateset$, and any non-empty set
 \item $\whmprocesses_{\rateset,\mathcal{M}}$ is the consistent set of all well-behaved homogeneous Markov chains.
 \end{itemize}
 We call each of these three sets 
- an \emph{imprecise continuous-time Markov chain}, and abbreviate this as \ictmc. 
+ an \emph{imprecise continuous-time Markov chain}, and abbreviate this as \ictmc.\footnote{For the set $\wprocesses_{\rateset,\mathcal{M}}$, one might wonder why we choose to call it a \emph{Markov} chain, since, at first sight, it does not satisfy any Markov property. The reason for this choice will become clear in Section~\ref{subsec:ictmc_types}.} 
 Following Definition~\ref{def:consistent_process_set}, we will write $\wprocesses_{\rateset}$ when we take $\mathcal{M}$ to be the set of \emph{all} probability mass functions on $\states$, and similarly for $\wmprocesses_{\rateset}$ and $\whmprocesses_{\rateset}$.
 \end{definition}
 
@@ -2108,20 +2108,18 @@ and similarly, we also have that $\overline{P}(A\vert X_u=x_u)=\overline{E}[\ind
 
 In particular, one of the main aims of this paper is to provide methods to compute lower expectations for the different types of \ictmc's that we have introduced in Section~\ref{subsec:types_ictmc}. To this end, we start by giving some useful properties of these lower expectations.
 
-First of all, it can be shown that if $\rateset$ is a non-empty, bounded, convex and closed set of rate matrices, then the conditional lower expectations $\underline{\mathbb{E}}_{\rateset}^\mathrm{W}, \underline{\mathbb{E}}_{\rateset}^\mathrm{WM},$ and $\underline{\mathbb{E}}_{\rateset}^\mathrm{WHM}$ are actually minima---rather than infima---because they are always reached by some element of their corresponding \ictmc. However, the proof of this claim is extremely involved and requires some machinery that is rather outside the scope of this paper; we intend to publish these and related results separately in future work.
+First of all, it can be shown that if $\rateset$ is a non-empty, bounded, convex and closed set of rate matrices, then the conditional lower expectations $\underline{\mathbb{E}}_{\rateset}^\mathrm{W}, \underline{\mathbb{E}}_{\rateset}^\mathrm{WM},$ and $\underline{\mathbb{E}}_{\rateset}^\mathrm{WHM}$ are actually minima---rather than infima---because they are always reached by some element of their corresponding \ictmc. However, the proof of this claim is rather involved and requires machinery that is outside of the scope of this paper; we intend to publish these and related results separately in future work.
 
 Moving on, we noted in Section~\ref{subsec:types_ictmc} that the sets $\whmprocesses_{\rateset,\mathcal{M}}, \wmprocesses_{\rateset,\mathcal{M}},$ and $\wprocesses_{\rateset,\mathcal{M}}$ are nested subsets of each other. As an immediate consequence, their corresponding lower expectations provide (lower) bounds for each other.
 \begin{proposition}\label{prop:lower_exp_markov_bounded_by_nonmarkov}
-Consider any bounded set of rate matrices $\rateset$, and any non-empty set $\mathcal{M}$ of probability mass functions on $\states$. Then,
+Consider any non-empty bounded set of rate matrices $\rateset$, and any non-empty set $\mathcal{M}$ of probability mass functions on $\states$. Then,
 \begin{equation*}
 \underline{\mathbb{E}}_{\rateset,\mathcal{M}}^\mathrm{W}[\cdot\,\vert\,\cdot] \leq
 \underline{\mathbb{E}}_{\rateset,\mathcal{M}}^\mathrm{WM}[\cdot\,\vert\,\cdot] \leq
 \underline{\mathbb{E}}_{\rateset,\mathcal{M}}^\mathrm{WHM}[\cdot\,\vert\,\cdot]\,.
 \end{equation*}
 \end{proposition}
-\begin{proof}
-*** still need to check this *** This is immediate from Definition~\ref{def:lower_exp} and Proposition \ref{prop:markov_set_subset_of_nonmarkov_set}.
-\end{proof}
+
 
 Now, while Proposition~\ref{prop:lower_exp_markov_bounded_by_nonmarkov} states that these lower expectations provide bounds for each other, it thereby also implies that these lower expectations are not always the same. This is indeed the case, although we do not feel that a formal argument would be of much value. However, a numerical example will be given in Example~\ref{exmp:num_counterexample_markov} later on.
 
@@ -4697,6 +4695,10 @@ If instead $\smash{Q^*\in\overline{\partial}_{-}
 {T^t_{t,\,x_v}}}$ both lead to a contradiction, we conclude that our ex absurdo assumption must be false, or equivalently, that $P$ is consistent with $\rateset$. 
 
 Hence, since we already know that $P$ is a well-behaved stochastic process such that $P(X_0)\in\mathcal{M}$, it follows that $P\in\wprocesses_{\rateset,\,\mathcal{M}}$.
+\end{proof}
+
+\begin{proof}[Proof of Proposition~\ref{prop:lower_exp_markov_bounded_by_nonmarkov}]
+This result is an immediate consequence of Proposition \ref{prop:markov_set_subset_of_nonmarkov_set} and Definition~\ref{def:lower_exp}.
 \end{proof}
 
 \begin{proof}[Proof of Theorem~\ref{theorem:decomposition_multivar}]
