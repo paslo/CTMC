@@ -2060,23 +2060,36 @@ P(A\vert X_u=x_u)=P_{x_u}(A\vert X_u=x_u).
 
 \subsection{Lower Expectations for \ictmc's}\label{subsec:ictmc_types}
 
-From a practical point of view, after having specified a (precise) stochastic process, one is typically interested in the expected value of some function of interest. Similarly, in this work, our main object of consideration will be the \emph{lower expectation} with respect to the \ictmc's that we introduced in the previous section.
+From a practical point of view, after having specified a (precise) stochastic process, one is typically interested in the expected value of some function of interest, or the probability of some event. Similarly, in this work, our main objects of consideration will be the \emph{lower and upper expectations} and \emph{lower and upper probabilities} that correspond to the \ictmc's that we introduced in the previous section.
 
 \begin{definition}[Lower Expectation]\label{def:lower_exp}
-For any set of stochastic processes $\mathcal{P}\subseteq\processes$, the \emph{(conditional) lower expectation with respect to $\mathcal{P}$} is defined as
+For any non-empty set of stochastic processes $\mathcal{P}\subseteq\processes$, the \emph{(conditional) lower expectation with respect to $\mathcal{P}$} is defined as
 \begin{equation*}
-\underline{\mathbb{E}}[\cdot\,\vert\,\cdot] \coloneqq \inf\left\{\mathbb{E}_P[\cdot\,\vert\,\cdot]\,:\,P\in\mathcal{P}\right\}\,,
+\underline{\mathbb{E}}[\cdot\,\vert\,\cdot] \coloneqq \inf\left\{\mathbb{E}_P[\cdot\,\vert\,\cdot]\,:\,P\in\mathcal{P}\right\},
 \end{equation*}
 where $\mathbb{E}_P[\cdot\,\vert\,\cdot]$ denotes the (conditional) expectation taken with respect to $P$.
 
-As specific cases, we will denote the lower expectation with respect to $\wprocesses_{\rateset,\mathcal{M}}$ as $\underline{\mathbb{E}}_{\rateset,\mathcal{M}}^{\mathrm{W}}$, with respect to $\wmprocesses_{\rateset,\mathcal{M}}$ as $\underline{\mathbb{E}}_{\rateset,\mathcal{M}}^{\mathrm{WM}}$, and with respect to  $\whmprocesses_{\rateset,\mathcal{M}}$ as $\underline{\mathbb{E}}_{\rateset,\mathcal{M}}^{\mathrm{WHM}}$. Following Definition~\ref{def:consistent_process_set}, we will write $\underline{\mathbb{E}}_{\rateset}^{\mathrm{W}}$ when we take $\mathcal{M}$ to be the set of \emph{all} probability mass functions on $\states$ (and similarly for these other lower expectations).
+In particular, for any non-empty bounded set of rate matrices $\rateset$ and any non-empty set $\mathcal{M}$ of probability mass functions on $\states$, we let
+\begin{equation*}
+\underline{\mathbb{E}}_{\rateset,\mathcal{M}}^{\mathrm{W}}[\cdot\,\vert\,\cdot] \coloneqq \inf\left\{\mathbb{E}_P[\cdot\,\vert\,\cdot]\,:\,P\in\mathcal{P}_{\rateset,\mathcal{M}}^{\mathrm{W}}\right\},
+\end{equation*}
+and similarly for $\smash{\underline{\mathbb{E}}_{\rateset,\mathcal{M}}^{\mathrm{WM}}}$ and $\smash{\underline{\mathbb{E}}_{\rateset,\mathcal{M}}^{\mathrm{WHM}}}$.
+%As specific cases, we will denote the lower expectation with respect to $\wprocesses_{\rateset,\mathcal{M}}$ as $\underline{\mathbb{E}}_{\rateset,\mathcal{M}}^{\mathrm{W}}$, with respect to $\wmprocesses_{\rateset,\mathcal{M}}$ as $\underline{\mathbb{E}}_{\rateset,\mathcal{M}}^{\mathrm{WM}}$, and with respect to  $\whmprocesses_{\rateset,\mathcal{M}}$ as $\underline{\mathbb{E}}_{\rateset,\mathcal{M}}^{\mathrm{WHM}}$. 
+If $\mathcal{M}$ is the set of \emph{all} probability mass functions on $\states$, then as in Definition~\ref{def:consistent_process_set}, we will write $\underline{\mathbb{E}}_{\rateset}^{\mathrm{W}}$ instead of $\underline{\mathbb{E}}_{\rateset,\mathcal{M}}^{\mathrm{W}}$, and similarly for $\underline{\mathbb{E}}_{\rateset}^{\mathrm{WM}}$ and $\underline{\mathbb{E}}_{\rateset}^{\mathrm{WHM}}$.
 \end{definition}
 
-\noindent The corresponding \emph{upper expectation}, $\overline{\mathbb{E}}[\cdot\,\vert\,\cdot]\coloneqq \sup\{\mathbb{E}_P[\cdot\,\vert\,\cdot]\,:\,P\in\mathcal{P}\}$ can, as is well-known~{\bf CITE}, always be defined through the conjugacy relation $\overline{\mathbb{E}}[\cdot\,\vert\,\cdot]=-\underline{\mathbb{E}}[-\cdot\,\vert\,\cdot]$. Therefore, we will in the remainder of this work focus only on the lower expectation with respect to some set $\mathcal{P}$.
-
+Upper expectations can be defined analogously, simply by replacing the infimum by a supremum: $\smash{\overline{\mathbb{E}}[\cdot\,\vert\,\cdot]\coloneqq \sup\{\mathbb{E}_P[\cdot\,\vert\,\cdot]\,:\,P\in\mathcal{P}\}}$.
+%, and similarly for ${\overline{\mathbb{E}}_{\rateset,\mathcal{M}}^{\mathrm{W}}}$, ${\overline{\mathbb{E}}_{\rateset,\mathcal{M}}^{\mathrm{WM}}}$ and ${\overline{\mathbb{E}}_{\rateset,\mathcal{M}}^{\mathrm{WHM}}}$. 
+However, there is no need to study these upper expectations separately, because they are in one-to-one correspondence to lower expectations through the conjugacy relation $\overline{\mathbb{E}}[\cdot\,\vert\,\cdot]=-\underline{\mathbb{E}}[-\cdot\,\vert\,\cdot]$. 
 %Because these lower expectations are linked to a given set $\mathcal{P}\subseteq\processes$ of stochastic processes, we will first look at how we can describe such a set $\mathcal{P}$.
-
-
+Lower and upper probabilities also have analogous definitions. However, these too do not need to be studied separately, because they correspond to special cases of lower and upper expectations. For example, for any $u\in\mathcal{U}$, $x_u\in\states^u$ and $A\in\mathcal{A}_u$, we have that
+\begin{align*}
+\underline{P}(A\vert X_u=x_u)
+\coloneqq&\inf\{P(A\vert X_u=x_u)\colon P\in\mathcal{P}\}\\
+=&\inf\{\mathbb{E}_P[\ind{A}\vert X_u=x_u]\colon P\in\mathcal{P}\}
+=\underline{E}[\ind{A}\vert X_u=x_u],
+\end{align*}
+and similarly, we also have that $\overline{P}(A\vert X_u=x_u)=\overline{E}[\ind{A}\vert X_u=x_u]$, which, due to conjugacy, implies that $\overline{P}(A\vert X_u=x_u)=-\underline{E}[-\ind{A}\vert X_u=x_u]$. Hence, from a computational point of view, it clearly suffices to focus on lower expectations, which is what we will do in the remainder of this work.
 
 %\begin{exmp}\label{example:singleton_infinite_consistent}
 %Suppose that $\rateset=\{Q\}$ for some $Q\in\mathcal{R}$. Then, there are an infinite number of stochastic processes consistent with $\rateset$. In particular, recall from Section~\ref{sec:homogen_markov_chain} that there exists a well-behaved homogeneous Markov chain that is characterized uniquely by the rate matrix $Q$, \emph{up to} its initial distribution $P(X_0)$. Therefore, and due to Proposition~\ref{prop:Q_is_singleton_deriv_for_homogen}, for each choice of probability mass function $p$ on $\states$, there is a well-behaved homogeneous Markov chain $P$ that is consistent with $\rateset$, and for which $P(X_0=x)=p(x)$ for all $x\in\states$.
