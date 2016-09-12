@@ -21,6 +21,8 @@
 \usepackage{algorithmicx}
 \usepackage{algpseudocode}
 
+\usepackage{graphicx}
+
 %\usepackage{hyperref}
 %\usepackage{pdfsync}
 %\usepackage{authblk}
@@ -2168,22 +2170,24 @@ Therefore, we will in the sequel focus on the \ictmc's $\wmprocesses_{\rateset,\
 **** Ok, got it down numerically. Consider a ternary-state model, with $\states\coloneqq \{1,2,3\}$, take
 \begin{equation*}
 \rateset \coloneqq \left\{ \left[\begin{array}{rrr}
--\mu & 0 &\mu \\
+-0.01 & 0 & 0.01 \\
 \lambda & -\lambda & 0 \\
 0 & 0 & 0
-\end{array}\right] \,:\,\mu\in[0.01,0.5],\lambda\in[0.01,0.5]\right\}\,,
+\end{array}\right] \,:\,\lambda\in[0.01,0.5]\right\}\,,
 \end{equation*}
-let $f\in\gamblesX$ be defined as $f\coloneqq [0~1~2]^\top$, and compute the lower expectation at time $t=10$, conditional on $X_0=2$, to find
-\begin{equation*}
-\underline{\mathbb{E}}_{\rateset}^\mathrm{WHM}[f(X_{10}),\vert\,X_0=2] \approx 0.16038\,.
-\end{equation*}
-*** Mathematica actually breaks down when I try to use the build-in solver for this. Interestingly, it works perfectly fine for time points less than 6.6, which is around the point where the "desired-state" switch occurs and homogeneity breaks down. Anyway, I used a $1000\times 1000$-grid discretization of the above $\rateset$, then just optimized over that to find the answer.
+and let $f\in\gamblesX$ be defined as $f\coloneqq [0~1~2]^\top$.
 
-By comparison, for the non-homogeneous case, the optimization using Algorithm~\ref{alg:compute_singlevar}, with $\epsilon=10^{-2}$, gives
-\begin{equation*}
-\underline{\mathbb{E}}_{\rateset}^\mathrm{WM}[f(X_{10}),\vert\,X_0=2] \approx 0.128954\pm 10^{-2}\,,
-\end{equation*}
-which \emph{should} establish the difference within error tolerances, although it's close given the (unknown-error) approximation I used for the homogeneous case. My Mathematica implementation of Algorithm~\ref{alg:compute_singlevar} is \emph{super slow} though, so I didn't yet check for higher precision. Will start that computation after committing this, will hopefully finish some time tonight.
+The below picture should work for this example (y-axis is still labeled incorrectly though by a factor of 50). X-axis is time, y-axis is expected value conditional on $X_0=2$, the colored area is the set of $\{\mathbb{E}_P[f(X_t)\,\vert\,X_0=2]\,:\,P\in\whmprocesses_\rateset\}$, obtained by varying $\lambda\in[0.01,0.5]$, and the orange line is lower expectation for non-Markov \ictmc, $\underline{\mathbb{E}}_\rateset^\mathrm{WM}[f(X_t)\,\vert\,X_0=2]$. I feel this is a clear illustration that the lower expectations are different :)
+%*** Mathematica actually breaks down when I try to use the build-in solver for this. Interestingly, it works perfectly fine for time points less than 6.6, which is around the point where the "desired-state" switch occurs and homogeneity breaks down. Anyway, I used a $1000\times 1000$-grid discretization of the above $\rateset$, then just optimized over that to find the answer.
+
+%By comparison, for the non-homogeneous case, the optimization using Algorithm~\ref{alg:compute_singlevar}, with $\epsilon=10^{-3}$, gives
+%\begin{equation*}
+%\underline{\mathbb{E}}_{\rateset}^\mathrm{WM}[f(X_{10})\,\vert\,X_0=2] \approx 0.129\pm 10^{-3}\,,
+%\end{equation*}
+%which should establish the difference within error tolerances.
+\begin{figure}[H]
+\includegraphics[width=\textwidth]{HomogeneousCounterExamplePicture}
+\end{figure}
 \exampleend
 \end{exmp}
 
