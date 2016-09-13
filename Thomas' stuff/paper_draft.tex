@@ -2177,7 +2177,7 @@ Therefore, we will in the sequel focus on the \ictmc's $\wmprocesses_{\rateset,\
 \end{equation*}
 and let $f\in\gamblesX$ be defined as $f\coloneqq [0~1~2]^\top$.
 
-The below picture should work for this example (y-axis is still labeled incorrectly though by a factor of 50). X-axis is time, y-axis is expected value conditional on $X_0=2$, the colored area is the set of $\{\mathbb{E}_P[f(X_t)\,\vert\,X_0=2]\,:\,P\in\whmprocesses_\rateset\}$, obtained by varying $\lambda\in[0.01,0.5]$, and the orange line is lower expectation for non-Markov \ictmc, $\underline{\mathbb{E}}_\rateset^\mathrm{WM}[f(X_t)\,\vert\,X_0=2]$. I feel this is a clear illustration that the lower expectations are different :)
+%The below picture should work for this example (y-axis is still labeled incorrectly though by a factor of 50). X-axis is time, y-axis is expected value conditional on $X_0=2$, the colored area is the set of $\{\mathbb{E}_P[f(X_t)\,\vert\,X_0=2]\,:\,P\in\whmprocesses_\rateset\}$, obtained by varying $\lambda\in[0.01,0.5]$, and the orange line is lower expectation for non-Markov \ictmc, $\underline{\mathbb{E}}_\rateset^\mathrm{WM}[f(X_t)\,\vert\,X_0=2]$. I feel this is a clear illustration that the lower expectations are different :)
 %*** Mathematica actually breaks down when I try to use the build-in solver for this. Interestingly, it works perfectly fine for time points less than 6.6, which is around the point where the "desired-state" switch occurs and homogeneity breaks down. Anyway, I used a $1000\times 1000$-grid discretization of the above $\rateset$, then just optimized over that to find the answer.
 
 %By comparison, for the non-homogeneous case, the optimization using Algorithm~\ref{alg:compute_singlevar}, with $\epsilon=10^{-3}$, gives
@@ -2185,8 +2185,9 @@ The below picture should work for this example (y-axis is still labeled incorrec
 %\underline{\mathbb{E}}_{\rateset}^\mathrm{WM}[f(X_{10})\,\vert\,X_0=2] \approx 0.129\pm 10^{-3}\,,
 %\end{equation*}
 %which should establish the difference within error tolerances.
-\begin{figure}[H]
+\begin{figure}[H]\label{fig:homogeneousCounterExample}
 \includegraphics[width=\textwidth]{HomogeneousCounterExamplePicture}
+\caption{Plot of the induced set of expected values $\mathbb{E}_P[f(X_t)\,\vert\,X_0=2]$, corresponding to all $P\in\whmprocesses_{\rateset}$ obtained as we vary $\lambda\in[0.01,0.5]$. The horizontal axis denotes the time-points $[0,100]$. Observe that the lower expectation with respect to this set is first given by choosing $\lambda=0.5$. This changes around the time-point $t\approx 6.6$, after which the minimizing value of $\lambda$ becomes a (changing) internal point of the interval $[0.01,0.5]$. The orange line corresponds to the lower expectation with respect to the set $\wmprocesses_\rateset$, which also includes non-homogeneous Markov chains. It is clear that the lower expectations $\underline{\mathbb{E}}_\rateset^\mathrm{WHM}[f(X_t)\,\vert\,X_0=2]$ and $\underline{\mathbb{E}}_\rateset^\mathrm{WM}[f(X_t)\,\vert\,X_0=2]$ are equal when $t<6.6$, but then diverge as time evolves further.}
 \end{figure}
 \exampleend
 \end{exmp}
