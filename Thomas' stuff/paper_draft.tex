@@ -1160,7 +1160,7 @@ Hence, for any $A\in\mathcal{A}_u$ and $x_u\in\states_u$, we find that $(A,X_u=x
 \mathcal{C}^\mathrm{SP}\coloneqq\big\{
 (A,X_u=x_u)
 \colon
-u\in\mathcal{U},~x_u\in\states^u,~A\in\mathcal{A}_u\big\}
+u\in\mathcal{U},~x_u\in\states_u,~A\in\mathcal{A}_u\big\}
 \end{equation*}
 is a subset of $\power\times\nonemptypower$. It is also worth noting that if $u=\emptyset$, then $\omega\vert_u=x_u$ is vacuously true, which implies that in that case, $(X_u=x_u)=\Omega$.
 
@@ -2084,7 +2084,7 @@ Upper expectations can be defined analogously, simply by replacing the infimum b
 %, and similarly for ${\overline{\mathbb{E}}_{\rateset,\mathcal{M}}^{\mathrm{W}}}$, ${\overline{\mathbb{E}}_{\rateset,\mathcal{M}}^{\mathrm{WM}}}$ and ${\overline{\mathbb{E}}_{\rateset,\mathcal{M}}^{\mathrm{WHM}}}$. 
 However, there is no need to study these upper expectations separately, because they are in one-to-one correspondence to lower expectations through the conjugacy relation $\overline{\mathbb{E}}[\cdot\,\vert\,\cdot]=-\underline{\mathbb{E}}[-\cdot\,\vert\,\cdot]$. 
 %Because these lower expectations are linked to a given set $\mathcal{P}\subseteq\processes$ of stochastic processes, we will first look at how we can describe such a set $\mathcal{P}$.
-Lower and upper probabilities also have analogous definitions. However, these too do not need to be studied separately, because they correspond to special cases of lower and upper expectations. For example, for any $u\in\mathcal{U}$, $x_u\in\states^u$ and $A\in\mathcal{A}_u$, we have that
+Lower and upper probabilities also have analogous definitions. However, these too do not need to be studied separately, because they correspond to special cases of lower and upper expectations. For example, for any $u\in\mathcal{U}$, $x_u\in\states_u$ and $A\in\mathcal{A}_u$, we have that
 \begin{align*}
 \underline{P}(A\vert X_u=x_u)
 \coloneqq&\inf\{P(A\vert X_u=x_u)\colon P\in\mathcal{P}\}\\
@@ -2133,7 +2133,7 @@ Generally speaking, the inequalities in this proposition can be---and often are-
 
 %We have in the previous section defined imprecise continuous-time Markov chains as sets of stochastic processes consistent with some set $\rateset$ of rate matrices. An obvious question, therefore, is to see if we can express properties of these sets $\wmprocesses_{\rateset,\,\mathcal{M}}$ and $\wprocesses_{\rateset,\,\mathcal{M}}$ in relation to properties of the set $\rateset$. We have by assumption stated that such a $\rateset$ must be non-empty and bounded, and will here consider the cases where $\rateset$ is additionally closed or convex.
 
-For now, we first provide a useful property of the lower expectation $\smash{\underline{\mathbb{E}}_{\rateset,\mathcal{M}}^\mathrm{W}}$ that corresponds to $\wprocesses_{\rateset,\mathcal{M}}$. To this end, consider a function $f\in\gambles(\states^{u\cup v\cup w})$ defined on the union $u\cup v\cup w$ of three finite sets of time points $u,v,w\in\mathcal{U}$ such that $u<v<w$. It then follows from the basic properties of expectations that for any stochastic process $P$, the corresponding expectation of $f$, conditional on $X_u$, decomposes as follows:
+For now, we first provide a useful property of the lower expectation $\smash{\underline{\mathbb{E}}_{\rateset,\mathcal{M}}^\mathrm{W}}$ that corresponds to $\wprocesses_{\rateset,\mathcal{M}}$. To this end, consider a function $f\in\gambles(\states_{u\cup v\cup w})$ defined on the union $u\cup v\cup w$ of three finite sets of time points $u,v,w\in\mathcal{U}$ such that $u<v<w$. It then follows from the basic properties of expectations that for any stochastic process $P$, the corresponding expectation of $f$, conditional on $X_u$, decomposes as follows:
 \begin{equation*}
 \mathbb{E}_P[f(X_u,X_v,X_w)\,\vert\,X_u] = \mathbb{E}_P\bigl[\mathbb{E}_P[f(X_u,X_v,X_w)\,\vert\,X_u,X_v]\,\big\vert\,X_u\bigr].
 \end{equation*}
@@ -3338,6 +3338,8 @@ In summary, then, we have provided in this work a generalization of continuous-t
 %For instance, we mentioned---but did not prove---that the difference between $\wprocesses_{\text{int}(\rateset_{\lrate})}$ and $\wprocesses_{\rateset_{\lrate}}$ is that the lower expectation of the latter \ictmc~is actually a minimum, rather than an infimum, because it will always be reached by the expectation of some stochastic process $P\in\wprocesses_{\rateset_{\lrate}}$. The proof of this claim relies on some technical results about closure properties relating to this set, and we aim to publish these results in future work.
 
 *** I would discuss sigma-additivity things here: explain that this is possible with our approach by using Kolmogorovs extension theorem, say that this would allow us to consider for example the lower and upper expected time till absorbtion. (I promised to discuss this here in Section 4.2) ***
+
+*** mention that we expect convexity to be unnecessary for some of the result that we have (for now) proved with convexity ***
 
 Furthermore, recall from Section~\ref{sec:funcs_multi_time_points} that the computation of lower expectations of functions defined on multiple time points has a runtime complexity that is exponential in the number of these time points. However, this exponential runtime holds for Algorithm~\ref{alg:compute_multivar}, which works for \emph{arbitrary} functions. That is, it does not assume any structure of the function. In contrast, in many practical applications there will be some underlying structure of the functions that we are interested in. For instance, for time points $v=s_0,\ldots,s_m$, there may be functions $g_i\in\gambles(\states_{s_i})$, $i\in\{0,\ldots,m\}$, such that $f\in\gambles(\states_v)$ is of the form $f(x_v) = \sum_{i=0}^m g_i(x_{s_i})$ or $f(x_v) = \prod_{i=0}^m g_i(x_{s_i})$. It follows from earlier work on imprecise graphical models~\cite{de2015credal} that functions of this form can be computed in a runtime complexity that is \emph{linear} in the number of time points. We intend in future work to develop algorithms that use this property, and as such reduce the computational complexity of computing lower expectations of such functions. In particular, because the \emph{generalized Bayes-rule}~\cite{Walley:1991vk} is within this tractably-computable function class, this should make possible tractable inference algorithms for \ictmc's, as well as the further generalization to imprecise continuous-time \emph{hidden} Markov chains.
 
@@ -4735,7 +4737,7 @@ This result is an immediate consequence of Proposition \ref{prop:markov_set_subs
 
 \begin{proof}[Proof of Theorem~\ref{theorem:decomposition_multivar}]
 Let $g(X_u,X_v)\coloneqq\underline{\mathbb{E}}^{\mathrm{W}}_{\rateset,\,\mathcal{M}}\left[f(X_u,X_v,X_w)\vert\,X_u,X_v\right]$ and fix any $x_u\in\states_u$.
-For any $P\in\wprocesses_{\rateset,\,\mathcal{M}}$, it then follows from the basic properties of expectation (which follow from~\ref{def:coh_prob_2}--\ref{def:coh_prob_6}) and Definition~\ref{def:lower_exp} that
+For any $P\in\wprocesses_{\rateset,\,\mathcal{M}}$, it then follows from the basic properties of expectations (which follow from~\ref{def:coh_prob_2}--\ref{def:coh_prob_6}) and Definition~\ref{def:lower_exp} that
 \begin{align*}
 \mathbb{E}_P\left[f(X_u,X_v,X_w)\vert\,x_u\right] = \mathbb{E}_P\bigl[\mathbb{E}_P\left[f(X_u,X_v,X_w)\vert\,X_u,X_v\right]\vert\,x_u\bigr] 
  &\geq \mathbb{E}_P\bigl[g(X_u,X_v)\vert\,x_u\bigr] \\
@@ -4750,7 +4752,8 @@ Since $P\in\wprocesses_{\rateset,\,\mathcal{M}}$ is arbitrary, this implies that
 % \begin{equation*}
 % \norm{\mathbb{E}\left[f(X_u,X_v)\,\vert\,X_u\right] - \underline{\mathbb{E}}^{\mathrm{W}}_\rateset\bigl[\underline{\mathbb{E}}^{\mathrm{W}}_\rateset\left[f(X_u,X_v)\,\vert\,X_u,X_{v\setminus w}\right]\,\vert\,X_u\bigr]} < \epsilon\,.
 % \end{equation*}
-Fix $\epsilon\in\realspos$.
+\noindent
+Now fix any $\epsilon\in\realspos$.
 % Due to the definition of the norm, we have to show that
 % \begin{equation*}
 % \max\left\{\abs{\mathbb{E}\left[f(x_u,X_v)\,\vert\,x_u\right] - \underline{\mathbb{E}}^{\mathrm{W}}_\rateset\bigl[\underline{\mathbb{E}}^{\mathrm{W}}_\rateset\left[f(x_u,X_v)\,\vert\,x_u,X_{v\setminus w}\right]\,\vert\,x_u\bigr]}\,:\,x_u\in\states^u\right\} < \epsilon\,.
@@ -4759,13 +4762,13 @@ Fix $\epsilon\in\realspos$.
 % \begin{equation*}
 % \underline{\mathbb{E}}^{\mathrm{W}}_\rateset\bigl[\underline{\mathbb{E}}^{\mathrm{W}}_\rateset[f(x_u,X_z,X_w)\,\vert\,x_u,X_z]\,\big\vert\,x_u\bigr] = \inf\{\mathbb{E}\bigl[\underline{\mathbb{E}}^{\mathrm{W}}_\rateset[f(x_u,X_z,X_w)\,\vert\,x_u,X_z]\,\big\vert\,x_u\bigr]\,:\,P\in\wprocesses_\rateset\}\,.
 % \end{equation*}
-Because of Definition~\ref{def:lower_exp}, there is some $P_\emptyset\in\wprocesses_{\rateset,\,\mathcal{M}}$ such that
+Then due to Definition~\ref{def:lower_exp}, there is some $P_\emptyset\in\wprocesses_{\rateset,\,\mathcal{M}}$ such that
 \begin{equation}\label{eq:theorem:decomposition_multivar:firsthalfprob}
 \mathbb{E}_{P_\emptyset}\bigl[g(x_u,X_v)\vert\,x_u\bigr]
 =\mathbb{E}_{P_\emptyset}\bigl[g(X_u,X_v)\vert\,x_u\bigr] < \underline{\mathbb{E}}^{\mathrm{W}}_{\rateset,\,\mathcal{M}}\bigl[g(X_u,X_v)\big\vert\,x_u\bigr]
-+\nicefrac{\epsilon}{2}
++\nicefrac{\epsilon}{2},
 \end{equation}
-and, for all $x_{v}\in\states_v$, there is some $P_{x_v}\in\wprocesses_{\rateset,\,\mathcal{M}}$ such that
+where the first equality follows from the basic properties of expectations. Similarly, for all $x_{v}\in\states_v$, there is some $P_{x_v}\in\wprocesses_{\rateset,\,\mathcal{M}}$ such that
 \begin{equation}\label{eq:theorem:decomposition_multivar:secondhalfprob}
 \mathbb{E}_{P_{x_v}}\left[f(X_u,X_v,X_w)\vert\,x_u,x_v\right] < \underline{\mathbb{E}}^{\mathrm{W}}_{\rateset,\,\mathcal{M}}\left[f(X_u,X_v,X_w)\vert\,x_u,x_v\right]+\nicefrac{\epsilon}{2}=g(x_u,x_v)+\nicefrac{\epsilon}{2}.
 \end{equation}
