@@ -2133,11 +2133,11 @@ Generally speaking, the inequalities in this proposition can be---and often are-
 
 %We have in the previous section defined imprecise continuous-time Markov chains as sets of stochastic processes consistent with some set $\rateset$ of rate matrices. An obvious question, therefore, is to see if we can express properties of these sets $\wmprocesses_{\rateset,\,\mathcal{M}}$ and $\wprocesses_{\rateset,\,\mathcal{M}}$ in relation to properties of the set $\rateset$. We have by assumption stated that such a $\rateset$ must be non-empty and bounded, and will here consider the cases where $\rateset$ is additionally closed or convex.
 
-For now, we first provide a useful property of the lower expectation $\smash{\underline{\mathbb{E}}_{\rateset,\mathcal{M}}^\mathrm{W}}$ that corresponds to $\wprocesses_{\rateset,\mathcal{M}}$. To this end, consider a function $f\in\gambles(\states^{u\cup v\cup w})$ defined on the union $u\cup v\cup w$ of three finite sets of time points $u,v,w\in\mathcal{U}$ such that $u<v<w$. It then follows from the basic properties of expectations that for any stochastic process $P$, the expectation $\mathbb{E}_P$ of such a function satisfies,
+For now, we first provide a useful property of the lower expectation $\smash{\underline{\mathbb{E}}_{\rateset,\mathcal{M}}^\mathrm{W}}$ that corresponds to $\wprocesses_{\rateset,\mathcal{M}}$. To this end, consider a function $f\in\gambles(\states^{u\cup v\cup w})$ defined on the union $u\cup v\cup w$ of three finite sets of time points $u,v,w\in\mathcal{U}$ such that $u<v<w$. It then follows from the basic properties of expectations that for any stochastic process $P$, the corresponding expectation of $f$, conditional on $X_u$, decomposes as follows:
 \begin{equation*}
-\mathbb{E}_P[f(X_u,X_v,X_w)\,\vert\,X_u] = \mathbb{E}_P\bigl[\mathbb{E}_P[f(X_u,X_v,X_w)\,\vert\,X_u,X_v]\,\big\vert\,X_u\bigr]\,,
+\mathbb{E}_P[f(X_u,X_v,X_w)\,\vert\,X_u] = \mathbb{E}_P\bigl[\mathbb{E}_P[f(X_u,X_v,X_w)\,\vert\,X_u,X_v]\,\big\vert\,X_u\bigr].
 \end{equation*}
-assuming without loss of generality that $u<v<w$. This equality is the well-known \emph{law of iterated expectation}. As shown by our next result, it follows from Theorem~\ref{theo:aanelkaarplakken} that, if $\rateset$ is convex, the same decomposition property holds for lower expectations $\underline{\mathbb{E}}^{\mathrm{W}}_{\rateset,\,\mathcal{M}}$; this is the law of iterated \emph{lower} expectation {\bf CITE?}.
+This equality is well-known, and is called the \emph{law of iterated expectation}. Rather remarkably, if $\rateset$ is convex, then the lower expectation $\underline{\mathbb{E}}^{\mathrm{W}}_{\rateset,\,\mathcal{M}}$ satisfies a similar property. The proof for this so-called law of iterated \emph{lower} expectation is based on Theorem~\ref{theo:aanelkaarplakken}.
 
 \begin{theorem}\label{theorem:decomposition_multivar}
 Let $\rateset$ be an arbitrary non-empty, bounded, and convex set of rate matrices, and consider any non-empty set $\mathcal{M}$ of probability mass functions on $\states$. Then for any $u,v,w\in\mathcal{U}$ such that $u<v<w$ and any $f\in\gambles(\states_{u\cup v\cup w})$:
@@ -2145,9 +2145,9 @@ Let $\rateset$ be an arbitrary non-empty, bounded, and convex set of rate matric
 \underline{\mathbb{E}}^{\mathrm{W}}_{\rateset,\,\mathcal{M}}\left[f(X_u,X_v,X_w)\,\vert\,X_u\right] = \underline{\mathbb{E}}^{\mathrm{W}}_{\rateset,\,\mathcal{M}}\Bigl[\underline{\mathbb{E}}^{\mathrm{W}}_{\rateset,\,\mathcal{M}}\left[f(X_u,X_v,X_w)\,\vert\,X_u,X_v\right] \Big\vert\,X_u\Bigr]\,. 
 \end{equation}
 \end{theorem}
-The reason that this result is useful, is that it essentially allows us to compute the lower expectation of such functions recursively. In particular, instead of computing the lower expectation on all time-points simultaneously, we can focus on subsets of the time-points separately. We will revisit this idea in Section~\ref{sec:funcs_multi_time_points}.
+The reason why this result is useful, is because it essentially allows us to compute the lower expectation of such functions recursively. In particular, instead of computing the lower expectation on all time-points simultaneously, we can focus on subsets of the time-points separately. We will revisit this idea Section~\ref{sec:funcs_multi_time_points}, where we will use it to develop efficient algorithms.
 
-This property stated by Theorem~\ref{theorem:decomposition_multivar} relies on the fact that the elements of $\wprocesses_{\rateset,\mathcal{M}}$ can have history-dependent probabilities, which is why it does not in general hold for $\underline{\mathbb{E}}_{\rateset,\mathcal{M}}^\mathrm{WM}$ or $\underline{\mathbb{E}}_{\rateset,\mathcal{M}}^\mathrm{WHM}$. Because, as mentioned above, this property does simplify the process of computing the lower expectation $\underline{\mathbb{E}}_{\rateset,\mathcal{M}}^\mathrm{W}$, this suggests that the qualitative differences between our various \ictmc's make some of these lower expectations harder to compute than others. In fact, we will show in Section~\ref{sec:funcs_multi_time_points} that $\wprocesses_{\rateset\,,\mathcal{M}}$ is in some sense the easiest set to do this for, exactly because of Theorem~\ref{theorem:decomposition_multivar}.
+This property that is stated by Theorem~\ref{theorem:decomposition_multivar} relies on the fact that the elements of $\wprocesses_{\rateset,\mathcal{M}}$ can have history-dependent probabilities, which is why it does not in general hold for $\underline{\mathbb{E}}_{\rateset,\mathcal{M}}^\mathrm{WM}$ or $\underline{\mathbb{E}}_{\rateset,\mathcal{M}}^\mathrm{WHM}$. Because, as mentioned above, this property does simplify the process of computing the lower expectation $\underline{\mathbb{E}}_{\rateset,\mathcal{M}}^\mathrm{W}$, this suggests that the qualitative differences between our various \ictmc's make some of these lower expectations harder to compute than others. In fact, we will show in Section~\ref{sec:funcs_multi_time_points} that $\wprocesses_{\rateset\,,\mathcal{M}}$ is in some sense the easiest set to do this for, exactly because of Theorem~\ref{theorem:decomposition_multivar}.
 
 Furthermore, it---ironically---turns out that computing lower expectations for the set $\whmprocesses_{\rateset\,,\mathcal{M}}$ is in general much harder than for the sets $\wmprocesses_{\rateset\,,\mathcal{M}}$ or $\wprocesses_{\rateset\,,\mathcal{M}}$. The problem is, essentially, that while homogeneous Markov chains are easy to work with numerically, the set $\whmprocesses_{\rateset\,,\mathcal{M}}$ does not provide enough ``degrees of freedom'' to make the optimization problem involved in computing $\underline{\mathbb{E}}^\mathrm{WHM}_{\rateset\,,\mathcal{M}}$ tractable. The following serves as an illustration. 
 
@@ -4935,9 +4935,14 @@ $\underline{\mathbb{E}}^{\mathrm{W}}_{\rateset,\,\mathcal{M}}\left[f(X_u,X_v,X_w
 
 \section{Proofs and Lemmas for Section~\ref{sec:lowertrans}}
 
-We require the following result for the proof of Proposition~\ref{lemma:completemetricspace}.
-\begin{lemma}\cite[Proposition~1]{DeBock:2016}\label{lemma:lowertrans_limit_iff_pointwise_limit}
-Let $\lt$ be a lower transition operator, and consider any sequence $\{\lt_i\}_{i\in\nats}$ of lower transition operators. Then, $\lt=\lim_{i\to\infty}T_i$ if and only if $\lt f=\lim_{i\to\infty}\lt_i f$ for all $f\in\gamblesX$.
+We require the following two results for the proof of Proposition~\ref{lemma:completemetricspace}.
+
+\begin{lemma}\cite[Proposition~1]{DeBock:2016}\label{lemma:lowertrans_if_pointwise_limit}
+Consider any sequence $\{\lt_i\}_{i\in\nats}$ of lower transition operators such that $\lt f=\lim_{i\to\infty}\lt_i f$ for all $f\in\gamblesX$. Then $\lt$ is a lower transition operator.
+\end{lemma}
+
+\begin{lemma}\cite[Proposition~2]{DeBock:2016}\label{lemma:lowertrans_limit_iff_pointwise_limit}
+Let $\lt$ be a lower transition operator, and consider any sequence $\{\lt_i\}_{i\in\nats}$ of lower transition operators. Then, $\lt=\lim_{i\to\infty}\lt_i$ if and only if $\lt f=\lim_{i\to\infty}\lt_i f$ for all $f\in\gamblesX$.
 \end{lemma}
 
 \begin{proof}[Proof of Proposition~\ref{lemma:completemetricspace}]
@@ -4952,17 +4957,7 @@ Consider any $f\in\gamblesX$ and $x\in\states$. For any $k,\ell\in\nats$, \eqref
 \end{equation*}
 Therefore, and because $\{\lt_i\}_{i\in\nats}$ is Cauchy with respect to the norm $\norm{\cdot}$, it follows that $\{[\lt_i f](x)\}_{i\in\nats}$ is Cauchy with respect to the norm $\abs{\cdot}$. Hence, since $\reals$ is (well known to be) complete with respect to the topology that is induced by $\abs{\cdot}$, we find that $\{[\lt_i f](x)\}_{i\in\nats}$ converges to a limit in $\reals$, which we will denote by $[\lt f](x)$. Let $\lt f$ be the unique function in $\gamblesX$ that has $[\lt f](x)$, $x\in\states$, as its components. Then clearly, $\lt f=\lim_{i\to+\infty}\lt_if$. 
 
-Let $\lt\colon\gamblesX\to\gamblesX$ be the unique operator that maps any $f\in\gamblesX$ to $\lt f$. We will prove that $\lt$ is a lower transition operator, or equivalently, that $\lt$ satisfies \ref{LT:bounded_min}--\ref{LT:homo}. For all $f,g\in\gamblesX$, we know that, for all $i\in\nats$, $\lt_i(f+g)\geq\lt_if+\lt_ig$ because $\lt_i$ is a lower transition operator, and therefore, we find that
-\begin{equation*}
-\lt(f+g)
-=\lim_{i\to+\infty}\lt_i(f+g)
-\geq\lim_{i\to+\infty}\lt_if
-+
-\lim_{i\to+\infty}\lt_ig=\lt f+\lt g.
-\end{equation*}
-Since $f$ and $g$ are arbitrary elements of $\gamblesX$, this means that $\lt$ satisfies \ref{LT:super_additive}. The proof for \ref{LT:bounded_min} and~\ref{LT:homo} is completely analogous. Hence, $\lt$ is a lower transition operator. 
-
-Since we have shown above that $\lt f=\lim_{i\to+\infty}\lt_i f$ for all $f\in\gamblesX$, and that $\lt$ is a lower transition operator, and because, for all $i\in\nats$, $\lt_i$ is a lower transition operator, it now follows from Lemma~\ref{lemma:lowertrans_limit_iff_pointwise_limit} that $\lim_{i\to+\infty}\lt_i=\lt$.
+Let $\lt\colon\gamblesX\to\gamblesX$ be the unique operator that maps any $f\in\gamblesX$ to $\lt f$. It then follows from Lemma~\ref{lemma:lowertrans_if_pointwise_limit} that $\lt$ is a lower transition operator. Therefore, and because we already know that $\lt f=\lim_{i\to+\infty}\lt_i f$ for all $f\in\gamblesX$, it now follows from Lemma~\ref{lemma:lowertrans_limit_iff_pointwise_limit} that $\lim_{i\to+\infty}\lt_i=\lt$.
 % Since $\{\lt_i\}_{i\in\nats}$ is cauchy with respect to $\norm{\cdot}$, we know that
 % \begin{equation}\label{eq:lemma:completemetricspace:cauchy}
 % (\forall\epsilon\in\realspos)\,(\exists n_\epsilon\in\nats)\,(\forall k,\ell > n_\epsilon)
