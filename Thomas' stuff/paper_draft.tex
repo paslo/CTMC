@@ -2161,15 +2161,7 @@ Suppose that for some function $f\in\gamblesX$, we want to compute the condition
  &= \inf\left\{ e^{Q_P t}f\,:\,P\in\whmprocesses_{\rateset,\,\mathcal{M}} \right\} \\
  &= \inf\left\{ e^{Q t}f\,:\,Q\in\rateset\right\}\,.
 \end{align*}
-Therefore, computing the term $\smash{\underline{\mathbb{E}}_{\rateset,\,\mathcal{M}}^{\mathrm{WHM}}[f(X_t)\,\vert\,X_0]}$ is at its core a non-linear, constrained optimization problem over the set $\rateset$---the non-linearity stemming from the term $e^{Qt}$, and the specific form of the constraints depending on the choice of $\rateset$. While numerically solving this optimization problem is tractable for sufficiently ``nice'' $\rateset$ and in low dimensions, the computational complexity will in general quickly explode as the size of $\states$ increases.
-
-The problem, then, is that for lower expectations $\underline{\mathbb{E}}_{\rateset,\,\mathcal{M}}^{\mathrm{WHM}}$, we are unable to simplify the above optimization problem. In contrast, we will show later in this work that this is possible for lower expectations $\underline{\mathbb{E}}_{\rateset,\,\mathcal{M}}^{\mathrm{WM}}$ and $\underline{\mathbb{E}}_{\rateset,\,\mathcal{M}}^{\mathrm{W}}$.
-%\exampleend
-%\end{exmp}
-
-*** ADD REFERENCES FOR FIRST APPROACH! ***
-
-Therefore, we will in the sequel focus on the \ictmc's $\wmprocesses_{\rateset,\,\mathcal{M}}$ and $\wprocesses_{\rateset,\,\mathcal{M}}$, having introduced $\whmprocesses_{\rateset,\,\mathcal{M}}$ only for the sake of completeness. Note that Proposition~\ref{prop:lower_exp_markov_bounded_by_nonmarkov} guarantees that the lower expectation for either $\wmprocesses_{\rateset,\,\mathcal{M}}$ or $\wprocesses_{\rateset,\,\mathcal{M}}$ suffices to compute a lower bound for $\underline{\mathbb{E}}_{\rateset,\,\mathcal{M}}^\mathrm{WHM}$. Of course, this bound will in general not be tight if one insists that any analysis should be done with respect to $\whmprocesses_{\rateset,\,\mathcal{M}}$. However, since this latter \ictmc~does make the strictest---and, we would argue, most unrealistic---assumptions about the domain of interest, we do not consider this particularly problematic.
+Therefore, computing the term $\smash{\underline{\mathbb{E}}_{\rateset,\,\mathcal{M}}^{\mathrm{WHM}}[f(X_t)\,\vert\,X_0]}$ is at its core a non-linear, constrained optimization problem over the set $\rateset$, where the non-linearity stems from the term $e^{Qt}$, and the specific form of the constraints depends on the choice of $\rateset$.  The following example illustrates the non-linearity of this type of optimisation problem in a simple case.
 
 \begin{exmp}\label{ex:homogeneousexample}
 **** Ok, got it down numerically. Consider a ternary-state model, with $\states\coloneqq \{1,2,3\}$, take
@@ -2190,12 +2182,27 @@ and let $f\in\gamblesX$ be defined as $f\coloneqq [0~1~2]^\top$.
 %\underline{\mathbb{E}}_{\rateset}^\mathrm{WM}[f(X_{10})\,\vert\,X_0=2] \approx 0.129\pm 10^{-3}\,,
 %\end{equation*}
 %which should establish the difference within error tolerances.
-\begin{figure}[H]\label{fig:homogeneousCounterExample}
+\begin{figure}[t]\label{fig:homogeneousCounterExample}
 \includegraphics[width=\textwidth]{HomogeneousCounterExamplePicture}
 \caption{Plot of the induced set of expected values $\mathbb{E}_P[f(X_t)\,\vert\,X_0=2]$, for time points $t\in[0,100]$, corresponding to all $P\in\whmprocesses_{\rateset}$ obtained as we vary $\lambda\in[0.01,0.5]$. Observe that the lower expectation with respect to this set is initially reached by choosing $\lambda=0.5$. This changes around the time-point $t\approx 6.6$, after which the minimizing value of $\lambda$ becomes a (changing) internal point of the interval $[0.01,0.5]$. The dashed line corresponds to the lower expectation with respect to the set $\wmprocesses_\rateset$, which also includes non-homogeneous Markov chains. It is clear that the lower expectations $\underline{\mathbb{E}}_\rateset^\mathrm{WHM}[f(X_t)\,\vert\,X_0=2]$ and $\underline{\mathbb{E}}_\rateset^\mathrm{WM}[f(X_t)\,\vert\,X_0=2]$ are equal when $t<6.6$, but then diverge as time evolves further.}
 \end{figure}
 \exampleend
 \end{exmp}
+
+While numerically solving this type of optimization problems is tractable for sufficiently ``nice'' $\rateset$ and in low dimensions---as was the case in our example---the computational complexity will in general quickly explode as the size of $\states$ increases.
+Therefore, computing lower expectations for \ictmc's that are of the type $\smash{\whmprocesses_{\rateset,\,\mathcal{M}}}$ is typically intractable. %In contrast, for lower expectations of the type $\smash{\underline{\mathbb{E}}_{\rateset,\,\mathcal{M}}^{\mathrm{WM}}}$ or $\smash{\underline{\mathbb{E}}_{\rateset,\,\mathcal{M}}^{\mathrm{W}}}$ as we will show later in this work, efficient computations are definitely possible.
+%\exampleend
+%\end{exmp}
+%In fact, even for the particular case where $\rateset$ corresponds to an interval matrix, the problem is already NP-hard~\cite{Goldsztejn2014}.
+In contrast, as we will see in the remainder of this paper, lower expectations for \ictmc's that are of the type $\smash{\wmprocesses_{\rateset,\,\mathcal{M}}}$ or $\smash{\wprocesses_{\rateset,\,\mathcal{M}}}$ is much easier.
+
+
+
+, having introduced $\smash{\whmprocesses_{\rateset,\,\mathcal{M}}}$ only for the sake of completeness. Note that Proposition~\ref{prop:lower_exp_markov_bounded_by_nonmarkov} guarantees that the lower expectation for either $\wmprocesses_{\rateset,\,\mathcal{M}}$ or $\wprocesses_{\rateset,\,\mathcal{M}}$ provides a lower bound for $\underline{\mathbb{E}}_{\rateset,\,\mathcal{M}}^\mathrm{WHM}$ as well. However, of course, this bounds will in general not be tight if one insists that the analysis should be done with respect to $\whmprocesses_{\rateset,\,\mathcal{M}}$. %However, since this latter \ictmc~does make the strictest---and, we would argue, most unrealistic---assumptions about the domain of interest, we do not consider this particularly problematic.
+
+\cite{Goldsztejn2014,oppenheimer1988}
+
+
 
 \section{Toward Lower Transition Operators for \ictmc's}
 \label{sec:lowertrans}
