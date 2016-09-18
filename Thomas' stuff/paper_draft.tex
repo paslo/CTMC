@@ -2123,7 +2123,7 @@ Consider any non-empty bounded set of rate matrices $\rateset$, and any non-empt
 \end{equation*}
 \end{proposition}
 
-Generally speaking, the inequalities in this proposition can be---and often are---strict; for the first inequality, we will illustrate this in Example~\ref{ex:homogeneousexample}, whereas for the second inequality, this can be seen by comparing Examples~\ref{exmp:num_multivar_func_nonmarkov} and \ref{exmp:num_counterexample_markov}.
+Generally speaking, the inequalities in this proposition can be---and often are---strict; for the first inequality, we will illustrate this further on in this section, in Figure~\ref{fig:homogeneousCounterExample}, whereas for the second inequality, this can be seen by comparing Examples~\ref{exmp:num_multivar_func_nonmarkov} and \ref{exmp:num_counterexample_markov} in Section~\ref{sec:decomposition}.
 
 %Depending on the type of function for which you want to compute the lower expectation, the inequalities in this proposition may or may not be strict. 
 
@@ -2165,9 +2165,10 @@ Suppose that we want to compute the lower expectation $\underline{\mathbb{E}}_{\
 \end{align*}
 Therefore, computing $\smash{\underline{\mathbb{E}}_{\rateset,\,\mathcal{M}}^{\mathrm{WHM}}[f(X_t)\,\vert\,X_0=x_0]}$ is at its core a non-linear, constrained optimization problem over the set $\rateset$, where the non-linearity stems from the term $e^{Qt}$, and the specific form of the constraints depends on the choice of $\rateset$.  The following example illustrates the non-linearity of this type of optimisation problem in a simple case.
 
-\begin{figure}[t]\label{fig:homogeneousCounterExample}
+\begin{figure}[t]
 \includegraphics[width=\textwidth]{HomogeneousCounterExamplePicture}
-\caption{Plot of the induced set of expected values $\mathbb{E}_P[f(X_t)\,\vert\,X_0=2]$, for time points $t\in[0,100]$, corresponding to all $P\in\whmprocesses_{\rateset}$ obtained as we vary $\lambda\in[0.01,0.5]$. Observe that the lower expectation with respect to this set is initially reached by choosing $\lambda=0.5$. This changes around the time-point $t\approx 6.6$, after which the minimizing value of $\lambda$ becomes a (changing) internal point of the interval $[0.01,0.5]$. The dashed line corresponds to the lower expectation with respect to the set $\wmprocesses_\rateset$, which also includes non-homogeneous Markov chains. It is clear that the lower expectations $\underline{\mathbb{E}}_\rateset^\mathrm{WHM}[f(X_t)\,\vert\,X_0=2]$ and $\underline{\mathbb{E}}_\rateset^\mathrm{WM}[f(X_t)\,\vert\,X_0=2]$ are equal when $t<6.6$, but then diverge as time evolves further.}
+\caption{Plot of the induced set of expected values $\mathbb{E}_P[f(X_t)\,\vert\,X_0=2]$, for time points $t\in[0,100]$, corresponding to all $P\in\whmprocesses_{\rateset}$ obtained as we vary $\lambda\in[0.01,0.5]$. Observe that the lower expectation with respect to this set is initially reached by choosing $\lambda=0.5$. This changes around the time-point $t\approx 6.6$, after which the minimizing value of $\lambda$ becomes a (changing) internal point of the interval $[0.01,0.5]$. The dashed line corresponds to the lower expectation with respect to the set $\wmprocesses_\rateset$, which also includes non-homogeneous Markov chains. It is clear that the lower expectations $\underline{\mathbb{E}}_\rateset^\mathrm{WHM}[f(X_t)\,\vert\,X_0=2]$ and $\underline{\mathbb{E}}_\rateset^\mathrm{WM}[f(X_t)\,\vert\,X_0=2]$ are equal when $t<6.6$, but then diverge as time evolves further. {\textcolor{red}{*** I need a cleaned version of the graph, without any math, numbers, or axes (I'll add them on top of the graph with tikz to keep the notation uniform) *** Also, on the place where they overlap, wouldn't it be cleaner if we only showed the topmost part of the graph and not the part that is hidden behind it? ***}}}
+\label{fig:homogeneousCounterExample}
 \end{figure}
 
 \begin{exmp}\label{ex:homogeneousexample}
@@ -2181,28 +2182,29 @@ Consider an ordered ternary state space $\states\coloneqq \{a,b,c\}$,  let $f\in
 \end{array}\right] \,:\,\lambda\in[0.01,0.5]\right\}.
 \vspace{4pt}
 \end{equation*}
-For every $Q\in\rateset$, some basic---yet cumbersome---algebra then reveals that
+Every process $P$ in the imprecise Markov chain $\whmprocesses_{\rateset,\,\mathcal{M}}$ is then a time-homogeneous Markov chain of which the unique transition rate matrix $Q$ is completely determined by some $\lambda$ in $[0.01,0.5]$. Furthermore, as we know from Remark~\ref{remark:expectationT} and Theorem~\ref{theo:homogeneoushasQ}, the conditional expectation $\mathbb{E}_P(f(X_t)\vert X_0=b)$ that corresponds to this time-homogeneous Markov chain is equal to $[e^{Q t}f](b)$. Due to this equality, it is a matter of applying some basic---yet cumbersome---algebra to find that 
 \begin{align*}
-[e^{Q t}f](b)
+\mathbb{E}_P(f(X_t)\vert X_0=b)
 =
 \begin{cases}
 \displaystyle
 2+e^{-\lambda t}+2\frac{e^{-\lambda t}-100\lambda e^{-\nicefrac{t}{100}}}{100\lambda-1}&\text{ if $\lambda\in(0.01,0.5]$}\\[8pt]
 \displaystyle
-2-e^{-\nicefrac{t}{100}}-\frac{1}{50}te^{-\nicefrac{t}{100}}&\text{ if $\lambda=0.01$}
+2-e^{-\nicefrac{t}{100}}-\frac{1}{50}te^{-\nicefrac{t}{100}}&\text{ if $\lambda=0.01$.}
 \end{cases}
 \end{align*}
+Obtaining the value of $\underline{\mathbb{E}}_{\rateset,\,\mathcal{M}}^{\mathrm{WHM}}[f(X_t)\,\vert\,X_0=b]$ now corresponds to minimising this expression as $\lambda$ ranges over the interval $[0.01,0.5]$. Figure~\ref{fig:homogeneousCounterExample} illustrates that, even in this simple ternary case, this minimisation problem is already non-trivial, because---depending on the value of $t$---the minimum is not guaranteed to obtained for one of the end points of $[0.01,0.5]$, but may only be achieved by an internal point. Nevertheless, in this simple case, $\underline{\mathbb{E}}_{\rateset,\,\mathcal{M}}^{\mathrm{WHM}}[f(X_t)\,\vert\,X_0=b]$ can of course be computed by brute force, leading to the solution that is depicted in Figure~\ref{fig:homogeneousCounterExample}. 
 
-Then
-\begin{align*}
-\underline{\mathbb{E}}_{\rateset,\,\mathcal{M}}^{\mathrm{WHM}}[f(X_t)\,\vert\,X_0=2]
-&=
-\inf\left\{ [e^{Q t}f](x_0)\,:\,Q\in\rateset\right\}\\
-&=
-\begin{cases}
-test
-\end{cases}
-\end{align*}
+Figure~\ref{fig:homogeneousCounterExample} also depicts $\underline{\mathbb{E}}_{\rateset,\,\mathcal{M}}^{\mathrm{WM}}[f(X_t)\,\vert\,X_0=b]$ and $\underline{\mathbb{E}}_{\rateset,\,\mathcal{M}}^{\mathrm{W}}[f(X_t)\,\vert\,X_0=b]$, which happen to coincide. The reason why they coincide in this case, and the method by which we have computed them, will be explained in Section~\ref{sec:single_var_lower_exp}. For now, it suffices to notice that for large enough values of $t$, their common value differs from $\underline{\mathbb{E}}_{\rateset,\,\mathcal{M}}^{\mathrm{WHM}}[f(X_t)\,\vert\,X_0=b]$, thereby illustrating that the first inequality in Proposition~\ref{prop:lower_exp_markov_bounded_by_nonmarkov} can indeed be strict.
+% \begin{align*}
+% \underline{\mathbb{E}}_{\rateset,\,\mathcal{M}}^{\mathrm{WHM}}[f(X_t)\,\vert\,X_0=]
+% &=
+% \inf\left\{ [e^{Q t}f](x_0)\,:\,Q\in\rateset\right\}\\
+% &=
+% \begin{cases}
+% test
+% \end{cases}
+% \end{align*}
 %The below picture should work for this example (y-axis is still labeled incorrectly though by a factor of 50). X-axis is time, y-axis is expected value conditional on $X_0=2$, the colored area is the set of $\{\mathbb{E}_P[f(X_t)\,\vert\,X_0=2]\,:\,P\in\whmprocesses_\rateset\}$, obtained by varying $\lambda\in[0.01,0.5]$, and the orange line is lower expectation for non-Markov \ictmc, $\underline{\mathbb{E}}_\rateset^\mathrm{WM}[f(X_t)\,\vert\,X_0=2]$. I feel this is a clear illustration that the lower expectations are different :)
 %*** Mathematica actually breaks down when I try to use the build-in solver for this. Interestingly, it works perfectly fine for time points less than 6.6, which is around the point where the "desired-state" switch occurs and homogeneity breaks down. Anyway, I used a $1000\times 1000$-grid discretization of the above $\rateset$, then just optimized over that to find the answer.
 %By comparison, for the non-homogeneous case, the optimization using Algorithm~\ref{alg:compute_singlevar}, with $\epsilon=10^{-3}$, gives
@@ -2213,7 +2215,7 @@ test
 \exampleend
 \end{exmp}
 
-While numerically solving this type of non-linear optimization problems is feasible for sufficiently ``nice'' sets $\rateset$ in low dimensions---as was the case in our example---the computational complexity will in general quickly explode as the size of $\states$ increases.
+While numerically solving the type of non-linear optimization problems that are associated with $\underline{\mathbb{E}}^\mathrm{WHM}_{\rateset\,,\mathcal{M}}$ is feasible for sufficiently ``nice'' sets $\rateset$ in low dimensions---as was the case in our example---the computational complexity will in general quickly explode as the size of $\states$ increases.
 Therefore, computing lower expectations for \ictmc's that are of the type $\smash{\whmprocesses_{\rateset,\,\mathcal{M}}}$ is typically intractable, and it is then necessary to resort to approximation methods. For the particular case where $\rateset$ corresponds to an interval matrix, such methods have been explored in, for example, References \cite{Goldsztejn2014} and~\cite{oppenheimer1988}. 
 
 %In contrast, for lower expectations of the type $\smash{\underline{\mathbb{E}}_{\rateset,\,\mathcal{M}}^{\mathrm{WM}}}$ or $\smash{\underline{\mathbb{E}}_{\rateset,\,\mathcal{M}}^{\mathrm{W}}}$ as we will show later in this work, efficient computations are definitely possible.
@@ -2222,7 +2224,7 @@ Therefore, computing lower expectations for \ictmc's that are of the type $\smas
 %In fact, even for the particular case where $\rateset$ corresponds to an interval matrix, the problem is already NP-hard~\cite{Goldsztejn2014}.
 
 
-In the remainder of this paper, we do not consider \ictmc's that are of the type $\smash{\whmprocesses_{\rateset,\,\mathcal{M}}}$. Instead, we will focus on the lower expectations $\smash{\underline{\mathbb{E}}_{\rateset,\mathcal{M}}^\mathrm{WM}}$ and $\smash{\underline{\mathbb{E}}_{\rateset,\mathcal{M}}^\mathrm{W}}$ that correspond to \ictmc's of the type $\smash{\wmprocesses_{\rateset,\,\mathcal{M}}}$ or $\smash{\wprocesses_{\rateset,\,\mathcal{M}}}$, and will develop efficient methods for computing them.
+In the remainder of this paper, we do not consider \ictmc's that are of the type $\smash{\whmprocesses_{\rateset,\,\mathcal{M}}}$. Instead, we will focus on the lower expectations $\smash{\underline{\mathbb{E}}_{\rateset,\mathcal{M}}^\mathrm{WM}}$ and $\smash{\underline{\mathbb{E}}_{\rateset,\mathcal{M}}^\mathrm{W}}$ that correspond to \ictmc's that are of the type $\smash{\wmprocesses_{\rateset,\,\mathcal{M}}}$ or $\smash{\wprocesses_{\rateset,\,\mathcal{M}}}$, and will develop efficient methods for computing them.
 
 
 %, having introduced \ictmc's of the type $\smash{\whmprocesses_{\rateset,\,\mathcal{M}}}$ only for the sake of completeness. %Of course, because of Proposition~\ref{prop:lower_exp_markov_bounded_by_nonmarkov}, $\smash{\underline{\mathbb{E}}_{\rateset,\mathcal{M}}^\mathrm{WM}}$ and $\smash{\underline{\mathbb{E}}_{\rateset,\mathcal{M}}^\mathrm{W}}$ both provide a lower bound for $\underline{\mathbb{E}}_{\rateset,\,\mathcal{M}}^\mathrm{WHM}$. However, this bounds will in general not be tight if one insists that the analysis should be done with respect to $\whmprocesses_{\rateset,\,\mathcal{M}}$. %However, since this latter \ictmc~does make the strictest---and, we would argue, most unrealistic---assumptions about the domain of interest, we do not consider this particularly problematic.
