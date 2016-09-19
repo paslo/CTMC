@@ -2167,24 +2167,24 @@ Therefore, computing $\smash{\underline{\mathbb{E}}_{\rateset,\,\mathcal{M}}^{\m
 
 \begin{figure}[t]
 \includegraphics[width=\textwidth]{HomogeneousCounterExamplePicture}
-\caption{Plot of the induced set of expected values $\mathbb{E}_P[f(X_t)\,\vert\,X_0=2]$, for time points $t\in[0,100]$, corresponding to all $P\in\whmprocesses_{\rateset}$ obtained as we vary $\lambda\in[0.01,0.5]$. Observe that the lower expectation with respect to this set is initially reached by choosing $\lambda=0.5$. This changes around the time-point $t\approx 6.6$, after which the minimizing value of $\lambda$ becomes a (changing) internal point of the interval $[0.01,0.5]$. The dashed line corresponds to the lower expectation with respect to the set $\wmprocesses_\rateset$, which also includes non-homogeneous Markov chains. It is clear that the lower expectations $\underline{\mathbb{E}}_\rateset^\mathrm{WHM}[f(X_t)\,\vert\,X_0=2]$ and $\underline{\mathbb{E}}_\rateset^\mathrm{WM}[f(X_t)\,\vert\,X_0=2]$ are equal when $t<6.6$, but then diverge as time evolves further. {\textcolor{red}{*** I need a cleaned version of the graph, without any math, numbers, or axes (I'll add them on top of the graph with tikz to keep the notation uniform) *** Also, on the place where they overlap, wouldn't it be cleaner if we only showed the topmost part of the graph and not the part that is hidden behind it? ***}}}
+\caption{Plot of the induced set of expected values $\mathbb{E}_P[f(X_t)\,\vert\,X_0=a]$, for time points $t\in[0,100]$, corresponding to all $P\in\whmprocesses_{\rateset}$ obtained as we vary $\lambda\in[0.01,0.5]$. Observe that the lower expectation with respect to this set is initially reached by choosing $\lambda=0.5$. This changes around the time-point $t\approx 6.6$, after which the minimizing value of $\lambda$ becomes a (changing) internal point of the interval $[0.01,0.5]$. The dashed line corresponds to the lower expectation with respect to the set $\wmprocesses_\rateset$, which also includes non-homogeneous Markov chains. It is clear that the lower expectations $\underline{\mathbb{E}}_\rateset^\mathrm{WHM}[f(X_t)\,\vert\,X_0=a]$ and $\underline{\mathbb{E}}_\rateset^\mathrm{WM}[f(X_t)\,\vert\,X_0=a]$ are equal when $t<6.6$, but then diverge as time evolves further. {\textcolor{red}{*** I need a cleaned version of the graph, without any math, numbers, or axes (I'll add them on top of the graph with tikz to keep the notation uniform) *** Also, on the place where they overlap, wouldn't it be cleaner if we only showed the topmost part of the graph and not the part that is hidden behind it? ***}}}
 \label{fig:homogeneousCounterExample}
 \end{figure}
 
 \begin{exmp}\label{ex:homogeneousexample}
-Consider an ordered ternary state space $\states\coloneqq \{a,b,c\}$,  let $f\in\gamblesX$ be defined as $f\coloneqq [0~1~2]^\top$---in the sense that $f(a)\coloneqq0$, $f(b)\coloneqq1$ and $f(c)\coloneqq2$---and consider the set of transition rate matrices
+Consider an ordered ternary state space $\states\coloneqq \{a,b,c\}$,  let $f\in\gamblesX$ be defined as $f\coloneqq [1~0~2]^\top$---in the sense that $f(a)\coloneqq1$, $f(b)\coloneqq0$ and $f(c)\coloneqq2$---and consider the set of transition rate matrices
 \vspace{4pt}
 \begin{equation*}
 \rateset \coloneqq \left\{ \left[\begin{array}{rrr}
--0.01 & 0 & 0.01 \\
-\lambda & -\lambda & 0 \\
+-\lambda & \lambda & 0 \\
+0 & -0.01 & 0.01 \\
 0 & 0 & 0
 \end{array}\right] \,:\,\lambda\in[0.01,0.5]\right\}.
 \vspace{4pt}
 \end{equation*}
-Every process $P$ in the imprecise Markov chain $\whmprocesses_{\rateset,\,\mathcal{M}}$ is then a homogeneous Markov chain of which the unique transition rate matrix $Q$ is completely determined by some $\lambda$ in $[0.01,0.5]$. Furthermore, as we know from Remark~\ref{remark:expectationT} and Theorem~\ref{theo:homogeneoushasQ}, the conditional expectation $\mathbb{E}_P(f(X_t)\vert X_0=b)$ that corresponds to this homogeneous Markov chain is equal to $[e^{Q t}f](b)$. Due to this equality, it is a matter of applying some basic---yet cumbersome---algebra to find that 
+Every process $P$ in the imprecise Markov chain $\whmprocesses_{\rateset,\,\mathcal{M}}$ is then a homogeneous Markov chain of which the unique transition rate matrix $Q$ is completely determined by some $\lambda$ in $[0.01,0.5]$. Furthermore, as we know from Remark~\ref{remark:expectationT} and Theorem~\ref{theo:homogeneoushasQ}, the conditional expectation $\mathbb{E}_P(f(X_t)\vert X_0=a)$ that corresponds to this homogeneous Markov chain is equal to $[e^{Q t}f](a)$. Due to this equality, it is a matter of applying some basic---yet cumbersome---algebra to find that 
 \begin{align*}
-\mathbb{E}_P(f(X_t)\vert X_0=b)
+\mathbb{E}_P[f(X_t)\vert X_0=a]
 =
 \begin{cases}
 \displaystyle
@@ -2193,9 +2193,9 @@ Every process $P$ in the imprecise Markov chain $\whmprocesses_{\rateset,\,\math
 2-e^{-\nicefrac{t}{100}}-\frac{1}{50}te^{-\nicefrac{t}{100}}&\text{ if $\lambda=0.01$.}
 \end{cases}
 \end{align*}
-Obtaining the value of $\underline{\mathbb{E}}_{\rateset,\,\mathcal{M}}^{\mathrm{WHM}}[f(X_t)\,\vert\,X_0=b]$ now corresponds to minimising this expression as $\lambda$ ranges over the interval $[0.01,0.5]$. Figure~\ref{fig:homogeneousCounterExample} illustrates that, even in this simple ternary case, this minimisation problem is already non-trivial, because---depending on the value of $t$---the minimum is not guaranteed to obtained for one of the end points of $[0.01,0.5]$, but may only be achieved by an internal point. Nevertheless, in this simple case, $\underline{\mathbb{E}}_{\rateset,\,\mathcal{M}}^{\mathrm{WHM}}[f(X_t)\,\vert\,X_0=b]$ can of course be computed by brute force, leading to the solution that is depicted in Figure~\ref{fig:homogeneousCounterExample}. 
+Obtaining the value of $\underline{\mathbb{E}}_{\rateset,\,\mathcal{M}}^{\mathrm{WHM}}[f(X_t)\,\vert\,X_0=a]$ now corresponds to minimising this expression as $\lambda$ ranges over the interval $[0.01,0.5]$. Figure~\ref{fig:homogeneousCounterExample} illustrates that, even in this simple ternary case, this minimisation problem is already non-trivial, because---depending on the value of $t$---the minimum is not guaranteed to obtained for one of the end points of $[0.01,0.5]$, but may only be achieved by an internal point. Nevertheless, in this simple case, $\underline{\mathbb{E}}_{\rateset,\,\mathcal{M}}^{\mathrm{WHM}}[f(X_t)\,\vert\,X_0=a]$ can of course be computed by brute force, leading to the solution that is depicted in Figure~\ref{fig:homogeneousCounterExample}. 
 
-Figure~\ref{fig:homogeneousCounterExample} also depicts $\underline{\mathbb{E}}_{\rateset,\,\mathcal{M}}^{\mathrm{WM}}[f(X_t)\,\vert\,X_0=b]$ and $\underline{\mathbb{E}}_{\rateset,\,\mathcal{M}}^{\mathrm{W}}[f(X_t)\,\vert\,X_0=b]$, which happen to coincide. The reason why they coincide in this case, and the method by which we have computed them, will be explained in Section~\ref{sec:single_var_lower_exp}. For now, it suffices to notice that for large enough values of $t$, their common value differs from $\underline{\mathbb{E}}_{\rateset,\,\mathcal{M}}^{\mathrm{WHM}}[f(X_t)\,\vert\,X_0=b]$, thereby illustrating that the first inequality in Proposition~\ref{prop:lower_exp_markov_bounded_by_nonmarkov} can indeed be strict.
+Figure~\ref{fig:homogeneousCounterExample} also depicts $\underline{\mathbb{E}}_{\rateset,\,\mathcal{M}}^{\mathrm{WM}}[f(X_t)\,\vert\,X_0=a]$ and $\underline{\mathbb{E}}_{\rateset,\,\mathcal{M}}^{\mathrm{W}}[f(X_t)\,\vert\,X_0=a]$, which happen to coincide. The reason why they coincide in this case, and the method by which we have computed them, will be explained in Section~\ref{sec:single_var_lower_exp}. For now, it suffices to notice that for large enough values of $t$, their common value differs from $\underline{\mathbb{E}}_{\rateset,\,\mathcal{M}}^{\mathrm{WHM}}[f(X_t)\,\vert\,X_0=a]$, thereby illustrating that the first inequality in Proposition~\ref{prop:lower_exp_markov_bounded_by_nonmarkov} can indeed be strict.
 % \begin{align*}
 % \underline{\mathbb{E}}_{\rateset,\,\mathcal{M}}^{\mathrm{WHM}}[f(X_t)\,\vert\,X_0=]
 % &=
@@ -2270,43 +2270,21 @@ $\left[\lt(\lambda f)\right](x)=\lambda\left[\lt\,f\right](x)$. \label{LT:homo}
 %\vspace{5pt}
 \noindent We use $\underline{\mathcal{T}}$ to denote the set of all lower transition operators.
 
-Such lower transition operators furthermore satisfy the following properties---see Reference~\cite{DeBock:2016} for a proof. For any lower transition operator $\lt$ and any two non-negatively homogeneous operators $A,B$ from $\gamblesX$ to $\gamblesX$,
+Such lower transition operators furthermore satisfy the following properties---see Reference~\cite{DeBock:2016} for a proof. For any lower transition operator $\lt$, any $f_1,f_2\in\gamblesX$ and any two non-negatively homogeneous operators $A,B$ from $\gamblesX$ to $\gamblesX$:
 \begin{enumerate}[label=LT\arabic*:,ref=LT\arabic*,start=4]
 \item
 $\norm{\lt} \leq 1$; \label{LT:norm_at_most_one}
 \item
+$f_1\geq f_2~\then~\lt f_1\geq\lt f_2$;\label{LT:monotonicity}
+\item
 $\norm{\lt A - \lt B} \leq \norm{A - B}$. \label{LT:differencenorm}
 \end{enumerate}
-\vspace{5pt}
+\vspace{0pt}
 \end{definition}
 
 \begin{proposition}\label{lemma:compositioncoherence}
 For any two lower transition operators $\lt,\underline{S}\in\underline{\mathcal{T}}$, their composition $\lt\,\underline{S}$ is again a lower transition operator.% $\left(\lt\,\underline{S}\right)\in\underline{\mathcal{T}}$.
 \end{proposition}
-\begin{proof}
-Consider any $f,g\in\gamblesX$, $\lambda\in\realsnonneg$ and $x\in\states$. Since $\underline{T}$ and $\underline{S}$ are both lower transition operators, we then find that
-\begin{align*}
-[\underline{T}\underline{S}f](x)
-&\geq
-\min\{[\underline{S}f](y)\colon y\in\states\}\\
-&\geq
-\min\{\min\{f(z)\colon z\in\states\}\colon y\in\states\}
-=
-\min\{f(z)\colon z\in\states\}
-\end{align*}
-and
-\begin{align*}
-[\underline{T}\underline{S}(f+g)](x)
-&\geq
-\min\{[\underline{S}f](y)\colon y\in\states\}\\
-&\geq
-\min\{\min\{f(z)\colon z\in\states\}\colon y\in\states\}
-=
-\min\{f(z)\colon z\in\states\}
-\end{align*}
-
-*** still need to check this *** Simply check each of the properties.
-\end{proof}
 
 The first thing to note is that any transition matrix $T$ will also satisfy properties~\ref{LT:bounded_min}-\ref{LT:homo}, and hence is also a lower transition operator. It is therefore clear that lower transition operators are a generalization of transition matrices.
 
@@ -5002,6 +4980,40 @@ $\underline{\mathbb{E}}^{\mathrm{W}}_{\rateset,\,\mathcal{M}}\left[f(X_u,X_v,X_w
 
 
 \section{Proofs and Lemmas for Section~\ref{sec:lowertrans}}
+
+\begin{proof}[Proof of Proposition~\ref{lemma:compositioncoherence}]
+Consider any $f,g\in\gamblesX$, $\lambda\in\realsnonneg$ and $x\in\states$. Since $\underline{T}$ and $\underline{S}$ are lower transition operators, they both satisfy~\ref{LT:bounded_min}, and therefore, we find that
+\begin{align*}
+[\underline{T}\underline{S}f](x)
+&\geq
+\min\{[\underline{S}f](y)\colon y\in\states\}\\
+&\geq
+\min\{\min\{f(z)\colon z\in\states\}\colon y\in\states\}
+=
+\min\{f(z)\colon z\in\states\},
+\end{align*}
+which implies that $\underline{T}\underline{S}$ satisfies~\ref{LT:bounded_min} as well. 
+Similarly, $\underline{T}\underline{S}$ satisfies~\ref{LT:super_additive} because
+\begin{align*}
+[\underline{T}\underline{S}(f+g)](x)
+\geq
+[\underline{T}(\underline{S}f+\underline{S}g)](x)
+\geq
+[\underline{T}\underline{S}f](x)
++
+[\underline{T}\underline{S}g](x),
+\end{align*}
+where the first inequality follows from~\ref{LT:monotonicity} and the fact that $\underline{S}$ satisfies~\ref{LT:super_additive}, and where the second inequality follows from the fact that $\underline{T}$ satisfies~\ref{LT:super_additive}.
+Finally, since $\underline{T}$ and $\underline{S}$ both satisfy~\ref{LT:homo}, it follows that $\underline{T}\underline{S}$ also satisfies~\ref{LT:homo}, because
+\begin{align*}
+[\underline{T}\underline{S}(\lambda f)](x)
+=
+[\underline{T}(\lambda\underline{S}f)](x)
+=
+\lambda[\underline{T}\underline{S}f](x).
+\end{align*}
+We conclude that $\underline{T}\underline{S}$ satisfies~\ref{LT:bounded_min}-\ref{LT:homo}, and therefore, because of Definition~\ref{def:low_trans}, it is a lower transition operator.
+\end{proof}
 
 We require the following two results for the proof of Proposition~\ref{lemma:completemetricspace}.
 
