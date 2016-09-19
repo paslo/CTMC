@@ -2168,7 +2168,21 @@ Suppose that we want to compute the lower expectation $\underline{\mathbb{E}}_{\
 Therefore, computing $\smash{\underline{\mathbb{E}}_{\rateset,\,\mathcal{M}}^{\mathrm{WHM}}[f(X_t)\,\vert\,X_0=x_0]}$ is at its core a non-linear, constrained optimization problem over the set $\rateset$, where the non-linearity stems from the term $e^{Qt}$, and the specific form of the constraints depends on the choice of $\rateset$.  The following example illustrates the non-linearity of this type of optimisation problem in a simple case.
 
 \begin{figure}[t]
-\includegraphics[width=\textwidth]{HomogeneousCounterExamplePicture}
+\begin{tikzpicture}
+      \node[anchor=south west,inner sep=0] (plot) at (0,1) {\includegraphics[width=110mm]{HomogeneousCounterExamplePicture}};
+      \begin{scope}[x={(plot.south east)},y={(plot.north west)}]
+        \draw (0,0) -> (0,1) ;
+        \draw (0,0) -> (1.03,-0.125) ;
+        \node[below] at (0,0) {$0$}; 
+        \node[below] at (1,0) {$1$};
+        \node[below=0pt] at (1,-0.125) {$t$}; 
+        \node[left=0pt] at (0,1) {$q$};
+        \node at (0.7,0.42) {$\underline{\mathbb{E}}_\rateset^\mathrm{WHM}[f(X_t)\,\vert\,X_0=a]$};
+        \node at (0.8,0.15) {$\underline{\mathbb{E}}_\rateset^\mathrm{WM}[f(X_t)\,\vert\,X_0=a]$};
+        \node at (0.85,0.07) {$~~~~=\underline{\mathbb{E}}_\rateset^\mathrm{W}[f(X_t)\,\vert\,X_0=a]$};
+      \end{scope}
+    \end{tikzpicture}
+% \includegraphics[width=\textwidth]{HomogeneousCounterExamplePicture}
 \caption{Plot of the induced set of expected values $\mathbb{E}_P[f(X_t)\,\vert\,X_0=a]$, for time points $t\in[0,100]$, corresponding to all $P\in\whmprocesses_{\rateset}$ obtained as we vary $\lambda\in[0.01,0.5]$. Observe that the lower expectation with respect to this set is initially reached by choosing $\lambda=0.5$. This changes around the time-point $t\approx 6.6$, after which the minimizing value of $\lambda$ becomes a (changing) internal point of the interval $[0.01,0.5]$. The dashed line corresponds to the lower expectation with respect to the set $\wmprocesses_\rateset$, which also includes non-homogeneous Markov chains. It is clear that the lower expectations $\underline{\mathbb{E}}_\rateset^\mathrm{WHM}[f(X_t)\,\vert\,X_0=a]$ and $\underline{\mathbb{E}}_\rateset^\mathrm{WM}[f(X_t)\,\vert\,X_0=a]$ are equal when $t<6.6$, but then diverge as time evolves further. {\textcolor{red}{*** I need a cleaned version of the graph, without any math, numbers, or axes (I'll add them on top of the graph with tikz to keep the notation uniform) *** Also, on the place where they overlap, wouldn't it be cleaner if we only showed the topmost part of the graph and not the part that is hidden behind it? ***}}}
 \label{fig:homogeneousCounterExample}
 \end{figure}
