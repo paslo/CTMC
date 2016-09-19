@@ -23,6 +23,8 @@
 
 \usepackage{graphicx}
 
+\usepackage{eufrak}
+
 %\usepackage{hyperref}
 %\usepackage{pdfsync}
 %\usepackage{authblk}
@@ -432,7 +434,7 @@ $\sum_{y\in\states}T(x,y)=1$ for all $x\in\states$;\label{def:trans_matrix_is_st
 $T(x,y)\geq0$ for all $x,y\in\states$.
 \end{enumerate}
 \vspace{5pt}
-\noindent
+\noindent We will use $\mathbb{T}$ to denote the set of all transition matrices.
 \end{definition}
 
 \begin{proposition}\label{lemma:compositiontransitionmatrix}
@@ -2268,7 +2270,7 @@ $\left[\lt(f+g)\right](x)\geq \left[\lt\,f\right](x)+\left[\lt\,g\right](x)$; \l
 $\left[\lt(\lambda f)\right](x)=\lambda\left[\lt\,f\right](x)$. \label{LT:homo}
 \end{enumerate}
 %\vspace{5pt}
-\noindent We use $\underline{\mathcal{T}}$ to denote the set of all lower transition operators.
+\noindent We will use $\underline{\mathbb{T}}$ to denote the set of all lower transition operators.
 
 Such lower transition operators furthermore satisfy the following properties---see Reference~\cite{DeBock:2016} for a proof. For any lower transition operator $\lt$, any $f_1,f_2\in\gamblesX$ and any two non-negatively homogeneous operators $A,B$ from $\gamblesX$ to $\gamblesX$:
 \begin{enumerate}[label=LT\arabic*:,ref=LT\arabic*,start=4]
@@ -2283,7 +2285,7 @@ $\norm{\lt A - \lt B} \leq \norm{A - B}$. \label{LT:differencenorm}
 \end{definition}
 
 \begin{proposition}\label{lemma:compositioncoherence}
-For any two lower transition operators $\lt,\underline{S}\in\underline{\mathcal{T}}$, their composition $\lt\,\underline{S}$ is again a lower transition operator.% $\left(\lt\,\underline{S}\right)\in\underline{\mathcal{T}}$.
+For any two lower transition operators $\lt,\underline{S}\in\underline{\mathbb{T}}$, their composition $\lt\,\underline{S}$ is again a lower transition operator.% $\left(\lt\,\underline{S}\right)\in\underline{\mathbb{T}}$.
 \end{proposition}
 
 The first thing to note is that any transition matrix $T$ will also satisfy properties~\ref{LT:bounded_min}-\ref{LT:homo}, and hence is also a lower transition operator. It is therefore clear that lower transition operators are a generalization of transition matrices.
@@ -2292,21 +2294,26 @@ A first way to motivate this specific generalization is to note the following. F
 \begin{equation}\label{eq:lowerprevisionfromlt}
 \lt_xf \coloneqq \left[\lt f\right](x)\,.
 \end{equation}
-Due to properties~\ref{LT:bounded_min}-\ref{LT:homo}, it follows that $\lt_x$ is a map from $\gamblesX$ to $\reals$ that is super-additive, non-negatively homogeneous, and bounded below by the minimum operator. By definition~\cite[Definition~2.3.3]{Walley:1991vk}, that means that $\lt_x$ is a \emph{coherent lower prevision} on $\gamblesX$. Note that the term ``prevision'' here is simply another name for ``expectation'', so this essentially states that $\lt_x$ is a ``coherent lower expectation'' on $\gamblesX$.
+Due to properties~\ref{LT:bounded_min}-\ref{LT:homo}, it then follows that $\lt_x$ is a map from $\gamblesX$ to $\reals$ that is super-additive, non-negatively homogeneous, and bounded below by the minimum operator. By definition~\cite[Definition~2.3.3]{Walley:1991vk}, that means that $\lt_x$ is a \emph{coherent lower prevision} on $\gamblesX$. Note that the term ``prevision'' here is a synonym for ``expectation''---be it with a different interpretation attached to it---so this essentially states that $\lt_x$ is a ``coherent lower expectation'' on $\gamblesX$.
 
 For the reader that is unfamiliar with this notion of coherent lower previsions, this is perhaps best clarified as follows. Consider some arbitrary set $\mathcal{M}$ of probability mass functions on $\states$, and consider a map $\underline{\mathbb{E}}:\gamblesX\to\reals$, defined for all $f\in\gamblesX$ as
 \begin{equation*}
 \underline{\mathbb{E}}f \coloneqq \inf\left\{\sum_{x\in\states} p(x)f(x)\,:\,p\in\mathcal{M}\right\}\,.
 \end{equation*}
-We call this map $\underline{\mathbb{E}}$ the \emph{lower envelope} of $\mathcal{M}$, and it should be clear that this map computes a lower expectation with respect to $\mathcal{M}$. Furthermore, note that for any $p\in\mathcal{M}$, the quantity $\sum_{x\in\states}p(x)f(x)$ is bounded from below by $\min\{f(y):y\in\states\}$. Because this holds for any $p\in\mathcal{M}$, it follows that $\underline{\mathbb{E}}$ is also bounded below by this minimum operator. Furthermore, it is easily verified that $\underline{\mathbb{E}}$ is super-additive and non-negatively homogeneous, due to the properties of the $\inf$ operator. Hence, by the definition cited above, this lower expectation operator corresponding to $\mathcal{M}$ is a coherent lower prevision on $\gamblesX$. 
+We call this map $\underline{\mathbb{E}}$ the \emph{lower envelope} of $\mathcal{M}$, and it should be clear that this map computes a lower expectation with respect to $\mathcal{M}$. Furthermore, note that for any $p\in\mathcal{M}$, the quantity $\sum_{x\in\states}p(x)f(x)$ is bounded from below by $\min\{f(y):y\in\states\}$, and since this is true for any $p\in\mathcal{M}$, it follows that $\underline{\mathbb{E}}f$ is also bounded below by this minimum. Similarly, it is easily verified that $\underline{\mathbb{E}}$ is super-additive and non-negatively homogeneous, due to the properties of the $\inf$ operator. Hence, by the definition cited above, the lower expectation operator $\underline{\mathbb{E}}$ that corresponds to $\mathcal{M}$ is a coherent lower prevision on $\gamblesX$. 
 
-Our consideration of the coherent lower prevision $\lt_x$  above is essentially the same idea, but \emph{without} considering explicitly any link to sets $\mathcal{M}$ of probability mass functions. Suffice it to say that, for any coherent lower prevision, such a set $\mathcal{M}$ will always exist {\bf CITE}. It should furthermore be noted that the qualifier ``coherent'' here has connections to the notion of \emph{coherence} that we mentioned in Section~\ref{sec:cond_prob}. We refer to {\bf CITE CITE CITE} for further discussion on this.
+Our consideration of the coherent lower prevision $\lt_x$  above is essentially the same idea, but \emph{without} considering explicitly any link to some set of probability mass functions $\mathcal{M}_x$. Suffice it to say that, for any coherent lower prevision $\lt_x$, such a set $\mathcal{M}_x$ will always exist~\cite[Section 10.2]{Huber:1981ch}. It should furthermore be noted that the qualifier ``coherent'' here has connections to the notion of coherence that appeared in Section~\ref{sec:cond_prob}, and that it can be given a direct gambling interpretation that resembles the one in Appendix~\ref{app:coherence}; we refer to~\cite{troffaes2013:lp,Walley:1991vk} for further discussion on this.
 
-Because for any lower transition operator $\lt$ and any $x\in\states$, the map $\lt_x$ is a coherent lower prevision, it follows that the lower transition operator $\lt$ can be seen as a vector of coherent lower previsions. Furthermore, as mentioned above, each coherent lower prevision $\lt_x$ has some set $\mathcal{M}_{\lt_x}$ of probability mass functions of which $\lt_x$ computes the lower envelope {\bf CITE}. Therefore, and since the set $\mathcal{M}_{\lt}\coloneqq \times_{x\in\states}\mathcal{M}_{\lt_x}$ can be interpreted as a set of transition matrices---the elements $T\in\mathcal{M}_{\lt}$ are row-stochastic, with $T(x,\cdot)\in\mathcal{M}_{\lt_x}$ for all $x\in\states$---the operator $\lt$ can intuitively be seen as a lower envelope operator over this set. That is, for every lower transition operator $\lt$, there is some set $\mathcal{M}_{\lt}$ of transition matrices, such that for any $f\in\gamblesX$,
+In any case, for our present purposes, it suffices to realise that, because $\lt_x$ is a coherent lower prevision for any $x\in\states$, the lower transition operator $\lt$ can be seen as a vector of coherent lower previsions. Therefore, and because each of these coherent lower previsions $\lt_x$ has some set $\mathcal{M}_x$ of probability mass functions of which $\lt_x$ computes the lower envelope, we can combine these sets of probability mass functions to form a set of transition matrices
 \begin{equation*}
-\lt f = \inf\{ Tf\,:\, T\in\mathcal{M}_{\lt} \}\,.
+\mathfrak{T}=\{T\in\mathbb{T}\colon (\forall x\in\states)~T(x,\cdot)\in\mathcal{M}_x\}
 \end{equation*}
-Due to the correspondence between transition matrices and conditional expectation operators, as noted by Remark~\ref{remark:expectationT}, it should therefore be clear that lower transition operators are an intuitive starting point for alternative characterizations of lower expectations for \ictmc's. In particular, what remains is to find the specific lower transition operator $\lt$, whose set of dominating transition matrices $\mathcal{M}_{\lt}$ corresponds to the set of transition matrices induced by a given \ictmc; the remainder of this section will provide the machinery required to do this.
+of which $\lt$ is the lower envelope, in the sense that
+\begin{equation*}
+[\lt f](x) = \inf\{ [Tf](x)\,:\, T\in\mathfrak{T} \}~
+\text{ for all $f\in\gamblesX$ and $x\in\states$.}
+\end{equation*}
+Due to the correspondence between transition matrices and conditional expectation operators---see Remark~\ref{remark:expectationT}---it should therefore be clear that lower transition operators are an intuitive starting point to try and find alternative characterizations for the lower expectations that correspond to an \ictmc. What remains is to find the specific lower transition operator $\lt$ whose set of dominating transition matrices $\mathfrak{T}$ corresponds to the set of transition matrices that is induced by a given \ictmc; the remainder of this section will provide the machinery required to do this.
 
 %\begin{proposition}\label{lem:normlratefinite}
 %For any lower transition rate operator $\lrate$, we have that $0\leq\norm{\lrate}<+\infty$.
@@ -2316,10 +2323,10 @@ Due to the correspondence between transition matrices and conditional expectatio
 %For any lower transition operator $\lt$, we have that $0\leq \norm{\lt}\leq 1$.
 %\end{proposition}
 
-We conclude with a powerful result about the set $\underline{\mathcal{T}}$ of all lower transition operators; this set is a complete metric space under our usual norm.
+We conclude with the following result about the set $\underline{\mathbb{T}}$ of all lower transition operators, which states that this set is a complete metric space with respect to our usual norm.
 
 \begin{proposition}\label{lemma:completemetricspace}
-The metric space $(\underline{\mathcal{T}},d)$ is complete under the metric $d$ induced by our usual norm $\norm{\cdot}$.
+The metric space $(\underline{\mathbb{T}},d)$ is complete with respect to the metric $d$ that is induced by our usual norm $\norm{\cdot}$.
 \end{proposition}
 
 \subsection{Lower Transition Rate Operators}\label{sec:connections_rate}
@@ -2542,7 +2549,7 @@ For every sequence $\{u_i\}_{i\in\nats}$ in $\mathcal{U}_{[t,s]}$ such that $\li
 Finally, as our next result establishes, this limit is also unique, in the sense that it is independent of the choice of $\{u_i\}_{i\in\nats}$.
 
 \begin{theorem}\label{theo:convergencelowerbound}
-For any $t,s\in\realsnonneg$ such that $t\leq s$ and any lower transition rate operator $\lrate$, there is a unique lower transition operator $\lt\in\underline{\mathcal{T}}$ such that 
+For any $t,s\in\realsnonneg$ such that $t\leq s$ and any lower transition rate operator $\lrate$, there is a unique lower transition operator $\lt\in\underline{\mathbb{T}}$ such that 
 \begin{equation}\label{eq:theo:convergencelowerbound}
 (\forall\epsilon>0)\,
 (\exists\delta>0)\,
