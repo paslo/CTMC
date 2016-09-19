@@ -2437,7 +2437,9 @@ Consider a lower transition rate operator $\lrate$ and let $\rateset_{\lrate}$ b
 
 \noindent
 Because of this result, and since---as discussed above---every non-empty bounded set of rate matrices that has $\lrate$ as its lower envelope is a subset of $\rateset_{\lrate}$, it follows that $\rateset_{\lrate}$ is the largest non-empty bounded set of rate matrices that has $\lrate$ as its lower envelope.
-Furthermore, as we will show in Proposition~\ref{prop:dominatingproperties} below, this set $\rateset_{\lrate}$ is also closed and convex, and has \emph{separately specified rows}. We say that a set of rate matrices has separately specified rows if it is closed under taking arbitrary combinations of rows from its elements. That is, if for every $x\in\states$ we let $\rateset_x\coloneqq\{Q(x,\cdot):Q\in\rateset\}$ denote the set of the $x$-th rows of the elements of $\rateset$, then we say that $\rateset$ has separately specified rows if $\rateset$ contains every matrix $Q$ that can be constructed by selecting, for all $x\in\states$, an arbitrary row $Q(x,\cdot)$ from $\rateset_x$.
+Furthermore, as we show in Proposition~\ref{prop:dominatingproperties} below, this set $\rateset_{\lrate}$ is also closed and convex, and has what we call \emph{separately specified rows}. 
+
+Intuitively, we say that a set $\rateset$ of rate matrices has separately specified rows if it is closed under taking arbitrary combinations of rows from its elements. More formally, if for every $x\in\states$ we let $\rateset_x\coloneqq\{Q(x,\cdot):Q\in\rateset\}$ denote the set of $x$-rows of the matrices in $\rateset$, then we say that $\rateset$ has separately specified rows if $\rateset$ contains every matrix $Q$ that can be constructed by selecting, for all $x\in\states$, an arbitrary row $Q(x,\cdot)$ from $\rateset_x$.
 
 \begin{definition}\label{def:separatelyspecifiedrows}
 A set of rate matrices $\rateset\subseteq\mathcal{R}$ has separately specified rows if
@@ -2447,7 +2449,7 @@ Q\in\mathcal{R}
 \colon
 (\forall x\in\states)~Q(x,\cdot)\in\rateset_x\right\},
 \end{equation*}
-where, for every $x\in\states$, $\rateset_x\coloneqq\{Q(x,\cdot)\colon Q\in\rateset\}$ is some set of rows from which the $x$-th row of the rate matrices in $\rateset$ are taken.
+where, for every $x\in\states$, $\rateset_x\coloneqq\{Q(x,\cdot)\colon Q\in\rateset\}$ is some given set of rows from which the $x$-row $Q(x,\cdot)$ of the rate matrices $Q$ in $\rateset$ is selected, independently of the other rows.
 \end{definition}
 
 \begin{proposition}\label{prop:dominatingproperties}
@@ -2467,11 +2469,11 @@ Let $\rateset_1$ and $\rateset_2$ be constructed as in Example~\ref{example:diff
 \rateset^* \coloneqq \{Q\in\mathcal{R}\,:\,(\forall x\in\states)\, Q(x,\cdot)\in\rateset_x\},
 \end{equation}
 where, for all $x\in\states$, $\rateset_x$ is given by
-\begin{equation*}
+\begin{equation}\label{eq:ex:dominatingset:localdef}
 \rateset_x \coloneqq \left\{\lambda A(x,\cdot)+(1-\lambda)B(x,\cdot)\,:\,\lambda\in[0,1]\right\}.
-\end{equation*}
+\end{equation}
 
-First of all, for any $Q\in\rateset^*$, $f\in\gamblesX$ and $x\in\states$, it follows from Equation~\eqref{eq:ex:dominatingset:globaldef} that there is some $\lambda\in[0,1]$ such that
+First of all, for any $Q\in\rateset^*$, $f\in\gamblesX$ and $x\in\states$, it follows from Equations~\eqref{eq:ex:dominatingset:globaldef} and~\eqref{eq:ex:dominatingset:localdef} that there is some $\lambda\in[0,1]$ such that
 \begin{equation*}
 [Qf](x)=\lambda[Af](x)+(1-\lambda)[Bf](x)
 \geq\lambda[\lrate f](x)+(1-\lambda)[\lrate f](x)
@@ -2480,7 +2482,7 @@ First of all, for any $Q\in\rateset^*$, $f\in\gamblesX$ and $x\in\states$, it fo
 where the inequality holds because $\lrate$ is the lower envelope of $\rateset_1$. Since this is true for all $x\in\states$, we find that $Qf\geq\lrate f$. Since this is true for all $f\in\gamblesX$ and all $Q\in\rateset^*$, it follows that $\rateset^*\subseteq\rateset_{\lrate}$. 
 
 
-Let now $\lrate^*$ be the lower transition rate operator that corresponds to $\rateset^*$. Consider any $f\in\gamblesX$. Then, because $\rateset^*\subseteq\rateset_{\lrate}$, we find that $\lrate^*f\geq\lrate f$. Similarly, since $\rateset_1$ is clearly a subset of $\rateset^*$, we find that $\lrate^*f\leq\lrate_1f$. Since $\lrate_1=\lrate$, it follows that $\lrate f\leq \lrate^*f\leq \lrate f$, and because this holds for any $f\in\gamblesX$, we conclude that $\lrate^*=\lrate$.
+Let now $\lrate^*$ be the lower transition rate operator that corresponds to $\rateset^*$ and consider any $f\in\gamblesX$. Then, because $\rateset^*\subseteq\rateset_{\lrate}$, we find that $\lrate^*f\geq\lrate f$. Similarly, since $\rateset_1$ is clearly a subset of $\rateset^*$, we find that $\lrate^*f\leq\lrate_1f$. Since $\lrate_1=\lrate$, it follows that $\lrate f\leq \lrate^*f\leq \lrate f$, and because this holds for any $f\in\gamblesX$, we conclude that $\lrate^*=\lrate$.
 
 
 % Recall from Example~\ref{example:different_sets_same_lower_rate} that for all $f\in\gamblesX$, it holds that either $\lrate f=Af$, or $\lrate f=Bf$. Using a similar argument as we used there for the rate matrix $C$, it is clear that any convex combination $Q_\lambda\coloneqq \lambda A+(1-\lambda)B$, with $\lambda\in[0,1]$, is a rate matrix that dominates $\lrate$. Furthermore, because we there found that $[Af](1)\leq [Bf](1)$ if and only if $[Af](2)\leq[Bf](2)$, any matrix constructed by combining rows from $A$ and $B$ will dominate $\lrate$. For example, let $D$ be a rate matrix such that $D(1,\cdot)\coloneqq A(1,\cdot)$ and $D(2,\cdot)\coloneqq B(2,\cdot)$. Then, if $Af\leq Bf$, it also holds that $Af\leq Df$. Similarly, if $Bf\leq Af$, then also $Bf\leq Df$. A similar argument shows that the same is true for any matrix constructed by combining rows from different convex combinations of $A$ and $B$.
@@ -2496,7 +2498,7 @@ Let now $\lrate^*$ be the lower transition rate operator that corresponds to $\r
 % The converse also holds; for all $a\in[1,3]$ and $b\in[1,2]$, there is a $Q\in\rateset$ that takes the above form. From this, it is clear that for all $Q\in\rateset$, it holds that $\lrate f\leq Qf$, for all $f\in\gamblesX$. 
 %Furthermore, $\rateset^1\subset\rateset$ and $\rateset^2\subset\rateset$. Hence, $\rateset$ has $\lrate$ as its corresponding lower transition rate operator. 
 
-It remains to determine that $\rateset^*=\rateset_{\lrate}$. One way to verify this is to consider any $Q'\notin\rateset^*$ and show that there is some $f\in\gamblesX$ and some $x\in\states$ such that $[Q'f](x)<[\lrate f](x)$. We leave this method as an exercise for the reader, and note instead the following. $\rateset^*$ is clearly non-empty, bounded, closed, convex, has separately specified rows and, as we have just shown, has $\lrate$ as its lower transition rate operator. Therefore, by Proposition~\ref{prop:dominating_unique_characterization}, we find that indeed $\rateset=\rateset_{\lrate}$.
+It remains to show that $\smash{\rateset^*=\rateset_{\lrate}}$. One way to verify this is to consider any $Q'\notin\rateset^*$ and to then prove that there is some $f\in\gamblesX$ and some $x\in\states$ such that $[Q'f](x)<[\lrate f](x)$. We leave this method as an exercise for the reader, and note instead the following. $\rateset^*$ is clearly non-empty, bounded, closed, convex, has separately specified rows and, as we have just shown, has $\lrate$ as its lower transition rate operator. Therefore, by Proposition~\ref{prop:dominating_unique_characterization}, it follows that $\rateset^*=\rateset_{\lrate}$.
 \exampleend
 \end{exmp}
 
@@ -5150,13 +5152,13 @@ Since $x\in\states$ is arbitrary, Proposition~\ref{prop:alternativedefforbounded
 \end{proof}
 
 \begin{proof}[Proof of Proposition~\ref{prop:dominatingproperties}]
-We start by showing that $\rateset_{\lrate}$ is closed, or equivalently, that for any converging sequence $\{Q_i\}_{i\in\nats}$ in $\rateset_{\lrate}$, the limit $Q\coloneqq\lim_{i\to+\infty}Q_i$ is again an element of $\rateset_{\lrate}$. Since $\{Q_i\}_{i\in\nats}$ belongs to the bounded set of rate matrices $\rateset_{\lrate}$---see Proposition~\ref{prop:dominating_nonempty_bounded}---we know that the limit $Q$ is again a rate matrix. Now, assume \emph{ex absurdo} that $Q\notin\rateset_{\lrate}$. Then, by Equation~\eqref{eq:dominatingratematrices}, there is some $f\in\gamblesX$ and some $x\in\states$ such that $\smash{\left[Qf\right](x) < \left[\lrate f\right](x)}$, and therefore some $\epsilon\in\realspos$ such that $[Qf](x) + \epsilon < [\lrate f](x)$. Hence, since $\lim_{i\to+\infty}Q_i=Q$, there is some $i^*\in\nats$ such that $[Q_{i^*}f](x) <[Qf](x) + \epsilon<[\lrate f](x)$. Since $Q_{i^*}\in\rateset_{\lrate}$, this is a contradiction. Therefore, $Q\in\rateset_{\lrate}$, and because the converging sequence $\{Q_i\}_{i\in\nats}$ was arbitrary, this proves that $\rateset_{\lrate}$ is closed.
+We start by showing that $\rateset_{\lrate}$ is closed, or equivalently, that for any converging sequence $\{Q_i\}_{i\in\nats}$ in $\rateset_{\lrate}$, the limit $Q\coloneqq\lim_{i\to+\infty}Q_i$ is again an element of $\rateset_{\lrate}$. Since $\{Q_i\}_{i\in\nats}$ belongs to the bounded set of rate matrices $\rateset_{\lrate}$---see Proposition~\ref{prop:dominating_nonempty_bounded}---we know that the limit $Q$ is a real-valued matrix, and therefore, since~\ref{def:Q:sumzero} and~\ref{def:Q:nonnegoffdiagonal} are clearly both preserved under taking limits, $Q$ is a rate matrix. Now, assume \emph{ex absurdo} that $Q\notin\rateset_{\lrate}$. Then, by Equation~\eqref{eq:dominatingratematrices}, there is some $f\in\gamblesX$ and some $x\in\states$ such that $\smash{\left[Qf\right](x) < \left[\lrate f\right](x)}$, and therefore some $\epsilon\in\realspos$ such that $[Qf](x) + \epsilon < [\lrate f](x)$. Hence, since $\lim_{i\to+\infty}Q_i=Q$, there is some $i^*\in\nats$ such that $[Q_{i^*}f](x) <[Qf](x) + \epsilon<[\lrate f](x)$. Since $Q_{i^*}\in\rateset_{\lrate}$, this is a contradiction. Therefore, $Q\in\rateset_{\lrate}$, and because the converging sequence $\{Q_i\}_{i\in\nats}$ was arbitrary, this proves that $\rateset_{\lrate}$ is closed.
 
 Next, we show that $\rateset_{\lrate}$ is convex, or equivalently, that for any two rate matrices $Q_1,Q_2\in\rateset_{\lrate}$, and any $\lambda\in[0,1]$, the matrix $Q_\lambda\coloneqq\lambda Q_1 + (1-\lambda)Q_2$ is again an element of $\rateset_{\lrate}$. It is easily verified from Definition~\ref{def:rate_matrix} that $Q_\lambda$ is a rate matrix. Furthermore, for any $f\in\gamblesX$, we find that
 \begin{equation*}
 Q_\lambda f=\lambda Q_1f+(1-\lambda)Q_2f\geq\lambda \lrate f+(1-\lambda)\lrate f=\lrate f,
 \end{equation*}
-where the inequality holds because $Q_1$ and $Q_2$ belong to $\rateset_{\lrate}$. Hence, it follows from Equation~\ref{eq:dominatingratematrices} that $Q_\lambda\in\rateset_{\lrate}$.
+where the inequality holds because $Q_1$ and $Q_2$ belong to $\rateset_{\lrate}$. Hence, it follows from Equation~\eqref{eq:dominatingratematrices} that $Q_\lambda\in\rateset_{\lrate}$.
 
 We finally show that $\rateset_{\lrate}$ has separately specified rows. For all $x\in\states$, let $\rateset_x\coloneqq\{Q(x,\cdot)\,:\,Q\in\rateset_{\lrate}\}$. Consider now any rate matrix $Q$ such that, for all $x\in\states$, $Q(x,\cdot)\in\rateset_x$ and assume \emph{ex absurdo} that $\smash{Q\notin\rateset_{\lrate}}$. Equation~\eqref{eq:dominatingratematrices} then implies the existence of some $f\in\gamblesX$ and $x\in\states$ such that $\smash{\left[Qf\right](x) < \left[\lrate f\right](x)}$. Since $Q(x,\cdot)\in\rateset_x$, this in turn implies that there is some $Q'\in\rateset_{\lrate}$ such that $\left[Q'f\right](x) < \left[\lrate f\right](x)$, a contradiction. Hence we find that $Q\in\rateset_{\lrate}$.
 \end{proof}
@@ -5174,9 +5176,9 @@ Since $\{Q_i\}_{i\in\nats}$ belongs to the---closed and bounded and therefore---
 \end{proof}
 
 \begin{proof}[Proof of Proposition~\ref{prop:dominating_unique_characterization}]
-Since $\rateset$ has $\lrate$ as its lower envelope, it follows from Equation~\eqref{eq:dominatingratematrices} that $\rateset\subseteq\rateset_{\lrate}$. Assume \emph{ex absurdo} that $\rateset\subset\rateset_{\lrate}$, or equivalently, that there is some $Q\in\rateset_{\lrate}$ such that $Q\notin\rateset$. Consider any such $Q$.
+Since $\rateset$ has $\lrate$ as its lower envelope, it follows from Equation~\eqref{eq:dominatingratematrices} that $\rateset\subseteq\rateset_{\lrate}$. Assume \emph{ex absurdo} that $\rateset\subset\rateset_{\lrate}$, or equivalently, that there is some $Q\in\rateset_{\lrate}$ such that $Q\notin\rateset$. Consider now any such $Q$.
 
-Because $\rateset$ has separately specified rows, it follows from $Q\notin\rateset$ that there is some $x\in\states$ such that $Q(x,\cdot)\notin\rateset_x\coloneqq\{Q'(x,\cdot)\,:\,Q'\in\rateset\}$. Since $\rateset$ is non-empty, bounded, closed and convex, it then follows from Lemma~\ref{lemma:rows_nonempty_bounded_closed_convex} that $\rateset_x$ is a non-empty, bounded, closed and convex subset of $\gamblesX$, and therefore, since $\gamblesX$ is a normed linear space, it follows from the separating hyperplane theorem~\cite[Chapter 14, Corollary 25]{Royden:2010vn} that there is a linear operator $\psi\colon\gamblesX\to\reals$ such that
+Because $\rateset$ has separately specified rows, it follows from $Q\notin\rateset$ that there is some $x\in\states$ such that $Q(x,\cdot)\notin\rateset_x\coloneqq\{Q'(x,\cdot)\,:\,Q'\in\rateset\}$. Furthermore, since $\rateset$ is non-empty, bounded, closed and convex, it follows from Lemma~\ref{lemma:rows_nonempty_bounded_closed_convex} that $\rateset_x$ is a non-empty, bounded, closed and convex subset of $\gamblesX$, and therefore, since $\gamblesX$ is a normed linear space and $Q(x,\cdot)\notin\rateset_x$, it follows from the separating hyperplane theorem~\cite[Chapter 14, Corollary 25]{Royden:2010vn} that there is a linear operator $\psi\colon\gamblesX\to\reals$ such that
 \begin{equation}\label{eq:prop:dominating_unique_characterization:C}
 \psi(Q(x,\cdot))<\inf\{\psi(q)\colon q\in\rateset_x\}=\colon C.
 \end{equation}
