@@ -2254,14 +2254,14 @@ Further on in this paper, we will then  show that this type of lower transition 
 
 \subsection{Lower Transition Operators}\label{subsec:lowertrans_rate}
 
-We start by generalizing transition matrices $T$ to lower transition operators $\lt$.
+The central concept that we will be interested in throughout this section is that of a lower transition operator $\lt$.
 
 \begin{definition}[Lower Transition Operator]\label{def:coh_low_trans}
-We will call a map $\lt$ from $\gamblesX$ to $\gamblesX$ a \emph{lower transition operator} if, for all $f,g\in\gamblesX$, all $\lambda\in\realsnonneg$, and all $x\in\states$:
+A map $\lt$ from $\gamblesX$ to $\gamblesX$ is called a \emph{lower transition operator} if, for all $f,g\in\gamblesX$, all $\lambda\in\realsnonneg$, and all $x\in\states$:
 %\vspace{5pt}
 \begin{enumerate}[label=LT\arabic*:,ref=LT\arabic*]
 \item
-$\left[\lt\,f\right](x)\geq\min\left\{f(y)\,\vert\,y\in\states\right\}$ \label{LT:bounded_min}
+$\left[\lt\,f\right](x)\geq\min\left\{f(y)\,\colon\,y\in\states\right\}$ \label{LT:bounded_min}
 \item
 $\left[\lt(f+g)\right](x)\geq \left[\lt\,f\right](x)+\left[\lt\,g\right](x)$; \label{LT:super_additive}
 \item
@@ -2281,9 +2281,30 @@ $\norm{\lt A - \lt B} \leq \norm{A - B}$. \label{LT:differencenorm}
 \end{definition}
 
 \begin{proposition}\label{lemma:compositioncoherence}
-For any two lower transition operators $\lt,\underline{S}\in\underline{\mathcal{T}}$, their composition is also a lower transition operator  $\left(\lt\,\underline{S}\right)\in\underline{\mathcal{T}}$.
+For any two lower transition operators $\lt,\underline{S}\in\underline{\mathcal{T}}$, their composition $\lt\,\underline{S}$ is again a lower transition operator.% $\left(\lt\,\underline{S}\right)\in\underline{\mathcal{T}}$.
 \end{proposition}
 \begin{proof}
+Consider any $f,g\in\gamblesX$, $\lambda\in\realsnonneg$ and $x\in\states$. Since $\underline{T}$ and $\underline{S}$ are both lower transition operators, we then find that
+\begin{align*}
+[\underline{T}\underline{S}f](x)
+&\geq
+\min\{[\underline{S}f](y)\colon y\in\states\}\\
+&\geq
+\min\{\min\{f(z)\colon z\in\states\}\colon y\in\states\}
+=
+\min\{f(z)\colon z\in\states\}
+\end{align*}
+and
+\begin{align*}
+[\underline{T}\underline{S}(f+g)](x)
+&\geq
+\min\{[\underline{S}f](y)\colon y\in\states\}\\
+&\geq
+\min\{\min\{f(z)\colon z\in\states\}\colon y\in\states\}
+=
+\min\{f(z)\colon z\in\states\}
+\end{align*}
+
 *** still need to check this *** Simply check each of the properties.
 \end{proof}
 
