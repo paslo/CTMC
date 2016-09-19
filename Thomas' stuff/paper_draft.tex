@@ -2333,7 +2333,7 @@ The metric space $(\underline{\mathbb{T}},d)$ is complete with respect to the me
 
 We next focus on the generalization of transition rate matrices $Q$ to lower transition rate operators $\lrate$, as follows.
 \begin{definition}[Lower Transition Rate Operator]\label{def:coh_low_trans_rate}
-We will call a map $\lrate$ from $\gamblesX$ to $\gamblesX$ a \emph{lower transition rate operator} if, for all $f,g\in\gamblesX$, all $\lambda\in\realsnonneg$, all constant functions $\mu\in\gamblesX$, and all $x\in\states$:
+A map $\lrate$ from $\gamblesX$ to $\gamblesX$ is called a \emph{lower transition rate operator} if, for all $f,g\in\gamblesX$, all $\lambda\in\realsnonneg$, all constant functions $\mu\in\gamblesX$, and all $x\in\states$:
 
 %\vspace{5pt}
 \begin{enumerate}[label=LR\arabic*:,ref=LR\arabic*]
@@ -2347,38 +2347,40 @@ $\left[\lrate(f+g)\right](x)\geq\left[\lrate f\right](x)+\left[\lrate g\right](x
 $\left[\lrate(\lambda f)\right](x)= \lambda\left[\lrate f\right](x)$.
 \end{enumerate}
 %\vspace{5pt}
-Such lower transition rate operators furthermore satisfy the following properties---see Reference~\cite{DeBock:2016} for a proof. For any lower transition rate operator $\lrate$ and any two non-negatively homogeneous operators $A,B$ from $\gamblesX$ to $\gamblesX$,
+Such lower transition rate operators furthermore satisfy the following properties---see Reference~\cite{DeBock:2016} for a proof. For any lower transition rate operator $\lrate$ and any two non-negatively homogeneous operators $A,B$ from $\gamblesX$ to $\gamblesX$:
 \begin{enumerate}[label=LR\arabic*:,ref=LR\arabic*,start=5]
 \item
 $\norm{\lrate} < +\infty$ \label{LR:normlratefinite};
 \item
 $\norm{\lrate A - \lrate B} \leq 2\norm{\lrate}\norm{A - B}.$ \label{LR:differenceofnorm}
 \end{enumerate}
+\vspace{0pt}
 \end{definition}
 
-Note that properties~\ref{LR:constantzero} and~\ref{LR:nondiagpos} essentially preserve properties~\ref{def:Q:sumzero} and~\ref{def:Q:nonnegoffdiagonal} from Definition~\ref{def:rate_matrix}. However, where any rate matrix $Q$ represents a linear map, properties~\ref{LR:subadditive} and~\ref{LR:homo} merely require that a lower transition rate operator $\lrate$ is super-additive and non-negatively homogeneous. Hence, any rate matrix is in fact also a lower transition rate operator, with the latter concept providing a generalization of the former.
+Note that properties~\ref{LR:constantzero} and~\ref{LR:nondiagpos} essentially preserve properties~\ref{def:Q:sumzero} and~\ref{def:Q:nonnegoffdiagonal} from Definition~\ref{def:rate_matrix}. The main difference lies in the fact that a rate matrix $Q$ is a linear map, whereas properties~\ref{LR:subadditive} and~\ref{LR:homo} merely require that a lower transition rate operator $\lrate$ is super-additive and non-negatively homogeneous. Therefore, every rate matrix is clearly a lower transition rate operator, with the latter concept providing a generalization of the former.
 
-The first reason that this specific generalization is of interest, is that it preserves the relation between transition matrices and rate matrices, as stated by Propositions~\ref{prop:stochastic_from_rate_matrix} and~\ref{prop:rate_from_stochastic_matrix}. The following two propositions make this explicit in our current setting.
+A first reason why this specific generalization is of interest, is because it preserves the relation between transition matrices and rate matrices that was established in Propositions~\ref{prop:stochastic_from_rate_matrix} and~\ref{prop:rate_from_stochastic_matrix}. Indeed, the following two results generalise these relations to our current setting.
 
 %**** We next establish that there is a correspondence between lower transition rate operators and lower transition operators that is analogous to the one found in Section~\ref{sec:trans_rate_matrices}.
 
-\begin{proposition}[Reference \cite{DeBock:2016}]\label{lemma:normQsmallenough}
-Consider any lower transition rate operator $\lrate$, and any $\Delta\in\realsnonneg$ such that $\Delta\norm{\lrate}\leq 1$. Then, the operator $(I+\Delta\lrate)$ is a lower transition operator.
+\begin{proposition}[Reference {\cite[Proposition 5]{DeBock:2016}}]\label{lemma:normQsmallenough}
+Consider any lower transition rate operator $\lrate$, and any $\Delta\in\realsnonneg$ such that $\Delta\norm{\lrate}\leq 1$. Then the operator $(I+\Delta\lrate)$ is a lower transition operator.
 \end{proposition}
 
-\begin{proposition}[Reference \cite{DeBock:2016}]\label{lemma:lower_trans_to_lower_rate}
-Consider any lower transition operator $\lt$, and any $\Delta\in\realspos$. Then, the operator $\nicefrac{1}{\Delta}(\lt - I)$ is a lower transition rate operator.
+\begin{proposition}[Reference {\cite[Proposition 6]{DeBock:2016}}]\label{lemma:lower_trans_to_lower_rate}
+Consider any lower transition operator $\lt$, and any $\Delta\in\realspos$. Then the operator $\nicefrac{1}{\Delta}(\lt - I)$ is a lower transition rate operator.
 \end{proposition}
 
-Now, in our discussion of lower transition operators in Section~\ref{subsec:lowertrans_rate}, we mentioned that lower transition operators can intuitively be interpreted as a lower envelope over some set of transition matrices. As we are about to show, there is a similar connection between lower transition rate operators and sets of rate matrices.
+Now, in our discussion of lower transition operators in Section~\ref{subsec:lowertrans_rate}, we mentioned that lower transition operators can be interpreted as the lower envelope of a set of transition matrices. As we are about to show, there is a similar connection between lower transition rate operators and sets of rate matrices.
 
-We start by considering a non-empty bounded set $\rateset\subseteq\mathcal{R}$ of rate matrices. For any $f\in\gamblesX$,
+So consider any non-empty bounded set $\rateset\subseteq\mathcal{R}$ of rate matrices. Then for any $f\in\gamblesX$, if we let
 \begin{equation}\label{eq:correspondinglowertrans}
-\lrate f\coloneqq\inf\{Qf\colon Q\in\rateset\}\\[2mm]
+[\lrate f](x)\coloneqq\inf\{[Qf](x)\colon Q\in\rateset\}
+\text{ for all $x\in\states$},%\\[2mm],
 \end{equation}
-is then again an element of $\gamblesX$.\footnote{%Since $\rateset$ is non-empty, the components of $\lrate f$ cannot be $+\infty$.
+the resulting function $\lrate f$ is again an element of $\gamblesX$,\footnote{%Since $\rateset$ is non-empty, the components of $\lrate f$ cannot be $+\infty$.
 Since $\rateset$ is bounded,~\ref{N:normAf} implies that, for all $Q\in\rateset$, $\norm{Qf}\leq\norm{Q}\norm{f}\leq\norm{\rateset}\norm{f}<+\infty$. Therefore, and since $\rateset$ is non-empty, the components of $\lrate f$ are bounded below by $-\norm{\rateset}\norm{f}$, which implies that $\lrate f$ is a real-valued function on $\states$.}
-Therefore, $\lrate$ is a map from $\gamblesX$ to $\gamblesX$. We call this operator $\lrate$, as defined by Equation~\eqref{eq:correspondinglowertrans}, the \emph{lower envelope} of $\rateset$. It is a matter of straightforward verification to see that $\lrate$ is a lower transition rate operator.
+and therefore, $\lrate$ is a map from $\gamblesX$ to $\gamblesX$. We call this operator $\lrate$, as defined by Equation~\eqref{eq:correspondinglowertrans}, the \emph{lower envelope} of $\rateset$. It is a matter of straightforward verification to see that $\lrate$ is a lower transition rate operator.
 
 \begin{proposition}\label{prop:lowerenvelopeislowertrans}
 For any non-empty bounded set $\rateset\subseteq\mathcal{R}$ of rate matrices, the corresponding operator $\lrate\colon\gamblesX\to\gamblesX$, as defined by Equation~\eqref{eq:correspondinglowertrans}, is a lower transition rate operator.
@@ -2389,7 +2391,7 @@ Inspired by this result, we will also refer to the lower envelope of $\rateset$ 
 However, this correspondence is not one-to-one. As the following example establishes, different non-empty bounded sets of rate matrices may have the same corresponding lower transition rate operator.
 
 \begin{exmp}\label{example:different_sets_same_lower_rate}
-For the sake of simplicity, we assume that the state space $\states\coloneqq\{1,2\}$ has only two elements, which allows us to work with $2\times 2$ matrices. Consider now two rate matrices
+For the sake of simplicity, we assume that the state space $\states$ has only two elements, which allows us to work with $2\times 2$ matrices. Consider now two rate matrices
 \begin{equation*}
 A\coloneqq\left[\begin{array}{rr}-1 & 1 \\2 & -2\end{array}\right]\quad\text{and}\quad
 B\coloneqq\left[\begin{array}{rr}-3 & 3 \\1 & -1\end{array}\right]\,,
@@ -2404,7 +2406,7 @@ and consider any $f\in\gamblesX$. Equation~\eqref{eq:correspondinglowertrans} th
 Of course, this should not really be surprising---Example~\ref{example:different_sets_same_lower_rate} essentially establishes that different sets can have the same infimum. However, it does lead to a natural question: what do these different sets have in common?
 
 Therefore, we next consider some fixed lower transition rate operator $\lrate$.
-All the non-empty bounded sets $\rateset$ of rate matrices that have $\lrate$ as their lower envelope then share this common property: they consist of rate matrices $Q$ that dominate $\lrate$, in the sense that $Qf\geq\lrate f$ for all $f\in\gamblesX$. Therefore, each of these sets $\rateset$ is contained in the following set of dominating rate matrices:
+All the non-empty bounded sets $\rateset$ of rate matrices that have $\lrate$ as their lower envelope then share a common property: they consist of rate matrices $Q$ that dominate $\lrate$, in the sense that $Qf\geq\lrate f$ for all $f\in\gamblesX$. Therefore, each of these sets $\rateset$ is contained in the following set of dominating rate matrices:
 \begin{equation}\label{eq:dominatingratematrices}
 \rateset_{\lrate}\coloneqq
 \left\{
@@ -5120,15 +5122,15 @@ Consider any $Q\in\rateset$. It then follows from Definition~\ref{def:rate_matri
 \end{proof}
 
 \begin{proof}[Proof of Proposition~\ref{prop:dominating_nonempty_bounded}]
-We will start by showing that, for every $f\in\gamblesX$, there is some $Q\in\rateset_{\lrate}$ such that $\lrate f=Qf$. Therefore, fix any $f\in\gamblesX$. Choose $\Delta>0$ small enough such that $0\leq\Delta\norm{\lrate}\leq 1$ (this always possible because of property~\ref{LR:normlratefinite}). Define $\lt\coloneqq I+\Delta\lrate$. Since $\lrate$ is a lower transition rate operator, it follows from Proposition~\ref{lemma:normQsmallenough} that $\lt$ is a lower transition operator. For any $x\in\states$, we now consider the operator $\lt_x\colon\gamblesX\to\reals$, as defined by Equation~\eqref{eq:lowerprevisionfromlt}, which is a coherent lower prevision. Because of \cite[Theorem~3.3.3(b)]{Walley:1991vk}, this implies the existence of an expectation operator $\mathbb{E}_x$ on $\gamblesX$---Reference~\cite{Walley:1991vk} calls this a linear prevision on $\gamblesX$---such that $\mathbb{E}_xg\geq\lt_xg$ for all $g\in\gamblesX$ and $\mathbb{E}_xf=\lt_xf$. Let $P_x$ be the unique probability mass function that corresponds to $\mathbb{E}_x$. For all $x,y\in\states$, we now let $T(x,y)\coloneqq P_x(y)\coloneqq \mathbb{E}_x(\ind{y})$. Then $T$ is clearly a transition matrix. Furthermore, for every $x\in\states$ and $g\in\gamblesX$, we have that $(Tg)(x)=\mathbb{E}_xg$. Hence, it follows that $Tg\geq\lt g$ for all $g\in\gamblesX$ and that $Tf=\lt f$. Now let $Q\coloneqq\nicefrac{1}{\Delta}(T-I)$, which, because of Proposition~\ref{prop:rate_from_stochastic_matrix}, is a rate matrix. Since $Tf=\lt f$, it then follows that
+We will start by showing that, for every $f\in\gamblesX$, there is some $\smash{Q\in\rateset_{\lrate}}$ such that $\lrate f=Qf$. To this end, fix any $f\in\gamblesX$. Now choose $\Delta>0$ small enough such that $\smash{0\leq\Delta\norm{\lrate}\leq 1}$ (this always possible because of property~\ref{LR:normlratefinite}) and define $\lt\coloneqq I+\Delta\lrate$. Since $\lrate$ is a lower transition rate operator, it then follows from Proposition~\ref{lemma:normQsmallenough} that $\lt$ is a lower transition operator. For any $x\in\states$, we now consider the operator $\lt_x\colon\gamblesX\to\reals$, as defined by Equation~\eqref{eq:lowerprevisionfromlt}, which is a coherent lower prevision. Because of \cite[Theorem~3.3.3(b)]{Walley:1991vk}, this implies the existence of an expectation operator $\mathbb{E}_x$ on $\gamblesX$---Reference~\cite{Walley:1991vk} calls this a linear prevision on $\gamblesX$---such that $\mathbb{E}_xg\geq\lt_xg$ for all $g\in\gamblesX$ and $\mathbb{E}_xf=\lt_xf$. Let $P_x$ be the unique probability mass function that corresponds to $\mathbb{E}_x$. For all $x,y\in\states$, we now let $T(x,y)\coloneqq P_x(y)\coloneqq \mathbb{E}_x(\ind{y})$. Then $T$ is clearly a transition matrix. Furthermore, for every $x\in\states$ and $g\in\gamblesX$, we have that $(Tg)(x)=\mathbb{E}_xg$. Hence, it follows that $Tg\geq\lt g$ for all $g\in\gamblesX$ and that $Tf=\lt f$. Now let $Q\coloneqq\nicefrac{1}{\Delta}(T-I)$, which, because of Proposition~\ref{prop:rate_from_stochastic_matrix}, is a rate matrix. Since $Tf=\lt f$, it then follows that
 \begin{equation*}
-Qf=\frac{1}{\Delta}(Tf-f)\geq\frac{1}{\Delta}(\lt f-f)=\lrate f.
+Qf=\frac{1}{\Delta}(Tf-f)=\frac{1}{\Delta}(\lt f-f)=\lrate f.
 \end{equation*}
-Similarly, since $Tg\geq\lt g$ for all $g\in\gamblesX$, it follows that $Qg\geq\lrate g$, or equivalently, since $Q$ is a rate matrix, that $Q\in\rateset_{\lrate}$. Since $f$ was arbitrary, this proves that, for all $f\in\gamblesX$, there is some $Q\in\rateset_{\lrate}$ such that $Qf=\lrate f$. Since $\gamblesX$ is non-empty, this clearly implies that $\rateset_{\lrate}$ is non-empty.
+Similarly, since $Tg\geq\lt g$ for all $g\in\gamblesX$, it follows that $Qg\geq\lrate g$, or equivalently, since $Q$ is a rate matrix, that $Q\in\rateset_{\lrate}$. Since $f$ was arbitrary, this proves that, for all $f\in\gamblesX$, there is some $Q\in\rateset_{\lrate}$ such that $Qf=\lrate f$. Since $\gamblesX$ is non-empty, this clearly also implies that $\rateset_{\lrate}$ is non-empty.
 
-We end this proof by showing that $\rateset_{\lrate}$ is bounded. Consider any $x\in\states$. Then for all $Q\in\rateset_{\lrate}$, we have that $Q(x,x)=(Q\ind{x})(x)\geq(\lrate\ind{x})(x)$, which implies that
+We end this proof by showing that $\rateset_{\lrate}$ is bounded. Consider any $x\in\states$. Then for all $Q\in\rateset_{\lrate}$, we have that $Q(x,x)=[Q\ind{x}](x)\geq[\lrate\ind{x}](x)$, which implies that
 \begin{equation*}
-\inf\left\{Q(x,x)\colon Q\in\rateset_{\lrate}\right\}\geq(\lrate\ind{x})(x)>-\infty.
+\inf\left\{Q(x,x)\colon Q\in\rateset_{\lrate}\right\}\geq[\lrate\ind{x}](x)>-\infty.
 \end{equation*}
 Since $x\in\states$ is arbitrary, Proposition~\ref{prop:alternativedefforbounded} now guarantees that $\rateset_{\lrate}$ is bounded. 
 \end{proof}
