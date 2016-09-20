@@ -2662,7 +2662,7 @@ We will next establish that this operator $L_t^s$ satisfies a number of convenie
 Let $\lrate$ be an arbitrary lower transition rate operator. Then, the \emph{lower transition operator system} corresponding to $\lrate$ is the family $\underline{\mathcal{T}}_{\lrate}$ of lower transition operators $L_t^s$ corresponding to $\lrate$, defined for all $t,s\in\realsnonneg$, with $t\leq s$, as in Definition~\ref{def:low_trans}.
 \end{definition}
 
-Our first result is that this family $\underline{\mathcal{T}}_{\lrate}$ satisfies the same semi-group property that was found to hold for the transition matrix systems $\mathcal{T}_P$ corresponding to Markov chains $P\in\mprocesses$ in Section~\ref{sec:cont_time_markov_chains}.
+Our first result is that this family $\smash{\underline{\mathcal{T}}_{\lrate}}$ satisfies the same semi-group property that was found to hold for the transition matrix system $\mathcal{T}_P$ of a Markov chain $P\in\mprocesses$ in Section~\ref{sec:cont_time_markov_chains}.
 
 \begin{proposition}\label{prop:lower_trans_system_is_system}
 Let $\lrate$ be an arbitrary lower transition rate operator, and let $\underline{\mathcal{T}}_{\lrate}$ be the corresponding lower transition operator system. Then, for all $t,r,s\in\realsnonneg$ such that $t\leq r\leq s$, it holds that
@@ -2672,38 +2672,52 @@ L_t^s = L_t^rL_r^s\,.
 Furthermore, for all $t\in\realsnonneg$, we have that $L_t^t=I$.
 \end{proposition}
 
-Our next result is that this family $\underline{\mathcal{T}}_{\lrate}$ is also homogeneous:
+Our next result is that this family $\underline{\mathcal{T}}_{\lrate}$ is time-homogeneous:
 
 \begin{proposition}\label{prop:lower_transition_is_homogeneous}
-Let $\lrate$ be an arbitrary lower transition rate operator, and let $\underline{\mathcal{T}}_{\lrate}$ be the corresponding lower transition operator system. Then, for all $t,s\in\realsnonneg$ such that $t\leq s$, we have that $L_t^s=L_0^{s-t}$.
+Let $\lrate$ be an arbitrary lower transition rate operator, and let $\smash{\underline{\mathcal{T}}_{\lrate}}$ be the corresponding lower transition operator system. Then, for all $t,s\in\realsnonneg$ such that $t\leq s$, we have that $L_t^s=L_0^{s-t}$.
 %\begin{equation*}
 %L_t^s = L_{t+\Delta}^{s+\Delta}\,.
 %\end{equation*}
 \end{proposition}
 
-Finally, we note that the derivatives of these lower transition operators always exist.
+Finally, we find that the derivatives of these lower transition operators always exist, and that they furthermore satisfy the following simple equalities.
 
 \begin{proposition}\label{prop:lower_transition_has_deriv}
 Let $\lrate$ be an arbitrary lower transition rate operator, and let $\underline{\mathcal{T}}_{\lrate}$ be the corresponding lower transition operator system. Then, for all $t,s\in\realsnonneg$ such that $t\leq s$, it holds that\footnote{If $0=t<s$, the derivative with respect to $t$ is taken to be a right derivative. If $t=s$, the derivative with respect to $s$ is taken to be a right derivative and the derivative with respect to $t$ is taken to be a left derivative (or becomes meaningless if $t=0$).}
 \begin{equation*}
-\frac{\partial}{\partial t}\lbound_t^s=-\lrate\lbound_t^s\,,\quad\text{and}\quad\frac{\partial}{\partial s}\lbound_t^s=\lrate\lbound_t^s.\vspace{7pt}
+\frac{\partial}{\partial t}\lbound_t^s=-\lrate\lbound_t^s\,\quad\text{and}\quad\frac{\partial}{\partial s}\lbound_t^s=\lrate\lbound_t^s.\vspace{7pt}
 \end{equation*}
 % Then $\frac{d}{dt}\lbound_t^s=-\lrate\lbound_t^s$ and $\frac{d}{ds}\lbound_t^s=\lbound_t^s\lrate$, meaning that
 \end{proposition}
+We would like to point out here that the derivatives in this result are not taken pointwise, but are taken with respect to the operator norm. For example, for $t=0$ and $s>0$, Proposition~\ref{prop:lower_transition_has_deriv} does not state that
+\begin{equation}\label{eq:pointwisedifferential}
+\frac{\partial}{\partial s}\lbound_0^sf=\lrate\lbound_0^sf
+~\text{ for all $f\in\gamblesX$,}
+\end{equation}
+but rather that
+\begin{equation}\label{eq:uniformdifferential}
+\lim_{\Delta\to0}
+\norm{\frac{L_0^{s+\Delta}-L_0^s}{\Delta}-\lrate L_0^s}=0.\vspace{6pt}
+\end{equation}
+Of these two statements, the latter is the strongest one, as it implies the former. Hence, although from an intuitive point of view, the reader may whish to interpret the results in Proposition~\ref{prop:lower_transition_has_deriv} as in Equation~\eqref{eq:pointwisedifferential}---which would be correct---one should keep in mind that from a technical point of view, the result is in fact stronger, and is intended to be read as in Equation~\eqref{eq:uniformdifferential}.
 
-One conclusion that we can draw from this, is that $L_t^s$ can alternatively be expressed as the solution of the differential equation
+It is also worth noting that, as a consequence of Propositions~\ref{prop:lower_transition_has_deriv} and~\ref{prop:lower_trans_system_is_system}, the operator $L_t^s$ satisfies the following differential equation:
 \begin{equation*}
 \frac{\partial}{\partial s}L_t^s=\lrate L_t^s\,,\quad\quad L_t^t=I\,.
 \end{equation*}
-Observe, therefore, the strong correspondence between the operator $L_t^s$ corresponding to some $\lrate$, and the matrix exponential $e^{Q(s-t)}$ of any rate matrix $Q\in\mathcal{R}$. In particular, it is well known~\cite[Equation 4.4]{van2006study} that this matrix exponential is the solution of the differential equation
+Observe, therefore, the strong correspondence between the operator $L_t^s$ corresponding to some $\lrate$, and the matrix exponential $e^{Q(s-t)}$ of a rate matrix $Q\in\mathcal{R}$. In particular, as is very well known~\cite[Equation 4.4]{van2006study}, this matrix exponential is the unique solution of the differential equation
 \begin{equation*}
 \frac{\partial}{\partial s}e^{Q(s-t)}=Qe^{Q(s-t)}\,,\quad\quad e^{Q(t-t)}=I\,.
 \end{equation*}
-Now, recall that any rate matrix $Q$ is also a lower transition rate operator. It therefore follows from the above that the lower transition operator $L_t^s$ corresponding to this $\lrate=Q$ will satisfy $L_t^s=e^{Q(s-t)}$. 
+Now, recall that any rate matrix $Q$ is also a lower transition rate operator. It then follows from the above that the lower transition operator $L_t^s$ that corresponds to this $\lrate=Q$ is given by $\smash{L_t^s=e^{Q(s-t)}}$. 
+%Therefore, if $\lrate=Q$ for some $Q\in\mathcal{R}$, we find that the family $\smash{\underline{\mathcal{T}}_{\lrate}}$ is equal to $\mathcal{T}_Q$, which is the exponential transition matrix system from Definition~\ref{def:systemfromQ} that, by Corollary~\ref{cor:rate_has_unique_homogen_markov_process}, is known to correspond to a well-behaved homogeneous Markov chain $P\in\whmprocesses$. 
+Hence, more generally, $L_t^s$ can be regarded as a generalized version of the matrix exponential of a transition rate matrix, and---with some slight abuse of terminology---can be considered to be the `matrix exponential' of the lower transition rate operator $\lrate$.
 
-Furthermore, if $\lrate=Q$ for some $Q\in\mathcal{R}$, we find that the family $\underline{\mathcal{T}}_{\lrate}$ is equal to $\mathcal{T}_Q$, the exponential transition matrix system from Definition~\ref{def:systemfromQ} that, by Corollary~\ref{cor:rate_has_unique_homogen_markov_process}, corresponds to some well-behaved homogeneous Markov chain $P\in\whmprocesses$. We can conclude from this that Definition~\ref{def:low_trans} expresses a generalization of the matrix exponential, that can be used when working with lower transition rate operators.
+Another closely related observation is that, if $\lrate=Q$ for some $Q\in\mathcal{R}$, then the family $\smash{\underline{\mathcal{T}}_{\lrate}}$ is equal to $\mathcal{T}_Q$, which is the exponential transition matrix system from Definition~\ref{def:systemfromQ} that, by Corollary~\ref{cor:rate_has_unique_homogen_markov_process}, is known to correspond to a well-behaved homogeneous Markov chain $P\in\whmprocesses$. 
+Interestingly, then, the family $\underline{\mathcal{T}}_{\lrate}$ maintains the convenient properties of differentiability, time-homogeneity, and ``Markovian-like'' factorization, when instead of some rate matrix $Q$ we replace it by a lower transition rate operator~$\lrate$.
 
-Interestingly, then, the family $\underline{\mathcal{T}}_{\lrate}$ maintains the convenient properties of differentiability, homogeneity, and ``Markovian-like'' factorization, when instead of some rate matrix $Q$ we take an arbitrary lower transition rate operator $\lrate$. And, mathematical niceties aside, we are of course not really interested in the trivial case where $\lrate=Q$. Instead, we wish to use our lower transition operator to compute lower expectations for imprecise continuous-time Markov chains. We will find in the next section that this is possible by properly choosing $\lrate$.
+Mathematical niceties aside, we are of course not really interested in the trivial case where $\lrate=Q$. Instead, we wish to use the lower transition operator $L_t^s$ to compute lower expectations for imprecise continuous-time Markov chains. We will find in the next section that this is indeed possible, provide that $\lrate$ is chosen properly.
 
 \section{\ictmc's and Corresponding Lower Transition Operators}\label{sec:connections}
 
