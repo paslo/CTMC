@@ -322,7 +322,7 @@ Infinite sequences of quantities will be denoted $\{a_i\}_{i\in\nats}$, possibly
 
 For any set $A$ and any subset $C$ of $A$, we use $\ind{C}$ to denote the indicator of $C$, defined for all $a\in A$ by $\ind{C}(a)=1$ if $a\in C$ and $\ind{C}(a)=0$, otherwise. If $C$ is a singleton $C=\{c\}$, we may instead write $\ind{c}\coloneqq\ind{\{c\}}$.
 
-\subsection{Sequences of Time Points}
+\subsection{Sequences of Time Points}\label{subsec:sequencesoftimepoints}
 
 We will make extensive use of finite sequences of time points. Such a sequence is of the form $u\coloneqq t_0,t_1,\ldots,t_n$, with $n\in\natswith$ and, for all $i\in\{0,\ldots,n\}$, $t_i\in\realsnonneg$. These sequences are taken to be ordered, meaning that for all $i,j\in\{0,\ldots,n\}$ with $i<j$, it holds that $t_i\leq t_j$. Let $\mathcal{U}$ denote the set of all such finite sequences that are \emph{non-degenerate}, meaning that for all $u\in\mathcal{U}$ with $u=t_0,\ldots,t_n$, it holds that $t_i\neq t_j$ for all $i,j\in\{0,\ldots,n\}$ such that $i\neq j$. Note that this does not prohibit \emph{empty} sequences. We therefore also define $\mathcal{U}_\emptyset\coloneqq \mathcal{U}\setminus\{\emptyset\}$.
 
@@ -330,7 +330,7 @@ For any finite sequence $u$ of time points, let $\max u\coloneqq \max\{t_i:i\in\
 
 Since a sequence $u\in\mathcal{U}$ is a subset of $\realsnonneg$, we can use set-theoretic notation to operate on such sequences. The result of such operations is again taken to be ordered. For example, for any $u,v\in\mathcal{U}$, we use $u\cup v$ to denote the ordered union of $u$ and $v$. Similarly, for any $s\in\realsnonneg$ and any $u\in\mathcal{U}_{<s}$ with $u=t_0,\ldots,t_n$, we use $u\cup\{s\}$ to denote the sequence $t_0,\ldots,t_n,s$.
 
-As a special case, we consider finite sequences of time points that partition a given time interval $[t,s]$, with $t,s\in\realsnonneg$ such that $t\leq s$. Such a sequence is taken to include the end-points of this interval.  Thus, the sequence is of the form $t=t_0< t_1<\cdots< t_n=s$. We denote the set of all such sequences by $\mathcal{U}_{[t,s]}$. Since these sequences are non-degenerate, it follows that $\mathcal{U}_{[t,t]}$ consists of a single sequence $u=t$. For any $u\in\mathcal{U}_{[t,s]}$ with $u=t_0,\ldots,t_n$, we also define the sequential differences $\Delta_i^u\coloneqq t_i-t_{i-1}$, for all $i\in\{1,\ldots,n\}$. We then use $\sigma(u)\coloneqq \max\{\Delta_i^u:i\in\{1,\ldots,n\}\}$ to denote the maximum such difference.
+As a special case, we consider finite sequences of time points that partition a given time interval $[t,s]$, with $t,s\in\realsnonneg$ such that $t\leq s$. Such a sequence is taken to include the end-points of this interval.  Thus, the sequence is of the form $t=t_0< t_1<\cdots< t_n=s$. We denote the set of all such sequences by $\mathcal{U}_{[t,s]}$. Since these sequences are non-degenerate, it follows that $\mathcal{U}_{[t,t]}$ consists of a single sequence $u=t$. For any $u\in\mathcal{U}_{[t,s]}$ with $u=t_0,\ldots,t_n$, we also define the sequential differences $\Delta_i\coloneqq t_i-t_{i-1}$, for all $i\in\{1,\ldots,n\}$. We then use $\sigma(u)\coloneqq \max\{\Delta_i:i\in\{1,\ldots,n\}\}$ to denote the maximum such difference.
 
 \subsection{States and Functions}\label{sec:multivar_notation}
 
@@ -2598,49 +2598,49 @@ We conclude from all of this that non-empty bounded sets of rate matrices are mo
 
 \subsection{Corresponding Lower Transition Operators}
 
-Proposition~\ref{lemma:normQsmallenough} already established that we can fairly easily construct a lower transition operator from a given lower transition rate operator. In this section, we construct a somewhat more complicated lower transition operator from a given lower transition rate operator, and it is this specific lower transition operator on which we will focus for the remainder of this work. In particular, we will introduce the \emph{lower transition operator corresponding to a given lower transition rate operator}.
+Proposition~\ref{lemma:normQsmallenough} already established that we can fairly easily construct a lower transition operator from a given lower transition rate operator $\lrate$: if $\Delta\geq0$ is sufficiently small, then $I+\Delta\lrate$ will be a lower transition operator. In this section, we construct a somewhat more complicated lower transition operator from a given lower transition rate operator, and it is this specific lower transition operator on which we will focus for the remainder of this work. In particular, we will introduce the \emph{lower transition operator corresponding to a given lower transition rate operator}.
 
 To this end, we will assume here that we are given some arbitrary lower transition rate operator $\lrate$, and any two time points $t,s\in\realsnonneg$ such that $t\leq s$. For any $u\in\mathcal{U}_{[t,s]}$ such that $u=t_0,\ldots,t_n$, we then define the auxiliary operator
 \begin{equation}\label{eq:aux_lower_trans}
 \Phi_u\coloneqq\prod_{i=1}^n(I+\Delta_i\lrate)\,,
 \end{equation}
-where, for every $i\in\{1,\ldots,n\}$, the $\Delta_i=t_i-t_{i-1}$ denote the sequential differences of the time points in $u$. The lower transition operator corresponding to this $\lrate$ will be defined below as a limit of such auxiliary operators $\Phi_u$, obtained as we take $u$ to be an increasingly finer partition of the interval $[t,s]$.
+where, as in Section~\ref{subsec:sequencesoftimepoints}, for every $i\in\{1,\ldots,n\}$, $\Delta_i= t_i-t_{i-1}$ denotes the difference between two consecutive time points in $u$, and $\sigma(u)\coloneqq \max\{\Delta_i:i\in\{1,\ldots,n\}\}$ is the maximum such difference. Clearly, if $\sigma(u)$ is small enough, Proposition~\ref{lemma:normQsmallenough} guarantees that each of the terms $I+\Delta_i\lrate$ is a lower transition operator, and it then follows from Proposition~\ref{lemma:compositioncoherence} that $\Phi_u$---since it is a composition of lower transition operators---is also a lower transition operator. The so-called \emph{lower transition operator corresponding to} $\lrate$ will be defined below as the limit of these lower transition operators $\Phi_u$, obtained as we take $u$ to be an increasingly finer partition of the interval $[t,s]$.
 
-Before defining this operator of interest, we therefore first give some results to show that such a limit exists. We start with a bound on the distance between two operators $\Phi_u$ and $\Phi_{u*}$.
+However, before we can do that, we first need to establish that this limit indeed exists. To this end, we start by providing a bound on the distance between two operators $\Phi_u$ and $\Phi_{u*}$.
 
 \begin{proposition}\label{prop:differencebetweenu}
-Consider any $t,s\in\realsnonneg$ with $t\leq s$, any $\delta\in\realspos$ such that $\delta\norm{\lrate}\leq1$, and any $u,u^*\in\mathcal{U}_{[t,s]}$ such that $\sigma(u)<\delta$ and $\sigma(u^*)<\delta$. Let $C\coloneqq s-t$. Then
+Consider any $t,s\in\realsnonneg$ with $t\leq s$, any $\delta\in\realspos$ such that $\delta\norm{\lrate}\leq1$, and any $u,u^*\in\mathcal{U}_{[t,s]}$ such that $\sigma(u)\leq\delta$ and $\sigma(u^*)\leq\delta$. Let $C\coloneqq s-t$. Then
 \begin{equation*}
 \norm{\Phi_u-\Phi_{u^*}}\leq 2\delta C\norm{\lrate}^2\,.
-\end{equation*}
+\end{equation*}\\[-27pt]
 \end{proposition}
 
-Note, therefore, that the distance $\norm{\Phi_u - \Phi_{u^*}}$ decreases as $\sigma(u)$ and $\sigma(u^*)$ become smaller. This allows us to state the following result.
+Note, therefore, that the distance $\norm{\Phi_u - \Phi_{u^*}}$ vanishes as we make $\sigma(u)$ and $\sigma(u^*)$ smaller and smaller. This allows us to state the following result.
 
 \begin{corollary}\label{corol:cauchy}
 For every sequence $\{u_i\}_{i\in\nats}$ in $\mathcal{U}_{[t,s]}$ such that $\lim_{i\to\infty}\sigma(u_i)=0$, the corresponding sequence $\{\Phi_{u_i}\}_{i\in\nats}$ is Cauchy.
 \end{corollary}
 
-Furthermore, because of Proposition~\ref{lemma:completemetricspace}, this Cauchy sequence converges to a limit, and this limit is a lower transition operator.
+Since we already know that, for partitions $u$ that are sufficiently fine, $\Phi_u$ is a lower transition operator, Proposition~\ref{lemma:completemetricspace} now implies that this Cauchy sequence converges to a limit, and that this limit is again a lower transition operator.
 
 \begin{corollary}\label{corol:limitexistsandiscoherent}
 For every sequence $\{u_i\}_{i\in\nats}$ in $\mathcal{U}_{[t,s]}$ such that $\lim_{i\to\infty}\sigma(u_i)=0$, the corresponding sequence $\{\Phi_{u_i}\}_{i\in\nats}$ converges to a lower transition operator.
 \end{corollary}
 
-Finally, as our next result establishes, this limit is also unique, in the sense that it is independent of the choice of $\{u_i\}_{i\in\nats}$.
+Finally, as our next result establishes, this limit is unique, in the sense that it is independent of the choice of $\{u_i\}_{i\in\nats}$.
 
 \begin{theorem}\label{theo:convergencelowerbound}
 For any $t,s\in\realsnonneg$ such that $t\leq s$ and any lower transition rate operator $\lrate$, there is a unique lower transition operator $\lt\in\underline{\mathbb{T}}$ such that 
 \begin{equation}\label{eq:theo:convergencelowerbound}
 (\forall\epsilon>0)\,
 (\exists\delta>0)\,
-(\forall u\in\mathcal{U}_{[t,s]}\colon\sigma(u)<\delta)~\norm{\lt - \Phi_u}<\epsilon.
+(\forall u\in\mathcal{U}_{[t,s]}\colon\sigma(u)\leq\delta)~\norm{\lt - \Phi_u}\leq\epsilon.
 \end{equation}
 \end{theorem}
 
 Note that the $\epsilon-\delta$ expression in Theorem~\ref{theo:convergencelowerbound} is a limit statement. Specifically, it is a limit of operators $\Phi_{u}$ corresponding to increasingly finer partitions $u$ of the interval $[t,s]$. In the sequel, whenever such a unique limit exists and equals some lower transition operator $\lt$, we will denote it as
 \begin{equation}\label{eq:net_limit_lower_trans}
-\lim_{\sigma(u)\to0}\left\{\Phi_u\,\big\vert\,u\in\mathcal{U}_{[t,s]}\right\} = \lt\,.
+\lim_{\sigma(u)\to0}\left\{\Phi_u\,\colon\,u\in\mathcal{U}_{[t,s]}\right\} = \lt\,.
 \end{equation}
 Here, the notation is understood to indicate that the limit of these operators $\Phi_{u}$ is independent of the exact choice of $\{u_i\}_{i\in\nats}$ in $\mathcal{U}_{[t,s]}$, so long as $\lim_{i\to\infty}\sigma(u_i)=0$.
 
@@ -2649,7 +2649,7 @@ We are now ready to define the \emph{lower transition operator corresponding to 
 \begin{definition}[Corresponding Lower Transition Operator]\label{def:low_trans}
 Consider any $t,s\in\realsnonneg$ such that $t\leq s$ and let $\lrate$ be an arbitrary lower transition rate operator. The \emph{corresponding lower transition operator} $\lbound_t^s$ is a map from $\gamblesX$ to $\gamblesX$, defined by
 \begin{equation}\label{eq:lowerbound}
-\lbound_t^s\coloneqq\lim_{\sigma(u)\to0}\left\{ \Phi_u\,\big\vert\,u\in\mathcal{U}_{[t,s]}\right\},
+\lbound_t^s\coloneqq\lim_{\sigma(u)\to0}\left\{ \Phi_u\,\colon\,u\in\mathcal{U}_{[t,s]}\right\},
 \end{equation}
 where the limit is understood as in Equation~\eqref{eq:net_limit_lower_trans}.
 \end{definition}
@@ -5268,9 +5268,9 @@ This implies that $Qf\not\geq\lrate f$, and therefore, that $Q\notin\rateset_{\l
 % This clearly implies that, for all $Q'\in\rateset$, it holds that $[Qf](x) \leq c_1 < c_2 \leq [Q'f](x)$. In turn, this implies the existence of some $\epsilon\in\realspos$ for which $[Qf](x) + \epsilon < [Q'f](x)$, for all $Q'\in\rateset$. Because $\lrate$ is the lower envelope of $\rateset$, by Equation~\eqref{eq:correspondinglowertrans}, we therefore find that $[Qf](x) < [\lrate f](x)$. Hence, we have found a $f\in\gamblesX$ and a $x\in\states$, such that for some $Q\in\rateset_{\lrate}$, it holds that $[Qf](x) < [\lrate f](x)$. By Equation~\eqref{eq:dominatingratematrices}, this is a contradiction, and hence $\rateset=\rateset_{\lrate}$.
 \end{proof}
 
-In order to prove the norm inequality stated by Proposition~\ref{prop:differencebetweenu}, we first give a number of norm inequalities that are more conveniently proved separately. These inequalities are stated by Lemmas~\ref{lemma:recursive_lower_trans}-\ref{corol:differencebetweennestedintermsofu} below.
+In order to prove the norm inequality stated by Proposition~\ref{prop:differencebetweenu}, we first give a number of norm inequalities that are more conveniently proved separately. These inequalities are stated by Lemmas~\ref{lemma:recursive_lower_trans}-\ref{lemma:differencebetweennested} and Corollary \ref{corol:differencebetweennestedintermsofu} below.
 
-We start with the following result, which states that the distance between two composed lower transition operators $\lt_1\lt_2\cdots\lt_n$ and $\underline{S}_1\underline{S}_2\cdots\underline{S}_n$ is bounded from above by the sum of the distances $\norm{\lt_i - \underline{S}_i}$ between their components. Note that this result is the generalized version of Lemma~\ref{lemma:recursive}, which until this point has remained unproven. To see that the result below implies Lemma~\ref{lemma:recursive}, simply recall from Section~\ref{subsec:lowertrans_rate} that a transition matrix $T$ is also a lower transition operator.
+We start with the following result, which states that the distance between two composed lower transition operators $\lt_1\lt_2\cdots\lt_n$ and $\underline{S}_1\underline{S}_2\cdots\underline{S}_n$ is bounded from above by the sum of the distances $\norm{\lt_i - \underline{S}_i}$ between their components. Note that this result is a generalized version of Lemma~\ref{lemma:recursive}, which until this point has remained unproven. To see that the result below indeed implies Lemma~\ref{lemma:recursive}, simply recall from Section~\ref{subsec:lowertrans_rate} that every transition matrix $T$ is also a lower transition operator.
 
 \begin{lemma}\label{lemma:recursive_lower_trans}
 Consider two finite sequences $\underline{T}_1,\ldots,\underline{T}_n$ and $\underline{S}_1,\ldots,\underline{S}_n$ of lower transition operators. Then
@@ -5301,12 +5301,12 @@ Consider a lower transition rate operator $\lrate$ and, for all $i\in\{1,\ldots,
 %To avoid trivialities, we will assume that $\norm{\lrate}\neq 0$.
 We provide a proof by induction. For $n=1$, the result is trivial. So consider the case $n\geq2$ and assume that the result is true for $n-1$. 
 
-For all $i\in\{2,\dots,n\}$, since $\Delta_i\norm{\lrate}\leq1$, it follows from Proposition~\ref{lemma:normQsmallenough} that $(I+\Delta_i\lrate)$ and $I$ are lower transition operators. Therefore,
+For all $i\in\{2,\dots,n\}$, since $\Delta_i\norm{\lrate}\leq1$, it follows from Proposition~\ref{lemma:normQsmallenough} that $I$ and $(I+\Delta_i\lrate)$ are lower transition operators. Therefore,
 \begin{multline*}
 \norm{\prod_{i=1}^n(I+\Delta_i\lrate)-(I+\Delta\lrate)}\\
 \begin{aligned}
-&=\norm{\prod_{i=2}^n(I+\Delta_i\lrate)+\Delta_1\lrate\prod_{i=2}^n(I-\Delta_i\lrate)-(I+\sum_{i=2}^n\Delta_i\lrate)-\Delta_1\lrate}\\
-&\leq\norm{\prod_{i=2}^n(I+\Delta_i\lrate)-(I+\sum_{i=2}^n\Delta_i\lrate)}+\norm{\Delta_1\lrate\prod_{i=2}^n(I-\Delta_i\lrate)-\Delta_1\lrate}\\
+&=\norm{\prod_{i=2}^n(I+\Delta_i\lrate)+\Delta_1\lrate\prod_{i=2}^n(I+\Delta_i\lrate)-(I+\sum_{i=2}^n\Delta_i\lrate)-\Delta_1\lrate}\\
+&\leq\norm{\prod_{i=2}^n(I+\Delta_i\lrate)-(I+\sum_{i=2}^n\Delta_i\lrate)}+\norm{\Delta_1\lrate\prod_{i=2}^n(I+\Delta_i\lrate)-\Delta_1\lrate}\\
 &\leq(\sum_{i=2}^n\Delta_i)^2\norm{\lrate}^2
 +2\Delta_1\norm{\lrate}
 \norm{\prod_{i=2}^n(I+\Delta_i\lrate)-I}\\
@@ -5405,7 +5405,7 @@ Let $\lrate$ be a lower transition rate operator. Consider any $t,s\in\realsnonn
 \end{corollary}
 \begin{proof}
 This result is trivial if $s=t$, because then $u=u'=\{t\}=\{s\}$. Hence, without loss of generality, we assume that $s>t$, which implies that $u=(t_0,\dots,t_n)$, with $n\in\nats$, $t_0=t$ and $t_n=s$.
-Since $u\subseteq u'$, we know that, for all $k\in\{1,\dots,n\}$, there is some sequence $\Delta_{k,i}> 0$, $i\in\{1,\dots,n_k\}$, with $n_k\in\nats$, such that $\Delta_k=\sum_{i=1}^{n_k}\Delta_{k,i}\leq\sigma(u)$ and
+Since $u\subseteq u'$, we know that, for all $k\in\{1,\dots,n\}$, there is some sequence $\Delta_{k,i}> 0$, $i\in\{1,\dots,n_k\}$, with $n_k\in\nats$ and $\Delta_k=\sum_{i=1}^{n_k}\Delta_{k,i}\leq\sigma(u)$, such that $\sum_{k=1}^n\Delta_k=s-t$,
 \begin{equation*}
 \Phi_{u'}\coloneqq\prod_{k=1}^n\left(\prod_{i=1}^{n_k}(I+\Delta_{k,i}\lrate)\right)
 \text{~~and~~}
@@ -5416,7 +5416,7 @@ Because of Lemma~\ref{lemma:differencebetweennested}, this implies that $\norm{\
 
 
 \begin{proof}[Proof of Proposition~\ref{prop:differencebetweenu}]
-Consider any $u'\in\mathcal{U}_{[t,s]}$ that is finer than $u$ and $u^*$, meaning that the timepoints it consists of contain the timepoints in $u$ and the timepoints in $u^*$. For example, let $u'$ be the ordered union of the timepoints in $u$ and $u^*$. Lemma~\ref{lemma:differencebetweennested} then implies that $\norm{\Phi_{u'}-\Phi_u}\leq\delta C\norm{\lrate}^2$ and $\norm{\Phi_{u'}-\Phi_{u^*}}\leq\delta C\norm{\lrate}^2$, and therefore, it follows that
+Consider any $u'\in\mathcal{U}_{[t,s]}$ that is finer than $u$ and $u^*$, meaning that the timepoints it consists of contain the timepoints in $u$ and the timepoints in $u^*$. For example, let $u'$ be the ordered union of the timepoints in $u$ and $u^*$. Corollary~\ref{corol:differencebetweennestedintermsofu} then implies that $\smash{\norm{\Phi_{u}-\Phi_{u'}}\leq\delta C\norm{\lrate}^2}$ and $\smash{\norm{\Phi_{u^*}-\Phi_{u'}}\leq\delta C\norm{\lrate}^2}$, and therefore, it follows that
 \begin{equation*}
 \norm{\Phi_{u}-\Phi_{u^*}}
 %=
@@ -5436,18 +5436,18 @@ By definition of a Cauchy sequence, we need to show that
 (\forall \epsilon>0)(\exists n\in\nats)(\forall i,j\geq n)
 \norm{\Phi_{u_i}-\Phi_{u_j}}<\epsilon.
 \end{equation*}
-Therefore, fix any $\epsilon\in\realspos$, and choose $\delta\in\realspos$ such that $\delta\norm{\lrate}\leq 1$ and $2\delta(s-t)\norm{\lrate}^2<\epsilon$ [this is clearly always possible]. Because $\lim_{i\to\infty}\sigma(u_i)=0$, there is some $n\in\nats$ such that, for all $i\geq n$, $\sigma(u_i)<\delta$. Consider any $i,j\geq n$. It then follows from Proposition~\ref{prop:differencebetweenu} that
+Therefore, fix any $\epsilon\in\realspos$, and choose $\delta\in\realspos$ such that $\smash{2\delta(s-t)\norm{\lrate}^2<\epsilon}$ and $\delta\norm{\lrate}\leq 1$ [this is clearly always possible]. Because $\lim_{i\to\infty}\sigma(u_i)=0$, there is some $n\in\nats$ such that, for all $i\geq n$, $\sigma(u_i)\leq\delta$. Consider any $i,j\geq n$. It then follows from Proposition~\ref{prop:differencebetweenu} that
 \begin{equation*}
 \norm{\Phi_{u_i}-\Phi_{u_j}} \leq 2\delta(s-t)\norm{\lrate}^2 < \epsilon\,.
 \end{equation*}
 \end{proof}
 
 \begin{proof}[Proof of Corollary~\ref{corol:limitexistsandiscoherent}]
-Since $\lim_{i\to\infty}\sigma(u_i)=0$, and because of Propositions~\ref{lemma:normQsmallenough} and~\ref{lemma:compositioncoherence} and property~\ref{LR:normlratefinite}, there is some index $n$ such that the sequence $\Phi_{u_n},\Phi_{u_{n+1}},\ldots$ consists of lower transition operators. Due to Corollary~\ref{corol:cauchy}, this sequence is Cauchy and therefore, because of Proposition~\ref{lemma:completemetricspace}, this sequence has a limit that is also a lower transition operator. Since the limit starting from $n$ and the limit starting from $1$ are identical (initial elements do not influence the limit), we find that the sequence $\left\{\Phi_{u_i}\right\}_{i\in\nats}$ has a limit, and that this limit is a lower transition operator.
+Since $\lim_{i\to\infty}\sigma(u_i)=0$, and due to Propositions~\ref{lemma:normQsmallenough} and~\ref{lemma:compositioncoherence} and property~\ref{LR:normlratefinite}, there is some index $n$ such that the sequence $\Phi_{u_n},\Phi_{u_{n+1}},\ldots$ consists of lower transition operators. Due to Corollary~\ref{corol:cauchy}, this sequence is Cauchy and therefore, because of Proposition~\ref{lemma:completemetricspace}, this sequence has a limit that is also a lower transition operator. Since the limit starting from $n$ and the limit starting from $1$ are identical (initial elements do not influence the limit), we find that the sequence $\left\{\Phi_{u_i}\right\}_{i\in\nats}$ has a limit, and that this limit is a lower transition operator.
 \end{proof}
 
 \begin{proof}[Proof of Theorem~\ref{theo:convergencelowerbound}]
-Consider any sequence $\{u_i\}_{i\in\nats}$ in $\mathcal{U}_{[t,s]}$ such that $\lim_{i\to\infty}\sigma(u_i)=0$. Because of Corollary~\ref{corol:limitexistsandiscoherent}, the sequence $\{\Phi_{u_i}\}_{i\in\nats}$ then converges to a lower transition operator, which we denote by $\lt$. 
+Let $\{u_i\}_{i\in\nats}$ be any sequence in $\mathcal{U}_{[t,s]}$ such that $\lim_{i\to\infty}\sigma(u_i)=0$. Because of Corollary~\ref{corol:limitexistsandiscoherent}, the sequence $\{\Phi_{u_i}\}_{i\in\nats}$ then converges to a lower transition operator, which we denote by $\lt$. 
 
 Let $C\coloneqq s-t$, fix any $\epsilon>0$, and choose any $\delta>0$ such that $\smash{4\delta C\norm{\lrate}^2<\epsilon}$ and $\delta\norm{\lrate}\leq1$ [this is clearly always possible].
 % \begin{equation*}
@@ -5455,17 +5455,17 @@ Let $C\coloneqq s-t$, fix any $\epsilon>0$, and choose any $\delta>0$ such that 
 % \end{equation*}
 Since $\lim_{i\to+\infty}\Phi_{u_i}=\lt$ and $\lim_{i\to\infty}\sigma(u_i)=0$, there is some $i^*\in\nats$ such that
 \begin{equation}\label{eq:theo:convergencelowerbound:proof}
-\sigma(u_{i^*})<\delta\text{ and }\norm{\lt - \Phi_{u_{i^*}}}<\frac{\epsilon}{2}.
+\sigma(u_{i^*})\leq\delta\text{ and }\norm{\lt - \Phi_{u_{i^*}}}\leq\frac{\epsilon}{2}.
 \end{equation}
-Consider now any $u\in\mathcal{U}_{[t,s]}$ such that $\sigma(u)<\delta$. Then
+Consider now any $u\in\mathcal{U}_{[t,s]}$ such that $\sigma(u)\leq\delta$. Then
 \begin{equation*}
 \norm{\lt - \Phi_u}\leq\norm{\lt-\Phi_{u_{i^*}}}
 +\norm{\Phi_{u_{i^*}}-\Phi_u}
-<\frac{\epsilon}{2}+2\delta C\norm{\lrate}^2\leq\epsilon,
+\leq\frac{\epsilon}{2}+2\delta C\norm{\lrate}^2\leq\epsilon,
 \end{equation*}
-where the strict inequality follows from Equation~\eqref{eq:theo:convergencelowerbound:proof} and Proposition~\ref{prop:differencebetweenu}.
+where the second inequality follows from Equation~\eqref{eq:theo:convergencelowerbound:proof} and Proposition~\ref{prop:differencebetweenu}.
 
-It remains to show that $\lt$ is unique. Therefore, let $\lt'$ be any lower transition operator that satisfies Equation~\eqref{eq:theo:convergencelowerbound}. Then clearly, for any $\epsilon>0$, there is some $u\in\mathcal{U}_{[t,s]}$ such that $\norm{\lt-\Phi_u}<\epsilon$ and $\norm{\lt'-\Phi_u}<\epsilon$, and therefore also $\norm{\lt-\lt'}<2\epsilon$. Since $\epsilon>0$ is arbitrary, this implies that $\norm{\lt-\lt'}=0$, or equivalently, that $\lt=\lt'$. Because this holds for every $\lt'$ that satisfies Equation~\eqref{eq:theo:convergencelowerbound}, it follows that $\lt$ is the unique operator satisfying this equation.
+It remains to show that $\lt$ is unique. Therefore, let $\lt'$ be any lower transition operator that satisfies Equation~\eqref{eq:theo:convergencelowerbound}. Then clearly, for any $\epsilon>0$, there is some $u\in\mathcal{U}_{[t,s]}$ such that $\norm{\lt-\Phi_u}\leq\epsilon$ and $\norm{\lt'-\Phi_u}\leq\epsilon$, and therefore also $\norm{\lt-\lt'}\leq2\epsilon$. Since $\epsilon>0$ is arbitrary, this implies that $\norm{\lt-\lt'}=0$, or equivalently, that $\lt=\lt'$. Because this holds for every $\lt'$ that satisfies Equation~\eqref{eq:theo:convergencelowerbound}, it follows that $\lt$ is the unique operator satisfying this equation.
 % In summary, we have shown that there is lower transition operator $\lt$ such that
 % \begin{equation*}
 % (\forall\epsilon>0)\,
@@ -6572,7 +6572,7 @@ Next, we consider the case that $P$ is well behaved, but not consistent with $\r
 \end{proof}
 
 \begin{proof}[Proof of Proposition~\ref{prop:approximation_error_bound}]
-Let $u\in\mathcal{U}_{[t,s]}$ be such that $u=t_0,t_1,\ldots,t_n$, where, for all $i\in\{0,1,\ldots,n\}$, $t_i\coloneqq t + i\cdot\Delta$. Then, because $\Delta=\nicefrac{(s-t)}{n}$, we have $t_0=t$, $t_n=s$, and, clearly,  $\sigma(u)=\Delta$. Let now $\Phi_u\coloneqq \prod_{i=1}^n (I + \Delta_i^u\lrate) = \prod_{i=1}^n(I+\Delta\lrate)$.
+Let $u\in\mathcal{U}_{[t,s]}$ be such that $u=t_0,t_1,\ldots,t_n$, where, for all $i\in\{0,1,\ldots,n\}$, $t_i\coloneqq t + i\cdot\Delta$. Then, because $\Delta=\nicefrac{(s-t)}{n}$, we have $t_0=t$, $t_n=s$, and, clearly,  $\sigma(u)=\Delta$. Let now $\Phi_u\coloneqq \prod_{i=1}^n (I + \Delta_i\lrate) = \prod_{i=1}^n(I+\Delta\lrate)$.
 
 Due to the choice of $n$, we have that
 \begin{align*}
