@@ -23,7 +23,7 @@
 
 \usepackage{graphicx}
 
-\usepackage{eufrak}
+%\usepackage{eufrak}
 
 %\usepackage{hyperref}
 %\usepackage{pdfsync}
@@ -158,7 +158,7 @@ Continuous-time Markov chains are mathematical models that are used to describe 
 
 More technically, an \ictmc~is a \emph{set} of ``precise'' continuous-time finite-state stochastic processes, and rather than computing expected values of functions, we seek to compute \emph{lower expectations}, which are tight lower bounds on the expectations that correspond to such a set of ``precise'' models. Note that, in contrast to e.g. Bayesian methods, all the elements of such a set are treated on equal grounds; we do not consider a distribution over this set. Together with the conjugate notion of \emph{upper expectation}, the bounds that we provide can then be intuitively interpreted as providing best- and worst-case scenarios with respect to all the models in our set of stochastic processes. 
 
-The first part of this paper develops a formalism for describing continuous-time finite-state stochastic processes that does not require any of the aforementioned simplifying assumptions. Next, this formalism is used to characterize \ictmc's and to investigate their properties. The concept of lower expectation is then given an alternative operator-theoretic characterization, by means of a \emph{lower transition operator}, and the properties of this operator are investigated as well. Finally, we use this lower transition operator to derive tractable algorithms (with polynomial runtime-complexity w.r.t. the maximum numerical error) for computing the lower expectation of functions that depend on the state at any finite number of time points.
+The first part of this paper develops a formalism for describing continuous-time finite-state stochastic processes that does not require the aforementioned simplifying assumptions. Next, this formalism is used to characterize \ictmc's and to investigate their properties. The concept of lower expectation is then given an alternative operator-theoretic characterization, by means of a \emph{lower transition operator}, and the properties of this operator are investigated as well. Finally, we use this lower transition operator to derive tractable algorithms (with polynomial runtime-complexity w.r.t. the maximum numerical error) for computing the lower expectation of functions that depend on the state at any finite number of time points.
 \end{abstract}
 
 \section{Introduction}\label{sec:introduction}
@@ -2021,7 +2021,7 @@ For instance, for any $r>0$, it follows from Proposition~\ref{prop:nonhomogeneou
 %there will be some $P_r\in\wmprocesses_{\rateset,\mathcal{M}}$ such that, for all $t<r$, $\overline{\partial}T_t^t=\{Q_1\}$ and, for all $t>r$, $\overline{\partial}T_t^t=\{Q_2\}$. Therefore, $P_r$ will be ``piecewise'' homogeneous on the intervals $[0,r]$ and $[r,+\infty)$, and its family of transition matrices $\mathcal{T}_{P_r}$ will be given by the transition matrix system $\mathcal{T}_{Q_1}^{[0,r]}\otimes\mathcal{T}_{Q_2}^{[r,+\infty)}$. It is readily verified that this $P_r$ therefore satisfies $\overline{\partial}T_r^r=\{Q_1,Q_2\}$, since in this case $\overline{\partial}_-T_r^r=\{Q_1\}$ and $\overline{\partial}_+T_r^r=\{Q_2\}$.
 %Of course, $\wmprocesses_{\rateset,\mathcal{M}}$ contains more complicated Markov processes still. For instance, for every $r,q\in\realsnonneg$ such that $r<q$, it contains a process $P_{rq}$ with transition matrix system $\mathcal{T}_{Q_1}^{[0,r]}\otimes \mathcal{T}_{Q_2}^{[r,q]}\otimes \mathcal{T}_{Q_1}^{[q,+\infty)}$. Other such processes can be found in a similar manner.
 
-Since $\wmprocesses_{\rateset,\mathcal{M}}$ is a subset of $\wprocesses_{\rateset,\mathcal{M}}$, each of the processes that we have considered so far belong to the set $\smash{\wprocesses_{\rateset,\mathcal{M}}}$ as well. However this latter set contains more complicated processes still. For instance, for any $u\in\mathcal{U}$ and any $x_u,y_u\in\states_u$ such that $x_u\neq y_u$, $\wprocesses_{\rateset,\mathcal{M}}$ might for example contain a stochastic process $P$ such that, for all $t>u$, $\smash{\overline{\partial}}T_{t,x_u}^t=\{Q_1\}$ and $\smash{\overline{\partial}}T_{t,y_u}^t=\{Q_2\}$. For all $s>t>u$, the history-dependent transition matrices $T_{t,x_u}^s$ and $T_{t,y_u}^s$ of this process $P$ will be given by $T_{t,x_u}^s=e^{Q_1(s-t)}$ and $T_{t,y_u}^s=e^{Q_2(s-t)}$, which implies that this process $P$ does not satisfy the Markov property, and therefore, that it does not belong to $\wmprocesses_{\rateset,\mathcal{M}}$.
+Since $\wmprocesses_{\rateset,\mathcal{M}}$ is a subset of $\wprocesses_{\rateset,\mathcal{M}}$, each of the processes that we have considered so far belong to the set $\smash{\wprocesses_{\rateset,\mathcal{M}}}$ as well. However this latter set contains more complicated processes still. For instance, for any $u\in\mathcal{U}$ and any $x_u,y_u\in\states_u$ such that $x_u\neq y_u$, $\wprocesses_{\rateset,\mathcal{M}}$ might for example contain a stochastic process $P$ such that, for all $t>u$, $\smash{\overline{\partial}}T_{t,x_u}^t=\{Q_1\}$ and $\smash{\overline{\partial}}T_{t,y_u}^t=\{Q_2\}$. For all $s>t>u$, the history-dependent transition matrices $\smash{T_{t,x_u}^s}$ and $T_{t,y_u}^s$ of this process $P$ will be given by $\smash{T_{t,x_u}^s=e^{Q_1(s-t)}}$ and $\smash{T_{t,y_u}^s=e^{Q_2(s-t)}}$, which implies that this process $P$ does not satisfy the Markov property, and therefore, that it does not belong to $\wmprocesses_{\rateset,\mathcal{M}}$.
 %Suppose that $\rateset=\{Q_1,Q_2\}$ for some $Q_1,Q_2\in\mathcal{R}$ with $Q_1\neq Q_2$. Then, clearly, all well-behaved homogeneous Markov chains described by either $Q_1$ or $Q_2$ are consistent with $\rateset$. Furthermore, there will also be different non-homogeneous Markov chains consistent with $\rateset$. In particular, not only can such processes differ in their initial distribution, there will be non-homogeneous Markov chains with the same initial distribution but which differ in the choice of $Q_1$ or $Q_2$ for any given time $t\in\realsnonneg$. 
 %Furthermore, various non-homogeneous, non-Markov processes will be consistent with $\rateset$ as well. For example, for any $t\in\realsnonneg$ and any $x_u,y_u\in\states_u$ such that $x_u\neq y_u$, there will be a process that satisfies $\smash{\overline{\partial}}T_{t,x_u}^t=\{Q_1\}$ and $\smash{\overline{\partial}}T_{t,y_u}^t=\{Q_2\}$.
 \exampleend
@@ -2648,9 +2648,9 @@ We are now ready to define the \emph{lower transition operator corresponding to 
 
 \begin{definition}[Corresponding Lower Transition Operator]\label{def:low_trans}
 Consider any $t,s\in\realsnonneg$ such that $t\leq s$ and let $\lrate$ be an arbitrary lower transition rate operator. The \emph{corresponding lower transition operator} $\lbound_t^s$ is a map from $\gamblesX$ to $\gamblesX$, defined by
-\begin{equation}\label{eq:lowerbound}
+\begin{equation*}%\label{eq:lowerbound}
 \lbound_t^s\coloneqq\lim_{\sigma(u)\to0}\left\{ \Phi_u\,\colon\,u\in\mathcal{U}_{[t,s]}\right\},
-\end{equation}
+\end{equation*}
 where the limit is understood as in Equation~\eqref{eq:net_limit_lower_trans}.
 \end{definition}
 
@@ -5499,14 +5499,14 @@ Let $\lrate$ be a lower transition rate operator. Then for any $t,s\in\realsnonn
 \end{equation*}
 \end{lemma}
 \begin{proof}
-Fix any $\epsilon>0$. Because of Definition~\ref{def:low_trans}, there is some $u'\in\mathcal{U}_{[t,s]}$ such that $u\subseteq u'$ and $\norm{L_t^s-\Phi_{u'}}<\epsilon$. By combining this with Corollary~\ref{corol:differencebetweennestedintermsofu}, it follows that
+Fix any $\epsilon>0$. Because of Definition~\ref{def:low_trans}, there is some $u'\in\mathcal{U}_{[t,s]}$ such that $u\subseteq u'$ and $\norm{L_t^s-\Phi_{u'}}\leq\epsilon$. By combining this with Corollary~\ref{corol:differencebetweennestedintermsofu}, it follows that
 \begin{equation*}
 \norm{L_t^s-\Phi_{u}}
 \leq
 \norm{L_t^s-\Phi_{u'}}
 +
 \norm{\Phi_{u'}-\Phi_{u}}
-<\epsilon+
+\leq\epsilon+
 \sigma(u)(s-t)\norm{\lrate}^2.
 \end{equation*}
 Since $\epsilon>0$ is arbitrary, the result is now immediate.
@@ -5549,8 +5549,8 @@ Fix any $\delta>0$ such that $\delta\norm{\lrate}\leq1$. Since $r>t$, there is s
 \delta(r-t)\norm{\lrate}^2
 +
 \delta(s-r)\norm{\lrate}^2
-\leq
-3\delta(s-t)\norm{\lrate}^2,
+=
+2\delta(s-t)\norm{\lrate}^2,
 \end{align*}
 where the second inequality follows from Lemma~\ref{lemma:recursive_lower_trans} and the third inequality follows from Lemma~\ref{lemma:limitboundonL}. Since $\delta>0$ can be chosen arbitrarily small, this implies that $\norm{L_t^s-L_t^rL_r^s}=0$, or equivalently, that $L_t^s=L_t^rL_r^s$.
 % To this end, consider any $\{u_i\}_{i\in\nats}$ in $\mathcal{U}_{[t,r]}$ and any $\{v_i\}_{i\in\nats}$ in $\mathcal{U}_{[r,s]}$, such that $\lim_{i\to\infty}\sigma(u_i)=0$ and $\lim_{i\to\infty}\sigma(v_i)=0$. Then, by Theorem~\ref{theo:convergencelowerbound}, $\lim_{i\to\infty}\Phi_{u_i}=L_t^r$ and $\lim_{i\to\infty}\Phi_{v_i}=L_r^s$. Denote $u_i=t_0^i,\ldots,t_{n_i}^i$, and $v_i=s_0^i,\ldots,s_{m_i}^i$. Let the differences be denoted as $\Delta_1^{u_i},\ldots,\Delta_{n_i}^{u_i}$ and $\Delta_1^{v_i},\ldots,\Delta_{m_i}^{v_i}$ for $u_i$ and $v_i$, respectively.
@@ -5604,7 +5604,7 @@ L_t^s=\lim_{i\to\infty}\Phi_{u_i}=\lim_{i\to\infty}\Phi_{u_i^*}=L_{t+\Delta}^{s+
 where the first and last equality follow from Theorem~\ref{theo:convergencelowerbound}.
 \end{proof}
 
-The following lemma provides a bound on how well the operator $L_t^{t+\Delta}$ can be approximated using the much simpler operator $(I+\Delta\lrate)$. Note that this lemma states the general version of Lemma~\ref{lemma:linearpartofexponential}, which until this point has remained unproven. To see that the result below implies Lemma~\ref{lemma:linearpartofexponential}, simply recall from Section~\ref{sec:connections_rate} that any rate matrix $Q$ is also a lower transition rate operator. Since it follows from our comments in Section~\ref{sec:properties_lower_trans} that the lower transition operator $L_t^{t+\Delta}$ corresponding to such a $\lrate=Q$ satisfies $L_t^{t+\Delta}=e^{Q\Delta}$, Lemma~\ref{lemma:linearpartofexponential} now follows from the following result.
+The following lemma provides a bound on how well the operator $L_t^{t+\Delta}$ can be approximated using the much simpler operator $(I+\Delta\lrate)$. Note that this lemma states the general version of Lemma~\ref{lemma:linearpartofexponential}, which until this point has remained unproven. To see that the result below indeed implies Lemma~\ref{lemma:linearpartofexponential}, simply recall from Section~\ref{sec:connections_rate} that any rate matrix $Q$ is also a lower transition rate operator. Since it follows from our comments in Section~\ref{sec:properties_lower_trans} that the lower transition operator $L_t^{t+\Delta}$ corresponding to such a $\lrate=Q$ satisfies $L_t^{t+\Delta}=e^{Q\Delta}$, Lemma~\ref{lemma:linearpartofexponential} clearly follows from the following result.
 
 \begin{lemma}\label{lemma:quadraticboundonL}
 Let $\lrate$ be a lower transition rate operator. Then for any $t,\Delta\in\realsnonneg$:
@@ -5613,20 +5613,20 @@ Let $\lrate$ be a lower transition rate operator. Then for any $t,\Delta\in\real
 \end{equation*}
 \end{lemma}
 \begin{proof}
-Fix any $\epsilon>0$. Because of Definition~\ref{def:low_trans}, there is some $\smash{u\in\mathcal{U}_{[t,t+\Delta]}}$ such that $\sigma(u)\norm{\lrate}\leq1$ and $\norm{L_t^s-\Phi_{u}}<\epsilon$. By combining this with Lemma~\ref{lemma:justthelinearpart}, it follows that
+Fix any $\epsilon>0$. Because of Definition~\ref{def:low_trans}, there is some $\smash{u\in\mathcal{U}_{[t,t+\Delta]}}$ such that $\sigma(u)\norm{\lrate}\leq1$ and $\norm{L_t^s-\Phi_{u}}\leq\epsilon$. By combining this with Lemma~\ref{lemma:justthelinearpart}, it follows that
 \begin{equation*}
 \norm{L_t^s-(I+\Delta\lrate)}
 \leq
 \norm{L_t^s-\Phi_{u}}
 +
 \norm{\Phi_{u}-(I+\Delta\lrate)}
-<\epsilon+
+\leq\epsilon+
 \Delta^2\norm{\lrate}^2.
 \end{equation*}
 Since $\epsilon>0$ is arbitrary, the result is now immediate.
 \end{proof}
 
-The final lemma of this section states how well we can approximate the operator $L_t^{t+\Delta}$ using the identity matrix $I$. Put differently, since it follows from Proposition~\ref{prop:lower_trans_system_is_system} that $L_t^t=I$, this tells us how quickly $L_t^{t+\Delta}$ changes as we increase $\Delta$. This result is a generalised version of Lemma~\ref{lemma:linearboundonexponential}, which has so far remained unproven. The reason why Lemma~\ref{lemma:linearboundonexponential} is a special case is again because for $\lrate=Q$, we have that $L_t^{t+\Delta}=e^{Q\Delta}$.
+The final lemma of this section states how well we can approximate the operator $L_t^{t+\Delta}$ using the identity matrix $I$. Put differently, since we know from Proposition~\ref{prop:lower_trans_system_is_system} that $L_t^t=I$, this tells us how quickly $L_t^{t+\Delta}$ changes as we increase $\Delta$. This result is a generalised version of Lemma~\ref{lemma:linearboundonexponential}, which has so far remained unproven. The reason why Lemma~\ref{lemma:linearboundonexponential} is a special case is again because for $\lrate=Q$, we have that $L_t^{t+\Delta}=e^{Q\Delta}$.
 
 \begin{lemma}\label{lemma:linearboundonL}
 Let $\lrate$ be a lower transition rate operator. Then for any $t,\Delta\in\realsnonneg$:
@@ -5659,14 +5659,14 @@ and therefore, it follows from Lemma~\ref{lemma:recursive_lower_trans} that
 \norm{(L_0^{\Delta_n})^n-I^n}
 %\leq\sum_{i=1}^n\norm{L_0^{\Delta_n}-I}
 \leq n\norm{L_0^{\Delta_n}-I}
-\leq n\Delta_n\norm{\lrate}+n\norm{L_0^{\Delta_n}-(I+\Delta_n\lrate)},
+\leq n\norm{L_0^{\Delta_n}-(I+\Delta_n\lrate)}+n\Delta_n\norm{\lrate},
 \end{equation*}
 which, when combined with Lemma~\ref{lemma:quadraticboundonL}, implies that
 \begin{equation*}
 \norm{L_t^{t+\Delta}-I}
 \leq
-n\Delta_n\norm{\lrate}+n\Delta_n^2\norm{\lrate}^2
-=\Delta\norm{\lrate}+\frac{1}{n}\Delta^2\norm{\lrate}^2.
+n\Delta_n^2\norm{\lrate}^2+n\Delta_n\norm{\lrate}
+=\frac{1}{n}\Delta^2\norm{\lrate}^2+\Delta\norm{\lrate}.
 \end{equation*}
 Since $n\in\nats$ is arbitrary, the result is now immediate.
 \end{proof}
@@ -5710,7 +5710,7 @@ which implies that
 &\leq
 \Delta^2\norm{\lrate}^2+\abs{\Delta}2\norm{\lrate}\norm{L_{t}^{t'}-I}\leq\Delta^2\norm{\lrate}^2+2\abs{\Delta}(t'-t)\norm{\lrate}^2,
 \end{align*}
-using Lemma~\ref{lemma:quadraticboundonL} for the second inequality and Lemma~\ref{lemma:linearboundonL} for the third inequality. Hence, since $0\leq(t'-t)\leq\abs{\Delta}$, we find that $\norm{L_{t+\Delta}^s-L_t^s+\Delta\lrate L_t^s}\leq3\Delta^2\norm{\lrate}^2$, which implies that indeed, as required,
+using Lemma~\ref{lemma:quadraticboundonL} and~\ref{LR:differenceofnorm} for the second inequality and Lemma~\ref{lemma:linearboundonL} for the third inequality. Hence, since $0\leq(t'-t)\leq\abs{\Delta}$, we find that $\norm{L_{t+\Delta}^s-L_t^s+\Delta\lrate L_t^s}\leq3\Delta^2\norm{\lrate}^2$, which implies that indeed, as required,
 \begin{equation*}
 \norm{\frac{L_{t+\Delta}^s-L_t^s}{\Delta}+\lrate L_t^s}
 =\frac{1}{\abs{\Delta}}\norm{L_{t+\Delta}^s-L_t^s+\Delta\lrate L_t^s}
