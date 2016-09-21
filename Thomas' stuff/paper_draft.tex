@@ -2717,9 +2717,9 @@ Hence, more generally, $L_t^s$ can be regarded as a generalized version of the m
 Another closely related observation is that, if $\lrate=Q$ for some $Q\in\mathcal{R}$, then the family $\smash{\underline{\mathcal{T}}_{\lrate}}$ is equal to $\mathcal{T}_Q$, which is the exponential transition matrix system from Definition~\ref{def:systemfromQ} that, by Corollary~\ref{cor:rate_has_unique_homogen_markov_process}, is known to correspond to a well-behaved homogeneous Markov chain $P\in\whmprocesses$. 
 Interestingly, then, the family $\underline{\mathcal{T}}_{\lrate}$ maintains the convenient properties of differentiability, time-homogeneity, and ``Markovian-like'' factorization, when instead of some rate matrix $Q$ we replace it by a lower transition rate operator~$\lrate$.
 
-Mathematical niceties aside, we are of course not really interested in the trivial case where $\lrate=Q$. Instead, we wish to use the lower transition operator $L_t^s$ to compute lower expectations for imprecise continuous-time Markov chains. We will show in the next section that this is indeed possible, provided that $\lrate$ is chosen properly.
+Mathematical niceties aside, we are of course not really interested in the trivial case where $\lrate=Q$. Instead, we wish to use the lower transition operator $L_t^s$ to compute lower expectations for imprecise continuous-time Markov chains. We will show in the next section that this is indeed possible.%, provided that $\lrate$ is chosen properly.
 
-\section{\ictmc's and Corresponding Lower Transition Operators}\label{sec:connections}
+\section{Connecting \ictmc's and Lower Transition Operators}\label{sec:connections}
 
 In the previous section, we introduced the lower transition operator $L_t^s$ corresponding to a given lower transition rate operator $\lrate$. As mentioned in the beginning of Section~\ref{sec:lowertrans}, we aim to use this lower transition operator as an alternative characterization of the lower expectation of a given \ictmc, with which this lower expectation can be tractably computed. We show in this section how to do this. Specifically, we explain in Section~\ref{sec:single_var_lower_exp} how the operator $L_t^s$ can be used as an alternative representation of lower expectations, and provide in Section~\ref{subsec:compute_single_var} a simple algorithm for the numerical computation of lower expectations using this operator.
 
@@ -2736,7 +2736,7 @@ In the previous section, we introduced the lower transition operator $L_t^s$ cor
 
 %This section contains the new, simplified proofs.
 
-\subsection{Lower Expectations and Corresponding Lower Transition Operators}\label{sec:single_var_lower_exp}
+\subsection{Lower Transition Operators as a Representational Tool}\label{sec:single_var_lower_exp}
 
 %*** blabla
 
@@ -2845,7 +2845,7 @@ A second conclusion that we can draw from Theorem~\ref{theo:dominating_rate_proc
 %\lrate &\Rightarrow \underline{\mathcal{T}}_{\lrate} \Rightarrow L_t^s,\quad\text{and,}\quad \lrate\Rightarrow \rateset_{\lrate} \Rightarrow \wprocesses_{\rateset_{\lrate}} = \mathcal{P}
 %\end{align*}
 
-\subsection{Computing Lower Expectations with Corresponding Lower Transition Operators}\label{subsec:compute_single_var}
+\subsection{Lower Transition Operators as a Computational Tool}\label{subsec:compute_single_var}
 
 We have in the previous section shown that (conditional) lower expectations can be computed using the operator $L_t^s$. However, in order to make these results practicable, we still require a method to numerically compute the function $L_t^sf$. Because we are now interested in numerical methods, we will focus on computing such a quantity $L_t^sf$ within a guaranteed $\epsilon$-error bound. 
 
@@ -2997,7 +2997,7 @@ This iterative procedure for computing $L_t^sf$ is outlined in Algorithm~\ref{al
   \end{algorithmic}
 \end{algorithm}
 
-\section{Computing Lower Expectations of Arbitrary Functions}\label{sec:funcs_multi_time_points}
+\section{A General Framework for Computing Lower Expectations}\label{sec:funcs_multi_time_points}
 
 %*** I removed this from Section~\ref{sec:multivar_notation} because $X_t$ was not yet defined at that point: ``For any such function $f\in\gambles(\states^{u\cup\{s\}})$, we will write $f(x_u,X_s)$ for the restriction of $f$ to $\states^{\{s\}}$ specific to the joint state assignment $x_u\in\states^u$. Thus, $f(x_u,X_s)$ corresponds to a $g\in\gambles(\states^{\{s\}})$ such that $g(x_s) = f(x_u,x_s)$ for all $x_s\in\states^{\{s\}}$.'' I guess that this section here would be a good place to incorporate it in... ***
 
@@ -3487,6 +3487,10 @@ In summary, then, we have provided in this work a generalization of continuous-t
 *** mention that we expect convexity to be unnecessary for some of the result that we have (for now) proved with convexity ***
 
 Furthermore, recall from Section~\ref{sec:funcs_multi_time_points} that the computation of lower expectations of functions defined on multiple time points has a runtime complexity that is exponential in the number of these time points. However, this exponential runtime holds for Algorithm~\ref{alg:compute_multivar}, which works for \emph{arbitrary} functions. That is, it does not assume any structure of the function. In contrast, in many practical applications there will be some underlying structure of the functions that we are interested in. For instance, for time points $v=s_0,\ldots,s_m$, there may be functions $g_i\in\gambles(\states_{s_i})$, $i\in\{0,\ldots,m\}$, such that $f\in\gambles(\states_v)$ is of the form $f(x_v) = \sum_{i=0}^m g_i(x_{s_i})$ or $f(x_v) = \prod_{i=0}^m g_i(x_{s_i})$. It follows from earlier work on imprecise graphical models~\cite{de2015credal} that functions of this form can be computed in a runtime complexity that is \emph{linear} in the number of time points. We intend in future work to develop algorithms that use this property, and as such reduce the computational complexity of computing lower expectations of such functions. In particular, because the \emph{generalized Bayes-rule}~\cite{Walley:1991vk} is within this tractably-computable function class, this should make possible tractable inference algorithms for \ictmc's, as well as the further generalization to imprecise continuous-time \emph{hidden} Markov chains.
+
+
+
+*** add acknowledgements, thank FWO for money, thank Alexander for some stimulating discussions ***
 
 \textcolor{red}{*** the style of the references is not yet uniformized... (for example, abreviations of names sometimes have a dot after them, and sometimes not) According to the ancient rules of accademia, this is a task of the first author :-) ***}
 
