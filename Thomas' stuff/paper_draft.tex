@@ -2747,9 +2747,9 @@ In order to establish the connection between lower expectations and lower transi
 To start with, as the following result shows, the operator $L_t^s$ corresponding to a lower transition rate operator $\lrate$ computes a lower bound on the expectation of a function $f\in\gamblesX$, with respect to the set $\wprocesses_\rateset$ of well-behaved stochastic processes consistent with any set $\rateset$ of which $\lrate$ is the lower envelope.
 
 \begin{proposition}\label{theorem:nonmarkov_single_var_lower_bounded}
-Let $\rateset$ be an arbitrary non-empty bounded set of rate matrices with corresponding lower transition rate operator $\lrate$, and let $\smash{\underline{\mathcal{T}}_{\lrate}}$ be the corresponding lower transition operator system. Then, for any $P\in\wprocesses_\rateset$, any $t,s\in\realsnonneg$ such that $t\leq s$, any $u\in\mathcal{U}_{<t}$, any $x_t\in\states$ and $x_u\in\states_u$, and any $f\in\gamblesX$,
+Consider a non-empty bounded set of rate matrices $\rateset$ whose corresponding lower transition rate operator is $\lrate$, and let $\smash{\underline{\mathcal{T}}_{\lrate}}$ be the corresponding lower transition operator system. Then, for any $\smash{P\in\wprocesses_\rateset}$, any $t,s\in\realsnonneg$ such that $t\leq s$, any $u\in\mathcal{U}_{<t}$, any $x_t\in\states$ and $x_u\in\states_u$, and any $f\in\gamblesX$:
 \begin{equation*}
-[L_{t}^s f](x_t) \leq \mathbb{E}_P[f(X_s)\,\vert\,X_t=x_t,X_u=x_u]\,.
+ \mathbb{E}_P[f(X_s)\,\vert\,X_t=x_t,X_u=x_u]\geq[L_{t}^s f](x_t).
 \end{equation*}
 \end{proposition}
 
@@ -2758,20 +2758,18 @@ As this result shows, $L_t^sf$ is a lower bound on the expectation of a function
 Our next result establishes that the bound in Proposition~\ref{theorem:nonmarkov_single_var_lower_bounded} is tight if $\rateset$ also has separately specified rows. Specifically, we show that $L_t^sf$ can then be approximated to arbitrary precision by carefully choosing a Markov process $P$ from the set $\wmprocesses_{\rateset,\,\mathcal{M}}$.
 
 \begin{proposition}\label{theorem:lower_markov_bound_is_tight}
-Let $\mathcal{M}$ be an arbitrary non-empty set of probability mass functions on $\states$, let $\rateset$ be an arbitrary non-empty bounded set of rate matrices that has separately specified rows, with corresponding lower transition rate operator $\lrate$, and let $\underline{\mathcal{T}}_{\lrate}$ be the corresponding lower transition operator system. Then for all $t,s\in\realsnonneg$ such that $t\leq s$, all $f\in\gamblesX$, and all $\epsilon\in\realspos$, there is a $P\in\wmprocesses_{\rateset,\,\mathcal{M}}$ such that
+Let $\mathcal{M}$ be a non-empty set of probability mass functions on $\states$, let $\rateset$ be a non-empty bounded set of rate matrices that has separately specified rows, with corresponding lower transition rate operator $\lrate$, and let $\underline{\mathcal{T}}_{\lrate}$ be the corresponding lower transition operator system. Then for all $t,s\in\realsnonneg$ such that $t\leq s$, all $f\in\gamblesX$, and all $\epsilon\in\realspos$, there is a well-behaved Markov process $P\in\wmprocesses_{\rateset,\,\mathcal{M}}$ such that
 \begin{equation*}
-\norm{\lbound_t^sf-\mathbb{E}_P[f(X_s)\,\vert\,X_t]} < \epsilon\,.
+\norm{\mathbb{E}_P[f(X_s)\,\vert\,X_t]-\lbound_t^sf} < \epsilon.
 \end{equation*}
 \end{proposition}
 
 Together, Propositions~\ref{theorem:nonmarkov_single_var_lower_bounded} and~\ref{theorem:lower_markov_bound_is_tight} establish a strong connection between $L_t^s$ and lower expectations $\underline{\mathbb{E}}$. In particular, for functions defined on a single point in time, they turn out to be equivalent, as shown by the result below.
 
 \begin{corollary}\label{cor:lower_operator_is_infimum}
-Let $\mathcal{M}$ be an arbitrary non-empty set of probability mass functions on $\states$, let $\rateset$ be an arbitrary non-empty bounded set of rate matrices that has separately specified rows, with corresponding lower transition rate operator $\lrate$, and let $\underline{\mathcal{T}}_{\lrate}$ be the corresponding lower transition operator system. Then, for all $t,s\in\realsnonneg$ such that $t\leq s$, all $u\in\mathcal{U}_{<t}$, $x_u\in\states_u$ and $x_t\in\states$, and all $f\in\gamblesX$:
+Let $\mathcal{M}$ be a non-empty set of probability mass functions on $\states$, let $\rateset$ be a non-empty bounded set of rate matrices that has separately specified rows, with corresponding lower transition rate operator $\lrate$, and let $\underline{\mathcal{T}}_{\lrate}$ be the corresponding lower transition operator system. Then, for all $t,s\in\realsnonneg$ such that $t\leq s$, all $u\in\mathcal{U}_{<t}$, $x_u\in\states_u$ and $x_t\in\states$, and all $f\in\gamblesX$:
 \begin{align*}
-\left[L_t^sf\right](x_t) = \underline{\mathbb{E}}^{\mathrm{WM}}_{\,\rateset,\,\mathcal{M}}[f(X_s)\,\vert\,X_t=x_t,X_u=x_u] 
-=
-\underline{\mathbb{E}}^{\mathrm{W}}_{\,\rateset,\,\mathcal{M}}[f(X_s)\,\vert\,X_t=x_t,X_u=x_u].
+\underline{\mathbb{E}}^{\mathrm{W}}_{\,\rateset,\,\mathcal{M}}[f(X_s)\,\vert\,X_t=x_t,X_u=x_u]=\underline{\mathbb{E}}^{\mathrm{WM}}_{\,\rateset,\,\mathcal{M}}[f(X_s)\,\vert\,X_t=x_t,X_u=x_u] =\left[L_t^sf\right](x_t).
  %&= \underline{\mathbb{E}}^{\mathrm{WM}}_{\,\rateset}[f(X_s)\,\vert\,X_t=x_t]\,,
 \end{align*}\\[-25pt]
 % and furthermore,
@@ -5828,11 +5826,11 @@ where the first equality follows from Proposition~\ref{prop:lower_transition_is_
 
 \section{Proofs and Lemmas for Section~\ref{sec:connections}}
 
-Before giving the proof of Proposition~\ref{theorem:nonmarkov_single_var_lower_bounded}, we first prove some crucial steps of the proof separately in the lemmas below.
+Before giving the proof of Proposition~\ref{theorem:nonmarkov_single_var_lower_bounded}, we first prove some crucial steps of the proof separately, in the lemmas below.
 
-First of all, recall from Proposition~\ref{prop:outerderivativebehaveslikelimit} that, for any $\epsilon\in\realspos$ and over a small enough time step $\Delta$, the transition matrix $T_{t,x_u}^{t+\Delta}$ of any stochastic process $P\in\wprocesses_{\rateset,\mathcal{M}}$ can be approximated by $(I+\Delta Q)$ with an error of at most $\Delta \epsilon$, using some rate matrix $Q\in\overline{\partial}T_{t,x_u}^t\subseteq \mathcal{Q}$. The following lemma states that, for any time interval $[t,s]$, there exists a finite partition $u\in\mathcal{U}_{[t,s]}$, $u=t_0,\ldots,t_n$, such that the transition matrices $T_{t_i,x_u}^{t_{i+1}}$ can all be similarly approximated by $(I+\Delta_iQ_i)$, for some $Q_i\in\rateset$ and with $\Delta_i=t_{i+1}-t_i$. 
+First of all, recall from Proposition~\ref{prop:outerderivativebehaveslikelimit} that, for any $\epsilon\in\realspos$, there is some $\delta>0$ such that, for all $0<\Delta<\delta$, the transition matrix $\smash{T_{t,x_u}^{t+\Delta}}$ of a fixed stochastic process $\smash{P\in\wprocesses_{\rateset,\mathcal{M}}}$ can be approximated by $(I+\Delta Q)$ with an error of at most $\Delta \epsilon$, using a rate matrix $Q\in\overline{\partial}T_{t,x_u}^t\subseteq \mathcal{Q}$. Quite similarly, the following lemma states that, for any given time interval $[t,s]$, there exists a finite partition $u\in\mathcal{U}_{[t,s]}$, $u=t_0,\ldots,t_n$, such that the transition matrices $\smash{T_{t_i,x_u}^{t_{i+1}}}$ can all be approximated by $(I+\Delta_{i+1}Q_{i+1})$, for some $Q_{i+1}\in\rateset$ and with $\Delta_{i+1}=t_{i+1}-t_i$. 
 
-The reason that this result is not entirely straightforward is the ``small enough'' requirement to approximate $T_{t,x_u}^{t+\Delta}$; this only works for $\Delta<\delta_t$, for some $\delta_t\in\realspos$ that is specific to the time $t$. Because we are now looking at multiple time points simultaneously, we need a guarantee that these $\delta_t$ do not vanish as we change $t$---this is what the following lemma essentially establishes.
+The reason that why this result does not follow trivially from Proposition~\ref{prop:outerderivativebehaveslikelimit} is because the $\delta$---and hence also $\Delta$---in Proposition~\ref{prop:outerderivativebehaveslikelimit} depends on the particular time point that is considered. For this reason, the intuitive idea of using Proposition~\ref{prop:outerderivativebehaveslikelimit} to first find some $\Delta_0$ and $Q_0$ such that $T_{t_0,x_u}^{t_1}=T_{t_0,x_u}^{t_0+\Delta}$ can be approximated by $I+\Delta_1Q_1$, and to then continue in this way find some $\Delta_2$ and $Q_2$, and then some $\Delta_3$ and $Q_3$, and so on, is not feasible, because this proces may continue indefinitely if $\sum_{i=1}^\infty\Delta_i$ is finite. In order to make this work, we need some kind of guarantee that it suffices to consider a finite number of $\Delta_i$, and this is exactly what the following lemma establishes.
 
 \begin{lemma}\label{lemma:bound_on_linear_approx_partition}
 Consider any $P\in\wprocesses_{\rateset,\,\mathcal{M}}$, any $0\leq t<s$, any $u\in\mathcal{U}_{<t}$ and any $x_u\in\states_u$. Then for all $\epsilon>0$ and $\delta>0$, there is some $v\in\mathcal{U}_{[t,s]}$ such that $\sigma(v)<\delta$ and, for all $i\in\{0,\dots,n-1\}$:
