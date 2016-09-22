@@ -366,9 +366,9 @@ Linear maps from $\gamblesX$ to $\gamblesX$ will play an important role in this 
 Because we will also be interested in non-linear maps, we consider as a more general case operators that are \emph{non-negatively homogeneous}. An operator $A$ from $\gamblesX$ to $\gamblesX$ is non-negatively homogeneous if $A(\lambda f)=\lambda \left[Af\right]$ for all $f\in\gamblesX$ and all $\lambda\in\realsnonneg$. Note that this includes matrices as a special case.
 
 For any non-negatively homogeneous operator $A$ from $\gamblesX$ to $\gamblesX$, we consider the induced operator norm
-\begin{equation*}
+\begin{equation}\label{eq:operatornorm}
 \norm{A}\coloneqq\sup\left\{\norm{Af}\colon f\in\gamblesX,\norm{f}=1\right\}.
-\end{equation*}
+\end{equation}
 If $A$ is a matrix, it is easily verified that then
 \begin{equation}\label{eq:normofmatrix}
 \norm{A}
@@ -2850,7 +2850,7 @@ We have in the previous section shown that (conditional) lower expectations can 
 The construction of the operator $L_t^s$ in Section~\ref{sec:lowertrans} already suggests how we can do this; namely, by using a finite-precision approximation of $L_t^s$ using the auxiliary operator $\Phi_u\coloneqq \prod_{i=1}^n(I+\Delta_i\lrate)$. Recall from Section~\ref{sec:lowertrans} that the approximation of $L_t^s$ by $\Phi_u$ becomes better as we take $u\in\mathcal{U}_{[t,s]}$ to be an increasingly finer partition of the interval $[t,s]$. The following result tells us exactly how fine this partition needs to be for a specific function $f\in\gamblesX$, in order to guarantee an $\epsilon$-error bound on $L_t^sf$.
 
 \begin{proposition}\label{prop:approximation_error_bound}
-Let $\lrate$ be an arbitrary lower transition rate operator. Choose any $t,s\in\realsnonneg$ such that $t\leq s$, any $f\in\gamblesX$, and any $\epsilon\in\realspos$, and let $L_t^s$ be the lower transition operator corresponding to $\lrate$. Choose any $n\in\nats$ such that $n\geq\nicefrac{\left((s-t)^2\norm{\lrate}^2\norm{f}\right)}{\epsilon}$ and $n\geq(s-t)\norm{\lrate}$,
+Let $\lrate$ be an arbitrary lower transition rate operator. Choose any $t,s\in\realsnonneg$ such that $t\leq s$, any $f\in\gamblesX$ and any $\epsilon\in\realspos$, and let $L_t^s$ be the lower transition operator corresponding to $\lrate$. Choose any $n\in\nats$ such that $n\geq\nicefrac{\left((s-t)^2\norm{\lrate}^2\norm{f}\right)}{\epsilon}$ and $n\geq(s-t)\norm{\lrate}$,
 %\begin{equation*}
 %n > \frac{(s-t)^2\norm{\lrate}^2\norm{f}}{\epsilon}\,,
 %\end{equation*}
@@ -5712,7 +5712,7 @@ which implies that
 &\leq
 \Delta^2\norm{\lrate}^2+\abs{\Delta}2\norm{\lrate}\norm{L_{t}^{t'}-I}\leq\Delta^2\norm{\lrate}^2+2\abs{\Delta}(t'-t)\norm{\lrate}^2,
 \end{align*}
-using Lemma~\ref{lemma:quadraticboundonL} and~\ref{LR:differenceofnorm} for the second inequality and Lemma~\ref{lemma:linearboundonL} for the third inequality. Hence, since $0\leq(t'-t)\leq\abs{\Delta}$, we find that $\norm{L_{t+\Delta}^s-L_t^s+\Delta\lrate L_t^s}\leq3\Delta^2\norm{\lrate}^2$, which implies that indeed, as required,
+using Lemma~\ref{lemma:quadraticboundonL} and~\ref{LR:differenceofnorm} for the second inequality and Lemma~\ref{lemma:linearboundonL} for the third inequality. Hence, since $0\leq(t'-t)\leq\abs{\Delta}$, we find that $\smash{\norm{L_{t+\Delta}^s-L_t^s+\Delta\lrate L_t^s}\leq3\Delta^2\norm{\lrate}^2}$, which implies that indeed, as required,
 \begin{equation*}
 \norm{\frac{L_{t+\Delta}^s-L_t^s}{\Delta}+\lrate L_t^s}
 =\frac{1}{\abs{\Delta}}\norm{L_{t+\Delta}^s-L_t^s+\Delta\lrate L_t^s}
@@ -6043,9 +6043,9 @@ Hence, we conclude that Equation~\eqref{eq:opencoverproofresult} holds for all $
 % \end{proof}
 
 
-The following lemma provides a useful decomposition property for expectations $\mathbb{E}_P$ corresponding to (non-)Markov processes $P\in\wprocesses$, expressed in terms of transition matrices $T_{t,x_u}^s$ (using Remark~\ref{remark:expectationT}). We will use this result in the proof of Proposition~\ref{theorem:nonmarkov_single_var_lower_bounded}.
+The following lemma provides a decomposition property for the expectation operator $\mathbb{E}_P$ that corresponds to a stochastic processes $P\in\processes$. For notational convenience, we express it in terms of transition matrices $T_{t,x_u}^s$, using Remark~\ref{remark:expectationT}. This result will end up being useful in the proof of Proposition~\ref{theorem:nonmarkov_single_var_lower_bounded}.
 
-Roughly speaking, this result establishes that the transition matrix $T_{t,x_u}^s$ of any well-behaved stochastic process $P\in\wprocesses$ can be decomposed into a number of other transition matrices corresponding to this $P$, such that---crucially---these other transition matrices do not depend on the exact way that the decomposition was performed, despite $P$ not necessarily being a Markov process.
+Roughly speaking, the result establishes that the (history-dependent) transition matrix $T_{t,x_u}^s$ of a stochastic process $P\in\processes$ can be decomposed into a number of other transition matrices corresponding to this $P$, such that---crucially---these individual transition matrices do not depend on the exact way that the decomposition was performed---that is, the other transition matrices in the decomposition---despite $P$ not necessarily being a Markov process.
 
 \begin{lemma}\label{lemma:weirddecomposition}
 Consider any $P\in\wprocesses$, any $t,s\in\realsnonneg$ such that $t<s$, any $u\in\mathcal{U}_{<t}$ and $x_u\in\states_u$ and any sequence $t=t_0<t_1<\cdots<t_n=s$, with $n\in\nats$.
@@ -6057,7 +6057,7 @@ Then for any $f\in\gamblesX$ and $x_t\in\states$:
 \end{lemma}
 \begin{proof}
 We provide a proof by induction. For $n=1$, the result holds trivially. So consider now any $n>1$ and assume that the result is true for $n-1$.
-For any $g\in\gamblesX$, we then find that
+For any $g\in\gamblesX$, Remark~\ref{remark:expectationT} then implies that
 \begin{align*}
 [T_{t_0,\,x_u}^{t_2}g](x_t)
 %=[T_{t,\,x_u}^{t_2}g](x_t)
@@ -6080,10 +6080,21 @@ T_{t_1,\,x_{u\cup\{t\}}}^{t_{2}}
 using the induction hypothesis for the first equality.
 \end{proof}
 
-The final result that we require has to do with the connection between $\rateset$ and $\lrate$. Due to the definition of the lower transition rate operator $\lrate$ corresponding to a given $\rateset$, it holds for all $\Delta\in\realsnonneg$, all $Q\in\rateset$, and all $f\in\gamblesX$ that $(I+\Delta Q)f \geq (I+\Delta\lrate)f$. The following lemma establishes that this inequality extends to compositions of such operators $(I+\Delta Q)$ and $(I+\Delta\lrate)$.
+The final two results that we require have to do with the connection between $\rateset$ and $\lrate$. Due to the definition of the lower transition rate operator $\lrate$ corresponding to a given $\rateset$---see Equation~\eqref{eq:correspondinglowertrans}---it holds for all $\Delta\in\realsnonneg$, all $Q\in\rateset$, and all $f\in\gamblesX$ that $(I+\Delta Q)f \geq (I+\Delta\lrate)f$. Lemma~\ref{lemma:productofQsdominatesproductoflrates} establishes that this inequality extends to compositions of such operators $(I+\Delta Q)$ and $(I+\Delta\lrate)$, provided that we impose an upper bound on $\Delta$. In orde to prove this Lemma~\ref{lemma:productofQsdominatesproductoflrates}, we also require Lemma~\ref{lemma:normQboundedbynormLQ}, which states that $\norm{Q}$ is bounded above by $\norm{\lrate}$.
+
+\begin{lemma}\label{lemma:normQboundedbynormLQ}
+Consider a non-empty bounded set $\rateset$ of rate matrices and let $\lrate$ be the corresponding lower transition rate operator. Then for all $Q\in\rateset$, we have that $\norm{Q}\leq\norm{\lrate}$.
+\end{lemma}
+\begin{proof}
+Consider any $f\in\gamblesX$ such that $\norm{f}=1$. It then follows from Equation~\eqref{eq:correspondinglowertrans} that $Qf\geq\lrate f$ and, due to the linearity of $Q$, also that $Qf=-Q(-f)\leq-\lrate(-f)$. Hence, we find that $\lrate f\leq Q f\leq-\lrate(-f)$, which implies that
+\begin{equation}\label{eq:lemma:normQboundedbynormLQ}
+\norm{Qf}\leq\max\{\norm{\lrate f},\norm{-\lrate(-f)}\}=\max\{\norm{\lrate f},\norm{\lrate(-f)}\}.
+\end{equation}
+Since $\norm{f}=1$, it follows from Equation~\ref{eq:operatornorm} that $\norm{\lrate f}\leq\norm{\lrate}$, and similarly, since $\norm{-f}=\norm{f}=1$, we also find that $\norm{\lrate(-f)}\leq\norm{\lrate}$. By combining this with Equation, we find that $\norm{Qf}\leq\norm{\lrate f}$, and since this is true for every $f\in\gamblesX$ such that $\norm{f}=1$, it now follows from Equation~\eqref{eq:operatornorm} that $\norm{Q}\leq\norm{\lrate}$.
+\end{proof}
 
 \begin{lemma}\label{lemma:productofQsdominatesproductoflrates}
-Consider a non-empty bounded set $\rateset$ of rate matrices and let $\lrate$ be the corresponding lower transition rate operator. Fix any $n\in\nats$ and, for all $i\in\{1,\dots,n\}$, consider some $\Delta_i\geq0$ and $Q_i\in\rateset$. Then for any $f\in\gamblesX$:
+Consider a non-empty bounded set $\rateset$ of rate matrices, let $\smash{\lrate}$ be the corresponding lower transition rate operator, and consider any $\delta\in\realspos$ such that $\delta\norm{\lrate}\leq1$. Now fix any $n\in\nats$ and, for all $i\in\{1,\dots,n\}$, consider some $0\leq\Delta_i\leq\delta$ and $Q_i\in\rateset$. Then for any $f\in\gamblesX$:
 \begin{equation*}
 \prod_{i=1}^n(I+\Delta_iQ_i)f
 \geq
@@ -6091,7 +6102,7 @@ Consider a non-empty bounded set $\rateset$ of rate matrices and let $\lrate$ be
 \end{equation*}
 \end{lemma}
 \begin{proof}
-We provide a proof by induction. For $n=1$, the result follows trivially from Equation~\eqref{eq:correspondinglowertrans}. Consider now any $n>1$ and assume that the result is true for $n-1$. We then find that
+We provide a proof by induction. For $n=1$, the result follows trivially from Equation~\eqref{eq:correspondinglowertrans}. Consider now any $n>1$ and assume that the result is true for $n-1$. Since Lemma~\ref{lemma:normQboundedbynormLQ} implies that $\Delta_1\norm{Q_1}\leq\Delta_1\norm{\lrate}\leq\delta\norm{\lrate}\leq1$, it then follows from Proposition~\ref{prop:stochastic_from_rate_matrix} that $I+\Delta_1Q_1$ is a transition matrix, and therefore, as noted in Section~\ref{subsec:lowertrans_rate}, also a lower transition matrix, which therefore satisfies~\ref{LT:monotonicity}. We now find that
 \begin{equation*}
 \prod_{i=1}^n(I+\Delta_iQ_i)f
 % =
@@ -6101,7 +6112,7 @@ We provide a proof by induction. For $n=1$, the result follows trivially from Eq
 \geq
 \prod_{i=1}^n(I+\Delta_i\lrate)f,
 \end{equation*}
-where the first inequality follows from the induction hypothesis and the second inequality follows from Equation~\eqref{eq:correspondinglowertrans}.
+where the first inequality follows from the induction hypothesis and~\ref{LT:monotonicity}, and the second inequality follows from Equation~\eqref{eq:correspondinglowertrans}.
 \end{proof}
 
 \begin{proof}[Proof of Proposition~\ref{theorem:nonmarkov_single_var_lower_bounded}]
@@ -6110,7 +6121,7 @@ This result is trivial if $t=s$. Hence, without loss of generality, we may assum
 
 Due to Theorem~\ref{theo:convergencelowerbound}, there is some $\delta\in\realspos$ such that $\delta\norm{\lrate}\leq1$ and
 \begin{equation}\label{eq:theorem:nonmarkov_single_var_lower_bounded}
-(\forall v\in\mathcal{U}_{[t,s]}\,:\,\sigma(v)<\delta) \norm{L_{t}^s - \Phi_v} < \epsilon_1,
+(\forall v\in\mathcal{U}_{[t,s]}\,:\,\sigma(v)\leq\delta) \norm{L_{t}^s - \Phi_v} \leq \epsilon_1,
 \end{equation}
 with $\Phi_v$ as in Equation~\eqref{eq:aux_lower_trans}.
 %, which implies that for all $v\in\mathcal{U}_{[t,s]}$ with $\sigma(v)<\delta$,
@@ -6119,7 +6130,7 @@ with $\Phi_v$ as in Equation~\eqref{eq:aux_lower_trans}.
 % \end{equation}
 Since $\smash{P\in\wprocesses_\rateset}$, it now follows from Proposition~\ref{prop:outerderivativebehaveslikelimit} that there is some $0<\Delta_1<\min\{\delta,C\}$ such that
 \begin{equation*}
-(\exists Q_1\in\overline{\partial}_+T_{t,\,x_u}^{t+\Delta_1}\subseteq\rateset)~
+(\exists Q_1\in\overline{\partial}_+T_{t,\,x_u}^{t}\subseteq\rateset)~
 \norm{T_{t_0,\,x_u}^{t_1} - (I+\Delta_1 Q_1)}
 =
 \norm{T_{t,\,x_u}^{t+\Delta_1} - (I+\Delta_1 Q_1)} < \Delta_1\epsilon_2,
@@ -6138,11 +6149,11 @@ with $t_0\coloneqq t$ and $t_1\coloneqq t+\Delta_1$.
 % \left[(I+\Delta_0 \lrate)g\right](y) - \frac{\Delta_0\epsilon}{2C} < \left[T_{t,x_u}^{t+\Delta_0}g\right](y)\,.
 % \end{equation}
 %Next, we focus on the remaining interval $[t+\Delta_0,s]$. To this end, we fix the history $(X_t=x,X_u=x_u)$ by defining $x_{u\cup\{t\}}\in\states^{u\cup\{t\}}$ as $x_{u\cup\{t\}}\coloneqq (x_u,x)$.
-Furthermore, since $P\in\wprocesses_\rateset$, and because $\Delta_1<C$ implies that $t+\Delta_1<s$, it follows from Lemma~\ref{lemma:bound_on_linear_approx_partition} that there is some $v\in\mathcal{U}_{[t+\Delta_1,s]}$ such that $\sigma(v)<\delta$, with $v=t_1,\ldots,t_n$ and $t_n=s$, and such that for all $i\in\{2,\ldots,n\}$, with $\Delta_i\coloneqq t_i-t_{i-1}$:
+Furthermore, since $P\in\wprocesses_\rateset$, and because $\Delta_1<C$ implies that $t_1t+\Delta_1<s$, it follows from Lemma~\ref{lemma:bound_on_linear_approx_partition} that there is some $v\in\mathcal{U}_{[t_1,s]}$ such that $\sigma(v)<\delta$, with $v=t_1,\ldots,t_n$ and $t_n=s$, and such that for all $i\in\{2,\ldots,n\}$, with $\Delta_i\coloneqq t_i-t_{i-1}$:
 \begin{equation*}
 (\exists Q_i\in\rateset)\norm{T_{t_{i-1},x_{u\cup \{t\}}}^{t_{i}} - (I+\Delta_{i}Q_i)} < \Delta_{i}\epsilon_2.\vspace{5pt}
 \end{equation*}
-Since $\Delta_1<\delta$ and, for all $i\in\{2,\dots,n\}$, $\Delta_i\leq\sigma(v)<\delta$, we know that, for all $i\in\{1,\dots,n\}$, $\Delta_i<\delta$ and therefore also $\Delta_i\norm{Q_i}\leq\delta\norm{\rateset}\leq1$.
+Since $\Delta_1<\delta$ and, for all $i\in\{2,\dots,n\}$, $\Delta_i\leq\sigma(v)<\delta$, we know that, for all $i\in\{1,\dots,n\}$, $\Delta_i<\delta$ and therefore also, using Lemma~\ref{lemma:normQboundedbynormLQ}, that $\Delta_i\norm{Q_i}\leq\delta\norm{\lrate}\leq1$.
 % which implies that there exist rate matrices $Q_{1},\ldots,Q_{m}\in\rateset$ such that, for all functions $g\in\gamblesX$ with $\norm{g}\leq\norm{f}$ and all $i\in\{1,\ldots,m\}$,
 % \begin{equation*}
 % \norm{T_{\tau_{i-1},x_{u\cup\{t\}}}^{\tau_{i}}g - (I+\Delta_{i}Q_i)g} \leq \norm{T_{\tau_{i-1},x_{u\cup\{t\}}}^{\tau_{i}} - (I+\Delta_{i}Q_i)} \norm{g} < \frac{\Delta_{i}\epsilon}{2C\norm{f}}\norm{g} \leq \frac{\Delta_{i}\epsilon}{2C}\,.
