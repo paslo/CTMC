@@ -2758,9 +2758,10 @@ As this result shows, $L_t^sf$ is a lower bound on the expectation of a function
 Our next result establishes that the bound in Proposition~\ref{theorem:nonmarkov_single_var_lower_bounded} is tight if $\rateset$ also has separately specified rows. Specifically, we show that $L_t^sf$ can then be approximated to arbitrary precision by carefully choosing a Markov process $P$ from the set $\wmprocesses_{\rateset,\,\mathcal{M}}$.
 
 \begin{proposition}\label{theorem:lower_markov_bound_is_tight}
-Let $\mathcal{M}$ be a non-empty set of probability mass functions on $\states$, let $\rateset$ be a non-empty bounded set of rate matrices that has separately specified rows, with corresponding lower transition rate operator $\lrate$, and let $\underline{\mathcal{T}}_{\lrate}$ be the corresponding lower transition operator system. Then for all $t,s\in\realsnonneg$ such that $t\leq s$, all $f\in\gamblesX$, and all $\epsilon\in\realspos$, there is a well-behaved Markov process $P\in\wmprocesses_{\rateset,\,\mathcal{M}}$ such that
+Let $\mathcal{M}$ be a non-empty set of probability mass functions on $\states$, let $\rateset$ be a non-empty bounded set of rate matrices that has separately specified rows, with corresponding lower transition rate operator $\lrate$, and let $\smash{\underline{\mathcal{T}}_{\lrate}}$ be the corresponding lower transition operator system. Then for all $t,s\in\realsnonneg$ such that $t\leq s$, all $f\in\gamblesX$, and all $\epsilon\in\realspos$, there is a well-behaved Markov process $P\in\wmprocesses_{\rateset,\,\mathcal{M}}$ such that
 \begin{equation*}
-\norm{\mathbb{E}_P[f(X_s)\,\vert\,X_t]-\lbound_t^sf} < \epsilon.
+\norm{\mathbb{E}_P[f(X_s)\,\vert\,X_t=x_t]-[\lbound_t^sf](x_t)} < \epsilon
+~\text{ for all $x_t\in\states$.}
 \end{equation*}
 \end{proposition}
 
@@ -6316,10 +6317,10 @@ Since $\epsilon>0$ was arbitrary, this allows us to infer that $[L_{t}^s f](x_t)
 %Because the $\epsilon\in\realspos$ was arbitrary, this concludes the proof.
 %\end{proof}
 
-The following lemma is required for the proof of Proposition~\ref{theorem:lower_markov_bound_is_tight}. Recall from the definition of the lower envelope $\lrate$ of a given set $\rateset$ of rate matrices, that $\lrate f$ is the greatest element of $\gamblesX$ that satisfies $\lrate f\leq Qf$ for all $Q\in\rateset$. Therefore, for all $x\in\states$ and all $\epsilon>0$, there is some $Q\in\rateset$ such that $[Qf](x)<[\lrate f](x)+\epsilon$. In other words, $[\lrate f](x)$ can be approximated arbitrarily closely using the elements of $\rateset$. The following lemma establishes that the \emph{entire} function $\lrate f$ can be approximated arbitrarily closely whenever $\rateset$ has separately specified rows.
+The following lemma is required for the proof of Proposition~\ref{theorem:lower_markov_bound_is_tight}. Recall from the definition of the lower envelope $\lrate$ of a given set $\rateset$ of rate matrices, that for any $f\in\gamblesX$, and $x\in\states$ and any $\epsilon>0$, there is some $Q\in\rateset$ such that $[Qf](x)<[\lrate f](x)+\epsilon$. In other words, $[\lrate f](x)$ can be approximated arbitrarily closely using the elements of $\rateset$. The following lemma establishes that the \emph{entire} function $\lrate f$ can be approximated arbitrarily closely by a single $Q\in\rateset$, whenever $\rateset$ has separately specified rows.
 
 \begin{lemma}\label{lemma:rateset_has_arginf}
-Let $\rateset$ be an arbitrary non-empty bounded set of rate matrices that has separately specified rows, with corresponding lower transition rate operator $\lrate$. Then for all $f\in\gamblesX$ and $\epsilon\in\realspos$, there exists a $Q\in\rateset$ such that
+Let $\rateset$ be an arbitrary non-empty bounded set of rate matrices that has separately specified rows, with corresponding lower transition rate operator $\lrate$. Then for any $f\in\gamblesX$ and $\epsilon\in\realspos$, there exists a $Q\in\rateset$ such that
 \begin{equation*}
 \norm{\lrate f - Qf} < \epsilon\,.
 \end{equation*}
@@ -6329,7 +6330,7 @@ This is immediate from the definition of the lower envelope of $\rateset$, as gi
 \end{proof}
 
 \begin{proof}[Proof of Proposition~\ref{theorem:lower_markov_bound_is_tight}]
-Fix any $t,s\in\realsnonneg$ such that $t\leq s$, any $f\in\gamblesX$ and any $\epsilon\in\realspos$. If $t=s$, the result is trivial. Hence, without loss of generality, we may assume that $t<s$. Let $C\coloneqq (s-t)$, choose any $\epsilon^*>0$ such that $\epsilon^*C<\epsilon$, choose any $\epsilon_1,\epsilon_2,\epsilon_3>0$ such that $\epsilon_1+\epsilon_2+\epsilon_3<\epsilon^*$, choose any $\delta>0$ such that $\delta\norm{\rateset}^2\norm{f}<\epsilon_3$ and $\smash{\delta\norm{\lrate}^2\norm{f}<\epsilon_1}$ (this is always possible because of~\ref{LR:normlratefinite}), and consider any $u\in\mathcal{U}_{[t,s]}$ such that $\sigma(u)<\delta$, with $u=t_0,\ldots,t_n$ and $n\in\nats$. 
+Fix any $t,s\in\realsnonneg$ such that $t\leq s$, any $f\in\gamblesX$ and any $\epsilon\in\realspos$. If $t=s$, the result is trivial. Hence, without loss of generality, we may assume that $t<s$. Let $C\coloneqq (s-t)$, choose any $\epsilon^*>0$ such that $\epsilon^*C<\epsilon$, choose any $\epsilon_1,\epsilon_2,\epsilon_3>0$ such that $\epsilon_1+\epsilon_2+\epsilon_3<\epsilon^*$, choose any $\delta>0$ such that $\smash{\delta\norm{\rateset}^2\norm{f}<\epsilon_3}$ and $\smash{\delta\norm{\lrate}^2\norm{f}<\epsilon_1}$ (this is always possible because of~\ref{LR:normlratefinite}), and consider any $u\in\mathcal{U}_{[t,s]}$ such that $\sigma(u)<\delta$, with $u=t_0,\ldots,t_n$ and $n\in\nats$. 
 
 Fix any $i\in\{1,\dots,n\}$ and let $g_i\coloneqq L_{t_i}^{t_n}f$. It then follows from Lemma~\ref{lemma:rateset_has_arginf} that there is some $Q_i\in\rateset$ such that $\norm{\lrate g_i-Q_i g_i}<\epsilon_2$ and, due to~\ref{N:normAf} and~\ref{LT:norm_at_most_one}, we also know that $\norm{g_i}=\norm{L_{t_i}^{t_n}f}\leq\norm{L_{t_i}^{t_n}}\norm{f}\leq\norm{f}$.
 % \begin{equation}\label{eq:prop_lower_markov_tight_rate_error}
@@ -6364,7 +6365,7 @@ where the second inequality holds because of~\ref{N:normAf}, the third inequalit
 
 
 
-For all $i\in\{0,\ldots,n\}$, let $\mathcal{T}_{Q_i}$ denote the transition matrix system corresponding to $Q_i$, as in Definition~\ref{def:systemfromQ}. Then, by Proposition~\ref{prop:nonhomogeneous_in_process_set}, there is some $P\in\wmprocesses_{\rateset,\,\mathcal{M}}$ with transition matrix system $\mathcal{T}_P$, such that
+Let $Q_0$ and $Q_{n+1}$ be two arbitrary elements of $\rateset$ and, for all $i\in\{0,\ldots,n+1\}$, let $\mathcal{T}_{Q_i}$ denote the transition matrix system corresponding to $Q_i$, as in Definition~\ref{def:systemfromQ}. Then, by Proposition~\ref{prop:nonhomogeneous_in_process_set}, there is some $P\in\wmprocesses_{\rateset,\,\mathcal{M}}$ with transition matrix system $\mathcal{T}_P$, such that
 \begin{equation*}
 \mathcal{T}_P = \mathcal{T}_{Q_0}^{[0,t_0]}\otimes \mathcal{T}_{Q_1}^{[t_0,t_1]}\otimes \cdots \otimes \mathcal{T}_{Q_n}^{[t_{n-1},t_n]} \otimes \mathcal{T}_{Q_n}^{[t_{n},\infty)}\,.
 \end{equation*}
@@ -6376,12 +6377,13 @@ Due to Equation~\eqref{eq:theorem:lower_markov_bound_is_tight:localbound}, we kn
 \end{equation}
 Furthermore, we also know that
 \begin{align*}
-\norm{L_{t_0}^{t_n}g_n - T_{t_0}^{t_n}g_n} 
- &\leq \norm{L_{t_0}^{t_{n-1}}L_{t_{n-1}}^{t_n}g_n - T_{t_0}^{t_{n-1}}L_{t_{n-1}}^{t_n}g_n} + \norm{T_{t_0}^{t_{n-1}}L_{t_{n-1}}^{t_n}g_n - T_{t_0}^{t_{n-1}}T_{t_{n-1}}^{t_n}g_n} \\
+\norm{L_{t_0}^{t_n}g_n - T_{t_0}^{t_n}g_n}
+&=\norm{L_{t_0}^{t_{n-1}}L_{t_{n-1}}^{t_n}g_n - T_{t_0}^{t_{n-1}}L_{t_{n-1}}^{t_n}g_n+T_{t_0}^{t_{n-1}}(L_{t_{n-1}}^{t_n}g_n - T_{t_{n-1}}^{t_n}g_n)} \\ 
+ &\leq \norm{L_{t_0}^{t_{n-1}}L_{t_{n-1}}^{t_n}g_n - T_{t_0}^{t_{n-1}}L_{t_{n-1}}^{t_n}g_n} + \norm{T_{t_0}^{t_{n-1}}}\norm{L_{t_{n-1}}^{t_n}g_n - T_{t_{n-1}}^{t_n}g_n} \\
  %&\leq \norm{L_{t_0}^{t_{n-1}}L_{t_{n-1}}^{t_n}f - T_{t_0}^{t_{n-1}}L_{t_{n-1}}^{t_n}f} + \norm{{T_{t_0}^{t_{n-1}}}}\cdot\norm{L_{t_{n-1}}^{t_n}g_n - T_{t_{n-1}}^{t_n}g_n} \\
  &\leq \norm{L_{t_0}^{t_{n-1}}g_{n-1} - T_{t_0}^{t_{n-1}}g_{n-1}} + \norm{L_{t_{n-1}}^{t_n}g_n - T_{t_{n-1}}^{t_n}g_n},
 \end{align*}
-using Proposition~\ref{prop:lower_trans_system_is_system} and Equation~\eqref{eq:markovintermsofmatrices} for the first inequality, and Proposition~\ref{prop:lower_trans_system_is_system} and \ref{LT:differencenorm} for the second one.
+using Proposition~\ref{prop:lower_trans_system_is_system} and Equation~\eqref{eq:markovintermsofmatrices} for the first inequality, and~\ref{LT:norm_at_most_one} for the second one.
 Similarly, we also find that
 \begin{equation*}
 \norm{L_{t_0}^{t_{n-1}}g_{n-1} - T_{t_0}^{t_{n-1}}g_{n-1}}
