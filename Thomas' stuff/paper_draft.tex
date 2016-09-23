@@ -2075,9 +2075,9 @@ For any non-empty set of stochastic processes $\mathcal{P}\subseteq\processes$, 
 where $\mathbb{E}_P[\cdot\,\vert\,\cdot]$ denotes the (conditional) expectation taken with respect to $P$.
 
 In particular, for any non-empty bounded set of rate matrices $\rateset$ and any non-empty set $\mathcal{M}$ of probability mass functions on $\states$, we let
-\begin{equation*}
+\begin{equation}\label{eq:lowerexp3}
 \underline{\mathbb{E}}_{\rateset,\mathcal{M}}^{\mathrm{W}}[\cdot\,\vert\,\cdot] \coloneqq \inf\left\{\mathbb{E}_P[\cdot\,\vert\,\cdot]\,:\,P\in\mathcal{P}_{\rateset,\mathcal{M}}^{\mathrm{W}}\right\},
-\end{equation*}
+\end{equation}
 and similarly for $\smash{\underline{\mathbb{E}}_{\rateset,\mathcal{M}}^{\mathrm{WM}}}$ and $\smash{\underline{\mathbb{E}}_{\rateset,\mathcal{M}}^{\mathrm{WHM}}}$.
 %As specific cases, we will denote the lower expectation with respect to $\wprocesses_{\rateset,\mathcal{M}}$ as $\underline{\mathbb{E}}_{\rateset,\mathcal{M}}^{\mathrm{W}}$, with respect to $\wmprocesses_{\rateset,\mathcal{M}}$ as $\underline{\mathbb{E}}_{\rateset,\mathcal{M}}^{\mathrm{WM}}$, and with respect to  $\whmprocesses_{\rateset,\mathcal{M}}$ as $\underline{\mathbb{E}}_{\rateset,\mathcal{M}}^{\mathrm{WHM}}$. 
 If $\mathcal{M}$ is the set of \emph{all} probability mass functions on $\states$, then as in Definition~\ref{def:consistent_process_set}, we will write $\underline{\mathbb{E}}_{\rateset}^{\mathrm{W}}$ instead of $\underline{\mathbb{E}}_{\rateset,\mathcal{M}}^{\mathrm{W}}$, and similarly for $\underline{\mathbb{E}}_{\rateset}^{\mathrm{WM}}$ and $\underline{\mathbb{E}}_{\rateset}^{\mathrm{WHM}}$.
@@ -2771,10 +2771,10 @@ Let $\mathcal{M}$ be a non-empty set of probability mass functions on $\states$,
 \end{equation*}
 \end{proposition}
 
-Together, Propositions~\ref{theorem:nonmarkov_single_var_lower_bounded} and~\ref{theorem:lower_markov_bound_is_tight} establish a strong connection between $L_t^s$ and lower expectations $\underline{\mathbb{E}}$. In particular, for functions defined on a single point in time, they turn out to be equivalent, as shown by the result below.
+Together, Propositions~\ref{theorem:nonmarkov_single_var_lower_bounded} and~\ref{theorem:lower_markov_bound_is_tight} establish a strong connection between the operator $L_t^s$ and the lower expectations that correspond to $\smash{\wmprocesses_{\rateset,\mathcal{M}}}$ or $\smash{\wprocesses_{\rateset,\mathcal{M}}}$. In particular, for separately specified $\rateset$, and for functions $f(X_s)$ that depend on the state $X_s$ at a single time-point $s$ in the future, these three objects end up being identical.
 
 \begin{corollary}\label{cor:lower_operator_is_infimum}
-Let $\mathcal{M}$ be a non-empty set of probability mass functions on $\states$, let $\rateset$ be a non-empty bounded set of rate matrices that has separately specified rows, with corresponding lower transition rate operator $\lrate$, and let $\underline{\mathcal{T}}_{\lrate}$ be the corresponding lower transition operator system. Then, for all $t,s\in\realsnonneg$ such that $t\leq s$, all $u\in\mathcal{U}_{<t}$, $x_u\in\states_u$ and $x_t\in\states$, and all $f\in\gamblesX$:
+Let $\mathcal{M}$ be a non-empty set of probability mass functions on $\states$, let $\rateset$ be a non-empty bounded set of rate matrices that has separately specified rows, with corresponding lower transition rate operator $\lrate$, and let $\mathcal{\underline{\mathcal{T}}_{\lrate}}$ be the corresponding lower transition operator system. Then, for all $t,s\in\realsnonneg$ such that $t\leq s$, all $u\in\mathcal{U}_{<t}$, $x_u\in\states_u$ and $x_t\in\states$, and all $f\in\gamblesX$:
 \begin{align*}
 \underline{\mathbb{E}}^{\mathrm{W}}_{\,\rateset,\,\mathcal{M}}[f(X_s)\,\vert\,X_t=x_t,X_u=x_u]=\underline{\mathbb{E}}^{\mathrm{WM}}_{\,\rateset,\,\mathcal{M}}[f(X_s)\,\vert\,X_t=x_t,X_u=x_u] =\left[L_t^sf\right](x_t).
  %&= \underline{\mathbb{E}}^{\mathrm{WM}}_{\,\rateset}[f(X_s)\,\vert\,X_t=x_t]\,,
@@ -2785,7 +2785,7 @@ Let $\mathcal{M}$ be a non-empty set of probability mass functions on $\states$,
 % \end{equation*}
 \end{corollary}
 
-Thus, we find that there is indeed a correspondence between the operator $L_t^s$ and lower expectations for \ictmc's.
+Hence, we find that there is indeed a correspondence between the operator $L_t^s$ and the lower expectations that correspond to \ictmc's.
 
 Furthermore, observe that Corollary~\ref{cor:lower_operator_is_infimum} states that $L_t^sf = \underline{\mathbb{E}}_{\rateset,\mathcal{M}}^\mathrm{W}[f(X_s)\,\vert\,X_t,X_u]$ for \emph{all} histories $u\in\mathcal{U}_{<t}$. Therefore, and since the definition of $L_t^s$ does not depend on this choice of $u$, it follows that
 \begin{equation*}
@@ -6470,7 +6470,7 @@ It then follows from Proposition~\ref{theorem:lower_markov_bound_is_tight} that 
 &=\mathbb{E}_P[f(X_s)\vert\,X_t=x_t]
 < [L_t^sf](x_t)+\epsilon,
 \end{align*}
-using Definition~\ref{def:process_sets} for the first inequality and the Markov property of $P$ for the equality. Hence, since $\epsilon>0$ is arbitrary, we find that  $\underline{\mathbb{E}}^{\mathrm{WM}}_{\rateset,\,\mathcal{M}}\left[f(X_s)\,\vert\,X_t=x_t,X_u=x_u\right]\leq[L_t^sf](x_t)$.
+using Equation~\eqref{eq:lowerexp3} for the first inequality and the Markov property of $P$ for the equality. Since $\epsilon>0$ is arbitrary, it follows that  $\underline{\mathbb{E}}^{\mathrm{WM}}_{\rateset,\,\mathcal{M}}\left[f(X_s)\,\vert\,X_t=x_t,X_u=x_u\right]\leq[L_t^sf](x_t)$.
 % Together this implies, using Definition~\ref{def:lower_exp}, that
 % \begin{equation*}
 % \left[L_t^sf\right](x) = \inf\left\{\left[T_t^sf\right](x)\,:\,P\in\wmprocesses_\rateset\right\} = \underline{\mathbb{E}}^{\mathrm{WM}}_\rateset\left[f(X_s)\,\vert\,X_t=x\right].
