@@ -2068,9 +2068,9 @@ From a practical point of view, after having specified a (precise) stochastic pr
 
 \begin{definition}[Lower Expectation]\label{def:lower_exp}
 For any non-empty set of stochastic processes $\mathcal{P}\subseteq\processes$, the \emph{(conditional) lower expectation with respect to $\mathcal{P}$} is defined as
-\begin{equation*}
+\begin{equation}\label{eq:genericlowerexpectation}
 \underline{\mathbb{E}}[\cdot\,\vert\,\cdot] \coloneqq \inf\left\{\mathbb{E}_P[\cdot\,\vert\,\cdot]\,:\,P\in\mathcal{P}\right\},
-\end{equation*}
+\end{equation}
 where $\mathbb{E}_P[\cdot\,\vert\,\cdot]$ denotes the (conditional) expectation taken with respect to $P$.
 
 In particular, for any non-empty bounded set of rate matrices $\rateset$ and any non-empty set $\mathcal{M}$ of probability mass functions on $\states$, we let
@@ -2811,10 +2811,11 @@ That being said, Corollary~\ref{cor:lower_operator_is_infimum} also establishes 
 In order to answer this question, we recall from Section~\ref{sec:connections_rate} that for a given lower transition rate operator $\lrate$, its set of dominating rate matrices $\rateset_{\lrate}$ is---by definition---the largest set of rate matrices that has $\lrate$ as its lower envelope. The following result shows that the set of all well-behaved stochastic processes that are consistent with this set of dominating rate matrices $\rateset_{\lrate}$ is the largest set of stochastic processes for which $L_t^s$ computes the lower expectation.
 
 \begin{theorem}\label{theo:dominating_rate_processes_max_set}
-Let $\lrate$ be an arbitrary lower transition rate operator, with $\rateset_{\lrate}$ its set of dominating rate matrices, and let $\smash{\underline{\mathcal{T}}_{\lrate}}$ be the corresponding lower transition operator system. Then, the set $\wprocesses_{\rateset_{\lrate}}$ is the largest set of stochastic processes for which, for all $t,s\in\realsnonneg$ such that $t\leq s$, all $u\in\mathcal{U}_{<t}$, all $x_t\in\states$ and $x_u\in\states_u$, and all $f\in\gamblesX$,
+Let $\lrate$ be an arbitrary lower transition rate operator, with $\rateset_{\lrate}$ its set of dominating rate matrices, and let $\smash{\underline{\mathcal{T}}_{\lrate}}$ be the corresponding lower transition operator system. Then the largest set of stochastic processes $\mathcal{P}$ for which the corresponding conditional lower expectation operator $\underline{\mathbb{E}}[\cdot\,\vert\,\cdot]$---as defined in Equation~\eqref{eq:genericlowerexpectation}---satisfies
 \begin{equation*}
-[L_t^sf](x_t) = \underline{\mathbb{E}}_{\,\rateset_{\lrate}}^{\mathrm{W}}[f(X_s)\,\vert\,X_t=x_t,X_u=x_u]\,.
+\underline{\mathbb{E}}[f(X_s)\,\vert\,X_t=x_t,X_u=x_u]=[L_t^sf](x_t)
 \end{equation*}
+for all $t,s\in\realsnonneg$ such that $t\leq s$, all $u\in\mathcal{U}_{<t}$, all $x_t\in\states$ and $x_u\in\states_u$, and every $f\in\gamblesX$, is the set $\wprocesses_{\rateset_{\lrate}}$.
 \end{theorem}
 
 One conclusion that we can draw from this is that if $\rateset$ is any non-empty and bounded set of rate matrices that has separately specified rows, and lower transition rate operator $\lrate$, that then
@@ -6584,7 +6585,7 @@ where the first inequality follows from Proposition~\ref{theorem:nonmarkov_singl
 % a contradiction with Equation~\eqref{eq:nonwellbehaved_limit_diagonal_left}. Therefore, if $P\notin\wprocesses$, Equation~\eqref{theo:largest_set_outside_process_lower} follows.
 
 % *** first attempt at shorter version  ***
-Clearly, it suffices to prove that for any $P\in\processes$ that is not well-behaved or not consistent with $\rateset_{\lrate}$, there are $t,s\in\realsnonneg$ with $t< s$, $u\in\mathcal{U}_{<t}$, $x_u\in\states_u$, $x_t\in\states$ and $f\in\gamblesX$ such that
+Clearly, it suffices to prove that for any $P\in\processes$ that is not well-behaved or not consistent with $\rateset_{\lrate}$, there are $t,s\in\realsnonneg$ with $t\leq s$, $u\in\mathcal{U}_{<t}$, $x_u\in\states_u$, $x_t\in\states$ and $f\in\gamblesX$ such that
 \begin{equation}\label{eq:theo:dominating_rate_processes_max_set:toprove}
 % (\exists t,s\in\realsnonneg\colon t\leq s)\,
 % (\exists u\in\mathcal{U}_{<t})\,
@@ -6595,24 +6596,24 @@ Clearly, it suffices to prove that for any $P\in\processes$ that is not well-beh
 \end{equation}
 % We consider two cases: $P\in\processes\setminus\wprocesses$. and $P\in\wprocesses\setminus\wprocesses_{\rateset_{\lrate}}$
 
-We start with the case that $P$ is not well-behaved. Fix any $\epsilon>0$ and let $C\coloneqq\norm{\lrate}+\epsilon$. It then follows from Proposition~\ref{prop:stochasticprocess:simpleproperties} that there are $t,s\in\realsnonneg$ with $t< s$, $u\in\mathcal{U}_{<t}$ and $x_u\in\states_u$ such that $\nicefrac{1}{\Delta}\norm{T_{t,\,x_u}^s-I}>C$ and $\smash{\Delta\norm{\lrate}^2<\epsilon}$, with $\Delta\coloneqq s-t>0$. Let $Q\coloneqq\nicefrac{1}{\Delta}(T_{t,\,x_u}^s-I)$. Since $\norm{Q}>C$, it then follows that there is some $f'\in\gamblesX$ such that $\norm{Qf'}>C$, which in turn implies that there is some $x_t\in\states$ such that $\abs{[Qf'](x_t)}>C$. If $[Qf'](x_t)<0$, we let $f\coloneqq f'$, and if $[Qf'](x_t)>0$, we let $f\coloneqq -f'$. Clearly, this implies that $[Qf](x_t)<-C$, which, since $[\lrate f](x_t)\geq-\norm{\lrate}$, implies that $[Qf](x_t)\leq[\lrate f](x_t)-\epsilon$ and therefore that $[(I+\Delta Q)f](x_t)+\Delta\epsilon\leq [(I+\Delta\lrate)f](x_t)$. Hence, since we also know that
+We start with the case that $P$ is not well-behaved. Fix any $\epsilon>0$ and let $C\coloneqq\norm{\lrate}+\epsilon$. It then follows from Proposition~\ref{prop:stochasticprocess:simpleproperties} that there are $t,s\in\realsnonneg$ with $t< s$, $u\in\mathcal{U}_{<t}$ and $x_u\in\states_u$ such that $\nicefrac{1}{\Delta}\norm{T_{t,\,x_u}^s-I}>C$ and $\smash{\Delta\norm{\lrate}^2<\epsilon}$, with $\Delta\coloneqq s-t>0$. Let $Q\coloneqq\nicefrac{1}{\Delta}(T_{t,\,x_u}^s-I)$. Since $\norm{Q}>C$, it then follows that there is some $f'\in\gamblesX$ such that $\norm{f'}=1$ and $\norm{Qf'}>C$, which in turn implies that there is some $x_t\in\states$ such that $\abs{[Qf'](x_t)}>C$. If $[Qf'](x_t)<0$, we let $f\coloneqq f'$, and if $[Qf'](x_t)>0$, we let $f\coloneqq -f'$. Clearly, this implies that $\norm{f}=1$ and $[Qf](x_t)<-C$. From $\norm{f}=1$, it furthermore follows that $[\lrate f](x_t)\geq-\norm{\lrate f}\geq-\norm{\lrate}$, and therefore, we we find that $[Qf](x_t)<-\norm{\lrate}-\epsilon\leq[\lrate f](x_t)-\epsilon$, which implies that $[(I+\Delta Q)f](x_t)\leq [(I+\Delta\lrate)f](x_t)-\Delta\epsilon$. Hence, since we also know that
 \begin{align*}
 \abs{[L_t^sf](x_t)-[(I+\Delta\lrate)f](x_t)}
 \leq
 \norm{L_t^s-(I+\Delta\lrate)}\leq\Delta^2\norm{\lrate}^2<\Delta\epsilon,
 \end{align*}
-using Lemma~\ref{lemma:quadraticboundonL} to establish the first inequality, it follows that
+where we use $\norm{f}=1$ for the first inequality and Lemma~\ref{lemma:quadraticboundonL} for the second inequality, it follows that
 \begin{align*}
 %\mathbb{E}[f(X_s)\,\vert\,X_t=x_t,X_u=x_u] 
 %=
 [T_{t,\,x_u}^sf](x_t)
 =[(I+\Delta Q)f](x_t)
-=[(I+\Delta \lrate)f](x_t)-\Delta\epsilon
+\leq[(I+\Delta \lrate)f](x_t)-\Delta\epsilon
 <[L_t^sf](x_t),
 \end{align*}
 which, because of Remark~\ref{remark:expectationT}, implies that Equation~\eqref{eq:theo:dominating_rate_processes_max_set:toprove} holds.
 
-Next, we consider the case that $P$ is well behaved, but not consistent with $\rateset_{\lrate}$. In that case, it follows from Definition~\ref{def:consistent_process} that there are $t^*\in\realsnonneg$, $u\in\mathcal{U}_{<t}$ and $x_u\in\states_u$ such that $\smash{\overline{\partial}T_{t^*,\,x_u}^{t^*} \not\subseteq \rateset_{\lrate}}$. Since we know that $\smash{\overline{\partial}T_{t^*,\,x_u}^{t^*}}$ is a non-empty set of rate matrices because of Proposition~\ref{prop:boundednon-emptyandclosed}, this implies the existence of a rate matrix $Q^*\in\smash{\overline{\partial}}T_{t^*,x_u}^{t^*}$ such that $Q^*\notin\rateset_{\lrate}$. Furthermore, since $Q^*\notin\rateset_{\lrate}$, Equation~\eqref{eq:dominatingratematrices} implies that there are $f\in\gamblesX$ and $x_t\in\states$ such that $[Q^*f](x_t)<[\lrate f](x_t)$. Consider now any $\epsilon>0$ such that $[Q^*f](x_t)\leq[\lrate f](x_t)-2\epsilon$ (this is clearly possible). Since $Q^*\in\smash{\overline{\partial}}T_{t^*,x_u}^{t^*}$, it then follows from Definition~\ref{def:outerpartialderivatives} that thare are $t,s\in\realsnonneg$ such that $u<t<s$, $\norm{\nicefrac{1}{\Delta}(T_{t,\,x_u}^s-I)-Q^*}\leq\epsilon$ and $\smash{\Delta\norm{\lrate}^2<\epsilon}$, with $\Delta\coloneqq s-t>0$. Let $Q\coloneqq\nicefrac{1}{\Delta}(T_{t,\,x_u}^s-I)$. Since $\norm{Q-Q^*}\leq\epsilon$, it then follows that $[Qf](x_t)\leq[Q^*f](x_t)+\epsilon\leq[\lrate f](x_t)-\epsilon$. Hence, using the exact same argument as in the first part of this proof, we find that Equation~\eqref{eq:theo:dominating_rate_processes_max_set:toprove} holds.
+Next, we consider the case that $P$ is well behaved, but not consistent with $\rateset_{\lrate}$. In that case, it follows from Definition~\ref{def:consistent_process} that there are $t^*\in\realsnonneg$, $u\in\mathcal{U}_{<t}$ and $x_u\in\states_u$ such that $\smash{\overline{\partial}T_{t^*,\,x_u}^{t^*} \not\subseteq \rateset_{\lrate}}$. Since we know that $\smash{\overline{\partial}T_{t^*,\,x_u}^{t^*}}$ is a non-empty set of rate matrices because of Proposition~\ref{prop:boundednon-emptyandclosed}, this implies the existence of a rate matrix $Q^*\in\smash{\overline{\partial}}T_{t^*,x_u}^{t^*}$ such that $Q^*\notin\rateset_{\lrate}$. Furthermore, since $Q^*\notin\rateset_{\lrate}$, Equation~\eqref{eq:dominatingratematrices} implies that there are $f'\in\gamblesX$ and $x_t\in\states$ such that $[Q^*f'](x_t)<[\lrate f'](x_t)$. Clearly, this implies that $f'\neq0$, and therefore, that $\norm{f'}>0$. If we now let $f\coloneqq\nicefrac{1}{\norm{f'}}f'$, then $\norm{f}=1$, and furthermore, because of the linearity of $Q^*$ and the non-negative homogeneity of $\lrate$, it follows that $[Q^*f](x_t)=\nicefrac{1}{\norm{f'}}[Q^*f'](x_t)<\nicefrac{1}{\norm{f'}}[\lrate f'](x_t)=[\lrate f](x_t)$. Consider now any $\epsilon>0$ such that $\smash{[Q^*f](x_t)\leq[\lrate f](x_t)-2\epsilon}$ (this is now clearly possible). Since $\smash{Q^*\in\smash{\overline{\partial}}T_{t^*,\,x_u}^{t^*}}$, it then follows from Definition~\ref{def:outerpartialderivatives} that there are $t,s\in\realsnonneg$ such that $u<t<s$, $\norm{\nicefrac{1}{\Delta}(T_{t,\,x_u}^s-I)-Q^*}\leq\epsilon$ and $\smash{\Delta\norm{\lrate}^2<\epsilon}$, with $\Delta\coloneqq s-t>0$. Let $Q\coloneqq\nicefrac{1}{\Delta}(T_{t,\,x_u}^s-I)$. Since $\norm{Q-Q^*}\leq\epsilon$ and $\norm{f}=1$, it then follows that $[Qf](x_t)\leq[Q^*f](x_t)+\epsilon\leq[\lrate f](x_t)-\epsilon$. Hence, using the exact same argument as in the first part of this proof, we find that Equation~\eqref{eq:theo:dominating_rate_processes_max_set:toprove} holds.
 \end{proof}
 
 \begin{proof}[Proof of Proposition~\ref{prop:approximation_error_bound}]
