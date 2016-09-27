@@ -2871,22 +2871,27 @@ We regard this result as a vindication for our choice to focus on \emph{well-beh
 
 \subsection{Lower Transition Operators as a Computational Tool}\label{subsec:compute_single_var}
 
-We have in the previous section shown that (conditional) lower expectations can be computed using the operator $L_t^s$. However, in order to make these results practicable, we still require a method to numerically compute the function $L_t^sf$. Because we are now interested in numerical methods, we will focus on computing such a quantity $L_t^sf$ within a guaranteed $\epsilon$-error bound. 
+An important consequence of the fact that the lower expectations $\underline{\mathbb{E}}_{\,\rateset,\mathcal{M}}^{\mathrm{WM}}$ and $\underline{\mathbb{E}}_{\,\rateset,\mathcal{M}}^{\mathrm{W}}$ can be conveniently represented by the operator $L_t^s$---at least for functions of the state at a single time point in the future---is that we can focus our computational efforts on evaluating this operator $L_t^s$, thereby abstracting away all the technicalities of dealing with lower expectations with respect to sets of stochastic process. Of course, in practice, we are only interested in a finite precision approximation of $L_t^sf$, and we will therefore focus on computing $L_t^sf$ within some guaranteed $\epsilon$-bound.
 
 The construction of the operator $L_t^s$ in Section~\ref{sec:lowertrans} already suggests how we can do this; namely, by using a finite-precision approximation of $L_t^s$ using the auxiliary operator $\Phi_u\coloneqq \prod_{i=1}^n(I+\Delta_i\lrate)$. Recall from Section~\ref{sec:lowertrans} that the approximation of $L_t^s$ by $\Phi_u$ becomes better as we take $u\in\mathcal{U}_{[t,s]}$ to be an increasingly finer partition of the interval $[t,s]$. The following result tells us exactly how fine this partition needs to be for a specific function $f\in\gamblesX$, in order to guarantee an $\epsilon$-error bound on $L_t^sf$.
 
 \begin{proposition}\label{prop:approximation_error_bound}
-Let $\lrate$ be an arbitrary lower transition rate operator. Choose any $t,s\in\realsnonneg$ such that $t\leq s$, any $f\in\gamblesX$ and any $\epsilon\in\realspos$, and let $L_t^s$ be the lower transition operator corresponding to $\lrate$. Choose any $n\in\nats$ such that $n\geq\nicefrac{\left((s-t)^2\norm{\lrate}^2\norm{f}\right)}{\epsilon}$ and $n\geq(s-t)\norm{\lrate}$,
-%\begin{equation*}
-%n > \frac{(s-t)^2\norm{\lrate}^2\norm{f}}{\epsilon}\,,
-%\end{equation*}
-and let $\Delta\coloneqq \nicefrac{(s-t)}{n}$. Then,
+Let $\lrate$ be a lower transition rate operator, choose any $t,s\in\realsnonneg$ such that $t\leq s$, and let $L_t^s$ be the lower transition operator corresponding to $\lrate$. Then for any $f\in\gamblesX$ and $\epsilon\in\realspos$, if we choose any $n\in\nats$ such that%Choose any $n\in\nats$ such that $n\geq\nicefrac{\left((s-t)^2\norm{\lrate}^2\norm{f}\right)}{\epsilon}$ and $n\geq(s-t)\norm{\lrate}$,
 \begin{equation*}
-\norm{L_t^sf - \prod_{i=1}^n(I + \Delta\lrate)f} \leq \epsilon\,.
+n \geq\max\left\{
+(s-t)\norm{\lrate},
+\frac{1}{\epsilon}(s-t)^2\norm{\lrate}^2\norm{f}
+\right\},
 \end{equation*}
+%and let $\Delta\coloneqq \nicefrac{(s-t)}{n}$. Then,
+we are guaranteed that
+\begin{equation*}
+\norm{L_t^sf - \prod_{i=1}^n(I + \Delta\lrate)f} \leq \epsilon,
+\end{equation*}
+with $\Delta\coloneqq \nicefrac{(s-t)}{n}$.
 \end{proposition}
 
-Simply put, this result tells us that if we can compute the quantity $\lrate g$ for any $g\in\gamblesX$, then we can also approximate the quantity $L_t^sf$ to an arbitrary precision for any given $f\in\gamblesX$. Therefore, and due to our results in Section~\ref{sec:single_var_lower_exp}, by taking $\lrate$ to be the lower transition rate operator corresponding to a given set $\rateset$ that is non-empty and bounded and has separately specified rows, the non-linear optimization problem of computing $\underline{\mathbb{E}}_\rateset^\mathrm{WM}[f(X_s)\vert X_t]$ or $\underline{\mathbb{E}}_\rateset^\mathrm{W}[f(X_s)\vert X_t]$ reduces to a series of $n$ linear optimization problems to compute $\lrate g$, for certain $g\in\gamblesX$ and with $n\in\nats$ as in Proposition~\ref{prop:approximation_error_bound}.
+Simply put, this result tells us that if we can compute the quantity $\lrate g$ for all $g\in\gamblesX$, then we can also approximate the quantity $L_t^sf$ to arbitrary precision, for any given $f\in\gamblesX$. Therefore, and due to our results in Section~\ref{sec:single_var_lower_exp}, by taking $\lrate$ to be the lower transition rate operator corresponding to a given set $\rateset$ that is non-empty and bounded and has separately specified rows, the non-linear optimization problem of computing $\underline{\mathbb{E}}_\rateset^\mathrm{WM}[f(X_s)\vert X_t]$ or $\underline{\mathbb{E}}_\rateset^\mathrm{W}[f(X_s)\vert X_t]$ reduces to a series of $n$ linear optimization problems to compute $\lrate g$, for certain $g\in\gamblesX$ and with $n\in\nats$ as in Proposition~\ref{prop:approximation_error_bound}.
 
 In the remainder of this section, we will numerically illustrate this method of computing the conditional lower expectation of a given function $f\in\gamblesX$. In order to make this less abstract, we will provide these examples in the context of the simple disease model put forward in Example~\ref{ex:health_sick_exmp} in Section~\ref{sec:introduction}. To this end, we first construct a parameter set $\rateset$ that we will use in the examples to come.
 
@@ -6628,18 +6633,16 @@ Next, we consider the case that $P$ is well behaved, but not consistent with $\r
 \end{proof}
 
 \begin{proof}[Proof of Proposition~\ref{prop:approximation_error_bound}]
-Let $u\in\mathcal{U}_{[t,s]}$ be such that $u=t_0,t_1,\ldots,t_n$, where, for all $i\in\{0,1,\ldots,n\}$, $t_i\coloneqq t + i\cdot\Delta$. Then, because $\Delta=\nicefrac{(s-t)}{n}$, we have $t_0=t$, $t_n=s$, and, clearly,  $\sigma(u)=\Delta$. Let now $\Phi_u\coloneqq \prod_{i=1}^n (I + \Delta_i\lrate) = \prod_{i=1}^n(I+\Delta\lrate)$.
-
-Due to the choice of $n$, we have that
+Let $u\in\mathcal{U}_{[t,s]}$ be such that $u=t_0,t_1,\ldots,t_n$, where, for all $i\in\{0,1,\ldots,n\}$, $t_i\coloneqq t + i\Delta$. Since $\Delta=\nicefrac{(s-t)}{n}$, we then have that $t_0=t$, $t_n=s$, $\sigma(u)=\Delta$ and $\Phi_u= \prod_{i=1}^n(I+\Delta\lrate)$.
+Furthermore, since $n\geq (s-t)\norm{\lrate}$, we also know that $\Delta\norm{\lrate}=\nicefrac{(s-t)}{n}\norm{\lrate}\leq 1$. Hence, we find that
 \begin{align*}
-\Delta &= \frac{(s-t)}{n} \leq (s-t)\frac{\epsilon}{(s-t)^2\norm{\lrate}^2\norm{f}}  = \frac{\epsilon}{(s-t)\norm{\lrate}^2\norm{f}},
-\end{align*}
-and, because also $n\geq (s-t)\norm{\lrate}$, we have $\Delta\norm{\lrate}=\nicefrac{(s-t)}{n}\norm{\lrate}\leq 1$. It therefore follows from Property~\ref{N:normAf} and Lemma~\ref{lemma:limitboundonL} that
-\begin{align*}
-\norm{L_t^sf - \prod_{i=1}^n(I+\Delta\lrate)f} &= \norm{L_t^sf - \Phi_uf} \leq \norm{L_t^s - \Phi_u}\norm{f} \\
+\norm{L_t^sf - \prod_{i=1}^n(I+\Delta\lrate)f} = \norm{L_t^sf - \Phi_uf} &\leq \norm{L_t^s - \Phi_u}\norm{f} \\[-8pt]
  &\leq \sigma(u)(s-t)\norm{\lrate}^2\norm{f} = \Delta(s-t)\norm{\lrate}^2\norm{f} \\
- &\leq \frac{\epsilon}{(s-t)\norm{\lrate}^2\norm{f}} (s-t)\norm{\lrate}^2\norm{f} = \epsilon\,.
+ &\leq 
+\frac{\epsilon}{n}\frac{1}{\epsilon}(s-t)^2\norm{\lrate}^2\norm{f}
+ \leq \epsilon.
 \end{align*}
+where the first inequality follows from Property~\ref{N:normAf}, the second inequality follows from Lemma~\ref{lemma:limitboundonL} and the final inequality follows from our lower bound on $n$.
 \end{proof}
 
 %\section{Proofs and Lemmas for Section~\ref{sec:funcs_multi_time_points}}
