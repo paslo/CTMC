@@ -2903,18 +2903,27 @@ In the remainder of this section, we will numerically illustrate this method of 
 \begin{exmp}\label{exmp:example_rateset_simple_model}
 Consider again the binary-state disease model from Example~\ref{ex:health_sick_exmp}, modeling a person periodically becoming sick and recovering after some time. The state-space here is of the form $\states=\{\text{{\tt healthy}},\text{{\tt sick}}\}$, and we wish to specify numerical values for the rate at which the two possible transitions occur; that is, the transitions from {\tt healthy} to {\tt sick}, and from {\tt sick} to {\tt healthy}.
 
-If we were using a precise,homogeneous Markov chain $P\in\whmprocesses$, it would suffice to select a single rate matrix $Q\in\mathcal{R}$. In that case, and if we---arbitrarily---assume that the person becomes sick once a year, with sickness lasting for one week, this rate matrix would be of the form
+If we were using a precise homogeneous Markov chain $P\in\whmprocesses$, it would suffice to select a single rate matrix $Q\in\mathcal{R}$, which, in this binary case, would be of the form
 \begin{equation*}
 Q = \left[ \begin{array}{rr}
--\frac{1}{52} & \frac{1}{52} \\
-1 & -1
-\end{array}\right]\,,
+-a & a \\
+b & -b
+\end{array}\right] \text{ for some } a,b\in\reals_{\geq0}.
 \end{equation*}
-with the unit-time being one week. That is, the person on average becomes sick once every 52 weeks, and recovers after one week on average.
+The parameter $a$ here is the rate at which a healthy person becomes sick.
+Technically, this means that if a person is healthy at time $t$, the probability that he or she will be sick at time $t+\Delta$, for small $\Delta$, is very close to $\Delta a$. More intuitively, if we take the time unit to be one week, it means that he or she will, on average, become sick after $\nicefrac{1}{a}$ weeks. The parameter $b$ is the rate at which a sick person becomes healthy again, and has a similar interpretation. In other words, if we would for example say that $a=\nicefrac{1}{52}$ and $b=1$, then this would mean that---on average---we expect that a healthy person will stay healthy for about one year---52 weeks---and that a sick person will remain sick for one week.
 
-Technically, this means that if a person is healthy at time $t$, the probability that he or she will be sick at time $t+\Delta$, for small $\Delta$, is very close to $\Delta a$. More intuitively, it means that he or she will, on average, become sick after $\nicefrac{1}{a}$ weeks.
 
-However, instead of using a precise model, we here wish to use an imprecise continuous-time Markov chain to model this behaviour. Hence, we need to select a set of rate matrices $\rateset$. Suppose therefore that we feel confident in saying that the person becomes sick anywhere between one and three times per year, with sickness lasting anywhere from half a week to two weeks on average. This set of rate matrices can then be expressed as
+%In that case, and if we---arbitrarily---assume that the person becomes sick once a year, with sickness lasting for one week, this rate matrix would be of the form
+% \begin{equation*}
+% Q = \left[ \begin{array}{rr}
+% -\frac{1}{52} & \frac{1}{52} \\
+% 1 & -1
+% \end{array}\right]\,,
+% \end{equation*}
+% with the unit-time being one week. That is, the person on average becomes sick once every 52 weeks, and recovers after one week on average.
+
+In practice, assessing the exact values of $a$ and $b$ may be difficult, especially if want them to be reliable. In those cases, instead of modelling our problem by mean of a precise continuous-time Markov chain, we can consider an \ictmc. We hen no longer need to assess a single transition rate matrix $Q$, but only need to specify a set of rate matrices $\rateset$ to which we think $Q$ might belong. Suppose for example that we feel confident in saying that the average time for a healthy person to become sick lies somewhere in between three months and a year, and that the average time for a sick person to recover is situated somewhere in between half a week and two weeks. The corresponding set of transition rate matrices is then given by
 \begin{equation}\label{eq:num_example_rateset_params}
 \rateset = \left\{\left[\begin{array}{rr}
 -a & a \\
@@ -2922,7 +2931,7 @@ b & -b
 \end{array}\right]\,:\,a\in\left[\frac{1}{52},\frac{3}{52}\right], b\in\left[\frac{1}{2},2\right]\right\},
 \vspace{6pt}
 \end{equation}
-with the unit-time again being one week. Note that $\rateset$ here is clearly non-empty, bounded, closed, convex, and has separately specified rows. As such, this set will satisfy all the preconditions necessary to be used in the examples that follow.
+with the time unit again being one week. Note that $\rateset$ here is clearly non-empty, bounded, closed, convex, and has separately specified rows. As such, this set will satisfy all the preconditions necessary to be used in the examples that follow.
 \exampleend
 \end{exmp}
 
