@@ -2924,12 +2924,13 @@ Technically, this means that if a person is healthy at time $t$, the probability
 % with the unit-time being one week. That is, the person on average becomes sick once every 52 weeks, and recovers after one week on average.
 
 In practice, assessing the exact values of $a$ and $b$ may be difficult, especially if want them to be reliable. In those cases, instead of modelling our problem by mean of a precise continuous-time Markov chain, we can consider an \ictmc. We hen no longer need to assess a single transition rate matrix $Q$, but only need to specify a set of rate matrices $\rateset$ to which we think $Q$ might belong. Suppose for example that we feel confident in saying that the average time for a healthy person to become sick lies somewhere in between three months and a year, and that the average time for a sick person to recover is situated somewhere in between half a week and two weeks. The corresponding set of transition rate matrices is then given by
+\vspace{3pt}
 \begin{equation}\label{eq:num_example_rateset_params}
-\rateset = \left\{\left[\begin{array}{rr}
+\rateset \coloneqq \left\{\left[\begin{array}{rr}
 -a & a \\
 b & -b
 \end{array}\right]\,:\,a\in\left[\frac{1}{52},\frac{3}{52}\right], b\in\left[\frac{1}{2},2\right]\right\},
-\vspace{6pt}
+\vspace{3pt}
 \end{equation}
 with the time unit again being one week. Note that $\rateset$ here is clearly non-empty, bounded, closed, convex, and has separately specified rows. As such, this set will satisfy all the preconditions necessary to be used in the examples that follow.
 \exampleend
@@ -2937,35 +2938,63 @@ with the time unit again being one week. Note that $\rateset$ here is clearly no
 
 %We will now focus on how to compute lower expectations with respect to imprecise continuous-time Markov chains induced by the set $\rateset$ from Example~\ref{exmp:example_rateset_simple_model}. To this end, consider the lower transition rate operator $\lrate$ corresponding to this $\rateset$. It should be clear that, for any function $f\in\gamblesX$, computing the quantity $\lrate f$ is relatively easy.
 
-As mentioned above *** not anymore, I removed this ***, Proposition~\ref{prop:approximation_error_bound} lets us reduce the computation of conditional lower expectations to a (finite) number of linear optimization problems to compute $\lrate g$, where $\lrate$ is the lower transition rate operator corresponding to $\rateset$, i.e.,
-\begin{equation}\label{eq:lrate_optimization}
-\lrate g = \inf\left\{ Qg : Q\in\rateset \right\}\,,
-\end{equation}
-as in Equation~\ref{eq:correspondinglowertrans} in Section~\ref{sec:connections_rate}.
+As mentioned above, for a given set $\rateset$, Proposition~\ref{prop:approximation_error_bound} allows us to reduce the problem of computing conditional lower expectations to the problem of evaluating the lower transition operator $\lrate$ of $\rateset$, as defined in Equation~\eqref{eq:correspondinglowertrans}. In theory, the latter could still be a difficult problem, since $\rateset$ can very complicated---we only require that it is non-empty and has separately specified rows. However, in practice, $\rateset$ will typically be described by means of linear constraints, and computing $\lrate g$ is then a standard constrained linear optimization problem, which is easily solved by means of linear programming techniques. 
+%Note that, in the context of computing conditional lower expectations, we require $\rateset$ to have separately specified rows. This already reduces the complexity of the optimization, because this implies that, for all $x\in\states$, $[\lrate g](x)$ is given by
+% \begin{equation}\label{eq:lrate_optimization_separate}
+% [\lrate g](x) = \inf\left\{ Q(x,\cdot)g : Q(x,\cdot)\in\rateset_x\right\}\,,
+% \end{equation}
+% where $\rateset_x\coloneqq \{Q(x,\cdot) : Q\in\rateset\}$. In other words, requiring that $\rateset$ has separately specified rows allows us to perform the optimization in Equation~\ref{eq:lrate_optimization} component-wise, i.e. separately for each $x\in\states$. 
+We will henceforth assume that the optimization problem in Equation~\eqref{eq:correspondinglowertrans} is solvable. However, as we have just explained, the complexity of this problem will depend on the exact form of $\rateset$.
 
-Clearly, therefore, computing $\lrate g$ is a constrained linear optimization problem, where the exact form of these constraints---and hence the difficulty of solving this optimization problem---depends on the set $\rateset$. Note that, in the context of computing conditional lower expectations, we require $\rateset$ to have separately specified rows. This already reduces the complexity of the optimization, because this implies that, for all $x\in\states$, $[\lrate g](x)$ is given by
-\begin{equation}\label{eq:lrate_optimization_separate}
-[\lrate g](x) = \inf\left\{ Q(x,\cdot)g : Q(x,\cdot)\in\rateset_x\right\}\,,
-\end{equation}
-where $\rateset_x\coloneqq \{Q(x,\cdot) : Q\in\rateset\}$. In other words, requiring that $\rateset$ has separately specified rows allows us to perform the optimization in Equation~\ref{eq:lrate_optimization} component-wise, i.e. separately for each $x\in\states$. We will henceforth assume that the optimization problem in Equation~\ref{eq:lrate_optimization_separate} is solvable, although as mentioned above, the complexity of this problem will depend on the exact form of $\rateset_x$.
-
-In the case of the set $\rateset$ from Example~\ref{exmp:example_rateset_simple_model}, as given by Equation~\eqref{eq:num_example_rateset_params}, the constraints that we are dealing with are simple box-constraints. Furthermore, because the state-space $\states$ contains only two states in this specific example model, computing $\lrate g$ is particularly easy, regardless of the choice of $g\in\gamblesX$. This is illustrated by the following example, where we also compute the quantity $\norm{\lrate}$ that is required for the numerical computations that follow.
+For the set $\rateset$ of Example~\ref{exmp:example_rateset_simple_model}, as defined by Equation~\eqref{eq:num_example_rateset_params}, the constraints that we are dealing with are simple box-constraints. Furthermore, because the state-space $\states$ contains only two states in this specific example model, computing $\lrate g$ is particularly easy, regardless of the choice of $g\in\gamblesX$. This is made explicit in the following example, where we also compute the quantity $\norm{\lrate}$ that is required for the numerical computations that follow.
 
 \begin{exmp}\label{exmp:numerical_lrate}
-Consider the set $\rateset$ from Example~\ref{exmp:example_rateset_simple_model}, given by Equation~\eqref{eq:num_example_rateset_params}. Let $\lrate$ be the lower transition rate operator corresponding to $\rateset$, and consider any $g\in\gamblesX$. We now want to solve
+Consider the set $\rateset$ of Example~\ref{exmp:example_rateset_simple_model}, as defined by Equation~\eqref{eq:num_example_rateset_params}, let $\lrate$ be the corresponding lower transition rate operator, and consider any $g\in\gamblesX$. Furthermore, for the sake of notational convenience, let us abbreviate {\tt healthy} as {\tt h} and {\tt sick} as {\tt s}. It then follows from Equation~\eqref{eq:correspondinglowertrans} that
 \begin{align*}
-\lrate g &= \inf\{Qg\,:\,Q\in\rateset\} \\
- &= \inf\left\{\left[\begin{array}{rr}-a & a \\b & -b\end{array}\right]\left[\begin{array}{r} g(0) \\ g(1) \end{array}\right]\,:\,a\in\left[\frac{1}{52}, \frac{3}{52} \right],\,b\in\left[\frac{1}{2}, 2 \right]\right\} \\
- &= \inf\left\{ \left[\begin{array}{r} a\bigl(g(1) - g(0)\bigr) \\ b\bigl(g(0) - g(1) \bigr)\end{array} \right]\,:\,a\in\left[\frac{1}{52}, \frac{3}{52} \right],\,b\in\left[\frac{1}{2}, 2 \right]\right\}\,.
+[\lrate g](\text{{\tt h}})
+\coloneqq
+\inf\{[Qg](\text{{\tt h}})\,:\,Q\in\rateset\}
+=&
+\inf\left\{\left[\begin{array}{rr}-a & a \end{array}\right]\left[\begin{array}{l} g(\text{{\tt h}}) \\ g(\text{{\tt s}}) \end{array}\right]\,:\,a\in\left[\frac{1}{52}, \frac{3}{52} \right]\right\} \\[2pt]
+=&\inf\left\{a\big(g(\text{{\tt s}})-g(\text{{\tt h}})\big)\,:\,a\in\left[\frac{1}{52}, \frac{3}{52} \right]\right\},
 \end{align*}
-From the above, it is readily seen that $\lrate g$ is always given by some $Q g$, with $Q\in\rateset$ such that $a\in\{\nicefrac{1}{52}, \nicefrac{3}{52}\}$ and $b\in\{\nicefrac{1}{2},2\}$. Hence, we only need to consider four different rate matrices $Q\in\rateset$ to find $\lrate g$ for any given $g\in\gamblesX$.
+and therefore, that
+\begin{equation}\label{eq:lratehealthexample:h}
+[\lrate g](\text{{\tt h}})
+=
+\begin{cases}
+\nicefrac{1}{52}\big(g(\text{{\tt s}})-g(\text{{\tt h}})\big)
+&\text{ if $g(\text{{\tt s}})\geq g(\text{{\tt h}})$}\\
+\nicefrac{3}{52}\big(g(\text{{\tt s}})-g(\text{{\tt h}})\big)
+&\text{ if $g(\text{{\tt s}})\leq g(\text{{\tt h}})$}.
+\end{cases}
+\end{equation}
+In a completely analogous way, we also find that
+\begin{equation}\label{eq:lratehealthexample:s}
+[\lrate g](\text{{\tt s}})
+=
+\begin{cases}
+\nicefrac{1}{2}\big(g(\text{{\tt h}})-g(\text{{\tt s}})\big)
+&\text{ if $g(\text{{\tt s}})\leq g(\text{{\tt h}})$}\\
+2\big(g(\text{{\tt h}})-g(\text{{\tt s}})\big)
+&\text{ if $g(\text{{\tt s}})\geq g(\text{{\tt h}})$}.
+\end{cases}
+\end{equation}
+% \begin{align*}
+% \lrate g &= \inf\{Qg\,:\,Q\in\rateset\} \\
+%  &= \inf\left\{\left[\begin{array}{rr}-a & a \\b & -b\end{array}\right]\left[\begin{array}{r} g(0) \\ g(1) \end{array}\right]\,:\,a\in\left[\frac{1}{52}, \frac{3}{52} \right],\,b\in\left[\frac{1}{2}, 2 \right]\right\} \\
+%  &= \inf\left\{ \left[\begin{array}{r} a\bigl(g(1) - g(0)\bigr) \\ b\bigl(g(0) - g(1) \bigr)\end{array} \right]\,:\,a\in\left[\frac{1}{52}, \frac{3}{52} \right],\,b\in\left[\frac{1}{2}, 2 \right]\right\}\,.
+% \end{align*}
+% From the above, it is readily seen that $\lrate g$ is always given by some $Q g$, with $Q\in\rateset$ such that $a\in\{\nicefrac{1}{52}, \nicefrac{3}{52}\}$ and $b\in\{\nicefrac{1}{2},2\}$. Hence, we only need to consider four different rate matrices $Q\in\rateset$ to find $\lrate g$ for any given $g\in\gamblesX$.
 
-Using these observations, we will next compute $\norm{\lrate}$. We have that
+Using these observations, we will next compute $\norm{\lrate}$. If $g\in\gamblesX$ is such that $\norm{g}=1$, then clearly, it follows from Equation~\eqref{eq:lratehealthexample:h} that the highest possible value for $\abs{[\lrate g]({\tt h})}$ is $\nicefrac{3}{52}$---for $g({\tt s})=-1$ and $g({\tt h})=1$---and similarly, using Equation~\eqref{eq:lratehealthexample:s}, we find that the highest possible value for $\abs{[\lrate g]({\tt s})}$ is $4$---for $g({\tt s})=1$ and $g({\tt h})=-1$. Since
+\vspace{-2pt}
 \begin{align*}
 \norm{\lrate} &= \sup\left\{ \norm{\lrate g}\,:\,g\in\gamblesX,\, \norm{g}=1 \right\} \\
- &= \sup\left\{ \max\left\{\abs{\left[\lrate g\right](x)}\,:\,x\in\states\right\}\,:\,g\in\gamblesX,\, \norm{g}=1 \right\}\,.
-\end{align*}
-Combining with the above expression for $\lrate g$, it should be clear that the supremum is in this case always reached by a $g\in\gamblesX$ such that either $g=[-1\,\,1]^\top$ or $g=[1\,\,-1]^\top$. Some arithmetic then reveals that $\norm{\lrate}=4$.
+ &= \sup\left\{ \max\left\{\abs{\left[\lrate g\right](x)}\,:\,x\in\states\right\}\,:\,g\in\gamblesX,\, \norm{g}=1 \right\},
+\end{align*}\\[-4pt]
+this implies that $\norm{\lrate}=4$.
+%Combining with the above expression for $\lrate g$, it should be clear that the supremum is in this case always reached by a $g\in\gamblesX$ such that either $g=[-1\,\,1]^\top$ or $g=[1\,\,-1]^\top$. Some arithmetic then reveals that $\norm{\lrate}=4$.
 \exampleend
 \end{exmp}
 
