@@ -3134,7 +3134,7 @@ This iterative procedure for computing $L_t^sf$, as illustrated in the above exa
 
 Having shown in the previous Section~\ref{sec:single_var_lower_exp} that the operator $L_t^s$ allows us to compute conditional lower expectations for functions $f\in\gamblesX$ that are defined on the state at a single future time point, we will now turn our attention to functions defined on multiple time points. 
 
-We will start by considering conditional lower expectations, where the conditioning is done with respect to the states $x_u$ at a finite sequence of time points $u$. In this context, it makes sense to distinguish between two different classes of functions. 
+We will start by considering conditional lower expectations, where the conditioning is done with respect to the states $x_u$ at a finite sequence of time points $u$. In this context, we distinguish between two different classes of functions. 
 We begin in Section~\ref{sec:function_single_future_multiple_past} by considering functions $f\in\gambles(\states_{u\cup s})$ and lower expectations of the form $\underline{\mathbb{E}}[f(X_u,X_s)\,\vert\,X_u=x_u]$, with $s$ a single future time point. Thus, although the function $f$ depends on multiple time points, all but one of these time points coincide with the time points on which we are conditioning. This is then generalized in Section~\ref{sec:decomposition} to functions $f\in\gambles(\states_{u\cup v})$ and lower expectations $\underline{\mathbb{E}}[f(X_u,X_v)\,\vert\,X_u=x_u]$, where $v$ is now a finite sequence of future time points. We end in Section~\ref{sec:marginal_lower_exp} by showing how to compute unconditional lower expectations of the form $\underline{\mathbb{E}}[f(X_u)]$, where $u$ is again a finite sequence of time points.
 
 %First, in Section~\ref{sec:function_single_future_multiple_past}, we will consider functions defined on a single time point in a chain's future, and multiple time points in the chain's history. Thus, we will consider functions $f\in\gambles(\states^{u\cup\{s\}})$, and lower expectations of the form
@@ -3153,18 +3153,24 @@ We begin in Section~\ref{sec:function_single_future_multiple_past} by considerin
 
 \subsection{Multi-Variable Functions on a Single Future Time Point}\label{sec:function_single_future_multiple_past}
 
-We start by considering functions $f\in\gambles(\states_{u\cup s})$ defined on a single time point $s$ in a (non-)Markov chain's future, and multiple time points $u=t_0,\ldots,t_n$ in a chain's history. Observe that for any stochastic process $P$, the conditional expectation of such a function satisfies, for any $x_u\in\states_u$,
+Consider a non-empty sequence of time points $u=t_0,\ldots,t_n\in\mathcal{U}_\emptyset$ and a single future time point $s>u$. Let $f\in\gambles(\states_{u\cup s})$ be a function that depends on the states at these time points. Then for any stochastic process $P$ and any history $x_u\in\states_u$, the corresponding conditional expectation of such a function is well known to satisfy the following simple property:
+\vspace{-2pt}
 \begin{equation*}
-\mathbb{E}_P[f(X_u,X_s)\,\vert\,X_u=x_u] = \mathbb{E}_P[f(x_u,X_s)\,\vert\,X_u=x_u]\,.
+\mathbb{E}_P[f(X_u,X_s)\,\vert\,X_u=x_u] = \mathbb{E}_P[f(x_u,X_s)\,\vert\,X_u=x_u].
 \end{equation*}
-Therefore, and because a lower expectation is an infimum over such expectations, we find that also
-\begin{equation*}
-\underline{\mathbb{E}}[f(X_u,X_s)\,\vert\,X_u=x_u] = \underline{\mathbb{E}}[f(x_u,X_s)\,\vert\,X_u=x_u]\,.
-\end{equation*}
+Therefore, and because a lower expectation is an infimum over expectations, we find that also
+\vspace{-2pt}
+\begin{equation}\label{eq:fixxu}
+\underline{\mathbb{E}}[f(X_u,X_s)\,\vert\,X_u=x_u] = \underline{\mathbb{E}}[f(x_u,X_s)\,\vert\,X_u=x_u].
+\end{equation}\\[-14pt]
 
-Note that we have implicitly introduced a notational convention here; the function $f(x_u,X_s)$ is the restriction of a function $f\in\gambles(\states_{u\cup s})$ to the state $\states_s$, specific to the state assignment $x_u$. In other words, $f(x_u,X_s)$ corresponds to some $g_{x_u}\in\gambles(\states_s)$ such that $g_{x_u}(x_s)=f(x_u,x_s)$ for all $x_s\in\states_s$.
+While writing down these equations, we have implicitly introduced a notational convention that should be intuitively clear: we interpret the function $f(x_u,X_s)$ as the restriction of $f(X_u,X_s)$ to the state $\states_s$, for the fixed state assignment $x_u$. A more formal---but completely equivalent---way of doing this, is to identify $f(x_u,X_s)$ with a function $f_{x_u}\in\gambles(\states_s)$, defined by $f_{x_u}(x_s)\coloneqq f(x_u,x_s)$ for all $x_s\in\states_s$.
 %Now, recall our notation from Section~\ref{sec:multivar_notation}; the function $f(x_u,X_s)$ is the restriction of a function $f\in\gambles(\states^{u\cup\{s\}})$ to the state $\states^{\{s\}}$, specific to the state assignment $x_u\in\states^u$. In other words, for all $x_u\in\states^u$, there is some function $g_{x_u}\in\gambles(\states^{\{s\}})$, such that $g_{x_u}(x_s)=f(x_u,x_s)$ for all $x_s\in\states^{\{s\}}$.
-Therefore, we find that the problem of computing $\underline{\mathbb{E}}[f(x_u,X_s)\,\vert\,X_u=x_u]$ is in fact equivalent to computing $\underline{\mathbb{E}}[g_{x_u}(X_s)\,\vert\,X_u=x_u]$. 
+With this notation, the equation above then turns into
+\begin{equation}\label{eq:fixxuexplicit}
+\underline{\mathbb{E}}[f(X_u,X_s)\,\vert\,X_u=x_u] = \underline{\mathbb{E}}[f_{x_u}(X_s)\,\vert\,X_u=x_u],
+\end{equation}\\[-14pt]
+and in this way, it becomes clear that the problem of computing $\underline{\mathbb{E}}[f(X_u,X_s)\,\vert\,X_u=x_u]$ is completely equivalent to the problem that we have considered in the previous section, which is to compute lower expectations of the form $\underline{\mathbb{E}}[f(X_s)\,\vert\,X_u=x_u]$.
 
 Furthermore, because $g_{x_u}\in\gambles(\states_{s})=\gamblesX$, we already know from Section~\ref{sec:single_var_lower_exp} how to do this! In particular, we can do this by computing 
 \begin{equation*}
@@ -3178,19 +3184,15 @@ However, note that the quantity $[L_{t_n}^sg_{x_u}](x_{t_n})$ still depends on t
 
 In order to unify our notation, we therefore stipulate the following convention. For any $s\in\realspos$ and any $u\in\mathcal{U}_{<s}$ with $u\neq\emptyset$ such that $u=t_0,\ldots,t_n$, we allow $L_{t_n}^s$ to be applied to any $f\in\gambles(\states_{u\cup s})$, by applying it to the restriction of $f$ to the \emph{latest} time point at which it is defined---the time point $s$, in this case. Because this restriction depends on the state assignment $x_u$ at the other time points, the result is a function $[L_{t_n}^sf]\in\gambles(\states_u)$. In short, we stipulate for any $f\in\gambles(\states_{u\cup s})$ and any $x_u\in\states_u$, that
 \begin{equation*}
-[L_{t_n}^sf](x_u) \coloneqq [L_{t_n}^sg_{x_u}](x_{t_n}) \coloneqq [L_{t_n}^sf(x_u,X_s)](x_{t_n})\,.
+[L_{t_n}^sf](x_u) \coloneqq [L_{t_n}^sf_{x_u}](x_{t_n}) \coloneqq [L_{t_n}^sf(x_u,X_s)](x_{t_n})\,.
 \end{equation*}
 
-The following now formalizes the fact that our previous results also apply to functions in $\gambles(\states_{u\cup s})$.
+Using this notational convention, the following formalizes the fact that our previous results also apply to functions in $\gambles(\states_{u\cup s})$.
 
 \begin{corollary}\label{cor:inf_works_for_single_future_var}
-Let $\mathcal{M}$ be an arbitrary non-empty set of probability mass functions on $\states$, let $\rateset$ be an arbitrary non-empty bounded set of rate matrices that has separately specified rows, with corresponding lower transition rate operator $\lrate$, and let $\underline{\mathcal{T}}_{\lrate}$ be the corresponding lower transition operator system. Then, for all $s\in\realspos$, all $u\in\mathcal{U}_{<s}$ such that $u\neq\emptyset$, all $x_u\in\states_u$, and all $f\in\gambles(\states_{u\cup s})$,
+Let $\mathcal{M}$ be an arbitrary non-empty set of probability mass functions on $\states$, let $\rateset$ be an arbitrary non-empty bounded set of rate matrices that has separately specified rows, with corresponding lower transition rate operator $\lrate$, and let $\underline{\mathcal{T}}_{\lrate}$ be the corresponding lower transition operator system. Then, for all $s\in\realspos$, all $u\in\mathcal{U}_{<s}$ such that $u\neq\emptyset$, all $x_u\in\states_u$, and all $f\in\gambles(\states_{u\cup s})$:
 \begin{equation*}
-\left[L_{t_n}^s f\right](x_u) = \underline{\mathbb{E}}^{\mathrm{WM}}_{\,\rateset,\,\mathcal{M}}[f(x_u,X_s)\,\vert\,X_u=x_u]\,,
-\end{equation*}
-and furthermore,
-\begin{equation*}
-\left[L_{t_n}^s f\right](x_u) = \underline{\mathbb{E}}^\mathrm{W}_{\,\rateset,\,\mathcal{M}}[f(x_u,X_s)\,\vert\,X_u=x_u]\,.
+\underline{\mathbb{E}}^\mathrm{W}_{\,\rateset,\,\mathcal{M}}[f(X_u,X_s)\,\vert\,X_u=x_u]=\underline{\mathbb{E}}^{\mathrm{WM}}_{\,\rateset,\,\mathcal{M}}[f(X_u,X_s)\,\vert\,X_u=x_u]=\left[L_{t_n}^s f\right](x_u).
 \end{equation*}
 \end{corollary}
 \begin{proof}
