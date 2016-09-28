@@ -154,7 +154,7 @@
 \maketitle
 
 \begin{abstract}
-Continuous-time Markov chains are mathematical models that are used to describe the state-evolution of dynamical systems under stochastic uncertainty, and have found widespread applications in various fields. However, in order to make such a model computationally tractable, it relies on a number of technical assumptions that may not be realistic for the domain of application, such as the ability to provide exact numerical parameter assessments, and the applicability of time-homogeneity and the eponymous Markov property. In this work, we extend these models to \emph{imprecise continuous-time Markov chains} (\ictmc's), which are a robust generalisation that does not require exact numerical parameter assessments, and which furthermore relaxes the Markov property and the assumption of time-homogeneity.%, and some technical assumptions such as differentiability.
+Continuous-time Markov chains are mathematical models that are used to describe the state-evolution of dynamical systems under stochastic uncertainty, and have found widespread applications in various fields. However, in order to make such a model computationally tractable, it relies on a number of assumptions that may not be realistic for the domain of application, such as the ability to provide exact numerical parameter assessments, and the applicability of time-homogeneity and the eponymous Markov property. In this work, we extend these models to \emph{imprecise continuous-time Markov chains} (\ictmc's), which are a robust generalisation that does not require exact numerical parameter assessments, and which furthermore relaxes the Markov property and the assumption of time-homogeneity.%, and some technical assumptions such as differentiability.
 
 More technically, an \ictmc~is a \emph{set} of ``precise'' continuous-time finite-state stochastic processes, and rather than computing expected values of functions, we seek to compute \emph{lower expectations}, which are tight lower bounds on the expectations that correspond to such a set of ``precise'' models. Note that, in contrast to e.g. Bayesian methods, all the elements of such a set are treated on equal grounds; we do not consider a distribution over this set. Together with the conjugate notion of \emph{upper expectation}, the bounds that we provide can then be intuitively interpreted as providing best- and worst-case scenarios with respect to all the models in our set of stochastic processes. 
 
@@ -3015,43 +3015,49 @@ Suppose now that we are interested in the lower probability that a person is sic
 % \underline{P}(X_1 = \text{{\tt s}}\,\vert\,X_0=\text{{\tt s}}) = \underline{\mathbb{E}}[\ind{\text{{\tt s}}}(X_1)\,\vert\,X_0=\text{{\tt s}}] = \left[L_0^1\ind{\text{{\tt s}}}\right](\text{{\tt s}})\,.
 % \end{equation*}
 
-The result of this computation can, generally speaking, depend on our choice of \ictmc. In this example, we will consider $\smash{\mathbb{P}_{\rateset,\mathcal{M}}^{\mathrm{WM}}}$ or $\smash{\mathbb{P}_{\rateset,\mathcal{M}}^{\mathrm{W}}}$. It does not make any difference, because it follows from Corollary~\ref{cor:lower_operator_is_infimum} that\footnote{Actually, in this particular---binary---case, it can be shown that $\mathbb{P}_{\rateset,\mathcal{M}}^{\mathrm{WHM}}$ would lead to the exact same result. However, in general, as we have seen in Example~\ref{ex:homogeneousexample}, this will not be the case.}
+The result of this computation will, generally speaking, depend on our choice of \ictmc. In this example, we consider $\smash{\mathbb{P}_{\rateset,\mathcal{M}}^{\mathrm{WM}}}$ or $\smash{\mathbb{P}_{\rateset,\mathcal{M}}^{\mathrm{W}}}$. The choice between these two does not make any difference, because it follows from Corollary~\ref{cor:lower_operator_is_infimum} that\footnote{Actually, in this particular---binary---case, it can be shown that $\mathbb{P}_{\rateset,\mathcal{M}}^{\mathrm{WHM}}$ would lead to the exact same result. However, in general, as we have seen in Example~\ref{ex:homogeneousexample}, this will not be the case.}
 \begin{equation*}
 \underline{\mathbb{E}}_{\rateset,\mathcal{M}}^\mathrm{W}[\ind{\text{{\tt s}}}(X_1)\,\vert\,X_0=\text{{\tt s}}]
 =
-\underline{\mathbb{E}}_{\rateset,\mathcal{M}}^\mathrm{WM}[\ind{\text{{\tt s}}}(X_1)\,\vert\,X_0=\text{{\tt s}}]=[L_0^1\ind{\text{{\tt s}}}](\text{\tt s})
+\underline{\mathbb{E}}_{\rateset,\mathcal{M}}^\mathrm{WM}[\ind{\text{{\tt s}}}(X_1)\,\vert\,X_0=\text{{\tt s}}]=[L_0^1\ind{\text{{\tt s}}}](\text{\tt s}).
 \end{equation*}
+Hence, our problem has now been reduced to the task of computing $[L_0^1\ind{\text{{\tt s}}}](\text{\tt s})$.
 
 
-
-Proposition~\ref{prop:approximation_error_bound} tells us that we can compute this quantity using a fine enough partition of the time interval $[0,1]$. We will be using a maximum error for this computation of $\epsilon\coloneqq 10^{-3}$. Furthermore, the length of the time interval $(s-t)=1$, the function norm $\norm{\ind{\text{s}}}_\mathrm{v}=1$, and due to our choice of $\rateset$, we have $\norm{\lrate} = 4$, as in Example~\ref{exmp:numerical_lrate}. In order to reach the desired maximum error, we therefore need to subdivide the time interval into at least $n$ steps, where
+Proposition~\ref{prop:approximation_error_bound} tells us that we can compute this quantity using a fine enough partition of the time interval $[0,1]$. We will be using a maximum error for this computation of $\epsilon\coloneqq 10^{-3}$. Furthermore, the length of the time interval is equal to $(s-t)=1$, the difference between the maximum and minimum of $\ind{\text{s}}$ is $\norm{\ind{\text{s}}}_\mathrm{v}=1$, and due to our choice of $\rateset$, we have $\norm{\lrate} = 4$, as in Example~\ref{exmp:numerical_lrate}. In order to reach the desired maximum error, we therefore need to subdivide the time interval into at least $n$ steps, with
 \begin{equation*}
-n = \frac{(s-t)^2\norm{\lrate}^2\norm{\ind{\text{s}}}_\mathrm{v}}{2\epsilon} = \frac{1^2\cdot 4^2\cdot 1}{2\cdot10^{-3}} = 8000\,,
+n=\max\left\{
+(s-t)\norm{\lrate},
+\frac{1}{2\epsilon}(s-t)^2\norm{\lrate}^2\norm{f}_\mathrm{v}
+\right\}
+=\max\left\{4,8000\right\}=8000,
 \end{equation*}
-resulting in a step size of $\Delta=\nicefrac{(s-t)}{n}=1.25\times 10^{-4}$. *** hier stond oorspronkelijk $1.6\times 10^{-4}$, wat denk ik mis was (zelfs met de originele norm) *** Note that this choice of $n$ here also satisfies the requirement $n\geq (s-t)\norm{\lrate}$ from Proposition~\ref{prop:approximation_error_bound}. 
+% \begin{equation*}
+% n \geq \frac{(s-t)^2\norm{\lrate}^2\norm{\ind{\text{s}}}_\mathrm{v}}{2\epsilon} = \frac{1^2\cdot 4^2\cdot 1}{2\cdot10^{-3}} = 8000\,,
+% \end{equation*}
+resulting in a step size of $\Delta=\nicefrac{(s-t)}{n}=1.25\times 10^{-4}$. %Note that this choice of $n$ here also satisfies the requirement $n\geq (s-t)\norm{\lrate}$ from Proposition~\ref{prop:approximation_error_bound}. 
 
 We now compute the quantity
 \begin{equation*}
-\prod_{i=1}^n(I + \Delta\lrate)\ind{\text{{\tt sick}}} = \prod_{i=1}^{16000}(I + \Delta\lrate)\ind{\text{{\tt sick}}} = \left(\prod_{i=1}^{15999}(I + \Delta\lrate)\right)\left((I+\Delta\lrate)\ind{\text{{\tt sick}}}\right)\,.
+\prod_{i=1}^n(I + \Delta\lrate)\ind{\text{{\tt sick}}} = \prod_{i=1}^{8000}(I + \Delta\lrate)\ind{\text{{\tt sick}}} = \left(\prod_{i=1}^{7999}(I + \Delta\lrate)\right)\left((I+\Delta\lrate)\ind{\text{{\tt sick}}}\right)\,.
 \end{equation*}
 We start by computing the right-most factor on the right-hand side of this equation. First compute $\lrate\ind{\text{{\tt sick}}}$, as in Example~\ref{exmp:numerical_lrate}:
 \begin{align*}
 \lrate\ind{\text{{\tt sick}}} &= \inf\left\{ Q\ind{\text{{\tt sick}}}\,:\,Q\in\rateset \right\} = \inf\left\{ Q \left[\begin{array}{c} 0\\ 1 \end{array}\right]\,:\,Q\in\rateset \right\} \\
- &= \inf\left\{ \left[\begin{array}{rr}-a&a\\b&-b \end{array}\right] \left[\begin{array}{c} 0\\ 1 \end{array}\right]\,:\, a\in[\nicefrac{1}{52},\nicefrac{3}{52}],\,b\in[\nicefrac{1}{2},2]\right\} = \left[\begin{array}{c}\nicefrac{1}{52}\\2\end{array}\right]\,.
-\end{align*}
-*** moet dat niet $-2$ zijn? *** Let now
+ &= \inf\left\{ \left[\begin{array}{rr}-a&a\\b&-b \end{array}\right] \left[\begin{array}{c} 0\\ 1 \end{array}\right]\,:\, a\in[\nicefrac{1}{52},\nicefrac{3}{52}],\,b\in[\nicefrac{1}{2},2]\right\} = \left[\begin{array}{c}\nicefrac{1}{52}\\-2\end{array}\right]\,.
+\end{align*}Let now
 \begin{align*}
 g_1 \coloneqq (I + \Delta\lrate)\ind{\text{{\tt sick}}} &= \ind{\text{{\tt sick}}} + \Delta\lrate\ind{\text{{\tt sick}}} \\
- &= \left[\begin{array}{c}0\\1\end{array}\right] + 1.25\times 10^{-4}\cdot\left[\begin{array}{c}\nicefrac{1}{52}\\2\end{array}\right] = \left[\begin{array}{l} 0 + \nicefrac{1}{52}\cdot 1.6\times 10^{-4}\\ 1 + 2\cdot 1.6\times 10^{-4}\end{array}\right]\,.
+ &= \left[\begin{array}{c}0\\1\end{array}\right] + 1.25\times 10^{-4}\cdot\left[\begin{array}{c}\nicefrac{1}{52}\\-2\end{array}\right] = \left[\begin{array}{l} 0 + \nicefrac{1}{52}\cdot 1.6\times 10^{-4}\\ 1 - 2\cdot 1.6\times 10^{-4}\end{array}\right]\,.
 \end{align*}
 *** moet die laatste $+$ geen $-$ zijn? ***
 Having completed this first step, we have
 \begin{equation*}
-\prod_{i=1}^n(I + \Delta\lrate)\ind{\text{{\tt sick}}} = \prod_{i=1}^{15999}(I + \Delta\lrate)g_1 = \left(\prod_{i=1}^{15998}(I + \Delta\lrate)\right)\left((I+\Delta\lrate)g_1\right)\,.
+\prod_{i=1}^n(I + \Delta\lrate)\ind{\text{{\tt sick}}} = \prod_{i=1}^{7999}(I + \Delta\lrate)g_1 = \left(\prod_{i=1}^{7998}(I + \Delta\lrate)\right)\left((I+\Delta\lrate)g_1\right)\,.
 \end{equation*}
 We now repeat this process, computing the term $g_2\coloneqq(I+\Delta\lrate)g_1$. After $j$ steps, we then have
 \begin{equation*}
-\prod_{i=1}^n(I + \Delta\lrate)\ind{\text{{\tt sick}}} = \prod_{i=1}^{16000-j}(I + \Delta\lrate)g_j\,.
+\prod_{i=1}^n(I + \Delta\lrate)\ind{\text{{\tt sick}}} = \prod_{i=1}^{8000-j}(I + \Delta\lrate)g_j\,.
 \end{equation*}
 After repeating this process for $n$ steps, we have computed the term
 \begin{equation*}
