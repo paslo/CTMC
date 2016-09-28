@@ -3162,19 +3162,19 @@ Therefore, and because a lower expectation is an infimum over expectations, we f
 \vspace{-2pt}
 \begin{equation}\label{eq:fixxu}
 \underline{\mathbb{E}}[f(X_u,X_s)\,\vert\,X_u=x_u] = \underline{\mathbb{E}}[f(x_u,X_s)\,\vert\,X_u=x_u].
-\end{equation}\\[-14pt]
+\end{equation}\\[-18pt]
 
-While writing down these equations, we have implicitly introduced a notational convention that should be intuitively clear: we interpret the function $f(x_u,X_s)$ as the restriction of $f(X_u,X_s)$ to the state $\states_s$, for the fixed state assignment $x_u$. A more formal---but completely equivalent---way of doing this, is to identify $f(x_u,X_s)$ with a function $f_{x_u}\in\gambles(\states_s)$, defined by $f_{x_u}(x_s)\coloneqq f(x_u,x_s)$ for all $x_s\in\states_s$.
+While writing down these equations, we have implicitly introduced a notational convention that should be intuitively clear: we interpret the function $f(x_u,X_s)$ as the restriction of $f(X_u,X_s)$ to the state $\states_s$, for the fixed state assignment $x_u$. A more formal---but completely equivalent---way of doing this, is to identify $f(x_u,X_s)$ with a function $f_{x_u}\in\gambles(\states_s)=\gamblesX$, defined by $f_{x_u}(x_s)\coloneqq f(x_u,x_s)$ for all $x_s\in\states$.
 %Now, recall our notation from Section~\ref{sec:multivar_notation}; the function $f(x_u,X_s)$ is the restriction of a function $f\in\gambles(\states^{u\cup\{s\}})$ to the state $\states^{\{s\}}$, specific to the state assignment $x_u\in\states^u$. In other words, for all $x_u\in\states^u$, there is some function $g_{x_u}\in\gambles(\states^{\{s\}})$, such that $g_{x_u}(x_s)=f(x_u,x_s)$ for all $x_s\in\states^{\{s\}}$.
 With this notation, the equation above then turns into
-\begin{equation}\label{eq:fixxuexplicit}
+\begin{equation*}%\label{eq:fixxuexplicit}
 \underline{\mathbb{E}}[f(X_u,X_s)\,\vert\,X_u=x_u] = \underline{\mathbb{E}}[f_{x_u}(X_s)\,\vert\,X_u=x_u],
-\end{equation}\\[-14pt]
-and in this way, it becomes clear that the problem of computing $\underline{\mathbb{E}}[f(X_u,X_s)\,\vert\,X_u=x_u]$ is completely equivalent to the problem that we have considered in the previous section, which is to compute lower expectations of the form $\underline{\mathbb{E}}[f(X_s)\,\vert\,X_u=x_u]$.
-
-Furthermore, because $g_{x_u}\in\gambles(\states_{s})=\gamblesX$, we already know from Section~\ref{sec:single_var_lower_exp} how to do this! In particular, we can do this by computing 
+\end{equation*}\\[-14pt]
+and in this way, it becomes clear that the problem of computing $\underline{\mathbb{E}}[f(X_u,X_s)\,\vert\,X_u=x_u]$ is completely equivalent to the problem that we have considered in the previous section, which is to compute lower expectations of functions that depend on the state at a single future time point.
+%Furthermore, because $g_{x_u}\in\gambles(\states_{s})=\gamblesX$, we already know from Section~\ref{sec:single_var_lower_exp} how to do this! In particular, we can do this by computing
+In particular, under the conditions of Corollary~\ref{cor:lower_operator_is_infimum}, we find that
 \begin{equation*}
-\left[L_{t_n}^sg_{x_u}\right](x_{t_n}) = \underline{\mathbb{E}}_{\rateset,\,\mathcal{M}}^{\mathrm{WM}}[g_{x_u}(X_s)\,\vert\,X_{t_n}=x_{t_n}] = \underline{\mathbb{E}}_{\rateset,\,\mathcal{M}}^{\mathrm{W}}[g_{x_u}(X_s)\,\vert\,X_u=x_u]\,.
+\underline{\mathbb{E}}_{\rateset,\,\mathcal{M}}^{\mathrm{W}}[f(X_u,X_s)\,\vert\,X_u=x_u] = \underline{\mathbb{E}}_{\rateset,\,\mathcal{M}}^{\mathrm{WM}}[f(X_u,X_s)\,\vert\,X_u=x_u]=\left[L_{t_n}^sg_{x_u}\right](x_{t_n}).
 \end{equation*}
 %recall from Section~\ref{sec:multivar_notation} that for operators from $\gamblesX$ to $\gamblesX$, and functions $f\in\gambles(\states^{u\cup\{s\}})$, we write
 %\begin{equation*}
@@ -3182,12 +3182,13 @@ Furthermore, because $g_{x_u}\in\gambles(\states_{s})=\gamblesX$, we already kno
 %\end{equation*}
 However, note that the quantity $[L_{t_n}^sg_{x_u}](x_{t_n})$ still depends on the \emph{entire} state assignment $x_u\in\states_u$, and not just on the state $x_{t_n}$.
 
-In order to unify our notation, we therefore stipulate the following convention. For any $s\in\realspos$ and any $u\in\mathcal{U}_{<s}$ with $u\neq\emptyset$ such that $u=t_0,\ldots,t_n$, we allow $L_{t_n}^s$ to be applied to any $f\in\gambles(\states_{u\cup s})$, by applying it to the restriction of $f$ to the \emph{latest} time point at which it is defined---the time point $s$, in this case. Because this restriction depends on the state assignment $x_u$ at the other time points, the result is a function $[L_{t_n}^sf]\in\gambles(\states_u)$. In short, we stipulate for any $f\in\gambles(\states_{u\cup s})$ and any $x_u\in\states_u$, that
-\begin{equation*}
-[L_{t_n}^sf](x_u) \coloneqq [L_{t_n}^sf_{x_u}](x_{t_n}) \coloneqq [L_{t_n}^sf(x_u,X_s)](x_{t_n})\,.
-\end{equation*}
+In order to unify our notation, we therefore stipulate the following convention. For any $s\in\realspos$ and any $u\in\mathcal{U}_{<s}$ with $u\neq\emptyset$ such that $u=t_0,\ldots,t_n$, we allow $L_{t_n}^s$ to be applied to any $f\in\gambles(\states_{u\cup s})$, by applying it to the restriction of $f$ to the \emph{latest} time point at which it is defined---the time point $s$, in this case. Because this restriction depends on the state assignment $x_u$ at the other time points, the result is a function $[L_{t_n}^sf]\in\gambles(\states_u)$. In short, we stipulate for any $f\in\gambles(\states_{u\cup s})$ that
+\begin{equation}\label{eq:applyLtolargerfunctions}
+[L_{t_n}^sf](x_u) \coloneqq [L_{t_n}^sf_{x_u}](x_{t_n}) \coloneqq [L_{t_n}^sf(x_u,X_s)](x_{t_n})
+~~\text{for all $x_u\in\states_u$}.
+\end{equation}
 
-Using this notational convention, the following formalizes the fact that our previous results also apply to functions in $\gambles(\states_{u\cup s})$.
+Using this notational convention, the following corollary formalizes the fact that our previous results also apply to functions in $\gambles(\states_{u\cup s})$.
 
 \begin{corollary}\label{cor:inf_works_for_single_future_var}
 Let $\mathcal{M}$ be an arbitrary non-empty set of probability mass functions on $\states$, let $\rateset$ be an arbitrary non-empty bounded set of rate matrices that has separately specified rows, with corresponding lower transition rate operator $\lrate$, and let $\underline{\mathcal{T}}_{\lrate}$ be the corresponding lower transition operator system. Then, for all $s\in\realspos$, all $u\in\mathcal{U}_{<s}$ such that $u\neq\emptyset$, all $x_u\in\states_u$, and all $f\in\gambles(\states_{u\cup s})$:
@@ -3195,9 +3196,6 @@ Let $\mathcal{M}$ be an arbitrary non-empty set of probability mass functions on
 \underline{\mathbb{E}}^\mathrm{W}_{\,\rateset,\,\mathcal{M}}[f(X_u,X_s)\,\vert\,X_u=x_u]=\underline{\mathbb{E}}^{\mathrm{WM}}_{\,\rateset,\,\mathcal{M}}[f(X_u,X_s)\,\vert\,X_u=x_u]=\left[L_{t_n}^s f\right](x_u).
 \end{equation*}
 \end{corollary}
-\begin{proof}
-*** still need to check this *** Immediate consequence of Corollary~\ref{cor:lower_operator_is_infimum}.
-\end{proof}
 
 Now, because the term $L_{t_n}^sf$ must be read as a separate application of the operator $L_{t_n}^s$ to each restriction of $f$ to $\states_s$, it follows that we can straightforwardly use Algorithm~\ref{alg:compute_singlevar} to numerically compute lower expectations $\underline{\mathbb{E}}^{\mathrm{WM}}_{\,\rateset,\,\mathcal{M}}[f(X_u,X_s)\,\vert\,X_u]$ and $\underline{\mathbb{E}}^{\mathrm{W}}_{\,\rateset,\,\mathcal{M}}[f(X_u,X_s)\,\vert\,X_u]$.
 %Recall now from Section~\ref{sec:function_single_future_multiple_past} that we can also use the operator $L_t^s$ to compute lower expectations of functions $f\in\gambles(\states_{u\cup s})$ defined on a single time point $s$ in the future, and on multiple time points $u\in\mathcal{U}_{<s}$ in the process' history. This is done by separately applying the operator $L_t^s$ to each restriction of $f$ to $\states_s$, for every state assignment $x_u\in\states_u$. 
@@ -3665,7 +3663,7 @@ The final assumption is now that the bettor is willing to combine any finite num
 The coherence of $P$ is now equivalent to requiring that any such bet \emph{avoids sure loss}, in the sense that there exists at least one ``non-trivial'' outcome $\omega$ for which her total profit is non-negative, the trivial case being when none of the events $C_i$ happen---$\omega\notin\cup_{i=1}^n C_i$---because she then gets refunded completely. %However, to be coherent, the prices specifically have to avoid sure loss if (some) of the conditioning events do come true; there must always be an $\omega\in\cup_{i=1}^n C_i$ that yields non-negative profit.
 %If the prices $P$ satisfy this criteria, they are called a coherent conditional probability.***
 
-\section{Proofs of results in Section~\ref{sec:systems}}\label{app:systems}
+\section{Proofs and Lemmas for the results in Section~\ref{sec:systems}}\label{app:systems}
 
 \begin{proof}[Proof of Proposition~\ref{lemma:compositiontransitionmatrix}]
 Simply check each of the properties.
@@ -4062,7 +4060,7 @@ where the first inequality follows from Lemma~\ref{lemma:recursive}, the second 
 % Since $\epsilon>0$ is arbitrary, it follows that $\norm{T_t^s-I}\leq(s-t)\norm{\rateset}$.
 % \end{proof}
 
-\section{Proofs and Lemmas for Section~\ref{sec:stochastic_processes}}\label{app:stoch_proc}
+\section{Proofs for the results in Section~\ref{sec:stochastic_processes}}\label{app:stoch_proc}
 
 \begin{proof}[Proof of \ref{def:coh_prob_2b}-\ref{def:coh_prob_5}]
 Consider any $A\in\power$ and $C\in\nonemptypower$. It then follows from \ref{def:coh_prob_1} and \ref{def:coh_prob_3} that
@@ -4206,7 +4204,7 @@ with $Q_k$ defined as in Equation~\eqref{eq:sequenceofQsinproof}. As we know fro
 This follows trivially from Proposition~\ref{prop:outerderivativebehaveslikelimit}.
 \end{proof}
 
-\section{Proofs and Lemmas for Section~\ref{sec:cont_time_markov_chains}}
+\section{Proofs and Lemmas for the results in Section~\ref{sec:cont_time_markov_chains}}
 
 \begin{proof}[Proof of Proposition~\ref{prop:Markovhassystem}]
 Consider any Markov chain $P\in\mprocesses$, with $\mathcal{T}_P$ its corresponding family of transition matrices. Then, because $P$ is a stochastic process, it follows from Proposition~\ref{prop:stochasticprocess:simpleproperties} that $T_t^t=I$ for all $t\in\realsnonneg$. 
@@ -4626,7 +4624,7 @@ The result about the partial derivatives is an immediate consequence of Lemma~\r
 % \end{proof}
 
 
-\section{Proofs and Lemmas for Section~\ref{sec:iCTMC}}
+\section{Proofs for the results in Section~\ref{sec:iCTMC}}
 
 \begin{proof}[Proof of Proposition~\ref{prop:markov_set_subset_of_nonmarkov_set}]This is immediate from Definitions~\ref{def:consistent_process_set} and~\ref{def:process_sets} and the fact that $\whmprocesses\subseteq\wmprocesses\subseteq\wprocesses$.
 \end{proof}
@@ -5219,7 +5217,7 @@ $\underline{\mathbb{E}}^{\mathrm{W}}_{\rateset,\,\mathcal{M}}\left[f(X_u,X_v,X_w
 %\end{proof}
 
 
-\section{Proofs and Lemmas for Section~\ref{sec:lowertrans}}
+\section{Proofs and Lemmas for the results in Section~\ref{sec:lowertrans}}
 
 \begin{proof}[Proof of Proposition~\ref{lemma:compositioncoherence}]
 Consider any $f,g\in\gamblesX$, $\lambda\in\realsnonneg$ and $x\in\states$. Since $\underline{T}$ and $\underline{S}$ are lower transition operators, they both satisfy~\ref{LT:bounded_min}, and therefore, we find that
@@ -5958,7 +5956,7 @@ where the first equality follows from Proposition~\ref{prop:lower_transition_is_
 %where in the last step we applied $L_{t-\Delta}^s=L_t^{s+\Delta}$, by Proposition~\ref{prop:lower_transition_is_homogeneous}. Hence, we have found that $\norm{\lrate L_t^s - L_t^s\lrate}<\epsilon$. Because this holds for any $\epsilon\in\realspos$, we conclude that indeed $\lrate L_t^s=L_t^s\lrate$.
 \end{proof}
 
-\section{Proofs and Lemmas for Section~\ref{sec:connections}}
+\section{Proofs and Lemmas for the results in Section~\ref{sec:connections}}
 
 Before giving the proof of Proposition~\ref{theorem:nonmarkov_single_var_lower_bounded}, we first prove some crucial steps of the proof separately, in the lemmas below.
 
@@ -6774,7 +6772,11 @@ where the first inequality follows from Property~\ref{N:normAf}, the second ineq
 because of~\ref{LT:constantadditivity}.
 \end{proof}
 
-%\section{Proofs and Lemmas for Section~\ref{sec:funcs_multi_time_points}}
+\section{Proofs for the results in Section~\ref{sec:funcs_multi_time_points}}
+
+\begin{proof}[Proof of Corollary~\ref{cor:inf_works_for_single_future_var}]
+Because of Equations~\eqref{eq:fixxu} and~\eqref{eq:applyLtolargerfunctions}, this result is an immediate consequence of Corollary~\ref{cor:lower_operator_is_infimum}. 
+\end{proof}
 
 %\begin{proof}[Proof of Proposition~\ref{prop:multi_var_single_future_bounded}]
 %Because $f(x_{t_0},\ldots,x_{t_n},X_s)$ is a restriction of $f$ to $\states^{\{s\}}$, there is some $g\in\gambles(\states^{\{s\}})$ such that $g(x_s) = f(x_{t_0},\ldots,x_{t_n},x_s)$ for all $x_s\in\states^{\{s\}}$. By substitution, we therefore have to show that $\left[L_t^sg\right](x_{t_n}) \leq \mathbb{E}\left[g(X_s)\,\vert\,X_{t_0,\ldots,t_n}=x_{t_0,\ldots,t_n}\right]$. Because $g\in\gambles(\states^{\{s\}})$, this inequality holds by Theorem~\ref{theorem:nonmarkov_single_var_lower_bounded}.
