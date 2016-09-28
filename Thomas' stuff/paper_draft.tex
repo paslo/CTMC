@@ -3021,7 +3021,7 @@ Proposition~\ref{prop:approximation_error_bound} tells us that we can compute th
 \begin{equation*}
 n = \frac{(s-t)^2\norm{\lrate}^2\norm{\ind{\text{s}}}_\mathrm{v}}{2\epsilon} = \frac{1^2\cdot 4^2\cdot 1}{2\cdot10^{-3}} = 8000\,,
 \end{equation*}
-resulting in a step size of $\Delta=\nicefrac{(s-t)}{n}=1.25\times 10^{-4}$. Note that this choice of $n$ here also satisfies the requirement $n\geq (s-t)\norm{\lrate}$ from Proposition~\ref{prop:approximation_error_bound}. 
+resulting in a step size of $\Delta=\nicefrac{(s-t)}{n}=1.25\times 10^{-4}$. *** hier stond oorspronkelijk $1.6\times 10^{-4}$, wat denk ik mis was (zelfs met de originele norm) *** Note that this choice of $n$ here also satisfies the requirement $n\geq (s-t)\norm{\lrate}$ from Proposition~\ref{prop:approximation_error_bound}. 
 
 We now compute the quantity
 \begin{equation*}
@@ -3032,11 +3032,12 @@ We start by computing the right-most factor on the right-hand side of this equat
 \lrate\ind{\text{{\tt sick}}} &= \inf\left\{ Q\ind{\text{{\tt sick}}}\,:\,Q\in\rateset \right\} = \inf\left\{ Q \left[\begin{array}{c} 0\\ 1 \end{array}\right]\,:\,Q\in\rateset \right\} \\
  &= \inf\left\{ \left[\begin{array}{rr}-a&a\\b&-b \end{array}\right] \left[\begin{array}{c} 0\\ 1 \end{array}\right]\,:\, a\in[\nicefrac{1}{52},\nicefrac{3}{52}],\,b\in[\nicefrac{1}{2},2]\right\} = \left[\begin{array}{c}\nicefrac{1}{52}\\2\end{array}\right]\,.
 \end{align*}
-Let now
+*** moet dat niet $-2$ zijn? *** Let now
 \begin{align*}
 g_1 \coloneqq (I + \Delta\lrate)\ind{\text{{\tt sick}}} &= \ind{\text{{\tt sick}}} + \Delta\lrate\ind{\text{{\tt sick}}} \\
- &= \left[\begin{array}{c}0\\1\end{array}\right] + 1.6\times 10^{-4}\cdot\left[\begin{array}{c}\nicefrac{1}{52}\\2\end{array}\right] = \left[\begin{array}{l} 0 + \nicefrac{1}{52}\cdot 1.6\times 10^{-4}\\ 1 + 2\cdot 1.6\times 10^{-4}\end{array}\right]\,.
+ &= \left[\begin{array}{c}0\\1\end{array}\right] + 1.25\times 10^{-4}\cdot\left[\begin{array}{c}\nicefrac{1}{52}\\2\end{array}\right] = \left[\begin{array}{l} 0 + \nicefrac{1}{52}\cdot 1.6\times 10^{-4}\\ 1 + 2\cdot 1.6\times 10^{-4}\end{array}\right]\,.
 \end{align*}
+*** moet die laatste $+$ geen $-$ zijn? ***
 Having completed this first step, we have
 \begin{equation*}
 \prod_{i=1}^n(I + \Delta\lrate)\ind{\text{{\tt sick}}} = \prod_{i=1}^{15999}(I + \Delta\lrate)g_1 = \left(\prod_{i=1}^{15998}(I + \Delta\lrate)\right)\left((I+\Delta\lrate)g_1\right)\,.
@@ -3050,6 +3051,7 @@ After repeating this process for $n$ steps, we have computed the term
 \prod_{i=1}^n(I + \Delta\lrate)\ind{\text{{\tt sick}}} = g_{n} \approx \left[\begin{array}{c}0.0083 \\ 0.1410\end{array}\right]\,,
 \end{equation*}
 from which we conclude that
+*** klopt dit resultaat nu nog??? ***
 \begin{align*}
 \underline{P}(X_1 = \text{{\tt sick}}\,\vert\,X_0=\text{{\tt sick}}) &\equiv \left[L_0^1\ind{\text{{\tt sick}}}\right](\text{{\tt sick}})
 = g_{n}(\text{{\tt sick}}) \pm \epsilon \approx 0.141 \pm 10^{-3}\,,
@@ -3305,7 +3307,7 @@ Note that $f$ is here a function defined on multiple time points, and hence we w
  &\text{and,} \\
 \left[L_1^2f\right](\text{{\tt sick}}) &= \left[L_1^2f(\text{{\tt sick}}, X_2)\right](\text{{\tt sick}}) = \left[L_1^2\ind{\text{{\tt sick}}}(X_2)\right](\text{{\tt sick}})\,.
 \end{align*}
-Using Proposition~\ref{prop:approximation_error_bound}, the quantities $L_1^2\ind{\text{{\tt healthy}}}$ and $L_1^2\ind{\text{{\tt sick}}}$ can now be computed using Algorithm~\ref{alg:compute_singlevar}, as done on Line 5 of Algorithm~\ref{alg:compute_singlevar_multiple_past}. We find that
+Using Proposition~\ref{prop:approximation_error_bound}, the quantities $L_1^2\ind{\text{{\tt healthy}}}$ and $L_1^2\ind{\text{{\tt sick}}}$ can now be computed using Algorithm~\ref{alg:compute_singlevar}, as done on Line 5 of Algorithm~\ref{alg:compute_singlevar_multiple_past}. We find that *** zijn de onderstaande numerieke resultaten zeker correct? ***
 \begin{equation*}
 L_1^2 f = \left[\begin{array}{l}
 \left[L_1^2\ind{\text{{\tt healthy}}}(X_2)\right](\text{{\tt healthy}}) \\
@@ -3399,7 +3401,7 @@ One problem in doing this, is that we do not have a general method for computing
 
 This numerical approach was verified to work for simple functions $g\in\gamblesX$, i.e. functions defined on a single time point, for which Corollary~\ref{cor:lower_operator_is_infimum} tells us that the lower expectation should correspond to the quantity $L_t^sg$. Because Algorithm~\ref{alg:compute_singlevar} tells us how to compute this latter quantity, we could verify the precision of the numerical optimization employed here. In doing so, we found a numerical correspondence between the ``brute-force'' optimization over $\wmprocesses_\rateset$ and the computation using $L_t^s$, with deviations less than the $\epsilon$ error-bound used to compute the quantity $L_t^sg$.
 
-Employing this ``brute-force'' optimization to the function $f$ that we are interested in here, we found that
+Employing this ``brute-force'' optimization to the function $f$ that we are interested in here, we found that *** zeker correct? ***
 \begin{align*}
 \underline{P}_{\rateset}^{\mathrm{WM}}(X_1 = X_2\,\vert\,X_0=\text{{\tt healthy}}) \approx 0.939,\quad\text{and,}\quad \underline{P}_{\rateset}^{\mathrm{WM}}(X_1 = X_2\,\vert\,X_0=\text{{\tt sick}}) \approx 0.467\,.
 \end{align*}
