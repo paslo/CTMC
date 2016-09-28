@@ -2087,12 +2087,13 @@ Upper expectations can be defined analogously, simply by replacing the infimum b
 However, there is no need to study these upper expectations separately, because they are in one-to-one correspondence to lower expectations through the conjugacy relation $\overline{\mathbb{E}}[\cdot\,\vert\,\cdot]=-\underline{\mathbb{E}}[-\cdot\,\vert\,\cdot]$. 
 %Because these lower expectations are linked to a given set $\mathcal{P}\subseteq\processes$ of stochastic processes, we will first look at how we can describe such a set $\mathcal{P}$.
 Lower and upper probabilities also have analogous definitions. However, these too do not need to be studied separately, because they correspond to special cases of lower and upper expectations. For example, for any $u\in\mathcal{U}$, $x_u\in\states_u$ and $A\in\mathcal{A}_u$, we have that
-\begin{align*}
+\begin{align}
 \underline{P}(A\vert X_u=x_u)
-\coloneqq&\inf\{P(A\vert X_u=x_u)\colon P\in\mathcal{P}\}\\
+\coloneqq&\inf\{P(A\vert X_u=x_u)\colon P\in\mathcal{P}\}\notag\\
 =&\inf\{\mathbb{E}_P[\ind{A}\vert X_u=x_u]\colon P\in\mathcal{P}\}
 =\underline{E}[\ind{A}\vert X_u=x_u],
-\end{align*}
+\label{eq:lowerprobaslowerexp}
+\end{align}
 and similarly, we also have that $\overline{P}(A\vert X_u=x_u)=\overline{E}[\ind{A}\vert X_u=x_u]$, which, due to conjugacy, implies that $\overline{P}(A\vert X_u=x_u)=-\underline{E}[-\ind{A}\vert X_u=x_u]$. Hence, from a computational point of view, it clearly suffices to focus on lower expectations, which is what we will do in the remainder of this work.
 
 %\begin{exmp}\label{example:singleton_infinite_consistent}
@@ -3007,14 +3008,20 @@ We now have everything in place to demonstrate the use of Proposition~\ref{prop:
 \begin{exmp}\label{exmp:single_time_numerical}
 Consider again the set of rate matrices $\rateset$ from Example~\ref{exmp:example_rateset_simple_model}, which, as we have seen there, expresses that the rate $a$ at which a healthy person becomes sick belongs to the interval $[\nicefrac{1}{52},\nicefrac{3}{52}]$, and the rate $b$ at which a sick person becomes healthy belongs to the interval $[\nicefrac{1}{2},2]$.
 
-Depending on the extra assumptions that we impose, we can now consider three different \ictmc's. If we believe that the rates $a$ and $b$ remain constant over time, and interpret the intervals $[\nicefrac{1}{52},\nicefrac{3}{52}]$ and $[\nicefrac{1}{2},2]$ as bounds on these partially known but constant rates, then we can model our problem by means of the \ictmc~$\mathbb{P}_{\rateset,\mathcal{M}}^{\mathrm{WHM}}$. If, on the other hand, we think that the rates $a$ and $b$ might vary within these bounds as time progresses, then we should use the \ictmc's $\mathbb{P}_{\rateset,\mathcal{M}}^{\mathrm{WM}}$ or $\mathbb{P}_{\rateset,\mathcal{M}}^{\mathrm{W}}$ instead, where the former assumes that the time-dependent rates $a$ and $b$ cannot be influenced by the value of the past states of the process, whereas the latter does not make such an assumption. The choice of $\mathcal{M}$ does not matter, because it will not effect any of the computations in this example.
+Depending on the extra assumptions that we impose, we can now consider three different \ictmc's. If we believe that the rates $a$ and $b$ remain constant over time, and interpret the intervals $[\nicefrac{1}{52},\nicefrac{3}{52}]$ and $[\nicefrac{1}{2},2]$ as bounds on these unknown but constant rates, then we can model our problem by means of the \ictmc~$\mathbb{P}_{\rateset,\mathcal{M}}^{\mathrm{WHM}}$. If, on the other hand, we think that the rates $a$ and $b$ might vary within these bounds as time progresses, then we should use the \ictmc's $\mathbb{P}_{\rateset,\mathcal{M}}^{\mathrm{WM}}$ or $\mathbb{P}_{\rateset,\mathcal{M}}^{\mathrm{W}}$ instead, where the former assumes that the time-dependent rates $a$ and $b$ cannot be influenced by the value of the past states of the process, whereas the latter does not make such an assumption. The choice of $\mathcal{M}$ does not matter, because it will not effect any of the computations in this example.
 
-Suppose now that we choose to model our problem by means of the set of stochastic processes $\mathbb{P}_{\rateset,\mathcal{M}}^{\mathrm{WM}}$, and that we are interested in the lower probability that a person is sick one week from now, given that he or she is currently also sick. That is, we want to compute the conditional lower probability $\underline{P}(X_1 = \text{{\tt sick}}\,\vert\,X_0=\text{{\tt sick}})$, which---using the notational convention of Example~\ref{exmp:numerical_lrate}---we will denote by $\underline{P}(X_1 = \text{{\tt s}}\,\vert\,X_0=\text{{\tt s}})$.
+Suppose now that we are interested in the lower probability that a person is sick one week from now, given that he or she is currently also sick. That is, we want to compute the conditional lower probability $\underline{P}(X_1 = \text{{\tt sick}}\,\vert\,X_0=\text{{\tt sick}})$, which---using the abbreviation of Example~\ref{exmp:numerical_lrate}---we will denote by $\underline{P}(X_1 = \text{{\tt s}}\,\vert\,X_0=\text{{\tt s}})$. Then as we know from Equation~\eqref{eq:lowerprobaslowerexp}, this is equivalent to computing $\underline{\mathbb{E}}[\ind{\text{{\tt s}}}(X_1)\,\vert\,X_0=\text{{\tt s}}]$.
+% \begin{equation*}
+% \underline{P}(X_1 = \text{{\tt s}}\,\vert\,X_0=\text{{\tt s}}) = \underline{\mathbb{E}}[\ind{\text{{\tt s}}}(X_1)\,\vert\,X_0=\text{{\tt s}}] = \left[L_0^1\ind{\text{{\tt s}}}\right](\text{{\tt s}})\,.
+% \end{equation*}
+
+The result of this computation can, generally speaking, depend on our choice of \ictmc. In this example, we will consider $\smash{\mathbb{P}_{\rateset,\mathcal{M}}^{\mathrm{WM}}}$ or $\smash{\mathbb{P}_{\rateset,\mathcal{M}}^{\mathrm{W}}}$. It does not make any difference, because it follows from Corollary~\ref{cor:lower_operator_is_infimum} that\footnote{Actually, in this particular---binary---case, it can be shown that $\mathbb{P}_{\rateset,\mathcal{M}}^{\mathrm{WHM}}$ would lead to the exact same result. However, in general, as we have seen in Example~\ref{ex:homogeneousexample}, this will not be the case.}
 \begin{equation*}
-\underline{P}(X_1 = \text{{\tt sick}}\,\vert\,X_0=\text{{\tt sick}}) \equiv \underline{\mathbb{E}}[\ind{\text{{\tt sick}}}(X_1)\,\vert\,X_0=\text{{\tt sick}}] \equiv \left[L_0^1\ind{\text{{\tt sick}}}\right](\text{{\tt sick}})\,.
+\underline{\mathbb{E}}_{\rateset,\mathcal{M}}^\mathrm{W}[\ind{\text{{\tt s}}}(X_1)\,\vert\,X_0=\text{{\tt s}}]
+=
+\underline{\mathbb{E}}_{\rateset,\mathcal{M}}^\mathrm{WM}[\ind{\text{{\tt s}}}(X_1)\,\vert\,X_0=\text{{\tt s}}]=[L_0^1\ind{\text{{\tt s}}}](\text{\tt s})
 \end{equation*}
 
-*** where $\underline{\mathbb{E}}$ can be either $\underline{\mathbb{E}}_{\rateset\,\mathcal{M}}^{\mathrm{WM}}$ or $\underline{\mathbb{E}}_{\rateset\,\mathcal{M}}^{\mathrm{W}}$. ***
 
 
 Proposition~\ref{prop:approximation_error_bound} tells us that we can compute this quantity using a fine enough partition of the time interval $[0,1]$. We will be using a maximum error for this computation of $\epsilon\coloneqq 10^{-3}$. Furthermore, the length of the time interval $(s-t)=1$, the function norm $\norm{\ind{\text{s}}}_\mathrm{v}=1$, and due to our choice of $\rateset$, we have $\norm{\lrate} = 4$, as in Example~\ref{exmp:numerical_lrate}. In order to reach the desired maximum error, we therefore need to subdivide the time interval into at least $n$ steps, where
