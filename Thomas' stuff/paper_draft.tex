@@ -3111,8 +3111,8 @@ This iterative procedure for computing $L_t^sf$, as illustrated in the above exa
   \caption{Numerically compute $L_t^sf$ for any $f\in\gamblesX$.}
     \label{alg:compute_singlevar}
   \begin{algorithmic}[1]
-  \vspace{2pt}
-    \Require{A lower transition rate operator $\lrate$, two time points $t,s\in\realsnonneg$ such that $t\leq s$, a function $f\in\gamblesX$ and a maximum numerical error $\epsilon\in\realspos$.}\vspace{2pt}    
+  \vspace{4pt}
+    \Require{A lower transition rate operator $\lrate$, two time points $t,s\in\realsnonneg$ such that $t\leq s$, a function $f\in\gamblesX$ and a maximum numerical error $\epsilon\in\realspos$.}\vspace{4pt}    
 \Ensure{A function $L_t^sf\pm \epsilon$ in $\gamblesX$.}\vspace{-5pt}
     \Statex
     \Function{ComputeLf}{$\lrate, t,s, f,\epsilon$}\vspace{4pt}
@@ -3124,7 +3124,7 @@ This iterative procedure for computing $L_t^sf$, as illustrated in the above exa
 		\EndFor
       \State \Return{$g_n$}
     \EndFunction
-    \vspace{2pt}
+    \vspace{4pt}
   \end{algorithmic}
 \end{algorithm}
 
@@ -3209,9 +3209,9 @@ The algorithm starts by allocating space for a new function $g\in\gambles(\state
   \caption{Numerically compute $L_{t_n}^sf$ for any $f\in\gambles(\states_{u\cup s})$.}
     \label{alg:compute_singlevar_multiple_past}
   \begin{algorithmic}[1]
-  \vspace{2pt}
+  \vspace{4pt}
     \Require{A lower transition rate operator $\lrate$, a time point $s\in\realsnonneg$, a sequence of time points $u\in\mathcal{U}_{<s}$ with $u=t_0,\ldots,t_n$, a function $f\in\gambles(\states_{u\cup s})$, and a maximum numerical error $\epsilon\in\realspos$.}
-    \vspace{2pt}  
+    \vspace{4pt}  
 \Ensure{A function $L_{t_n}^sf\pm \epsilon$ in $\gambles(\states_u)$.}
 \vspace{-5pt}
     \Statex
@@ -3224,7 +3224,7 @@ The algorithm starts by allocating space for a new function $g\in\gambles(\state
 		\EndFor
       \State \Return{$g$}
     \EndFunction
-    \vspace{2pt}
+    \vspace{4pt}
   \end{algorithmic}
 \end{algorithm}
 
@@ -3448,32 +3448,33 @@ Finally, by combining Equations~\eqref{eq:num_example_composition} and~\eqref{eq
 \exampleend
 \end{exmp}
 
-The general method for computing conditional lower expectations of functions $f\in\gambles(\states_{u\cup v})$ is outlined in Algorithm~\ref{alg:compute_multivar}. This algorithm starts by constructing a buffer $w\coloneqq v=s_0,\ldots,s_m$ of the time points for which the operators $L_{t_n}^{s_0},L_{s_1}^{s_2},\ldots,L_{s_{m-1}}^{s_m}$ have not yet been resolved, which initially corresponds to just $v$ (Line 2). We rename the function $f$ to $g_m$ for indexing purposes (Line 3). The algorithm then iteratively resolves the composition of operators in a backward fashion, working from the latest time point in $v$ back to the earliest time point in $v$ (Line 4). One step here amounts to removing the current latest remaining time point $s_i$ from the buffer $w$ (Line 5), and then computing the lower expectation $\underline{\mathbb{E}}_{\rateset}^\mathrm{W}[g_i(X_u,X_w,X_{s_i})\vert X_u,X_w]$ using Algorithm~\ref{alg:compute_singlevar_multiple_past}. The result of this computation is therefore a function $g_{(i-1)}\in\gambles(\states_{u\cup w})$. This iterative process corresponds to the repeated decomposition and resolution of lower expectations, as explained in the beginning of this section. After all time points $s_m,s_{m-1},\ldots,s_0$ have been resolved, the returned function $g_{(-1)}$ (Line 8) corresponds to $\underline{\mathbb{E}}_{\rateset}^\mathrm{W}[f(X_u,X_v)\vert X_u]\pm\epsilon$, due to Corollary~\ref{cor:composition_lower_trans} and Proposition~\ref{prop:approximation_error_bound}.
+A general method for computing the conditional lower expectation in Equation~\eqref{eq:lowerexpmultipletimepoints} is outlined in Algorithm~\ref{alg:compute_multivar}. This algorithm starts by constructing a buffer $w\coloneqq v=s_0,\ldots,s_m$ of the time points for which the operators $L_{t_n}^{s_0},L_{s_1}^{s_2},\ldots,L_{s_{m-1}}^{s_m}$ have not yet been resolved, which initially corresponds to just $v$ (Line 2). We rename the function $f$ to $g_m$ for indexing purposes (Line 3). The algorithm then iteratively resolves the composition of operators in a backward fashion, working from the last time point in $v$ back to the first time point in $v$ (Line 4). One step here amounts to removing the current latest remaining time point $s_i$ from the buffer $w$ (Line 5), and then computing the lower expectation $\underline{\mathbb{E}}_{\rateset}^\mathrm{W}[g_i(X_u,X_w,X_{s_i})\vert X_u,X_w]$ using Algorithm~\ref{alg:compute_singlevar_multiple_past}. The result of this computation is therefore a function $g_{(i-1)}\in\gambles(\states_{u\cup w})$. This iterative process corresponds to the repeated decomposition and resolution of lower expectations, as explained in the beginning of this section. After all time points $s_m,s_{m-1},\ldots,s_0$ have been resolved, the returned function $g_{(-1)}$ (Line 8) corresponds to $\underline{\mathbb{E}}_{\rateset}^\mathrm{W}[f(X_u,X_v)\vert X_u]\pm\epsilon$, due to Corollary~\ref{cor:composition_lower_trans} and Proposition~\ref{prop:approximation_error_bound}.
 
 Note that the error bound of $\pm\epsilon$ holds because we compute each step using a maximum error of $\nicefrac{\epsilon}{m}$ (Line 6). That is, the finite-precision approximation-error scales linearly in the number of time points that have to be computed. We will not provide a formal proof of this claim, however this is easily verified by replacing $g_{(i-1)}$ in Line 6 with the true function $L_{s_{i-1}}^{s_i}g_i$, and keeping track of the compound error obtained from this substitution.
 
 \begin{algorithm}[htb]
-  \caption{Numerically compute $\underline{\mathbb{E}}_\rateset^\mathrm{W}[f(X_u,X_v)\,\vert\,X_u]$ for any $f\in\gambles(\states_{u\cup v})$.}
+  \caption{Numerically compute $\underline{\mathbb{E}}_{\rateset,\mathcal{M}}^\mathrm{W}[f(X_u,X_v)\,\vert\,X_u]$ for any $f\in\gambles(\states_{u\cup v})$.}
     \label{alg:compute_multivar}
   \begin{algorithmic}[1]
-  \vspace{2pt}
-    \Require{The lower transition rate operator $\lrate$ of a non-empty, bounded and convex set of rate matrices $\rateset$ with separately specified rows, two sets of time points $u,v\in\mathcal{U}_\emptyset$ such that $u< v$, a function $f\in\gambles(\states_{u\cup v})$, and a maximum numerical error $\epsilon\in\realspos$.}\vspace{2pt}
-\Ensure{A function $\underline{\mathbb{E}}_\rateset^\mathrm{W}[f(X_u,X_v)\,\vert\,X_u]\pm\epsilon$ in $\gambles(\states_u)$.}
+  \vspace{4pt}
+    \Require{The lower transition rate operator $\lrate$ of a non-empty, bounded and convex set of rate matrices $\rateset$ with separately specified rows, two sequences of time points $u=t_0,\ldots,t_n$ and $v=s_0,\ldots,s_n$ in $\mathcal{U}_\emptyset$ such that $u<v$, a function $f\in\gambles(\states_{u\cup v})$, and a maximum numerical error $\epsilon\in\realspos$.}\vspace{4pt}
+\Ensure{A function $\underline{\mathbb{E}}_{\rateset,\mathcal{M}}^\mathrm{W}[f(X_u,X_v)\,\vert\,X_u]\pm\epsilon$ in $\gambles(\states_u)$.}
 \vspace{-5pt}
 	 \Statex
-    \Function{ComputeLowerExp}{$\rateset, u,v, f,\epsilon$}
-		\State $w \gets v$ \Comment{Buffer for remaining time points.}
-		\State $g_{m}\gets f$ \Comment{Buffer for function.}
+    \Function{ComputeLowerExp}{$\lrate, u,v, f,\epsilon$}
+		\State $w \gets v$ %\Comment{Buffer for remaining time points.}
+		\State $g_{m}\gets f$\vspace{2pt} %\Comment{Buffer for function.}
 %		\Statex
-		\For{$i\in\{m,m-1,\ldots,0\}$}	\Comment{Iterate backward over $v=s_0,\ldots,s_m$.}
-			\State $w \gets w\setminus s_i$ \Comment{Remove latest time point $s_i$ from $w$.}
-			\State $g_{(i-1)}\gets ${\textsc{ComputeLuf}}($\rateset,u\cup w,s_i,g_i,\nicefrac{\epsilon}{m}$)  \Comment{Run Algorithm~\ref{alg:compute_singlevar_multiple_past}}
+		\For{$i\in\{m,m-1,\ldots,0\}$}	\Comment{Iterate backward over $v=s_0,\ldots,s_m$}
+			\State $w \gets w\setminus s_i$ \Comment{Remove last point of $w$}
+			\State $g_{(i-1)}\gets ${\textsc{ComputeLuf}}($\lrate,u\cup w,s_i,g_i,\nicefrac{\epsilon}{m}$)  \Comment{Run Algorithm~\ref{alg:compute_singlevar_multiple_past}}\vspace{3pt}
 %			\Statex
 		\EndFor
 %		\Statex
-		\State \Return{$g_{(-1)}$}\Comment{Result is a function in $\gambles(\states_u)$.}
+		\State \Return{$g_{(-1)}$}%\Comment{Result is a function in $\gambles(\states_u)$.}
+		\vspace{2pt}
     \EndFunction
-    \vspace{2pt}
+    \vspace{4pt}
   \end{algorithmic}
 \end{algorithm}
 
