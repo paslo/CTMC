@@ -3193,7 +3193,7 @@ Using this notational convention, the following corollary formalises the fact th
 \begin{corollary}\label{cor:inf_works_for_single_future_var}
 Let $\mathcal{M}$ be an arbitrary non-empty set of probability mass functions on $\states$, let $\rateset$ be an arbitrary non-empty bounded set of rate matrices that has separately specified rows, with corresponding lower transition rate operator $\lrate$, and let $\underline{\mathcal{T}}_{\lrate}$ be the corresponding lower transition operator system. Then, for all $s\in\realspos$, all $u\in\mathcal{U}_{<s}$ such that $u\neq\emptyset$ and all $f\in\gambles(\states_{u\cup s})$:
 \begin{equation*}
-\underline{\mathbb{E}}^\mathrm{W}_{\,\rateset,\,\mathcal{M}}[f(X_u,X_s)\,\vert\,X_u]=\underline{\mathbb{E}}^{\mathrm{WM}}_{\,\rateset,\,\mathcal{M}}[f(X_u,X_s)\,\vert\,X_u]=L_{t_n}^s f.\vspace{3pt}
+\underline{\mathbb{E}}^\mathrm{W}_{\,\rateset,\,\mathcal{M}}[f(X_u,X_s)\,\vert\,X_u]=\underline{\mathbb{E}}^{\mathrm{WM}}_{\,\rateset,\,\mathcal{M}}[f(X_u,X_s)\,\vert\,X_u]=\left[L_{t_n}^s f\right](X_u).\vspace{3pt}
 \end{equation*}
 \end{corollary}
 
@@ -3280,25 +3280,30 @@ The algorithm starts by allocating space for a new function $g\in\gambles(\state
 
 \subsection{Multi-Variable Functions on Multiple Future Time Points}\label{sec:decomposition}
 
-We next consider functions $f\in\gambles(\states_{u\cup v})$, where $u=t_0,\ldots,t_n$ is a sequence of time points in a process' history, and $v=s_0,\ldots,s_m$ is a sequence of time points in a process' future; hence, we assume $s_0>t_n$. For functions of this kind, it---surprisingly---turns out that computing the lower expectation with respect to $\wprocesses_{\rateset,\,\mathcal{M}}$ is easier than for $\wmprocesses_{\rateset,\,\mathcal{M}}$. We will show in this section how to do this for the former set, as well as provide a counter example for the latter.
+We next consider functions $f\in\gambles(\states_{u\cup v})$, where $u=t_0,\ldots,t_n$ is a sequence of time points in a process's history, on which we intend to condition, and $v=s_0,\ldots,s_m$ is a sequence of time points in a process's future; hence, we have that $s_0>t_n$. For functions of this kind, it---surprisingly---turns out that computing the conditional lower expectation with respect to $\wprocesses_{\rateset,\,\mathcal{M}}$ is easier than for $\wmprocesses_{\rateset,\,\mathcal{M}}$. We will show in this section how to do this for the former set, that is, how to compute the conditional lower expectation
+\begin{equation}\label{eq:lowerexpmultipletimepoints}
+\underline{\mathbb{E}}_{\rateset,\,\mathcal{M}}^{\mathrm{W}}[f(X_u,X_v)\,\vert\,X_u],
+\end{equation}
+and we will provide a counter example to illustrate that, unfortunately, this method does not work for the later set, that is, for lower expectations with respect to $\wmprocesses_{\rateset,\,\mathcal{M}}$.
 
-We have seen in the previous sections that we can use the operator $L_t^s$ to compute lower expectations of functions $f\in\gamblesX$ and $f\in\gambles(\states_{u\cup s})$, whenever $\rateset$ is non-empty, bounded, and has separately specified rows. We here show that if $\rateset$ is additionally convex, then we can do the same for functions $f\in\gambles(\states_{u\cup v})$.
+%As explained in the previous sections, we can use the operator $L_t^s$ to compute lower expectations of functions $f\in\gamblesX$ and $f\in\gambles(\states_{u\cup s})$, whenever $\rateset$ is non-empty, bounded, and has separately specified rows. We here show that if $\rateset$ is additionally convex, then we can do the same for functions $f\in\gambles(\states_{u\cup v})$.
 
-Hence, we are now interested in computing the quantity
-\begin{equation*}
-\underline{\mathbb{E}}_{\rateset,\,\mathcal{M}}^{\mathrm{W}}[f(x_u,X_v)\,\vert\,X_u=x_u]\,.
-\end{equation*}
+% Hence, we are now interested in computing the quantity
+% \begin{equation*}
+% \underline{\mathbb{E}}_{\rateset,\,\mathcal{M}}^{\mathrm{W}}[f(X_u,X_v)\,\vert\,X_u=x_u]\,.
+% \end{equation*}
 Recall now from Theorem~\ref{theorem:decomposition_multivar} that if $\rateset$ is convex, we can decompose this lower expectation as
 \begin{equation}\label{eq:nested_lower_exp_single_step}
-\underline{\mathbb{E}}_{\rateset,\,\mathcal{M}}^{\mathrm{W}}[f(x_u,X_v)\,\vert\,X_u=x_u] = \underline{\mathbb{E}}_{\rateset,\,\mathcal{M}}^{\mathrm{W}}\bigl[ \underline{\mathbb{E}}_{\rateset,\,\mathcal{M}}^{\mathrm{W}}[f(x_u,X_v)\,\vert\,X_u=x_u,X_{v\setminus\{s_m\}}] \,\big\vert\,X_u=x_u\bigr]\,,
+\underline{\mathbb{E}}_{\rateset,\,\mathcal{M}}^{\mathrm{W}}[f(X_u,X_v)\,\vert\,X_u] = \underline{\mathbb{E}}_{\rateset,\,\mathcal{M}}^{\mathrm{W}}\bigl[ \underline{\mathbb{E}}_{\rateset,\,\mathcal{M}}^{\mathrm{W}}[f(X_u,X_v)\,\vert\,X_u,X_{v\setminus\{s_m\}}] \,\big\vert\,X_u\bigr]\,,
 \end{equation}
-where we use the notation $v=s_0,\ldots,s_m$. Observe that the inner lower expectation on the right-hand side of this equality is conditioned on all the time points $u$ and $v\setminus\{s_m\}$. Therefore, this lower expectation is only taken at a single time $s_m$. It therefore follows from Corollary~\ref{cor:inf_works_for_single_future_var} that, for all $x_{v\setminus\{s_m\}}\in\states_{v\setminus\{s_m\}}$,
+where we use the notation $v=s_0,\ldots,s_m$. Observe that the inner lower expectation on the right-hand side of this equality is conditioned on all the time points $u$ and $v\setminus\{s_m\}$. Therefore, this lower expectation is only taken at a single time $s_m$. It therefore follows from Corollary~\ref{cor:inf_works_for_single_future_var} that
 \begin{equation*}
-\left[L_{s_{m-1}}^{s_m}f\right]\left(x_u,x_{v\setminus\{s_m\}}\right) = \underline{\mathbb{E}}_{\rateset,\,\mathcal{M}}^{\mathrm{W}}[f(x_u,X_v)\,\vert\,X_u=x_u,X_{v\setminus\{s_m\}}=x_{v\setminus\{s_m\}}]\,.
+%\left[L_{s_{m-1}}^{s_m}f\right]\left(x_u,x_{v\setminus\{s_m\}}\right) = 
+\underline{\mathbb{E}}_{\rateset,\,\mathcal{M}}^{\mathrm{W}}[f(X_u,X_v)\,\vert\,X_u,X_{v\setminus\{s_m\}}]=\big[L_{s_{m-1}}^{s_m}f\big]\left(X_u,X_{v\setminus\{s_m\}}\right) .
 \end{equation*}
-Because this holds for all $x_{v\setminus\{s_m\}}\in\states_{v\setminus\{s_m\}}$, we can now replace the inner lower expectation in Equation~\eqref{eq:nested_lower_exp_single_step}, to obtain
+We can now replace the inner lower expectation in Equation~\eqref{eq:nested_lower_exp_single_step}, to obtain
 \begin{equation*}
-\underline{\mathbb{E}}_{\rateset,\,\mathcal{M}}^{\mathrm{W}}[f(x_u,X_v)\,\vert\,X_u=x_u] = \underline{\mathbb{E}}_{\rateset,\,\mathcal{M}}^{\mathrm{W}}\left[ \left[L_{s_{m-1}}^{s_m}f\right]\left(x_u,X_{v\setminus\{s_m\}}\right) \,\big\vert\,X_u=x_u\right]\,.
+\underline{\mathbb{E}}_{\rateset,\,\mathcal{M}}^{\mathrm{W}}[f(X_u,X_v)\,\vert\,X_u] = \underline{\mathbb{E}}_{\rateset,\,\mathcal{M}}^{\mathrm{W}}\left[ \big[L_{s_{m-1}}^{s_m}f\big]\left(X_u,X_{v\setminus\{s_m\}}\right) \,\big\vert\,X_u\right].
 \end{equation*}
 If we now recursively apply this process, we can repeatedly factor out the latest remaining time point $s_{m-1}, s_{m-2},\ldots,s_{0}$, and at each step replace the inner lower expectation with the operator $L_{s_{m-2}}^{s_{m-1}},L_{s_{m-3}}^{s_{m-2}},\ldots,L_{t_n}^{s_0}$. Because $v$ is finite, this process eventually stops, and we then obtain the following result.
 
@@ -3402,8 +3407,10 @@ Note that the error bound of $\pm\epsilon$ holds because we compute each step us
   \caption{Numerically compute $\underline{\mathbb{E}}_\rateset^\mathrm{W}[f(X_u,X_v)\,\vert\,X_u]$ for any $f\in\gambles(\states_{u\cup v})$.}
     \label{alg:compute_multivar}
   \begin{algorithmic}[1]
-    \Require{A non-empty, bounded, and convex set of rate matrices $\rateset$ with separately specified rows, two sets of time points $u,v\in\mathcal{U}_\emptyset$ such that $u\leq v$, a function $f\in\gambles(\states_{u\cup v})$, and a maximum numerical error $\epsilon\in\realspos$.}
+  \vspace{2pt}
+    \Require{The lower transition rate operator $\lrate$ of a non-empty, bounded and convex set of rate matrices $\rateset$ with separately specified rows, two sets of time points $u,v\in\mathcal{U}_\emptyset$ such that $u< v$, a function $f\in\gambles(\states_{u\cup v})$, and a maximum numerical error $\epsilon\in\realspos$.}\vspace{2pt}
 \Ensure{A function $\underline{\mathbb{E}}_\rateset^\mathrm{W}[f(X_u,X_v)\,\vert\,X_u]\pm\epsilon$ in $\gambles(\states_u)$.}
+\vspace{-5pt}
 	 \Statex
     \Function{ComputeLowerExp}{$\rateset, u,v, f,\epsilon$}
 		\State $w \gets v$ \Comment{Buffer for remaining time points.}
@@ -3411,12 +3418,13 @@ Note that the error bound of $\pm\epsilon$ holds because we compute each step us
 %		\Statex
 		\For{$i\in\{m,m-1,\ldots,0\}$}	\Comment{Iterate backward over $v=s_0,\ldots,s_m$.}
 			\State $w \gets w\setminus s_i$ \Comment{Remove latest time point $s_i$ from $w$.}
-			\State $g_{(i-1)}\gets ${\tt ComputeLuf}($\rateset,u\cup w,s_i,g_i,\nicefrac{\epsilon}{m}$)  \Comment{Compute $g_{(i-1)}\in\gambles(\states_{u\cup w})$.}
+			\State $g_{(i-1)}\gets ${\textsc{ComputeLuf}}($\rateset,u\cup w,s_i,g_i,\nicefrac{\epsilon}{m}$)  \Comment{Run Algorithm~\ref{alg:compute_singlevar_multiple_past}}
 %			\Statex
 		\EndFor
 %		\Statex
 		\State \Return{$g_{(-1)}$}\Comment{Result is a function in $\gambles(\states_u)$.}
     \EndFunction
+    \vspace{2pt}
   \end{algorithmic}
 \end{algorithm}
 
