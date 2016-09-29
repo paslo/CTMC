@@ -3174,13 +3174,13 @@ and in this way, it becomes clear that the problem of computing $\underline{\mat
 %Furthermore, because $g_{x_u}\in\gambles(\states_{s})=\gamblesX$, we already know from Section~\ref{sec:single_var_lower_exp} how to do this! In particular, we can do this by computing
 In particular, under the conditions of Corollary~\ref{cor:lower_operator_is_infimum}, we find that
 \begin{equation*}
-\underline{\mathbb{E}}_{\rateset,\,\mathcal{M}}^{\mathrm{W}}[f(X_u,X_s)\,\vert\,X_u=x_u] = \underline{\mathbb{E}}_{\rateset,\,\mathcal{M}}^{\mathrm{WM}}[f(X_u,X_s)\,\vert\,X_u=x_u]=\left[L_{t_n}^sg_{x_u}\right](x_{t_n}).
+\underline{\mathbb{E}}_{\rateset,\,\mathcal{M}}^{\mathrm{W}}[f(X_u,X_s)\,\vert\,X_u=x_u] = \underline{\mathbb{E}}_{\rateset,\,\mathcal{M}}^{\mathrm{WM}}[f(X_u,X_s)\,\vert\,X_u=x_u]=\left[L_{t_n}^sf_{x_u}\right](x_{t_n}).
 \end{equation*}
 %recall from Section~\ref{sec:multivar_notation} that for operators from $\gamblesX$ to $\gamblesX$, and functions $f\in\gambles(\states^{u\cup\{s\}})$, we write
 %\begin{equation*}
 %\left[L_{t_n}^sf\right](x_u) \equiv \left[L_{t_n}^sf(x_u,X_s)\right](x_{t_n}) = \left[L_{t_n}^sg_{x_u}(X_s)\right](x_{t_n})\,.
 %\end{equation*}
-However, note that the quantity $[L_{t_n}^sg_{x_u}](x_{t_n})$ still depends on the \emph{entire} state assignment $x_u\in\states_u$, and not just on the state $x_{t_n}$.
+However, note that the quantity $[L_{t_n}^sf_{x_u}](x_{t_n})$ still depends on the \emph{entire} state assignment $x_u\in\states_u$, and not just on the state $x_{t_n}$.
 
 In order to unify our notation, we therefore stipulate the following convention. For any $s\in\realspos$ and any $u\in\mathcal{U}_{<s}$ with $u\neq\emptyset$ such that $u=t_0,\ldots,t_n$, we allow $L_{t_n}^s$ to be applied to any $f\in\gambles(\states_{u\cup s})$, by applying it to the restriction of $f$ to the \emph{latest} time point at which it is defined---the time point $s$, in this case. Because this restriction depends on the state assignment $x_u$ at the other time points, the result is a function $[L_{t_n}^sf]\in\gambles(\states_u)$. In short, we stipulate for any $f\in\gambles(\states_{u\cup s})$ that
 \begin{equation}\label{eq:applyLtolargerfunctions}
@@ -3191,34 +3191,40 @@ In order to unify our notation, we therefore stipulate the following convention.
 Using this notational convention, the following corollary formalizes the fact that our previous results also apply to functions in $\gambles(\states_{u\cup s})$.
 
 \begin{corollary}\label{cor:inf_works_for_single_future_var}
-Let $\mathcal{M}$ be an arbitrary non-empty set of probability mass functions on $\states$, let $\rateset$ be an arbitrary non-empty bounded set of rate matrices that has separately specified rows, with corresponding lower transition rate operator $\lrate$, and let $\underline{\mathcal{T}}_{\lrate}$ be the corresponding lower transition operator system. Then, for all $s\in\realspos$, all $u\in\mathcal{U}_{<s}$ such that $u\neq\emptyset$, all $x_u\in\states_u$, and all $f\in\gambles(\states_{u\cup s})$:
+Let $\mathcal{M}$ be an arbitrary non-empty set of probability mass functions on $\states$, let $\rateset$ be an arbitrary non-empty bounded set of rate matrices that has separately specified rows, with corresponding lower transition rate operator $\lrate$, and let $\underline{\mathcal{T}}_{\lrate}$ be the corresponding lower transition operator system. Then, for all $s\in\realspos$, all $u\in\mathcal{U}_{<s}$ such that $u\neq\emptyset$ and all $f\in\gambles(\states_{u\cup s})$:
 \begin{equation*}
-\underline{\mathbb{E}}^\mathrm{W}_{\,\rateset,\,\mathcal{M}}[f(X_u,X_s)\,\vert\,X_u=x_u]=\underline{\mathbb{E}}^{\mathrm{WM}}_{\,\rateset,\,\mathcal{M}}[f(X_u,X_s)\,\vert\,X_u=x_u]=\left[L_{t_n}^s f\right](x_u).
+\underline{\mathbb{E}}^\mathrm{W}_{\,\rateset,\,\mathcal{M}}[f(X_u,X_s)\,\vert\,X_u]=\underline{\mathbb{E}}^{\mathrm{WM}}_{\,\rateset,\,\mathcal{M}}[f(X_u,X_s)\,\vert\,X_u]=L_{t_n}^s f.\vspace{3pt}
 \end{equation*}
 \end{corollary}
 
-Now, because the term $L_{t_n}^sf$ must be read as a separate application of the operator $L_{t_n}^s$ to each restriction of $f$ to $\states_s$, it follows that we can straightforwardly use Algorithm~\ref{alg:compute_singlevar} to numerically compute lower expectations $\underline{\mathbb{E}}^{\mathrm{WM}}_{\,\rateset,\,\mathcal{M}}[f(X_u,X_s)\,\vert\,X_u]$ and $\underline{\mathbb{E}}^{\mathrm{W}}_{\,\rateset,\,\mathcal{M}}[f(X_u,X_s)\,\vert\,X_u]$.
+Now, since $L_{t_n}^sf$ must be read as a separate application of the operator $L_{t_n}^s$ to every $f_{x_u}$, for $x_u\in\states_u$, it follows that we can compute $L_{t_n}^sf$ by applying Algorithm~\ref{alg:compute_singlevar} multiple times.
+%conditional lower expectations of the form $\smash{\underline{\mathbb{E}}^{\mathrm{WM}}_{\,\rateset,\,\mathcal{M}}[f(X_u,X_s)\,\vert\,X_u]}$ or $\smash{\underline{\mathbb{E}}^{\mathrm{W}}_{\,\rateset,\,\mathcal{M}}[f(X_u,X_s)\,\vert\,X_u]}$.
 %Recall now from Section~\ref{sec:function_single_future_multiple_past} that we can also use the operator $L_t^s$ to compute lower expectations of functions $f\in\gambles(\states_{u\cup s})$ defined on a single time point $s$ in the future, and on multiple time points $u\in\mathcal{U}_{<s}$ in the process' history. This is done by separately applying the operator $L_t^s$ to each restriction of $f$ to $\states_s$, for every state assignment $x_u\in\states_u$. 
 The method for this computation is outlined in Algorithm~\ref{alg:compute_singlevar_multiple_past}, which can be read as follows. 
 
-The algorithm starts by constructing a new function $g\in\gambles(\states_u)$ (Line 2), which will be the result of the algorithm. Then, for each state assignment $x_u\in\states_u$ (Line 3), the value of $g(x_u)$ will be computed (Lines 4-6), as follows. First, we take the restriction of $f\in\gambles(\states_{u\cup s})$ to the state $\states_s$, for a specific state assignment $x_u$ (Line 4). Note that this $f_{x_u}\coloneqq f(x_u,X_s)$ is a function in $\gamblesX$, and we can therefore compute $L_{t_n}^sf_{x_u}$ using Algorithm~\ref{alg:compute_singlevar} (Line 5), where $t_n$ is the latest time point in $u$. The resulting function $\hat{f}_{x_u}\coloneqq L_{t_n}^sf_{x_u}$ is then a function in $\gambles(\states_{t_n})$, so it needs to be evaluated in $x_{t_n}\in x_u$ to find the correct value for $g(x_u)$ (Line 6). Using Proposition~\ref{prop:approximation_error_bound} and the notational convention stipulated above, the returned function $g$ (Line 8) then corresponds to $[L_{t_n}^sf \pm\epsilon]\in\gambles(\states_u)$, which, by Corollary~\ref{cor:inf_works_for_single_future_var}, corresponds to both $\underline{\mathbb{E}}_{\rateset}^\mathrm{WM}[f(X_u,X_s)\vert X_u]$ and $\underline{\mathbb{E}}_{\rateset}^\mathrm{W}[f(X_u,X_s)\vert X_u]$.
+The algorithm starts by allocating space for a new function $g\in\gambles(\states_u)$ (Line 2), which will be the result of the algorithm. Then, for each state assignment $x_u\in\states_u$ (Line 3), it computes the value of $g(x_u)$ (Lines 4-6), as follows. First, we take the restriction of $f\in\gambles(\states_{u\cup s})$ to the state $\states_s$, for a specific state assignment $x_u$ (Line 4). Since the resulting function $f_{x_u}\coloneqq f(x_u,X_s)$ belongs to $\gamblesX$, we can then approximate $L_{t_n}^sf_{x_u}$ using Algorithm~\ref{alg:compute_singlevar} (Line 5), where $t_n$ is the last time point in $u$. The resulting function $\smash{\hat{f}_{x_u}=L_{t_n}^sf_{x_u}}\pm\epsilon$ is then a function in $\gambles(\states_{t_n})$, which, as we know from Equation~\eqref{eq:applyLtolargerfunctions}, can be evaluated in $x_{t_n}$---the restriction of $x_u$ to the time point $t_n$---to obtain the value $g(x_u)=[L_{t_n}^sf](x_u)\pm\epsilon$ of $g$ in $x_u$ (Line 6). Therefore, up to a maximum error of $\epsilon$, the returned function $g$ (Line 8) will be equal to $L_{t_n}^sf$.%\in\gambles(\states_u)$.
+%, which, by Corollary~\ref{cor:inf_works_for_single_future_var}, corresponds to both $\underline{\mathbb{E}}_{\rateset}^\mathrm{WM}[f(X_u,X_s)\vert X_u]$ and $\underline{\mathbb{E}}_{\rateset}^\mathrm{W}[f(X_u,X_s)\vert X_u]$.
 
 \begin{algorithm}[htb]
   \caption{Numerically compute $L_{t_n}^sf$ for any $f\in\gambles(\states_{u\cup s})$.}
     \label{alg:compute_singlevar_multiple_past}
   \begin{algorithmic}[1]
-    \Require{A non-empty, bounded set of rate matrices $\rateset$ with separately specified rows, a time point $s\in\realsnonneg$, a sequence $u\in\mathcal{U}_{<s}$ with $u=t_0,\ldots,t_n$, a function $f\in\gambles(\states_{u\cup s})$, and a maximum numerical error $\epsilon\in\realspos$.}    
+  \vspace{2pt}
+    \Require{A lower transition rate operator $\lrate$, a time point $s\in\realsnonneg$, a sequence of time points $u\in\mathcal{U}_{<s}$ with $u=t_0,\ldots,t_n$, a function $f\in\gambles(\states_{u\cup s})$, and a maximum numerical error $\epsilon\in\realspos$.}
+    \vspace{2pt}  
 \Ensure{A function $L_{t_n}^sf\pm \epsilon$ in $\gambles(\states_u)$.}
+\vspace{-5pt}
     \Statex
-    \Function{ComputeLuf}{$\rateset, u,s, f,\epsilon$}
-      \State $g\gets g\in\gambles(\states_u)$ \Comment{Result will be a function $g\in\gambles(\states_u)$.}
+    \Function{ComputeLuf}{$\lrate, u,s, f,\epsilon$}
+      \State $g\gets g\in\gambles(\states_u)$ \Comment{Allocate space for $g\in\gambles(\states_u)$}
 		\For{$x_u\in\states_u$} \Comment{Compute $g(x_u)$ for all $x_u\in\states_u$} 
-		\State $f_{x_u}\gets f(x_u,X_s)$ \Comment{Take restriction of $f$ to $\states_s$ for this $x_u$.}
-		\State $\hat{f}_{x_u} \gets$ {\tt ComputeLF($\rateset, t_n,s,f_{x_u},\epsilon$)} \Comment{Compute $L_{t_n}^sf(x_u,X_s)\pm\epsilon$.}
-		\State $g(x_u)\gets \hat{f}_{x_u}(x_{t_n})$ \Comment{Set $g(x_u)=[L_{t_n}^s f(x_u,X_s)](x_{t_n})\pm\epsilon$, with $x_{t_n}\in x_u$.}
+		\State $f_{x_u}\gets f(x_u,X_s)$ %\Comment{Take restriction of $f$ to $\states_s$ for this $x_u$.}
+		\State $\hat{f}_{x_u} \gets$ {\textsc{ComputeLf}($\rateset, t_n,s,f_{x_u},\epsilon$)} \Comment{Run Agorithm~\ref{alg:compute_singlevar}}
+		\State $g(x_u)\gets \hat{f}_{x_u}(x_{t_n})$ %\Comment{Set $g(x_u)=[L_{t_n}^s f(x_u,X_s)](x_{t_n})\pm\epsilon$, with $x_{t_n}\in x_u$.}
 		\EndFor
       \State \Return{$g$}
     \EndFunction
+    \vspace{2pt}
   \end{algorithmic}
 \end{algorithm}
 
@@ -3571,7 +3577,7 @@ Furthermore, this previous work only focused on functions $f\in\gamblesX$ define
 
 Finally, this earlier work provided several different methods to numerically compute the solution of the differential equation~\eqref{eq:damjans_diff}. The first method presented therein works similarly to our Algorithm~\ref{alg:compute_singlevar}, in that it computes a uniform partition $u=t_0,t_1,\ldots,t_n$ of the time interval $[0,s]$, so that at each step $t_i$, one only has to solve a relatively straightforward linear optimization problem. However, it turns out that our Algorithm~\ref{alg:compute_singlevar} is much more efficient, because the number of steps $n$ that we require in this partition is much smaller. 
 
-For instance, for the numerical example presented at the end of~\cite[Section 4.1]{Skulj:2015cq}, {\v{S}}kulj finds that this partition requires more than $n=6000$ steps. In contrast, due to Proposition~\ref{prop:approximation_error_bound}, Algorithm~\ref{alg:compute_singlevar} requires only $n=50$ steps for that particular example. Similarly, in our Example~\ref{exmp:single_time_numerical} we found that we required $n=800$ steps. Applying the method from~\cite{Skulj:2015cq}, by comparison, requires that $n\approx 2.2\times 10^9$. *** kan het zijn dat dit $2.2\times 10^8$ moet zijn? ***
+For instance, for the numerical example presented at the end of~\cite[Section 4.1]{Skulj:2015cq}, {\v{S}}kulj finds that this partition requires more than $n=6000$ steps. In contrast, due to Proposition~\ref{prop:approximation_error_bound}, Algorithm~\ref{alg:compute_singlevar} requires only $n=50$ steps for that particular example. Similarly, in our Example~\ref{exmp:single_time_numerical} we found that we required $n=800$ steps. Applying the method from~\cite{Skulj:2015cq}, by comparison, requires that $n\approx 2.3\times 10^9$.
 
 These observations may go some way in explaining a comment made by the authors of Reference~\cite{troffaes2015using}, in which they applied this method from Reference~\cite{Skulj:2015cq} in a practical application. In particular, they observed that the number of steps required to obtain empirically good results was much lower than was expected from the theoretical bound used to derive their algorithm.
 
