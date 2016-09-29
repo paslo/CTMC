@@ -3344,37 +3344,46 @@ The following example numerically illustrates the use of Corollary~\ref{cor:comp
 Consider again the set of rate matrices $\rateset$ from Example~\ref{exmp:example_rateset_simple_model}, and suppose that we are interested in the lower probability $\underline{P}(X_1 = X_2\,\vert\, X_0)$. That is, given that we start in some initial state $X_0$, we want to know the lower probability that $X_1$ and $X_2$ will have identical values. %---both `{\tt healthy}' or both `{\tt sick}'.
 As we know from Equation~\eqref{eq:lowerprobaslowerexp}, this lower probability is given by
 \begin{equation*}
-\underline{P}(X_1 = X_2\,\vert\, X_0) = \underline{\mathbb{E}}[f(X_1,X_2)\,\vert\,X_0],\vspace{4pt}
+\underline{P}(X_1 = X_2\,\vert\, X_0) = \underline{\mathbb{E}}[I_{X_1=X_2}(X_1,X_2)\,\vert\,X_0],\vspace{4pt}
 \end{equation*}
-with $f$ the indicator of the event $X_1=X_2$, as defined by
+with $I_{X_1=X_2}$ the indicator of the event $X_1=X_2$, as defined by
 \begin{equation*}
-f(x_1,x_2) \coloneqq
+I_{X_1=X_2}(x_1,x_2) \coloneqq
 \begin{cases}
 1 & \text{if $x_1 = x_2$} \\
 0 & \text{if $x_1 \neq x_2$}
 \end{cases}
 ~~~\text{ for all $x_1,x_2\in\states$.}
 \end{equation*}
-The value of this lower expectation can---as in Example~\ref{exmp:single_time_numerical}---depend on the particular type of {\ictmc} that we choose to use. In this example, we will consider the \ictmc~$\smash{\mathbb{P}_{\rateset,\mathcal{M}}^{\mathrm{W}}}$, with $\mathcal{M}$ some arbitrary set of probability mass functions on $\states$.
+As explained in Example~\ref{exmp:single_time_numerical}, the value of such a lower expectation can depend on the particular type of {\ictmc} that we choose to use, and in fact, in this particular case, as we will see in Example~\ref{exmp:num_counterexample_markov}, this choice does indeed make a difference. 
 
-
-Corollary~\ref{cor:composition_lower_trans} tells us that we can compute this lower expectation as
+For now, in this example, we use the \ictmc~$\smash{\mathbb{P}_{\rateset,\mathcal{M}}^{\mathrm{W}}}$, with $\mathcal{M}$ some arbitrary set of probability mass functions on $\states$. The aim is therefore to compute the conditional lower expectation $\underline{\mathbb{E}}_{\rateset,\mathcal{M}}^{\mathrm{W}}[I_{X_1=X_2}(X_1,X_2)\,\vert\,X_0]$. Technically speaking, we cannot do this by means of Corollary~\ref{cor:composition_lower_trans}, because $I_{X_1=X_2}$ does not formally depend on $X_0$. However, in practice, this of course not a problem, because we can trivially regard $I_{X_1=X_2}$ as a function of $X_0$, $X_1$ and $X_2$ whose value remains constant on $X_0$. In order to formalize this, we introduce the function $f(X_0,X_1,X_2)$, defined by
+\begin{equation*}
+f(x_0,x_1,x_2)\coloneqq I_{X_1=X_2}(x_1,x_2)
+=
+\begin{cases}
+1 & \text{if $x_1 = x_2$} \\
+0 & \text{if $x_1 \neq x_2$}
+\end{cases}
+~~~\text{ for all $x_1,x_2,x_3\in\states$.}
+\end{equation*}
+Since $f(X_0,X_1,X_2)$ is clearly identical to $I_{X_1=X_2}(X_1,X_2)$, our problem now consist in computing $\underline{\mathbb{E}}_{\rateset,\mathcal{M}}^{\mathrm{W}}[f(X_0,X_1,X_2)\,\vert\,X_0]$, which, according to Corollary~\ref{cor:composition_lower_trans}, is equal to
 \begin{equation}\label{eq:num_example_composition}
-\underline{\mathbb{E}}_{\rateset}^\mathrm{W}[f(X_1,X_2)\,\vert\,X_0] \equiv \left[L_0^1L_1^2f\right](X_0)\,.
+\underline{\mathbb{E}}_{\rateset}^\mathrm{W}[f(X_0,X_1,X_2)\,\vert\,X_0] \equiv \left[L_0^1L_1^2f\right](X_0).
 \end{equation}
 In order to compute this quantity, we now resolve this composition of operators $L_0^1L_1^2$ by starting from the latest time point, and working back to the earliest time point. Hence, we start by looking at the quantity $L_1^2f$. 
 
-Note that $f$ is here a function defined on multiple time points, and hence we will use Algorithm~\ref{alg:compute_singlevar_multiple_past} to compute the quantity $L_1^2f$. So, we will apply $L_1^2$ separately to each restriction of $f$ to $\states_2$, for each different state assignment $x_1\in\states_1$. Thus, we have that $\left[L_1^2f\right](\text{{\tt healthy}}) = \left[L_1^2f(\text{{\tt healthy}}, X_2)\right](\text{{\tt healthy}})$, and similarly for $\left[L_1^2f\right](\text{{\tt sick}})$. Due to the definition of $f$, we therefore have that
+Note that $f$ is here a function defined on multiple time points, and hence we will use Algorithm~\ref{alg:compute_singlevar_multiple_past} to compute the quantity $L_1^2f$. So, we will apply $L_1^2$ separately to each restriction of $f$ to $\states_2$, for each different state assignment $x_1\in\states_1$. Thus, we have that $\left[L_1^2f\right](\text{{\tt h}}) = \left[L_1^2f(\text{{\tt h}}, X_2)\right](\text{{\tt h}})$, and similarly for $\left[L_1^2f\right](\text{{\tt s}})$. Due to the definition of $f$, we therefore have that
 \begin{align*}
-\left[L_1^2f\right](\text{{\tt healthy}}) &= \left[L_1^2f(\text{{\tt healthy}}, X_2)\right](\text{{\tt healthy}}) = \left[L_1^2\ind{\text{{\tt healthy}}}(X_2)\right](\text{{\tt healthy}})\,,\\
+\left[L_1^2f\right](\text{{\tt h}}) &= \left[L_1^2f(\text{{\tt h}}, X_2)\right](\text{{\tt h}}) = \left[L_1^2\ind{\text{{\tt h}}}(X_2)\right](\text{{\tt h}})\,,\\
  &\text{and,} \\
-\left[L_1^2f\right](\text{{\tt sick}}) &= \left[L_1^2f(\text{{\tt sick}}, X_2)\right](\text{{\tt sick}}) = \left[L_1^2\ind{\text{{\tt sick}}}(X_2)\right](\text{{\tt sick}})\,.
+\left[L_1^2f\right](\text{{\tt s}}) &= \left[L_1^2f(\text{{\tt s}}, X_2)\right](\text{{\tt s}}) = \left[L_1^2\ind{\text{{\tt s}}}(X_2)\right](\text{{\tt s}})\,.
 \end{align*}
-Using Proposition~\ref{prop:approximation_error_bound}, the quantities $L_1^2\ind{\text{{\tt healthy}}}$ and $L_1^2\ind{\text{{\tt sick}}}$ can now be computed using Algorithm~\ref{alg:compute_singlevar}, as done on Line 5 of Algorithm~\ref{alg:compute_singlevar_multiple_past}. We find that
+Using Proposition~\ref{prop:approximation_error_bound}, the quantities $L_1^2\ind{\text{{\tt h}}}$ and $L_1^2\ind{\text{{\tt s}}}$ can now be computed using Algorithm~\ref{alg:compute_singlevar}, as done on Line 5 of Algorithm~\ref{alg:compute_singlevar_multiple_past}. We find that
 \begin{equation*}
 L_1^2 f = \left[\begin{array}{l}
-\left[L_1^2\ind{\text{{\tt healthy}}}(X_2)\right](\text{{\tt healthy}}) \\
-\left[L_1^2\ind{\text{{\tt sick}}}(X_2)\right](\text{{\tt sick}})
+\left[L_1^2\ind{\text{{\tt h}}}(X_2)\right](\text{{\tt h}}) \\
+\left[L_1^2\ind{\text{{\tt s}}}(X_2)\right](\text{{\tt s}})
 \end{array}\right] 
 \approx \left[\begin{array}{c}
 0.956 \\
@@ -3400,7 +3409,7 @@ L_0^1\left[\begin{array}{c}
 \end{equation*}
 We therefore conclude that
 \begin{align*}
-\underline{P}_{\rateset}^{\mathrm{W}}(X_1 = X_2\,\vert\,X_0=\text{{\tt healthy}}) \approx 0.920,\quad\text{and,}\quad \underline{P}_{\rateset}^{\mathrm{W}}(X_1 = X_2\,\vert\,X_0=\text{{\tt sick}}) \approx 0.453\,.
+\underline{P}_{\rateset}^{\mathrm{W}}(X_1 = X_2\,\vert\,X_0=\text{{\tt h}}) \approx 0.920,\quad\text{and,}\quad \underline{P}_{\rateset}^{\mathrm{W}}(X_1 = X_2\,\vert\,X_0=\text{{\tt s}}) \approx 0.453\,.
 \end{align*}
 \exampleend
 \end{exmp}
