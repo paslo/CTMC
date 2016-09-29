@@ -3099,7 +3099,7 @@ and after completing all $n$ steps, we eventually find that
 from which we conclude that
 \begin{align*}
 \underline{P}(X_1 = \text{{\tt s}}\,\vert\,X_0=\text{{\tt s}}) &= \left[L_0^1\ind{\text{{\tt s}}}\right](\text{{\tt s}})
-= g_{n}(\text{{\tt s}}) \pm \epsilon = 0.141 \pm 10^{-3}\,,
+= g_{n}(\text{{\tt s}}) \pm \epsilon = 0.141 \pm 0.001,
 \end{align*}
 where the second equality follows from the error bound that is guaranteed by Proposition~\ref{prop:approximation_error_bound}.
 \exampleend
@@ -3368,16 +3368,18 @@ f(x_0,x_1,x_2)\coloneqq \ind{X_1=X_2}(x_1,x_2)
 \end{cases}
 ~~~\text{ for all $x_1,x_2,x_3\in\states$.}
 \end{equation*}
-Since $f(X_0,X_1,X_2)$ is clearly identical to $\ind{X_1=X_2}(X_1,X_2)$, our problem now consist in computing $\underline{\mathbb{E}}_{\rateset,\mathcal{M}}^{\mathrm{W}}[f(X_0,X_1,X_2)\,\vert\,X_0]$, which, because of Corollary~\ref{cor:composition_lower_trans}, is equal to
+Since $f(X_0,X_1,X_2)$ is clearly identical to $\ind{X_1=X_2}(X_1,X_2)$, our problem now consist in computing $\underline{\mathbb{E}}_{\rateset,\mathcal{M}}^{\mathrm{W}}[f(X_0,X_1,X_2)\,\vert\,X_0]$, which, because of Corollary~\ref{cor:composition_lower_trans}, is given by
 \begin{equation}\label{eq:num_example_composition}
-\underline{\mathbb{E}}_{\rateset}^\mathrm{W}[f(X_0,X_1,X_2)\,\vert\,X_0] \equiv \left[L_0^1L_1^2f\right](X_0).
+\underline{\mathbb{E}}_{\rateset}^\mathrm{W}[f(X_0,X_1,X_2)\,\vert\,X_0] = \left[L_0^1L_1^2f\right](X_0).
 \end{equation}
-In order to compute this, we will resolve the composition of operators $L_0^1L_1^2$ by starting from the latest time point, and working back to the earliest time point. Hence, we start by looking at $L_1^2f$. 
+In order to compute the left hand side of this equality, we will resolve the composition of operators $L_0^1L_1^2$ by starting from the latest time point, and working back to the earliest time point. Hence, we start by looking at $L_1^2f$. 
 
 The function $f$ depends on multiple---in this case three---time points, and we will therefore use Algorithm~\ref{alg:compute_singlevar_multiple_past} to compute $L_1^2f$, which consists in applying Algorithm~\ref{alg:compute_singlevar} four times. In particular, for every $x_0\in\states=\{{\tt h},{\tt s}\}$ and $x_1\in\states=\{{\tt h},{\tt s}\}$, we use Algorithm~\ref{alg:compute_singlevar} to compute
-\begin{equation*}
-[L_1^2f](x_0,x_1)
-\coloneqq
+\begin{align*}
+g(x_0,x_1)
+&\coloneqq
+[L_1^2f](x_0,x_1)\\[-7pt]
+&\coloneqq
 [L_1^2f(x_0,x_1,X_2)](x_1)
 =
 \begin{cases}
@@ -3386,7 +3388,7 @@ The function $f$ depends on multiple---in this case three---time points, and we 
 \left[L_1^2\ind{{\tt s}}\right](\text{{\tt s}})=0.141\pm\epsilon
 &\text{ if $x_1={\tt s}$}
 \end{cases}
-\end{equation*}
+\end{align*}
 up to some desired maximum error $\epsilon$, which we have here chosen to be $\epsilon=10^{-3}$. Note that the value of $\left[L_1^2\ind{{\tt s}}\right](\text{{\tt s}})$ is identical to the value that we had obtained for $\left[L_0^1\ind{{\tt s}}\right](\text{{\tt s}})$ in Example~\ref{exmp:single_time_numerical}; this is to be expected, as it follows from the time-homogeneity property in Proposition~\ref{prop:lower_transition_is_homogeneous}.
 %So, we will apply $L_1^2$ separately to each restriction of $f$ to $\states_2$, for each different state assignment $x_1\in\states_1$. Thus, we have that $\left[L_1^2f\right](\text{{\tt h}}) = \left[L_1^2f(\text{{\tt h}}, X_2)\right](\text{{\tt h}})$, and similarly for $\left[L_1^2f\right](\text{{\tt s}})$. Due to the definition of $f$, we therefore have that
 % \begin{align*}
@@ -3405,26 +3407,43 @@ up to some desired maximum error $\epsilon$, which we have here chosen to be $\e
 % 0.141
 % \end{array}\right]\,.
 % \end{equation*}
-Substituting this result into Equation~\eqref{eq:num_example_composition}, we have
-\begin{equation*}
-\underline{\mathbb{E}}_{\rateset}^\mathrm{W}[f(X_1,X_2)\,\vert\,X_0] \equiv \left[L_0^1L_1^2f\right](X_0) \approx \left[L_0^1 \left[\begin{array}{c}
-0.956 \\
-0.141
-\end{array}\right]\right](X_0)\,.
-\end{equation*}
-In order to compute the lower expectation of interest, we apply Algorithm~\ref{alg:compute_singlevar} once more, finding that
-\begin{equation*}
-L_0^1\left[\begin{array}{c}
-0.956 \\
-0.141
-\end{array}\right] \approx \left[\begin{array}{c}
-0.920 \\
-0.453
-\end{array}\right]\,.
-\end{equation*}
-We therefore conclude that
+
+Next, we apply the operator $L_0^1$ to the function $L_1^2f$, or equivalently, to the function $g$. The approach is completely similar. Again, as in Algorithm~\ref{alg:compute_singlevar_multiple_past}, we simply apply Algorithm~\ref{alg:compute_singlevar} multiple times. In particular, for every $x_0\in\states=\{{\tt h},{\tt s}\}$, we use Algorithm~\ref{alg:compute_singlevar} to compute
+\begin{equation}\label{eq:secondpass}
+[L_0^1L_1^2f](x_0)
+=[L_0^1g](x_0)
+\coloneqq
+[L_1^2 g(x_0,X_1)](x_0)
+=
+\begin{cases}
+0.920\pm2\epsilon
+&\text{ if $x_0={\tt h}$}\\
+0.453\pm2\epsilon
+&\text{ if $x_0={\tt s}$},
+\end{cases}
+\end{equation}
+where the maximum error is now $2\epsilon=0.002$, which is the sum of our previous error bound on $L_1^2f$, which was $\epsilon$, and the maximum extra error that may have arisen while computing Equation~\eqref{eq:secondpass}; the additivity of the two error bounds is a result of~\ref{LT:constantadditivity} and the fact that $L_t^s$ is a lower transition operator.
+% Substituting this result into Equation~\eqref{eq:num_example_composition}, we have
+% \begin{equation*}
+% \underline{\mathbb{E}}_{\rateset}^\mathrm{W}[f(X_1,X_2)\,\vert\,X_0] \equiv \left[L_0^1L_1^2f\right](X_0) \approx \left[L_0^1 \left[\begin{array}{c}
+% 0.956 \\
+% 0.141
+% \end{array}\right]\right](X_0)\,.
+% \end{equation*}
+% In order to compute the lower expectation of interest, we apply Algorithm~\ref{alg:compute_singlevar} once more, finding that
+% \begin{equation*}
+% L_0^1\left[\begin{array}{c}
+% 0.956 \\
+% 0.141
+% \end{array}\right] \approx \left[\begin{array}{c}
+% 0.920 \\
+% 0.453
+% \end{array}\right]\,.
+% \end{equation*}
+
+Finally, by combining Equations~\eqref{eq:num_example_composition} and~\eqref{eq:secondpass}, we conclude that
 \begin{align*}
-\underline{P}_{\rateset}^{\mathrm{W}}(X_1 = X_2\,\vert\,X_0=\text{{\tt h}}) \approx 0.920~~\text{and}~~\underline{P}_{\rateset}^{\mathrm{W}}(X_1 = X_2\,\vert\,X_0=\text{{\tt s}}) \approx 0.453\,.
+\underline{P}(X_1 = X_2\,\vert\,X_0=\text{{\tt h}})=0.920\pm0.002~~\text{and}~~\underline{P}(X_1 = X_2\,\vert\,X_0=\text{{\tt s}})=0.453\pm0.002.
 \end{align*}
 \exampleend
 \end{exmp}
