@@ -3341,17 +3341,23 @@ Let $\mathcal{M}$ be a non-empty set of probability mass functions on $\states$,
 The following example numerically illustrates the use of Corollary~\ref{cor:composition_lower_trans} for computing the conditional lower expectation of a function that depends on the state at multiple time points.
 
 \begin{exmp}\label{exmp:num_multivar_func_nonmarkov}
-Consider again the model and set of rate matrices $\rateset$ from Example~\ref{exmp:example_rateset_simple_model}. Suppose that we are now interested in the lower probability of the model being in the same state at two different time points. That is, we will be computing
+Consider again the set of rate matrices $\rateset$ from Example~\ref{exmp:example_rateset_simple_model}, and suppose that we are interested in the lower probability $\underline{P}(X_1 = X_2\,\vert\, X_0)$. That is, given that we start in some initial state $X_0$, we want to know the lower probability that $X_1$ and $X_2$ will have identical values. %---both `{\tt healthy}' or both `{\tt sick}'.
+As we know from Equation~\eqref{eq:lowerprobaslowerexp}, this lower probability is given by
 \begin{equation*}
-\underline{P}_{\rateset}^{\mathrm{W}}(X_1 = X_2\,\vert\, X_0) \equiv \underline{\mathbb{E}}_{\rateset}^{\mathrm{W}}[f(X_1,X_2)\,\vert\,X_0]\,,
+\underline{P}(X_1 = X_2\,\vert\, X_0) = \underline{\mathbb{E}}[f(X_1,X_2)\,\vert\,X_0],\vspace{4pt}
 \end{equation*}
-where,
+with $f$ the indicator of the event $X_1=X_2$, as defined by
 \begin{equation*}
-f(X_1,X_2) \coloneqq \left\{\begin{array}{ll}
-1 & \text{if $X_1 = X_2$, and} \\
-0 & \text{otherwise.}
-\end{array}\right.
+f(x_1,x_2) \coloneqq
+\begin{cases}
+1 & \text{if $x_1 = x_2$} \\
+0 & \text{if $x_1 \neq x_2$}
+\end{cases}
+~~~\text{ for all $x_1,x_2\in\states$.}
 \end{equation*}
+The value of this lower expectation can---as in Example~\ref{exmp:single_time_numerical}---depend on the particular type of {\ictmc} that we choose to use. In this example, we will consider the \ictmc~$\smash{\mathbb{P}_{\rateset,\mathcal{M}}^{\mathrm{W}}}$, with $\mathcal{M}$ some arbitrary set of probability mass functions on $\states$.
+
+
 Corollary~\ref{cor:composition_lower_trans} tells us that we can compute this lower expectation as
 \begin{equation}\label{eq:num_example_composition}
 \underline{\mathbb{E}}_{\rateset}^\mathrm{W}[f(X_1,X_2)\,\vert\,X_0] \equiv \left[L_0^1L_1^2f\right](X_0)\,.
@@ -3364,7 +3370,7 @@ Note that $f$ is here a function defined on multiple time points, and hence we w
  &\text{and,} \\
 \left[L_1^2f\right](\text{{\tt sick}}) &= \left[L_1^2f(\text{{\tt sick}}, X_2)\right](\text{{\tt sick}}) = \left[L_1^2\ind{\text{{\tt sick}}}(X_2)\right](\text{{\tt sick}})\,.
 \end{align*}
-Using Proposition~\ref{prop:approximation_error_bound}, the quantities $L_1^2\ind{\text{{\tt healthy}}}$ and $L_1^2\ind{\text{{\tt sick}}}$ can now be computed using Algorithm~\ref{alg:compute_singlevar}, as done on Line 5 of Algorithm~\ref{alg:compute_singlevar_multiple_past}. We find that *** zijn de onderstaande numerieke resultaten zeker correct? ***
+Using Proposition~\ref{prop:approximation_error_bound}, the quantities $L_1^2\ind{\text{{\tt healthy}}}$ and $L_1^2\ind{\text{{\tt sick}}}$ can now be computed using Algorithm~\ref{alg:compute_singlevar}, as done on Line 5 of Algorithm~\ref{alg:compute_singlevar_multiple_past}. We find that
 \begin{equation*}
 L_1^2 f = \left[\begin{array}{l}
 \left[L_1^2\ind{\text{{\tt healthy}}}(X_2)\right](\text{{\tt healthy}}) \\
@@ -3454,16 +3460,14 @@ f(X_1,X_2) \coloneqq \left\{\begin{array}{ll}
 \end{equation*}
 We will here compute the lower expectation $\underline{\mathbb{E}}_\rateset^{\mathrm{WM}}[f(X_1,X_2)\,\vert\,X_0]$ of this function with respect to the set $\wmprocesses_\rateset$ of Markov chains consistent with $\rateset$. We will then see that this lower expectation differs from the one found in Example~\ref{exmp:num_multivar_func_nonmarkov} for the set $\wprocesses_\rateset$.
 
-One problem in doing this, is that we do not have a general method for computing such lower expectations for sets of Markov chains. Fortunately, in the very specific case of a binary-state model, as we use here, we can actually numerically solve the optimization problem given by the right-hand side of
+A major problem in doing so, however, is that we do not have a general method for computing such lower expectations for sets of Markov chains. Fortunately, in the very specific case of a binary state space $\mathcal{X}$---as we use here in this example---and for functions $f$ that depend on a small number of states $X_t$---just $X_1$ and $X_2$ in this case---it is possible to numerically solve the optimization problem given by the right-hand side of
 \begin{equation*}
-\underline{\mathbb{E}}_\rateset^{\mathrm{WM}}[f(X_1,X_2)\,\vert\,X_0] = \inf\left\{ \mathbb{E}_P[f(X_1,X_2)\,\vert\,X_0]\,:\,P\in\wmprocesses_\rateset\right\}.
+\underline{\mathbb{E}}_\rateset^{\mathrm{WM}}[f(X_1,X_2)\,\vert\,X_0] = \inf\left\{ \mathbb{E}_P[f(X_1,X_2)\,\vert\,X_0]\,:\,P\in\wmprocesses_\rateset\right\}\\[6pt]
 \end{equation*}
-
-This numerical approach was verified to work for simple functions $g\in\gamblesX$, i.e. functions defined on a single time point, for which Corollary~\ref{cor:lower_operator_is_infimum} tells us that the lower expectation should correspond to the quantity $L_t^sg$. Because Algorithm~\ref{alg:compute_singlevar} tells us how to compute this latter quantity, we could verify the precision of the numerical optimization employed here. In doing so, we found a numerical correspondence between the ``brute-force'' optimization over $\wmprocesses_\rateset$ and the computation using $L_t^s$, with deviations less than the $\epsilon$ error-bound used to compute the quantity $L_t^sg$.
-
-Employing this ``brute-force'' optimization to the function $f$ that we are interested in here, we found that *** zeker correct? ***
+%This numerical approach was verified to work for simple functions $g\in\gamblesX$, i.e. functions defined on a single time point, for which Corollary~\ref{cor:lower_operator_is_infimum} tells us that the lower expectation should correspond to the quantity $L_t^sg$. Because Algorithm~\ref{alg:compute_singlevar} tells us how to compute this latter quantity, we could verify the precision of the numerical optimization employed here. In doing so, we found a numerical correspondence between the ``brute-force'' optimization over $\wmprocesses_\rateset$ and the computation using $L_t^s$, with deviations less than the $\epsilon$ error-bound used to compute the quantity $L_t^sg$.
+by combining brute-force optimization techniques with some clever tricks. We will not report on this method here, because it only works in very specific cases such as the one we consider here, and does not scale well to larger problems. For our present purposes, it suffices to know that this method yields the following results:
 \begin{align*}
-\underline{P}_{\rateset}^{\mathrm{WM}}(X_1 = X_2\,\vert\,X_0=\text{{\tt healthy}}) \approx 0.939,\quad\text{and,}\quad \underline{P}_{\rateset}^{\mathrm{WM}}(X_1 = X_2\,\vert\,X_0=\text{{\tt sick}}) \approx 0.467\,.
+\underline{P}_{\rateset}^{\mathrm{WM}}(X_1 = X_2\,\vert\,X_0=\text{{\tt h}}) \approx 0.939~~\text{and}~~\underline{P}_{\rateset}^{\mathrm{WM}}(X_1 = X_2\,\vert\,X_0=\text{{\tt s}}) \approx 0.467.
 \end{align*}
 
 Comparing to the lower expectation for the set $\wprocesses_\rateset$ that was found in Example~\ref{exmp:num_multivar_func_nonmarkov}, we see that the lower expectations are indeed different for these two sets of processes. Furthermore, as was guaranteed by Proposition~\ref{prop:lower_exp_markov_bounded_by_nonmarkov}, the lower expectation for $\wprocesses_\rateset$ indeed provides a lower bound for the lower expectation with respect to $\wmprocesses_\rateset$.
