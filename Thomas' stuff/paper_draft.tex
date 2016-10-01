@@ -3008,18 +3008,18 @@ We now have everything in place to demonstrate the use of Proposition~\ref{prop:
 \begin{exmp}\label{exmp:single_time_numerical}
 Consider again the set of rate matrices $\rateset$ from Example~\ref{exmp:example_rateset_simple_model}, which, as we have seen there, expresses that the rate $a$ at which a healthy person becomes sick belongs to the interval $[\nicefrac{1}{52},\nicefrac{3}{52}]$, and the rate $b$ at which a sick person becomes healthy belongs to the interval $[\nicefrac{1}{2},2]$.
 
-Depending on the extra assumptions that we impose, we can now consider three different \ictmc's. If we believe that the rates $a$ and $b$ remain constant over time, and interpret the intervals $[\nicefrac{1}{52},\nicefrac{3}{52}]$ and $[\nicefrac{1}{2},2]$ as bounds on these unknown but constant rates, then we can model our problem by means of the \ictmc~$\mathbb{P}_{\rateset,\mathcal{M}}^{\mathrm{WHM}}$. If, on the other hand, we think that the rates $a$ and $b$ might vary within these bounds as time progresses, then we should use the \ictmc's $\mathbb{P}_{\rateset,\mathcal{M}}^{\mathrm{WM}}$ or $\mathbb{P}_{\rateset,\mathcal{M}}^{\mathrm{W}}$ instead, where the former assumes that the time-dependent rates $a$ and $b$ cannot be influenced by the value of the past states of the process, whereas the latter does not make such an assumption. The choice of $\mathcal{M}$ does not matter, because it will not effect any of the computations in this example.
+Depending on the extra assumptions that we impose, we can now consider three different \ictmc's. If we believe that the rates $a$ and $b$ remain constant over time, and interpret the intervals $[\nicefrac{1}{52},\nicefrac{3}{52}]$ and $[\nicefrac{1}{2},2]$ as bounds on these unknown but constant rates, then we can model our problem by means of the \ictmc~$\mathbb{P}_{\rateset,\mathcal{M}}^{\mathrm{WHM}}$. If, on the other hand, we think that the rates $a$ and $b$ might vary within these bounds as time progresses, then we should use the \ictmc's $\mathbb{P}_{\rateset,\mathcal{M}}^{\mathrm{WM}}$ or $\mathbb{P}_{\rateset,\mathcal{M}}^{\mathrm{W}}$ instead, where the former assumes that the time-dependent rates $a$ and $b$ cannot be influenced by the value of the past states of the process, whereas the latter does not make such an assumption. The choice of $\mathcal{M}$ does not matter, because it will not effect any of the computations in this example; we therefore drop it from our notation.
 
 Suppose now that we are interested in the lower probability that a person is sick one week from now, given that he or she is currently also sick. That is, we want to compute the conditional lower probability $\underline{P}(X_1 = \text{{\tt sick}}\,\vert\,X_0=\text{{\tt sick}})$, which---using the abbreviation of Example~\ref{exmp:numerical_lrate}---we will denote by $\underline{P}(X_1 = \text{{\tt s}}\,\vert\,X_0=\text{{\tt s}})$. Then as we know from Equation~\eqref{eq:lowerprobaslowerexp}, this is equivalent to computing $\underline{\mathbb{E}}[\ind{\text{{\tt s}}}(X_1)\,\vert\,X_0=\text{{\tt s}}]$.
 % \begin{equation*}
 % \underline{P}(X_1 = \text{{\tt s}}\,\vert\,X_0=\text{{\tt s}}) = \underline{\mathbb{E}}[\ind{\text{{\tt s}}}(X_1)\,\vert\,X_0=\text{{\tt s}}] = \left[L_0^1\ind{\text{{\tt s}}}\right](\text{{\tt s}})\,.
 % \end{equation*}
 
-The result of this computation will, generally speaking, depend on our choice of \ictmc. In this example, we consider $\smash{\mathbb{P}_{\rateset,\mathcal{M}}^{\mathrm{WM}}}$ or $\smash{\mathbb{P}_{\rateset,\mathcal{M}}^{\mathrm{W}}}$. The choice between these two does not make any difference, because it follows from Corollary~\ref{cor:lower_operator_is_infimum} that\footnote{Actually, in this particular---binary---case, it can be shown that $\mathbb{P}_{\rateset,\mathcal{M}}^{\mathrm{WHM}}$ would lead to the exact same result. However, in general, as we have seen in Example~\ref{ex:homogeneousexample}, this will not be the case.}
+The result of this computation will, generally speaking, depend on our choice of \ictmc. In this example, we consider $\smash{\mathbb{P}_{\rateset}^{\mathrm{WM}}}$ or $\smash{\mathbb{P}_{\rateset}^{\mathrm{W}}}$. The choice between these two does not make any difference, because it follows from Corollary~\ref{cor:lower_operator_is_infimum} that\footnote{Actually, in this particular---binary---case, it can be shown that $\mathbb{P}_{\rateset}^{\mathrm{WHM}}$ would lead to the exact same result. However, in general, as we have seen in Example~\ref{ex:homogeneousexample}, this will not be the case.}
 \begin{equation*}
-\underline{\mathbb{E}}_{\rateset,\mathcal{M}}^\mathrm{W}[\ind{\text{{\tt s}}}(X_1)\,\vert\,X_0=\text{{\tt s}}]
+\underline{\mathbb{E}}_{\rateset}^\mathrm{W}[\ind{\text{{\tt s}}}(X_1)\,\vert\,X_0=\text{{\tt s}}]
 =
-\underline{\mathbb{E}}_{\rateset,\mathcal{M}}^\mathrm{WM}[\ind{\text{{\tt s}}}(X_1)\,\vert\,X_0=\text{{\tt s}}]=[L_0^1\ind{\text{{\tt s}}}](\text{\tt s}).
+\underline{\mathbb{E}}_{\rateset}^\mathrm{WM}[\ind{\text{{\tt s}}}(X_1)\,\vert\,X_0=\text{{\tt s}}]=[L_0^1\ind{\text{{\tt s}}}](\text{\tt s}).
 \end{equation*}
 Hence, our problem has now been reduced to the task of computing $[L_0^1\ind{\text{{\tt s}}}](\text{\tt s})$.
 
@@ -3098,10 +3098,12 @@ and after completing all $n$ steps, we eventually find that
 \end{equation*}
 from which we conclude that
 \begin{align*}
-\underline{P}(X_1 = \text{{\tt s}}\,\vert\,X_0=\text{{\tt s}}) &= \left[L_0^1\ind{\text{{\tt s}}}\right](\text{{\tt s}})
-= g_{n}(\text{{\tt s}}) \pm \epsilon = 0.141 \pm 0.001,
+\underline{P}_{\rateset}^{\mathrm{W}}(X_1 = \text{{\tt s}}\,\vert\,X_0=\text{{\tt s}}) = \underline{P}_{\rateset}^{\mathrm{WM}}(X_1 = \text{{\tt s}}\,\vert\,X_0=\text{{\tt s}})
+&=
+\left[L_0^1\ind{\text{{\tt s}}}\right](\text{{\tt s}})\\
+&= g_{n}(\text{{\tt s}}) \pm \epsilon = 0.141 \pm 0.001,
 \end{align*}
-where the second equality follows from the error bound that is guaranteed by Proposition~\ref{prop:approximation_error_bound}.
+where the third equality follows from the error bound that is guaranteed by Proposition~\ref{prop:approximation_error_bound}.
 \exampleend
 \end{exmp}
 
@@ -3358,8 +3360,8 @@ with $\ind{X_1=X_2}$ the indicator of the event $X_1=X_2$, as defined by
 \end{equation*}
 As explained in Example~\ref{exmp:single_time_numerical}, the value of such a lower expectation can depend on the particular type of {\ictmc} that we choose to use, and in fact, in this particular case, as we will see in Example~\ref{exmp:num_counterexample_markov}, this choice does indeed make a difference. 
 
-For now, in this example, we use the \ictmc~$\smash{\mathbb{P}_{\rateset,\mathcal{M}}^{\mathrm{W}}}$, with $\mathcal{M}$ some arbitrary set of probability mass functions on $\states$. The aim is therefore to compute the conditional lower expectation $\underline{\mathbb{E}}_{\rateset,\mathcal{M}}^{\mathrm{W}}[\ind{X_1=X_2}(X_1,X_2)\,\vert\,X_0]$. Technically speaking, we cannot do this by means of Corollary~\ref{cor:composition_lower_trans}, because $\ind{X_1=X_2}$ does not formally depend on $X_0$. However, in practice, this of course not a problem, because we can trivially regard $\ind{X_1=X_2}$ as a function of $X_0$, $X_1$ and $X_2$ whose value remains constant on $X_0$. In order to formalize this, we introduce the function $f(X_0,X_1,X_2)$, defined by
-\begin{equation*}
+For now, in this example, we use the \ictmc~$\smash{\mathbb{P}_{\rateset}^{\mathrm{W}}}$. The aim is therefore to compute the conditional lower expectation $\underline{\mathbb{E}}_{\rateset}^{\mathrm{W}}[\ind{X_1=X_2}(X_1,X_2)\,\vert\,X_0]$. Technically speaking, we cannot do this by means of Corollary~\ref{cor:composition_lower_trans}, because $\ind{X_1=X_2}$ does not formally depend on $X_0$. However, in practice, this is of course not a problem, because we can trivially regard $\ind{X_1=X_2}$ as a function of $X_0$, $X_1$ and $X_2$ whose value remains constant on $X_0$. In order to formalize this, we introduce the function $f(X_0,X_1,X_2)$, defined by
+\begin{equation}\label{eq:fforexample}
 f(x_0,x_1,x_2)\coloneqq \ind{X_1=X_2}(x_1,x_2)
 =
 \begin{cases}
@@ -3367,8 +3369,8 @@ f(x_0,x_1,x_2)\coloneqq \ind{X_1=X_2}(x_1,x_2)
 0 & \text{if $x_1 \neq x_2$}
 \end{cases}
 ~~~\text{ for all $x_1,x_2,x_3\in\states$.}
-\end{equation*}
-Since $f(X_0,X_1,X_2)$ is clearly identical to $\ind{X_1=X_2}(X_1,X_2)$, our problem now consist in computing $\underline{\mathbb{E}}_{\rateset,\mathcal{M}}^{\mathrm{W}}[f(X_0,X_1,X_2)\,\vert\,X_0]$, which, because of Corollary~\ref{cor:composition_lower_trans}, is given by
+\end{equation}
+Since $f(X_0,X_1,X_2)$ is clearly identical to $\ind{X_1=X_2}(X_1,X_2)$, our problem now consist in computing $\underline{\mathbb{E}}_{\rateset}^{\mathrm{W}}[f(X_0,X_1,X_2)\,\vert\,X_0]$, which, because of Corollary~\ref{cor:composition_lower_trans}, is given by
 \begin{equation}\label{eq:num_example_composition}
 \underline{\mathbb{E}}_{\rateset}^\mathrm{W}[f(X_0,X_1,X_2)\,\vert\,X_0] = \left[L_0^1L_1^2f\right](X_0).
 \end{equation}
@@ -3408,7 +3410,7 @@ up to some desired maximum error $\epsilon$, which we have here chosen to be $\e
 % \end{array}\right]\,.
 % \end{equation*}
 
-Next, we apply the operator $L_0^1$ to the function $L_1^2f$, or equivalently, to the function $g$. The approach is completely similar. Again, as in Algorithm~\ref{alg:compute_singlevar_multiple_past}, we simply apply Algorithm~\ref{alg:compute_singlevar} multiple times. In particular, for every $x_0\in\states=\{{\tt h},{\tt s}\}$, we use Algorithm~\ref{alg:compute_singlevar} to compute
+Next, we apply the operator $L_0^1$ to the function $L_1^2f$, or equivalently, to the function~$g$. The approach is completely similar. Again, as in Algorithm~\ref{alg:compute_singlevar_multiple_past}, we simply apply Algorithm~\ref{alg:compute_singlevar} multiple times. In particular, for every $x_0\in\states=\{{\tt h},{\tt s}\}$, we use Algorithm~\ref{alg:compute_singlevar} to compute
 \begin{equation}\label{eq:secondpass}
 [L_0^1L_1^2f](x_0)
 =[L_0^1g](x_0)
@@ -3422,7 +3424,7 @@ Next, we apply the operator $L_0^1$ to the function $L_1^2f$, or equivalently, t
 &\text{ if $x_0={\tt s}$},
 \end{cases}
 \end{equation}
-where the maximum error is now $2\epsilon=0.002$, which is the sum of our previous error bound on $L_1^2f$, which was $\epsilon$, and the maximum extra error that may have arisen while computing Equation~\eqref{eq:secondpass}; the additivity of the two error bounds is a result of~\ref{LT:monotonicity} and~\ref{LT:constantadditivity} and the fact that $L_t^s$ is a lower transition operator.
+where the maximum error is now $2\epsilon=2\cdot10^{-3}$, which is the sum of our previous error bound on $L_1^2f$, which was $\epsilon$, and the maximum extra error that may have arisen while computing Equation~\eqref{eq:secondpass}; the additivity of the two error bounds is a result of~\ref{LT:monotonicity} and~\ref{LT:constantadditivity} and the fact that $L_t^s$ is a lower transition operator.
 % Substituting this result into Equation~\eqref{eq:num_example_composition}, we have
 % \begin{equation*}
 % \underline{\mathbb{E}}_{\rateset}^\mathrm{W}[f(X_1,X_2)\,\vert\,X_0] \equiv \left[L_0^1L_1^2f\right](X_0) \approx \left[L_0^1 \left[\begin{array}{c}
@@ -3443,7 +3445,7 @@ where the maximum error is now $2\epsilon=0.002$, which is the sum of our previo
 
 Finally, by combining Equations~\eqref{eq:num_example_composition} and~\eqref{eq:secondpass}, we conclude that
 \begin{align*}
-\underline{P}(X_1 = X_2\,\vert\,X_0=\text{{\tt h}})=0.920\pm0.002~~\text{and}~~\underline{P}(X_1 = X_2\,\vert\,X_0=\text{{\tt s}})=0.453\pm0.002.
+\underline{P}_{\rateset}^{\mathrm{W}}(X_1 = X_2\,\vert\,X_0=\text{{\tt h}})=0.920\pm0.002~~\text{and}~~\underline{P}_{\rateset}^{\mathrm{W}}(X_1 = X_2\,\vert\,X_0=\text{{\tt s}})=0.453\pm0.002.
 \end{align*}
 \exampleend
 \end{exmp}
@@ -3521,7 +3523,7 @@ All of this changes if we replace $\wmprocesses_{\rateset,\mathcal{M}}$ with $\w
 % Now, in the case of functions $f\in\gambles(\states_{u\cup s})$, the conditional lower expectation $\underline{\mathbb{E}}_\rateset^\mathrm{WM}[f(X_u,X_s)\vert X_u]$ is still correctly given by these (separate) minimizing processes, due to the definition of the infimum---that is, the infimum does not require that it actually be reached. In particular, $L_{t_n}^sf$ is the greatest element of $\gambles(\states_u)$ that is not greater than $\mathbb{E}_P[f(X_u,X_s)\vert X_u]$ for all $P\in\wmprocesses_\rateset$, under the natural ordering on $\gambles(\states_u)$ that, for all $g,h\in\gambles(\states_u)$, $g\leq h$ if and only if $g(x_u)\leq h(x_u)$ for all $x_u\in\states_u$.
 %However, if we now consider functions $f\in\gambles(\states_{u\cup v})$, we also find a ``history''---or more aptly, \emph{trajectory}---dependence in the resolution of the time points in $v$. 
 
-In the example below, we reconsider the problem of Example~\ref{exmp:num_multivar_func_nonmarkov}, but for a different {\ictmc}: we now use $\wmprocesses_{\rateset,\mathcal{M}}$ instead of $\wprocesses_{\rateset,\mathcal{M}}$. The result ends up being different, and thereby illustrates---by means of a counterexample---that Algorithm~\ref{alg:compute_multivar} is not in general applicable when working with sets of Markov chains. 
+In the example below, we reconsider the problem of Example~\ref{exmp:num_multivar_func_nonmarkov}, but for a different {\ictmc}: we now use $\wmprocesses_{\rateset,\mathcal{M}}$ instead of $\wprocesses_{\rateset,\mathcal{M}}$. The result ends up being different, and thereby illustrates---by means of a counterexample---that Algorithm~\ref{alg:compute_multivar} is not in general applicable when working with sets of Markov chains such as $\wmprocesses_{\rateset,\mathcal{M}}$.
 
 %The example below will show that, indeed, the lower expectation of the function from Example~\ref{exmp:num_multivar_func_nonmarkov}, with respect to $\wmprocesses_\rateset$, is different from the one that was found for $\wprocesses_\rateset$. This therefore shows by counterexample that Algorithm~\ref{alg:compute_multivar} is not in general applicable when working with sets of Markov chains. %Put differently, a composition of lower transition operators does not in general correspond to the lower expectation for such a set, i.e.,
 %\begin{equation*}
@@ -3530,18 +3532,11 @@ In the example below, we reconsider the problem of Example~\ref{exmp:num_multiva
 %in contrast to our results from Section~\ref{sec:decomposition} for the set $\wprocesses_\rateset$.
 
 \begin{exmp} \label{exmp:num_counterexample_markov}
-Consider again the model and set of rate matrices $\rateset$ from Example~\ref{exmp:example_rateset_simple_model}, and the function $f\in\gambles(\states_{\{1,2\}})$ from Example~\ref{exmp:num_multivar_func_nonmarkov} given by
-\begin{equation*}
-f(X_1,X_2) \coloneqq \left\{\begin{array}{ll}
-1 & \text{if $X_1 = X_2$, and} \\
-0 & \text{otherwise.}
-\end{array}\right.
-\end{equation*}
-We will here compute the lower expectation $\underline{\mathbb{E}}_\rateset^{\mathrm{WM}}[f(X_1,X_2)\,\vert\,X_0]$ of this function with respect to the set $\wmprocesses_\rateset$ of Markov chains consistent with $\rateset$. We will then see that this lower expectation differs from the one found in Example~\ref{exmp:num_multivar_func_nonmarkov} for the set $\wprocesses_\rateset$.
+Consider again the set of rate matrices $\rateset$ from Example~\ref{exmp:example_rateset_simple_model} and the problem of computing $\underline{P}(X_1 = X_2\,\vert\, X_0)$. However, this time, we will compute this quantity with respect to the {\ictmc} $\wmprocesses_{\rateset}$ instead of $\wprocesses_{\rateset}$. Using an argument that is analogous to that in Example~\ref{exmp:example_rateset_simple_model}, we find that this problem is equivalent to computing $\underline{\mathbb{E}}_{\rateset}^{\mathrm{WM}}[f(X_0,X_1,X_2)\,\vert\,X_0]$, with $f$ as in Equation~\eqref{eq:fforexample}. %We will then see that this lower expectation differs from the one found in Example~\ref{exmp:num_multivar_func_nonmarkov} for the set $\wprocesses_\rateset$.
 
-A major problem in doing so, however, is that we do not have a general method for computing such lower expectations for sets of Markov chains. Fortunately, in the very specific case of a binary state space $\mathcal{X}$---as we use here in this example---and for functions $f$ that depend on a small number of states $X_t$---just $X_1$ and $X_2$ in this case---it is possible to numerically solve the optimization problem given by the right-hand side of
+The issue, however, is that we do not have a general method for computing such lower expectations for sets of Markov chains. Fortunately, in the very specific case of a binary state space $\mathcal{X}$---as we use here in this example---and for functions $f$ that depend on a small number of states $X_t$---only three in this case---it is possible to numerically solve the optimization problem given by the right-hand side of
 \begin{equation*}
-\underline{\mathbb{E}}_\rateset^{\mathrm{WM}}[f(X_1,X_2)\,\vert\,X_0] = \inf\left\{ \mathbb{E}_P[f(X_1,X_2)\,\vert\,X_0]\,:\,P\in\wmprocesses_\rateset\right\}\\[6pt]
+\underline{\mathbb{E}}_{\rateset}^{\mathrm{WM}}[f(X_0,X_1,X_2)\,\vert\,X_0] = \inf\left\{ \mathbb{E}_P[f(X_1,X_2)\,\vert\,X_0]\,:\,P\in\wmprocesses_\rateset\right\}%\\[6pt]
 \end{equation*}
 %This numerical approach was verified to work for simple functions $g\in\gamblesX$, i.e. functions defined on a single time point, for which Corollary~\ref{cor:lower_operator_is_infimum} tells us that the lower expectation should correspond to the quantity $L_t^sg$. Because Algorithm~\ref{alg:compute_singlevar} tells us how to compute this latter quantity, we could verify the precision of the numerical optimization employed here. In doing so, we found a numerical correspondence between the ``brute-force'' optimization over $\wmprocesses_\rateset$ and the computation using $L_t^s$, with deviations less than the $\epsilon$ error-bound used to compute the quantity $L_t^sg$.
 by combining brute-force optimization techniques with some clever tricks. We will not report on this method here, because it only works in very specific cases such as the one we consider here, and does not scale well to larger problems. For our present purposes, it suffices to know that this method yields the following results:
@@ -3549,7 +3544,7 @@ by combining brute-force optimization techniques with some clever tricks. We wil
 \underline{P}_{\rateset}^{\mathrm{WM}}(X_1 = X_2\,\vert\,X_0=\text{{\tt h}}) \approx 0.939~~\text{and}~~\underline{P}_{\rateset}^{\mathrm{WM}}(X_1 = X_2\,\vert\,X_0=\text{{\tt s}}) \approx 0.467.
 \end{align*}
 
-Comparing to the lower expectation for the set $\wprocesses_\rateset$ that was found in Example~\ref{exmp:num_multivar_func_nonmarkov}, we see that the lower expectations are indeed different for these two sets of processes. Furthermore, as was guaranteed by Proposition~\ref{prop:lower_exp_markov_bounded_by_nonmarkov}, the lower expectation for $\wprocesses_\rateset$ indeed provides a lower bound for the lower expectation with respect to $\wmprocesses_\rateset$.
+Comparing to the results for $\wprocesses_\rateset$ in Example~\ref{exmp:num_multivar_func_nonmarkov}, we see that the obtained lower probabilities are indeed different for these two sets of processes. Furthermore, as guaranteed by Proposition~\ref{prop:lower_exp_markov_bounded_by_nonmarkov}, the lower probabilities with respect to $\wprocesses_\rateset$---which, as we know from Section~\ref{subsec:ictmc_types}, is just a special type of lower expectation---provides a lower bound on the lower probabilities with respect to $\wmprocesses_\rateset$.
 \exampleend
 \end{exmp}
 
