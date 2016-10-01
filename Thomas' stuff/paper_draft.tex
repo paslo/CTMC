@@ -3494,16 +3494,21 @@ For example, if we were to assume that
 \begin{equation*}%\label{eq:nested_lower_exp_single_step}
 \underline{\mathbb{E}}_{\rateset,\,\mathcal{M}}^{\mathrm{WM}}[f(X_u,X_t,X_s)\,\vert\,X_u] = \underline{\mathbb{E}}_{\rateset,\,\mathcal{M}}^{\mathrm{WM}}\bigl[ \underline{\mathbb{E}}_{\rateset,\,\mathcal{M}}^{\mathrm{WM}}[f(X_u,X_t,X_s)\,\vert\,X_u,X_t] \,\big\vert\,X_u\bigr],
 \end{equation*}
-thereby mimicking Equation~\eqref{eq:nested_lower_exp_single_step} for $v=\{t,s\}$, we would essentially be assuming that we can combine the individual processes $P_{x_u,\,x_t}\in\wmprocesses_{\rateset,\mathcal{M}}$ for which the conditional lower expectations
+thereby mimicking Equation~\eqref{eq:nested_lower_exp_single_step} for $v=\{t,s\}$, we would essentially be assuming that the individual Markov chains $P_{x_u,\,x_t}\in\wmprocesses_{\rateset,\mathcal{M}}$ for which the conditional lower expectations
 \begin{equation*}
 \underline{\mathbb{E}}_{\rateset,\,\mathcal{M}}^{\mathrm{WM}}[f(X_u,X_t,X_s)\,\vert\,X_u=x_u,X_t=x_t]\vspace{5pt}
 \end{equation*}
-are obtained---or rather approximated from above up to some arbitrary $\epsilon$---into a single new Markov chain $P\in\wmprocesses_{\rateset,\mathcal{M}}$ such that
+are obtained---or rather, are approximated from above up to some arbitrary $\epsilon$---can be combined into a single new Markov chain $P\in\wmprocesses_{\rateset,\mathcal{M}}$ such that
 \begin{equation}\label{eq:Markovfailure}
-P(X_s\vert X_u=x_u,X_t=x_t)=P_{x_u}(X_s\vert X_u=x_u,X_t=x_t)=P_{x_u}(X_s\vert X_t=x_t)
+P(X_s\vert X_u=x_u,X_t=x_t)=P_{x_u,x_t}(X_s\vert X_u=x_u,X_t=x_t)=P_{x_u,x_t}(X_s\vert X_t=x_t)
 \end{equation}
-for all $x_u\in\states_u$ and $x_t\in\states$. However, in most cases, this will not be possible: as can be seen from Equation~\eqref{eq:Markovfailure}, such a stochastic process $P$ can easily fail the Markov property, because the right hand side of the expression still depends on $x_u$.
+for all $x_u\in\states_u$ and $x_t\in\states$. However, in most cases, this will not be possible. The issue is that for a stochastic process $P$ that satisfies Equation~\eqref{eq:Markovfailure}, the Markov property will---generally speaking---fail, because the right hand side of the expression still depends on $x_u$.%, and will therefore not belong to $\wmprocesses_{\rateset,\mathcal{M}}$.
 
+All of this changes if we replace $\wmprocesses_{\rateset,\mathcal{M}}$ with $\wprocesses_{\rateset,\mathcal{M}}$. In that case, we are no longer forced to obey the Markov property, and it then does become possible to combine different stochastic processes in a history-dependent way, as in Equation~\eqref{eq:Markovfailure}---using Theorem~\ref{theo:aanelkaarplakken}. Essentially, this is the main reason why we were able to decompose the lower expectations $\underline{\mathbb{E}}_{\rateset,\,\mathcal{M}}^{\mathrm{W}}$---as we did in Theorem~\ref{theorem:decomposition_multivar} and Equation~\eqref{eq:nested_lower_exp_single_step}---and ultimately, why we could use the operator $L_t^s$ to compute them.
+
+%In order to have a single minimizing process, we require in general that the probabilities of this process can depend on the entire state assignment $x_u$---and this is exactly what the Markov property prevents us from doing.
+
+%Non-Markov processes provide us with these additional degrees of freedom to let the probabilities depend on the specific trajectory $x_{u\cup v}\in\states_{u\cup v}$, which is why we \emph{can} use the operator $L_t^s$ to compute lower expectations of such functions for the set $\wprocesses_{\rateset}$.
 
 %Corollary~\ref{cor:composition_lower_trans} crucially depends on Theorem~\ref{theorem:decomposition_multivar}, because it validates the decomposition in Equation~\eqref{eq:nested_lower_exp_single_step}.
 
@@ -3511,13 +3516,14 @@ for all $x_u\in\states_u$ and $x_t\in\states$. However, in most cases, this will
 
 %In particular, for each $x_u\in\states_u$, we find $\underline{\mathbb{E}}_\rateset^\mathrm{WM}[f(x_u,X_s)\vert X_u=x_u]$ as a minimization over $\{\mathbb{E}_P[f(x_u,X_s)\vert X_u=x_u] : P\in\wmprocesses_\rateset\}$ for the specific restriction $f(x_u,X_s)$ of $f(X_u,X_s)$. Since $f(x_u,X_s)$ may take different values for each $x_u$, the minimizing process may therefore be different for each state assignment $x_u$. 
 
-Therefore, in order to have a single minimizing process, we require in general that the probabilities of this process can depend on the entire state assignment $x_u$---and this is exactly what the Markov property prevents us from doing.
+
 
 % Now, in the case of functions $f\in\gambles(\states_{u\cup s})$, the conditional lower expectation $\underline{\mathbb{E}}_\rateset^\mathrm{WM}[f(X_u,X_s)\vert X_u]$ is still correctly given by these (separate) minimizing processes, due to the definition of the infimum---that is, the infimum does not require that it actually be reached. In particular, $L_{t_n}^sf$ is the greatest element of $\gambles(\states_u)$ that is not greater than $\mathbb{E}_P[f(X_u,X_s)\vert X_u]$ for all $P\in\wmprocesses_\rateset$, under the natural ordering on $\gambles(\states_u)$ that, for all $g,h\in\gambles(\states_u)$, $g\leq h$ if and only if $g(x_u)\leq h(x_u)$ for all $x_u\in\states_u$.
+%However, if we now consider functions $f\in\gambles(\states_{u\cup v})$, we also find a ``history''---or more aptly, \emph{trajectory}---dependence in the resolution of the time points in $v$. 
 
-However, if we now consider functions $f\in\gambles(\states_{u\cup v})$, we also find a ``history''---or more aptly, \emph{trajectory}---dependence in the resolution of the time points in $v$. Non-Markov processes provide us with these additional degrees of freedom to let the probabilities depend on the specific trajectory $x_{u\cup v}\in\states_{u\cup v}$, which is why we \emph{can} use the operator $L_t^s$ to compute lower expectations of such functions for the set $\wprocesses_{\rateset}$.
+In the example below, we reconsider the problem of Example~\ref{exmp:num_multivar_func_nonmarkov}, but for a different {\ictmc}: we now use $\wmprocesses_{\rateset,\mathcal{M}}$ instead of $\wprocesses_{\rateset,\mathcal{M}}$. The result ends up being different, and thereby illustrates---by means of a counterexample---that Algorithm~\ref{alg:compute_multivar} is not in general applicable when working with sets of Markov chains. 
 
-The example below will show that, indeed, the lower expectation of the function from Example~\ref{exmp:num_multivar_func_nonmarkov}, with respect to $\wmprocesses_\rateset$, is different from the one that was found for $\wprocesses_\rateset$. This therefore shows by counterexample that Algorithm~\ref{alg:compute_multivar} is not in general applicable when working with sets of Markov chains. %Put differently, a composition of lower transition operators does not in general correspond to the lower expectation for such a set, i.e.,
+%The example below will show that, indeed, the lower expectation of the function from Example~\ref{exmp:num_multivar_func_nonmarkov}, with respect to $\wmprocesses_\rateset$, is different from the one that was found for $\wprocesses_\rateset$. This therefore shows by counterexample that Algorithm~\ref{alg:compute_multivar} is not in general applicable when working with sets of Markov chains. %Put differently, a composition of lower transition operators does not in general correspond to the lower expectation for such a set, i.e.,
 %\begin{equation*}
 %\left[L_{t_n}^{s_0}L_{s_0}^{s_1}\cdots L_{s_{m-1}}^{s_m}f\right](x_u) \neq \underline{\mathbb{E}}_\rateset^{\mathrm{WM}}[f(X_u,X_v)\,\vert\,X_u=x_u]\,,
 %\end{equation*}
