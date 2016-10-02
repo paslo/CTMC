@@ -3581,29 +3581,55 @@ Of course, this should not really be surprising---even the simple enumeration of
 
 \subsection{Unconditional Lower Expectations}\label{sec:marginal_lower_exp}
 
-Having shown in Section~\ref{sec:decomposition} how to compute \emph{conditional} lower expectations of functions defined on an arbitrary number of time points, we now consider how to compute \emph{marginal}---that is, unconditional---lower expectations of such functions. Thus, we consider a function $f\in\gambles(\states_u)$, with $u\in\mathcal{U}_{\emptyset}$, and are interested in the quantity $\underline{\mathbb{E}}[f(X_u)]$.
+Having shown in the previous sections how to compute conditional lower expectations, we now shift our attention to unconditional ones. In particular, we consider a function $f\in\gambles(\states_u)$, with $u\in\mathcal{U}_{\emptyset}$, and are interested in computing $\underline{\mathbb{E}}[f(X_u)]$. 
 
-An astute reader may have noticed that all our previous results about computability with the operator $L_t^s$ hold for any choice of initial distributions $\mathcal{M}$. Therefore, and because the definition of $L_t^s$ does not rely on the choice of $\mathcal{M}$, it follows that conditional lower expectations with respect to $\wmprocesses_{\rateset,\,\mathcal{M}}$ and $\wprocesses_{\rateset,\,\mathcal{M}}$ are invariant to the choice of $\mathcal{M}$. In contrast, and unsurprisingly, marginal lower expectations do depend on this choice.
+As we will see, the difference between unconditional and conditional lower expectations is mainly related to the role of the set of initial distributions $\mathcal{M}$. In particular, as an astute reader may have noticed, all our previous results about computing conditional lower expectations with the operator $L_t^s$ did not depend on the particular choice of this set $\mathcal{M}$. %Therefore, and because the definition of $L_t^s$ does not rely on the choice of $\mathcal{M}$, it follows that conditional lower expectations with respect to $\wmprocesses_{\rateset,\,\mathcal{M}}$ and $\wprocesses_{\rateset,\,\mathcal{M}}$ are invariant to the choice of $\mathcal{M}$. 
+In contrast, and rather unsurprisingly, unconditional lower expectations do depend on this choice.
 
 
-Nevertheless, the computation of marginal lower expectations is relatively straightforward when they are taken with respect to $\wprocesses_{\rateset,\,\mathcal{M}}$, assuming that $\rateset$ is non-empty, bounded, convex, and has separately specified rows. Note that these are the same requirements that we mentioned in Section~\ref{sec:decomposition} are necessary for computing conditional lower expectations of arbitrary functions. In what follows, we will explain how to compute $\underline{\mathbb{E}}_{\rateset,\,\mathcal{M}}^\mathrm{W}[f(X_u)]$ if $\rateset$ satisfies these assumptions.
+Nevertheless, as we are about to show, the computation of unconditional lower expectations is relatively straightforward when they are taken with respect to the {\ictmc} $\wprocesses_{\rateset,\,\mathcal{M}}$, at least when the set of rate matrices $\rateset$ is non-empty, bounded and convex, and has separately specified rows. Note that these are the same requirements that appeared in Section~\ref{sec:decomposition} for our results on computing conditional lower expectations of functions that depend on the state at multiple future time points. In what follows, we explain how to compute $\underline{\mathbb{E}}_{\rateset,\,\mathcal{M}}^\mathrm{W}[f(X_u)]$, provided that $\rateset$ satisfies these conditions.
 
-*** $\underline{\mathbb{E}}_{\rateset,\mathcal{M}}^\mathrm{W}(g(X_0)=\underline{\mathbb{E}}_{\mathcal{M}}(g(X_0)$ is non-trivial; this needs to be shown/proved ***
 
-*** I will first explain the decomposition, showing that everything reduces to $\underline{\mathbb{E}}_{\rateset,\mathcal{M}}^\mathrm{W}(g(X_0)$, then prove that it is equal to $\underline{\mathbb{E}}_{\mathcal{M}}(g(X_0)$, and then explain that this is basically just linear programming ***
-
-Due to Theorem~\ref{theorem:decomposition_multivar}, we can rewrite\footnote{Technically, this requires that $f$ depends on the state at time $0$. However, if $0\notin u$, we can instead use the trivial extension of $f$ from $\states_{u}$ to a function $f^*$ on $\states_{0\cup u}$, such that $f(x_u)=f^*(x_0,x_u)$ for all $x_0\in\states_0$. Hence, we can assume without loss of generality that $0\in u$.} the marginal lower expectation $\underline{\mathbb{E}}_{\rateset,\,\mathcal{M}}^\mathrm{W}[f(X_u)]$ as
-\begin{equation}\label{eq:marginal_decomp}
-\underline{\mathbb{E}}_{\rateset,\,\mathcal{M}}^\mathrm{W}[f(X_u)] = \underline{\mathbb{E}}_{\rateset,\,\mathcal{M}}^\mathrm{W}[\underline{\mathbb{E}}_{\rateset,\,\mathcal{M}}^\mathrm{W}[f(X_u)\,\vert\,X_0]] = \underline{\mathbb{E}}_{\mathcal{M}}[\underline{\mathbb{E}}_{\rateset,\,\mathcal{M}}^\mathrm{W}[f(X_u)\,\vert\,X_0]]\,,
-\end{equation}
-where we have used $\underline{\mathbb{E}}_{\mathcal{M}}[g(X_0)]\coloneqq \inf\{\sum_{x\in\states}p(x)g(x)\,:\,p\in\mathcal{M}\}$. Note that the inner lower expectation in the right-hand side of Equation~\eqref{eq:marginal_decomp} is a conditional lower expectation which, due to Corollary~\ref{cor:composition_lower_trans}, is computable as
-\begin{equation*}
-\underline{\mathbb{E}}_{\rateset,\,\mathcal{M}}^\mathrm{W}[f(X_u)\,\vert\,X_0] = \left[L_{t_0}^{t_1}L_{t_1}^{t_2}\cdots L_{t_{n-1}}^{t_n}f\right](X_0) =: \hat{f}(X_0)\,,
+Without loss of generality, we assume that $0\in u$. Whenever this is not the case, it suffices to first replace $f(X_u)$ by its trivial extension $f^*(X_0,X_u)$ to $\states_{0\cup u}$, defined by $f^*(x_0,x_u)\coloneqq f(x_u)$ for all $x_0\in\states$ and $x_u\in\states_u$. This addition of $X_0$ to the domain is merely a notational trick: since $f^*(X_0,X_u)$ is identical to $f(X_u)$, it clearly does not influence the result of the computations. It does however provide us with the formal requirements to apply Theorem~\ref{theorem:decomposition_multivar} and Corollary~\ref{cor:composition_lower_trans}. From the former, we infer that 
+%\footnote{Technically, this requires that $f$ depends on the state at time $0$. However, if $0\notin u$, we can instead use the trivial extension of $f$ from $\states_{u}$ to a function $f^*$ on $\states_{0\cup u}$, such that $f(x_u)=f^*(x_0,x_u)$ for all $x_0\in\states_0$. Hence, we can assume without loss of generality that $0\in u$.} 
+%the marginal lower expectation $\underline{\mathbb{E}}_{\rateset,\,\mathcal{M}}^\mathrm{W}[f(X_u)]$ as
+\begin{equation*}%\label{eq:marginal_decomp}
+\underline{\mathbb{E}}_{\rateset,\,\mathcal{M}}^\mathrm{W}[f(X_u)] = \underline{\mathbb{E}}_{\rateset,\,\mathcal{M}}^\mathrm{W}[\underline{\mathbb{E}}_{\rateset,\,\mathcal{M}}^\mathrm{W}[f(X_u)\,\vert\,X_0]]
+=\underline{\mathbb{E}}_{\rateset,\,\mathcal{M}}^\mathrm{W}[\hat{f}(X_0)],
+%= \underline{\mathbb{E}}_{\mathcal{M}}[\underline{\mathbb{E}}_{\rateset,\,\mathcal{M}}^\mathrm{W}[f(X_u)\,\vert\,X_0]]\,,
 \end{equation*}
-with $u=t_0,\ldots,t_n$, and where we have assumed without loss of generality that $t_0=0$. Thus, we find that
+where, because of the latter, for all $x_0\in\states$:
 \begin{equation*}
-\underline{\mathbb{E}}_{\rateset,\,\mathcal{M}}^\mathrm{W}[f(X_u)] = \underline{\mathbb{E}}_{\mathcal{M}}[\hat{f}(X_0)] = \inf\left\{\sum_{x_0\in\states_0}p(x_0)\hat{f}(x_0)\,:\,p\in\mathcal{M} \right\}\,.
+\hat{f}(x_0)\coloneqq
+\underline{\mathbb{E}}_{\rateset,\,\mathcal{M}}^\mathrm{W}[f(X_u)\,\vert\,X_0=x_0]=\left[L_{t_0}^{t_1}L_{t_1}^{t_2}\cdots L_{t_{n-1}}^{t_n}f\right](x_0),
+%~\text{ for all $x_0\in\states$},
 \end{equation*}
+with $u=t_0,\ldots,t_n$ and, without loss of generality, $t_0=0$.
+
+\begin{proposition}\label{prop:computeinitial}
+Let $\mathcal{M}$ be a non-empty set of probability mass functions on $\states$ and let $\rateset$ be a non-empty bounded set of rate matrices. Then for all $f\in\gamblesX$:
+\begin{equation*}
+\underline{\mathbb{E}}^\mathrm{W}_{\rateset,\mathcal{M}}[f(X_0)]
+=
+\underline{\mathbb{E}}_{\mathcal{M}}[f]
+\coloneqq
+\inf
+\left\{\sum_{x\in\states}p(x)f(x)\colon p\in\mathcal{M}\right\}.
+\vspace{5pt}
+\end{equation*}
+\end{proposition}
+\begin{proof}[Proof of Proposition~\ref{prop:computeinitial}]
+test
+\end{proof}
+% where we have used $\underline{\mathbb{E}}_{\mathcal{M}}[g(X_0)]\coloneqq \inf\{\sum_{x\in\states}p(x)g(x)\,:\,p\in\mathcal{M}\}$. Note that the inner lower expectation in the right-hand side of Equation~\eqref{eq:marginal_decomp} is a conditional lower expectation which, due to Corollary~\ref{cor:composition_lower_trans}, is computable as
+
+% and where we have assumed without loss of generality that $t_0=0$. 
+
+
+%Thus, we find that
+% \begin{equation*}
+% \underline{\mathbb{E}}_{\rateset,\,\mathcal{M}}^\mathrm{W}[f(X_u)] = \underline{\mathbb{E}}_{\mathcal{M}}[\hat{f}(X_0)] = \inf\left\{\sum_{x_0\in\states_0}p(x_0)\hat{f}(x_0)\,:\,p\in\mathcal{M} \right\}\,.
+% \end{equation*}
 Hence, in order to compute the marginal lower expectation $\underline{\mathbb{E}}_{\rateset,\,\mathcal{M}}^\mathrm{W}[f(X_u)]$, it suffices to only compute the term $\hat{f}(X_0)$ once, which by Corollary~\ref{cor:composition_lower_trans} can be done with the operator $L_t^s$. What remains is a relatively straightforward linear optimization problem over the set $\mathcal{M}$, which is a well-known problem in the field of imprecise probability. We will henceforth assume that this problem is solvable, although the difficulty clearly depends on the exact choice of $\mathcal{M}$.
 
 As two particular cases, we note that if $\mathcal{M}$ is the set of \emph{all} probability mass functions on $\states$, we have that
