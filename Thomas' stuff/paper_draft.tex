@@ -3604,23 +3604,33 @@ where, because of the latter, for all $x_0\in\states$:
 \underline{\mathbb{E}}_{\rateset,\,\mathcal{M}}^\mathrm{W}[f(X_u)\,\vert\,X_0=x_0]=\left[L_{t_0}^{t_1}L_{t_1}^{t_2}\cdots L_{t_{n-1}}^{t_n}f\right](x_0),
 %~\text{ for all $x_0\in\states$},
 \end{equation*}
-with $u=t_0,\ldots,t_n$ and, without loss of generality, $t_0=0$.
+with $u=t_0,\ldots,t_n$ and, without loss of generality, $t_0=0$. Hence, the only part of the problem that is new here is the computation of $\underline{\mathbb{E}}_{\rateset,\,\mathcal{M}}^\mathrm{W}[\hat{f}(X_0)]$.
+
+The first part consists in computing $\hat{f}$, which we already know how to do, , we need to c
 
 \begin{proposition}\label{prop:computeinitial}
 Let $\mathcal{M}$ be a non-empty set of probability mass functions on $\states$ and let $\rateset$ be a non-empty bounded set of rate matrices. Then for all $f\in\gamblesX$:
 \begin{equation*}
 \underline{\mathbb{E}}^\mathrm{W}_{\rateset,\mathcal{M}}[f(X_0)]
 =
+\underline{\mathbb{E}}^\mathrm{WM}_{\rateset,\mathcal{M}}[f(X_0)]
+=
+\underline{\mathbb{E}}^\mathrm{WHM}_{\rateset,\mathcal{M}}[f(X_0)]
+=
+\underline{\mathbb{E}}_{\mathcal{M}}[f],
+%\vspace{5pt}
+\end{equation*}
+with
+\vspace{-2pt}
+\begin{equation}\label{eq:initiallowerexp}
 \underline{\mathbb{E}}_{\mathcal{M}}[f]
 \coloneqq
 \inf
 \left\{\sum_{x\in\states}p(x)f(x)\colon p\in\mathcal{M}\right\}.
-\vspace{5pt}
-\end{equation*}
+\vspace{6pt}
+\end{equation}
 \end{proposition}
-\begin{proof}[Proof of Proposition~\ref{prop:computeinitial}]
-test
-\end{proof}
+
 % where we have used $\underline{\mathbb{E}}_{\mathcal{M}}[g(X_0)]\coloneqq \inf\{\sum_{x\in\states}p(x)g(x)\,:\,p\in\mathcal{M}\}$. Note that the inner lower expectation in the right-hand side of Equation~\eqref{eq:marginal_decomp} is a conditional lower expectation which, due to Corollary~\ref{cor:composition_lower_trans}, is computable as
 
 % and where we have assumed without loss of generality that $t_0=0$. 
@@ -6904,6 +6914,34 @@ Because of Equations~\eqref{eq:fixxu} and~\eqref{eq:applyLtolargerfunctions}, th
 \end{proof}
 \begin{proof}[Proof of Corollary~\ref{cor:composition_lower_trans}]
 As explained in the main text of Section~\ref{sec:decomposition}, this result is an immediate consequence of Theorem~\ref{theorem:decomposition_multivar} and Corollary~\ref{cor:inf_works_for_single_future_var}.
+\end{proof}
+
+\begin{proof}[Proof of Proposition~\ref{prop:computeinitial}]
+Fix $f\in\gamblesX$ and $\epsilon>0$. It then follows from Equation~\eqref{eq:lowerexp3} that there is a stochastic process $\smash{P\in\wprocesses_{\rateset,\mathcal{M}}}$ such that $\mathbb{E}_P[f(X_0)]\leq\underline{\mathbb{E}}^\mathrm{W}_{\rateset,\mathcal{M}}[f(X_0)]+\epsilon$. Furthermore, since $P\in\wprocesses_{\rateset,\mathcal{M}}$, it follows from Definitions~\ref{def:consistent_process_initialdistribution} and~\ref{def:process_sets} that $P(X_0)\in\mathcal{M}$, and therefore, that
+\begin{equation*}
+\mathbb{E}_P[f(X_0)]=\sum_{x\in\states}P(X_0=x)f(x)\geq\underline{\mathbb{E}}_{\mathcal{M}}[f].
+\end{equation*}
+Because of Equation~\eqref{eq:initiallowerexp}, we also know that there is a probability mass function $p\in\mathcal{M}$ such that $\sum_{x\in\states}p(x)f(x)\leq\underline{\mathbb{E}}_{\mathcal{M}}[f]+\epsilon$. Consider now any $Q\in\rateset$. It then follows from Corollary~\ref{cor:rate_has_unique_homogen_markov_process} that there is a unique well-behaved homogeneous Markov chain $P'\in\mprocesses$, with transition matrix $Q$, and with $P'(X_0=x)=p(x)$ for all $x\in\states$. Since $P'$ clearly belongs to $\whmprocesses_{\rateset,\mathcal{M}}$, this implies that
+\begin{equation*}
+\sum_{x\in\states}p(x)f(x)
+=\sum_{x\in\states}P'(X_0=x)f(x)
+=\mathbb{E}_{P'}[f(X_0)]
+\geq\underline{\mathbb{E}}_{\rateset,\mathcal{M}}^{\mathrm{W
+HM}}[f(X_0)].
+\end{equation*}
+Hence, we conclude that
+\begin{equation*}
+\underline{\mathbb{E}}^\mathrm{W}_{\rateset,\mathcal{M}}[f(X_0)]+\epsilon\geq\mathbb{E}_P[f(X_0)]
+\geq
+\underline{\mathbb{E}}_{\mathcal{M}}[f]
+\geq\sum_{x\in\states}p(x)f(x)-\epsilon
+\geq\underline{\mathbb{E}}_{\rateset,\mathcal{M}}^{\mathrm{W
+HM}}[f(X_0)]-\epsilon.
+\end{equation*}
+Since $\epsilon>0$ is arbitrary, this implies that $
+\underline{\mathbb{E}}^\mathrm{W}_{\rateset,\mathcal{M}}[f(X_0)]
+=\underline{\mathbb{E}}_{\mathcal{M}}[f]=\underline{\mathbb{E}}_{\rateset,\mathcal{M}}^{\mathrm{W
+HM}}[f(X_0)]$, and therefore, the result follows from Proposition~\ref{prop:lower_exp_markov_bounded_by_nonmarkov}.
 \end{proof}
 
 %\begin{proof}[Proof of Proposition~\ref{prop:multi_var_single_future_bounded}]
