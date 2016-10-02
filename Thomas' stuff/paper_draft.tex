@@ -2943,7 +2943,7 @@ with the time unit again being one week. Note that $\rateset$ here is clearly no
 
 %We will now focus on how to compute lower expectations with respect to imprecise continuous-time Markov chains induced by the set $\rateset$ from Example~\ref{exmp:example_rateset_simple_model}. To this end, consider the lower transition rate operator $\lrate$ corresponding to this $\rateset$. It should be clear that, for any function $f\in\gamblesX$, computing the quantity $\lrate f$ is relatively easy.
 
-As mentioned above, for a given set $\rateset$, Proposition~\ref{prop:approximation_error_bound} allows us to reduce the problem of computing conditional lower expectations to the problem of evaluating the lower transition operator $\lrate$ of $\rateset$, as defined in Equation~\eqref{eq:correspondinglowertrans}. In theory, the latter could still be a difficult problem, since $\rateset$ can very complicated---we only require that it is non-empty and has separately specified rows. However, in practise, $\rateset$ will typically be described by means of linear constraints, and computing $\lrate g$ is then a standard constrained linear optimisation problem, which is easily solved by means of linear programming techniques. 
+As mentioned above, for a given set $\rateset$, Proposition~\ref{prop:approximation_error_bound} allows us to reduce the problem of computing conditional lower expectations to the problem of evaluating the lower transition operator $\lrate$ of $\rateset$, as defined in Equation~\eqref{eq:correspondinglowertrans}. In theory, the latter could still be a difficult problem, since $\rateset$ can very complicated---we only require that it is non-empty and has separately specified rows. However, in practice, $\rateset$ will typically be described by means of linear constraints, and computing $\lrate g$ is then a standard constrained linear optimisation problem, which is easily solved by means of linear programming techniques. 
 %Note that, in the context of computing conditional lower expectations, we require $\rateset$ to have separately specified rows. This already reduces the complexity of the optimization, because this implies that, for all $x\in\states$, $[\lrate g](x)$ is given by
 % \begin{equation}\label{eq:lrate_optimization_separate}
 % [\lrate g](x) = \inf\left\{ Q(x,\cdot)g : Q(x,\cdot)\in\rateset_x\right\}\,,
@@ -3599,14 +3599,18 @@ Without loss of generality, we assume that $0\in u$. Whenever this is not the ca
 %= \underline{\mathbb{E}}_{\mathcal{M}}[\underline{\mathbb{E}}_{\rateset,\,\mathcal{M}}^\mathrm{W}[f(X_u)\,\vert\,X_0]]\,,
 \end{equation*}
 where, because of the latter, for all $x_0\in\states$:
-\begin{equation*}
-\hat{f}(x_0)\coloneqq
-\underline{\mathbb{E}}_{\rateset,\,\mathcal{M}}^\mathrm{W}[f(X_u)\,\vert\,X_0=x_0]=\left[L_{t_0}^{t_1}L_{t_1}^{t_2}\cdots L_{t_{n-1}}^{t_n}f\right](x_0),
+\begin{align*}
+\hat{f}(x_0)\coloneqq&
+\underline{\mathbb{E}}_{\rateset,\,\mathcal{M}}^\mathrm{W}[f(X_u)\,\vert\,X_0=x_0]
+=
+\underline{\mathbb{E}}_{\rateset}^\mathrm{W}[f(X_u)\,\vert\,X_0=x_0]
+=\left[L_{t_0}^{t_1}L_{t_1}^{t_2}\cdots L_{t_{n-1}}^{t_n}f\right](x_0),
 %~\text{ for all $x_0\in\states$},
-\end{equation*}
-with $u=t_0,\ldots,t_n$ and, without loss of generality, $t_0=0$. Hence, the only part of the problem that is new here is the computation of $\underline{\mathbb{E}}_{\rateset,\,\mathcal{M}}^\mathrm{W}[\hat{f}(X_0)]$.
+\end{align*}
+with $u=t_0,\ldots,t_n$ and, without loss of generality, $t_0=0$. 
 
-The first part consists in computing $\hat{f}$, which we already know how to do, , we need to c
+Since we already know how to compute $\hat{f}$---see Section~\ref{sec:decomposition} and Algorithm~\ref{alg:compute_multivar}---the only part of the problem that is new here is the computation of $\smash{\underline{\mathbb{E}}_{\rateset,\,\mathcal{M}}^\mathrm{W}[\hat{f}(X_0)]}$. The following proposition shows that this requires us to minimise the expectation of $\smash{\hat{f}}$ with respect to the probability mass functions $p$ in $\mathcal{M}$.
+
 
 \begin{proposition}\label{prop:computeinitial}
 Let $\mathcal{M}$ be a non-empty set of probability mass functions on $\states$ and let $\rateset$ be a non-empty bounded set of rate matrices. Then for all $f\in\gamblesX$:
@@ -3640,16 +3644,26 @@ with
 % \begin{equation*}
 % \underline{\mathbb{E}}_{\rateset,\,\mathcal{M}}^\mathrm{W}[f(X_u)] = \underline{\mathbb{E}}_{\mathcal{M}}[\hat{f}(X_0)] = \inf\left\{\sum_{x_0\in\states_0}p(x_0)\hat{f}(x_0)\,:\,p\in\mathcal{M} \right\}\,.
 % \end{equation*}
-Hence, in order to compute the marginal lower expectation $\underline{\mathbb{E}}_{\rateset,\,\mathcal{M}}^\mathrm{W}[f(X_u)]$, it suffices to only compute the term $\hat{f}(X_0)$ once, which by Corollary~\ref{cor:composition_lower_trans} can be done with the operator $L_t^s$. What remains is a relatively straightforward linear optimization problem over the set $\mathcal{M}$, which is a well-known problem in the field of imprecise probability. We will henceforth assume that this problem is solvable, although the difficulty clearly depends on the exact choice of $\mathcal{M}$.
 
-As two particular cases, we note that if $\mathcal{M}$ is the set of \emph{all} probability mass functions on $\states$, we have that
-\begin{equation*}
-\underline{\mathbb{E}}_{\rateset,\,\mathcal{M}}^\mathrm{W}[f(X_u)] = \underline{\mathbb{E}}_{\rateset}^\mathrm{W}[f(X_u)] = \min\Bigl\{  \underline{\mathbb{E}}_{\rateset}^\mathrm{W}[f(X_u)\,\vert\,X_0=x] \,:\,x\in\states\Bigr\}\,,
-\end{equation*}
-and, if instead $\mathcal{M}$ is a singleton set $\mathcal{M}=\{p\}$, then
-\begin{equation*}
-\underline{\mathbb{E}}_{\rateset,\,\{p\}}^\mathrm{W}[f(X_u)] = \sum_{x\in\states} \underline{\mathbb{E}}_{\rateset}^\mathrm{W}[f(X_u)\,\vert\,X_0=x]p(x)\,.
-\end{equation*}
+
+%Hence, in order to compute the marginal lower expectation $\underline{\mathbb{E}}_{\rateset,\,\mathcal{M}}^\mathrm{W}[f(X_u)]$, it suffices to only compute the term $\hat{f}(X_0)$ once, which by Corollary~\ref{cor:composition_lower_trans} can be done with the operator $L_t^s$. What remains is a relatively straightforward linear optimization problem over the set $\mathcal{M}$, which is a well-known problem in the field of imprecise probability. We will henceforth assume that this problem is solvable, although the difficulty clearly depends on the exact choice of $\mathcal{M}$.
+
+In principle, solving this local optimisation problem can be difficult, because the only restriction we impose on $\mathcal{M}$ is that it should be non-empty. However, in practice, the set $\mathcal{M}$ will typically have a rather simple  structure, and computing $\underline{\mathbb{E}}_\mathcal{M}\left[\hat{f}\right]$ will then be straightforward. For example, if $\mathcal{M}$ consists of a finite number of probability mass functions---or is equal to their convex hull---then evaluating $\underline{\mathbb{E}}_\mathcal{M}[\hat{f}]$ is just a matter of minimising over that finite set of probability mass functions.
+Another typical situation is when $\mathcal{M}$ is specified by means of linear constraints. In that case, $\underline{\mathbb{E}}_\mathcal{M}[\hat{f}]$ can be computed by means of linear programming techniques. 
+% Finally, for the rather extreme situation where $\mathcal{M}$ is the set of all probability mass functions on $\states$, we have that
+% \begin{equation*}
+% \underline{\mathbb{E}}_{\mathcal{M}}[f(X_u)] = \underline{\mathbb{E}}_{\rateset}^\mathrm{W}[f(X_u)] = \min\Bigl\{  \underline{\mathbb{E}}_{\rateset}^\mathrm{W}[f(X_u)\,\vert\,X_0=x] \,:\,x\in\states\Bigr\}\,,
+% \end{equation*}
+
+% If $\mathcal{M}$ is a singleton set $\mathcal{M}=\{p\}$ that consists of only a single probability mass function $p$, then
+% \begin{equation*}
+% \underline{\mathbb{E}}_{\rateset,\,\{p\}}^\mathrm{W}[f(X_u)]
+% =
+% \underline{\mathbb{E}}_{\{p\}}[\hat{f}]
+% = \sum_{x\in\states}\hat{f}(x)p(x)
+% = \sum_{x\in\states} \underline{\mathbb{E}}_{\rateset}^\mathrm{W}[f(X_u)\,\vert\,X_0=x]p(x)\,.
+% \end{equation*}
+
 
 %**** Dit moet nog helemaal, maar we gaan laten zien dat $\underline{\mathbb{E}}^\mathrm{W}_{\rateset,\,\mathcal{M}}[f(X_u)]$ berekenbaar is voor alle $f\in\gambles(\states_u)$.
 %
