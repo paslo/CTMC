@@ -3687,21 +3687,41 @@ Another typical situation is when $\mathcal{M}$ is specified by means of linear 
 
 %**** other related work: Markov Decision Processes, controlled Markov processes, differential inclusions, ....
 
-To the best of our knowledge, the concept of imprecise continuous-time Markov chains was first introduced in the literature by the work of {\v{S}}kulj~\cite{Skulj:2015cq}. There, the idea was used to define $\lrate$ as a lower envelope of a set of rate matrices $\rateset$ that has separately specified rows. The notion of ``imprecise continuous-time Markov chains'' was then introduced specifically with respect to lower expectations of functions $f\in\gamblesX$. In particular, it was shown that, for a given $f\in\gamblesX$, the differential equation
+To the best of our knowledge, the concept of an imprecise continuous-time Markov chain was first introduced in the literature by the work of {\v{S}}kulj~\cite{Skulj:2015cq}. There, $\lrate$ was defined as the lower envelope of a set of rate matrices $\rateset$ that has separately specified rows, and the notion of an imprecise continuous-time Markov chain was then introduced in terms of expectations of functions $f\in\gamblesX$. 
+
+In particular, for any $f\in\gamblesX$, {\v{S}}kulj starts by considering a time-dependent function $f_t$, which---using our notation---is equal to $f_t\coloneqq T_0^t f$, and then requires that $f_0=f$,
+\begin{equation*}
+\lrate f_t
+\leq
+D^+f_t\coloneqq
+\liminf_{\Delta\to0^+}
+\frac{f_{t+\Delta}-f_t}{\Delta}
+~~~\text{and}~~~
+\limsup_{\Delta\to0^+}
+\frac{f_{t+\Delta}-f_t}{\Delta}
+=\hspace{-1.5pt}\colon D_+f_t
+\leq\overline{Q} f_t,
+\end{equation*}
+where $\overline{Q}$ is the conjugate upper transition rate operator of $\lrate$, defined by $\overline{Q}g\coloneqq-\lrate(-g)$ for all $g\in\gamblesX$, and where $D^+f_t$ and $D_-f_t$ are called Dini derivatives. In this way, he mimics the usual differential equation characterisation of a precise homogeneous Markov chain, where the the Dini derivatives would be replaced by derivatives, and where the $\lrate$ would be replaced by a transition rate matrix $Q$.
+
+
+the differential equation
 \begin{align}\label{eq:damjans_diff}
 \begin{split}
 \frac{d \underline{f}_{\,s}}{d s} &\coloneqq \lrate\,\underline{f}_{\,s}\,,\quad
 \underline{f}_{\,0} \coloneqq f\,,
 \end{split}
 \end{align}
-has a unique solution, and that this solution corresponds to the lower envelope of the set of solutions $f_s$ of differential equations\footnote{{\v{S}}kulj actually uses so-called \emph{Dini derivatives}, rather then the ordinary partial derivative notation that we use here, for technical reasons having to do with the existence of these differentials. We omit this technicality here for the sake of brevity and intuition.} satisfying $f_0=f$ and $\nicefrac{\partial f_s}{\partial s}=Q_s f_s$, %, for all $s\in\realsnonneg$,
+has a unique solution, and that this solution corresponds to the lower envelope of the set of solutions $f_s$ of differential equations
+
+%\footnote{{\v{S}}kulj actually uses so-called \emph{Dini derivatives}, rather then the ordinary partial derivative notation that we use here, for technical reasons having to do with the existence of these differentials. We omit this technicality here for the sake of brevity and intuition.} satisfying $f_0=f$ and $\nicefrac{\partial f_s}{\partial s}=Q_s f_s$, %, for all $s\in\realsnonneg$,
 %\begin{equation*}
 %\frac{\partial f_s}{\partial s} = Q_s f_s\,,
 %\end{equation*}
-with $Q_s\in\rateset$ some arbitrary rate matrix chosen at time $s$. In other words, it was shown that
-\begin{equation*}
-\underline{f}_s = \inf\left\{ f_s\in\gamblesX\,:\, f_0=f,\, \frac{\partial f_s}{\partial s}=Q_s f_s, \,Q_s\in\rateset \right\},
-\end{equation*}
+% with $Q_s\in\rateset$ some arbitrary rate matrix chosen at time $s$. In other words, it was shown that
+% \begin{equation*}
+% \underline{f}_s = \inf\left\{ f_s\in\gamblesX\,:\, f_0=f,\, \frac{\partial f_s}{\partial s}=Q_s f_s, \,Q_s\in\rateset \right\},
+% \end{equation*}
 with $\underline{f}_s$ the unique solution to Equation~\eqref{eq:damjans_diff}. 
 
 The connection to ``imprecise continuous-time Markov chains'', then, was the idea that the set over which this infimum is taken corresponds to the set of expected values induced by a certain set of ``precise'' continuous-time Markov chains, which in turn is induced by the set $\rateset$. In other words, and using the notation from our current work, it was argued that
