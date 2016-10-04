@@ -3325,9 +3325,9 @@ We can now simply apply this step over and over again, by repeatedly removing th
 \begin{corollary}\label{cor:composition_lower_trans}
 Let $\mathcal{M}$ be a non-empty set of probability mass functions on $\states$, let $\rateset$ be a non-empty, bounded and convex set of rate matrices that has separately specified rows, with lower transition rate operator $\lrate$, and let $\smash{\underline{\mathcal{T}}_{\lrate}}$ be the corresponding lower transition operator system. Then, for any $u=t_0,\ldots,t_n$ and $v={s_0,\ldots,s_m}$ in $\mathcal{U}_\emptyset$ such that with $u<v$ and any $f\in\gambles(\states_{u\cup v})$:
 \vspace{2pt}
-\begin{equation*}%\label{eq:composition_lower_trans}
+\begin{equation}\label{eq:composition_lower_trans}
 \underline{\mathbb{E}}^{\mathrm{W}}_{\,\rateset,\,\mathcal{M}}[f(X_u,X_v)\,\vert\,X_u]=L_{t_n}^{s_0}L_{s_0}^{s_1}\cdots L_{s_{m-1}}^{s_m}f.\\[5pt]
-\end{equation*}
+\end{equation}
 \end{corollary}
 
 %Observe, therefore, that we can use our lower transition operator $L_t^s$ to compute conditional lower expectations of arbitrary functions $f\in\gambles(\states_{u\cup v})$ with respect to the set $\wprocesses_{\rateset,\,\mathcal{M}}$, whenever $\rateset$ is non-empty, bounded, convex, and has separately specified rows. %We furthermore conjecture that the requirement of convexity is redundant, that is, that Theorem~\ref{theo:aanelkaarplakken} also holds without convexity, but have no proof.
@@ -3450,21 +3450,22 @@ Finally, by combining Equations~\eqref{eq:num_example_composition} and~\eqref{eq
 \exampleend
 \end{exmp}
 
-A general method for computing the conditional lower expectation in Equation~\eqref{eq:lowerexpmultipletimepoints} is outlined in Algorithm~\ref{alg:compute_multivar}. This algorithm starts by constructing a buffer $w\coloneqq v=s_0,\ldots,s_m$ of the time points for which the operators $L_{t_n}^{s_0},L_{s_1}^{s_2},\ldots,L_{s_{m-1}}^{s_m}$ have not yet been resolved, which initially corresponds to just $v$ (Line 2). We rename the function $f$ to $g_m$ for indexing purposes (Line 3). The algorithm then iteratively resolves the composition of operators in a backward fashion, working from the last time point in $v$ back to the first time point in $v$ (Line 4). One step here amounts to removing the current latest remaining time point $s_i$ from the buffer $w$ (Line 5), and then computing the lower expectation $\underline{\mathbb{E}}_{\rateset,\mathcal{M}}^\mathrm{W}[g_i(X_u,X_w,X_{s_i})\vert X_u,X_w]$ using Algorithm~\ref{alg:compute_singlevar_multiple_past}. The result of this computation is a function $g_{(i-1)}\in\gambles(\states_{u\cup w})$. By continuing in this way, the resulting iterative process corresponds to the repeated decomposition and resolution of lower expectations, as explained in the beginning of this section. After all time points $s_m,s_{m-1},\ldots,s_0$ have been resolved, it follows from Corollary~\ref{cor:composition_lower_trans} and Proposition~\ref{prop:approximation_error_bound} that the returned function $g_{(-1)}$ (Line 8) is equal to $\underline{\mathbb{E}}_{\rateset,\mathcal{M}}^\mathrm{W}[f(X_u,X_v)\vert X_u]\pm\epsilon$.
+A general method for computing the right hand side of Equation~\eqref{eq:composition_lower_trans} is outlined in Algorithm~\ref{alg:compute_multivar}. This algorithm starts by constructing a buffer $w\coloneqq v=s_0,\ldots,s_m$ of the time points for which the operators $L_{t_n}^{s_0},L_{s_1}^{s_2},\ldots,L_{s_{m-1}}^{s_m}$ have not yet been resolved, which initially corresponds to just $v$ (Line 2). We rename the function $f$ to $g_m$ for indexing purposes (Line 3). The algorithm then iteratively resolves the composition of operators in a backward fashion, working from the last time point in $v$ back to the first time point in $v$ (Line 4). One step here amounts to removing the current latest remaining time point $s_i$ from the buffer $w$ (Line 5), and then computing $L_{s_{i-1}}^{s_i}g_i$ using Algorithm~\ref{alg:compute_singlevar_multiple_past}. The outcome of this computation is a function $g_{(i-1)}\in\gambles(\states_{u\cup w})$. %By continuing in this way, the resulting iterative process corresponds to the repeated decomposition and resolution of lower expectations, as explained in the beginning of this section. 
+After all time points $s_m,s_{m-1},\ldots,s_0$ have been resolved, it follows from Proposition~\ref{prop:approximation_error_bound} that the returned function $g_{(-1)}$ (Line 8) is equal to $L_{t_n}^{s_0}L_{s_0}^{s_1}\cdots L_{s_{m-1}}^{s_m}f\pm\epsilon$.
 
 Note that the error bound of $\pm\epsilon$ holds because we compute each step using a maximum error of $\nicefrac{\epsilon}{m+1}$ (Line 6). That is, the finite-precision approximation error scales linearly in the number of time points that have to be computed. The reason why the accumulated error bounds can simply be added, is because $L_{s_{i-1}}^{s_i}$ is a lower transition operator and therefore satisfies~\ref{LT:monotonicity} and~\ref{LT:constantadditivity}. In particular, using these two properties, it is easily verified that for any $\mu>0$, $L_{s_{i-1}}^{s_i}(g_i\pm\mu)=L_{s_{i-1}}^{s_i}g_i\pm\mu$, where, in this case, we choose $\mu=\nicefrac{\epsilon}{m+1}$.
 %We will not provide a formal proof of this claim, however this is easily verified by replacing $g_{(i-1)}$ in Line 6 with the true function $L_{s_{i-1}}^{s_i}g_i$, and keeping track of the compound error obtained from this substitution.
 
 \begin{algorithm}[htb]
-  \caption{Numerically compute $\underline{\mathbb{E}}_{\rateset,\mathcal{M}}^\mathrm{W}[f(X_u,X_v)\,\vert\,X_u]$ for any $f\in\gambles(\states_{u\cup v})$.}
+  \caption{Numerically compute $L_{t_n}^{s_0}L_{s_0}^{s_1}\cdots L_{s_{m-1}}^{s_m}f$ for any $f\in\gambles(\states_{u\cup v})$.}
     \label{alg:compute_multivar}
   \begin{algorithmic}[1]
   \vspace{4pt}
-    \Require{The lower transition rate operator $\lrate$ of a non-empty, bounded and convex set of rate matrices $\rateset$ with separately specified rows, two sequences of time points $u=t_0,\ldots,t_n$ and $v=s_0,\ldots,s_n$ in $\mathcal{U}_\emptyset$ such that $u<v$, a function $f\in\gambles(\states_{u\cup v})$, and a maximum numerical error $\epsilon\in\realspos$.}\vspace{4pt}
-\Ensure{A function $\underline{\mathbb{E}}_{\rateset,\mathcal{M}}^\mathrm{W}[f(X_u,X_v)\,\vert\,X_u]\pm\epsilon$ in $\gambles(\states_u)$.}
+    \Require{A lower transition rate operator $\lrate$, two sequences of time points $u=t_0,\ldots,t_n$ and $v=s_0,\ldots,s_n$ in $\mathcal{U}_\emptyset$ such that $u<v$, a function $f\in\gambles(\states_{u\cup v})$, and a maximum numerical error $\epsilon\in\realspos$.}\vspace{4pt}
+\Ensure{A function $L_{t_n}^{s_0}L_{s_0}^{s_1}\cdots L_{s_{m-1}}^{s_m}f\pm\epsilon$ in $\gambles(\states_u)$.}
 \vspace{-5pt}
 	 \Statex
-    \Function{ComputeLowerExp}{$\lrate, u,v, f,\epsilon$}
+    \Function{ComputeLuvf}{$\lrate, u,v, f,\epsilon$}
 		\State $w \gets v$ %\Comment{Buffer for remaining time points.}
 		\State $g_{m}\gets f$\vspace{2pt} %\Comment{Buffer for function.}
 %		\Statex
@@ -3595,7 +3596,7 @@ In particular, the choice of $\mathcal{M}$ will influence our computations throu
 ~~\text{for all $f\in\gamblesX$.}
 \end{equation}
 In principle, evaluating this operator can be difficult, because the only restriction we impose on the set $\mathcal{M}$ is that it should be non-empty. However, in practice, $\mathcal{M}$ will typically have a rather simple  structure, and computing $\underline{\mathbb{E}}_\mathcal{M}[f]$ will then be straightforward. For example, if $\mathcal{M}$ consists of a finite number of probability mass functions---or is equal to their convex hull---then evaluating $\underline{\mathbb{E}}_\mathcal{M}[f]$ is just a matter of minimising over that finite set of probability mass functions.
-Another typical situation is when $\mathcal{M}$ is specified by means of linear constraints. In that case, $\underline{\mathbb{E}}_\mathcal{M}[f]$ can be computed by means of linear programming techniques. In the remainder of this section, we proceed under the assumption that the optimisation problem in Equation~\eqref{eq:initiallowerexp} is solvable.
+Another typical situation is when $\mathcal{M}$ is specified by means of linear constraints. In that case, $\underline{\mathbb{E}}_\mathcal{M}[f]$ can be computed by means of linear programming techniques. We will proceed under the assumption that the optimisation problem in Equation~\eqref{eq:initiallowerexp} is solvable.
 
 \begin{proposition}\label{prop:computeinitial}
 Let $\mathcal{M}$ be a non-empty set of probability mass functions on $\states$ and let $\rateset$ be a non-empty bounded set of rate matrices. Then for all $f\in\gamblesX$:
@@ -3606,9 +3607,36 @@ Let $\mathcal{M}$ be a non-empty set of probability mass functions on $\states$ 
 =
 \underline{\mathbb{E}}^\mathrm{WHM}_{\rateset,\mathcal{M}}[f(X_0)]
 =
-\underline{\mathbb{E}}_{\mathcal{M}}[f].
+\underline{\mathbb{E}}_{\mathcal{M}}[f].\vspace{4pt}
 \end{equation*}
 \end{proposition}
+
+\begin{proposition}\label{prop:computemarginal}
+Let $\mathcal{M}$ be a non-empty set of probability mass functions on $\states$ and let $\rateset$ be a non-empty bounded set of rate matrices that has separately specified rows, with lower transition rate operator $\lrate$. Then for any $s\in\realsnonneg$ and any $f\in\gamblesX$:
+\begin{equation*}
+\underline{\mathbb{E}}^\mathrm{W}_{\rateset,\mathcal{M}}[f(X_s)]
+=
+\underline{\mathbb{E}}^\mathrm{WM}_{\rateset,\mathcal{M}}[f(X_s)]
+=
+\underline{\mathbb{E}}_{\mathcal{M}}[L_0^s f].\vspace{5pt}
+\end{equation*}
+\end{proposition}
+\begin{proof}[Proof of Proposition~\ref{prop:computemarginal}]
+*** ??? ***
+\end{proof}
+
+\begin{proposition}\label{prop:computeunconditional}
+Let $\mathcal{M}$ be a non-empty set of probability mass functions on $\states$ and let $\rateset$ be a non-empty bounded, convex set of rate matrices that has separately specified rows, with lower transition rate operator $\lrate$. Then for any $u=t_0,\dots,t_n$ in $\mathcal{U}_{\emptyset}$ such that $t_0=0$, and any $f\in\gamblesX$:
+\begin{equation*}
+\underline{\mathbb{E}}_{\rateset,\,\mathcal{M}}^\mathrm{W}[f(X_u)]
+=
+\underline{\mathbb{E}}_{\mathcal{M}}[L_{t_0}^{t_1}L_{t_1}^{t_2}\cdots L_{t_{n-1}}^{t_n}f].\vspace{5pt}
+\end{equation*}
+\end{proposition}
+\begin{proof}[Proof of Proposition~\ref{prop:computeunconditional}]
+*** ??? ***
+\end{proof}
+
 
 
 
