@@ -2137,9 +2137,9 @@ Generally speaking, the inequalities in this proposition can be---and often are-
 %We have in the previous section defined imprecise continuous-time Markov chains as sets of stochastic processes consistent with some set $\rateset$ of rate matrices. An obvious question, therefore, is to see if we can express properties of these sets $\wmprocesses_{\rateset,\,\mathcal{M}}$ and $\wprocesses_{\rateset,\,\mathcal{M}}$ in relation to properties of the set $\rateset$. We have by assumption stated that such a $\rateset$ must be non-empty and bounded, and will here consider the cases where $\rateset$ is additionally closed or convex.
 
 For now, we first provide a useful property of the lower expectation $\smash{\underline{\mathbb{E}}_{\rateset,\mathcal{M}}^\mathrm{W}}$ that corresponds to $\wprocesses_{\rateset,\mathcal{M}}$. To this end, consider a function $f\in\gambles(\states_{u\cup v\cup w})$ defined on the union $u\cup v\cup w$ of three finite sets of time points $u,v,w\in\mathcal{U}$ such that $u<v<w$. It then follows from the basic properties of expectations that for any stochastic process $P$, the corresponding expectation of $f$, conditional on $X_u$, decomposes as follows:
-\begin{equation*}
+\begin{equation}\label{eq:lawofiteratedexpectation}
 \mathbb{E}_P[f(X_u,X_v,X_w)\,\vert\,X_u] = \mathbb{E}_P\bigl[\mathbb{E}_P[f(X_u,X_v,X_w)\,\vert\,X_u,X_v]\,\big\vert\,X_u\bigr].
-\end{equation*}
+\end{equation}
 This equality is well-known, and is called the \emph{law of iterated expectation}. Rather remarkably, if $\rateset$ is convex, then the lower expectation $\underline{\mathbb{E}}^{\mathrm{W}}_{\rateset,\,\mathcal{M}}$ satisfies a similar property. The proof for this so-called law of iterated \emph{lower} expectation is based on Theorem~\ref{theo:aanelkaarplakken}.
 
 \begin{theorem}\label{theorem:decomposition_multivar}
@@ -2766,7 +2766,7 @@ Notice that this result is stated for stochastic processes $P$ in $\smash{\wproc
 Our next result establishes that the bound in Proposition~\ref{theorem:nonmarkov_single_var_lower_bounded} is tight if $\rateset$ has separately specified rows. Specifically, we show that $L_t^sf$ can then be approximated to arbitrary precision by carefully choosing a Markov process $P$ from the set $\wmprocesses_{\rateset,\,\mathcal{M}}$.
 
 \begin{proposition}\label{theorem:lower_markov_bound_is_tight}
-Let $\mathcal{M}$ be a non-empty set of probability mass functions on $\states$, let $\rateset$ be a non-empty bounded set of rate matrices that has separately specified rows, with corresponding lower transition rate operator $\lrate$, and let $\smash{\underline{\mathcal{T}}_{\lrate}}$ be the corresponding lower transition operator system. Then for all $t,s\in\realsnonneg$ such that $t\leq s$, all $f\in\gamblesX$, and all $\epsilon\in\realspos$, there is a well-behaved Markov process $P\in\wmprocesses_{\rateset,\,\mathcal{M}}$ such that
+Let $\mathcal{M}$ be a non-empty set of probability mass functions on $\states$, let $\rateset$ be a non-empty bounded set of rate matrices that has separately specified rows, with corresponding lower transition rate operator $\lrate$, and let $\smash{\underline{\mathcal{T}}_{\lrate}}$ be the corresponding lower transition operator system. Then for all $t,s\in\realsnonneg$ such that $t\leq s$, all $f\in\gamblesX$, and all $\epsilon\in\realspos$, there is a well-behaved Markov chain $P\in\wmprocesses_{\rateset,\,\mathcal{M}}$ such that
 \begin{equation*}
 \abs{\mathbb{E}_P[f(X_s)\,\vert\,X_t=x_t]-[\lbound_t^sf](x_t)} < \epsilon
 ~\text{ for all $x_t\in\states$.}
@@ -3621,9 +3621,6 @@ Let $\mathcal{M}$ be a non-empty set of probability mass functions on $\states$ 
 \underline{\mathbb{E}}_{\mathcal{M}}[L_0^s f].\vspace{5pt}
 \end{equation*}
 \end{proposition}
-\begin{proof}[Proof of Proposition~\ref{prop:computemarginal}]
-*** ??? ***
-\end{proof}
 
 \begin{proposition}\label{prop:computeunconditional}
 Let $\mathcal{M}$ be a non-empty set of probability mass functions on $\states$ and let $\rateset$ be a non-empty bounded, convex set of rate matrices that has separately specified rows, with lower transition rate operator $\lrate$. Then for any $u=t_0,\dots,t_n$ in $\mathcal{U}_{\emptyset}$ such that $t_0=0$, and any $f\in\gamblesX$:
@@ -7013,8 +7010,60 @@ HM}}[f(X_0)]-\epsilon.
 \end{equation*}
 Since $\epsilon>0$ is arbitrary, this implies that $
 \underline{\mathbb{E}}^\mathrm{W}_{\rateset,\mathcal{M}}[f(X_0)]
-=\underline{\mathbb{E}}_{\mathcal{M}}[f]=\underline{\mathbb{E}}_{\rateset,\mathcal{M}}^{\mathrm{W
+\geq\underline{\mathbb{E}}_{\mathcal{M}}[f]\geq\underline{\mathbb{E}}_{\rateset,\mathcal{M}}^{\mathrm{W
 HM}}[f(X_0)]$, and therefore, the result follows from Proposition~\ref{prop:lower_exp_markov_bounded_by_nonmarkov}.
+\end{proof}
+
+
+\begin{proof}[Proof of Proposition~\ref{prop:computemarginal}]
+Fix $s\in\realsnonneg$, $f\in\gamblesX$ and $\epsilon>0$. 
+It then follows from Equation~\eqref{eq:lowerexp3} that there is some $\smash{P\in\wprocesses_{\rateset,\mathcal{M}}}$ such that $\mathbb{E}_P[f(X_s)]\leq\underline{\mathbb{E}}^\mathrm{W}_{\rateset,\mathcal{M}}[f(X_s)]+\epsilon$. Since $\smash{P\in\wprocesses_{\rateset,\mathcal{M}}}$, Equation~\eqref{eq:lowerexp3} now implies that, for all $x\in\states$,
+\begin{equation}\label{eq:prop:computemarginal}
+\mathbb{E}_P[f(X_s)\vert X_0=x]
+\geq
+\underline{\mathbb{E}}^\mathrm{W}_{\rateset,\mathcal{M}}[f(X_s)\vert X_0=x]
+=[L_0^sf](x),
+\end{equation}
+where the last equality follows from Corollary~\ref{cor:lower_operator_is_infimum}. Hence, we find that
+\begin{align*}
+\underline{\mathbb{E}}^\mathrm{W}_{\rateset,\mathcal{M}}[f(X_s)]+\epsilon
+\geq
+\mathbb{E}_P[f(X_s)]
+&=\mathbb{E}_P[\mathbb{E}_P[f(X_s)\vert X_0]]\notag\\
+&\geq\mathbb{E}_P[[L_0^sf](X_0)]
+\geq
+\underline{\mathbb{E}}^\mathrm{W}_{\rateset,\mathcal{M}}[[L_0^sf](X_0)]
+=\underline{\mathbb{E}}_{\mathcal{M}}[L_0^sf],%\label{eq:prop:computemarginal:2}
+\end{align*}
+where the first equality follows from Equation~\eqref{eq:lawofiteratedexpectation}, the second inequality follows from Equation~\eqref{eq:prop:computemarginal}, the third inequality follows from $P\in\wprocesses_{\rateset,\mathcal{M}}$ and Equation~\eqref{eq:lowerexp3}, and the last equality follows from Proposition~\ref{prop:computeinitial}.
+%Since we already know that $\mathbb{E}_P[f(X_s)]\leq\underline{\mathbb{E}}^\mathrm{W}_{\rateset,\mathcal{M}}[f(X_s)]+\epsilon$, this implies that $\underline{\mathbb{E}}_{\mathcal{M}}[f(X_s)]\leq\underline{\mathbb{E}}^\mathrm{W}_{\rateset,\mathcal{M}}[f(X_s)]+\epsilon$.
+Next, because of Equation~\eqref{eq:initiallowerexp}, we know that there is a probability mass function $p\in\mathcal{M}$ such that $\sum_{x\in\states}p(x)[L_0^sf](x)\leq\underline{\mathbb{E}}_{\mathcal{M}}[L_0^sf]+\epsilon$. Let $\mathcal{M}^*\coloneqq\{p\}$. Proposition~\ref{theorem:lower_markov_bound_is_tight} then implies that there is a well-behaved Markov chain $P^*\in\wmprocesses_{\rateset,\mathcal{M}^*}\subseteq\wmprocesses_{\rateset,\mathcal{M}}$ such that
+\begin{equation*}
+\mathbb{E}_{P^*}[f(X_s)\,\vert\,X_0]\leq[\lbound_0^sf](X_0)+\epsilon.
+\end{equation*}
+It now follows from the definition of $\underline{\mathbb{E}}^\mathrm{WM}_{\rateset,\mathcal{M}}$ that
+\begin{equation*}
+\underline{\mathbb{E}}^\mathrm{WM}_{\rateset,\mathcal{M}}[f(X_s)]
+\leq
+\mathbb{E}_{P^*}[f(X_s)]
+=\mathbb{E}_{P^*}[\mathbb{E}_{P^*}[f(X_s)\vert X_0]]
+\leq\mathbb{E}_{P^*}[[L_0^sf](X_0)]+\epsilon,
+\end{equation*}
+using Equation~\eqref{eq:lawofiteratedexpectation} for the equality. Furthermore, since $\smash{P^*\in\wmprocesses_{\rateset,\mathcal{M}^*}}$ implies that $P^*(X_0=x)=p(x)$ for all $x\in\states$, we also know that
+\begin{equation*}
+\mathbb{E}_{P^*}[[L_0^sf](X_0)]
+=
+\sum_{x\in\states}P^*(X_0=x)[L_0^sf](x)
+=\sum_{x\in\states}p(x)[L_0^sf](x)
+\leq\underline{\mathbb{E}}_{\mathcal{M}}[L_0^sf]+\epsilon.
+\end{equation*}
+Combining all of the above inequalities, we find that
+\begin{equation*}
+\underline{\mathbb{E}}^\mathrm{WM}_{\rateset,\mathcal{M}}[f(X_s)]-2\epsilon
+\leq
+\mathbb{E}_{P^*}[[L_0^sf](X_0)]-\epsilon\leq\underline{\mathbb{E}}_{\mathcal{M}}[L_0^sf]\leq\underline{\mathbb{E}}^\mathrm{W}_{\rateset,\mathcal{M}}[f(X_s)]+\epsilon.
+\end{equation*}
+Since $\epsilon>0$ is arbitrary, this implies that $\underline{\mathbb{E}}^\mathrm{WM}_{\rateset,\mathcal{M}}[f(X_s)]\leq\underline{\mathbb{E}}_{\mathcal{M}}[L_0^sf]\leq\underline{\mathbb{E}}^\mathrm{W}_{\rateset,\mathcal{M}}[f(X_s)]$. The result now follows from Proposition~\ref{prop:lower_exp_markov_bounded_by_nonmarkov}.
 \end{proof}
 
 %\begin{proof}[Proof of Proposition~\ref{prop:multi_var_single_future_bounded}]
