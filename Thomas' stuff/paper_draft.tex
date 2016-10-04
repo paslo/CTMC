@@ -218,7 +218,7 @@ The idea of relaxing the defining assumptions of a continuous-time Markov chain 
 For example, there are plenty of results to be found that deal with non-homogeneous continuous-time Markov chains~\cite{rindos1995exact,aalen1978empirical,johnson1989nonhomogeneous}.
 Dropping the Markov condition is less common, but nevertheless definitely possible~\cite{Harlamov:1320525}. However, the approaches that drop this Markov assumption will typically replace it by some other, weaker assumption, instead of dropping it altogether. %Almost all of the existing approaches seem to assume some type of differentiability or integrability condition.
 
-A common property of all of these approaches is that they still require the parameters of the model to be specified exactly. Furthermore, since these models are typically more complex, the number of parameters that needs to be specified is a lot larger than before. Therefore, in practice, specifying such a generalised model is a lot more difficult than specifying a normal,homogeneous continuous-time Markov chain.
+A common property of all of these approaches is that they still require the parameters of the model to be specified exactly. Furthermore, since these models are typically more complex, the number of parameters that needs to be specified is a lot larger than before. Therefore, in practice, specifying such a generalised model is a lot more difficult than specifying a normal, homogeneous continuous-time Markov chain.
 In contrast, our approach does not introduce additional parameters. Instead, we provide constraints on the traditional parameters of a continuous-time Markov chain, by requiring them to belong to some specified set of candidate parameters.
 In this sense, our approach can be regarded as a type of sensitivity analysis on the parameters of a continuous-time Markov chain. However, instead of simply varying the parameters of a continuous-time Markov chain, as a more traditional sensitivity analysis would do, we also consider what happens when these parameters are allowed to be time- and history-dependent. Furthermore, a sensitivity analysis is typically interested in the effect of infinitesimal parameter variations, whereas we consider the effect of variations within some freely chosen set of candidate parameters.
 
@@ -247,7 +247,7 @@ It is of interest, therefore, to study the robustness of such inferences with re
 
 In our approach, we investigate this type of robustness as follows: we simply consider the probability or expectation of interest for each of the stochastic processes in $\mathcal{P}$, and then report the corresponding lower and upper bound. Intuitively, this can be regarded as providing best- and worst-case scenarios with respect to all the models in $\mathcal{P}$.
 %It suffices to focus on lower and upper expectations, because lower and upper probabilities can be obtained as a special case.
-Of course, since the stochastic processes in $\mathcal{P}$ are not required to satisfy the Markov condition, a naive optimisation method will be highly inefficient, and in most cases not even possible. However, as we will see, it is possible to develop other, more efficient methods for computing the lower and upper bounds that we are after. If the lower and upper bounds that we obtain are similar, we can conclude that the corresponding inference is robust with respect to the variations that are represented by $\mathcal{P}$. However, if the lower and upper bound are substantially different, then the inference is clearly sensitive to these variations, and policy may then have to be adapted accordingly. 
+Of course, since the stochastic processes in $\mathcal{P}$ are not required to satisfy the Markov condition, a naive optimisation method will be highly inefficient, and in most cases not even possible. However, as we will see, it is possible to develop other, more efficient methods for computing the lower and upper bounds that we are after. On the one hand, if the lower and upper bounds that we obtain are similar, we can conclude that the corresponding inference is robust with respect to the variations that are represented by $\mathcal{P}$. On the other hand, if the lower and upper bound are substantially different, then the inference is clearly sensitive to these variations, and policy may then have to be adapted accordingly. 
 %In our specific setting, such a set might contain not only models under various parameter estimates, but also models for which, e.g., the Markov assumption does not hold. 
 
 
@@ -3221,7 +3221,7 @@ The algorithm starts by allocating space for a new function $g\in\gambles(\state
       \State $g\gets g\in\gambles(\states_u)$ \Comment{Allocate space for $g\in\gambles(\states_u)$}
 		\For{$x_u\in\states_u$} \Comment{Compute $g(x_u)$ for all $x_u\in\states_u$} 
 		\State $f_{x_u}\gets f(x_u,X_s)$ %\Comment{Take restriction of $f$ to $\states_s$ for this $x_u$.}
-		\State $\hat{f}_{x_u} \gets$ {\textsc{ComputeLf}($\rateset, t_n,s,f_{x_u},\epsilon$)} \Comment{Run Agorithm~\ref{alg:compute_singlevar}}
+		\State $\hat{f}_{x_u} \gets$ {\textsc{ComputeLf}($\lrate, t_n,s,f_{x_u},\epsilon$)} \Comment{Run Agorithm~\ref{alg:compute_singlevar}}
 		\State $g(x_u)\gets \hat{f}_{x_u}(x_{t_n})$ %\Comment{Set $g(x_u)=[L_{t_n}^s f(x_u,X_s)](x_{t_n})\pm\epsilon$, with $x_{t_n}\in x_u$.}
 		\EndFor
       \State \Return{$g$}
@@ -3583,8 +3583,34 @@ Of course, this should not really be surprising---even the simple enumeration of
 
 Having shown in the previous sections how to compute conditional lower expectations, we now shift our attention to unconditional ones. In particular, we consider a function $f\in\gambles(\states_u)$, with $u\in\mathcal{U}_{\emptyset}$, and are interested in computing $\underline{\mathbb{E}}[f(X_u)]$. 
 
-As we will see, the difference between unconditional and conditional lower expectations is mainly related to the role of the set of initial distributions $\mathcal{M}$. In particular, as an astute reader may have noticed, all our previous results about computing conditional lower expectations with the operator $L_t^s$ did not depend on the particular choice of this set $\mathcal{M}$. %Therefore, and because the definition of $L_t^s$ does not rely on the choice of $\mathcal{M}$, it follows that conditional lower expectations with respect to $\wmprocesses_{\rateset,\,\mathcal{M}}$ and $\wprocesses_{\rateset,\,\mathcal{M}}$ are invariant to the choice of $\mathcal{M}$. 
+As we will see, the difference between unconditional and conditional lower expectations is mainly related to the role of the set of initial distributions $\mathcal{M}$. In fact, as an astute reader may have noticed, all our previous results about computing conditional lower expectations with the operator $L_t^s$ did not depend on the particular choice of this set $\mathcal{M}$. %Therefore, and because the definition of $L_t^s$ does not rely on the choice of $\mathcal{M}$, it follows that conditional lower expectations with respect to $\wmprocesses_{\rateset,\,\mathcal{M}}$ and $\wprocesses_{\rateset,\,\mathcal{M}}$ are invariant to the choice of $\mathcal{M}$. 
 In contrast, and rather unsurprisingly, unconditional lower expectations do depend on this choice.
+
+In particular, the choice of $\mathcal{M}$ will influence our computations through the corresponding initial lower expectation operator $\underline{\mathbb{E}}_{\mathcal{M}}$, defined by
+\begin{equation}\label{eq:initiallowerexp}
+\underline{\mathbb{E}}_{\mathcal{M}}[f]
+\coloneqq
+\inf
+\left\{\sum_{x\in\states}p(x)f(x)\colon p\in\mathcal{M}\right\}
+~~\text{for all $f\in\gamblesX$.}
+\end{equation}
+In principle, evaluating this operator can be difficult, because the only restriction we impose on the set $\mathcal{M}$ is that it should be non-empty. However, in practice, $\mathcal{M}$ will typically have a rather simple  structure, and computing $\underline{\mathbb{E}}_\mathcal{M}[f]$ will then be straightforward. For example, if $\mathcal{M}$ consists of a finite number of probability mass functions---or is equal to their convex hull---then evaluating $\underline{\mathbb{E}}_\mathcal{M}[f]$ is just a matter of minimising over that finite set of probability mass functions.
+Another typical situation is when $\mathcal{M}$ is specified by means of linear constraints. In that case, $\underline{\mathbb{E}}_\mathcal{M}[f]$ can be computed by means of linear programming techniques. In the remainder of this section, we proceed under the assumption that the optimisation problem in Equation~\eqref{eq:initiallowerexp} is solvable.
+
+\begin{proposition}\label{prop:computeinitial}
+Let $\mathcal{M}$ be a non-empty set of probability mass functions on $\states$ and let $\rateset$ be a non-empty bounded set of rate matrices. Then for all $f\in\gamblesX$:
+\begin{equation*}
+\underline{\mathbb{E}}^\mathrm{W}_{\rateset,\mathcal{M}}[f(X_0)]
+=
+\underline{\mathbb{E}}^\mathrm{WM}_{\rateset,\mathcal{M}}[f(X_0)]
+=
+\underline{\mathbb{E}}^\mathrm{WHM}_{\rateset,\mathcal{M}}[f(X_0)]
+=
+\underline{\mathbb{E}}_{\mathcal{M}}[f].
+\end{equation*}
+\end{proposition}
+
+
 
 
 Nevertheless, as we are about to show, the computation of unconditional lower expectations is relatively straightforward when they are taken with respect to the {\ictmc} $\wprocesses_{\rateset,\,\mathcal{M}}$, at least when the set of rate matrices $\rateset$ is non-empty, bounded and convex, and has separately specified rows. Note that these are the same requirements that appeared in Section~\ref{sec:decomposition} for our results on computing conditional lower expectations of functions that depend on the state at multiple future time points. In what follows, we explain how to compute $\underline{\mathbb{E}}_{\rateset,\,\mathcal{M}}^\mathrm{W}[f(X_u)]$, provided that $\rateset$ satisfies these conditions.
@@ -3612,29 +3638,6 @@ with $u=t_0,\ldots,t_n$ and, without loss of generality, $t_0=0$.
 Since we already know how to compute $\hat{f}$---see Section~\ref{sec:decomposition} and Algorithm~\ref{alg:compute_multivar}---the only part of the problem that is new here is the computation of $\smash{\underline{\mathbb{E}}_{\rateset,\,\mathcal{M}}^\mathrm{W}[\hat{f}(X_0)]}$. The following proposition shows that this requires us to minimise the expectation of $\smash{\hat{f}}$ with respect to the probability mass functions $p$ in $\mathcal{M}$.
 
 
-\begin{proposition}\label{prop:computeinitial}
-Let $\mathcal{M}$ be a non-empty set of probability mass functions on $\states$ and let $\rateset$ be a non-empty bounded set of rate matrices. Then for all $f\in\gamblesX$:
-\begin{equation*}
-\underline{\mathbb{E}}^\mathrm{W}_{\rateset,\mathcal{M}}[f(X_0)]
-=
-\underline{\mathbb{E}}^\mathrm{WM}_{\rateset,\mathcal{M}}[f(X_0)]
-=
-\underline{\mathbb{E}}^\mathrm{WHM}_{\rateset,\mathcal{M}}[f(X_0)]
-=
-\underline{\mathbb{E}}_{\mathcal{M}}[f],
-%\vspace{5pt}
-\end{equation*}
-with
-\vspace{-2pt}
-\begin{equation}\label{eq:initiallowerexp}
-\underline{\mathbb{E}}_{\mathcal{M}}[f]
-\coloneqq
-\inf
-\left\{\sum_{x\in\states}p(x)f(x)\colon p\in\mathcal{M}\right\}.
-\vspace{6pt}
-\end{equation}
-\end{proposition}
-
 % where we have used $\underline{\mathbb{E}}_{\mathcal{M}}[g(X_0)]\coloneqq \inf\{\sum_{x\in\states}p(x)g(x)\,:\,p\in\mathcal{M}\}$. Note that the inner lower expectation in the right-hand side of Equation~\eqref{eq:marginal_decomp} is a conditional lower expectation which, due to Corollary~\ref{cor:composition_lower_trans}, is computable as
 
 % and where we have assumed without loss of generality that $t_0=0$. 
@@ -3648,8 +3651,8 @@ with
 
 %Hence, in order to compute the marginal lower expectation $\underline{\mathbb{E}}_{\rateset,\,\mathcal{M}}^\mathrm{W}[f(X_u)]$, it suffices to only compute the term $\hat{f}(X_0)$ once, which by Corollary~\ref{cor:composition_lower_trans} can be done with the operator $L_t^s$. What remains is a relatively straightforward linear optimization problem over the set $\mathcal{M}$, which is a well-known problem in the field of imprecise probability. We will henceforth assume that this problem is solvable, although the difficulty clearly depends on the exact choice of $\mathcal{M}$.
 
-In principle, solving this local optimisation problem can be difficult, because the only restriction we impose on $\mathcal{M}$ is that it should be non-empty. However, in practice, the set $\mathcal{M}$ will typically have a rather simple  structure, and computing $\underline{\mathbb{E}}_\mathcal{M}\left[\hat{f}\right]$ will then be straightforward. For example, if $\mathcal{M}$ consists of a finite number of probability mass functions---or is equal to their convex hull---then evaluating $\underline{\mathbb{E}}_\mathcal{M}[\hat{f}]$ is just a matter of minimising over that finite set of probability mass functions.
-Another typical situation is when $\mathcal{M}$ is specified by means of linear constraints. In that case, $\underline{\mathbb{E}}_\mathcal{M}[\hat{f}]$ can be computed by means of linear programming techniques. 
+% In principle, solving this local optimisation problem can be difficult, because the only restriction we impose on $\mathcal{M}$ is that it should be non-empty. However, in practice, the set $\mathcal{M}$ will typically have a rather simple  structure, and computing $\underline{\mathbb{E}}_\mathcal{M}\left[\hat{f}\right]$ will then be straightforward. For example, if $\mathcal{M}$ consists of a finite number of probability mass functions---or is equal to their convex hull---then evaluating $\underline{\mathbb{E}}_\mathcal{M}[\hat{f}]$ is just a matter of minimising over that finite set of probability mass functions.
+% Another typical situation is when $\mathcal{M}$ is specified by means of linear constraints. In that case, $\underline{\mathbb{E}}_\mathcal{M}[\hat{f}]$ can be computed by means of linear programming techniques. 
 % Finally, for the rather extreme situation where $\mathcal{M}$ is the set of all probability mass functions on $\states$, we have that
 % \begin{equation*}
 % \underline{\mathbb{E}}_{\mathcal{M}}[f(X_u)] = \underline{\mathbb{E}}_{\rateset}^\mathrm{W}[f(X_u)] = \min\Bigl\{  \underline{\mathbb{E}}_{\rateset}^\mathrm{W}[f(X_u)\,\vert\,X_0=x] \,:\,x\in\states\Bigr\}\,,
