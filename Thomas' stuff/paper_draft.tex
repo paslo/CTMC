@@ -3623,16 +3623,13 @@ Let $\mathcal{M}$ be a non-empty set of probability mass functions on $\states$ 
 \end{proposition}
 
 \begin{proposition}\label{prop:computeunconditional}
-Let $\mathcal{M}$ be a non-empty set of probability mass functions on $\states$ and let $\rateset$ be a non-empty bounded, convex set of rate matrices that has separately specified rows, with lower transition rate operator $\lrate$. Then for any $u=t_0,\dots,t_n$ in $\mathcal{U}_{\emptyset}$ such that $t_0=0$, and any $f\in\gamblesX$:
+Let $\mathcal{M}$ be a non-empty set of probability mass functions on $\states$ and let $\rateset$ be a non-empty, bounded, convex set of rate matrices that has separately specified rows, with lower transition rate operator $\lrate$. Then for any $u=t_0,\dots,t_n$ in $\mathcal{U}_{\emptyset}$ such that $t_0=0$, and any $f\in\gambles(\states_u)$:
 \begin{equation*}
 \underline{\mathbb{E}}_{\rateset,\,\mathcal{M}}^\mathrm{W}[f(X_u)]
 =
 \underline{\mathbb{E}}_{\mathcal{M}}[L_{t_0}^{t_1}L_{t_1}^{t_2}\cdots L_{t_{n-1}}^{t_n}f].\vspace{5pt}
 \end{equation*}
 \end{proposition}
-\begin{proof}[Proof of Proposition~\ref{prop:computeunconditional}]
-*** ??? ***
-\end{proof}
 
 
 
@@ -7065,6 +7062,25 @@ Combining all of the above inequalities, we find that
 \end{equation*}
 Since $\epsilon>0$ is arbitrary, this implies that $\underline{\mathbb{E}}^\mathrm{WM}_{\rateset,\mathcal{M}}[f(X_s)]\leq\underline{\mathbb{E}}_{\mathcal{M}}[L_0^sf]\leq\underline{\mathbb{E}}^\mathrm{W}_{\rateset,\mathcal{M}}[f(X_s)]$. The result now follows from Proposition~\ref{prop:lower_exp_markov_bounded_by_nonmarkov}.
 \end{proof}
+
+\begin{proof}[Proof of Proposition~\ref{prop:computeunconditional}]
+Consider any $u=t_0,\dots,t_n$ in $\mathcal{U}_{\emptyset}$ such that $t_0=0$ and any $f\in\gambles(\states_u)$. Let $\hat{f}\in\gamblesX$ be defined by
+\begin{equation}\label{eq:prop:computeunconditional}
+\hat{f}(x)\coloneqq
+\underline{\mathbb{E}}_{\rateset,\,\mathcal{M}}^\mathrm{W}[f(X_u)\,\vert\,X_0=x]
+=\left[L_{t_0}^{t_1}L_{t_1}^{t_2}\cdots L_{t_{n-1}}^{t_n}f\right](x)
+~\text{ for all $x\in\states$},
+\end{equation}
+using Corollary~\ref{cor:composition_lower_trans} to establish the last equality.
+It then follows from Theorem~\ref{theorem:decomposition_multivar} and Proposition~\ref{prop:computeinitial} that
+\begin{equation*}%\label{eq:marginal_decomp}
+\underline{\mathbb{E}}_{\rateset,\,\mathcal{M}}^\mathrm{W}[f(X_u)] = \underline{\mathbb{E}}_{\rateset,\,\mathcal{M}}^\mathrm{W}[\underline{\mathbb{E}}_{\rateset,\,\mathcal{M}}^\mathrm{W}[f(X_u)\,\vert\,X_0]]
+=\underline{\mathbb{E}}_{\rateset,\,\mathcal{M}}^\mathrm{W}[\hat{f}(X_0)]
+=\underline{\mathbb{E}}_{\mathcal{M}}[\hat{f}].
+\end{equation*}
+Combined with Equation~\eqref{eq:prop:computeunconditional}, this implies the result.
+\end{proof}
+
 
 %\begin{proof}[Proof of Proposition~\ref{prop:multi_var_single_future_bounded}]
 %Because $f(x_{t_0},\ldots,x_{t_n},X_s)$ is a restriction of $f$ to $\states^{\{s\}}$, there is some $g\in\gambles(\states^{\{s\}})$ such that $g(x_s) = f(x_{t_0},\ldots,x_{t_n},x_s)$ for all $x_s\in\states^{\{s\}}$. By substitution, we therefore have to show that $\left[L_t^sg\right](x_{t_n}) \leq \mathbb{E}\left[g(X_s)\,\vert\,X_{t_0,\ldots,t_n}=x_{t_0,\ldots,t_n}\right]$. Because $g\in\gambles(\states^{\{s\}})$, this inequality holds by Theorem~\ref{theorem:nonmarkov_single_var_lower_bounded}.
