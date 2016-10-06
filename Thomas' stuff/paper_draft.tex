@@ -2694,7 +2694,7 @@ Let $\lrate$ be an arbitrary lower transition rate operator, and let $\underline
 \end{proposition}
 We would like to point out here that the derivatives in this result are not taken pointwise, but are taken with respect to the operator norm. For example, for $t=0$ and $s>0$, Proposition~\ref{prop:lower_transition_has_deriv} does not state that
 \begin{equation}\label{eq:pointwisedifferential}
-\frac{\partial}{\partial s}\lbound_0^sf=\lrate\lbound_0^sf
+\frac{d}{d s}\lbound_0^sf=\lrate\lbound_0^sf
 ~\text{ for all $f\in\gamblesX$,}
 \end{equation}
 but rather that
@@ -3719,10 +3719,12 @@ In this result, the requirement $t_0=0$ is a purely formal one, and imposes no a
 
 %**** other related work: Markov Decision Processes, controlled Markov processes, differential inclusions, ....
 
-To the best of our knowledge, the concept of an imprecise continuous-time Markov chain was first introduced in the literature by the work of {\v{S}}kulj~\cite{Skulj:2015cq}. There, $\lrate$ was defined as the lower envelope of a non-empty, closed, convex set of rate matrices $\rateset$ with separately specified rows, and the notion of an imprecise continuous-time Markov chain was then introduced as follows.
+To the best of our knowledge, the concept of an imprecise continuous-time Markov chain was first introduced in the literature by the work of {\v{S}}kulj~\cite{Skulj:2015cq}. There, $\lrate$ was defined as the lower envelope of a non-empty, closed, convex set of rate matrices $\rateset$ with separately specified rows, and the notion of an imprecise continuous-time Markov chain was then introduced in two different ways.
 
-For any $f\in\gamblesX$, {\v{S}}kulj starts by considering a time-dependent function $f_s$, which---using our notation---is interpreted as $f_s\coloneqq T_0^s f$, and then requires that $f_0=f$,
-\begin{equation*}
+On the one hand, {\v{S}kulj} defines an imprecise continuous-time Markov chain as a random process $X\colon\reals\to\states$ whose transition rate matrix is an unspecified function $Q_t\in\rateset$ \cite[Definition~1]{Skulj:2015cq}, without any further restrictions on $Q_t$---such as, for example, continuity. However, he does not provide a definition for $Q_t$, nor for the notion of a random process, and in that sense, this first definition of an imprecise continuous-time Markov chain is rather informal. Furthermore, the definition also does not make explicit whether the random process in question should satisfy a Markov property. However, given the use of the transition rate matrix $Q_t$, it seems to us that the Markov property is intended to be imposed implicitly.
+
+On the other hand, more formally, for any $f\in\gamblesX$, {\v{S}}kulj considers a time-dependent function $f_s$, which---using our notation---is interpreted as $f_s\coloneqq T_0^s f$, and then requires that $f_0=f$,
+\begin{equation}\label{eq:constraintsDamjan}
 \lrate f_s
 \leq
 D^+f_s\coloneqq
@@ -3733,17 +3735,23 @@ D^+f_s\coloneqq
 \frac{f_{s+\Delta}-f_s}{\Delta}
 =\hspace{-1.5pt}\colon D_+f_s
 \leq\overline{Q} f_s,
-\end{equation*}
-where $\overline{Q}$ is the upper envelope of $\rateset$, or equivalently,  the conjugate upper transition rate operator of $\lrate$, defined by $\overline{Q}g\coloneqq-\lrate(-g)$ for all $g\in\gamblesX$, and where $D^+f_s$ and $D_-f_s$ are called Dini derivatives. In this way, he mimics the usual differential equation characterisation of a precise homogeneous Markov chain, where the the Dini derivatives would be replaced by derivatives, where the operator $\lrate$ would be replaced by a transition rate matrix $Q$, and where the inequalities would become equalities.
-
-Next, {\v{S}}kulj goes on to define $\underline{f}_s$ and $\overline{f}_s$ as the unique solutions of the differential equations
+\end{equation}
+where $\overline{Q}$ is the upper envelope of $\rateset$, or equivalently,  the conjugate upper transition rate operator of $\lrate$, defined by $\overline{Q}g\coloneqq-\lrate(-g)$ for all $g\in\gamblesX$, and where $D^+f_s$ and $D_-f_s$ are called Dini derivatives. In this way, he generalises the usual differential equation characterisation of a precise homogeneous Markov chain, where the Dini derivatives would be replaced by derivatives, where the operator $\lrate$ would be replaced by a transition rate matrix $Q$, and where the inequalities would become equalities. Since this generalisation considers inequalities, the solution $f_s$ is not uniquely determined, and the problem is therefore to find lower and upper bounds for $f_s$. {\v{S}kulj} solves this problem, by showing that $\underline{f}_s\leq f_s\leq\overline{f}_s$, where $\underline{f}_s$ and $\overline{f}_s$ are the unique solutions of the differential equations
 \begin{equation*}
 \frac{d \underline{f}_{\,s}}{d s}=\lrate\,\underline{f}_{\,s}
 ~~~\text{and}~~~
-\frac{d \overline{f}_{\,s}}{d s}=\overline{Q}\,\overline{f}_{\,s},\vspace{8pt}
+\frac{d \overline{f}_{\,s}}{d s}=\overline{Q}\,\overline{f}_{\,s},%\vspace{8pt}
 \end{equation*}
-with $\underline{f}_0=\overline{f}_0=f$, and proves that $\underline{f}_s\leq f_s\leq\overline{f}_s$. In practice, it suffices to restrict attention to either one of these two bounds, because they are related by conjugacy, in the sense that $\smash{\underline{f}_0=-\overline{f}_0}$ implies that $\smash{\underline{f}_s=-\overline{f}_s}$. 
+with $\underline{f}_0=\overline{f}_0=f$. 
+%, and proves that $\underline{f}_s\leq f_s\leq\overline{f}_s$. 
+
+
+
+
+In practice, it suffices to restrict attention to either one of these two bounds, because they are related by conjugacy, in the sense that $\smash{\underline{f}_0=-\overline{f}_0}$ implies that $\smash{\underline{f}_s=-\overline{f}_s}$. 
 Most of {\v{S}}kulj's subsequent results focus on the upper bound $\overline{f}_s$. In our further discussion of his work, however, we will focus on the lower bound $\underline{f}_s$ instead, because it allows for a more elegant comparison with our own work.
+
+*** Equation~\eqref{eq:pointwisedifferential} ***
 
 
 % the differential equation
