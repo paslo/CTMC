@@ -3721,9 +3721,13 @@ In this result, the requirement $t_0=0$ is a purely formal one, and imposes no a
 
 To the best of our knowledge, the concept of an imprecise continuous-time Markov chain was first introduced in the literature by the work of {\v{S}}kulj~\cite{Skulj:2015cq}. There, $\lrate$ was defined as the lower envelope of a non-empty, closed, convex set of rate matrices $\rateset$ with separately specified rows, and the notion of an imprecise continuous-time Markov chain was then introduced in two different ways.
 
-On the one hand, {\v{S}kulj} defines an imprecise continuous-time Markov chain as a random process $X\colon\reals\to\states$ whose transition rate matrix is an unspecified function $Q_t\in\rateset$ \cite[Definition~1]{Skulj:2015cq}, without imposing any further restrictions on $Q_t$---such as, for example, continuity. However, he does not provide a definition for $Q_t$, nor for the notion of a random process, and in that sense, this definition of an imprecise continuous-time Markov chain is rather informal. Furthermore, the definition also does not make explicit whether the random process in question should satisfy a Markov property. However, given the use of the transition rate matrix $Q_t$, it seems to us that the Markov property is intended to be imposed implicitly.
+On the one hand, {\v{S}kulj} defines an imprecise continuous-time Markov chain as a random process $X\colon\reals\to\states$ whose transition rate matrix is an unspecified function $Q_t\in\rateset$ \cite[Definition~1]{Skulj:2015cq}. 
+%, without imposing any further restrictions on $Q_t$---such as, for example, continuity. 
+However, he does not provide a definition for $Q_s$, nor for the notion of a random process, and in that sense, this definition of an imprecise continuous-time Markov chain is rather informal. It also does not make explicit whether the random process in question should satisfy a Markov property, but the introduction to his paper, and the use of the time-dependent transition rate matrix $Q_s$, suggests that the Markov property is intended to be imposed implicitly.
 
-On the other hand, more formally, for any $f\in\gamblesX$, {\v{S}}kulj considers a time-dependent function $f_s$, which---using our notation---is interpreted as $f_s\coloneqq T_0^s f$, and then requires that $f_0=f$,
+On the other hand, more formally, {\v{S}kulj} introduces imprecise continuous-time Markov chains in the following, alternative way.
+
+For any $f\in\gamblesX$, he considers a time-dependent function $f_s$, which---using our notation---is defined as $f_s\coloneqq T_0^s f$, and then requires that $f_0=f$,
 \begin{equation}\label{eq:constraintsDamjan}
 \lrate f_s
 \leq
@@ -3736,7 +3740,9 @@ D^+f_s\coloneqq
 =\hspace{-1.5pt}\colon D_+f_s
 \leq\overline{Q} f_s,
 \end{equation}
-where $\overline{Q}$ is the upper envelope of $\rateset$, or equivalently,  the conjugate upper transition rate operator of $\lrate$, defined by $\overline{Q}g\coloneqq-\lrate(-g)$ for all $g\in\gamblesX$, and where $D^+f_s$ and $D_-f_s$ are called Dini derivatives. In this way, he generalises the usual differential equation characterisation of a precise homogeneous Markov chain, where the Dini derivatives would be replaced by derivatives, where the operator $\lrate$ would be replaced by a transition rate matrix $Q$, and where the inequalities would become equalities. Since this generalisation considers inequalities, the solution $f_s$ is not uniquely determined, and the problem is therefore to find lower and upper bounds for $f_s$. {\v{S}kulj} solves this problem, by showing that $\underline{f}_s\leq f_s\leq\overline{f}_s$, where $\underline{f}_s$ and $\overline{f}_s$ are the unique solutions of the differential equations
+where $\overline{Q}$ is the upper envelope of $\rateset$, or equivalently,  the conjugate upper transition rate operator of $\lrate$, defined by $\overline{Q}g\coloneqq-\lrate(-g)$ for all $g\in\gamblesX$, and where $D^+f_s$ and $D_-f_s$ are called Dini derivatives. In this way, he generalises the usual differential equation characterisation of a precise homogeneous Markov chain, where the Dini derivatives would be replaced by derivatives, where the operator $\lrate$ would be replaced by a transition rate matrix $Q$, and where the inequalities would become equalities. 
+
+Since this generalisation considers inequalities, the solution $f_s$ is not uniquely determined, and the problem is therefore to find lower and upper bounds for $f_s$. {\v{S}kulj} solves this problem, by showing that $\underline{f}_s\leq f_s\leq\overline{f}_s$, where $\underline{f}_s$ and $\overline{f}_s$ are the unique solutions of the differential equations
 \begin{equation*}
 \frac{d \underline{f}_{\,s}}{d s}=\lrate\,\underline{f}_{\,s}
 ~~~\text{and}~~~
@@ -3745,9 +3751,35 @@ where $\overline{Q}$ is the upper envelope of $\rateset$, or equivalently,  the 
 with $\underline{f}_0=\overline{f}_0=f$. 
 %, and proves that $\underline{f}_s\leq f_s\leq\overline{f}_s$. 
 In practice, it suffices to restrict attention to either one of these two bounds, because they are related by conjugacy, in the sense that $\smash{\underline{f}_0=-\overline{f}_0}$ implies that $\smash{\underline{f}_s=-\overline{f}_s}$. 
-Most of {\v{S}}kulj's results focus on $\overline{f}_s$. In our further discussion of his work, however, we will focus on $\underline{f}_s$ instead, because it allows for a more elegant comparison with our own work.
+%Most of {\v{S}}kulj's results focus on $\overline{f}_s$. In our further discussion of his work, however, we will focus on $\underline{f}_s$ instead, because it allows for a more elegant comparison with our own work.
+%This notion of conjugacy is similar to the conjugacy between lower and upper expectations.
 
-*** Equation~\eqref{eq:pointwisedifferential} ***
+
+
+In the main body of his paper, {\v{S}kulj} focusses on computing $\overline{f}_s$. Since, for all $x\in\states$, $\overline{f}_s(x)$ is a tight upper bound on $f_s(x)\coloneqq [T_0^sf](x)=\mathbb{E}[f(X_s)\vert X_0=x]$, this can be interpreted as computing a conditional upper expectation. In particular, for all $x\in\states$, we can interpret $\overline{f}_s(x)$ as
+\begin{equation*}
+\overline{f}_s(x)
+=
+\overline{\mathbb{E}}[f(X_s)\vert X_0=x]=-\underline{\mathbb{E}}[-f(X_s)\vert X_0=x]
+=-\underline{[-f]}_s(x),
+\end{equation*}
+where the final two equalities follow from conjugacy. However, it is never made explicit with respect to which set of stochastic processes $\mathcal{P}$ these lower and upper expectations are taken. 
+
+On the one hand, {\v{S}kulj}'s first definition of an imprecise continuous-time Markov chain suggests that $\mathcal{P}$ is the set of all continuous-time Markov chains whose time-dependent transition rate matrix $Q_s$ takes values in $\rateset$. Since $Q_s$ is typically defined as a derivative, it furthermore suggests that $T_0^s$ should be differentiable in some way---or, at the very least, that $Q_s$ should be integrable. However, this does not seem compatible with Equation~\eqref{eq:constraintsDamjan}. First of all, the use of the Dini derivatives suggests that $T_0^s$ is not required to be differentiable. Secondly, Equation~\eqref{eq:constraintsDamjan} does not impose a Markov condition. So, in summary, it seems to us that {\v{S}kulj} clearly intends for $\mathcal{P}$ to be a set of stochastic processes of which the infinitesimal differences are compatible with $\rateset$, but that he does not make it explicit whether these processes should be Markov chains, nor whether their transition operators $T_0^s$ should be differentiable.
+
+%it seems to us that according to {\v{S}kulj}'s second definition, $\mathcal{P}$ is more or less equal to $\wmprocesses_\rateset$.
+
+% However, since the second definition---equation with Dini's---does not impose any Markov property, it seems to us that in fact, he is actually working with a set of processes that closely resembles $\wprocesses_\rateset$.
+
+% is more or less equal to $\wmprocesses_\rateset$. However, the correspondence is not exact, because
+
+%. The connection with his first definition is not formalised, and is based largely on intuition. 
+
+
+
+
+
+%*** Equation~\eqref{eq:pointwisedifferential} ***
 
 
 % the differential equation
@@ -3769,11 +3801,11 @@ Most of {\v{S}}kulj's results focus on $\overline{f}_s$. In our further discussi
 % \end{equation*}
 %with $\underline{f}_s$ the unique solution to Equation~\eqref{eq:damjans_diff}. 
 
-The connection to imprecise continuous-time Markov chains, then, was the idea that the set over which this infimum is taken corresponds to the set of expected values induced by a certain set of ``precise'' continuous-time Markov chains, which in turn is induced by the set $\rateset$. In other words, and using the notation from our current work, it was argued that
-\begin{equation}\label{eq:damjans_lower}
-\underline{f}_{\,s} = \underline{\mathbb{E}}_{\rateset}^{\mathrm{WM}}[f(X_s)\,\vert\,X_0]\,.
-\end{equation}
-However, the concept of a ``precise'' continuous-time Markov chain was never rigorously defined in Reference~\cite{Skulj:2015cq}, and no characterization or definition was given for how such a set of Markov chains would be induced by $\rateset$. As such, the connection between $\underline{f}_s$ and \ictmc's---in the sense of sets of ``precise'' continuous-time Markov chains---was largely based on intuition.
+%The connection to imprecise continuous-time Markov chains, then, was the idea that the set over which this infimum is taken corresponds to the set of expected values induced by a certain set of ``precise'' continuous-time Markov chains, which in turn is induced by the set $\rateset$. In other words, and using the notation from our current work, it was argued that
+% \begin{equation}\label{eq:damjans_lower}
+% \underline{f}_{\,s} = \underline{\mathbb{E}}_{\rateset}^{\mathrm{WM}}[f(X_s)\,\vert\,X_0]\,.
+% \end{equation}
+% However, the concept of a ``precise'' continuous-time Markov chain was never rigorously defined in Reference~\cite{Skulj:2015cq}, and no characterization or definition was given for how such a set of Markov chains would be induced by $\rateset$. As such, the connection between $\underline{f}_s$ and \ictmc's---in the sense of sets of ``precise'' continuous-time Markov chains---was largely based on intuition.
 
 Our current work, then, extends these results in several ways. First, as shown by Proposition~\ref{prop:lower_transition_has_deriv}, the differential equation~\eqref{eq:damjans_diff} has a uniform solution, i.e. one that is independent of $f$, and this solution is given by the operator $L_0^s$ corresponding to $\lrate$. Second, Corollary~\ref{cor:lower_operator_is_infimum} confirms that Equation~\eqref{eq:damjans_lower} indeed holds, but furthermore shows that the solution $\underline{f}_{\,s}$ also corresponds to the lower expectation with respect to a set of non-Markov processes.
 
