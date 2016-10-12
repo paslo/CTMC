@@ -2287,7 +2287,7 @@ Consider an ordered ternary state space $\states\coloneqq \{a,b,c\}$,  let $f\in
 \end{array}\right] \,:\,\lambda\in[0.01,0.5]\right\}.
 \vspace{4pt}
 \end{equation*}
-Every process $P$ in the imprecise Markov chain $\whmprocesses_{\rateset,\,\mathcal{M}}$ is then a homogeneous Markov chain of which the unique transition rate matrix $Q$ is completely determined by some $\lambda$ in $[0.01,0.5]$. Furthermore, as we know from Remark~\ref{remark:expectationT} and Theorem~\ref{theo:homogeneoushasQ}, the conditional expectation $\mathbb{E}_P(f(X_t)\vert X_0=a)$ that corresponds to this homogeneous Markov chain is equal to $[e^{Q t}f](a)$. Due to this equality, it is a matter of applying some basic---yet cumbersome---algebra to find that 
+Every process $P$ in the imprecise Markov chain $\whmprocesses_{\rateset,\,\mathcal{M}}$ is then a homogeneous Markov chain of which the unique transition rate matrix $Q$ is completely determined by some $\lambda$ in $[0.01,0.5]$. Furthermore, as we know from Remark~\ref{remark:expectationT} and Theorem~\ref{theo:homogeneoushasQ}, the conditional expectation $\mathbb{E}_P[f(X_t)\vert X_0=a]$ that corresponds to this homogeneous Markov chain is equal to $[e^{Q t}f](a)$. Due to this equality, it is a matter of applying some basic---yet cumbersome---algebra to find that 
 \begin{align*}
 \mathbb{E}_P[f(X_t)\vert X_0=a]
 =
@@ -3881,6 +3881,10 @@ Since the limit in Definition~\ref{def:low_trans} does not require the partition
 
 
 \section{Conclusions \& Future Work}\label{sec:conclusions}
+
+In this work, we formalised the concept of \emph{imprecise continuous-time Markov chains}; a generalisation of continuous-time Markov chains that robustifies this model class with respect to often-made simplifying assumptions. We derived tractable algorithms to compute lower expectations for such models, which work for arbitrary functions that depend on the state at any finite number of time points. In particular, we have seen that these algorithms are most generally applicable when we relax the often-made assumptions of time-homogeneity and Markovian probabilistic independence. One of our most important conclusions, therefore, is that dropping these assumptions in this context actually makes it \emph{easier} to compute the quantities that we are interested in---rather than harder, which is what one might intuitively expect.
+
+In the remainder of this section, we briefly summarise the most important technical results and concepts that we provided in this work. We then finally close with some pointers to future lines of research.
 
 In this work, \emph{continuous-time stochastic processes} were defined within the framework of full conditional probabilities, and using the notion of coherent conditional probabilities. Using the concept of \emph{well-behaved} stochastic processes, we introduced a way to characterise the dynamics of such stochastic processes by means of their \emph{outer partial derivatives}---sets of \emph{rate matrices} that we have shown are non-empty, bounded and closed, and which describe the infinitesimal state-transition rate of these processes. In particular, these outer partial derivatives allow us to describe this behaviour without imposing differentiability assumptions on the conditional state-transition probabilities. We have seen that by imposing the Markov property on such stochastic processes, we obtain continuous-time Markov chains. Under the further assumption of time-homogeneity of the state-transition probabilities, we have re-derived, within the framework of full conditional probabilities, the well known homogeneous continuous-time Markov chains, which are those stochastic processes whose matrix of conditional state-transition probabilities $T_t^s$ is given by the matrix exponential $e^{Q(s-t)}$, for some rate matrix $Q\in\mathcal{R}$.
 
