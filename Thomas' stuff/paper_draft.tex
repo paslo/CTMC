@@ -1392,7 +1392,7 @@ On the other hand, if we let $p(\Delta)\coloneqq \Delta\abs{\sin(\nicefrac{1}{\D
 \limsup_{\Delta\to0^+}\abs{\sin(\nicefrac{1}{\Delta})}
 =1.
 \end{equation*}
-In this case---at least for $t=0$ and $u=\emptyset$---$P$ does exhibit the behaviour that we associate with a well-behaved stochastic process. Furthermore, as we invite the reader to check, $P(X_\Delta=x\vert X_0=y)$ is again continuous on $\reals_{\geq0}$. However, $P(X_\Delta=x\vert X_0=y)$ is not differentiable in $\Delta=0$, because $\nicefrac{1}{\Delta}P(X_\Delta=x\vert X_0=y)=\abs{\sin(\nicefrac{1}{\Delta})}$ oscillates as $\Delta$ approaches zero.
+In this case---at least for $t=0$ and $u=\emptyset$---$P$ does exhibit the behaviour that we associate with a well-behaved stochastic process. Furthermore, as we invite the reader to check, $P(X_\Delta=y\vert X_0=x)$ is again continuous on $\reals_{\geq0}$. However, $P(X_\Delta=y\vert X_0=z)$ is not differentiable in $\Delta=0$, because $\nicefrac{1}{\Delta}P(X_\Delta=y\vert X_0=x)=\abs{\sin(\nicefrac{1}{\Delta})}$ oscillates as $\Delta$ approaches zero.
 \exampleend
 \end{exmp}
 
@@ -1518,7 +1518,7 @@ with $Q_\lambda\coloneqq \lambda Q_1+(1-\lambda)Q_2$. The reason why this indeed
 
 So fix any $\lambda\in[\nicefrac{1}{3},\nicefrac{2}{3}]$ and consider the sequence $\{\Delta_i\}_{i\in\nats_0}\to0^+$ whose elements are defined by $\Delta_i\coloneqq\nicefrac{(2\delta_{2i+1})}{(3\lambda)}$. For all $i\in\nats_0$, we then find that
 \begin{align*}
-\varphi_1(\Delta_i)Q_1+\varphi_2(\Delta_i)
+\varphi_1(\Delta_i)Q_1+\varphi_2(\Delta_i)Q_2
 =\frac{2}{3}\delta_{2i+1}Q_1+(\Delta_i-\frac{2}{3}\delta_{2i+1})Q_2
 %&=\frac{1}{3}\delta_{2i}Q_1+(\Delta_i-\frac{1}{3}\delta_{2i})Q_2\\
 =\lambda\Delta_i Q_1+(1-\lambda)\Delta_i Q_2
@@ -1658,7 +1658,7 @@ So consider any $Q\in\overline{\partial}_+T_0^0$. Definition~\ref{def:outerparti
 \lim_{i\to+\infty}\nicefrac{1}{\Delta_i}(T_0^{\Delta_i}-I)=Q.
 \end{equation}
 
-The first step of the proof is to observe that, for every $t\in(0,1]$, $\varphi_1(t)+\varphi_2(t)=t$ and $\nicefrac{1}{3}t\leq\varphi_1(t)\leq\nicefrac{2}{3}t$; we leave this as an exercise. Given this observation, it follows that for all $t\in(0,1]$, there is some $\lambda_t\in[\nicefrac{1}{3},\nicefrac{2}{3}]$ such that $\varphi_1(t)=\lambda_t t$ and $\varphi_2(t)=(1-\lambda_t)t$. Hence, in particular, for every $i\in\nats$, there is some $\lambda_i\in[\nicefrac{1}{3},\nicefrac{2}{3}]$ such that $\varphi_1(\Delta_i)=\lambda_i \Delta_i$ and $\varphi_2(\Delta_i)=(1-\lambda_i)\Delta_i$ and therefore also, due Equation~\eqref{eq:ex4:def}, $T_0^{\Delta_i}=e^{Q_{\lambda_i}\Delta_i}$.
+The first step of the proof is to observe that, for every $t\in(0,1]$, $\varphi_1(t)+\varphi_2(t)=t$ and $\nicefrac{1}{3}t\leq\varphi_1(t)\leq\nicefrac{2}{3}t$; we leave this as an exercise. Given this observation, it follows that for all $t\in(0,1]$, there is some $\lambda_t\in[\nicefrac{1}{3},\nicefrac{2}{3}]$ such that $\varphi_1(t)=\lambda_t t$ and $\varphi_2(t)=(1-\lambda_t)t$. Hence, in particular, for every $i\in\nats$, there is some $\lambda_i\in[\nicefrac{1}{3},\nicefrac{2}{3}]$ such that $\varphi_1(\Delta_i)=\lambda_i \Delta_i$ and $\varphi_2(\Delta_i)=(1-\lambda_i)\Delta_i$ and therefore also, due to Equation~\eqref{eq:ex4:def}, $T_0^{\Delta_i}=e^{Q_{\lambda_i}\Delta_i}$.
 Furthermore, because of the Bolzano-Weierstrass theorem, the sequence $\{\lambda_i\}_{i\in\nats_0}$ contains a convergent subsequence $\{\lambda_{i_k}\}_{k\in\nats_0}$ whose limit $\lambda\coloneqq\lim_{k\to+\infty}\lambda_{i_k}$ clearly belongs to $[\nicefrac{1}{3},\nicefrac{2}{3}]$. 
 
 In the remainder of this example, we will prove that $Q=Q_\lambda$. To this end, let us fix any $\epsilon>0$ and prove that $\norm{Q-Q_\lambda}<\epsilon$. First of all, since $\lambda=\lim_{k\to+\infty}\lambda_{i_k}$, there is some $n_1\in\nats_0$ such that, for all $k\geq n_1$, $\abs{\lambda-\lambda_{i_k}}\norm{Q_1-Q_2}<\nicefrac{\epsilon}{3}$ and therefore also
@@ -3922,7 +3922,13 @@ Since the limit in Definition~\ref{def:low_trans} does not require the partition
 
 \section{Conclusions \& Future Work}\label{sec:conclusions}
 
-In this work, we formalised the concept of \emph{imprecise continuous-time Markov chains}; a generalisation of continuous-time Markov chains that robustifies this model class with respect to often-made simplifying assumptions. We also presented tractable algorithms for computing the lower expectations that correspond to these models, for arbitrary functions that depend on the state at any finite number of time points. As we have seen, these algorithms are most generally applicable when we relax the often-made assumptions of time-homogeneity and Markovian probabilistic independence. One of our most important conclusions, therefore, is that dropping these assumptions in this context actually makes it \emph{easier} to compute the quantities that we are interested in---rather than harder, which is what one might intuitively expect.
+In this work, we formalised the concept of \emph{imprecise continuous-time Markov chains}; a generalisation of continuous-time Markov chains that robustifies this model class with respect to often-made simplifying assumptions. 
+%
+In particular, this approach allows one to relax the requirement of having to specify exact values---point-estimates---for the numerical parameters, as well as the assumptions of time-homogeneity and Markovian probabilistic independence. Since these assumptions are often made pragmatically to ensure a tractable model class, it should not be obvious that this generalisation results in a practically workable model class. Nevertheless, we were still able to derive polynomial runtime-complexity algorithms for computing quantities of interest.
+%We have shown that this model class allows one to relax the assumptions of time-homogeneity and Markovian probabilistic independence---which are often made pragmatically to ensure a computationally tractable model---without, rather amazingly, concessions to 
+%We also presented tractable algorithms for computing the lower expectations that correspond to these models, for arbitrary functions that depend on the state at any finite number of time points. 
+%As we have seen, 
+%In fact, and notably, these algorithms are most generally applicable when we relax the assumptions of both time-homogeneity and Markovian probabilistic independence. An important conclusion, therefore, is that dropping these assumptions in this context actually makes it \emph{easier} to compute the quantities that we are interested in---rather than harder, which is what one might intuitively expect.
 
 In the remainder of this section, given the length of this paper, we start by providing a brief summary of our most important technical contributions. We then finally close by discussing some future lines of research that we consider to be promising.
 
@@ -3948,7 +3954,7 @@ Using this connection between the operator $L_t^s$ and the lower expectations of
 %Furthermore, we have shown that the \emph{smallest} set of stochastic processes for which $L_t^s$ can compute the lower expectation, for arbitrary functions, is given by $\wprocesses_{\text{int}(\rateset_{\lrate})}$---which only differs with the above set of stochastic processes up to closure of the set of rate matrices with which it is consistent; $\text{int}(\rateset_{\lrate})$ is the interior of $\rateset_{\lrate}$. We argued that the difference between $\wprocesses_{\text{int}(\rateset_{\lrate})}$ and $\wprocesses_{\rateset_{\lrate}}$ is that the lower expectation of the latter set is actually a minimum, rather than an infimum, because it is always reached by some element of this set. 
 %We conclude from this that $\wprocesses_{\rateset_{\lrate}}$ can be viewed as the canonical \ictmc~corresponding to a given lower transition rate operator $L_t^s$.
 
-In summary, then, we have provided in this work a generalisation of continuous-time Markov chains to imprecise continuous-time Markov chains, which robustifies these models with respect to both numerical parameter assessments and simplifying assumptions of time-homogeneity, Markovian probabilistic independence and differentiability of the state-transition probabilities. In particular, we introduced formal definitions of these concepts, analysed their properties, and provided tools with which their lower expectations can be tractably computed. Therefore, this work can be seen as providing the required rigorous foundations for working with \ictmc's, both theoretically and practically. As such, we expect that it will provide plenty of avenues for future research. 
+In summary, then, we have provided in this work a generalisation of continuous-time Markov chains to imprecise continuous-time Markov chains, which robustifies these models with respect to both numerical parameter assessments and simplifying assumptions of time-homogeneity, Markovian probabilistic independence and differentiability of the state-transition probabilities. Notably, our lower transition operator provides a convenient analytical tool to represent such a model's lower expectation, and this quantity can be tractably computed using the algorithms that we presented. Therefore, this work can be seen as providing the required rigorous foundations for working with \ictmc's, both theoretically and practically. As such, we expect that it will provide plenty of avenues for future research. 
 
 %For instance, we mentioned---but did not prove---that the difference between $\wprocesses_{\text{int}(\rateset_{\lrate})}$ and $\wprocesses_{\rateset_{\lrate}}$ is that the lower expectation of the latter \ictmc~is actually a minimum, rather than an infimum, because it will always be reached by the expectation of some stochastic process $P\in\wprocesses_{\rateset_{\lrate}}$. The proof of this claim relies on some technical results about closure properties relating to this set, and we aim to publish these results in future work.
 
@@ -3975,9 +3981,7 @@ In the discrete time case, that is, for imprecise discrete time Markov chains, i
 
 \subsection*{Acknowledgements}
 
-\textcolor{red}{*** will add later; don't believe I need a formal one, will add Arno depending on co-authorship or not.}
-
-Jasper De Bock is a Postdoctoral Fellow of the Research Foundation - Flanders (FWO) and wishes to acknowledge its financial support. The authors would also like to thank Alexander Erreygers, for some stimulating discussions about the computational aspects of imprecise continuous-time Markov chains.
+Jasper De Bock is a Postdoctoral Fellow of the Research Foundation - Flanders (FWO) and wishes to acknowledge its financial support. Thomas Krak and Jasper De Bock want to thank Arno Siebes for his extensive proofreading and helpful comments. The authors would also like to thank Alexander Erreygers, for some stimulating discussions about the computational aspects of imprecise continuous-time Markov chains.
 %, and two anonymous reviewers, for their generous constructive comments that led to several improvements of this paper.
 
 \bibliographystyle{plain} 
