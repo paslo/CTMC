@@ -116,7 +116,8 @@
    \kern-\scriptspace%
    #2}
 
-\title{Imprecise Continuous-Time Markov Chains}
+
+\title{Imprecise Continuous-Time Markov Chains\raggedright}
 
 % \author[1]{Thomas E. Krak\thanks{t.e.krak@uu.nl}}
 % \author[2]{Jasper de Bock\thanks{jasper.debock@ugent.be}}
@@ -124,27 +125,34 @@
 % \affil[2]{Ghent University}
 
 %\renewcommand\Authfont{\flushleft\textsc}
-\renewcommand\Affilfont{\normalfont\normalsize}
-\setlength{\affilsep}{1em}
+\renewcommand\Affilfont{\normalfont\normalsize
+%\raggedright
+}
+\renewcommand{\titlefont}{\LARGE}
 
-\author[*]{Thomas Krak}
+\setlength{\affilsep}{3em}
+
+\author[*]{\vspace{0.5cm}
+%\hspace{-1.45cm}
+Thomas Krak}
 \author[$\dagger$]{Jasper De Bock}
-\author[$\ddagger$]{Arno Siebes}
+\author[$\ddagger\mathsection$]{Arno Siebes}
 
-\affil[ ]{${}^*$\texttt{t.e.krak@uu.nl}\\
-${}^\ddagger$\texttt{a.p.j.m.siebes@uu.nl}}
+%\affil[ ]{\vspace{2pt}}
+\affil[ ]{${}^*$\texttt{\large t.e.krak@uu.nl}\\
+${}^\ddagger$\texttt{\large a.p.j.m.siebes@uu.nl}\vspace{2pt}}
 \affil[ ]{Utrecht University\\
-Department of Information and Computing Sciences\\Princetonplein 5, De Uithof\\
+Department of Information and Computing Sciences\\ Princetonplein 5, De Uithof\\
 3584 CC Utrecht\\
 The Netherlands}
 
 \affil[ ]{}
 
-\affil[$\dagger$]{\texttt{jasper.debock@ugent.be}}
+\affil[$\dagger$]{\texttt{\large jasper.debock@ugent.be}\vspace{2pt}}
 \affil[ ]{Ghent University\\
 Department of Electronics and Information Systems\\
-Technologiepark -- Zwijnaarde 914 \\
-9052 Zwijnaarde \\ 
+Technologiepark -- Zwijnaarde 914\\
+9052 Zwijnaarde\\ 
 Belgium}
 
 
@@ -169,6 +177,7 @@ Belgium}
 %The Netherlands
 %\vspace{-0.4cm}}
 %\author{Thomas Krak and Jasper de Bock}
+
 
 
 \begin{document}
@@ -201,7 +210,6 @@ Belgium}
 %}
 \date{}
 \maketitle
-
 % \noindent
 % {\it Ghent University, Data Science Lab, Technologiepark -- Zwijnaarde 914, 9052 Zwijnaarde, Belgium}
 
@@ -216,6 +224,12 @@ More technically, an \ictmc~is a \emph{set} of ``precise'' continuous-time finit
 The first part of this paper develops a formalism for describing continuous-time finite-state stochastic processes that does not require the aforementioned simplifying assumptions. Next, this formalism is used to characterise \ictmc's and to investigate their properties. The concept of lower expectation is then given an alternative operator-theoretic characterisation, by means of a \emph{lower transition operator}, and the properties of this operator are investigated as well. Finally, we use this lower transition operator to derive tractable algorithms (with polynomial runtime complexity w.r.t. the maximum numerical error) for computing the lower expectation of functions that depend on the state at any finite number of time points.
 \end{abstract}
 
+
+
+
+{\let\thefootnote\relax\footnotetext{{\hspace{-4pt}${}^{\mathsection}$\hspace{1pt}The research for this paper has been conducted by the first two authors, who have also jointly written the first draft. The role of the third author consisted in proofreading this draft extensively, which lead to several improvements to Sections~\ref{sec:introduction},~\ref{sec:prev_work} and~\ref{sec:conclusions}.}}}
+
+\newpage
 \section{Introduction}\label{sec:introduction}
 
 Continuous-time Markov chains are mathematical models that can describe the behaviour of dynamical systems under stochastic uncertainty. In particular, they describe the stochastic evolution of such a system through a discrete state-space and over a continuous time-dimension. This class of models has found widespread applications in various fields, including queueing theory~\cite{asmussen2008applied,bolch2006queueing}, mathematical finance~\cite{elliott2013default, rolski2009stochastic,sass2004optimizing}, epidemiology~\cite{ duffy1995estimation,jackson2003multistate, lemey2009reconstructing}, system reliability analysis~\cite{besnard2010approach,gokhale2004analysis, wang2007reliability}, and many others~\cite{yin2012continuous}.
@@ -243,6 +257,8 @@ The following provides a motivating toy example.
 % that will return throughout this work. 
 It is clearly too simple to be of any practical use, but it does allow us to illustrate the simplifying assumptions that are usually adopted, and to provide a basic idea of how we intend to relax them.
 
+\vspace{10pt}
+
 \begin{exmp}\label{ex:health_sick_exmp}
 Consider a person periodically becoming sick, and recovering after some time. If we want to model this behaviour using a continuous-time Markov chain with a binary state space $\{\text{\tt healthy, sick}\}$, we need to specify a \emph{rate parameter} for each of the two possible state-transitions: from {\tt healthy} to {\tt sick}, and from {\tt sick} to {\tt healthy}. Loosely speaking, such a rate parameter characterises how quickly the corresponding state-transition happens. Technically, it specifies the derivative of a transition probability. For example, for the transition from {\tt healthy} to {\tt sick}, the corresponding rate parameter is the derivative of $P(X_s={\tt sick}\,\vert\,X_t={\tt healthy})$ with respect to $s$, for $s=t$, where $P(X_s={\tt sick}\,\vert\,X_t={\tt healthy})$ is the probability of a person being sick at time $s$, given that he or she is healthy at time $t$. Together with the initial probabilities of a person being {\tt sick} or {\tt healthy} at time zero, these rate parameters uniquely characterise a continuous-time Markov chain, which can then be used to answer various probabilistic queries of interest.
 For instance, to compute the probability that a person will be sick in ten days, given that he or she is healthy today.
@@ -265,7 +281,7 @@ Fourthly, the rate parameters are assumed to remain constant over time, which, f
 %As a final example, differentiability assumptions are often made about the probabilities involved. For instance, we might assume that $\nicefrac{\partial}{\partial s}\left[P(X_s\,\vert\,X_t)\right]$ exists. However, if the person that we are modeling is exposed to someone carrying a virus, the probability of becoming sick could suddenly and drastically change. More generally, this might be the case when our specified model fails to account for possible external perturbations.
 
 In the imprecise continuous-time Markov chains that we consider, these four conditions are relaxed in the following way. First of all, instead of providing a point-estimate for the initial probabilities and the rate parameters, we allow ourselves to specify a set of values. For the purpose of this example, we can take these sets to be intervals. The other three conditions are then dropped completely, provided that they remain compatible with these intervals. For example, the rate parameters do not need to be constant, but can vary in time in an arbitrary way, as long as they remain within their interval. Similarly, the rate parameters are also allowed to depend on the history of the process, that is, the value of the previous states. In fact, the rate parameters---as defined above---do not even need to exist, since we do not require differentiability either.
-\exampleend
+\exampleend\vspace{10pt}
 \end{exmp}
 
 The idea of relaxing the defining assumptions of a continuous-time Markov chain is not new. Various variations on it have been developed over the years.
@@ -794,6 +810,7 @@ t-\nicefrac{2}{3}\delta_{i+1}
 
 In order to prove this, we first establish some properties. 
 Consider any $t\in(0,1]$ and let $j$ be the unique element of $\nats_0$ such that $\delta_{j+1}\leq t\leq\delta_j$. Since $Q_1$ and $Q_2$ commute, it then follows from Equations~\eqref{eq:ex4:def}--\eqref{eq:ex4:phi2} that
+\vspace{3pt}
 \begin{align}\label{eq:ex4:recursestar}
 T_0^{t}
 =e^{Q_1\varphi_1(t)+Q_2\varphi_2(t)}
@@ -2225,12 +2242,12 @@ Furthermore, rather ironically, it turns out that computing lower expectations f
 
 %\begin{exmp}
 Suppose that we want to compute the lower expectation $\underline{\mathbb{E}}_{\rateset,\,\mathcal{M}}^{\mathrm{WHM}}[f(X_t)\,\vert\,X_0=x_0]$ of some function $f\in\gamblesX$ at time $t$, conditional on the information that the state $X_0$ at time $0$ takes the value $x_0\in\states_0$. It then follows from Definition~\ref{def:lower_exp},  Remark~\ref{remark:expectationT} and Proposition~\ref{prop:Q_is_singleton_deriv_for_homogen} that
-\vspace{-3pt}
+%\vspace{-3pt}
 \begin{align*}
 \underline{\mathbb{E}}_{\rateset,\,\mathcal{M}}^{\mathrm{WHM}}[f(X_t)\,\vert\,X_0=x_0] &= \inf\left\{ \mathbb{E}_P[f(X_t)\,\vert\,X_0=x_0]\,:\,P\in\whmprocesses_{\rateset,\,\mathcal{M}} \right\} \\
  &= \inf\left\{ [e^{Q_P t}f](x_0)\,:\,P\in\whmprocesses_{\rateset,\,\mathcal{M}} \right\} \\
  &= \inf\left\{ [e^{Q t}f](x_0)\,:\,Q\in\rateset\right\}.
- \vspace{4pt}
+ \vspace{6pt}
 \end{align*}
 Therefore, computing $\smash{\underline{\mathbb{E}}_{\rateset,\,\mathcal{M}}^{\mathrm{WHM}}[f(X_t)\,\vert\,X_0=x_0]}$ is at its core a non-linear, constrained optimisation problem over the set $\rateset$, where the non-linearity stems from the term $e^{Qt}$, and the specific form of the constraints depends on the choice of $\rateset$.  The following example illustrates the non-linearity of this type of optimisation problem in a simple case.
 
@@ -2337,7 +2354,7 @@ Every process $P$ in the imprecise Markov chain $\whmprocesses_{\rateset,\,\math
 2+e^{-\lambda t}+2\frac{e^{-\lambda t}-100\lambda e^{-\nicefrac{t}{100}}}{100\lambda-1}&\text{ if $\lambda\in(0.01,0.5]$}\\[8pt]
 \displaystyle
 2-e^{-\nicefrac{t}{100}}-\frac{1}{50}te^{-\nicefrac{t}{100}}&\text{ if $\lambda=0.01$.}
-\end{cases}
+\end{cases}\\[-10pt]
 \end{align*}
 Obtaining the value of $\underline{\mathbb{E}}_{\rateset,\,\mathcal{M}}^{\mathrm{WHM}}[f(X_t)\,\vert\,X_0=a]$ now corresponds to minimising this expression as $\lambda$ ranges over the interval $[0.01,0.5]$. Figure~\ref{fig:homogeneousCounterExample} illustrates that, even in this simple ternary case, this minimisation problem is already non-trivial, because---depending on the value of $t$---the minimum is not guaranteed to obtained for one of the end points of $[0.01,0.5]$, but may only be achieved by an internal point. Nevertheless, in this simple case, $\underline{\mathbb{E}}_{\rateset,\,\mathcal{M}}^{\mathrm{WHM}}[f(X_t)\,\vert\,X_0=a]$ can of course be computed by brute force, leading to the solution that is depicted in Figure~\ref{fig:homogeneousCounterExample}. 
 
@@ -2737,7 +2754,8 @@ Our first result is that this family $\smash{\underline{\mathcal{T}}_{\lrate}}$ 
 \begin{proposition}\label{prop:lower_trans_system_is_system}
 Let $\lrate$ be an arbitrary lower transition rate operator, and let $\underline{\mathcal{T}}_{\lrate}$ be the corresponding lower transition operator system. Then, for all $t,r,s\in\realsnonneg$ such that $t\leq r\leq s$, it holds that
 \begin{equation*}
-L_t^s = L_t^rL_r^s\,.
+L_t^s = L_t^rL_r^s.
+\vspace{6pt}
 \end{equation*}
 Furthermore, for all $t\in\realsnonneg$, we have that $L_t^t=I$.
 \end{proposition}
@@ -2761,6 +2779,7 @@ Let $\lrate$ be an arbitrary lower transition rate operator, and let $\underline
 % Then $\frac{d}{dt}\lbound_t^s=-\lrate\lbound_t^s$ and $\frac{d}{ds}\lbound_t^s=\lbound_t^s\lrate$, meaning that
 \end{proposition}
 We would like to point out here that the derivatives in this result are not taken pointwise, but are taken with respect to the operator norm. For example, for $t=0$ and $s>0$, Proposition~\ref{prop:lower_transition_has_deriv} does not state that
+\vspace{3pt}
 \begin{equation}\label{eq:pointwisedifferential}
 \frac{d}{d s}\lbound_0^sf=\lrate\lbound_0^sf
 ~\text{ for all $f\in\gamblesX$,}
@@ -2768,7 +2787,7 @@ We would like to point out here that the derivatives in this result are not take
 but rather that
 \begin{equation}\label{eq:uniformdifferential}
 \lim_{\Delta\to0}
-\norm{\frac{L_0^{s+\Delta}-L_0^s}{\Delta}-\lrate L_0^s}=0.\vspace{6pt}
+\norm{\frac{L_0^{s+\Delta}-L_0^s}{\Delta}-\lrate L_0^s}=0.\vspace{9pt}
 \end{equation}
 Of these two statements, the latter is the strongest one, as it implies the former. Hence, although from an intuitive point of view, the reader may wish to interpret the results in Proposition~\ref{prop:lower_transition_has_deriv} as in Equation~\eqref{eq:pointwisedifferential}---which would be correct---one should keep in mind that from a technical point of view, the result is in fact stronger, and is intended to be read as in Equation~\eqref{eq:uniformdifferential}.
 
@@ -3030,6 +3049,7 @@ Consider the set $\rateset$ of Example~\ref{exmp:example_rateset_simple_model}, 
 =&
 \inf\left\{\left[\begin{array}{rr}-a & a \end{array}\right]\left[\begin{array}{l} g(\text{{\tt h}}) \\ g(\text{{\tt s}}) \end{array}\right]\,:\,a\in\left[\frac{1}{52}, \frac{3}{52} \right]\right\} \\[2pt]
 =&\inf\left\{a\big(g(\text{{\tt s}})-g(\text{{\tt h}})\big)\,:\,a\in\left[\frac{1}{52}, \frac{3}{52} \right]\right\},
+\vspace{-6pt}
 \end{align*}
 and therefore, that
 \begin{equation}\label{eq:lratehealthexample:h}
@@ -3140,10 +3160,11 @@ g_1(x)\coloneqq[(I + \Delta\lrate)\ind{\text{{\tt s}}}](x)
 0.9975
 &\text{ if $x=\text{\tt s}$}
 \end{cases}
-~~~\text{for all $x\in\states$.}
+~~~\text{for all $x\in\states$.}\\
+&
 % \\
 %  &= \left[\begin{array}{c}0\\1\end{array}\right] + 1.25\times 10^{-4}\cdot\left[\begin{array}{c}\nicefrac{1}{52}\\-2\end{array}\right] = \left[\begin{array}{l} 0 + \nicefrac{1}{52}\cdot 1.6\times 10^{-4}\\ 1 - 2\cdot 1.6\times 10^{-4}\end{array}\right]\,.
-\end{align*}\\[-0pt]
+\end{align*}
 Having completed this first step, we now have that
 \begin{equation*}
 \prod_{i=1}^n(I + \Delta\lrate)\ind{\text{{\tt s}}} = \prod_{i=1}^{7999}(I + \Delta\lrate)g_1 = \left(\prod_{i=1}^{7998}(I + \Delta\lrate)\right)\left((I+\Delta\lrate)g_1\right)\,.
@@ -3987,7 +4008,7 @@ In the discrete time case, that is, for imprecise discrete time Markov chains, i
 
 \subsection*{Acknowledgements}
 
-Jasper De Bock is a Postdoctoral Fellow of the Research Foundation - Flanders (FWO) and wishes to acknowledge its financial support. Thomas Krak and Jasper De Bock want to thank Arno Siebes for his extensive proofreading and helpful comments. The authors would also like to thank Alexander Erreygers, for some stimulating discussions about the computational aspects of imprecise continuous-time Markov chains.
+Jasper De Bock is a Postdoctoral Fellow of the Research Foundation - Flanders (FWO) and wishes to acknowledge its financial support. The authors would also like to thank Alexander Erreygers, for some stimulating discussions about the computational aspects of imprecise continuous-time Markov chains.
 %, and two anonymous reviewers, for their generous constructive comments that led to several improvements of this paper.
 
 \bibliographystyle{plain} 
