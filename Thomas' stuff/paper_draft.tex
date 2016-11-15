@@ -3806,15 +3806,11 @@ In this result, the requirement $t_0=0$ is a purely formal one, and imposes no a
 
 %**** other related work: Markov Decision Processes, controlled Markov processes, differential inclusions, ....
 
-To the best of our knowledge, the concept of an imprecise continuous-time Markov chain was first introduced in the literature by the seminal work of {\v{S}}kulj~\cite{Skulj:2015cq}. There, $\lrate$ was defined as the lower envelope of a non-empty, closed, convex set of rate matrices $\rateset$ with separately specified rows, and the notion of an imprecise continuous-time Markov chain was then introduced in two different ways.
+To the best of our knowledge, the concept of an imprecise continuous-time Markov chain was first introduced in the literature by the seminal work of {\v{S}}kulj~\cite{Skulj:2015cq}. There, $\lrate$ was defined as the lower envelope of a non-empty, bounded, closed, and convex set of rate matrices $\rateset$ with separately specified rows, and the notion of an imprecise continuous-time Markov chain was then introduced in two different ways.
 
-On the one hand, {\v{S}kulj}  defines an imprecise continuous-time Markov chain as a random process $X\colon\reals\to\states$ whose transition rate matrix is an unspecified function $Q_s\in\rateset$ \cite[Definition~1]{Skulj:2015cq}. 
-%, without imposing any further restrictions on $Q_t$---such as, for example, continuity. 
-However, he does not provide a definition for $Q_s$, nor for the notion of a random process, and in that sense, this definition is rather informal. It also does not make explicit whether the random process in question should satisfy a Markov property.%, but the introduction to his paper, and the use of the time-dependent transition rate matrix $Q_s$, suggests that the Markov property is intended to be imposed implicitly.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-On the other hand, more formally, {\v{S}kulj} introduces imprecise continuous-time Markov chains in the following, alternative way.
-
-For any $f\in\gamblesX$, he considers a time-dependent function $f_s$, which---using our notation---is defined as $f_s\coloneqq T_0^s f$, and then requires that $f_0=f$,
+In the main body of his paper, {\v{S}kulj} characterises imprecise continuous-time Markov chains in the following way. For any $f\in\gamblesX$, he considers a time-dependent function $f_s$, which---using our notation---is defined as $f_s\coloneqq T_0^s f$, and then requires that $f_0=f$,
 \begin{equation}\label{eq:constraintsDamjan}
 \lrate f_s
 \leq
@@ -3842,7 +3838,7 @@ In practice, it suffices to restrict attention to either one of these two bounds
 %This notion of conjugacy is similar to the conjugacy between lower and upper expectations.
 
 
-In the main body of his paper, {\v{S}kulj} focusses on computing $\overline{f}_s$. Since, for all $x\in\states$, $\overline{f}_s(x)$ is a tight upper bound on $f_s(x)\coloneqq [T_0^sf](x)=\mathbb{E}[f(X_s)\vert X_0=x]$, this can be interpreted as computing a conditional upper expectation. In particular, for all $x\in\states$, we can interpret $\overline{f}_s(x)$ as
+Using this characterisation, {\v{S}kulj} focusses on computing $\overline{f}_s$. Since, for all $x\in\states$, $\overline{f}_s(x)$ is a tight upper bound on $f_s(x)\coloneqq [T_0^sf](x)=\mathbb{E}[f(X_s)\vert X_0=x]$, this can be interpreted as computing a conditional upper expectation. In particular, for all $x\in\states$, we can interpret $\overline{f}_s(x)$ as
 \begin{equation*}
 \overline{f}_s(x)
 =
@@ -3850,9 +3846,21 @@ In the main body of his paper, {\v{S}kulj} focusses on computing $\overline{f}_s
 =-\underline{[-f]}_s(x),
 \end{equation*}
 where the final two equalities follow from conjugacy. 
-However, it is never made explicit with respect to which set of stochastic processes $\mathcal{P}$ these lower and upper expectations are taken. 
 
-On the one hand, {\v{S}kulj}'s first definition of an imprecise continuous-time Markov chain suggests that $\mathcal{P}$ is the set of all continuous-time Markov chains whose time-dependent transition rate matrix $Q_s$ takes values in $\rateset$. Since $Q_s$ is typically defined as a derivative, this suggests that $T_0^s$ should be differentiable in some way---or, at the very least, that $Q_s$ should be integrable. On the other hand, {\smash{\v{S}kulj}}'s second definition suggests a different set of processes $\mathcal{P}$, because Equation~\eqref{eq:constraintsDamjan} does not impose a Markov condition, and because the use of the Dini derivatives suggests that $T_0^s$ is not required to be differentiable. In summary then, {\smash{\v{S}kulj}} clearly intends for $\mathcal{P}$ to be a set of stochastic processes of which the infinitesimal differences are compatible with $\rateset$, but leaves open the question of whether or not these processes are Markov chains, and whether or not their transition operators $T_0^s$ should be differentiable.
+%%%%%%%%%%%%%%%%%%%%%%
+
+However, the above characterisation leaves some ambiguity as to the set of stochastic processes $\mathcal{P}$ with respect to which these lower and upper expectations are taken. %That is, it is unclear which properties are satisfied by the stochastic processes $P$ for which $f_s=\mathbb{E}_P[f(X_s)\,\vert\,X_0]$ satisfies Equation~\eqref{eq:constraintsDamjan}.
+%
+As mentioned above, however, {\v{S}kulj} also provides another definition, which in his paper is introduced before the above rigorous characterisation in terms of lower- and upper bounds. Here, he defines an imprecise continuous-time Markov chain as a random process $X\colon\reals\to\states$ whose transition rate matrix is an unspecified function $Q_s\in\rateset$ \cite[Definition~1]{Skulj:2015cq}. However, he does not provide a definition for $Q_s$---as being a derivative or some other representation of the infinitesimal behaviour of the process' transition probabilities---nor for the notion of a random process, and in that sense, this definition is rather informal. 
+%, without imposing any further restrictions on $Q_t$---such as, for example, continuity. 
+
+%%%%%%%%%%%%%%%%%%%%
+%However, he does not provide a definition for $Q_s$, nor for the notion of a random process, and in that sense, this definition is rather informal. It also does not make explicit whether the random process in question should satisfy a Markov property.%, but the introduction to his paper, and the use of the time-dependent transition rate matrix $Q_s$, suggests that the Markov property is intended to be imposed implicitly.
+
+On the one hand, this other definition of an imprecise continuous-time Markov chain clearly suggests that $\mathcal{P}$ is the set of all random processes whose time-dependent transition rate matrix $Q_s$ takes values in $\rateset$. Since $Q_s$ is typically defined as a derivative, this suggests that $T_0^s$ should be differentiable in some way---or, at the very least, that $Q_s$ should be integrable. Furthermore, the fact that $Q_s$ is indexed only by the time $s$ suggests that $Q_s$ cannot be history-dependent---thereby implying that the corresponding random process satisfies the Markov property. On the other hand, {\smash{\v{S}kulj}}'s main definition suggests a different set of processes $\mathcal{P}$, because Equation~\eqref{eq:constraintsDamjan} does not impose a Markov condition, and because the use of the Dini derivatives suggests that $T_0^s$ is not required to be differentiable. In summary then, {\smash{\v{S}kulj}} clearly intends for $\mathcal{P}$ to be a set of stochastic processes of which the infinitesimal differences are compatible with $\rateset$, but leaves open the question of whether or not these processes are Markov chains, and whether or not their transition operators $T_0^s$ should be differentiable.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %it seems to us that according to {\v{S}kulj}'s second definition, $\mathcal{P}$ is more or less equal to $\wmprocesses_\rateset$.
 
@@ -3894,7 +3902,7 @@ On the one hand, {\v{S}kulj}'s first definition of an imprecise continuous-time 
 % \end{equation}
 % However, the concept of a ``precise'' continuous-time Markov chain was never rigorously defined in Reference~\cite{Skulj:2015cq}, and no characterization or definition was given for how such a set of Markov chains would be induced by $\rateset$. As such, the connection between $\underline{f}_s$ and \ictmc's---in the sense of sets of ``precise'' continuous-time Markov chains---was largely based on intuition.
 
-Our approach does make it explicit which set of stochastic processes $\mathcal{P}$ is being considered, and defines this set in a formal way. Interestingly, but perhaps unsurprisingly, our results end up being very closely related to the work of {\v{S}kulj}.
+Our approach, in contrast, removes this ambiguity, by making it formally explicit which set of stochastic processes $\mathcal{P}$ is being considered. Interestingly, but perhaps unsurprisingly, our results end up being very closely related to the work of {\v{S}kulj}.
 %In this paper, we have taken a different approach. 
 %Our present paper extends this approach in several ways. First of all, due to {\v{S}kulj}'s direct characterisation of $\underline{f}_s$ and $\overline{f}_s$, his approach left some open questions as to the exact set of stochastic processes that these bounds correspond to. That is, the properties of the stochastic processes for which $f_s\coloneqq \mathbb{E}[f(X_s)\,\vert\,X_0]$ satisfies Equation~\eqref{eq:constraintsDamjan}. Since our approach explicitly considers such sets, we are able to alleviate this ambiguity. 
 In particular, by comparing Equations~\eqref{eq:pointwisedifferential} and~\eqref{eq:boundsdifferentialDamjan}, we see that $\underline{f}_s=L_0^sf$, and therefore, it follows from Corollary~\ref{cor:lower_operator_is_infimum} that
