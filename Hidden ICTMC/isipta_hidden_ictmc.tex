@@ -556,7 +556,7 @@ For all $t_i\in u'$, let $g_{t_i}$, $g_{t_i}^+$ and $g_{t_i}^-$ be as defined ab
 \lexp\left[g_{t_0}^+(X_{t_0})\right] = \lexp\left[\prod_{t_i\in u'}g_{t_i}(X_{t_i})\right]\,,\quad\quad\text{and,}\quad\quad\uexp\left[g_{t_0}^-(X_{t_0})\right] = \uexp\left[\prod_{t_i\in u'}g_{t_i}(X_{t_i})\right]\,.
 \end{equation*}
 \end{proposition}
-So, in order to evaluate the function of interest, it remains to compute $\lexp\left[g_{t_0}^+(X_{t_0})\right]$. Since $g_{t_0}^+$ is a function on a single time point $t_0$, this can again be done in polynomial time\footnote{That is, under some assumptions on the set $\mathcal{M}$ of initial distributions. In particular, we require that the lower expectation with respect to this set can be computed efficiently.} using the results in Reference BIG PAPER.
+So, in order to evaluate the function of interest, it remains to compute $\lexp\left[g_{t_0}^+(X_{t_0})\right]$. Since $g_{t_0}^+$ is a function on a single time point $t_0$, this can again be done in polynomial time\footnote{That is, under some assumptions on the set $\mathcal{M}$ of initial distributions. In particular, we require that the lower expectation with respect to this set can be computed efficiently---otherwise, this becomes the bottleneck of the procedure.} using the results in Reference BIG PAPER.
 
 
 \subsection{Arbitrary Functions in the Future}
@@ -573,17 +573,37 @@ Due to this result, it suffices to first compute the quantity $\lexp[f(X_v)\vert
 
 Hence, the computational complexity of computing this updated lower expectation depends on the complexity of computing $\lexp[f(X_v)\vert X_{t_n}]$. In general, this takes exponential time in the number of time points in $v$, since even simply specifying $f$ takes this much time.
 
-However, there are certain classes of functions for which this can be done much more efficiently. For instance, if $f$ decomposes into a number of functions $f_{s_i}\in\gambles(\states_{s_i})$, $s_i\in v$, such that we can write
+However, there are certain classes of functions for which this can be done much more efficiently. For instance, if $f\in\gambles(\states_v)$ decomposes into a number of functions $f_{s_i}\in\gambles(\states_{s_i})$, $s_i\in v$, such that we can write
 \begin{equation*}
 f(x_v) = \prod_{s_i\in v}f_{s_i}(x_{s_i})\,,
 \end{equation*}
-then we can compute the quantity $\lexp[f(X_v)\vert X_{t_n}]$ by applying the same dynamic programming technique from Section~\ref{sec:funcs_single_time}. In particular, borrowing the notation from that section, this quantity is given by $\lexp[f_{s_0}^+(X_{s_0})\,\vert\,X_{t_n}]$, which is therefore computable in polynomial time (and in particular, in linear time w.r.t. the number of time points in $v$)--- ***** see Lemma~\ref{lemma:product_func_induction} in the appendix for the proof.
+then we can compute the quantity $\lexp[f(X_v)\vert X_{t_n}]$ by applying the same dynamic programming technique from Section~\ref{sec:funcs_single_time}. In particular, borrowing the notation from that section, this quantity is given by $\lexp[f_{s_0}^+(X_{s_0})\,\vert\,X_{t_n}]$, which is therefore computable in polynomial time (and in particular, in linear time w.r.t. the number of time points in $v$).
 
-**** Even easier for functions that are sums.
+Similarly, if $f\in\gambles(\states_v)$ decomposes into functions $f_{s_i}\in\gambles(\states_{s_i})$, $s_i\in v$ such that
+\begin{equation*}
+f(x_v) = \sum_{s_i\in v} f_{s_i}(x_{s_i})\,,
+\end{equation*}
+then we can apply an even simpler backward recursive scheme. Writing $v=s_0,\ldots,s_m$, define the base case $\tilde{f}_{s_m}\coloneqq f_{s_m}$ and, for all $i\in\{0,\ldots,m-1\}$, define
+\begin{equation*}
+\tilde{f}_{s_i} \coloneqq f_{s_i} + \lexp[\tilde{f}_{s_{i+1}}(X_{s_{i+1}})\,\vert\,X_{s_i}]\,.
+\end{equation*}
+It is easily verified that due to iterated lower expectation (Proposition REF) and the imprecise Markov property of \ictmc's, we then have
+\begin{equation*}
+\lexp[\tilde{f}_{s_0}(X_{s_0})\,\vert\,X_{t_n}] = \lexp\left[\sum_{s_i\in v} f_{s_i}(X_{s_i})\,\vert\,X_{t_n}\right]\,,
+\end{equation*}
+and that, using this procedure, this quantity is therefore computable in linear time w.r.t. $m$, and in polynomial time overall.
 
-\subsection{*** Product/Sum Functions at arbitrary points?}
+\subsection{Arbitrary Functions at Arbitrary Time Points}
 
-*** Not sure if we have room to add this.
+In the previous sections, we provided tractable inference algorithms for functions at an arbitrary single time point, and for certain classes of functions at multiple time points, provided that these time points are in the future with respect to our observations.
+
+One might then wonder whether it is also possible to provide tractable algorithms for functions at time points that lie before or between the observation times. Unfortunately, it turns out that this is in general not even the case for the relatively simple function classes discussed above, i.e., those that decompose as sums or products of functions at single time points.
+
+Nevertheless, there are some specific problems in which such inferences can be tractably computed. For instance, to find the lower probability of a given state-assignment $x_v$, given observations at time points $u$, where $u$ and $v$ are arbitrary---see JASPERS THESIS for details. 
+
+As another example, it is possible to tractably compute the set of (Walley-Sen)-\emph{maximal state sequences}, given observations at time points $u$. These are those joint state assignments $x_u$ that are non-dominated, in the sense that $P(X_u=x_u\,\vert\,Y_u\in O_u)> P(X_u=\tilde{x}_u\,\vert\,Y_u\in O_u)$ for all $\tilde{x}_u\in\states_u$, $\tilde{x}_u\neq x_u$, and $P\in\mathcal{Z}$---see REF for details.
+
+However, these inferences are computable using specialised algorithms that exploit problem-specific properties to achieve their tractability. For instance, that the function $f$ decomposes into \emph{indicator} functions---which vastly reduces the range of possible values that it can obtain. As such, their description lies well outside the scope of this current paper. In general, arbitrary inferences are still computable using the results in Reference BIG PAPER, although the time-complexity then becomes exponential in the number of time points in $u\cup v$. If nothing else, this makes it possible to perform inferences of arbitrary functions, provided that the number of time points in which we are interested is small enough.
 
 \section{Related Work}
 
