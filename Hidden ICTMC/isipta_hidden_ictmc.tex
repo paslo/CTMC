@@ -231,50 +231,42 @@ Recent work showed that it is possible to robustify against such simplifying ass
 
 In this current work, then, we introduce \emph{imprecise continuous-time hidden Markov chains}---a stochastic model analogous to a CTHMC, but where the latent CTMC is replaced by an ICTMC.
 
-The remainder of this paper is organised as follows. We introduce our notation in Section REF, and there also briefly recall the definitions and most important properties of ICTMC's. In Section REF, we formally introduce ICTHMC's. The remainder of the main body of the paper is then concerned with the inference problem that is important to this model class; in Section REF, we discuss the problem of making inferences about the latent process, given some observations; and in Section REF we provide polynomial runtime algorithms to solve this inference problem for some important classes of functions. We then compare and relate these results to other work in the literature, in Section REF, and finally close with conclusions and some pointers to future work, in Section REF.
+The remainder of this paper is organised as follows. We introduce our notation in Section~\ref{sec:prelim}, and there also briefly recall the definitions and most important properties of ICTMC's. In Section~\ref{sec:icthmc}, we formally introduce ICTHMC's. Next, in Section~\ref{sec:updating_model}, we discuss the problem of making inferences about the latent process, given some observations; and then, in Section~\ref{sec:inference_algos}, we provide polynomial runtime algorithms to solve this inference problem for some important classes of functions. We then compare and relate these results to other work in the literature, in Section~\ref{sec:related}, and finally close with conclusions and some pointers to future work, in Section~\ref{sec:conclusions}.
 
-\section{Preliminaries}
+\section{Preliminaries}\label{sec:prelim}
 
-*** basic notatie
+We denote the reals as $\reals$, the non-negative reals as $\realsnonneg$, and the positive reals as $\realspos$. The natural numbers are denoted $\nats$, and we define $\natswith\coloneqq\nats\cup\{0\}$.
 
-\subsection{State Space and Stochastic Processes}
+Since we are working in a continuous-time setting, a \emph{time-point} is an element of $\realsnonneg$, and these are typically denoted $t$ or $s$. We also make extensive use of finite sequences of time points $u\subset\realsnonneg$. These are taken to be ordered, so that they may be written $u=t_0,\ldots,t_n$, for some $n\in\nats$, and such that then $t_i<t_j$ for all $i,j\in\{0,\ldots,n\}$ for which $i< j$. Such sequences are usually denoted $u$ or $v$, and we denote the entire set of them by $\mathcal{U}$. We use set-theoretic notation to operate on them, while preserving the ordering requirement; i.e., we write $u\cup v$ for the ordered union of $u$ and $v$.
 
-*** blabla state space $\states$
+Throughout, we consider some fixed, finite state space $\states$. A generic element of $\states$ will be denoted $x$. When consider the state-space at a specific time $t$, we write $\states_t\coloneqq\states$, and $x_t$ denotes a generic state-assignment at this time. When considering multiple time points $u$ simultaneously, we consider the joint state-space $\states_u\coloneqq\prod_{t_i\in u}\states_{t_i}$, a generic element of which is denoted $x_u=(x_{t_0},\ldots,x_{t_n})$.
 
-\begin{definition}[Stochastic Process]
-Bla
-\end{definition}
+\subsection{Continuous-Time Stochastic Processes}
 
-\begin{definition}[Well-Behaved Stochastic Process]
-Bla
-\end{definition}
+** Minimum workable definition?
 
-\begin{definition}[Transition Matrix]
-Bla
-\end{definition}
+*** coherent conditional prob
 
-\begin{definition}[Rate Matrix]
-Bla
-\end{definition}
+*** rate matrix $\Leftarrow$ needs transition matrix
 
-\begin{definition}[Outer-Partial Derivatives]
-Bla
-\end{definition}
+*** well-behavedness
 
-\begin{proposition}
-**** For w.b. processes, outer partials are non-empty, bounded and closed sets of rate-matrices.
-\end{proposition}
 
 \subsection{Imprecise Continuous-Time Markov Chains}
 
-**** Hier herhaling definities en benodigde eerdere resultaten
+**** Minimum workable definition?
 
 \begin{definition}[ICTMC]
-Bla *** maybe just focus on $\wprocesses_{\rateset,\mathcal{M}}$?
+Bla *** maybe just focus on $\wprocesses_{\rateset,\mathcal{M}}$, with $\rateset$ convex and s.s.r.?
 \end{definition}
 
+*** Required properties: 
 
-\section{Imprecise Continuous-Time Hidden Markov Chains}
+***** iterated lower expectation
+
+***** imprecise Markov
+
+\section{Imprecise Continuous-Time Hidden Markov Chains}\label{sec:icthmc}
 
 \subsection{Observables}
 
@@ -619,9 +611,9 @@ As another example, it is possible to tractably compute the set of (Walley-Sen)-
 
 However, these inferences are computable using specialised algorithms that exploit problem-specific properties to achieve their tractability. For instance, that the function $f$ decomposes into \emph{indicator} functions---which vastly reduces the range of possible values that it can obtain. As such, their description lies well outside the scope of this current paper. In general, arbitrary inferences are still computable using the results in Reference BIG PAPER, although the time-complexity then becomes exponential in the number of time points in $u\cup v$. If nothing else, this makes it possible to perform inferences of arbitrary functions, provided that the number of time points in which we are interested is small enough.
 
-\section{Related Work}
+\section{Related Work}\label{sec:related}
 
-\section{Conclusions and Future Work}
+\section{Conclusions and Future Work}\label{sec:conclusions}
 
 \bibliographystyle{plain}
 \bibliography{general.bib}
