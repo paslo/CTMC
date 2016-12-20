@@ -219,7 +219,7 @@ Lorem ipsum.
 
 \section{Introduction}\label{sec:introduction}
 
-Continuous-time Markov chains (CTMC's) are stochastic models that describe the evolution of a dynamical system under uncertainty. Specifically, it provides a measure of the uncertainty of how such a system might move through a discrete state-space, as time elapses in a continuous fashion.
+A continuous-time Markov chain (CTMC) is a stochastic model that describes the evolution of a dynamical system under uncertainty. Specifically, it provides a measure of the uncertainty of how such a system might move through a discrete state-space, as time elapses in a continuous fashion.
 
 A continuous-time \emph{hidden} Markov chain (CTHMC), then, is a stochastic model that contains a continuous-time Markov chain as a latent variable---that is, the actual realised behaviour of the system cannot be directly observed. Such a model furthermore incorporates random \emph{output} variables, which in some sense depend on the current state that the system is in, and it is rather realisations of these variables that one observes. Through this stochastic dependency between the output variables and the states in which the system might be, one can perform inferences about quantities of interest that depend on these states---even though they have not been observed.
 
@@ -229,35 +229,53 @@ It should be clear from the above that CTHMC's are essentially the continuous-ti
 
 Recent work showed that it is possible to robustify against such simplifying assumptions using \emph{imprecise continuous-time Markov chains} (ICTMC's) REF REF. Briefly, an ICTMC is a \emph{set} of continuous-time (and discrete-state) stochastic processes. Some of these processes are ``traditional'' time-homogeneous CTMC's. However, this set also contains much more complicated processes, which are non-homogeneous and do not satisfy the Markov property.
 
-In this current work, then, we introduce \emph{imprecise continuous-time hidden Markov chains}---a stochastic model analogous to a CTHMC, but where the latent CTMC is replaced by an ICTMC.
+In this current work, then, we introduce \emph{imprecise continuous-time hidden Markov chains}---a stochastic model analogous to a CTHMC, but where the latent CTMC is replaced by an ICTMC. We focus on the corresponding inference problem, that is, the computation of lower expectations of functions on the state-space, given observed realisations of the output variables.
 
-The remainder of this paper is organised as follows. We introduce our notation in Section~\ref{sec:prelim}, and there also briefly recall the definitions and most important properties of ICTMC's. In Section~\ref{sec:icthmc}, we formally introduce ICTHMC's. Next, in Section~\ref{sec:updating_model}, we discuss the problem of making inferences about the latent process, given some observations; and then, in Section~\ref{sec:inference_algos}, we provide polynomial runtime algorithms to solve this inference problem for some important classes of functions. We then compare and relate these results to other work in the literature, in Section~\ref{sec:related}, and finally close with conclusions and some pointers to future work, in Section~\ref{sec:conclusions}.
+This paper is organised as follows. We introduce our notation in Section~\ref{sec:prelim}, and there also briefly recall the definitions and most important properties of ICTMC's. In Section~\ref{sec:icthmc}, we formally introduce ICTHMC's. Next, in Section~\ref{sec:updating_model}, we discuss the problem of making inferences about the latent process, given some observations; and then, in Section~\ref{sec:inference_algos}, we provide polynomial runtime algorithms to solve this inference problem for some important classes of functions. We then compare and relate these results to other work in the literature, in Section~\ref{sec:related}, and finally close with conclusions and some pointers to future work, in Section~\ref{sec:conclusions}.
 
 \section{Preliminaries}\label{sec:prelim}
 
 We denote the reals as $\reals$, the non-negative reals as $\realsnonneg$, and the positive reals as $\realspos$. The natural numbers are denoted $\nats$, and we define $\natswith\coloneqq\nats\cup\{0\}$.
 
-Since we are working in a continuous-time setting, a \emph{time-point} is an element of $\realsnonneg$, and these are typically denoted $t$ or $s$. We also make extensive use of finite sequences of time points $u\subset\realsnonneg$. These are taken to be ordered, so that they may be written $u=t_0,\ldots,t_n$, for some $n\in\nats$, and such that then $t_i<t_j$ for all $i,j\in\{0,\ldots,n\}$ for which $i< j$. Such sequences are usually denoted $u$ or $v$, and we denote the entire set of them by $\mathcal{U}$. We use set-theoretic notation to operate on them, while preserving the ordering requirement; i.e., we write $u\cup v$ for the ordered union of $u$ and $v$.
+Since we are working in a continuous-time setting, a \emph{time-point} is an element of $\realsnonneg$, and these are typically denoted $t$ or $s$. We also make extensive use of finite sequences of time points $u\subset\realsnonneg$. These are taken to be ordered, so that they may be written $u=t_0,\ldots,t_n$, for some $n\in\natswith$, and such that then $t_i<t_j$ for all $i,j\in\{0,\ldots,n\}$ for which $i< j$. Such sequences are usually denoted $u$ or $v$, and we denote the entire set of them by $\mathcal{U}$. We use set-theoretic notation to operate on them, while preserving the ordering requirement; i.e., we write $u\cup v$ for the ordered union of $u$ and $v$.
 
-Throughout, we consider some fixed, finite state space $\states$. A generic element of $\states$ will be denoted $x$. When consider the state-space at a specific time $t$, we write $\states_t\coloneqq\states$, and $x_t$ denotes a generic state-assignment at this time. When considering multiple time points $u$ simultaneously, we consider the joint state-space $\states_u\coloneqq\prod_{t_i\in u}\states_{t_i}$, a generic element of which is denoted $x_u=(x_{t_0},\ldots,x_{t_n})$.
-
-\subsection{Continuous-Time Stochastic Processes}
-
-** Minimum workable definition?
-
-*** coherent conditional prob
-
-*** rate matrix $\Leftarrow$ needs transition matrix
-
-*** well-behavedness
-
+Throughout, we consider some fixed, finite state space $\states$. A generic element of $\states$ will be denoted $x$. When considering the state-space at a specific time $t$, we write $\states_t\coloneqq\states$, and $x_t$ denotes a generic state-assignment at this time. When considering multiple time-points $u$ simultaneously, we denote the joint state-space as $\states_u\coloneqq\prod_{t_i\in u}\states_{t_i}$, a generic element of which is then denoted $x_u=(x_{t_0},\ldots,x_{t_n})$.
 
 \subsection{Imprecise Continuous-Time Markov Chains}
 
-**** Minimum workable definition?
+We here briefly recall the most important properties of imprecise continuous-time Markov chains (ICTMC's), following the definitions and results of Reference BIG PAPER. For reasons of brevity, we provide these definitions in a largely intuitive, not-so-formal manner, and refer the interested reader to this earlier work for an in-depth treatise on the subject.
+
+An ICTMC will be defined below as a specific set of \emph{continuous-time stochastic processes}. Such a stochastic process is a (coherent) conditional probability $P$ on a set of conditional events $\mathcal{C}^\mathrm{SP}$, where the events $(A,C)\in\mathcal{C}^\mathrm{SP}$ describe a joint state-assignment $A$, conditional on the joint state-assignment $C$. Intuitively, $C$ describes the known ``history'' of the process, and $A$ is then an event that might occur in the future, given this history. 
+
+To make this somewhat less abstract, given time-points $t,s\in\realsnonneg$ with $t<s$, and given time-points $u\in\mathcal{U}_{<t}$, we might consider the event $(X_s=x_s, (X_t=x_t,X_u=x_u))$, for which $P$ provides the quantity $P(X_s=x_s\,\vert\,X_t=x_t,X_u=x_u)$, which describes the probability of the state $X_s$ obtaining the value $x_s$, given that at time points $t$ and $u$, the system was in states $x_t$ and $x_u$, respectively. If $P$ is a continuous-time Markov chain, then this quantity would satisfy the identity
+\begin{equation*}
+P(X_s=x_s\,\vert\,X_t=x_t,X_u=x_u) = P(X_s=x_s\,\vert\,X_t=x_t)\,,
+\end{equation*}
+for every state-assignment $x_u\in\states_u$. This, of course, is the well-known Markov property.
+
+It is notationally convenient to jointly consider probabilities that are conditioned on the same time points, by defining an $\lvert\states\rvert\times\lvert\states\rvert$ real-valued matrix $T_t^s$ as
+\begin{equation*}
+T_t^s(x_t,x_s) \coloneqq P(X_s=x_s\,\vert\,X_t=x_t)\,,\quad\quad\text{for all $x_t\in\states_t$ and $x_s\in\states_s$.}
+\end{equation*}
+This matrix $T_t^s$ is called the \emph{transition matrix}, from time $t$ to time $s$, of the process $P$. Since we are more generally considering non-Markov processes, it is also convenient to define the \emph{history-dependent} transition matrix, for each $x_u\in\states_u$, as
+\begin{equation*}
+T_{t,x_u}^s(x_t,x_s) \coloneqq P(X_s=x_s\,\vert\,X_t=x_t,X_u=x_u)\,,\quad\quad\text{for all $x_t\in\states_t$ and $x_s\in\states_s$}.
+\end{equation*}
+
+Now, roughly speaking, such a stochastic process can be parameterised by the derivatives of its (history-dependent) transition matrices,
+\begin{equation}\label{eq:deriv_limit_is_rate}
+\partial T_{t,x_u}^t \coloneqq \lim_{\Delta\to 0^+}\frac{T_{t,x_u}^{t+\Delta}-I}{\Delta}\,,
+\end{equation}
+where $I$ denotes the identity matrix. If this derivative exists, then the quantity $\partial T_{t,x_u}^t$ is a \emph{rate matrix}---a matrix with all row-sums equal to zero, and with non-negative off-diagonal elements (and hence non-positive diagonal elements). Roughly, such a rate matrix describes the rate-of-change of the transition probabilities of the process $P$, that is, the instantaneous speed with which the process moves between states, around the time-point $t$. 
+
+Of course, the limit expression in Equation~\eqref{eq:deriv_limit_is_rate} need not exist. However, it was shown in Reference BIG PAPER that we can instead use a certain generalisation of this derivative, which is always well-defined for \emph{well-behaved} processes. A process $P$ is called well-behaved if its rate-of-change is \emph{bounded}---i.e., finite---for all time points $t$ and histories $x_u$, with $u\in\mathcal{U}_{<t}$. This generalisation, denoted $\overline{\partial} T_{t,x_u}^t$, is then always a non-empty \emph{set} of rate matrices.
+
+We can now use the above concepts to define \emph{imprecise continuous-time Markov chains}. In particular, such an ICTMC is the set of all well-behaved processes for which these generalised derivatives $\overline{\partial} T_{t,x_u}^t$ belong to some given set of rate matrices $\rateset$. Since this only parameterises the ``dynamics'' of the model, we furthermore restrict the initial distributions $P(X_0)$ to belong to a given set $\mathcal{M}$ of probability mass functions on $\states$.
 
 \begin{definition}[ICTMC]
-Bla *** maybe just focus on $\wprocesses_{\rateset,\mathcal{M}}$, with $\rateset$ convex and s.s.r.?
+Consider a non-empty, bounded of rate matrices $\rateset$, and a non-empty set $\mathcal{M}$ of probability mass functions on $\states$.
+
+Then, the corresponding ICTMC, denoted $\wprocesses_{\rateset,\mathcal{M}}$, is the set of all \emph{well-behaved} processes $P$ that satisfy $P(X_0)\in\mathcal{M}$, and $\overline{\partial} T_{t,x_u}^t \subseteq \rateset$ for all $t\in\realsnonneg$, all $u\in\mathcal{U}_{<t}$, and $x_u\in\states_u$.
 \end{definition}
 
 *** Required properties: 
