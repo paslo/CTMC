@@ -275,7 +275,7 @@ Of course, the limit expression in Equation~\eqref{eq:deriv_limit_is_rate} need 
 We can now use the above concepts to define \emph{imprecise continuous-time Markov chains}. In particular, such an ICTMC is the set of all well-behaved processes for which these generalised derivatives $\overline{\partial} T_{t,x_u}^t$ are contained in a given set of rate matrices $\rateset$. Since this only parameterises the ``dynamics'' of the model, we furthermore restrict the initial distributions $P(X_0)$ to belong to a given set $\mathcal{M}$ of probability mass functions on $\states$.
 
 \begin{definition}[ICTMC]
-Consider a non-empty bounded of rate matrices $\rateset$, and a non-empty set $\mathcal{M}$ of probability mass functions on $\states$.
+Consider a non-empty bounded set of rate matrices $\rateset$, and a non-empty set $\mathcal{M}$ of probability mass functions on $\states$.
 
 Then, the corresponding ICTMC, denoted $\wprocesses_{\rateset,\mathcal{M}}$, is the set of all well-behaved processes $P$ that satisfy $P(X_0)\in\mathcal{M}$, and $\overline{\partial} T_{t,x_u}^t \subseteq \rateset$ for all $t\in\realsnonneg$, all $u\in\mathcal{U}_{<t}$, and $x_u\in\states_u$.
 \end{definition}
@@ -428,7 +428,21 @@ Consider a non-empty bounded set of rate matrices $\rateset$, a non-empty set $\
 \end{equation*}
 \end{definition}
 
-**** Blabla lower expectation is infimum
+Given any ICTHMC $\mathcal{Z}$, the (conditional) lower expectation w.r.t. this model is denoted $\underline{\mathbb{E}}_\mathcal{Z}$, and defined as
+\begin{equation*}
+\underline{\mathbb{E}}_\mathcal{Z}[\cdot\,\vert\,\cdot] \coloneqq \inf\left\{ \mathbb{E}_P[\cdot\,\vert\,\cdot]\,:\,P\in\mathcal{Z} \right\}\,.
+\end{equation*}
+When considering a function $f\in\gambles(\states_v)$ that only depends on the states $\states_v$, we then have
+\begin{equation*}
+\underline{\mathbb{E}}_\mathcal{Z}[f(X_v)\,\vert\,X_u] = \lexp[f(X_v)\,\vert\,X_u]\,,
+\end{equation*}
+where $\lexp$ denotes lower expectation w.r.t. the ICTMC $\wprocesses_{\rateset,\mathcal{M}}$ from which $\mathcal{Z}$ was constructed.
+
+Similarly, for any $f\in\gambles(\observs_v)$ that only depends on the observations $\observs_v$, we have
+\begin{equation*}
+\underline{\mathbb{E}}_\mathcal{Z}[f(Y_v)\,\vert\,X_v] = \mathbb{E}_{\observs\vert\states}[f(Y_v)\,\vert\,X_v]\,,
+\end{equation*}
+where $\mathbb{E}_{\observs\vert\states}$ denotes expectation with respect to the observable model from which $\mathcal{Z}$ was constructed. Note that this only holds when we are conditioning exactly on the time points $v$ on which $f$ is defined.
 
 \section{Updating the Model}\label{sec:updating_model}
 
