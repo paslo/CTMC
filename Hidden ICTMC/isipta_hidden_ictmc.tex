@@ -268,21 +268,34 @@ Now, roughly speaking, such a stochastic process can be parameterised by the der
 \end{equation}
 where $I$ denotes the identity matrix. If this derivative exists, then the quantity $\partial T_{t,x_u}^t$ is a \emph{rate matrix}---a matrix with all row-sums equal to zero, and with non-negative off-diagonal elements (and hence non-positive diagonal elements). Roughly, such a rate matrix describes the rate-of-change of the transition probabilities of the process $P$, that is, the instantaneous speed with which the process moves between states, around the time-point $t$. 
 
-Of course, the limit expression in Equation~\eqref{eq:deriv_limit_is_rate} need not exist. However, it was shown in Reference BIG PAPER that we can instead use a certain generalisation of this derivative, which is always well-defined for \emph{well-behaved} processes. A process $P$ is called well-behaved if its rate-of-change is \emph{bounded}---i.e., finite---for all time points $t$ and histories $x_u$, with $u\in\mathcal{U}_{<t}$. This generalisation, denoted $\overline{\partial} T_{t,x_u}^t$, is then always a non-empty \emph{set} of rate matrices.
+Of course, the limit expression in Equation~\eqref{eq:deriv_limit_is_rate} need not exist. However, it was shown in Reference BIG PAPER that we can instead use a certain generalisation of this derivative, which is always well-defined for \emph{well-behaved} processes. A process $P$ is called well-behaved if its rate-of-change is \emph{bounded}---i.e., finite---for all time points $t$ and histories $x_u$, with $u\in\mathcal{U}_{<t}$. This generalisation, denoted $\overline{\partial} T_{t,x_u}^t$, is then always a non-empty \emph{set} of rate matrices. Furthermore, if the limit in Equation~\eqref{eq:deriv_limit_is_rate} exists, then it holds exactly that $\overline{\partial} T_{t,x_u}^t=\{\partial T_{t,x_u}^t\}$.
 
-We can now use the above concepts to define \emph{imprecise continuous-time Markov chains}. In particular, such an ICTMC is the set of all well-behaved processes for which these generalised derivatives $\overline{\partial} T_{t,x_u}^t$ belong to some given set of rate matrices $\rateset$. Since this only parameterises the ``dynamics'' of the model, we furthermore restrict the initial distributions $P(X_0)$ to belong to a given set $\mathcal{M}$ of probability mass functions on $\states$.
+We can now use the above concepts to define \emph{imprecise continuous-time Markov chains}. In particular, such an ICTMC is the set of all well-behaved processes for which these generalised derivatives $\overline{\partial} T_{t,x_u}^t$ are contained in a given set of rate matrices $\rateset$. Since this only parameterises the ``dynamics'' of the model, we furthermore restrict the initial distributions $P(X_0)$ to belong to a given set $\mathcal{M}$ of probability mass functions on $\states$.
 
 \begin{definition}[ICTMC]
-Consider a non-empty, bounded of rate matrices $\rateset$, and a non-empty set $\mathcal{M}$ of probability mass functions on $\states$.
+Consider a non-empty bounded of rate matrices $\rateset$, and a non-empty set $\mathcal{M}$ of probability mass functions on $\states$.
 
-Then, the corresponding ICTMC, denoted $\wprocesses_{\rateset,\mathcal{M}}$, is the set of all \emph{well-behaved} processes $P$ that satisfy $P(X_0)\in\mathcal{M}$, and $\overline{\partial} T_{t,x_u}^t \subseteq \rateset$ for all $t\in\realsnonneg$, all $u\in\mathcal{U}_{<t}$, and $x_u\in\states_u$.
+Then, the corresponding ICTMC, denoted $\wprocesses_{\rateset,\mathcal{M}}$, is the set of all well-behaved processes $P$ that satisfy $P(X_0)\in\mathcal{M}$, and $\overline{\partial} T_{t,x_u}^t \subseteq \rateset$ for all $t\in\realsnonneg$, all $u\in\mathcal{U}_{<t}$, and $x_u\in\states_u$.
 \end{definition}
+So, the ICTMC is parameterised using sets $\rateset$ and $\mathcal{M}$. Specific properties of the model therefore depend on specific properties of these parameter sets. In the sequel, we will assume that $\rateset$ is a convex set of rate matrices, and furthermore that it has \emph{separately specified rows} (s.s.r.). We say that $\rateset$ has s.s.r. if it is closed under arbitrary recombination of rows from its elements.
 
-*** Required properties: 
+The (conditional) \emph{lower expectation} with respect to $\wprocesses_{\rateset,\mathcal{M}}$ is denoted $\lexp[\cdot\vert\cdot]$, and defined as
+\begin{equation*}
+\lexp[\cdot\,\vert\,\cdot] \coloneqq \inf\left\{\mathbb{E}_P[\cdot\,\vert\,\cdot]\,:\,P\in\wprocesses_{\rateset,\mathcal{M}}\right\}\,,
+\end{equation*}
+where $\mathbb{E}_P[\cdot\,\vert\,\cdot]$ denotes the (precise) conditional expectation with respect to the stochastic process $P$.
 
-***** iterated lower expectation
+Under the above s.s.r. assumption on $\rateset$, it can then be shown that, for any $t\in\realsnonneg$, $v\in\mathcal{U}_{\geq t}$, $u\in\mathcal{U}_{<t}$, $x_u\in\states_u$, and $f\in\gambles(\states_v)$,
+\begin{equation*}
+\lexp[f(X_v)\,\vert\,X_t,X_u=x_u] = \lexp[f(X_v)\,\vert\,X_t]\,,
+\end{equation*}
+that is, $\wprocesses_{\rateset,\mathcal{M}}$ satisfies an \emph{imprecise Markov property} when $\rateset$ has separately specified rows.
 
-***** imprecise Markov
+Furthermore, under the above convexity assumption on $\rateset$, it can be shown that, for any $u,v,w\in\mathcal{U}$ such that $u<v<w$, and any $f\in\gambles(\states_{u\cup v\cup w})$,
+\begin{equation*}
+\lexp[f(X_u,X_v,X_w)\,\vert\,X_u] = \lexp\bigl[\lexp[f(X_u,X_v,X_w)\,\vert\,X_u,X_v]\,\big\vert\,X_u\bigr]\,,
+\end{equation*}
+that is, $\lexp$ has the property of \emph{iterated lower expectation}.
 
 \section{Imprecise Continuous-Time Hidden Markov Chains}\label{sec:icthmc}
 
