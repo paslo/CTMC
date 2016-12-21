@@ -503,16 +503,49 @@ Of course, when the upper probability of $(Y_u\in O_u)$ is zero, then the event 
 
 \subsection{Uncountable Outcome Spaces, Point Observations, and Probability Zero}
 
-An important special case where observations have probability zero for all precise models, but where we can still make informative inferences, is when we have an uncountable outcome space $\observs$ and the observations are points $y_u\in\observs_u$. In this case, it is common practice CITE to define the updated expectation $\mathbb{E}_P[f(X_v)\,\vert\,Y_u=y_u]$ as the limit of \emph{conditional} expectations, where each conditioning event is an increasingly smaller region $(y_u-\nicefrac{\delta}{2},y_u+\nicefrac{\delta}{2})$ around this point $y_u$. Under our assumption that the conditional density $\phi(y_u\vert X_u)$ is continuous, this yields the following result.
+An important special case where observations have probability zero for all precise models, but where we can still make informative inferences, is when we have an uncountable outcome space $\observs$ and the observations are points $y_u\in\observs_u$. In this case, it is common practice CITE to define the updated expectation $\mathbb{E}_P[f(X_v)\,\vert\,Y_u=y_u]$ as the limit of \emph{conditional} expectations, where each conditioning event is an increasingly smaller region around this point $y_u$.
+
+To this end, we write for any function $g:\Sigma_u\to\reals$, any $y_u\in\observs_u$ and $c\in\reals$, that $\lim_{C_u\to y_u}g(C_u)=c$ if, for every sequence of \emph{open} cubes\footnote{Under some appropriate metric and topology on $\observs$} $\{C_i\}_{i\in\nats}$ in $\Sigma_u$ that are centred on $y_u$, and satisfy $\cap_{i\in\nats}C_i=\{y_u\}$ and $C_i\supset C_{i+1}$ for all $i\in\nats$, it holds that $\lim_{i\to\infty}g(C_i)$ exists, and is equal to $c$.
+
+The updated (precise) expectation for any process $P$ will then be defined as
+\begin{equation*}
+\mathbb{E}_P[f(X_v)\,\vert\,Y_u=y_u] \coloneqq \lim_{C_u\to y_u} \mathbb{E}_P[f(X_v)\,\vert\,Y_u\in C_u]\,,
+\end{equation*}
+whenever this limit exists, and is left undefined, otherwise.
+
+In order to make this concept practicable, we will henceforth assume that if $\observs$ is uncountable, then it is some set $\observs\subseteq\reals^d$ with the usual topology, for some $d\in\nats$, and that $\Sigma$ is the restriction to $\observs$ of the Borel $\sigma$-algebra on $\reals^d$. We then also assume that $P_{\observs\vert\states}$ is $\sigma$-additive on $\Sigma$, and absolutely continuous with respect to Lebesgue measure $\lambda$ on $(\observs,\Sigma)$.
+
+For any $u\in\mathcal{U}_\emptyset$, we now let $\phi_u:\observs_u\times\states_u\to\realsnonneg$ be the unique function that is defined, for all $x_u\in\states_u$ and $y_u\in\observs_u$, by
+\begin{equation}\label{eq:density_is_limit}
+\phi_u(y_u\vert x_u) \coloneqq \lim_{C_u\to y_u} \frac{P_{\observs_u\vert\states_u}(C_u\vert x_u)}{\lambda(C_u)}\,,
+\end{equation}
+whenever this limit exists, and by $\phi_u(y_u\vert x_u)\coloneqq 0$, otherwise, where $\lambda(C_u)$ denotes Lebesgue measure of $C_u\subseteq\observs_u$, and where we assume $\frac{0}{0}=0$. Under the assumptions above, the limit in Equation~\eqref{eq:density_is_limit} can be shown to exist for $\lambda$-almost every $y_u\in\observs_u$; that is, it is guaranteed to exist everywhere outside a Lebesgue null-set. Furthermore, for every $O_u\in\Sigma_u$ and $x_u\in\states_u$, this function $\phi_u$ satisfies
+\begin{equation}\label{eq:density_generates_measure}
+P_{\observs_u\vert\states_u}(O_u\vert x_u) = \int_{O_u}\phi_u(y_u\vert x_u) \,\mathrm{d}y_u\,,
+\end{equation}
+where the integral is understood in the Lebesgue sense. In other words, $\phi_u(\cdot\,\vert x_u)$ is the conditional probability density function associated with the measure $P_{\observs_u\vert\states_u}(\cdot\vert x_u)$.
+\newline
+\begin{proof}
+Due to the assumptions above, and by the Radon-Nikodym theorem, we can associate with $P_{\observs\vert\states}$ a measurable function $\psi_u:\observs_u\times\states_u\to\realsnonneg$ such that, for all $x_u\in\states_u$ and $O_u\in\Sigma_u$,
+\begin{equation*}
+P_{\observs_u\vert\states_u}(O_u\vert x_u) = \int_{O_u}\psi_u(y_u\vert x_u) \,\mathrm{d}y_u\,.
+\end{equation*}
+Furthermore, since $\int_{\observs}\psi_u(y_u\vert x_u) \,\mathrm{d}y_u = P_{\observs_u\vert\states_u}(\observs_u\vert x_u)=1$, $\psi_u$ is absolutely integrable on $\observs_u$. Therefore, by the Lebesgue differentiation theorem, for $\lambda$-almost every $y_u\in\observs_u$, it holds that
+\begin{equation*}
+\psi_u(y_u\vert x_u) = \lim_{C_u\to y_u} \frac{1}{\lambda(C_u)} \int_{C_u} \psi(\tilde{y}_u\vert x_u)\,\mathrm{d}\tilde{y}_u = \lim_{C_u\to y_u} \frac{P_{\observs_u\vert\states_u}(C_u\vert x_u)}{\lambda(C_u)}\,.
+\end{equation*}
+In other words, the limit expression on the r.h.s. of this equality exists (at least) $\lambda$-almost everywhere---and hence, the same is true for the limit in Equation~\eqref{eq:density_is_limit}. Furthermore, this implies that $\phi_u(\cdot\,\vert x_u)$ differs from $\psi_u(\cdot\,\vert x_u)$ at most on a set of Lebesgue measure zero. Due to the choice of $\psi_u$, this immediately implies Equation~\eqref{eq:density_generates_measure}.
+\end{proof}
+
+In order to update a precise model $P$, we now require that $\mathbb{E}_P[\phi(y_u\vert X_u)]>0$. If this property does not hold, the updated expectation is left undefined. If it does hold, we have the following result.
+
+%$(y_u-\nicefrac{\delta}{2},y_u+\nicefrac{\delta}{2})$ around this point $y_u$. Under our assumption that the conditional density $\phi(y_u\vert X_u)$ is continuous, this yields the following result.
 
 \begin{proposition}\label{prop:precise_bayes_rule_densities}
-Suppose that $\observs$ is uncountable. Let $P$ be an augmented stochastic process, and consider any $v\in\mathcal{U}_\emptyset$, $u\in\mathcal{U}$, and $f\in\gambles(\states_v)$. Then, for every $y_u\in\observs_u$, if $\mathbb{E}_P[\phi_u(y_u\,\vert\,X_u)]>0$,
+Suppose that $\observs$ is uncountable, and $(\observs,\Sigma,P_{\observs\vert\states})$ is an observable model satisfying the assumptions above. Let $P$ be an augmented stochastic process, and consider any $v\in\mathcal{U}_\emptyset$, $u\in\mathcal{U}$, and $f\in\gambles(\states_v)$. Then, for every $y_u\in\observs_u$, if $\mathbb{E}_P[\phi(y_u\,\vert\,X_u)]>0$,
 \begin{equation}\label{eq:updated_expectation_is_limit}
-\mathbb{E}_P[f(X_v)\,\vert\,Y_u=y_u] \coloneqq \lim_{\delta\to 0^+} \mathbb{E}_P[f(X_v)\,\vert\,Y_u\in (y_u-\nicefrac{\delta}{2},y_u+\nicefrac{\delta}{2})] = \frac{\mathbb{E}_P[f(X_v)\phi_u(y_u\vert X_u)]}{\mathbb{E}_P[\phi_u(y_u\,\vert\,X_u)]}\,,
+\mathbb{E}_P[f(X_v)\,\vert\,Y_u=y_u] = \lim_{C_u\to y_u} \mathbb{E}_P[f(X_v)\,\vert\,Y_u\in C_u] = \frac{\mathbb{E}_P[f(X_v)\phi(y_u\vert X_u)]}{\mathbb{E}_P[\phi(y_u\,\vert\,X_u)]}\,.
 \end{equation}
-where $(y_u-\nicefrac{\delta}{2},y_u+\nicefrac{\delta}{2})$ is an open cube in $\observs_u$ of sidelength $\delta$ that is centred on $y_u$. 
-
-On the other hand, if $\mathbb{E}_P[\phi_u(y_u\,\vert\,X_u)]=0$, then $\mathbb{E}_P[f(X_v)\,\vert\,Y_u=y_u]$ is undefined.
 \end{proposition}
 
 The right-hand side of Equation~\eqref{eq:updated_expectation_is_limit} is, of course, the well-known Bayes' conditioning(/updating) rule for mixtures of densities. Similarly, we will again update the imprecise model using regular extension, this time by means of the generalised Bayes' rule for mixtures of densities, as follows.
@@ -552,9 +585,6 @@ Suppose that $\observs$ is uncountable. Let $\mathcal{Z}$ be an ICTHMC, and cons
  &= \lim_{\delta\to 0^+}\underline{\mathbb{E}}_\mathcal{Z}[f(X_v)\vert Y_u\in (y_u-\nicefrac{\delta}{2},y_u+\nicefrac{\delta}{2})]
 \end{align*}
 \end{proposition}
-
-*********** I tried to generalise the above result to the case where only $\uexp[\phi_u(y_u\vert X_u)]>0$, but have so far failed to do this. The problem is essentially that you can have precise models with $\mathbb{E}_P[\mathbb{E}_{\observs\vert\states}[\ind{(y_u-\nicefrac{\delta}{2},y_u+\nicefrac{\delta}{2})}(Y_u)\vert X_u]] > 0$ for all $\delta>0$, but still have $\mathbb{E}_P[\phi(y_u\vert X_u)]=0$. You can still construct a convergent sequence that goes to {\bf a} root of the density-GBR, but I'm failing to prove that this limit corresponds to the maximum root, and hence is independent of the exact sequence. Not that it should matter too much, since most practical densities are strictly positive anyway, but it is somewhat annoying. ******
-
 
 \section{Inference Algorithms}\label{sec:inference_algos}
 
@@ -656,7 +686,7 @@ Nevertheless, there are some specific problems in which such inferences can be t
 
 As another example, it is possible to tractably compute the set of (Walley-Sen)-\emph{maximal state sequences}, given observations at time points $u$. These are those joint state assignments $x_u$ that are non-dominated, in the sense that $P(X_u=x_u\,\vert\,Y_u\in O_u)> P(X_u=\tilde{x}_u\,\vert\,Y_u\in O_u)$ for all $\tilde{x}_u\in\states_u$, $\tilde{x}_u\neq x_u$, and $P\in\mathcal{Z}$---see REF for details.
 
-However, these inferences are computable using specialised algorithms that exploit problem-specific properties to achieve their tractability. For instance, that the function $f$ decomposes into \emph{indicator} functions---which vastly reduces the range of possible values that it can obtain. As such, their description lies well outside the scope of this current paper. In general, arbitrary inferences are still computable using the results in Reference BIG PAPER, although the time-complexity then becomes exponential in the number of time points in $u\cup v$. If nothing else, this makes it possible to perform inferences of arbitrary functions, provided that the number of time points in which we are interested is small enough.
+However, these inferences are computable using specialised algorithms that exploit problem-specific properties to achieve their tractability. For instance, that the function $f$ decomposes into a product of \emph{indicator} functions---which means that $f$ can only take on the values zero or one. As such, the description of such methods lies well outside the scope of this current paper. In general, arbitrary inferences are still computable using the results in Reference BIG PAPER, although the time-complexity then becomes exponential in the number of time points in $u\cup v$. If nothing else, this makes it possible to perform inferences of arbitrary functions, provided that the number of time points in which we are interested is small enough.
 
 \section{Related Work}\label{sec:related}
 
