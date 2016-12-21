@@ -306,26 +306,9 @@ that is, $\lexp$ has the property of \emph{iterated lower expectation}.
 Consider an observable random variable $Y$ taking values in some set $\observs\subseteq\reals^d$, for some fixed $d\in\nats$. This variable is associated with an observable model, as follows.
 
 \begin{definition}[Observable Model]
-An \emph{observable model} is a tuple $(\observs,\Sigma,P_{\observs\vert \states})$, where $\observs$ is an outcome space, $\Sigma$ is some appropriate $\sigma$-algebra on $\observs$ (see below), and, for every $x\in\states$, $P_{\observs\vert\states}(\cdot\vert x)$ is a ($\sigma$-additive) probability measure on $(\observs,\Sigma)$ such that, furthermore, if $\observs$ is uncountable, $P_{\observs\vert\states}(\cdot\vert x)$ is absolutely continuous with respect to Lebesgue measure on $(\observs,\Sigma)$.
+An \emph{observable model} is a tuple $(\observs,\Sigma,P_{\observs\vert \states})$, where $\observs$ is an outcome space, $\Sigma$ is a $\sigma$-algebra on $\observs$, and, for every $x\in\states$, $P_{\observs\vert\states}(\cdot\vert x)$ is a (finitely additive) probability measure on $(\observs,\Sigma)$.
 \end{definition}
-If $\observs$ is at most countable, then we assume that $\Sigma$ is the discrete $\sigma$-algebra on $\observs$, i.e., the power set of $\observs$. Clearly, $P_{\observs\vert\states}(\cdot\vert x)$ can then be associated with a probability mass function on $\observs$: the restriction of $P_{\observs\vert\states}(\cdot\vert x)$ to $\{E\in\Sigma\,:\,\lvert E\rvert = 1\}$, which by slight abuse of notation we will simply denote $P_{\observs\vert\states}(\cdot\vert x)$. In that case, for any bounded function $f:\observs\to\reals$, we can express the conditional expectation, given any $x\in\states$, as
-\begin{equation*}
-\mathbb{E}_{\observs\vert\states}[f(Y)\vert X=x] \coloneqq \sum_{y\in\observs} f(y) P_{\observs\vert\states}(y\vert x)\,.
-\end{equation*}
-
-On the other hand, if $\observs$ is uncountable, then we will assume that $\Sigma$ is the restriction to $\observs$ of the Borel $\sigma$-algebra on $\reals^d$ and that, for every $x\in\states$, $P_{\observs\vert\states}(\cdot\vert x)$ is absolutely continuous with respect to Lebesgue measure $\lambda$ on $(\observs,\Sigma)$\footnote{Note that this imposes some mild regularity assumptions on the entire model $(\observs,\Sigma,P_{\observs\vert\states})$, rather than just on $P_{\observs\vert\states}$. For instance, it implies that we cannot choose $\observs$ to be the Cantor set. Regardless, such pathological examples should not really arise in practice, and so we do not consider this restriction to be problematic.}. By the Radon-Nikodym theorem CITE, we can then associate with $P_{\observs\vert\states}(\cdot\vert x)$ a measurable function $\phi(\cdot\vert x):\observs\to\realsnonneg$ such that, for every $O\in\Sigma$,
-\begin{equation*}
-P_{\observs\vert\states}(O\vert x) = \int_O\phi(y\vert x)dy\,,
-\end{equation*}
-where the integral is understood to be taken with respect to Lebesgue measure. In other words, $\phi(\cdot\vert x)$ is ``the''\footnote{It is only uniquely determined up to a $\lambda$-null set, but we assume that a specific one is chosen, which we denote $\phi(\cdot\vert x)$.} probability density function associated with $P_{\observs\vert\states}(\cdot\vert x)$. Therefore in particular, for any measurable function $f:\observs\to\reals$, we can express its conditional expectation, given any $x\in\states$, as
-\begin{equation*}
-\mathbb{E}_{\observs\vert\states}[f(Y)\vert X=x] \coloneqq \int_\observs f(y) dP_{\observs\vert\states}(y\vert x) = \int_\observs f(y)\phi(y\vert x)dy\,.
-\end{equation*}
-
-In the sequel, we will for convenience assume that these densities $\phi(\cdot\vert x)$ are chosen so that they are continuous---and that this is in fact possible. While being perhaps somewhat unsatisfying from a mathematical point of view, we feel that this assumption vastly improves the clarity with which we can state results and explain our lines of reasoning. Furthermore, although this assumption is somewhat restrictive theoretically---if one wants to purposefully construct pathological examples---it will arguably hold for every probability measure that one intends to use in practice. Finally, if one insists that this assumption should be dropped, then a slightly weaker version of all our results still holds---replacing ``for every $y\in\observs$'' statements, by ``for $\lambda$-almost every $y\in\observs$''; that is, all relevant statements then still hold outside a Lebesgue null-set.
-%\begin{remark}
-%Throughout this work, we want to leave open the choice of whether $\observs$ is taken to be finite, countable, or uncountable. To prevent excessive case-work in our definitions, and in the interest of brevity, we therefore stipulate the following. Whenever, in the sequel, we write something to the effect of ``...$P$ a $\sigma$-additive probability measure on $(\observs,\Sigma)$...'', we implicitly append ``...such that, when $\observs$ is uncountable, $P$ is absolutely continuous with respect to Lebesgue measure on $(\observs,\Sigma)$''. When this property is to be proven, rather than assumed, we will of course be explicit.
-%\end{remark}
+*** blabla, we don't care
 
 When considering (multiple) explicit time points, we use notation analogous to that used for states. In particular, $\observs_t\coloneqq\observs$ for any time $t\in\realsnonneg$, and for any $u\in\mathcal{U}$ with $u=t_0,\ldots,t_n$, we write $\observs_u\coloneqq \observs_{t_0}\times\cdots\observs_{t_n}$. We then let $(\observs_u,\Sigma_u,P_{\observs_u\vert\states_u})$ be the obvious product probability space, i.e., $\Sigma_u$ is the tensor-product $\sigma$-algebra over the $\Sigma_i$, and for every $x_u\in\states_u$, $P_{\observs_u\vert\states_u}(\cdot\vert x_u)$ is the product measure over the $P_{\observs_{t_i}\vert\states_{t_i}}(\cdot\vert x_{t_i})=P_{\observs\vert\states}(\cdot\vert x_{t_i})$.
 
@@ -463,107 +446,82 @@ However, when this event has probability zero, but was nevertheless observed, th
 As noted above, when our assertion $(Y_u\in O_u)$ about an observation at time points $u$ has positive probability, we can---in the precise case---update our model by application of Bayes' rule. The following gives a convenient expression for the updated expectation $\mathbb{E}_P[f(X_v)\,\vert\,Y_u\in O_u]$, which makes use of the independence properties in Definition~\ref{def:generating_process}.
 
 \begin{proposition}\label{prop:precise_conditioning_for_positive}
-Let $P$ be an augmented stochastic process, and consider any $v\in\mathcal{U}_\emptyset$, $u\in\mathcal{U}$, $O_u\in\langle\mathcal{O}_u\rangle$, and $f\in\gambles(\states_v)$. Then, the updated expectation is given by
+Let $P$ be an augmented stochastic process, and consider any $v\in\mathcal{U}_\emptyset$, $u\in\mathcal{U}$, $O_u\in\Sigma_u$, and $f\in\gambles(\states_v)$. Then, the updated expectation is given by
 \begin{equation*}
 \mathbb{E}_P[f(X_v)\,\vert\,Y_u\in O_u] \coloneqq \sum_{x_v\in\states_v}f(x_v)\frac{P(X_v=x_v, Y_u\in O_u)}{P(Y_u\in O_u)} = \frac{\mathbb{E}_P[f(X_v)P(Y_u\in O_u\vert X_u)]}{\mathbb{E}_P[P(Y_u\in O_u\,\vert\,X_u)]}\,,
 \end{equation*}
 whenever $\mathbb{E}_P[P(Y_u\in O_u\,\vert\,X_u)]>0$, and is undefined, otherwise.
 \end{proposition}
 
-Similarly, we update the imprecise model by means of the \emph{generalised Bayes' rule} CITE CITE, and in particular through \emph{regular extension} CITE, as follows.
+Having defined above how to update all the precise models $P\in\mathcal{Z}$, we will now update the imprecise model through \emph{regular extension} CITE. This corresponds to simply discarding from $\mathcal{Z}$ those precise models that assign zero probability to $(Y_u\in O_u)$, updating the remaining models, and then computing the lower envelope over these updated remaining expectations.
+
 \begin{definition}
-Let $\mathcal{Z}$ be an ICTHMC, and consider any $v\in\mathcal{U}_\emptyset$, $u\in\mathcal{U}$, $O_u\in\langle\mathcal{O}_u\rangle$, and $f\in\gambles(\states_v)$. Then, the updated lower expectation is given by the \emph{generalised Bayes' rule},
+Let $\mathcal{Z}$ be an ICTHMC, and consider any $v\in\mathcal{U}_\emptyset$, $u\in\mathcal{U}$, $O_u\in\Sigma_u$, and $f\in\gambles(\states_v)$. Then, the updated lower expectation is defined through regular extension, by setting
 \begin{equation*}
-\underline{\mathbb{E}}_{\mathcal{Z}}\bigl[f(X_v)\,\vert\,Y_u\in O_u\bigr] \coloneqq \max\left\{\mu\in\reals\,:\, \lexp\bigl[\mathbb{E}_{\observs\vert\states}[\ind{O_u}(Y_u)\vert X_u]\bigl(f(X_v) - \mu\bigr)\bigr] \geq 0\right\}\,,
+\underline{\mathbb{E}}_{\mathcal{Z}}\bigl[f(X_v)\,\vert\,Y_u\in O_u\bigr] \coloneqq \inf\bigl\{ \mathbb{E}_P[f(X_v)\,\vert\,Y_u\in O_u]\,:\, P\in\mathcal{Z},\, P(Y_u\in O_u)>0 \bigr\}\,,
 \end{equation*}
-whenever $\overline{\mathbb{E}}_\mathcal{Z}[Y_u\in O_u] >0$, and by $\underline{\mathbb{E}}_{\mathcal{Z}}\bigl[f(X_v)\,\vert\,Y_u\in O_u\bigr]\coloneqq\min f$, otherwise.
+whenever $\overline{\mathbb{E}}_\mathcal{Z}[Y_u\in O_u] >0$, and $\underline{\mathbb{E}}_{\mathcal{Z}}\bigl[f(X_v)\,\vert\,Y_u\in O_u\bigr]\coloneqq\min f$, otherwise.
 \end{definition}
 
-When the event $(Y_u\in O_u)$ has positive lower probability, i.e. when $\underline{\mathbb{E}}_\mathcal{Z}[Y_u\in O_u] > 0$, then this event obviously has positive probability for all $P\in\mathcal{Z}$. Hence, each precise model $P$ in the set $\mathcal{Z}$ can then be updated with this observation---using Proposition~\ref{prop:precise_conditioning_for_positive}. In this case, the updated imprecise model corresponds to the lower envelope over all these updated precise models.
-
-\begin{proposition}\label{prop:GBR_positive_lower}
-Let $\mathcal{Z}$ be an ICTHMC, and consider any $v\in\mathcal{U}_\emptyset$, $u\in\mathcal{U}$, $O_u\in\langle\mathcal{O}_u\rangle$, and $f\in\gambles(\states_v)$. Then, if $\underline{\mathbb{E}}_\mathcal{Z}[Y_u\in O_u] > 0$,
-\begin{equation*}
-\underline{\mathbb{E}}_{\mathcal{Z}}\bigl[f(X_v)\,\vert\,Y_u\in O_u\bigr] = \inf\bigl\{ \mathbb{E}_P[f(X_v)\,\vert\,Y_u\in O_u]\,:\, P\in\mathcal{Z} \bigr\}\,.
-\end{equation*}
-\end{proposition}
-
-Now, in our definition of the updated imprecise model, we only required that $\overline{\mathbb{E}}_\mathcal{Z}[Y_u\in O_u] > 0$. Suppose, then, that the lower probability of $(Y_u\in O_u)$ is zero, but the upper probability is strictly positive. This means that the outcome $(Y_u\in O_u)$ is impossible for \emph{some} of the precise models $P\in\mathcal{Z}$, but possible for others. As noted in the introduction of this section, \emph{conditioning} all precise models in $\mathcal{Z}$ on this observation would then lead to a vacuous model\footnote{Formally, the precise models that attribute zero probability to this event, can through coherence be extended to conditional models, where $P(X_v\vert Y_u\in O_u)$ can then be identified with any arbitrary probability mass function on $\states_v$; note that these conditional probabilities are not \emph{undefined}---in a division by zero sense---but merely \emph{undetermined}---as in under-parameterised. Computing the lower envelope over the set of all such extended models consistent with the initial set $\mathcal{Z}$, would then yield the assertion that $\underline{\mathbb{E}}_\mathcal{Z}[f(X_v)\vert Y_u\in O_u]=\min f$ (and $\overline{\mathbb{E}}_\mathcal{Z}[f(X_v)\vert Y_u\in O_u]=\max f$).}.
-
-However, the generalised Bayes' rule as an \emph{updating} mechanism is more powerful than as a \emph{conditioning} mechanism. That is, when employing the GBR for regular extension---that is, precisely in the case where $\underline{\mathbb{E}}_\mathcal{Z}[Y_u\in O_u]=0$ but $\overline{\mathbb{E}}_\mathcal{Z}[Y_u\in O_u] > 0$---we can still obtain an informative, i.e. non-vacuous, model. To be exact, this corresponds to simply discarding from $\mathcal{Z}$ those precise models that assign zero probability to $(Y_u\in O_u)$, updating the remaining models, and then computing the lower envelope over these updated remaining expectations.
-
+As is well known, the updated lower expectation that is obtained through regular extension, can be computed using the \emph{generalised Bayes' rule} CITE. We will shortly see why this alternative expression is useful from a computational perspective.
 \begin{proposition}\label{prop:GBR_regular}
-Let $\mathcal{Z}$ be an ICTHMC, and consider any $v\in\mathcal{U}_\emptyset$, $u\in\mathcal{U}$, $O_u\in\langle\mathcal{O}_u\rangle$, and $f\in\gambles(\states_v)$. Then, if $\overline{\mathbb{E}}_\mathcal{Z}[Y_u\in O_u] > 0$,
+Let $\mathcal{Z}$ be an ICTHMC, and consider any $v\in\mathcal{U}_\emptyset$, $u\in\mathcal{U}$, $O_u\in\Sigma_u$, and $f\in\gambles(\states_v)$. Then, if $\overline{\mathbb{E}}_\mathcal{Z}[Y_u\in O_u] > 0$, the quantity $\underline{\mathbb{E}}_{\mathcal{Z}}\bigl[f(X_v)\,\vert\,Y_u\in O_u\bigr]$ satisfies the generalised Bayes' rule,
 \begin{equation*}
-\underline{\mathbb{E}}_{\mathcal{Z}}\bigl[f(X_v)\,\vert\,Y_u\in O_u\bigr] = \inf\bigl\{ \mathbb{E}_P[f(X_v)\,\vert\,Y_u\in O_u]\,:\, P\in\mathcal{Z},\, P(Y_u\in O_u)>0 \bigr\}\,.
+\underline{\mathbb{E}}_{\mathcal{Z}}\bigl[f(X_v)\,\vert\,Y_u\in O_u\bigr] = \max\left\{\mu\in\reals\,:\, \lexp\bigl[P_{\observs\vert\states}(O_u\vert X_u)\bigl(f(X_v) - \mu\bigr)\bigr] \geq 0\right\}\,.
 \end{equation*}
 \end{proposition}
 
-Of course, when the upper probability of $(Y_u\in O_u)$ is zero, then the event is deemed impossible by \emph{all} $P\in\mathcal{Z}$. In that case, the observation seems to be conflicting with our entire prior beliefs, and we cannot in general make informative inferences given this observation---that is, the updated model becomes vacuous, and hence $\underline{\mathbb{E}}_{\mathcal{Z}}\bigl[f(X_v)\,\vert\,Y_u\in O_u\bigr]=\min f$.
-
-\subsection{Uncountable Outcome Spaces, Point Observations, and Probability Zero}
+\subsection{Uncountable Outcome Spaces, Point Observations, and Probability Zero}\label{subsec:uncountable}
 
 An important special case where observations have probability zero for all precise models, but where we can still make informative inferences, is when we have an uncountable outcome space $\observs$ and the observations are points $y_u\in\observs_u$. In this case, it is common practice CITE to define the updated expectation $\mathbb{E}_P[f(X_v)\,\vert\,Y_u=y_u]$ as the limit of \emph{conditional} expectations, where each conditioning event is an increasingly smaller region around this point $y_u$.
 
-To this end, we write for any function $g:\Sigma_u\to\reals$, any $y_u\in\observs_u$ and $c\in\reals$, that $\lim_{C_u\to y_u}g(C_u)=c$ if, for every sequence of \emph{open} cubes\footnote{Under some appropriate metric and topology on $\observs$} $\{C_i\}_{i\in\nats}$ in $\Sigma_u$ that are centred on $y_u$, and satisfy $\cap_{i\in\nats}C_i=\{y_u\}$ and $C_i\supset C_{i+1}$ for all $i\in\nats$, it holds that $\lim_{i\to\infty}g(C_i)$ exists, and is equal to $c$.
+To make this concept practicable, we will henceforth assume that if $\observs$ is uncountable, then it is some set $\observs\subseteq\reals^d$, for some $d\in\nats$, and that $\Sigma$ is the restriction to $\observs$ of the Borel $\sigma$-algebra on $\reals^d$. 
 
-The updated (precise) expectation for any process $P$ will then be defined as
+For any function $g:\Sigma_u\to\reals$, any $y_u\in\observs_u$, and any $c\in\reals$, we write that $\lim_{B_u\to y_u}g(B_u)=c$ if there is at least one sequence of open balls $\{B_i\}_{i\in\nats}$ in $\Sigma_u$, centred on $y_u$ and satisfying $\lim_{i\to\infty}\lambda(B_i)=0$, and, for every such sequence, $\lim_{i\to\infty}g(B_i)$ exists and is equal to $c$---where $\lambda(B_i)$ is Lebesgue measure of $B_i\subseteq\observs_u$\footnote{More generally, it is useful to consider sequences $\{O_i\}_{i\in\nats}$ in $\Sigma_u$ (such that $y_u\in O_i$ for all $i\in\nats$, and $\lim_{i\to\infty}\lambda(O_i)=0$) belonging to a family of \emph{bounded eccentricity}---for which there exists some $\alpha > 0$ such that, for all $i\in\nats$, there is a ball $B_i\subseteq\reals^{d\cdot\lvert u\rvert}$ centred on $y_u$ such that $O_i\subseteq B_i$, and $\lambda(O_i)\geq \alpha\lambda(B_i)$; this allows such limit statements to be defined on the boundary of $\observs_u$, if it has one. For instance, we can then choose the $O_i\subseteq\observs_u$ to be half-open boxes, with $y_u$ in their boundaries. However, this opens yet another can of worms when $\observs$ is chosen to be highly irregular in its boundary. In any case, open balls largely suffice for our purposes, and we feel that they are much more intuitive.}.
+
+Using this notation, the updated (precise) expectation for any process $P$ is then defined as
 \begin{equation*}
-\mathbb{E}_P[f(X_v)\,\vert\,Y_u=y_u] \coloneqq \lim_{C_u\to y_u} \mathbb{E}_P[f(X_v)\,\vert\,Y_u\in C_u]\,,
+\mathbb{E}_P[f(X_v)\,\vert\,Y_u=y_u] \coloneqq \lim_{B_u\to y_u} \mathbb{E}_P[f(X_v)\,\vert\,Y_u\in B_u]\,,
 \end{equation*}
 whenever this limit exists, and is left undefined, otherwise.
 
-In order to make this concept practicable, we will henceforth assume that if $\observs$ is uncountable, then it is some set $\observs\subseteq\reals^d$ with the usual topology, for some $d\in\nats$, and that $\Sigma$ is the restriction to $\observs$ of the Borel $\sigma$-algebra on $\reals^d$. We then also assume that $P_{\observs\vert\states}$ is $\sigma$-additive on $\Sigma$, and absolutely continuous with respect to Lebesgue measure $\lambda$ on $(\observs,\Sigma)$.
-
-For any $u\in\mathcal{U}_\emptyset$, we now let $\phi_u:\observs_u\times\states_u\to\realsnonneg$ be the unique function that is defined, for all $x_u\in\states_u$ and $y_u\in\observs_u$, by
+To make this quantity computable, we now furthermore assume that $P_{\observs\vert\states}$ is $\sigma$-additive on $\Sigma$, and absolutely continuous with respect to Lebesgue measure $\lambda$ on $(\observs,\Sigma)$. For any $u\in\mathcal{U}_\emptyset$, we then let $\phi_u:\observs_u\times\states_u\to\realsnonneg$ be the unique function that is defined, for all $x_u\in\states_u$ and $y_u\in\observs_u$, by
 \begin{equation}\label{eq:density_is_limit}
-\phi_u(y_u\vert x_u) \coloneqq \lim_{C_u\to y_u} \frac{P_{\observs_u\vert\states_u}(C_u\vert x_u)}{\lambda(C_u)}\,,
+\phi_u(y_u\vert x_u) \coloneqq \lim_{B_u\to y_u} \frac{P_{\observs_u\vert\states_u}(B_u\vert x_u)}{\lambda(B_u)}\,,
 \end{equation}
-whenever this limit exists, and by $\phi_u(y_u\vert x_u)\coloneqq 0$, otherwise, where $\lambda(C_u)$ denotes Lebesgue measure of $C_u\subseteq\observs_u$, and where we assume $\frac{0}{0}=0$. Under the assumptions above, the limit in Equation~\eqref{eq:density_is_limit} can be shown to exist for $\lambda$-almost every $y_u\in\observs_u$; that is, it is guaranteed to exist everywhere outside a Lebesgue null-set. Furthermore, for every $O_u\in\Sigma_u$ and $x_u\in\states_u$, this function $\phi_u$ satisfies
+whenever this limit exists, and by $\phi_u(y_u\vert x_u)\coloneqq 0$, otherwise, where we assume that $\frac{0}{0}=0$. Under the assumptions above, for every $O_u\in\Sigma_u$ and $x_u\in\states_u$, this function $\phi_u$ satisfies
 \begin{equation}\label{eq:density_generates_measure}
 P_{\observs_u\vert\states_u}(O_u\vert x_u) = \int_{O_u}\phi_u(y_u\vert x_u) \,\mathrm{d}y_u\,,
 \end{equation}
 where the integral is understood in the Lebesgue sense. In other words, $\phi_u(\cdot\,\vert x_u)$ is the conditional probability density function associated with the measure $P_{\observs_u\vert\states_u}(\cdot\vert x_u)$.
-\newline
-\begin{proof}
-Due to the assumptions above, and by the Radon-Nikodym theorem, we can associate with $P_{\observs\vert\states}$ a measurable function $\psi_u:\observs_u\times\states_u\to\realsnonneg$ such that, for all $x_u\in\states_u$ and $O_u\in\Sigma_u$,
-\begin{equation*}
-P_{\observs_u\vert\states_u}(O_u\vert x_u) = \int_{O_u}\psi_u(y_u\vert x_u) \,\mathrm{d}y_u\,.
-\end{equation*}
-Furthermore, since $\int_{\observs}\psi_u(y_u\vert x_u) \,\mathrm{d}y_u = P_{\observs_u\vert\states_u}(\observs_u\vert x_u)=1$, $\psi_u$ is absolutely integrable on $\observs_u$. Therefore, by the Lebesgue differentiation theorem, for $\lambda$-almost every $y_u\in\observs_u$, it holds that
-\begin{equation*}
-\psi_u(y_u\vert x_u) = \lim_{C_u\to y_u} \frac{1}{\lambda(C_u)} \int_{C_u} \psi(\tilde{y}_u\vert x_u)\,\mathrm{d}\tilde{y}_u = \lim_{C_u\to y_u} \frac{P_{\observs_u\vert\states_u}(C_u\vert x_u)}{\lambda(C_u)}\,.
-\end{equation*}
-In other words, the limit expression on the r.h.s. of this equality exists (at least) $\lambda$-almost everywhere---and hence, the same is true for the limit in Equation~\eqref{eq:density_is_limit}. Furthermore, this implies that $\phi_u(\cdot\,\vert x_u)$ differs from $\psi_u(\cdot\,\vert x_u)$ at most on a set of Lebesgue measure zero. Due to the choice of $\psi_u$, this immediately implies Equation~\eqref{eq:density_generates_measure}.
-\end{proof}
 
-In order to update a precise model $P$, we now require that $\mathbb{E}_P[\phi(y_u\vert X_u)]>0$. If this property does not hold, the updated expectation is left undefined. If it does hold, we have the following result.
+In order to update a precise model $P$, we now require that $\mathbb{E}_P[\phi_u(y_u\vert X_u)]>0$. If this property does not hold, the updated expectation is left undefined. If it does hold, we have the following result.
 
 %$(y_u-\nicefrac{\delta}{2},y_u+\nicefrac{\delta}{2})$ around this point $y_u$. Under our assumption that the conditional density $\phi(y_u\vert X_u)$ is continuous, this yields the following result.
 
 \begin{proposition}\label{prop:precise_bayes_rule_densities}
-Suppose that $\observs$ is uncountable, and $(\observs,\Sigma,P_{\observs\vert\states})$ is an observable model satisfying the assumptions above. Let $P$ be an augmented stochastic process, and consider any $v\in\mathcal{U}_\emptyset$, $u\in\mathcal{U}$, and $f\in\gambles(\states_v)$. Then, for every $y_u\in\observs_u$, if $\mathbb{E}_P[\phi(y_u\,\vert\,X_u)]>0$,
+Suppose that $\observs$ is uncountable, and $(\observs,\Sigma,P_{\observs\vert\states})$ is an observable model satisfying the assumptions above. Let $P$ be an augmented stochastic process, and consider any $v\in\mathcal{U}_\emptyset$, $u\in\mathcal{U}$, and $f\in\gambles(\states_v)$. Then, for every $y_u\in\observs_u$, if $\mathbb{E}_P[\phi_u(y_u\,\vert\,X_u)]>0$,
 \begin{equation}\label{eq:updated_expectation_is_limit}
-\mathbb{E}_P[f(X_v)\,\vert\,Y_u=y_u] = \lim_{C_u\to y_u} \mathbb{E}_P[f(X_v)\,\vert\,Y_u\in C_u] = \frac{\mathbb{E}_P[f(X_v)\phi(y_u\vert X_u)]}{\mathbb{E}_P[\phi(y_u\,\vert\,X_u)]}\,.
+\mathbb{E}_P[f(X_v)\,\vert\,Y_u=y_u] = \lim_{B_u\to y_u} \mathbb{E}_P[f(X_v)\,\vert\,Y_u\in B_u] = \frac{\mathbb{E}_P[f(X_v)\phi_u(y_u\vert X_u)]}{\mathbb{E}_P[\phi_u(y_u\,\vert\,X_u)]}\,.
 \end{equation}
 \end{proposition}
+The right-hand side of Equation~\eqref{eq:updated_expectation_is_limit} is, of course, the well-known Bayes' conditioning(/updating) rule for mixtures of densities. 
 
-The right-hand side of Equation~\eqref{eq:updated_expectation_is_limit} is, of course, the well-known Bayes' conditioning(/updating) rule for mixtures of densities. Similarly, we will again update the imprecise model using regular extension, this time by means of the generalised Bayes' rule for mixtures of densities, as follows.
-
+The imprecise model will again be updated using regular extension, as follows.
 \begin{definition}
-Suppose that $\observs$ is uncountable. Let $\mathcal{Z}$ be an ICTHMC, and consider any $v\in\mathcal{U}_\emptyset$, $u\in\mathcal{U}$, $y_u\in\observs_u$, and $f\in\gambles(\states_v)$. Then, the updated lower expectation is given by the \emph{generalised Bayes' rule for mixtures of densities},
+Suppose that $\observs$ is uncountable, and $(\observs,\Sigma,P_{\observs\vert\states})$ is an observable model satisfying the assumptions above. Let $\mathcal{Z}$ be an ICTHMC, and consider any $v\in\mathcal{U}_\emptyset$, $u\in\mathcal{U}$, $y_u\in\observs_u$, and $f\in\gambles(\states_v)$. Then, the updated lower expectation is given by 
 \begin{equation*}
-\underline{\mathbb{E}}_{\mathcal{Z}}\bigl[f(X_v)\,\vert\,Y_u = y_u\bigr] \coloneqq \max\left\{\mu\in\reals\,:\, \lexp\bigl[\phi_u(y_u\vert X_u)\bigl(f(X_v) - \mu\bigr)\bigr] \geq 0\right\}\,,
+\underline{\mathbb{E}}_{\mathcal{Z}}\bigl[f(X_v)\,\vert\,Y_u = y_u\bigr] \coloneqq \inf\{\mathbb{E}_P[f(X_v)\vert Y_u=y_u]\,:\,P\in\mathcal{Z}, \mathbb{E}_P[\phi_u(y_u\,\vert\,X_u)]>0\}\,,
 \end{equation*}
 whenever $\overline{\mathbb{E}}_\mathcal{Z}[\phi_u(y_u\vert X_u)] >0$, and by $\underline{\mathbb{E}}_{\mathcal{Z}}\bigl[f(X_v)\,\vert\,Y_u=y_u\bigr]\coloneqq\min f$, otherwise.
 \end{definition}
 
-As was the case in Section REF, this updating rule corresponds to computing the lower envelope over all updated precise models---provided that $\lexp[\phi_u(y_u\vert X_u)]>0$. If only $\uexp[\phi_u(y_u\vert X_u)]>0$, it again corresponds to discarding the models for which $\mathbb{E}_P[\phi(y_u\vert X_u)]=0$, updating the remainder, and computing the lower envelope over those.
+Similar to the results in Section REF, this updated lower expectation can be computed by means of the generalised Bayes' rule for mixtures of densities, as follows.
 
 \begin{proposition}\label{prop:GBR_for_densities_lower_zero}
-Suppose that $\observs$ is uncountable. Let $\mathcal{Z}$ be an ICTHMC, and consider any $v\in\mathcal{U}_\emptyset$, $u\in\mathcal{U}$, $y_u\in\observs_u$, and $f\in\gambles(\states_v)$. Then, if $\uexp[\phi_u(y_u\vert X_u)]>0$,
+Suppose that $\observs$ is uncountable, and $(\observs,\Sigma,P_{\observs\vert\states})$ is an observable model satisfying the assumptions above. Let $\mathcal{Z}$ be an ICTHMC, and consider any $v\in\mathcal{U}_\emptyset$, $u\in\mathcal{U}$, $y_u\in\observs_u$, and $f\in\gambles(\states_v)$. Then, if $\uexp[\phi_u(y_u\vert X_u)]>0$,
 \begin{equation*}
-\underline{\mathbb{E}}_{\mathcal{Z}}\bigl[f(X_v)\,\vert\,Y_u = y_u\bigr] = \inf\{\mathbb{E}_P[f(X_v)\vert Y_u=y_u]\,:\,P\in\mathcal{Z}, \mathbb{E}_P[\phi_u(y_u\,\vert\,X_u)]>0\}\,.
+\underline{\mathbb{E}}_{\mathcal{Z}}\bigl[f(X_v)\,\vert\,Y_u = y_u\bigr] = \max\left\{\mu\in\reals\,:\, \lexp\bigl[\phi_u(y_u\vert X_u)\bigl(f(X_v) - \mu\bigr)\bigr] \geq 0\right\}\,.
 \end{equation*}
 \end{proposition}
 %
@@ -582,7 +540,7 @@ So, we know from the above that each of the updated precise models is interprete
 Suppose that $\observs$ is uncountable. Let $\mathcal{Z}$ be an ICTHMC, and consider any $v\in\mathcal{U}_\emptyset$, $u\in\mathcal{U}$, $y_u\in\observs_u$, and $f\in\gambles(\states_v)$. Then, if $\lexp[\phi_u(y_u\vert X_u)]>0$,
 \begin{align*}
 \underline{\mathbb{E}}_\mathcal{Z}[f(X_v)\vert Y_u=y_u] %&= \max\left\{ \mu\in\reals : \lexp\left[ \phi(y_u\vert X_u)\bigl(f(X_s) -\mu \bigr)\right] \geq 0\right\} \\
- &= \lim_{\delta\to 0^+}\underline{\mathbb{E}}_\mathcal{Z}[f(X_v)\vert Y_u\in (y_u-\nicefrac{\delta}{2},y_u+\nicefrac{\delta}{2})]
+ &= \lim_{B_u\to y_u}\underline{\mathbb{E}}_\mathcal{Z}[f(X_v)\vert Y_u\in B_u]
 \end{align*}
 \end{proposition}
 
@@ -930,10 +888,6 @@ from which we conclude that $\lexp\bigl[g(X_u)\bigl(f(X_v)-\mu\bigr)\bigr]$ is s
 \end{equation*}
 \end{proof}
 
-\begin{proof}{\bf of Proposition~\ref{prop:GBR_positive_lower}~}
-This is a special case of Lemma~\ref{lemma:general_regular_extension}, obtained by setting $g(X_u)\coloneqq \mathbb{E}_{\observs\vert\states}[\ind{O_u}(Y_u)\vert X_u]$ in that lemma's statement, and applying Proposition~\ref{prop:precise_conditioning_for_positive} to the quantities $\mathbb{E}_P[f(X_v)\,\vert\,Y_u\in O_u]$.
-\end{proof}
-
 \begin{proof}{\bf of Proposition~\ref{prop:GBR_regular}~}
 This is a special case of Lemma~\ref{lemma:general_regular_extension}, obtained by setting $g(X_u)\coloneqq \mathbb{E}_{\observs\vert\states}[\ind{O_u}(Y_u)\vert X_u]$ in that lemma's statement, and applying Proposition~\ref{prop:precise_conditioning_for_positive} to the quantities $\mathbb{E}_P[f(X_v)\,\vert\,Y_u\in O_u]$.
 \end{proof}
@@ -1030,6 +984,21 @@ This is a special case of Lemma~\ref{lemma:general_regular_extension}, obtained 
 %\end{align*}
 %\end{proof}
 
+
+The argument below proves the properties of the density $\phi_u$ that are claimed in Section~\ref{subsec:uncountable}; in particular, that the limit in Equation~\eqref{eq:density_is_limit} exists $\lambda$-almost everywhere, and that $\phi_u$ satisfies Equation~\eqref{eq:density_generates_measure}.
+\begin{proof}
+Due to the assumptions in Section~\ref{subsec:uncountable}, and by the Radon-Nikodym theorem, we can associate with $P_{\observs\vert\states}$ a measurable function $\psi_u:\observs_u\times\states_u\to\realsnonneg$ such that, for all $x_u\in\states_u$ and $O_u\in\Sigma_u$,
+\begin{equation*}
+P_{\observs_u\vert\states_u}(O_u\vert x_u) = \int_{O_u}\psi_u(y_u\vert x_u) \,\mathrm{d}y_u\,.
+\end{equation*}
+Furthermore, since $\int_{\observs}\psi_u(y_u\vert x_u) \,\mathrm{d}y_u = P_{\observs_u\vert\states_u}(\observs_u\vert x_u)=1$, $\psi_u$ is absolutely integrable on $\observs_u$. Therefore, by the Lebesgue differentiation theorem, for $\lambda$-almost every $y_u\in\observs_u$, it holds that
+\begin{equation*}
+\psi_u(y_u\vert x_u) = \lim_{B_u\to y_u} \frac{1}{\lambda(B_u)} \int_{B_u} \psi(\tilde{y}_u\vert x_u)\,\mathrm{d}\tilde{y}_u = \lim_{B_u\to y_u} \frac{P_{\observs_u\vert\states_u}(B_u\vert x_u)}{\lambda(B_u)}\,.
+\end{equation*}
+In other words, the limit expression on the r.h.s. of this equality exists (at least) $\lambda$-almost everywhere---and hence, the same is true for the limit in Equation~\eqref{eq:density_is_limit}. Furthermore, this implies that $\phi_u(\cdot\,\vert x_u)$ differs from $\psi_u(\cdot\,\vert x_u)$ at most on a set of Lebesgue measure zero. Due to the choice of $\psi_u$, this immediately implies Equation~\eqref{eq:density_generates_measure}.
+\end{proof}
+
+
 We need the following three results for the proof of Proposition~\ref{prop:GBR_for_densities_is_limit_if_continuous}.
 
 \begin{proposition}\label{prop:decomp}
@@ -1048,7 +1017,6 @@ Fix any $P\in\mathcal{Z}$. Then,
 \end{align*}
 where the first and second equality follow from the basic properties of expectation, the third equality is due to the independence assumption in Definition~\ref{def:generating_process}, and the final equality uses the facts that the (outer) expectation is only concerned with states, and that the probability $P_{\observs\vert\states}$ is shared by all $P\in\mathcal{Z}$. Since this is true for every $P\in\mathcal{Z}$, the result now follows.
 \end{proof}
-
 
 \begin{lemma}\label{lemma:dirac_delta_gets_density_value}
 Consider any sequence $\{\delta_i\}_{i\in\nats}\to 0^+$ in $\realspos$. Then, if $\phi(y_u\vert x_u)$ is continuous around $y_u$,
