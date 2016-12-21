@@ -475,17 +475,9 @@ Let $\mathcal{Z}$ be an ICTHMC, and consider any $v\in\mathcal{U}_\emptyset$, $u
 
 An important special case where observations have probability zero for all precise models, but where we can still make informative inferences, is when we have an uncountable outcome space $\observs$ and the observations are points $y_u\in\observs_u$. In this case, it is common practice CITE to define the updated expectation $\mathbb{E}_P[f(X_v)\,\vert\,Y_u=y_u]$ as the limit of \emph{conditional} expectations, where each conditioning event is an increasingly smaller region around this point $y_u$.
 
-To make this concept practicable, we will henceforth assume that if $\observs$ is uncountable, then it is some set $\observs\subseteq\reals^d$, for some $d\in\nats$, and that $\Sigma$ is the restriction to $\observs$ of the Borel $\sigma$-algebra on $\reals^d$. 
+To make this concept practicable, we will henceforth assume that if $\observs$ is uncountable, then it is some set $\observs\subseteq\reals^d$, for some $d\in\nats$, and that $\Sigma$ is the restriction to $\observs$ of the Borel $\sigma$-algebra on $\reals^d$. Furthermore, we assume that $P_{\observs\vert\states}$ is $\sigma$-additive on $\Sigma$, and absolutely continuous with respect to Lebesgue measure $\lambda$ on $(\observs,\Sigma)$.
 
-For any function $g:\Sigma_u\to\reals$, any $y_u\in\observs_u$, and any $c\in\reals$, we write that $\lim_{B_u\to y_u}g(B_u)=c$ if there is at least one sequence of open balls $\{B_i\}_{i\in\nats}$ in $\Sigma_u$, centred on $y_u$ and satisfying $\lim_{i\to\infty}\lambda(B_i)=0$, and, for every such sequence, $\lim_{i\to\infty}g(B_i)$ exists and is equal to $c$---where $\lambda(B_i)$ is Lebesgue measure of $B_i\subseteq\observs_u$\footnote{More generally, it is useful to consider sequences $\{O_i\}_{i\in\nats}$ in $\Sigma_u$ (such that $y_u\in O_i$ for all $i\in\nats$, and $\lim_{i\to\infty}\lambda(O_i)=0$) belonging to a family of \emph{bounded eccentricity}---for which there exists some $\alpha > 0$ such that, for all $i\in\nats$, there is a ball $B_i\subseteq\reals^{d\cdot\lvert u\rvert}$ centred on $y_u$ such that $O_i\subseteq B_i$, and $\lambda(O_i)\geq \alpha\lambda(B_i)$; this allows such limit statements to be defined on the boundary of $\observs_u$, if it has one. For instance, we can then choose the $O_i\subseteq\observs_u$ to be half-open boxes, with $y_u$ in their boundaries. However, this opens yet another can of worms when $\observs$ is chosen to be highly irregular in its boundary. In any case, open balls largely suffice for our purposes, and we feel that they are much more intuitive.}.
-
-Using this notation, the updated (precise) expectation for any process $P$ is then defined as
-\begin{equation*}
-\mathbb{E}_P[f(X_v)\,\vert\,Y_u=y_u] \coloneqq \lim_{B_u\to y_u} \mathbb{E}_P[f(X_v)\,\vert\,Y_u\in B_u]\,,
-\end{equation*}
-whenever this limit exists, and is left undefined, otherwise.
-
-To make this quantity computable, we now furthermore assume that $P_{\observs\vert\states}$ is $\sigma$-additive on $\Sigma$, and absolutely continuous with respect to Lebesgue measure $\lambda$ on $(\observs,\Sigma)$. For any $u\in\mathcal{U}_\emptyset$, we then let $\phi_u:\observs_u\times\states_u\to\realsnonneg$ be the unique function that is defined, for all $x_u\in\states_u$ and $y_u\in\observs_u$, by
+For any function $g:\Sigma_u\to\reals$, any $y_u\in\observs_u$, and any $c\in\reals$, we write that $\lim_{B_u\to y_u}g(B_u)=c$ if there is at least one sequence of open balls $\{B_i\}_{i\in\nats}$ in $\Sigma_u$, centred on $y_u$ and satisfying $\lim_{i\to\infty}\lambda(B_i)=0$, and, for every such sequence, $\lim_{i\to\infty}g(B_i)$ exists and is equal to $c$---where $\lambda(B_i)$ is Lebesgue measure of $B_i\subseteq\observs_u$\footnote{More generally, it is useful to consider sequences $\{O_i\}_{i\in\nats}$ in $\Sigma_u$ (such that $y_u\in O_i$ for all $i\in\nats$, and $\lim_{i\to\infty}\lambda(O_i)=0$) belonging to a family of \emph{bounded eccentricity}---for which there exists some $\alpha > 0$ such that, for all $i\in\nats$, there is a ball $B_i\subseteq\reals^{d\cdot\lvert u\rvert}$ centred on $y_u$ such that $O_i\subseteq B_i$, and $\lambda(O_i)\geq \alpha\lambda(B_i)$; this allows such limit statements to be defined on the boundary of $\observs_u$, if it has one. For instance, we can then choose the $O_i\subseteq\observs_u$ to be half-open boxes, with $y_u$ in their boundaries. However, this opens yet another can of worms when $\observs$ is chosen to be highly irregular in its boundary. In any case, open balls largely suffice for our purposes, and we feel that they are much more intuitive.}. Using this notation, for any $u\in\mathcal{U}_\emptyset$, we let $\phi_u:\observs_u\times\states_u\to\realsnonneg$ be the unique function that is defined, for all $x_u\in\states_u$ and $y_u\in\observs_u$, by
 \begin{equation}\label{eq:density_is_limit}
 \phi_u(y_u\vert x_u) \coloneqq \lim_{B_u\to y_u} \frac{P_{\observs_u\vert\states_u}(B_u\vert x_u)}{\lambda(B_u)}\,,
 \end{equation}
@@ -495,7 +487,11 @@ P_{\observs_u\vert\states_u}(O_u\vert x_u) = \int_{O_u}\phi_u(y_u\vert x_u) \,\m
 \end{equation}
 where the integral is understood in the Lebesgue sense. In other words, $\phi_u(\cdot\,\vert x_u)$ is the conditional probability density function associated with the measure $P_{\observs_u\vert\states_u}(\cdot\vert x_u)$.
 
-In order to update a precise model $P$, we now require that $\mathbb{E}_P[\phi_u(y_u\vert X_u)]>0$. If this property does not hold, the updated expectation is left undefined. If it does hold, we have the following result.
+The updated (precise) expectation for any process $P$ can now be defined as
+\begin{equation*}
+\mathbb{E}_P[f(X_v)\,\vert\,Y_u=y_u] \coloneqq \lim_{B_u\to y_u} \mathbb{E}_P[f(X_v)\,\vert\,Y_u\in B_u]\,,
+\end{equation*}
+whenever this limit exists, and is left undefined, otherwise. In order for this limit to exist, we require that $\mathbb{E}_P[\phi_u(y_u\vert X_u)]>0$. Under this assumption, we have the following result.
 
 %$(y_u-\nicefrac{\delta}{2},y_u+\nicefrac{\delta}{2})$ around this point $y_u$. Under our assumption that the conditional density $\phi(y_u\vert X_u)$ is continuous, this yields the following result.
 
