@@ -303,14 +303,14 @@ that is, $\lexp$ has the property of \emph{iterated lower expectation}.
 
 \subsection{Observables}
 
-Consider an observable random variable $Y$ taking values in some set $\observs\subseteq\reals^d$, for some fixed $d\in\nats$. This variable is associated with an observable model, as follows.
+Consider an observable random variable $Y$ taking values in some set $\observs$, conditional on a given state $x\in\states$. This variable is associated with an observable model, as follows.
 
 \begin{definition}[Observable Model]
-An \emph{observable model} is a tuple $(\observs,\Sigma,P_{\observs\vert \states})$, where $\observs$ is an outcome space, $\Sigma$ is a $\sigma$-algebra on $\observs$, and, for every $x\in\states$, $P_{\observs\vert\states}(\cdot\vert x)$ is a (finitely additive) probability measure on $(\observs,\Sigma)$.
+An \emph{observable model} is a tuple $(\observs,\Sigma,P_{\observs\vert \states})$, where $\observs$ is an outcome space, $\Sigma$ is a ($\sigma$-)algebra on $\observs$, and, for every $x\in\states$, $P_{\observs\vert\states}(\cdot\vert x)$ is a (finitely additive) probability measure on $(\observs,\Sigma)$.
 \end{definition}
 *** blabla, we don't care
 
-When considering (multiple) explicit time points, we use notation analogous to that used for states. In particular, $\observs_t\coloneqq\observs$ for any time $t\in\realsnonneg$, and for any $u\in\mathcal{U}$ with $u=t_0,\ldots,t_n$, we write $\observs_u\coloneqq \observs_{t_0}\times\cdots\observs_{t_n}$. We then let $(\observs_u,\Sigma_u,P_{\observs_u\vert\states_u})$ be the obvious product probability space, i.e., $\Sigma_u$ is the tensor-product $\sigma$-algebra over the $\Sigma_i$, and for every $x_u\in\states_u$, $P_{\observs_u\vert\states_u}(\cdot\vert x_u)$ is the product measure over the $P_{\observs_{t_i}\vert\states_{t_i}}(\cdot\vert x_{t_i})=P_{\observs\vert\states}(\cdot\vert x_{t_i})$.
+When considering (multiple) explicit time points, we use notation analogous to that used for states. In particular, $\observs_t\coloneqq\observs$ for any time $t\in\realsnonneg$, and for any $u\in\mathcal{U}$ with $u=t_0,\ldots,t_n$, we write $\observs_u\coloneqq \observs_{t_0}\times\cdots\observs_{t_n}$. We then let $(\observs_u,\Sigma_u,P_{\observs_u\vert\states_u})$ be the obvious product probability space, i.e., $\Sigma_u$ is the tensor-product ($\sigma$-)algebra over the $\Sigma_{t_i}=\Sigma$, and for every $x_u\in\states_u$, $P_{\observs_u\vert\states_u}(\cdot\vert x_u)$ is the product measure over the $P_{\observs_{t_i}\vert\states_{t_i}}(\cdot\vert x_{t_i})=P_{\observs\vert\states}(\cdot\vert x_{t_i})$.
 
 \subsection{Augmented Stochastic Processes}\label{sec:aug_stochastic_processes}
 We now move on to use this notion of observable models in defining augmented stochastic processes, which will be the stochastic model underlying---precise---continuous time \emph{hidden} stochastic processes. To this end, we will henceforth consider some fixed measurable space $(\observs,\Sigma)$ satisfying the assumptions discussed in Section REF. 
@@ -491,7 +491,7 @@ The updated (precise) expectation for any process $P$ can now be defined as
 \begin{equation*}
 \mathbb{E}_P[f(X_v)\,\vert\,Y_u=y_u] \coloneqq \lim_{B_u\to y_u} \mathbb{E}_P[f(X_v)\,\vert\,Y_u\in B_u]\,,
 \end{equation*}
-whenever this limit exists, and is left undefined, otherwise. In order for this limit to exist, we require that $\mathbb{E}_P[\phi_u(y_u\vert X_u)]>0$. Under this assumption, we have the following result.
+whenever this limit exists, and is undefined, otherwise. This limit can be shown to exist exactly when $\mathbb{E}_P[\phi_u(y_u\vert X_u)]>0$. Under this assumption, we have the following result.
 
 %$(y_u-\nicefrac{\delta}{2},y_u+\nicefrac{\delta}{2})$ around this point $y_u$. Under our assumption that the conditional density $\phi(y_u\vert X_u)$ is continuous, this yields the following result.
 
@@ -503,7 +503,7 @@ Suppose that $\observs$ is uncountable, and $(\observs,\Sigma,P_{\observs\vert\s
 \end{proposition}
 The right-hand side of Equation~\eqref{eq:updated_expectation_is_limit} is, of course, the well-known Bayes' conditioning(/updating) rule for mixtures of densities. 
 
-The imprecise model will again be updated using regular extension, as follows.
+The imprecise model will again be updated using regular extension; discarding the precise models for which the updated expectation is undefined, and computing the lower envelope over the remainder.
 \begin{definition}
 Suppose that $\observs$ is uncountable, and $(\observs,\Sigma,P_{\observs\vert\states})$ is an observable model satisfying the assumptions above. Let $\mathcal{Z}$ be an ICTHMC, and consider any $v\in\mathcal{U}_\emptyset$, $u\in\mathcal{U}$, $y_u\in\observs_u$, and $f\in\gambles(\states_v)$. Then, the updated lower expectation is given by 
 \begin{equation*}
@@ -548,7 +548,7 @@ In the previous section, we have seen that we can use the generalised Bayes' rul
 \end{equation*}
 we can focus on evaluating the function
 \begin{equation*}
-\lexp\bigl[\mathbb{E}_{\observs\vert\states}[\ind{O_u}(Y_u)\vert X_u]\bigl(f(X_v) - \mu\bigr)\bigr]\,,
+\lexp\bigl[P_{\observs\vert\states}(O_u\vert X_u)\bigl(f(X_v) - \mu\bigr)\bigr]\,,
 \end{equation*}
 or its density-analogue, for some fixed value of $\mu$. Finding the updated lower expectation is then a matter of finding the maximum value of $\mu$ for which this quantity is non-negative. Since this function is (well-known to be) continuous, monotonically decreasing, and convex in $\mu$, this latter optimisation problem is relatively straightforward to solve numerically using any number of standard optimisation methods.
 
@@ -556,7 +556,7 @@ Therefore, in order for this approach to be computationally tractable, we requir
 
 We start by generalising the problem so that these results are applicable both for observations of the form $(Y_u\in O_u)$, and for point-observations $(Y_u=y_u)$ in an uncountable outcome space. Writing $u=t_0,\ldots,t_n$, we note that the factorisation and independence properties in Definition~\ref{def:generating_process} imply that
 \begin{equation*}
-\mathbb{E}_{\observs\vert\states}[\ind{O_u}(Y_u)\vert X_u] = \prod_{t_i\in u}\mathbb{E}_{\observs\vert\states}[\ind{O_{t_i}}(Y_{t_i})\vert X_{t_i}]\,,\quad\quad\text{and,}\quad\quad \phi(y_u\vert X_u) = \prod_{t_i\in u}\phi(y_{t_i}\vert X_{t_i})\,.
+P_{\observs\vert\states}(O_u\vert X_u) = \prod_{t_i\in u}P_{\observs\vert\states}(O_{t_i}\vert X_{t_i})\,,\quad\quad\text{and,}\quad\quad \phi(y_u\vert X_u) = \prod_{t_i\in u}\phi(y_{t_i}\vert X_{t_i})\,.
 \end{equation*}
 Hence, we can in general identify with these a collection of functions $g_{t_i}\in\gambles(\states_{t_i})$, $t_i\in u$, such that $g_{t_i}\geq 0$ for all $i\in\{0,\ldots,n\}$, and the problem of interest is now to evaluate
 \begin{equation*}
