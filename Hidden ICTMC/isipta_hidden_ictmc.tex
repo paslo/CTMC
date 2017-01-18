@@ -247,57 +247,47 @@ For any $u\in\mathcal{U}_\emptyset$, we denote with $\gambles(\states_u)$ the se
 
 We here briefly recall the most important properties of imprecise continuous-time Markov chains (ICTMC's), following the definitions and results of Reference BIG PAPER. For reasons of brevity, we provide these definitions in a largely intuitive, not-so-formal manner, and refer the interested reader to this earlier work for an in-depth treatise on the subject.
 
-An ICTMC will be defined below as a specific set of \emph{continuous-time stochastic processes}. A stochastic process is a (coherent) conditional probability $P$ on a set of conditional events $\mathcal{C}^\mathrm{SP}$, and the entire set of such processes is denoted $\processes$. The events $(A,C)\in\mathcal{C}^\mathrm{SP}$ describe a joint state-assignment $A$, conditional on the joint state-assignment $C$. Intuitively, $C$ describes the known ``history'' of the process, and $A$ is then an event that might occur in the future, given this history. 
-
-To make this somewhat less abstract, given time-points $t,s\in\realsnonneg$ with $t<s$, and given time-points $u\in\mathcal{U}_{<t}$, we might consider the event $(X_s=x_s, (X_t=x_t,X_u=x_u))$, for which $P$ provides the quantity $P(X_s=x_s\,\vert\,X_t=x_t,X_u=x_u)$, which describes the probability of the state $X_s$ obtaining the value $x_s$, given that at time points $t$ and $u$, the system was in states $x_t$ and $x_u$, respectively. If $P$ is a continuous-time Markov chain, then this quantity satisfies the identity
-\begin{equation*}
-P(X_s=x_s\,\vert\,X_t=x_t,X_u=x_u) = P(X_s=x_s\,\vert\,X_t=x_t)\,,
-\end{equation*}
-for every state-assignment $x_u\in\states_u$. This, of course, is the well-known Markov property.
-
-It is notationally convenient to jointly consider probabilities that are conditioned on the same time points, by defining an $\lvert\states\rvert\times\lvert\states\rvert$ real-valued matrix $T_t^s$ as
-\begin{equation*}
-T_t^s(x_t,x_s) \coloneqq P(X_s=x_s\,\vert\,X_t=x_t)\,,\quad\quad\text{for all $x_t\in\states_t$ and $x_s\in\states_s$.}
-\end{equation*}
-This matrix $T_t^s$ is called the \emph{transition matrix}, from time $t$ to time $s$, of the process $P$. Since we are more generally considering non-Markov processes, it is also convenient to define the \emph{history-dependent} transition matrix, for each $x_u\in\states_u$, as
-\begin{equation*}
-T_{t,x_u}^s(x_t,x_s) \coloneqq P(X_s=x_s\,\vert\,X_t=x_t,X_u=x_u)\,,\quad\quad\text{for all $x_t\in\states_t$ and $x_s\in\states_s$}.
-\end{equation*}
-
-Now, roughly speaking, such a stochastic process can be parameterised by the derivatives of its (history-dependent) transition matrices,
-\begin{equation}\label{eq:deriv_limit_is_rate}
-\partial T_{t,x_u}^t \coloneqq \lim_{\Delta\to 0^+}\frac{T_{t,x_u}^{t+\Delta}-I}{\Delta}\,,
+An ICTMC will be defined below as a specific set of \emph{continuous-time stochastic processes}. Simply put, a continuous-time stochastic process is a joint probability distribution over random variables $X_t$, for each time $t\in\realsnonneg$, where each random variable $X_t$ takes values in $\states$. If such a stochastic process $P$ satisfies the \emph{Markov property}---see Equation~\eqref{eq:Markov_property} below---then $P$ is called a \emph{continuous-time Markov chain} (CTMC). The Markov property states that, for time points $t,s\in\realsnonneg$ such that $t\leq s$, and for any sequence of time points $u\in\mathcal{U}_{<t}$, it holds that
+\begin{equation}\label{eq:Markov_property}
+P(X_s\,\vert\,X_t,X_u) = P(X_s\,\vert\,X_t)\,.
 \end{equation}
-where $I$ denotes the identity matrix. If this derivative exists, then the quantity $\partial T_{t,x_u}^t$ is a \emph{rate matrix}---a matrix with all row-sums equal to zero, and with non-negative off-diagonal elements (and hence non-positive diagonal elements). Such a rate matrix describes the rate-of-change of the transition probabilities of the process $P$, that is, roughly speaking, the instantaneous speed with which the process moves between states, around the time-point $t$. 
+Intuitively, this means that once we know the state $x_t$ obtained at time $t$, the probability distribution over any state $X_s$ in the future---with respect to $t$---is independent of the history $x_u$ at time points $u$ that precede $t$.
 
-Of course, the limit expression in Equation~\eqref{eq:deriv_limit_is_rate} need not exist. However, it was shown in Reference BIG PAPER that we can instead use a certain generalisation of this derivative, which is always well-defined for \emph{well-behaved} processes. A process $P$ is called well-behaved if its rate-of-change is \emph{bounded}---i.e., finite---for all time points $t$ and histories $x_u$, with $u\in\mathcal{U}_{<t}$. This generalisation, denoted $\overline{\partial} T_{t,x_u}^t$, is then always a non-empty \emph{set} of rate matrices. Furthermore, if the limit in Equation~\eqref{eq:deriv_limit_is_rate} exists, then it holds exactly that $\overline{\partial} T_{t,x_u}^t=\{\partial T_{t,x_u}^t\}$.
-
-We can now use the above concepts to define \emph{imprecise continuous-time Markov chains}. In particular, such an ICTMC is the set of all well-behaved processes for which these generalised derivatives $\overline{\partial} T_{t,x_u}^t$ are contained in a given set of rate matrices $\rateset$. Since this only parameterises the ``dynamics'' of the model, we furthermore restrict the initial distributions $P(X_0)$ to belong to a given set $\mathcal{M}$ of probability mass functions on $\states$.
-
-\begin{definition}[ICTMC]
-Consider a non-empty bounded set of rate matrices $\rateset$, and a non-empty set $\mathcal{M}$ of probability mass functions on $\states$.
-
-Then, the corresponding ICTMC, denoted $\wprocesses_{\rateset,\mathcal{M}}$, is the set of all well-behaved processes $P$ that satisfy $P(X_0)\in\mathcal{M}$, and $\overline{\partial} T_{t,x_u}^t \subseteq \rateset$ for all $t\in\realsnonneg$, all $u\in\mathcal{U}_{<t}$, and $x_u\in\states_u$.
-\end{definition}
-So, the ICTMC is parameterised using sets $\rateset$ and $\mathcal{M}$. Specific properties of the model therefore depend on specific properties of these parameter sets. In the sequel, we will assume that $\rateset$ is a convex set of rate matrices, and furthermore that it has \emph{separately specified rows} (s.s.r.). We say that $\rateset$ has s.s.r. if it is closed under arbitrary recombination of rows from its elements.
-
-The (conditional) \emph{lower expectation} with respect to $\wprocesses_{\rateset,\mathcal{M}}$ is denoted $\lexp[\cdot\vert\cdot]$, and defined as
+An important notion in the numerical parameterisation of CTMC's---or more generally, of continuous-time stochastic processes---is that of a \emph{rate matrix}. Such a rate matrix $Q$ is a real-valued, $\lvert\states\rvert\times\lvert\states\rvert$ matrix, whose off-diagonal elements are non-negative, and whose every row sums to zero---thus, the diagonal elements are non-positive. Such a rate matrix may be interpreted as describing the ``rate of change'' of the conditional probability $P(X_s\,\vert\,X_t)$, when $s$ is close to $t$. Specifically, for small enough $\Delta\in\realspos$, we may write that
 \begin{equation*}
-\lexp[\cdot\,\vert\,\cdot] \coloneqq \inf\left\{\mathbb{E}_P[\cdot\,\vert\,\cdot]\,:\,P\in\wprocesses_{\rateset,\mathcal{M}}\right\}\,,
+P(X_{t+\Delta}\,\vert\,X_t) \approx \bigl[I + \Delta Q\bigr](X_t, X_{t+\Delta})\,,
 \end{equation*}
-where $\mathbb{E}_P[\cdot\,\vert\,\cdot]$ denotes the (precise) conditional expectation with respect to the stochastic process $P$.
+where $I$ denotes the $\lvert\states\rvert\times\lvert\states\rvert$ identity matrix, and where $[I + \Delta Q](X_t,X_{t+\Delta})$ denotes the element at the $X_t$-th row and $X_{t+\Delta}$-th column of the matrix $I + \Delta Q$. In general, this rate matrix $Q$ may depend on the specific time $t$ at which this relationship is stated.
 
-Under the above s.s.r. assumption on $\rateset$, it can then be shown that, for any $t\in\realsnonneg$, $v\in\mathcal{U}_{\geq t}$, $u\in\mathcal{U}_{<t}$, $x_u\in\states_u$, and $f\in\gambles(\states_v)$,
-\begin{equation*}
-\lexp[f(X_v)\,\vert\,X_t,X_u=x_u] = \lexp[f(X_v)\,\vert\,X_t]\,,
-\end{equation*}
-that is, $\wprocesses_{\rateset,\mathcal{M}}$ satisfies an \emph{imprecise Markov property} when $\rateset$ has separately specified rows.
+Clearly, such a rate matrix---or in general, family of rate matrices---only characterises the \emph{dynamic} behaviour of a CTMC. As a second parameter to such a model, we therefore need to stipulate an initial distribution $P(X_0)$ over the state $X_0$ at time zero.
 
-Furthermore, under the above convexity assumption on $\rateset$, it can be shown that, for any $u,v,w\in\mathcal{U}$ such that $u<v<w$, and any $f\in\gambles(\states_{u\cup v\cup w})$,
+Similarly, an \emph{imprecise continuous-time Markov chain} (ICTMC) is parameterised using a \emph{set} of rate matrices $\rateset$, and a \emph{set} of initial distributions $\mathcal{M}$. Intuitively, the corresponding ICTMC, denoted $\mathbb{P}_{\rateset,\mathcal{M}}$, can be characterised as the set of all stochastic processes $P$ that satisfy $P(X_0)\in\mathcal{M}$ and, for every time $t\in\realsnonneg$ and for every history $x_u\in\states_u$, with $u\in\mathcal{U}_{<t}$, there is some $Q\in\rateset$ and some $\Delta\in\realspos$, such that
 \begin{equation*}
-\lexp[f(X_u,X_v,X_w)\,\vert\,X_u] = \lexp\bigl[\lexp[f(X_u,X_v,X_w)\,\vert\,X_u,X_v]\,\big\vert\,X_u\bigr]\,,
+P(X_{t+\Delta}\,\vert\,X_t,X_u=x_u) \approx \bigl[I + \Delta Q\bigr](X_t, X_{t+\Delta})\,.
 \end{equation*}
-that is, $\lexp$ has the property of \emph{iterated lower expectation}.
+So, intuitively, we take $\mathbb{P}_{\rateset,\mathcal{M}}$ as the set of all continuous-time stochastic processes whose dynamics can be described using the elements of $\rateset$, and whose initial distributions are consistent with $\mathcal{M}$. For a more rigorous definition of such ICTMC's, we refer the reader to REF BIG PAPER.
+
+The lower expectation with respect to this set $\mathbb{P}_{\rateset,\mathcal{M}}$ is then defined as
+\begin{equation*}
+\underline{\mathbb{E}}_{\rateset,\mathcal{M}}[\cdot\,\vert\,\cdot] \coloneqq \inf\left\{ \mathbb{E}_P[\cdot\,\vert\,\cdot]\,:\, P\in\mathbb{P}_{\rateset,\mathcal{M}} \right\}\,,
+\end{equation*}
+where $\mathbb{E}_P[\cdot\,\vert\,\cdot]$ denotes the expectation with respect to the (precise) stochastic process $P$.
+
+From a computational viewpoint, it will be useful to introduce the \emph{lower transition rate operator} $\lrate$ that corresponds to $\rateset$. This operator is a map from $\gamblesX$ to $\gamblesX$, which is defined for every function $f\in\gamblesX$ as
+\begin{equation}\label{eq:lower_rate_is_inf}
+\lrate f \coloneqq \inf\{ Qf\,:\, Q\in\rateset \}\,.
+\end{equation}
+This lower transition rate operator can be used to compute the lower expectation of any function $f\in\gamblesX$, in the following sense. For any $t,s\in\realsnonneg$ such that $t\leq s$, it can be shown that REF, for large enough\footnote{We refer the reader to REF for a theoretical bound on the minimum such $n$ that is required to ensure a given maximum error on the approximation in Equation~\eqref{eq:lower_exp_in_steps}.} $n\in\nats$, and writing $\Delta\coloneqq \nicefrac{(s-t)}{n}$,
+\begin{equation}\label{eq:lower_exp_in_steps}
+\underline{\mathbb{E}}_{\rateset,\mathcal{M}}[f(X_s)\,\vert\,X_t] \approx \bigl[I + \Delta\lrate\,\bigr]^nf\,.
+\end{equation}
+Concretely, this means that if one is able to solve the minimisation problem in Equation~\eqref{eq:lower_rate_is_inf}---which is relatively straightforward for ``nice enough'' $\rateset$---then one can also compute the (conditional) lower expectation using the expression in Equation~\ref{eq:lower_exp_in_steps}.
+
+Furthermore, the \emph{unconditional} lower expectation of any function $f\in\gamblesX$, at time $t\in\realsnonneg$, can be computed as
+\begin{equation}\label{eq:unconditional_lower_exp}
+\underline{\mathbb{E}}_{\rateset,\mathcal{M}}[f(X_t)] = \underline{\mathbb{E}}_{\rateset,\mathcal{M}}\bigl[\underline{\mathbb{E}}_{\rateset,\mathcal{M}}[f(X_t)\,\vert\,X_0]\bigr] = \inf\left\{ \sum_{x\in\states} p(x)\cdot\underline{\mathbb{E}}_{\rateset,\mathcal{M}}[f(X_t)\,\vert\,X_0=x]\,:\,p\in\mathcal{M}  \right\}\,,
+\end{equation}
+again using the results from Reference BIG PAPER. Thus, from a practical point of view, it suffices to first compute the conditional lower expectation $\underline{\mathbb{E}}_{\rateset,\mathcal{M}}[f(X_t)\,\vert\,X_0]$, using Equation~\eqref{eq:lower_exp_in_steps}. Once this quantity is obtained, it remains to compute the right-hand side of Equation~\eqref{eq:unconditional_lower_exp}, which again is relatively straightforward when $\mathcal{M}$ is ``nice enough''.
 
 \section{Imprecise Continuous-Time Hidden Markov Chains}\label{sec:icthmc}
 
