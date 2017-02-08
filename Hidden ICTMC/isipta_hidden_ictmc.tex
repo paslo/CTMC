@@ -487,7 +487,7 @@ In most practical applications, therefore, the function $\phi_u(\cdot\,\vert\,x_
 
 %Moving on, the imprecise model will again be updated using regular extension\footnote{The condition $P(Y_u\in O_u^i)>0$ in Footnote~\ref{fnote:extra_condition} is not very problematic when focussing on single processes $P$, but we are here considering \emph{sets} of processes, and for a given sequence $\{O_u^i\}_{i\in\nats}$ this condition may hold for some processes in the set, yet fail to hold for others. This introduces some interpretational subtleties when using regular extension, whose formal treatment is unfortunately somewhat outside of the scope of this present paper. If one is uncomfortable with this, we could instead use \emph{natural extension} to update the imprecise model: modifying Definition~\ref{def:reg_ext_densities} to only define the updated lower expectation whenever $\lexp[\phi_u(y_u\vert X_u)]>0$. In that case the updated model can be shown to satisfy the intuitive limit interpretation: $\underline{\mathbb{E}}_{\mathcal{Z}}\bigl[f(X_v)\,\vert\,Y_u = y_u\bigr] = \lim_{i\to+\infty}\underline{\mathbb{E}}_{\mathcal{Z}}\bigl[f(X_v)\,\vert\,Y_u \in O_u^i\bigr]$.}; discarding the precise models for which the updated expectation is undefined, and computing the lower envelope over the remainder.
 
-Moving on, the imprecise model is here updated using \emph{natural extension}~\citep{Walley:1991vk}:
+Moving on, note that if $\phi_u(y_u\vert X_u)$ exists and satisfies $\lexp[\phi_u(y_u\vert X_u)]>0$, then the updated expectation $\mathbb{E}_P[f(X_v)\,\vert\,Y_u=y_u]$ is well-defined for every $P\in\mathcal{Z}$. Hence, we can then update the imprecise model using \emph{natural extension}~\citep{Walley:1991vk}:
 \begin{definition}\label{def:reg_ext_densities}
 Let $\mathcal{Z}$ be an ICTHMC, and consider any $v\in\mathcal{U}_\emptyset$, $u\in\mathcal{U}$, $y_u\in\observs_u$, and $f\in\gambles(\states_v)$. Then, for a given sequence $\{O_u^i\}_{i\in\nats}$ in $\Sigma_u$ satisfying the assumptions above, if for some $\{\lambda_i\}_{i\in\nats}$ the quantity $\phi_u(y_u\,\vert\,X_u)$ exists and is real-valued, the updated lower expectation is given by 
 \begin{equation*}
@@ -496,13 +496,14 @@ Let $\mathcal{Z}$ be an ICTHMC, and consider any $v\in\mathcal{U}_\emptyset$, $u
 whenever $\underline{\mathbb{E}}_\mathcal{Z}[\phi_u(y_u\vert X_u)] >0$, and is left undefined, otherwise.
 \end{definition}
 
-The reason that we here choose to update the model using natural extension, rather than regular extension, is that the latter leads to some interpretational difficulties that are somewhat outside the scope of the present paper\footnote{The condition $P(Y_u\in O_u^i)>0$ in Footnote~\ref{fnote:extra_condition} is not very problematic when focussing on single processes $P$, but we are here considering \emph{sets} of processes, and for a given sequence $\{O_u^i\}_{i\in\nats}$ this condition may hold for some processes in the set, yet fail to hold for others.}. In contrast, natural extension leads to the intuitive limit interpretation:
+The reason that we here choose to update the model using natural extension, rather than regular extension, is that the latter leads to some interpretational difficulties that are somewhat outside the scope of the present paper\footnote{These difficulties arise even when $\phi_u(\cdot\,\vert X_u)$ is everywhere defined and continuous. To wit, as mentioned in Footnote~\ref{fnote:extra_condition}, the additional assumption on the sequence $\{O_u^i\}_{i\in\nats}$ that every $P(Y_u\in O_u^i)>0$, is sufficient to guarantee a unique limit of conditional expectations for single processes $P$. However, we are here considering \emph{sets} of processes, and for a given sequence $\{O_u^i\}_{i\in\nats}$ this condition may hold for some processes in the set, yet fail to hold for others.}. In contrast, natural extension leads to the intuitive limit interpretation:
 \begin{proposition}\label{prop:GBR_for_densities_is_limit_if_continuous}
-Let $\mathcal{Z}$ be an ICTHMC, and consider any $v\in\mathcal{U}_\emptyset$, $u\in\mathcal{U}$, $y_u\in\observs_u$, and $f\in\gambles(\states_v)$. Then, for a given sequence $\{O_u^i\}_{i\in\nats}$ in $\Sigma_u$ satisfying the assumptions above, if for some $\{\lambda_i\}_{i\in\nats}$ the quantity $\phi_u(y_u\,\vert\,X_u)$ exists, is real-valued, and satisfies $\lexp[\phi_u(y_u\vert X_u)]>0$,
-\begin{equation*}
-\underline{\mathbb{E}}_\mathcal{Z}[f(X_v)\vert Y_u=y_u] %&= \max\left\{ \mu\in\reals : \lexp\left[ \phi(y_u\vert X_u)\bigl(f(X_s) -\mu \bigr)\right] \geq 0\right\} \\
- = \lim_{i\to+\infty}\underline{\mathbb{E}}_\mathcal{Z}[f(X_v)\vert Y_u\in O_u^i]
-\end{equation*}
+Let $\mathcal{Z}$ be an ICTHMC, and consider any $v\in\mathcal{U}_\emptyset$, $u\in\mathcal{U}$, $y_u\in\observs_u$, and $f\in\gambles(\states_v)$. Then, for a given sequence $\{O_u^i\}_{i\in\nats}$ in $\Sigma_u$ satisfying the assumptions above, if for some $\{\lambda_i\}_{i\in\nats}$ the quantity $\phi_u(y_u\,\vert\,X_u)$ exists, is real-valued, and satisfies $\lexp[\phi_u(y_u\vert X_u)]>0$, then the updated lower expectation satisfies $\underline{\mathbb{E}}_\mathcal{Z}[f(X_v)\vert Y_u=y_u] 
+ = \lim_{i\to+\infty}\underline{\mathbb{E}}_\mathcal{Z}[f(X_v)\vert Y_u\in O_u^i]$.
+%\begin{equation*}
+%\underline{\mathbb{E}}_\mathcal{Z}[f(X_v)\vert Y_u=y_u] 
+% = \lim_{i\to+\infty}\underline{\mathbb{E}}_\mathcal{Z}[f(X_v)\vert Y_u\in O_u^i]
+%\end{equation*}
 \end{proposition}
 
 Similar to the results in Section~\ref{subsec:pos_prob}, this updated lower expectation can be computed by means of the ``generalised Bayes' rule for mixtures of densities'', as follows.
@@ -555,11 +556,11 @@ Hence, we can in both cases rewrite the function of interest as
 $\lexp\left[ \left(\prod_{i=0}^ng_{t_i}(X_{t_i})\right)\bigl(f(X_v) - \mu\bigr) \right]$,
 for some collection of functions $g_{t_i}\in\gambles(\states_{t_i})$ such that $g_{t_i}\geq 0$, for $i\in\{0,\ldots,n\}$.
 
-In general, the computational complexity of evaluating this quantity depends both on the function $f\in\gambles(\states_v)$, and on how the time points $v$ relate to the time points $u$---whether we are performing inference ``into the future'' or ``into the past''. We treat some specific cases in the following sections.
+In general, the computational complexity of evaluating this quantity depends both on the function $f$, and on how the time points $v$ relate to the time points $u$---whether we are performing inference ``into the future'' or ``into the past''. We treat some specific cases in the following sections.
 
-\subsection{Solving the GBR}\label{sec:gbr}
+\subsection{Solving the Generalised Bayes' Rule}\label{sec:gbr}
 
-As mentioned above, finding the maximum value of $\mu$ for which the function of interest in the generalised Bayes' rule is non-negative, is relatively straightforward numerically. This is because this function, parameterised in $\mu$, is very well-behaved. The proposition below explicitly states some of these properties. These are essentially well-known, and can also be found in other work; see, e.g., \cite[Section 2.7.3]{de2015credal}. The statement below is therefore intended to briefly recall these properties, and is stated in the general form where we can also use it when working with densities.
+Finding the maximum value of $\mu$ for which the function of interest in the generalised Bayes' rule is non-negative, is relatively straightforward numerically. This is because this function, parameterised in $\mu$, is very well-behaved. The proposition below explicitly states some of these properties. These are essentially well-known, and can also be found in other work; see, e.g., \cite[Section 2.7.3]{de2015credal}. The statement below is therefore intended to briefly recall these properties, and is stated in the general form where we can also use it when working with densities.
 
 \begin{proposition}\label{prop:GBR_properties}
 Let $\mathbb{P}_{\rateset,\mathcal{M}}$ be an ICTMC, consider any $v\in\mathcal{U}_{\emptyset}$, any $f\in\gambles(\states_v)$, and, for all $t_i\in u$, any $g_{t_i}\in\gambles(\states_{t_i})$ such that $g_{t_i}\geq 0$. Let $G:\reals\to\reals$ be a function defined for all $\mu\in\reals$, as
@@ -574,9 +575,9 @@ Furthermore, if $\lexp\bigl[\prod_{i=0}^n g_{t_i}(X_{t_i})\bigr] >0$, this funct
 If instead $\lexp\bigl[\prod_{i=0}^n g_{t_i}(X_{t_i})\bigr]=0$ but $\uexp\bigl[\prod_{i=0}^n g_{t_i}(X_{t_i})\bigr] >0$, then this function: \customlabel{GBR:up_pos:max_root}{(UG1)} has a maximum root $\mu_*$, \customlabel{GBR:up_pos:zero_before}{(UG2)} satisfies $G(\mu)=0$ for all $\mu\leq \mu_*$ and, \customlabel{GBR:up_pos:monotone}{(UG3)} is strictly monotonically decreasing for $\mu\geq \mu_*$.
 \end{proposition}
 
-Note that this function $G(\mu)$ in Proposition~\ref{prop:GBR_properties} can therefore behave in two essentially different ways. These correspond to the cases where the observed event has strictly positive probability(/density) for \emph{all} processes in the ICTHMC, and to where it only has positive probability(/density) for \emph{some} of these processes.
+Note that this function $G(\mu)$ in Proposition~\ref{prop:GBR_properties} can behave in two essentially different ways. These correspond to the cases where the observed event has strictly positive probability(/density) for \emph{all} processes in the set, and to where it only has positive probability(/density) for \emph{some} processes.
 
-However, note that in either case, the function is ``well-behaved'' enough to make finding its maximum root a fairly straightforward task. For instance, a standard bisection algorithm can be straightforwardly applied here; known in this context as Lavine's algorithm~\citep{lavine1991sensitivity}. Other, more efficient, algorithms are presented by, e.g., \citet{cozman1997alternatives}. Also note that, due to Propositions~\ref{prop:GBR_regular} and~\ref{prop:GBR_for_densities_lower_zero}, this maximum root will always be found in the interval $[\min f, \max f]$---this observation might be helpful in practice.
+However, in either case, the function is ``well-behaved'' enough to make finding its maximum root a fairly straightforward task. For instance, a standard bisection algorithm can be applied here; this is known in this context as Lavine's algorithm~\citep{lavine1991sensitivity}. More efficient algorithms are presented by, e.g., \citet{cozman1997alternatives}. Also note that, due to Propositions~\ref{prop:GBR_regular} and~\ref{prop:GBR_for_densities_lower_zero}, the maximum root will always be found in the interval $[\min f, \max f]$---this observation might be helpful in practice.
 
 \subsection{Functions on a Single Time Point}\label{sec:funcs_single_time}
 
@@ -609,23 +610,23 @@ For all $t_i\in u'$, let $g_{t_i}$, $g_{t_i}^+$ and $g_{t_i}^-$ be as defined ab
 \lexp\left[g_{t_0}^+(X_{t_0})\right] = \lexp\left[\prod_{t_i\in u'}g_{t_i}(X_{t_i})\right]\,,\quad\quad\text{and,}\quad\quad\uexp\left[g_{t_0}^-(X_{t_0})\right] = \uexp\left[\prod_{t_i\in u'}g_{t_i}(X_{t_i})\right]\,.
 \end{equation*}
 \end{proposition}
-So, in order to evaluate the function of interest, it remains to compute $\lexp\left[g_{t_0}^+(X_{t_0})\right]$. Since $g_{t_0}^+$ is a function on a single time point $t_0$, this can again be done in polynomial time, using Equation~\eqref{eq:unconditional_lower_exp} in Section~\ref{subsec:ICTMC_computations} above.
+So, in order to evaluate the function of interest, it remains to compute $\lexp\left[g_{t_0}^+(X_{t_0})\right]$. Since $g_{t_0}^+$ is a function on a single time point $t_0$, this can again be done in polynomial time, using Equation~\eqref{eq:unconditional_lower_exp}.
 
 \section{Conclusions and Future Work}\label{sec:conclusions}
 
-*** brief summary
+In this work, we considered \emph{imprecise continuous-time hidden Markov chains}. These are an extension of (non-hidden) \emph{imprecise continuous-time Markov chains} (ICTMC's), obtained by augmenting such ICTMC's with random \emph{output} variables. We focussed in particular on the corresponding inference problem, \emph{viz.} to compute the lower expectation of functions on the state-space, given observed realisations of the output variables. 
 
-*** future work: imprecise observables, maximal state decoding, arbitrary functions in the future:
+To this end, we provided a polynomial runtime algorithm to compute such lower expectations for functions that depend on the state-space at a single given time-point. This algorithm can be used both when the output variables are discrete, and when they are continuous.
 
-**** The results in the previous section provided us with a way to tractably compute updated lower expectations of arbitrary functions on any single time point. Although this may seem restrictive, it immediately grants the possibility to compute updated lower expectations of arbitrary functions $f\in\gambles(\states_v)$, provided the time points $v$ come after the time points $u$ on which we are updating. This is due to the following result.
+With regard to future work, several natural next steps would seem to be apparent. For one, we intend in future work to further generalise this model class, by also allowing for an imprecise specification of the output variables. Second, a rigorous treatment of the possibility of updating the model using regular extension, in the case of continuous output variables, seems to be prudent. For instance, at present we have neither a proof of, nor a counter example to, the statement of Proposition~\ref{prop:GBR_for_densities_is_limit_if_continuous} in the case of regular extension---i.e. when $\lexp[\phi_u(y_u\vert X_u)]=0$ but $\uexp[\phi_u(y_u\vert X_u)]>0$.
 
-\begin{proposition}\label{prop:arbitrary_future_functions}
-Consider any $\mu\in\reals$, $v\in\mathcal{U}_\emptyset$, $u\in\mathcal{U}_{<v}$, $f\in\gambles(\states_v)$ and, for all $t_i\in u$, any $g_{t_i}\in\gambles(\states_{t_i})$ such that $g_{t_i}\geq 0$. Write $u=t_0,\ldots,t_n$. Then,
+Another obvious line of future research would be the development of algorithms to solve other inference problems for this model class. For instance, the problem of estimating state-sequences, given observed output-sequences---as was previously done for (discrete-time) iHMM's~\citep{DeBock:2014ts}. In fact, we believe that these previous results should translate fairly naturally to the current continuous-time setting.
+
+Finally, we might look into developing algorithms to compute the updated lower expectation of more general functions $f\in\gambles(\states_v)$, which depend on the state-space at more than one time-point. In fact, one such algorithm follows straightforwardly from the results of the current paper, provided that the time-points $v$ are in the future with respect to the time-points $u$ at which the observations took place. This is due to a result from~\cite{krak2016ictmc}, which states that the lower expectation for ICTMC's satisfies the property of ``iterated lower expectation''. Writing $u=t_0,\ldots,t_n$, the function of interest in the generalised Bayes' rule can therefore be rewritten as
 \begin{equation*}
 \lexp\left[\left(\prod_{i=0}^n g_{t_i}(X_{t_i})\right)\bigl(f(X_v) - \mu\bigr)\right] = \lexp\left[\left(\prod_{i=0}^n g_{t_i}(X_{t_i})\right)\left(\lexp[f(X_v)\vert X_{t_n}] - \mu\right)\right]\,.
 \end{equation*}
-\end{proposition}
-Due to this result, it suffices to first compute the quantity $\lexp[f(X_v)\vert X_{t_n}]$, which can in general be done using the results in Reference BIG PAPER. Since this conditional lower expectation is clearly a function on a single time point $t_n$, we can then apply the results from the previous section to compute the updated lower expectation.
+Therefore, it suffices to first compute the quantity $\lexp[f(X_v)\vert X_{t_n}]$, which can be done using the results in Reference~\citep{krak2016ictmc}. Since this is clearly a function on a single time point $t_n$, we can directly apply the results and algorithm from the current paper to compute $\underline{\mathbb{E}}_{\mathcal{Z}}[f(X_v)\,\vert\,Y_u\in O_u]$.
 
 \bibliographystyle{plain}
 \bibliography{general}
