@@ -1406,5 +1406,77 @@ and similarly for the upper expectation.
 %\end{equation*}
 %and immediately suggest an algorithm with total runtime complexity $O(n\lvert\states\rvert C)$, where $C$ is again the time complexity of evaluating $L_{t_{i-1}}^{t_i}g_i$.
 
+\section{Testing some stuff}
+
+\begin{proposition}
+The limit interpretation of the updated imprecise model with continuous outputs also holds under regular extension.
+\end{proposition}
+\begin{proof}
+Consider any $y_u\in\observs_u$, and any sequence $\{O_u^i\}_{i\in\nats}$ that shrinks to $y_u$. Suppose that there is a sequence $\{\lambda_i\}_{i\in\nats}$ such that $\phi_u(y_u\vert X_u)$ exists, and satisfies $\uexp[\phi_u(y_u\vert X_u)]>0$. We will show that
+\begin{equation*}
+\max\{\mu\in\reals\,:\,\lexp[\phi_u(y_u\vert X_u)(f(X_v)-\mu)]\geq 0\} = \lim_{i\to+\infty} \underline{\mathbb{E}}_\mathcal{Z}[f(X_v)\,\vert\,Y_u\in O_u^i]\,.
+\end{equation*}
+
+Fix any $\epsilon >0$ such that $\epsilon<\uexp[\phi_u(y_u\vert X_u)]$. Let $\mathcal{P}_\epsilon \coloneqq \{P\in\mathcal{Z}\,:\,\mathbb{E}_P(\phi_u(y_u\vert X_u))>\epsilon\}$. Clearly, $\mathcal{P}_\epsilon\neq\emptyset$, and furthermore $\underline{\mathbb{E}}_{\mathcal{P}_\epsilon}[\phi_u(y_u\vert X_u)] \geq \epsilon > 0$. Therefore, as we know from the proof of the statement of the present proposition---but under natural extension---it holds that
+\begin{equation*}
+\mu_\epsilon \coloneqq \underline{\mathbb{E}}_{\mathcal{P}_\epsilon}[f(X_v)\,\vert\,Y_u=y_u] = \lim_{i\to+\infty} \underline{\mathbb{E}}_{\mathcal{P}_\epsilon}[f(X_v)\,\vert\,Y_u\in O_u^i]\,,
+\end{equation*}
+under the obvious interpretation of the lower expectation.
+
+Because $\mathcal{P}_\epsilon\subseteq\{P\in\mathcal{Z}\,:\,\mathbb{E}_P[\phi_u(y_u\vert X_u)]>0\}$, we must have that
+\begin{align*}
+\mu_* \coloneqq \underline{\mathbb{E}}_{\mathcal{Z}}[f(X_v)\,\vert\,Y_u=y_u] &= \inf\{\mathbb{E}_P[f(X_v)\,\vert\,Y_u=y_u]\,:\,P\in\mathcal{Z},\mathbb{E}_P[\phi_u(y_u\vert X_u)]>0\} \\
+ &\leq \underline{\mathbb{E}}_{\mathcal{P}_\epsilon}[f(X_v)\,\vert\,Y_u=y_u] = \mu_\epsilon\,.
+\end{align*}
+
+Now, consider a sequence $\{\epsilon_i\}_{i\in\nats}\to 0^+$ in $\realspos$ such that $\epsilon_i<\uexp[\phi_u(y_u\vert X_u)]$ for all $i\in\nats$. Using the above notation, we will show that $\lim_{i\to\infty}\mu_{\epsilon_i}=\mu_*$. 
+
+First, note that $\mu_*\leq \mu_{\epsilon_i}$, and $\mu_{\epsilon_{i+1}}\leq \mu_{\epsilon_i}$ for all $i\in\nats$. In other words, $\{\mu_{\epsilon_i}\}_{i\in\nats}$ is a decreasing sequence which is bounded below by $\mu_*$; hence, by the monotone convergence theorem, the limit $\mu_{\epsilon_*}\coloneqq\lim_{i\to+\infty}\mu_{\epsilon_i}$ exists. Showing that $\mu_{\epsilon_*}=\mu_*$ is a bit more involved.
+
+First, define
+\begin{equation*}
+G(\mu) \coloneqq \lexp[\phi_u(y_u\vert X_u)\bigl(f(X_v) - \mu\bigr)]\,.
+\end{equation*}
+Note that $\mu_*=\max\{\mu\in\reals\,:\,G(\mu)\geq 0\}$ by the GBR. Now fix any $\epsilon>0$. Clearly, $G(\mu_* + \epsilon)< 0$.
+
+This implies that there is some $P\in\mathcal{Z}$ such that also
+\begin{equation*}
+\mathbb{E}_P[\phi_u(y_u\vert X_u)\bigl(f(X_v) - (\mu_*+\epsilon)\bigr)] < 0\,,
+\end{equation*}
+which implies that $\mathbb{E}_P[\phi_u(y_u\vert X_u)]>0$. Because $\{\epsilon_i\}_{i\in\nats}\to 0^+$, there is some $n\in\nats$ such that for all $k>n$, it holds that $\epsilon_k < \mathbb{E}_P[\phi_u(y_u\vert X_u)]$, and hence in particular $P\in\mathcal{P}_{\epsilon_k}$. It follows that
+\begin{equation*}
+G_{\epsilon_k}(\mu_*+\epsilon) \coloneqq \underline{\mathbb{E}}_{\mathcal{P}_{\epsilon_k}}[\phi_u(y_u\vert X_u)\bigl(f(X_v) - (\mu_*+\epsilon)\bigr)] \leq \mathbb{E}_P[\phi_u(y_u\vert X_u)\bigl(f(X_v) - (\mu_*+\epsilon)\bigr)] < 0\,.
+\end{equation*}
+Since $G_{\epsilon_k}$ is monotonically decreasing, and since $G_{\epsilon_k}(\mu_{\epsilon_k})=0$, it follows that $\mu_{\epsilon_k} < \mu_*+\epsilon$. Since we also know that $\mu_*\leq \mu_{\epsilon_k}$, we find $\mu_*\leq \mu_{\epsilon_k}<\mu_*+\epsilon$. Hence, by repeating the above for increasingly smaller choices of $\epsilon$, we can construct a subsequence $\{\mu_{i_k}\}_{k\in\nats}$ such that $\lim_{k\to+\infty}\mu_{i_k}=\mu_*$. Since this is a convergent subsequence of the sequence $\{\mu_i\}_{i\in\nats}$, which we know converges to $\mu_{\epsilon_*}$ itself, it must hold that $\mu_{\epsilon_*}=\mu_*$.
+
+To summarise, we have so far shown that
+\begin{equation*}
+\lim_{i\to+\infty}\underline{\mathbb{E}}_{\mathcal{P}_{\epsilon_i}}[f(X_v)\,\vert\,Y_u=y_u] = \underline{\mathbb{E}}_{\mathcal{Z}}[f(X_v)\,\vert\,Y_u=y_u]\,.
+\end{equation*}
+We will next establish that the same property holds for the quantities $\underline{\mathbb{E}}_{\mathcal{P}_{\epsilon_i}}[f(X_v)\,\vert\,Y_u\in O_u^j]$. The final argument is then by diagonalisation over all sequences at the same time.
+
+So, consider any $j\in\nats$, and the corresponding sequence $\{\nu_{\epsilon_i}^j\}_{i\in\nats}$ defined by
+\begin{equation*}
+\nu_{\epsilon_i}^j \coloneqq \underline{\mathbb{E}}_{\mathcal{P}_{\epsilon_i}}[f(X_v)\,\vert\,Y_u\in O_u^j]\,.
+\end{equation*}
+Let $\nu_*^j\coloneqq \underline{\mathbb{E}}_{\mathcal{Z}}[f(X_v)\,\vert\,Y_u\in O_u^j]$. 
+
+***** SHIT. I THINK THE NESTING IS NOW REVERSED. 
+
+Start by showing that $\underline{\mathbb{E}}_{\mathcal{P}_{\epsilon_i}}[\phi_u(y_u\vert X_y)]>0\Rightarrow \underline{\mathbb{E}}_{\mathcal{P}_{\epsilon_i}}[P_{\observs\vert\states}(O_u^j\vert X_u)]>0$ (should hold by convergence and monotonicity of measure).
+%Due to nesting of the sets $\mathcal{P}_{\epsilon_i}$ and $\mathcal{Z}$, we again have that $\nu_*^j\leq \nu_{\epsilon_i}^j$, and $\nu_{\epsilon_{i+1}}^j\leq \nu_{\epsilon_i}^j$ for all $i\in\nats$. Again by the monotone convergence theorem, $\nu_{\epsilon_*}^j\coloneqq \lim_{i\to+\infty}\nu_{\epsilon_i}^j$ exists.
+
+%Let next
+%\begin{equation*}
+%G^j(\nu) \coloneqq \lexp[P_{\observs\vert\states}(O_u^j\vert X_u)\bigl(f(X_v)-\nu\bigr)]\,.
+%\end{equation*}
+%Again, $\nu_*^j=\max\{\nu\in\reals\,:\,G^j(\nu)\geq 0\}$ by the GBR. For any $\epsilon>0$, we have $G^j(\nu_*^j+\epsilon) < 0$. Hence, there is a $P\in\mathcal{Z}$ such that also
+%\begin{equation*}
+%\mathbb{E}_P[P_{\observs\vert\states}(O_u^j\vert X_u)\bigl(f(X_v)-(\nu_*^j+\epsilon)\bigr)] < 0\,,
+%\end{equation*}
+%which implies that $\mathbb{E}_P[P_{\observs\vert\states}(O_u^j\vert X_u)] > 0$. ***** SHOW THAT THIS IMPLIES $\mathbb{E}_P[\phi_u(y_u\vert X_u)]>0$.
+
+\end{proof}
+
 
 \end{document}
