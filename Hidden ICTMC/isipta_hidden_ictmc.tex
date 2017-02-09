@@ -239,7 +239,7 @@ Ghent University (Belgium)
 \begin{abstract}
 In this work, we consider the problem of performing inference with \emph{imprecise continuous-time hidden Markov chains} (ICTHMC's). In analogy to the well-known---discrete-time---(imprecise) hidden Markov models, such an ICTHMC is an \emph{imprecise continuous-time Markov chain} (ICTMC), augmented with random \emph{output} variables whose distribution depends on the state of the ICTMC. The corresponding inference problem amounts to computing lower expectations of functions on the ICTMC's state-space, given observed realisations of these output variables.
 
-We develop and investigate this problem with very few assumptions on these output variables; in particular, these can be chosen to be either discrete or continuous random variables. Our main result is the development of a polynomial runtime algorithm to compute the lower expectation of functions on the state-space at any given time-point, given a collection of observations of the output variables at (other) time-points.
+We develop and investigate this problem with very few assumptions on these output variables; in particular, these can be chosen to be either discrete or continuous random variables. Our main result is a polynomial runtime algorithm to compute the lower expectation of functions on the state-space at any given time-point, given a collection of observations of the output variables.
 \end{abstract}
 
 \section{Introduction}\label{sec:introduction}
@@ -581,28 +581,37 @@ In general, the computational complexity of evaluating this quantity depends bot
 
 \subsection{Solving the Generalised Bayes' Rule}\label{sec:gbr}
 
-Finding the maximum value of $\mu$ for which the function of interest in the generalised Bayes' rule is non-negative, is relatively straightforward numerically. This is because this function, parameterised in $\mu$, is very well-behaved. The proposition below explicitly states some of these properties. These are essentially well-known, and can also be found in other work; see, e.g., \cite[Section 2.7.3]{de2015credal}. The statement below is therefore intended to briefly recall these properties, and is stated in the general form where we can also use it when working with densities.
+Finding the maximum value of $\mu$ for which the function of interest in the generalised Bayes' rule is non-negative, is relatively straightforward numerically. This is because this function, parameterised in $\mu$, is very well-behaved. The proposition below explicitly states some of these properties. These are essentially well-known, and can also be found in other work; see, e.g.,~\cite[Section 2.7.3]{de2015credal}. The statement below is therefore intended to briefly recall these properties, and is stated in the general form where we can also use it when working with densities.
 
 \begin{proposition}\label{prop:GBR_properties}
-Let $\mathbb{P}_{\rateset,\mathcal{M}}$ be an ICTMC, consider any $u,v\in\mathcal{U}$, any $f\in\gambles(\states_v)$, and, for all $t_i\in u$, any $g_{t_i}\in\gambles(\states_{t_i})$ such that $g_{t_i}\geq 0$. Let $G:\reals\to\reals$ be a function defined for all $\mu\in\reals$, as
-\begin{equation*}
-G(\mu) \coloneqq \lexp\left[\left(\prod_{i=0}^n g_{t_i}(X_{t_i})\right)\bigl(f(X_v) - \mu\bigr)\right]\,.
-\end{equation*}
+Let $\mathbb{P}_{\rateset,\mathcal{M}}$ be an ICTMC, consider any $u,v\in\mathcal{U}$, any $f\in\gambles(\states_v)$, and, for all $t_i\in u$, any $g_{t_i}\in\gambles(\states_{t_i})$ such that $g_{t_i}\geq 0$. 
+Consider the function $G: \reals\to\reals$ that is given, for all $\mu\in\reals$, by $G(\mu)\coloneqq \lexp\left[\left(\prod_{i=0}^n g_{t_i}(X_{t_i})\right)\bigl(f(X_v) - \mu\bigr)\right]$.
+%Let $G:\reals\to\reals$ be a function defined for all $\mu\in\reals$, as
+%\begin{equation*}
+%G(\mu) \coloneqq \lexp\left[\left(\prod_{i=0}^n g_{t_i}(X_{t_i})\right)\bigl(f(X_v) - \mu\bigr)\right]\,.
+%\end{equation*}
 Then, this function: \customlabel{GBR:always:continuous}{(G1)} is continuous, \customlabel{GBR:always:monotone}{(G2)} is monotonically decreasing, \customlabel{GBR:always:concave}{(G3)} is concave, and \customlabel{GBR:always:root}{(G4)} has a root, i.e. $G(\mu)=0$ for some $\mu\in\reals$.
 
 Furthermore, if $\lexp\bigl[\prod_{i=0}^n g_{t_i}(X_{t_i})\bigr] >0$, this function: 
 \customlabel{GBR:low_pos:monotone}{(LG1)} is strictly monotonically decreasing, and \customlabel{GBR:low_pos:unique_root}{(LG2)} has a unique root.
 
 If instead $\lexp\bigl[\prod_{i=0}^n g_{t_i}(X_{t_i})\bigr]=0$ but $\uexp\bigl[\prod_{i=0}^n g_{t_i}(X_{t_i})\bigr] >0$, then this function: \customlabel{GBR:up_pos:max_root}{(UG1)} has a maximum root $\mu_*$, \customlabel{GBR:up_pos:zero_before}{(UG2)} satisfies $G(\mu)=0$ for all $\mu\leq \mu_*$ and, \customlabel{GBR:up_pos:monotone}{(UG3)} is strictly monotonically decreasing for $\mu\geq \mu_*$.
+
+If $\uexp\bigl[\prod_{i=0}^n g_{t_i}(X_{t_i})\bigr]=0$, this function: \customlabel{GBR:none_pos:zero}{(ZG1)} is identically zero, i.e. $G(\mu)=0$ for all $\mu\in\reals$.
 \end{proposition}
 
-Note that this function $G(\mu)$ in Proposition~\ref{prop:GBR_properties} can behave in two essentially different ways. These correspond to the cases where the observed event has strictly positive probability(/density) for \emph{all} processes in the set, and to where it only has positive probability(/density) for \emph{some} processes.
+Note that this function $G(\mu)$ in Proposition~\ref{prop:GBR_properties} can behave in three essentially different ways. These correspond to the cases where the observed event has strictly positive probability(/density) for \emph{all} processes in the set; to where it only has positive probability(/density) for \emph{some} processes; and to where it has \emph{zero} probability(/density) for \emph{all} processes.
+However, in the first two cases---which are the important ones to apply the generalised Bayes' rule---the function is ``well-behaved'' enough to make finding its maximum root a fairly simple task. For instance, a standard bisection/bracketing algorithm can be applied here; known in this context as Lavine's algorithm~\citep{cozman1997alternatives}.
 
-However, in either case, the function is ``well-behaved'' enough to make finding its maximum root a fairly straightforward task. For instance, a standard bisection algorithm can be applied here. More efficient algorithms are presented by, e.g., \citet{cozman1997alternatives}. Also note that, due to Propositions~\ref{prop:GBR_regular} and~\ref{prop:GBR_for_densities_lower_zero}, the maximum root will always be found in the interval $[\min f, \max f]$---this property might be helpful in practice.
+We sketch this method below. First, note that due to Propositions~\ref{prop:GBR_regular} and~\ref{prop:GBR_for_densities_lower_zero}, the maximum root will always be found in the interval $[\min f, \max f]$. The properties above therefore provide us with a way to check the required condition to apply regular/natural extension. That is, consider any $\mu>\max f$; if $G(\mu)<0$, we know from~\ref{GBR:none_pos:zero} that $\uexp[\prod_{i=0}^n g_{t_i}(X_{t_i})]>0$ by \emph{modus tollens}---regular extension can then be applied. We can also choose any $\mu<\min f$; then $G(\mu)>0$ similarly implies $\lexp\bigl[\prod_{i=0}^n g_{t_i}(X_{t_i})\bigr]>0$, due to~\ref{GBR:up_pos:zero_before}---we can then apply natural extension.
+
+The algorithm then starts by setting $\mu_-\coloneqq \min f$, and $\mu_+\coloneqq \max f$; if $G(\mu_+)=0$, we known that $\mu_+$ is the quantity of interest. Otherwise, proceed iteratively in the following way. Compute the half-way point $\mu\coloneqq \nicefrac{1}{2}(\mu_+-\mu_-)$; then, if $G(\mu)\geq 0$, set $\mu_-\coloneqq \mu$, and otherwise, set $\mu_+\coloneqq\mu$. Clearly, this guarantees that the interval $[\mu_-,\mu_+]$ always contains the maximum root. The procedure can be terminated whenever $(\mu_+-\mu_-)<\epsilon$, for some desired numerical precision $\epsilon>0$. Since the width of the interval is halved at each iteration, the runtime of this procedure is $O(\log_2\epsilon^{-1})$.
+
+Some notes about how to improve the numerical stability of the above procedure are discussed in \cite[Section 2.7.3]{de2015credal}. More efficient algorithms are presented by, e.g., \citet{cozman1997alternatives}. %Also note that, due to Propositions~\ref{prop:GBR_regular} and~\ref{prop:GBR_for_densities_lower_zero}, the maximum root will always be found in the interval $[\min f, \max f]$---this property might be helpful in practice.
 
 \subsection{Functions on a Single Time Point}\label{sec:funcs_single_time}
 
-Having discussed in the previous section that finding the maximum root of the function $G(\mu)$ is relatively straightforward, it now remains to provide an efficient method to numerically \emph{evaluate} this function for a given value of $\mu$. Clearly, any such method will depend on the choice of $f$.
+Having discussed an efficient method to find the maximum root of the function $G(\mu)$ in Section~\ref{sec:gbr}, it now remains to provide an efficient method to numerically \emph{evaluate} this function for a given value of $\mu$. Clearly, any such method will depend on the choice of $f$.
 
 We focus on a particularly useful special case, which can be used to compute the updated lower expectation of a function $f\in\gambles(\states_s)$ on a single time point $s$, given observations at time points $u$. If $s\notin u$, then it will be notationally convenient to define $g_s\coloneqq f - \mu$, and to let $u'\coloneqq u\cup \{s\}$. We can then simply focus on computing
 \begin{equation*}
@@ -644,14 +653,14 @@ Out main result is an efficient---polynomial runtime---algorithm to compute such
 
 With regard to future work, several natural next steps would seem to be apparent. For one, we intend in future work to further generalise this model class, by also allowing for an imprecise specification of the output variables. Second, a rigorous treatment of the interpretation of updating the model using regular extension, in the case of continuous output variables, seems to be prudent. For instance, at present we have neither a proof of, nor a counter example to, the statement of Proposition~\ref{prop:GBR_for_densities_is_limit_if_continuous} in the case of regular extension---i.e. when $\lexp[\phi_u(y_u\vert X_u)]=0$ but $\uexp[\phi_u(y_u\vert X_u)]>0$.
 
-Another line of future research would be the development of algorithms to solve other inference problems for this model class. E.g., the problem of estimating state-sequences, given observed output-sequences---as was previously done for (discrete-time) iHMM's~\citep{DeBock:2014ts}. We believe that these previous results should translate fairly naturally to the current setting.
+Another line of future research would be the development of algorithms to solve other inference problems for this model class. E.g., we might look into developing algorithms to compute the updated lower expectation of more general functions $f\in\gambles(\states_v)$, which depend on more than one time-point. In fact, algorithms for several such function classes should follow straightforwardly by combining results from \cite{krak2016ictmc} with the algorithm presented here. Another such problem is that of estimating state-sequences, given observed output-sequences---as was previously done for (discrete-time) iHMM's~\citep{DeBock:2014ts}. We believe that these previous results should also translate fairly naturally to the current setting.
 
-Finally, we might look into developing algorithms to compute the updated lower expectation of more general functions $f\in\gambles(\states_v)$, which depend on the state-space at more than one time-point. In fact, one such algorithm follows straightforwardly from the results of the current paper, provided that the time-points $v$ are in the future with respect to the time-points $u$ at which the observations took place. This is due to a result from~\cite{krak2016ictmc}, which states that the lower expectation for ICTMC's satisfies the property of ``iterated lower expectation''. Combining this with the imprecise Markov property mentioned in Section~\ref{subsec:ictmc}, and writing $u=t_0,\ldots,t_n$, the function of interest in the generalised Bayes' rule can therefore be rewritten as
+%Finally, we might look into developing algorithms to compute the updated lower expectation of more general functions $f\in\gambles(\states_v)$, which depend on the state-space at more than one time-point. In fact, one such algorithm follows straightforwardly from the results of the current paper, provided that the time-points $v$ are in the future with respect to the time-points $u$ at which the observations took place. This is due to a result from~\cite{krak2016ictmc}, which states that the lower expectation for ICTMC's satisfies the property of ``iterated lower expectation''. Combining this with the imprecise Markov property mentioned in Section~\ref{subsec:ictmc}, and writing $u=t_0,\ldots,t_n$, the function of interest in the generalised Bayes' rule can therefore be rewritten as
 %\begin{equation*}
-$\lexp\left[\left(\prod_{i=0}^n g_{t_i}(X_{t_i})\right)\bigl(f(X_v) - \mu\bigr)\right] = \lexp\left[\left(\prod_{i=0}^n g_{t_i}(X_{t_i})\right)\left(\lexp[f(X_v)\vert X_{t_n}] - \mu\right)\right]$.
+%$\lexp\left[\left(\prod_{i=0}^n g_{t_i}(X_{t_i})\right)\bigl(f(X_v) - \mu\bigr)\right] = \lexp\left[\left(\prod_{i=0}^n g_{t_i}(X_{t_i})\right)\left(\lexp[f(X_v)\vert X_{t_n}] - \mu\right)\right]$.
 %\end{equation*}
 
-Therefore, it suffices to first compute the quantity $\lexp[f(X_v)\vert X_{t_n}]$, which can be done using \citep[Algorithm 3]{krak2016ictmc}. Since this is a function on a single time point $t_n$, we can then directly apply the results and algorithm from the current paper to compute $\underline{\mathbb{E}}_{\mathcal{Z}}[f(X_v)\,\vert\,Y_u\in O_u].$% or $\underline{\mathbb{E}}_{\mathcal{Z}}[f(X_v)\,\vert\,Y_u=y_u]$.
+%Therefore, it suffices to first compute the quantity $\lexp[f(X_v)\vert X_{t_n}]$, which can be done using \citep[Algorithm 3]{krak2016ictmc}. Since this is a function on a single time point $t_n$, we can then directly apply the results and algorithm from the current paper to compute $\underline{\mathbb{E}}_{\mathcal{Z}}[f(X_v)\,\vert\,Y_u\in O_u].$% or $\underline{\mathbb{E}}_{\mathcal{Z}}[f(X_v)\,\vert\,Y_u=y_u]$.
 
 \appendix
 \acks{Jasper De Bock is a Postdoctoral Fellow of the Research Foundation - Flanders (FWO) and wishes to acknowledge its financial support.}
