@@ -8,7 +8,7 @@
 \usepackage[british]{babel}
 %\usepackage[garamond]{mathdesign}
 
-\usepackage{authblk}
+%\usepackage{authblk}
 
 \usepackage{hyperref,url}
 
@@ -131,7 +131,7 @@
 }
 \makeatother
 
-\title{Efficient Computation of Updated Lower Expectations for\\ Imprecise Continuous-Time Hidden Markov Chains}
+%\title{Efficient Computation of Updated Lower Expectations for\\ Imprecise Continuous-Time Hidden Markov Chains}
 
 % \author[1]{Thomas E. Krak\thanks{t.e.krak@uu.nl}}
 % \author[2]{Jasper de Bock\thanks{jasper.debock@ugent.be}}
@@ -142,7 +142,7 @@
 %\renewcommand\Affilfont{\normalfont\normalsize}
 %\setlength{\affilsep}{1em}
 
-\author{Thomas Krak \and Jasper De Bock \and Arno Siebes}
+%\author{Thomas Krak \and Jasper De Bock \and Arno Siebes}
 
 %\author[*]{Thomas Krak}
 %\author[$\dagger$]{Jasper De Bock}
@@ -183,6 +183,12 @@
 %The Netherlands
 %\vspace{-0.4cm}}
 %\author{Thomas Krak and Jasper de Bock}
+\usepackage{color,soul,booktabs}
+\setulcolor{blue}
+\newcommand{\BibTeX}{\textsc{B\kern-0.1emi\kern-0.017emb}\kern-0.15em\TeX}
+
+% Running title and authors 
+\ShortHeadings{Efficient Computation of Updated Lower Expectations for ICTHMC's}{Krak et al.} 
 
 
 \begin{document}
@@ -213,7 +219,17 @@
 	%Belgium \\
 %	\texttt{jasper.debock@ugent.be}
 %}
-\date{}
+\title{Efficient Computation of Updated Lower Expectations for\\ Imprecise Continuous-Time Hidden Markov Chains}
+\author{\name Thomas Krak \email t.e.krak@uu.nl\\
+\addr $^\dagger$ Department of Information and Computing Sciences\\
+Utrecht University (The Netherlands)
+\AND
+\name Jasper De Bock \email jasper.debock@ugent.be\\
+\addr Department of Electronics and Information Systems\\
+Ghent University (Belgium)
+\AND
+\name Arno Siebes$^\dagger$ \email a.p.j.m.siebes@uu.nl
+}
 \maketitle
 
 % \noindent
@@ -221,18 +237,20 @@
 
 
 \begin{abstract}
-Lorem ipsum.
+In this work, we consider the problem of performing inference with \emph{imprecise continuous-time hidden Markov chains} (ICTHMC's). In analogy to the well-known discrete-time (imprecise) hidden Markov models, such an ICTHMC is an \emph{imprecise continuous-time Markov chain} (ICTMC), augmented with random \emph{output} variables whose distribution depends on the state of the ICTMC. The corresponding inference problem amounts to computing lower expectations of functions on the ICTMC's state-space, given observed realisations of these output variables.
+
+We develop and investigate this problem with very few assumptions on these output variables; in particular, these can be chosen to be either discrete or continuous random variables. Our main result is the development of a polynomial runtime algorithm to compute the lower expectation of functions on the state-space at any given time-point, given a collection of observations of the output variables at (other) time-points.
 \end{abstract}
 
 \section{Introduction}\label{sec:introduction}
 
 A continuous-time Markov chain (CTMC) is a stochastic model that describes the evolution of a dynamical system under uncertainty. Specifically, it provides a measure of the uncertainty of how such a system might move through a discrete state-space, as time elapses in a continuous fashion.
 
-A model class that is strongly related to CTMC's are the continuous-time \emph{hidden} Markov chains (CTHMC's)~\cite{wei2002continuous, liu2015efficient}. Such a CTHMC is a stochastic model that contains a continuous-time Markov chain as a latent variable---that is, the actual realised behaviour of the system cannot be directly observed. This model furthermore incorporates random \emph{output} variables, which in some sense depend on the current state that the system is in, and it is rather realisations of these variables that one observes. Through this stochastic dependency between the output variables and the states in which the system might be, one can perform inferences about quantities of interest that depend on these states---even though they have not been, or cannot be, observed directly.
+A model class that is strongly related to CTMC's are the continuous-time \emph{hidden} Markov chains (CTHMC's)~\cite{wei2002continuous}. Such a CTHMC is a stochastic model that contains a continuous-time Markov chain as a latent variable---that is, the actual realised behaviour of the system cannot be directly observed. This model furthermore incorporates random \emph{output} variables, which in some sense depend on the current state that the system is in, and it is rather realisations of these variables that one observes. Through this stochastic dependency between the output variables and the states in which the system might be, one can perform inferences about quantities of interest that depend on these states---even though they have not been, or cannot be, observed directly.
 
-As should be clear from the terminology, both of these types of models satisfy the eponymous Markov property. Loosely speaking, this property states that if we know the current state of the system, then any future behaviour will be independent of the entire history up to the current state. This simplifying assumption is typically rather critical to ensure that working with such models is computationally tractable. Nevertheless, we would argue that it is also often an unrealistic assumption to impose on the model, and so it would seem to be of interest to robustify such models against cases where this assumption might not hold.
+%As should be clear from the terminology, both of these types of models satisfy the eponymous Markov property. Loosely speaking, this property states that if we know the current state of the system, then any future behaviour will be independent of the entire history up to the current state. This simplifying assumption is typically rather critical to ensure that working with such models is computationally tractable. Nevertheless, we would argue that it is also often an unrealistic assumption to impose on the model, and so it would seem to be of interest to robustify such models against cases where this assumption might not hold.
 
-Recent work showed that it is possible to robustify against this and other assumptions using \emph{imprecise continuous-time Markov chains} (ICTMC's)~\citep{Skulj:2015cq, krak2016ictmc}. In particular, ICTMC's can furthermore be used to robustify against uncertain numerical parameter assessments, as well as the simplifying assumption of time-homogeneity. Briefly, an ICTMC is a \emph{set} of continuous-time (and discrete-state) stochastic processes. Some of these processes are ``traditional'' time-homogeneous CTMC's. However, this set also contains much more complicated processes, which are non-homogeneous and do not satisfy the Markov property.
+Recent work showed that it is possible to robustify against unwarranted assumptions on the specification of a CTMC, using \emph{imprecise continuous-time Markov chains} (ICTMC's)~\citep{Skulj:2015cq, krak2016ictmc}. In particular, ICTMC's can be used to robustify against uncertain numerical parameter assessments, as well as the simplifying assumptions of time-homogeneity and that the model should satisfy the Markov property. Briefly, an ICTMC is a \emph{set} of continuous-time (and discrete-state) stochastic processes. Some of these processes are ``traditional'' time-homogeneous CTMC's. However, this set also contains much more complicated processes, which are non-homogeneous and do not satisfy the Markov property.
 
 %It should be clear from the above that CTHMC's are essentially the continuous-time analogue of the well-known (discrete-time) \emph{hidden Markov models} (HMM's). This HMM model class has many successful applications in modelling systems where the ``time'' dimension is discrete, for instance in predicting sequences of characters in optical character recognition. In contrast, CTHMC's may be used to model systems where the time dimension is more naturally described as continuous, for instance in modelling the behaviour of biological systems over time. It was only relatively recently that an expectation-maximisation algorithm for parameter estimation in CTHMC's was first described in the literature REF. This same paper showed that CTHMC's outperformed the previous state-of-the-art in certain disease-progress prediction tasks, specifically in modelling the development of glaucoma and Alzheimer's disease.
 
@@ -259,7 +277,7 @@ Throughout, we consider some fixed, finite state space $\states$. A generic elem
 
 For any $u\in\mathcal{U}$, we let $\gambles(\states_u)$ be the set of all real-valued functions on $\states_u$.
 
-\subsection{Imprecise Continuous-Time Markov Chains}
+\subsection{Imprecise Continuous-Time Markov Chains}\label{subsec:ictmc}
 
 We here briefly recall the most important properties of imprecise continuous-time Markov chains (ICTMC's), following the definitions and results of~\citet{krak2016ictmc}. For reasons of brevity, we provide these definitions in a largely intuitive, non-rigorous manner, and refer the interested reader to this earlier work for an in-depth treatise on the subject.
 
@@ -295,7 +313,7 @@ In the sequel, we will assume that $\mathcal{M}$ is non-empty, and that $\ratese
 
 Under the above assumptions, it has been shown that $\mathbb{P}_{\rateset,\mathcal{M}}$ satisfies an \emph{imprecise Markov property}: it holds that $\lexp[f(X_s)\,\vert\,X_t,X_u=x_u]=\lexp[f(X_s)\,\vert\,X_t]$ for all functions $f\in\gamblesX$, all times $t,s\in\realsnonneg$ such that $t\leq s$, and all histories $x_u$. This property explains why we call this model an imprecise continuous-time ``Markov'' chain.
 
-\subsubsection{Computing Lower Expectations for ICTMC's}\label{subsec:ICTMC_computations}
+\subsection{Computing Lower Expectations for ICTMC's}\label{subsec:ICTMC_computations}
 
 Because we want to focus in this paper on providing efficient methods of computation, we here briefly recall some previous results from~\citet{krak2016ictmc} about how to compute lower expectations for ICTMC's. We focus in particular on how to do this for functions on a single time-point $t$. Note that for such functions, the set $\gambles(\states_t)=\gamblesX$ can be interpreted as the vector space $\reals^{\lvert\states\rvert}$, since $\states$ is finite. This allows us to treat these functions $f\in\gamblesX$ as $\lvert\states\rvert$-dimensional vectors, which in particular allows us to represent linear maps from $\gamblesX$ to $\gamblesX$ using matrices.
 
@@ -618,26 +636,29 @@ So, in order to evaluate the function of interest, it remains to compute $\lexp\
 
 \section{Conclusions and Future Work}\label{sec:conclusions}
 
-In this work, we considered \emph{imprecise continuous-time hidden Markov chains}. These are an extension of (non-hidden) \emph{imprecise continuous-time Markov chains} (ICTMC's), obtained by augmenting such ICTMC's with random \emph{output} variables. We focussed in particular on the corresponding inference problem, \emph{viz.} to compute the lower expectation of functions on the state-space, given observed realisations of the output variables. 
+In this work, we considered \emph{imprecise continuous-time hidden Markov chains}; an extension of \emph{imprecise continuous-time Markov chains} (ICTMC's), obtained by augmenting such ICTMC's with random \emph{output} variables. We focussed on the corresponding inference problem, \emph{viz.} to compute the lower expectation of functions on the state-space, given observed realisations of the output variables. 
 
-To this end, we provided a polynomial runtime algorithm to compute such lower expectations for functions that depend on the state-space at a single given time-point. This algorithm can be used both when the output variables are discrete, and when they are continuous.
+Out main result is an efficient---polynomial runtime---algorithm to compute such lower expectations for functions that depend on the state-space at any given time-point. This algorithm can be used both when the output variables are discrete, and when they are continuous.
 
 With regard to future work, several natural next steps would seem to be apparent. For one, we intend in future work to further generalise this model class, by also allowing for an imprecise specification of the output variables. Second, a rigorous treatment of the interpretation of updating the model using regular extension, in the case of continuous output variables, seems to be prudent. For instance, at present we have neither a proof of, nor a counter example to, the statement of Proposition~\ref{prop:GBR_for_densities_is_limit_if_continuous} in the case of regular extension---i.e. when $\lexp[\phi_u(y_u\vert X_u)]=0$ but $\uexp[\phi_u(y_u\vert X_u)]>0$.
 
 Another line of future research would be the development of algorithms to solve other inference problems for this model class. E.g., the problem of estimating state-sequences, given observed output-sequences---as was previously done for (discrete-time) iHMM's~\citep{DeBock:2014ts}. We believe that these previous results should translate fairly naturally to the current setting.
 
-Finally, we might look into developing algorithms to compute the updated lower expectation of more general functions $f\in\gambles(\states_v)$, which depend on the state-space at more than one time-point. In fact, one such algorithm follows straightforwardly from the results of the current paper, provided that the time-points $v$ are in the future with respect to the time-points $u$ at which the observations took place. This is due to a result from~\cite{krak2016ictmc}, which states that the lower expectation for ICTMC's satisfies the property of ``iterated lower expectation''. Writing $u=t_0,\ldots,t_n$, the function of interest in the generalised Bayes' rule can therefore be rewritten as
-\begin{equation*}
-\lexp\left[\left(\prod_{i=0}^n g_{t_i}(X_{t_i})\right)\bigl(f(X_v) - \mu\bigr)\right] = \lexp\left[\left(\prod_{i=0}^n g_{t_i}(X_{t_i})\right)\left(\lexp[f(X_v)\vert X_{t_n}] - \mu\right)\right]\,.
-\end{equation*}
-Therefore, it suffices to first compute the quantity $\lexp[f(X_v)\vert X_{t_n}]$, which can be done using the results in Reference~\citep{krak2016ictmc}. Since this is clearly a function on a single time point $t_n$, we can directly apply the results and algorithm from the current paper to compute $\underline{\mathbb{E}}_{\mathcal{Z}}[f(X_v)\,\vert\,Y_u\in O_u]$.
+Finally, we might look into developing algorithms to compute the updated lower expectation of more general functions $f\in\gambles(\states_v)$, which depend on the state-space at more than one time-point. In fact, one such algorithm follows straightforwardly from the results of the current paper, provided that the time-points $v$ are in the future with respect to the time-points $u$ at which the observations took place. This is due to a result from~\cite{krak2016ictmc}, which states that the lower expectation for ICTMC's satisfies the property of ``iterated lower expectation''. Combining this with the imprecise Markov property mentioned in Section~\ref{subsec:ictmc}, and writing $u=t_0,\ldots,t_n$, the function of interest in the generalised Bayes' rule can therefore be rewritten as
+%\begin{equation*}
+$\lexp\left[\left(\prod_{i=0}^n g_{t_i}(X_{t_i})\right)\bigl(f(X_v) - \mu\bigr)\right] = \lexp\left[\left(\prod_{i=0}^n g_{t_i}(X_{t_i})\right)\left(\lexp[f(X_v)\vert X_{t_n}] - \mu\right)\right]$.
+%\end{equation*}
 
-\bibliographystyle{plain}
+Therefore, it suffices to first compute the quantity $\lexp[f(X_v)\vert X_{t_n}]$, which can be done using the results in Reference~\citep{krak2016ictmc}. Since this is a function on a single time point $t_n$, we can directly apply the results and algorithm from the current paper to compute $\underline{\mathbb{E}}_{\mathcal{Z}}[f(X_v)\,\vert\,Y_u\in O_u].$% or $\underline{\mathbb{E}}_{\mathcal{Z}}[f(X_v)\,\vert\,Y_u=y_u]$.
+
+\appendix
+\acks{Jasper De Bock is a Postdoctoral Fellow of the Research Foundation - Flanders (FWO) and wishes to acknowledge its financial support.}
+
+%\bibliographystyle{plain}
 \bibliography{general}
 
 \newpage
 
-\appendix
 
 \section{Extended Preliminaries}
 
