@@ -237,7 +237,7 @@ Ghent University (Belgium)
 
 
 \begin{abstract}
-In this work, we consider the problem of performing inference with \emph{imprecise continuous-time hidden Markov chains} (ICTHMC's). In analogy to the well-known discrete-time (imprecise) hidden Markov models, such an ICTHMC is an \emph{imprecise continuous-time Markov chain} (ICTMC), augmented with random \emph{output} variables whose distribution depends on the state of the ICTMC. The corresponding inference problem amounts to computing lower expectations of functions on the ICTMC's state-space, given observed realisations of these output variables.
+In this work, we consider the problem of performing inference with \emph{imprecise continuous-time hidden Markov chains} (ICTHMC's). In analogy to the well-known---discrete-time---(imprecise) hidden Markov models, such an ICTHMC is an \emph{imprecise continuous-time Markov chain} (ICTMC), augmented with random \emph{output} variables whose distribution depends on the state of the ICTMC. The corresponding inference problem amounts to computing lower expectations of functions on the ICTMC's state-space, given observed realisations of these output variables.
 
 We develop and investigate this problem with very few assumptions on these output variables; in particular, these can be chosen to be either discrete or continuous random variables. Our main result is the development of a polynomial runtime algorithm to compute the lower expectation of functions on the state-space at any given time-point, given a collection of observations of the output variables at (other) time-points.
 \end{abstract}
@@ -256,6 +256,8 @@ Recent work showed that it is possible to robustify against unwarranted assumpti
 
 
 In this current work, we consider \emph{imprecise continuous-time hidden Markov chains}---a stochastic model analogous to a CTHMC, but where the latent CTMC is replaced by an ICTMC. We will focus in particular on practical aspects of the corresponding inference problem. That is, we provide results on how to efficiently compute lower expectations of functions on the state-space, given observed realisations of the output variables.
+
+Throughout, all results are stated without proof. We have made available an extended version of this work~\citep{krak2017icthmc}, which includes an appendix containing the proofs of all our results.
 
 %The paper is organised as follows. We introduce some notation in Section~\ref{sec:prelim}, and there also briefly recall the definitions and most important properties of ICTMC's. In particular, we there also summarise previous results on how to efficiently compute lower expectations for ICTMC's. In Section~\ref{sec:icthmc}, we introduce the hidden model on which we focus in this work. Next, in Section~\ref{sec:updating_model}, we discuss the problem of making inferences about the latent process, given some observations. Subsequently, in Section~\ref{sec:inference_algos}, we discuss how to efficiently solve this inference problem. We then compare and relate these results to other work in the literature, in Section~\ref{sec:related}, and finally close with conclusions and some pointers to future work, in Section~\ref{sec:conclusions}.
 
@@ -649,7 +651,7 @@ Finally, we might look into developing algorithms to compute the updated lower e
 $\lexp\left[\left(\prod_{i=0}^n g_{t_i}(X_{t_i})\right)\bigl(f(X_v) - \mu\bigr)\right] = \lexp\left[\left(\prod_{i=0}^n g_{t_i}(X_{t_i})\right)\left(\lexp[f(X_v)\vert X_{t_n}] - \mu\right)\right]$.
 %\end{equation*}
 
-Therefore, it suffices to first compute the quantity $\lexp[f(X_v)\vert X_{t_n}]$, which can be done using the results in Reference~\citep{krak2016ictmc}. Since this is a function on a single time point $t_n$, we can directly apply the results and algorithm from the current paper to compute $\underline{\mathbb{E}}_{\mathcal{Z}}[f(X_v)\,\vert\,Y_u\in O_u].$% or $\underline{\mathbb{E}}_{\mathcal{Z}}[f(X_v)\,\vert\,Y_u=y_u]$.
+Therefore, it suffices to first compute the quantity $\lexp[f(X_v)\vert X_{t_n}]$, which can be done using \citep[Algorithm 3]{krak2016ictmc}. Since this is a function on a single time point $t_n$, we can then directly apply the results and algorithm from the current paper to compute $\underline{\mathbb{E}}_{\mathcal{Z}}[f(X_v)\,\vert\,Y_u\in O_u].$% or $\underline{\mathbb{E}}_{\mathcal{Z}}[f(X_v)\,\vert\,Y_u=y_u]$.
 
 \appendix
 \acks{Jasper De Bock is a Postdoctoral Fellow of the Research Foundation - Flanders (FWO) and wishes to acknowledge its financial support.}
