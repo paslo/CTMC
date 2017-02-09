@@ -605,7 +605,7 @@ However, in the first two cases---which are the important ones to apply the gene
 
 We sketch this method below. First, note that due to Propositions~\ref{prop:GBR_regular} and~\ref{prop:GBR_for_densities_lower_zero}, the maximum root will always be found in the interval $[\min f, \max f]$. The properties above therefore provide us with a way to check the required condition to apply regular/natural extension. That is, consider any $\mu>\max f$; if $G(\mu)<0$, we know from~\ref{GBR:none_pos:zero} that $\uexp[\prod_{i=0}^n g_{t_i}(X_{t_i})]>0$ by \emph{modus tollens}---regular extension can then be applied. We can also choose any $\mu<\min f$; then $G(\mu)>0$ similarly implies $\lexp\bigl[\prod_{i=0}^n g_{t_i}(X_{t_i})\bigr]>0$, due to~\ref{GBR:up_pos:zero_before}---we can then apply natural extension.
 
-The algorithm then starts by setting $\mu_-\coloneqq \min f$, and $\mu_+\coloneqq \max f$; if $G(\mu_+)=0$, we known that $\mu_+$ is the quantity of interest. Otherwise, proceed iteratively in the following way. Compute the half-way point $\mu\coloneqq \nicefrac{1}{2}(\mu_+-\mu_-)$; then, if $G(\mu)\geq 0$, set $\mu_-\coloneqq \mu$, and otherwise, set $\mu_+\coloneqq\mu$. Clearly, this guarantees that the interval $[\mu_-,\mu_+]$ always contains the maximum root. The procedure can be terminated whenever $(\mu_+-\mu_-)<\epsilon$, for some desired numerical precision $\epsilon>0$. Since the width of the interval is halved at each iteration, the runtime of this procedure is $O\bigl(\log\{(\max f - \min f)\epsilon^{-1}\}\bigr)$.
+The algorithm then starts by setting $\mu_-\coloneqq \min f$, and $\mu_+\coloneqq \max f$; if $G(\mu_+)=0$, we known that $\mu_+$ is the quantity of interest. Otherwise, proceed iteratively in the following way. Compute the half-way point $\mu\coloneqq \nicefrac{1}{2}(\mu_+-\mu_-)$; then, if $G(\mu)\geq 0$ set $\mu_-\coloneqq \mu$, otherwise set $\mu_+\coloneqq\mu$; then repeat. Clearly, the interval $[\mu_-,\mu_+]$ still contains the maximum root after each step. The procedure can be terminated whenever $(\mu_+-\mu_-)<\epsilon$, for some desired numerical precision $\epsilon>0$. Since the width of the interval is halved at each iteration, the runtime of this procedure is $O\bigl(\log\{(\max f - \min f)\epsilon^{-1}\}\bigr)$.
 
 Some ways to improve the numerical stability of the above procedure are discussed in \cite[Section 2.7.3]{de2015credal}. Other, more efficient, algorithms are presented by, e.g., \citet{cozman1997alternatives}. %Also note that, due to Propositions~\ref{prop:GBR_regular} and~\ref{prop:GBR_for_densities_lower_zero}, the maximum root will always be found in the interval $[\min f, \max f]$---this property might be helpful in practice.
 
@@ -1309,26 +1309,26 @@ By combining Lemma~\ref{lemma:product_func_induction} with iterated lower expect
 and similarly for the upper expectation.
 \end{proof}
 
-\begin{proof}{\bf of Proposition~\ref{prop:arbitrary_future_functions}~}
-Due to iterated lower expectation (Proposition REF), we have
-\begin{equation*}
-\lexp\left[\left(\prod_{i=0}^n g_{t_i}(X_{t_i})\right)\bigl(f(X_v) - \mu\bigr)\right] = \lexp\left[\lexp\left[\left(\prod_{i=0}^n g_{t_i}(X_{t_i})\right)\bigl(f(X_v) - \mu\bigr)\,\bigl\vert\,X_u\right]\right]\,.
-\end{equation*}
-Now consider any $x_u\in\states_u$. Then,
-\begin{align*}
-\lexp\left[\left(\prod_{i=0}^n g_{t_i}(X_{t_i})\right)\bigl(f(X_v) - \mu\bigr)\,\bigl\vert\,X_u=x_u\right] &= \lexp\left[\left(\prod_{i=0}^n g_{t_i}(x_{t_i})\right)\bigl(f(X_v) - \mu\bigr)\,\bigl\vert\,X_u=x_u\right] \\
-&= \left(\prod_{i=0}^n g_{t_i}(x_{t_i})\right)\cdot\lexp\left[\bigl(f(X_v) - \mu\bigr)\,\bigl\vert\,X_u=x_u\right] \\
-&= \left(\prod_{i=0}^n g_{t_i}(x_{t_i})\right)\cdot\left(\lexp\left[f(X_v)\,\vert\,X_u=x_u\right] - \mu\right) \\
-&= \left(\prod_{i=0}^n g_{t_i}(x_{t_i})\right)\cdot\left(\lexp\left[f(X_v)\,\vert\,X_{t_n}=x_{t_n}\right] - \mu\right)\,,
-\end{align*}
-where the first equality is due to the basic properties of (lower) expectation, the second by non-negative homogeneity of lower expectation and the assumption that $g_{t_i}\geq 0$, the third by basic properties of lower expectation, and the fourth by the imprecise Markov property of ICTMC's (Proposition REF), and the assumption that $u<v$.
-
-Since this is true for all $x_u\in\states_u$, we therefore have
-\begin{align*}
- &\lexp\left[\lexp\left[\left(\prod_{i=0}^n g_{t_i}(X_{t_i})\right)\bigl(f(X_v) - \mu\bigr)\,\bigl\vert\,X_u\right]\right] \\
- &\quad\quad= \lexp\left[\left(\prod_{i=0}^n g_{t_i}(X_{t_i})\right)\cdot\left(\lexp\left[f(X_v)\,\vert\,X_{t_n}\right] - \mu\right)\right]\,.
-\end{align*}
-\end{proof}
+%\begin{proof}{\bf of Proposition~\ref{prop:arbitrary_future_functions}~}
+%Due to iterated lower expectation (Proposition REF), we have
+%\begin{equation*}
+%\lexp\left[\left(\prod_{i=0}^n g_{t_i}(X_{t_i})\right)\bigl(f(X_v) - \mu\bigr)\right] = \lexp\left[\lexp\left[\left(\prod_{i=0}^n g_{t_i}(X_{t_i})\right)\bigl(f(X_v) - \mu\bigr)\,\bigl\vert\,X_u\right]\right]\,.
+%\end{equation*}
+%Now consider any $x_u\in\states_u$. Then,
+%\begin{align*}
+%\lexp\left[\left(\prod_{i=0}^n g_{t_i}(X_{t_i})\right)\bigl(f(X_v) - \mu\bigr)\,\bigl\vert\,X_u=x_u\right] &= \lexp\left[\left(\prod_{i=0}^n g_{t_i}(x_{t_i})\right)\bigl(f(X_v) - \mu\bigr)\,\bigl\vert\,X_u=x_u\right] \\
+%&= \left(\prod_{i=0}^n g_{t_i}(x_{t_i})\right)\cdot\lexp\left[\bigl(f(X_v) - \mu\bigr)\,\bigl\vert\,X_u=x_u\right] \\
+%&= \left(\prod_{i=0}^n g_{t_i}(x_{t_i})\right)\cdot\left(\lexp\left[f(X_v)\,\vert\,X_u=x_u\right] - \mu\right) \\
+%&= \left(\prod_{i=0}^n g_{t_i}(x_{t_i})\right)\cdot\left(\lexp\left[f(X_v)\,\vert\,X_{t_n}=x_{t_n}\right] - \mu\right)\,,
+%\end{align*}
+%where the first equality is due to the basic properties of (lower) expectation, the second by non-negative homogeneity of lower expectation and the assumption that $g_{t_i}\geq 0$, the third by basic properties of lower expectation, and the fourth by the imprecise Markov property of ICTMC's (Proposition REF), and the assumption that $u<v$.
+%
+%Since this is true for all $x_u\in\states_u$, we therefore have
+%\begin{align*}
+% &\lexp\left[\lexp\left[\left(\prod_{i=0}^n g_{t_i}(X_{t_i})\right)\bigl(f(X_v) - \mu\bigr)\,\bigl\vert\,X_u\right]\right] \\
+% &\quad\quad= \lexp\left[\left(\prod_{i=0}^n g_{t_i}(X_{t_i})\right)\cdot\left(\lexp\left[f(X_v)\,\vert\,X_{t_n}\right] - \mu\right)\right]\,.
+%\end{align*}
+%\end{proof}
 
 %\section{Computing Functions that are Products}
 %
