@@ -489,9 +489,9 @@ For brevity, we nevertheless omit from the notation the updated expectation's de
 To make the above practicable, we can for example assume that if $\observs$ is uncountable, then it is the set $\observs=\reals^d$, for some $d\in\nats$, and that $\Sigma$ is the Borel $\sigma$-algebra on $\reals^d$ (with the usual topology). Furthermore, we then assume that, for every $x\in\states$, $P_{\observs\vert\states}(\cdot\,\vert x)$ is $\sigma$-additive on $\Sigma$, and absolutely continuous with respect to the Lebesgue measure $\lambda$ on $(\observs,\Sigma)$. 
 
 Consider now any $y_u\in\observs_u$. Then, for any $t\in u$, we can consider a sequence $\{O_t^i\}_{i\in\nats}$ of open balls in $\observs$ that are centered on, and shrink to, $y_t$. Let $\lambda(O_t^i)$ denote the Lebesgue measure of $O_t^i$. Under the assumptions above, it can be shown that, for every $x_t\in\states_t$,
-\begin{equation*}
+\begin{equation}\label{eq:density_is_limit}
 \phi_t(y_t\,\vert\,x_t) \coloneqq \lim_{i\to+\infty} \frac{P_{\observs\vert\states}(O_t^i\,\vert\,x_t)}{\lambda(O_t^i)}
-\end{equation*}
+\end{equation}
 exists (and is real-valued) for $\lambda$-almost every $y_t\in\observs$; that is, it can only fail to exist for some $y_t$ in a set with Lebesgue measure zero. When viewed as a function of $y_t$, $\phi_t(\cdot\vert x_t)$ satisfies for any $O\in\Sigma$,
 \begin{equation}\label{eq:density_generates_measure}
 P_{\observs\vert\states}(O\vert x_t) = \int_{O}\phi_t(y\vert x_t) \,\mathrm{d}y\,,
@@ -683,16 +683,56 @@ Since we are working in a continuous-time setting, a \emph{time-point} is an ele
 
 Throughout, we consider some fixed, finite state space $\states$. A generic element of $\states$ will be denoted $x$. When considering the state-space at a specific time $t$, we write $\states_t\coloneqq\states$, and $x_t$ denotes a generic state-assignment at this time. When considering multiple time-points $u$ simultaneously, we denote the joint state-space as $\states_u\coloneqq\prod_{t_i\in u}\states_{t_i}$, a generic element of which is then denoted $x_u=(x_{t_0},\ldots,x_{t_n})$.
 
-For any $u\in\mathcal{U}_\emptyset$, we denote with $\gambles(\states_u)$ the set of all real-valued functions on $\states_u$. We endow these function spaces with the $L^\infty$-norm, i.e. the norm $\norm{f}$ of any $f\in\gambles(\states_u)$ is defined to be $\norm{f}\coloneqq\norm{f}_\infty=\max\{\abs{f(x_u)}\,:\,x_u\in\states_u\}$.
+For any $u\in\mathcal{U}_\emptyset$, we denote with $\gambles(\states_u)$ the set of all real-valued functions on $\states_u$. We endow these function spaces with the $L^\infty$-norm, i.e. the norm $\norm{f}$ of any $f\in\gambles(\states_u)$ is defined to be $\norm{f}\coloneqq\norm{f}_\infty=\max\{\abs{f(x_u)}\,:\,x_u\in\states_u\}$. Limits of functions are to be interpreted under this norm.
+
+Furthermore, we often use the shorthand notation $\{a_i\}_{i\in\nats}\to c$ for convergent sequences of quantities, which should be read as $\lim_{i\to+\infty}a_i=c$. If this limit is approached from above or below, we write $\{a_i\}_{i\in\nats}\to c^+$ or $\{a_i\}_{i\in\nats}\to c^-$, respectively.
 
 \section{Globally Required Proofs and Lemmas}
+
+The following result is essentially well-known, but we repeat it here for the sake of completeness.
+
+\begin{lemma}\label{lemma:limit_lexp_is_lexp_limit}
+Consider any $u\in\mathcal{U}$ and any convergent sequence $\{f_i\}_{i\in\nats}\to f$ in $\gambles(\states_u)$. Then, $\lim_{i\to\infty}\lexp[f_i(X_u)]=\lexp[f(X_u)]$.
+\end{lemma}
+\begin{proof}
+We will show that, for every $\epsilon>0$, there is some $n\in\nats$ such that for all $i>n$, it holds that $\abs{\lexp[f_i(X_u)]-\lexp[f(X_u)]} < \epsilon$. So, consider any $\epsilon>0$, and define $\epsilon^*\coloneqq \nicefrac{\epsilon}{4}$. Because $\{f_i\}_{i\in\nats}\to f$, there is some $n\in\nats$ such that, for all $i>n$, it holds that $\norm{f_i - f}<\epsilon^*$. 
+
+Consider now any $i>n$. Because $\norm{f_i - f}<\epsilon^*$, it clearly holds for every $P\in\wprocesses_{\rateset,\mathcal{M}}$ that $\abs{\mathbb{E}_P[f_i(X_u)] - \mathbb{E}_P[f(X_u)]}<\epsilon^*$, and hence
+\begin{equation}\label{eq:lemma_converges_expectation_close}
+\mathbb{E}_P[f_i(X_u)] - \epsilon^* < \mathbb{E}_P[f(X_u)] < \mathbb{E}_P[f_i(X_u)] + \epsilon^*\,.
+\end{equation}
+Furthermore, because $\lexp[\cdot]$ computes an infimum, there must be $P_i,P\in\wprocesses_{\rateset,\mathcal{M}}$ such that
+\begin{equation*}
+\mathbb{E}_{P_i}[f_i(X_u)] - \epsilon^* < \lexp[f_i(X_u)] \leq \mathbb{E}_{P}[f_i(X_u)]\,,
+\end{equation*}
+and,
+\begin{equation*}
+\mathbb{E}_{P}[f(X_u)] - \epsilon^* < \lexp[f(X_u)] \leq \mathbb{E}_{P_i}[f(X_u)]\,.
+\end{equation*}
+Applying Equation~\eqref{eq:lemma_converges_expectation_close} to the r.h.s. of these equalities, we find that
+\begin{equation*}
+\mathbb{E}_{P_i}[f_i(X_u)] - \epsilon^* < \mathbb{E}_{P}[f(X_u)] + \epsilon^*\,,\quad\text{and,}\quad \mathbb{E}_{P}[f(X_u)] - \epsilon^* < \mathbb{E}_{P_i}[f_i(X_u)] + \epsilon^*\,,
+\end{equation*}
+which when combined implies
+\begin{equation*}
+\mathbb{E}_{P_i}[f_i(X_u)] - 2\epsilon^* < \mathbb{E}_{P}[f(X_u)] < \mathbb{E}_{P_i}[f_i(X_u)] + 2\epsilon^*\,,
+\end{equation*}
+or in other words that $\abs{\mathbb{E}_{P_i}[f_i(X_u)] - \mathbb{E}_{P}[f(X_u)]} < 2\epsilon^*$.
+
+Now, by the choice of $P_i$ and $P$, we have
+\begin{align*}
+ &\quad \abs{\lexp[f_i(X_u)]-\lexp[f(X_u)]} \\
+ &\leq \abs{\lexp[f_i(X_u)] - \mathbb{E}_{P_i}[f_i(X_u)]} + \abs{\lexp[f(X_u)] - \mathbb{E}_{P}[f(X_u)]} + \abs{\mathbb{E}_{P_i}[f_i(X_u)] - \mathbb{E}_{P}[f(X_u)]} \\
+ &< \epsilon^* + \epsilon^* + 2\epsilon^* = 4\epsilon^* = \epsilon\,.
+\end{align*}
+\end{proof}
 
 We provide the proof of Proposition~\ref{prop:GBR_properties} below; this is out of chronological order with respect to the main text, but it states a number of convenient properties of the function of interest for the Generalised Bayes' Rule, which are required in the proofs of some statements that appear before the statement of this proposition.
 
 \begin{proof}{\bf of Proposition~\ref{prop:GBR_properties}~}
 For brevity, define $g\in\gambles(\states_u)$ as $g(x_u)\coloneqq \prod_{i=0}^n g_{t_i}(x_{t_i})$ for all $x_u\in\states_u$.
 
-For \ref{GBR:always:continuous}, i.e. continuity, consider any $\mu\in\reals$. We will prove that $G$ is continuous at $\mu$, or in other words, that for every sequence $\{\mu_i\}_{i\in\nats}\to\mu$ it holds that $\lim_{i\to\infty}G(\mu_i)=G(\mu)$. So, choose any sequence $\{\mu_i\}_{i\in\nats}\to\mu$, and consider the induced sequence of functions $\bigl\{g(X_u)\bigl(f(X_v) - \mu_i\bigr)\bigr\}_{i\in\nats}$ in $\gambles(\states_{u\cup v})$. Then, since $\{\mu_i\}_{i\in\nats}\to\mu$, clearly also $\lim_{i\to\infty}g(X_u)\bigl(f(X_v) - \mu_i\bigr)=g(X_u)\bigl(f(X_v) - \mu\bigr)$ (*** under the appropriate function norm). Using Lemma~\ref{lemma:limit_lexp_is_lexp_limit}, we therefore have
+For \ref{GBR:always:continuous}, i.e. continuity, consider any $\mu\in\reals$. We will prove that $G$ is continuous at $\mu$, or in other words, that for every sequence $\{\mu_i\}_{i\in\nats}\to\mu$ it holds that $\lim_{i\to\infty}G(\mu_i)=G(\mu)$. So, choose any sequence $\{\mu_i\}_{i\in\nats}\to\mu$, and consider the induced sequence of functions $\bigl\{g(X_u)\bigl(f(X_v) - \mu_i\bigr)\bigr\}_{i\in\nats}$ in $\gambles(\states_{u\cup v})$. Then, since $\{\mu_i\}_{i\in\nats}\to\mu$, clearly also $\lim_{i\to\infty}g(X_u)\bigl(f(X_v) - \mu_i\bigr)=g(X_u)\bigl(f(X_v) - \mu\bigr)$. Using Lemma~\ref{lemma:limit_lexp_is_lexp_limit}, we therefore have
 \begin{equation*}
 \lim_{i\to\infty}\lexp[g(X_u)\bigl(f(X_v) - \mu_i\bigr)] = \lexp[g(X_u)\bigl(f(X_v) - \mu\bigr)]\,,
 \end{equation*}
@@ -726,11 +766,13 @@ Combining with the earlier above inequality, we find
 \end{equation*}
 Since the $\epsilon\in\realspos$ was arbitrary, this concludes the proof.
 
-For statement \ref{GBR:always:root}, i.e. that it has at least one root, we distinguish two cases. First, assume that $\uexp[g(X_u)]=0$. Clearly, this implies that $\mathbb{E}_P[g(X_u)]=0$ for all $P\in\mathbb{P}_{\rateset,\mathcal{M}}$. Therefore, since $g\geq 0$, we must have that $\mathbb{E}_P[g(X_u)\vert X_v=x_v]=0$ for all $x_v\in\states_v$. By the law of iterated expectation, we therefore have
+We now first prove \ref{GBR:none_pos:zero}, i.e. that $G(\mu)$ is identically zero whenever $\uexp[g(X_u)]=0$. Clearly, this assumption implies that $\mathbb{E}_P[g(X_u)]=0$ for all $P\in\mathbb{P}_{\rateset,\mathcal{M}}$. Therefore, since $g\geq 0$, we must have that $\mathbb{E}_P[g(X_u)\vert X_v=x_v]=0$ for all $x_v\in\states_v$. By the law of iterated expectation, we therefore have
 \begin{equation*}
 \mathbb{E}_P[f(X_v)g(X_u)] = \mathbb{E}_P\bigl[f(X_v)\mathbb{E}_P[g(X_u)\vert X_v]\bigr] = 0\,,
 \end{equation*}
-and hence, by combining with Equation~\ref{eq:gbr_linear_expansion}, that $\mathbb{E}_P\bigl[g(X_u)\bigl(f(X_v) - \mu\bigr)\bigr]=0$. Since this is true for all $P\in\mathbb{P}_{\rateset,\mathcal{M}}$, we clearly have that $G$ is identically zero for all choices of $\mu$ whenever $\uexp[g(X_u)]=0$ and hence, in this case it trivially has at least one root.
+and hence, by combining with Equation~\ref{eq:gbr_linear_expansion}, that $\mathbb{E}_P\bigl[g(X_u)\bigl(f(X_v) - \mu\bigr)\bigr]=0$. Since this is true for all $P\in\mathbb{P}_{\rateset,\mathcal{M}}$, we clearly have that $G$ is indeed zero for all choices of $\mu$.
+
+For statement \ref{GBR:always:root}, i.e. that it has at least one root, we distinguish two cases. First, assume that $\uexp[g(X_u)]=0$. Then, by \ref{GBR:none_pos:zero}, $G(\mu)$ is identically zero and hence, in this case it trivially has at least one root.
 
 Suppose for the other case that $\uexp[g(X_u)]>0$, and set $\mu\coloneqq \min f$. Then for every $P\in\mathbb{P}_{\rateset,\mathcal{M}}$, using the assumption $g\geq 0$,
 \begin{equation*}
@@ -759,26 +801,10 @@ For statement \ref{GBR:low_pos:unique_root}, i.e. that $G$ has a \emph{unique} r
 We do not explicitly prove properties \ref{GBR:up_pos:max_root}, \ref{GBR:up_pos:zero_before} and \ref{GBR:up_pos:monotone}, as they are essentially included in the statement and proof of Lemma~\ref{lemma:general_regular_extension}. In particular, the statement of that lemma establishes that $G$ has a maximum root $\mu_*$ (and in fact identifies it), which proves \ref{GBR:up_pos:max_root}. The proof of that lemma notes as the penultimate step that $G(\mu)=0$ for all $\mu\leq \mu_*$, proving \ref{GBR:up_pos:zero_before}. The fact that $G(\mu)$ is strictly monotonically decreasing for $\mu\geq \mu_*$, i.e. \ref{GBR:up_pos:monotone}, follows straightforwardly by combining the argument for statement \ref{GBR:low_pos:monotone} with the construction made in the proof of Lemma~\ref{lemma:general_regular_extension}.
 \end{proof}
 
-\section{Proofs and Lemmas for the Results in Section~\ref{sec:updating_model}}
-
-\begin{proof}{\bf of Proposition~\ref{prop:precise_conditioning_for_positive}~}
-This follows from some simple manipulations:
-\begin{align*}
-\mathbb{E}_P[f(X_v)\,\vert\,Y_u\in O_u] &= \sum_{x_v\in\states_v} f(x_v)\frac{P(X_v=x_v, Y_u\in O_u)}{P(Y_u\in O_u)} \\
- &= \sum_{x_v\in\states_v} f(x_v)\sum_{x_u\in\states_u}\frac{P(X_v=x_v, X_u=x_u, Y_u\in O_u)}{P(Y_u\in O_u)} \\
- &= \sum_{x_v\in\states_v} f(x_v)\sum_{x_u\in\states_u}\frac{P(Y_u\in O_u\,\vert\,X_v=x_v, X_u=x_u)P(X_v=x_v, X_u=x_u)}{P(Y_u\in O_u)} \\
- &= \sum_{x_v\in\states_v} f(x_v)\sum_{x_u\in\states_u}\frac{P(Y_u\in O_u\,\vert\,X_u=x_u)P(X_v=x_v, X_u=x_u)}{P(Y_u\in O_u)} \\
- &= \sum_{x_{u\cup v}\in\states_{u\cup v}} f(x_v)\frac{P(Y_u\in O_u\,\vert\,X_u=x_u)P(X_v=x_v, X_u=x_u)}{P(Y_u\in O_u)} \\
- &= \frac{\mathbb{E}_P[f(X_v)P(Y_u\in O_u\vert X_u)]}{P(Y_u\in O_u)} \\
- &= \frac{\mathbb{E}_P[f(X_v)P(Y_u\in O_u\vert X_u)]}{\mathbb{E}_P[P(Y_u\in O_u\,\vert\,X_u)]}\,,
-\end{align*}
-where the first equality is by definition, the second equality from the law of total probability, the third by the basic properties of probability, the fourth using the independence property in the definition of augmented stochastic processes, the sixth is simple rearrangement of terms, the seventh is by definition of expectation, and the final equality **** is also trivial (basic properties, total probability, definition expectation) ***.
-\end{proof}
-
-The following lemma states a more general version of the result that the generalised Bayes' rule computes the updated lower expectation of a model under regular extension.
+The following lemma states a more general version of the result that the generalised Bayes' rule computes the updated lower expectation of a model under regular extension. We state it here because we use the result for various proofs throughout this appendix.
 
 \begin{lemma}\label{lemma:general_regular_extension}
-Let $\mathcal{Z}$ be an ICTHMC, and consider any $v\in\mathcal{U}_\emptyset$, $u\in\mathcal{U}$, $f\in\gambles(\states_v)$, and $g\in\gambles(\states_u)$ such that $g\geq 0$. Then, if $\uexp[g(X_u)]>0$, it holds that
+Let $\mathcal{Z}$ be an ICTHMC, and consider any $u,v\in\mathcal{U}$, $f\in\gambles(\states_v)$, and $g\in\gambles(\states_u)$ such that $g\geq 0$. Then, if $\uexp[g(X_u)]>0$, it holds that
 \begin{equation*}
 \max\left\{\mu\in\reals\,:\, \lexp\bigl[g(X_u)\bigl(f(X_v) - \mu\bigr)\bigr] \geq 0\right\} = \inf\left\{ \frac{\mathbb{E}_P[f(X_v)g(X_u)]}{\mathbb{E}_P[g(X_u)]}\,:\,P\in\mathcal{Z}, \mathbb{E}_P[g(X_u)]>0 \right\}\,.
 \end{equation*}
@@ -854,19 +880,58 @@ from which we conclude that $\lexp\bigl[g(X_u)\bigl(f(X_v)-\mu\bigr)\bigr]$ is s
 \end{equation*}
 \end{proof}
 
-\begin{proof}{\bf of Proposition~\ref{prop:GBR_regular}~}
-This is a special case of Lemma~\ref{lemma:general_regular_extension}, obtained by setting $g(X_u)\coloneqq \mathbb{E}_{\observs\vert\states}[\ind{O_u}(Y_u)\vert X_u]$ in that lemma's statement, and applying Proposition~\ref{prop:precise_conditioning_for_positive} to the quantities $\mathbb{E}_P[f(X_v)\,\vert\,Y_u\in O_u]$.
+
+\section{Proofs and Lemmas for the Results in Section~\ref{subsec:pos_prob}}
+
+\begin{proof}{\bf of Proposition~\ref{prop:precise_conditioning_for_positive}~}
+This follows from some simple manipulations:
+\begin{align*}
+\mathbb{E}_P[f(X_v)\,\vert\,Y_u\in O_u] &= \sum_{x_v\in\states_v} f(x_v)\frac{P(X_v=x_v, Y_u\in O_u)}{P(Y_u\in O_u)} \\
+ &= \sum_{x_v\in\states_v} f(x_v)\sum_{x_u\in\states_u}\frac{P(X_v=x_v, X_u=x_u, Y_u\in O_u)}{P(Y_u\in O_u)} \\
+ &= \sum_{x_v\in\states_v} f(x_v)\sum_{x_u\in\states_u}\frac{P(Y_u\in O_u\,\vert\,X_v=x_v, X_u=x_u)P(X_v=x_v, X_u=x_u)}{P(Y_u\in O_u)} \\
+ &= \sum_{x_v\in\states_v} f(x_v)\sum_{x_u\in\states_u}\frac{P(Y_u\in O_u\,\vert\,X_u=x_u)P(X_v=x_v, X_u=x_u)}{P(Y_u\in O_u)} \\
+ &= \sum_{x_{u\cup v}\in\states_{u\cup v}} f(x_v)\frac{P(Y_u\in O_u\,\vert\,X_u=x_u)P(X_v=x_v, X_u=x_u)}{P(Y_u\in O_u)} \\
+ &= \frac{\mathbb{E}_P[f(X_v)P(Y_u\in O_u\vert X_u)]}{P(Y_u\in O_u)} \\
+ &= \frac{\mathbb{E}_P[f(X_v)P(Y_u\in O_u\vert X_u)]}{\mathbb{E}_P[P(Y_u\in O_u\,\vert\,X_u)]} \\
+  &= \frac{\mathbb{E}_{P_\states}[f(X_v)P_{\observs\vert\states}(O_u\vert X_u)]}{\mathbb{E}_{P_\states}[P_{\observs\vert\states}(O_u\,\vert\,X_u)]} \,,
+\end{align*}
+where the first equality is by definition of Bayes' rule, the second equality is by the law of total probability, the third by the basic properties of probability, the fourth using the independence property in the definition of augmented stochastic processes, the sixth is simple rearrangement of terms, the seventh is by definition of expectation, the eight is by law of total probability and the definition of expectation, and the final equality is due to the construction of augmented processes in Section~\ref{sec:aug_stochastic_processes}.
+
 \end{proof}
+
+
+\begin{proof}{\bf of Proposition~\ref{prop:GBR_regular}~}
+This is a special case of Lemma~\ref{lemma:general_regular_extension}, obtained by setting $g(X_u)\coloneqq P_{\observs\vert\states}(O_u\vert X_u)$ in that lemma's statement, and applying Proposition~\ref{prop:precise_conditioning_for_positive} to the quantities $\mathbb{E}_P[f(X_v)\,\vert\,Y_u\in O_u]$.
+\end{proof}
+
+\section{Proofs and Lemmas for the Results in Section~\ref{subsec:uncountable}}
 
 \begin{proof}{\bf of Proposition~\ref{prop:precise_bayes_rule_densities}~}
-**** Essentially a special case of the statement for the imprecise version.
+Assume that there is a sequence $\{\lambda_i\}_{i\in\nats}$ such that, for all $x_u\in\states_u$,
+\begin{equation*}
+\phi_u(y_u\vert x_u) \coloneqq \lim_{i\to+\infty}\frac{P_{\observs\vert\states}(O_u\vert x_u)}{\lambda_i}
+\end{equation*}
+exists, is real-valued, and $\mathbb{E}_P[\phi_u(y_u\vert X_u)]>0$. This implies that
+\begin{equation*}
+\lim_{i\to+\infty}\frac{\mathbb{E}_{P_\states}[f(X_v)P_{\observs\vert\states}(O_u^i\vert X_u)]}{\lambda_i} = \mathbb{E}_{P_\states}[f(X_v)\phi_u(y_u\vert X_u)]
+\end{equation*}
+exists, and similarly that
+\begin{equation*}
+\lim_{i\to+\infty}\frac{\mathbb{E}_{P_\states}[P_{\observs\vert\states}(O_u^i\vert X_u)]}{\lambda_i} = \mathbb{E}_{P_\states}[\phi_u(y_u\vert X_u)] > 0\,.
+\end{equation*}
+By the limit definition of $\mathbb{E}_P[f(X_v)\,\vert\,Y_u=y_u]$, and applying Proposition~\ref{prop:precise_conditioning_for_positive} to each step,
+\begin{align*}
+\mathbb{E}_P[f(X_v)\,\vert\,Y_u=y_u] &= \lim_{i\to+\infty} \mathbb{E}_P[f(X_v)\,\vert\,Y_u\in O_u^i] \\
+ &= \lim_{i\to+\infty} \frac{\mathbb{E}_{P_\states}[f(X_v)P_{\observs\vert\states}(O_u^i\vert X_u)]}{\mathbb{E}_{P_\states}[P_{\observs\vert\states}(O_u^i\vert X_u)]} \\
+ &= \lim_{i\to+\infty} \frac{\lambda_i}{\lambda_i}\frac{\mathbb{E}_{P_\states}[f(X_v)P_{\observs\vert\states}(O_u^i\vert X_u)]}{\mathbb{E}_{P_\states}[P_{\observs\vert\states}(O_u^i\vert X_u)]} \\
+ &= \lim_{i\to+\infty} \frac{\nicefrac{\mathbb{E}_{P_\states}[f(X_v)P_{\observs\vert\states}(O_u^i\vert X_u)]}{\lambda_i}}{\nicefrac{\mathbb{E}_{P_\states}[P_{\observs\vert\states}(O_u^i\vert X_u)]}{\lambda_i}} \\
+ &= \frac{\lim_{i\to+\infty} \nicefrac{\mathbb{E}_{P_\states}[f(X_v)P_{\observs\vert\states}(O_u^i\vert X_u)]}{\lambda_i}}{\lim_{i\to+\infty} \nicefrac{\mathbb{E}_{P_\states}[P_{\observs\vert\states}(O_u^i\vert X_u)]}{\lambda_i}} \\
+ &= \frac{\mathbb{E}_{P_\states}[f(X_v)\phi_u(y_u\vert X_u)]}{\mathbb{E}_{P_\states}[\phi_u(y_u\vert X_u)]}\,,
+\end{align*}
+using the above established existence and properties of the individual limits for the penultimate step.
 
-{\bf Removed imprecise version, need special case}
 \end{proof}
 
-\begin{proof}{\bf of Proposition~\ref{prop:GBR_for_densities_lower_zero}~}
-This is a special case of Lemma~\ref{lemma:general_regular_extension}, obtained by setting $g(X_u)\coloneqq \phi_u(y_u\vert X_u)$ in that lemma's statement, and applying Proposition~\ref{prop:precise_bayes_rule_densities} to the quantities $\mathbb{E}_P[f(X_v)\,\vert\,Y_u=y_u]$.
-\end{proof}
 
 %*************************
 %
@@ -953,115 +1018,144 @@ This is a special case of Lemma~\ref{lemma:general_regular_extension}, obtained 
 %\end{proof}
 
 
-The argument below proves the properties of the density $\phi_u$ that are claimed in Section~\ref{subsec:uncountable}; in particular, that $\phi_u$ satisfies Equation~\eqref{eq:density_generates_measure}.
+The argument below proves the properties of the density $\phi_u$ that are claimed in Section~\ref{subsec:uncountable}, under the additional assumptions on $(\observs,\Sigma,P_{\observs\vert\states})$ that are imposed there.
+
 \begin{proof}
-Due to the assumptions in Section~\ref{subsec:uncountable}, and by the Radon-Nikodym theorem, we can associate with $P_{\observs\vert\states}$ a measurable function $\psi_u:\observs_u\times\states_u\to\realsnonneg$ such that, for all $x_u\in\states_u$ and $O_u\in\Sigma_u$,
+Due to the assumptions in Section~\ref{subsec:uncountable}, and by the Radon-Nikodym theorem, we can associate with $P_{\observs\vert\states}$ a measurable function $\psi_t:\observs_t\times\states_t\to\realsnonneg$ such that, for all $x_t\in\states_t$ and $O_t\in\Sigma_t$,
 \begin{equation*}
-P_{\observs_u\vert\states_u}(O_u\vert x_u) = \int_{O_u}\psi_u(y_u\vert x_u) \,\mathrm{d}y_u\,.
+P_{\observs\vert\states}(O_t\vert x_t) = \int_{O_t}\psi_t(y\vert x_t) \,\mathrm{d}y\,.
 \end{equation*}
-Furthermore, since $\int_{\observs}\psi_u(y_u\vert x_u) \,\mathrm{d}y_u = P_{\observs_u\vert\states_u}(\observs_u\vert x_u)=1$, $\psi_u$ is absolutely integrable on $\observs_u$. Therefore, by the Lebesgue differentiation theorem, for $\lambda$-almost every $y_u\in\observs_u$, it holds that
+Furthermore, since $\int_{\observs}\psi_t(y\vert x_t) \,\mathrm{d}y = P_{\observs\vert\states}(\observs\vert x_t)=1$, $\psi_t(\cdot\vert x_t)$ is absolutely integrable on $\observs$. Therefore, by the Lebesgue differentiation theorem, for $\lambda$-almost every $y_t\in\observs_t$, and for any sequence $\{O_t^i\}_{i\in\nats}$ of open balls in $\observs$ that shrink to $y_t$, it holds that
 \begin{equation*}
-\psi_u(y_u\vert x_u) = \lim_{B_u\to y_u} \frac{1}{\lambda(B_u)} \int_{B_u} \psi(\tilde{y}_u\vert x_u)\,\mathrm{d}\tilde{y}_u\,.
+\psi_t(y_t\vert x_t) = \lim_{i\to+\infty} \frac{1}{\lambda(O_t^i)} \int_{O_t^i} \psi_t(y\vert x_t)\,\mathrm{d}y\,.
 \end{equation*}
-At those $y_u\in\observs_u$ where this equality holds, we then find using the choice of $\psi_u$ that
+At those $y_t\in\observs_t$ where this equality holds, we then find using the choice of $\psi_t$ that
 \begin{equation*}
-\psi_u(y_u\vert x_u) = \lim_{B_u\to y_u} \frac{1}{\lambda(B_u)} \int_{B_u} \psi(\tilde{y}_u\vert x_u)\,\mathrm{d}\tilde{y}_u = \lim_{B_u\to y_u} \frac{P_{\observs_u\vert\states_u}(B_u\vert x_u)}{\lambda(B_u)}\,.
+\psi_t(y_t\vert x_t) = \lim_{i\to+\infty} \frac{1}{\lambda(O_t^i)} \int_{O_t^i} \psi(y\vert x_t)\,\mathrm{d}y = \lim_{i\to+\infty} \frac{P_{\observs\vert\states}(O_t^i\vert x_t)}{\lambda(O_t^i)}\,.
 \end{equation*}
-In other words, the limit expression on the r.h.s. of this equality exists (at least) $\lambda$-almost everywhere---and hence, the same is true for the limit in Equation~\eqref{eq:density_is_limit}. Furthermore, this implies that $\phi_u(\cdot\,\vert x_u)$ differs from $\psi_u(\cdot\,\vert x_u)$ at most on a set of Lebesgue measure zero---the above r.h.s. limit might still exist even if the other equalities do not hold. Due to the choice of $\psi_u$, this immediately implies Equation~\eqref{eq:density_generates_measure}.
+In other words, the limit expression on the r.h.s. of this equality exists (at least) $\lambda$-almost everywhere---and hence, the same is true for the limit in Equation~\eqref{eq:density_is_limit}. Furthermore, this implies that $\phi_t(\cdot\,\vert x_t)$ differs from $\psi_t(\cdot\,\vert x_t)$ at most on a set of Lebesgue measure zero---the above r.h.s. limit might still exist even if the other equalities do not hold. Due to the choice of $\psi_t$, this immediately implies Equation~\eqref{eq:density_generates_measure}.
+
+It now remains to prove the claimed properties about the function $\phi_u$. **** TODO: finish this
+\end{proof}
+
+We give the proof of Proposition~\ref{prop:GBR_for_densities_lower_zero} before that of Proposition~\ref{prop:GBR_for_densities_is_limit_if_continuous}; we need the statement of the former to prove the latter.
+\begin{proof}{\bf of Proposition~\ref{prop:GBR_for_densities_lower_zero}~}
+This is a special case of Lemma~\ref{lemma:general_regular_extension}, obtained by setting $g(X_u)\coloneqq \phi_u(y_u\vert X_u)$ in that lemma's statement, and applying Proposition~\ref{prop:precise_bayes_rule_densities} to the quantities $\mathbb{E}_P[f(X_v)\,\vert\,Y_u=y_u]$.
 \end{proof}
 
 
-We (probably still) need (some of) the following three results for the proof of Proposition~\ref{prop:precise_bayes_rule_densities}. *** Previously needed for statement of imprecise version, which I removed.
+\begin{proof}{\bf of Proposition~\ref{prop:GBR_for_densities_is_limit_if_continuous}~}
+Assume that there is a sequence $\{\lambda_i\}_{i\in\nats}$ such that $\phi_u(y_u\vert X_u)$ exists, is real-valued, and satisfies $\lexp[\phi_u(y_u\vert X_u)] >0$. 
 
-\begin{proposition}\label{prop:decomp}
-Let $\mathcal{Z}$ be an ICTHMC, and consider any $v\in\mathcal{U}_\emptyset$, $u\in\mathcal{U}$, $f\in\gambles(\states_v)$, and $g\in\gambles(\observs_u)$. Then,
+Note that $\lexp[\phi_u(y_u\vert X_u)] >0$ implies that $\mathbb{E}_{P}[\phi_u(y_u\vert X_u)]>0$ for all $P\in\mathcal{Z}$. Furthermore, for any $P\in\mathcal{Z}$, because by assumption $\lim_{i\to+\infty}\nicefrac{P_{\observs\vert\states}(O_u^i\vert X_u)}{\lambda_i}=\phi_u(y_u\vert X_u)$, we have
 \begin{equation*}
-\underline{\mathbb{E}}_\mathcal{Z}\left[ f(X_v)g(Y_u) \right] = \lexp\left[ f(X_v)\mathbb{E}_{\observs\vert\states}[g(Y_u)\vert X_u] \right] 
+\lim_{i\to+\infty}\frac{\mathbb{E}_P[P_{\observs\vert\states}(O_u^i\vert X_u)]}{\lambda_i} = \mathbb{E}_{P}[\phi_u(y_u\vert X_u)] > 0\,.
 \end{equation*}
-\end{proposition}
-\begin{proof}
-Fix any $P\in\mathcal{Z}$. Then,
-\begin{align*}
-\mathbb{E}_P\bigl[ f(X_v)g(Y_u) \bigr] &= \mathbb{E}_P\bigl[ \mathbb{E}_P\left[ f(X_v)g(Y_u) \vert X_v,X_u \right] \bigr] \\
-&= \mathbb{E}_P\bigl[ f(X_v)\mathbb{E}_P[ g(Y_u) \vert X_v,X_u ] \bigr] \\
-&= \mathbb{E}_P\bigl[ f(X_v)\mathbb{E}_P[ g(Y_u) \vert X_u ] \bigr] \\
-&= \mathbb{E}_{P_\states}\bigl[ f(X_v)\mathbb{E}_{\observs\vert\states}[ g(Y_u) \vert X_u ] \bigr] \,,
-\end{align*}
-where the first and second equality follow from the basic properties of expectation, the third equality is due to the independence assumptions in Section~\ref{sec:aug_stochastic_processes}, and the final equality uses the facts that the (outer) expectation is only concerned with states, and that the probability $P_{\observs\vert\states}$ is shared by all $P\in\mathcal{Z}$. Since this is true for every $P\in\mathcal{Z}$, the result now follows.
-\end{proof}
+This implies that there is some $n\in\nats$ such that for all $j>n$,
+\begin{equation*}
+\frac{\mathbb{E}_P[P_{\observs\vert\states}(O_u^j\vert X_u)]}{\lambda_j} > 0\,,
+\end{equation*}
+which implies that also $\mathbb{E}_P[P_{\observs\vert\states}(O_u^j\vert X_u)] >0$. Furthermore, since $O_u^i\supset O_u^{i+1}$, we have $P_{\observs\vert\states}(O_u^i\vert x_u)\geq P_{\observs\vert\states}(O_u^{i+1}\vert x_u)$ for all $x_u\in\states_u$ by monotonicity of measure. It follows that also for all $k\leq n$
+\begin{equation*}
+\mathbb{E}_P[P_{\observs\vert\states}(O_u^k\vert X_u)] \geq \mathbb{E}_P[P_{\observs\vert\states}(O_u^j\vert X_u)] > 0\,.
+\end{equation*}
+Hence, we have found that $\mathbb{E}_P[P_{\observs\vert\states}(O_u^i\vert X_u)]>0$ for all $i\in\nats$. Since $P\in\mathcal{Z}$, it now follows that $\uexp[P_{\observs\vert\states}(O_u^i\vert X_u)]>0$ for all $i\in\nats$.
 
-\begin{lemma}\label{lemma:dirac_delta_gets_density_value}
-Consider any sequence $\{\delta_i\}_{i\in\nats}\to 0^+$ in $\realspos$. Then, if $\phi(y_u\vert x_u)$ is continuous around $y_u$,
+Now define the sequence $\{\mu_i\}_{i\in\nats}$ as $\mu_i\coloneqq \underline{\mathbb{E}}_\mathcal{Z}[f(X_v)\,\vert\,Y_u\in O_u^i]$.
+Fix any $i\in\nats$. Then, because $\uexp[P_{\observs\vert\states}(O_u^i\vert X_u)]>0$, it follows from Definition~\ref{def:reg_ext_pos} that $\mu_i\in[\min f, \max f]$ and furthermore, by Proposition~\ref{prop:GBR_regular}, that
 \begin{equation*}
-\lim_{i\to\infty} \frac{1}{\lambda(\mathcal{B}_i)}\mathbb{E}_{\observs\vert\states}[\ind{(y_u-\nicefrac{\delta_i}{2},y_u+\nicefrac{\delta_i}{2})}(Y_u)\vert X_u=x_u] = \phi(y_u\vert x_u)\,,
+\lexp[P_{\observs\vert\states}(O_u^i\vert X_u)\bigl(f(X_v) - \mu_i\bigr)] = 0\,.
 \end{equation*}
-where $\lambda(\mathcal{B}_i)\coloneqq \lambda((y_u-\nicefrac{\delta_i}{2},y_u+\nicefrac{\delta_i}{2}))$ is Lebesgue measure of the region $(y_u-\nicefrac{\delta_i}{2},y_u+\nicefrac{\delta_i}{2})$.
-\end{lemma}
-\begin{proof}
-Fix any $i\in\nats$, and note that
-\begin{align*}
-\mathbb{E}_{\observs\vert\states}[\ind{(y_u-\nicefrac{\delta_i}{2},y_u+\nicefrac{\delta_i}{2})}(Y_u)\vert X_u=x_u] &= \int_{\observs_u}\ind{(y_u-\nicefrac{\delta_i}{2},y_u+\nicefrac{\delta_i}{2})}(y)\phi(y\vert x_u) dy 
-= \int_{(y_u-\nicefrac{\delta_i}{2},y_u+\nicefrac{\delta_i}{2})}\phi(y\vert x_u) dy\,.
-\end{align*}
-Let $\underline{\phi}_i\coloneqq \inf\{\phi(y\vert x_u):y\in(y_u-\nicefrac{\delta_i}{2},y_u+\nicefrac{\delta_i}{2})\}$ and $\overline{\phi}_i\coloneqq \sup\{\phi(y\vert x_u):y\in(y_u-\nicefrac{\delta_i}{2},y_u+\nicefrac{\delta_i}{2})\}$. Then, since $\underline{\phi}_i \leq \phi(y\vert x_u)\leq \overline{\phi}_i$ for all $y\in(y_u-\nicefrac{\delta_i}{2},y_u+\nicefrac{\delta_i}{2})$, we clearly have that
-\begin{align*}
-\underline{\phi}_i = \underline{\phi}_i\cdot\frac{\lambda(\mathcal{B}_i)}{\lambda(\mathcal{B}_i)} = \underline{\phi}_i\cdot\frac{1}{\lambda(\mathcal{B}_i)}\int_{(y_u-\nicefrac{\delta_i}{2},y_u+\nicefrac{\delta_i}{2})}dy &= \frac{1}{\lambda(\mathcal{B}_i)}\int_{(y_u-\nicefrac{\delta_i}{2},y_u+\nicefrac{\delta_i}{2})}\underline{\phi}_idy
- \\
- &\leq \frac{1}{\lambda(\mathcal{B}_i)}\int_{(y_u-\nicefrac{\delta_i}{2},y_u+\nicefrac{\delta_i}{2})}\phi(y\vert x_u) dy \\
- &\leq \frac{1}{\lambda(\mathcal{B}_i)}\int_{(y_u-\nicefrac{\delta_i}{2},y_u+\nicefrac{\delta_i}{2})}\overline{\phi_i} dy  = \overline{\phi}_i\,.
-\end{align*}
-Hence, for every $i\in\nats$, we have that $\underline{\phi}_i\leq\nicefrac{1}{\lambda(\mathcal{B}_i)}\mathbb{E}_{\observs\vert\states}[\ind{(y_u-\nicefrac{\delta_i}{2},y_u+\nicefrac{\delta_i}{2})}(Y_u)\vert X_u=x_u]\leq\overline{\phi}_i$, and since also clearly $\underline{\phi}_i\leq \phi(y_u\vert x_u)\leq \overline{\phi}_i$, it follows that
-\begin{equation*}
-\abs{\phi(y_u\vert x_u) - \frac{1}{\lambda(\mathcal{B}_i)}\mathbb{E}_{\observs\vert\states}[\ind{(y_u-\nicefrac{\delta_i}{2},y_u+\nicefrac{\delta_i}{2})}(Y_u)\vert X_u=x_u]} \leq \overline{\phi}_i - \underline{\phi}_i\,,
-\end{equation*}
-and so we see that it suffices to show that $\lim_{i\to\infty}\overline{\phi}_i - \underline{\phi}_i = 0$, or equivalently, that for every $\epsilon\in\realspos$, there is some $N\in\nats$ such that, for every $i>N$, $\overline{\phi}_i-\underline{\phi}_i < \epsilon$. So, fix any $\epsilon\in\realspos$. Since we assumed that $\phi(y\vert x_u)$ is continuous around $y_u$, there exists some $\delta\in\realspos$ such that, for every $\Delta\in(-\delta,\delta)$,
-\begin{equation}\label{eq:dirac_bound_close_enough}
-\abs{\phi(y_u\vert x_u) - \phi(y_u+\Delta\vert x_u)} < \frac{\epsilon}{4}\,.
+Therefore, and by non-negative homogeneity of lower expectation, it also holds that
+\begin{equation}\label{eq:nat_ext_limit:steps_are_roots}
+\lexp\left[\frac{P_{\observs\vert\states}(O_u^i\vert X_u)}{\lambda_i}\bigl(f(X_v) - \mu_i\bigr)\right] = 0\,.
 \end{equation}
-Consider this $\delta$. Then, since $\{\delta_i\}_{i\in\nats}\to 0^+$, there exists some $N\in\nats$ such that, for all $i>N$, $\delta_i < \delta$. Consider this $N$, and choose any $i>N$; it now remains to show that $\overline{\phi}_i-\underline{\phi}_i < \epsilon$.
 
-Let $\underline{\phi}_*\coloneqq \inf\{ \phi(y\vert x_u):y\in(y_u-\nicefrac{\delta}{2},y_u+\nicefrac{\delta}{2}) \}$ and $\overline{\phi}_*\coloneqq \sup\{ \phi(y\vert x_u):y\in(y_u-\nicefrac{\delta}{2},y_u+\nicefrac{\delta}{2}) \}$. Then, since $\delta_i<\delta$, we clearly have $(y_u-\nicefrac{\delta_i}{2},y_u+\nicefrac{\delta_i}{2})\subset (y_u-\nicefrac{\delta}{2},y_u+\nicefrac{\delta}{2})$, and hence $\underline{\phi}_* \leq \underline{\phi}_i$ and $\overline{\phi}_i\leq \overline{\phi}_*$. Therefore, it suffices to show that $\overline{\phi}_*-\underline{\phi}_* < \epsilon$. Since it follows trivially from Equation~\eqref{eq:dirac_bound_close_enough} that $\phi(y_u\vert x_u)-\underline{\phi}_*\leq\nicefrac{\epsilon}{4}$ and $\overline{\phi}_*-\phi(y_u\vert x_u)\leq\nicefrac{\epsilon}{4}$, we have
-\begin{equation*}
-\overline{\phi}_* - \underline{\phi}_* = \overline{\phi}_* - \phi(y_u\vert x_u) + \phi(y_u\vert x_u) - \underline{\phi}_* \leq \frac{\epsilon}{4}+\frac{\epsilon}{4} = \frac{\epsilon}{2} < \epsilon\,,
-\end{equation*}
-which concludes the proof.
-\end{proof}
+Let now $\{\mu_{i_k}\}_{k\in\nats}$ be any convergent subsequence; since the sequence $\{\mu_i\}_{i\in\nats}$ is in the compact interval $[\min f,\max f]$, the Bolzano-Weierstrass theorem implies that at least one such subsequence exists. Let $\mu_{k_*}\coloneqq \lim_{k\to+\infty}\mu_{i_k}$.
 
-\begin{lemma}\label{lemma:limit_lexp_is_lexp_limit}
-Consider any $u\in\mathcal{U}_\emptyset$ and any convergent sequence $\{f_i\}_{i\in\nats}\to f$ in $\gambles(\states_u)$. Then, $\lim_{i\to\infty}\lexp[f_i(X_u)]=\lexp[f(X_u)]$.
-\end{lemma}
-\begin{proof}
-We will show that, for every $\epsilon>0$, there is some $n\in\nats$ such that for all $i>n$, it holds that $\abs{\lexp[f_i(X_u)]-\lexp[f(X_u)]} < \epsilon$. So, consider any $\epsilon>0$, and define $\epsilon^*\coloneqq \nicefrac{\epsilon}{4}$. Because $\{f_i\}_{i\in\nats}\to f$, there is some $n\in\nats$ such that, for all $i>n$, it holds that $\norm{f_i - f}<\epsilon^*$. 
+We now clearly have that
+\begin{equation*}
+\lim_{k\to+\infty} \frac{P_{\observs\vert\states}(O_u^{i_k}\vert X_u)}{\lambda_{i_k}}\bigl(f(X_v) - \mu_{i_k}\bigr) = \phi_u(y_u\vert X_u)\bigl(f(X_v) - \mu_{k_*}\bigr)\,,
+\end{equation*}
+and therefore, by Lemma~\ref{lemma:limit_lexp_is_lexp_limit}, that
+\begin{equation*}
+\lim_{k\to+\infty} \lexp\left[\frac{P_{\observs\vert\states}(O_u^{i_k}\vert X_u)}{\lambda_{i_k}}\bigl(f(X_v) - \mu_{i_k}\bigr)\right] = \lexp\left[\phi_u(y_u\vert X_u)\bigl(f(X_v) - \mu_{k_*}\bigr)\right]\,.
+\end{equation*}
+Furthermore, using Equation~\eqref{eq:nat_ext_limit:steps_are_roots}, we find that $\lexp\left[\phi_u(y_u\vert X_u)\bigl(f(X_v) - \mu_{k_*}\bigr)\right] = 0$.
 
-Consider now any $i>n$. Because $\norm{f_i - f}<\epsilon^*$, it clearly holds for every $P\in\wprocesses_{\rateset,\mathcal{M}}$ that $\abs{\mathbb{E}_P[f_i(X_u)] - \mathbb{E}_P[f(X_u)]}<\epsilon^*$, and hence
-\begin{equation}\label{eq:lemma_converges_expectation_close}
-\mathbb{E}_P[f_i(X_u)] - \epsilon^* < \mathbb{E}_P[f(X_u)] < \mathbb{E}_P[f_i(X_u)] + \epsilon^*\,.
-\end{equation}
-Furthermore, because $\lexp[\cdot]$ computes an infimum, there must be $P_i,P\in\wprocesses_{\rateset,\mathcal{M}}$ such that
-\begin{equation*}
-\mathbb{E}_{P_i}[f_i(X_u)] - \epsilon^* < \lexp[f_i(X_u)] \leq \mathbb{E}_{P}[f_i(X_u)]\,,
-\end{equation*}
-and,
-\begin{equation*}
-\mathbb{E}_{P}[f(X_u)] - \epsilon^* < \lexp[f(X_u)] \leq \mathbb{E}_{P_i}[f(X_u)]\,.
-\end{equation*}
-Applying Equation~\eqref{eq:lemma_converges_expectation_close} to the r.h.s. of these equalities, we find that
-\begin{equation*}
-\mathbb{E}_{P_i}[f_i(X_u)] - \epsilon^* < \mathbb{E}_{P}[f(X_u)] + \epsilon^*\,,\quad\text{and,}\quad \mathbb{E}_{P}[f(X_u)] - \epsilon^* < \mathbb{E}_{P_i}[f_i(X_u)] + \epsilon^*\,,
-\end{equation*}
-which when combined implies
-\begin{equation*}
-\mathbb{E}_{P_i}[f_i(X_u)] - 2\epsilon^* < \mathbb{E}_{P}[f(X_u)] < \mathbb{E}_{P_i}[f_i(X_u)] + 2\epsilon^*\,,
-\end{equation*}
-or in other words that $\abs{\mathbb{E}_{P_i}[f_i(X_u)] - \mathbb{E}_{P}[f(X_u)]} < 2\epsilon^*$.
+Due to Proposition~\ref{prop:GBR_properties}, and because $\lexp[\phi_u(y_u\vert X_u)]>0$, we conclude that $\mu_{k_*}$ corresponds to the unique root $\mu_*$ of the function $G(\mu)\coloneqq \lexp\left[\phi_u(y_u\vert X_u)\bigl(f(X_v) - \mu\bigr)\right]$. Furthermore, since the convergent subsequence $\{\mu_{i_k}\}_{k\in\nats}$ was arbitrary, we find that $\mu_*$ is the limit of \emph{every} convergent subsequence of $\{\mu_i\}_{i\in\nats}$.
 
-Now, by the choice of $P_i$ and $P$, we have
+We next show that $\{\mu_i\}_{i\in\nats}$ itself also converges to $\mu_*$. Assume \emph{ex absurdo} that this is false. Then, there is some $\epsilon>0$ such that, for all $n\in\nats$, there is some $k>n$ such that $\abs{\mu_k - \mu_*} \geq \epsilon$. This implies that we can construct a subsequence $\{\mu_{i_k}\}_{k\in\nats}$ such that $\abs{\mu_{i_k}-\mu_*}\geq \epsilon$ for all $k\in\nats$. This subsequence is again in the compact interval $[\min f, \max f]$, which implies that it has a convergent subsequence $\{\mu_{i_{k_\ell}}\}_{\ell\in\nats}$, and clearly $\lim_{\ell\to+\infty}\mu_{i_{k_\ell}} \neq \mu_*$ because $\abs{\mu_{i_{k_\ell}} - \mu_*}\geq\epsilon$ for all $\ell\in\nats$. However, since $\{\mu_{i_{k_\ell}}\}_{\ell\in\nats}$ is a convergent subsequence of the original sequence $\{\mu_i\}_{i\in\nats}$, this contradicts our above conclusions. Hence, we must have that indeed $\lim_{i\to\infty}\mu_i=\mu_*$.
+
+Since we already know that $\mu_*$ is the unique root of the function $G(\mu)$ defined above, and since this function is strictly monotonically decreasing due to Proposition~\ref{prop:GBR_properties}, we must have that
+\begin{equation*}
+\mu_* = \max\{\mu\in\reals\,:\, G(\mu)\geq 0\}\,.
+\end{equation*}
+Due to Proposition~\ref{prop:GBR_for_densities_lower_zero}, we therefore conclude
 \begin{align*}
- &\quad \abs{\lexp[f_i(X_u)]-\lexp[f(X_u)]} \\
- &\leq \abs{\lexp[f_i(X_u)] - \mathbb{E}_{P_i}[f_i(X_u)]} + \abs{\lexp[f(X_u)] - \mathbb{E}_{P}[f(X_u)]} + \abs{\mathbb{E}_{P_i}[f_i(X_u)] - \mathbb{E}_{P}[f(X_u)]} \\
- &< \epsilon^* + \epsilon^* + 2\epsilon^* = 4\epsilon^* = \epsilon\,.
+\underline{\mathbb{E}}_\mathcal{Z}[f(X_v)\,\vert\,Y_u=y_u] &= \max\left\{\mu\in\reals\,:\, \lexp\left[\phi_u(y_u\vert X_u)\bigl(f(X_v) - \mu\bigr)\right] \geq 0\right\} \\
+ &= \mu_* \\
+ &= \lim_{i\to+\infty} \mu_i \\
+ &= \lim_{i\to+\infty} \underline{\mathbb{E}}_\mathcal{Z}[f(X_v)\,\vert\,Y_u\in O_u^i]\,.
 \end{align*}
 \end{proof}
+
+%We (probably still) need (some of) the following three results for the proof of Proposition~\ref{prop:precise_bayes_rule_densities}. *** Previously needed for statement of imprecise version, which I removed.
+%
+%\begin{proposition}\label{prop:decomp}
+%Let $\mathcal{Z}$ be an ICTHMC, and consider any $v\in\mathcal{U}_\emptyset$, $u\in\mathcal{U}$, $f\in\gambles(\states_v)$, and $g\in\gambles(\observs_u)$. Then,
+%\begin{equation*}
+%\underline{\mathbb{E}}_\mathcal{Z}\left[ f(X_v)g(Y_u) \right] = \lexp\left[ f(X_v)\mathbb{E}_{\observs\vert\states}[g(Y_u)\vert X_u] \right] 
+%\end{equation*}
+%\end{proposition}
+%\begin{proof}
+%Fix any $P\in\mathcal{Z}$. Then,
+%\begin{align*}
+%\mathbb{E}_P\bigl[ f(X_v)g(Y_u) \bigr] &= \mathbb{E}_P\bigl[ \mathbb{E}_P\left[ f(X_v)g(Y_u) \vert X_v,X_u \right] \bigr] \\
+%&= \mathbb{E}_P\bigl[ f(X_v)\mathbb{E}_P[ g(Y_u) \vert X_v,X_u ] \bigr] \\
+%&= \mathbb{E}_P\bigl[ f(X_v)\mathbb{E}_P[ g(Y_u) \vert X_u ] \bigr] \\
+%&= \mathbb{E}_{P_\states}\bigl[ f(X_v)\mathbb{E}_{\observs\vert\states}[ g(Y_u) \vert X_u ] \bigr] \,,
+%\end{align*}
+%where the first and second equality follow from the basic properties of expectation, the third equality is due to the independence assumptions in Section~\ref{sec:aug_stochastic_processes}, and the final equality uses the facts that the (outer) expectation is only concerned with states, and that the probability $P_{\observs\vert\states}$ is shared by all $P\in\mathcal{Z}$. Since this is true for every $P\in\mathcal{Z}$, the result now follows.
+%\end{proof}
+%
+%\begin{lemma}\label{lemma:dirac_delta_gets_density_value}
+%Consider any sequence $\{\delta_i\}_{i\in\nats}\to 0^+$ in $\realspos$. Then, if $\phi(y_u\vert x_u)$ is continuous around $y_u$,
+%\begin{equation*}
+%\lim_{i\to\infty} \frac{1}{\lambda(\mathcal{B}_i)}\mathbb{E}_{\observs\vert\states}[\ind{(y_u-\nicefrac{\delta_i}{2},y_u+\nicefrac{\delta_i}{2})}(Y_u)\vert X_u=x_u] = \phi(y_u\vert x_u)\,,
+%\end{equation*}
+%where $\lambda(\mathcal{B}_i)\coloneqq \lambda((y_u-\nicefrac{\delta_i}{2},y_u+\nicefrac{\delta_i}{2}))$ is Lebesgue measure of the region $(y_u-\nicefrac{\delta_i}{2},y_u+\nicefrac{\delta_i}{2})$.
+%\end{lemma}
+%\begin{proof}
+%Fix any $i\in\nats$, and note that
+%\begin{align*}
+%\mathbb{E}_{\observs\vert\states}[\ind{(y_u-\nicefrac{\delta_i}{2},y_u+\nicefrac{\delta_i}{2})}(Y_u)\vert X_u=x_u] &= \int_{\observs_u}\ind{(y_u-\nicefrac{\delta_i}{2},y_u+\nicefrac{\delta_i}{2})}(y)\phi(y\vert x_u) dy 
+%= \int_{(y_u-\nicefrac{\delta_i}{2},y_u+\nicefrac{\delta_i}{2})}\phi(y\vert x_u) dy\,.
+%\end{align*}
+%Let $\underline{\phi}_i\coloneqq \inf\{\phi(y\vert x_u):y\in(y_u-\nicefrac{\delta_i}{2},y_u+\nicefrac{\delta_i}{2})\}$ and $\overline{\phi}_i\coloneqq \sup\{\phi(y\vert x_u):y\in(y_u-\nicefrac{\delta_i}{2},y_u+\nicefrac{\delta_i}{2})\}$. Then, since $\underline{\phi}_i \leq \phi(y\vert x_u)\leq \overline{\phi}_i$ for all $y\in(y_u-\nicefrac{\delta_i}{2},y_u+\nicefrac{\delta_i}{2})$, we clearly have that
+%\begin{align*}
+%\underline{\phi}_i = \underline{\phi}_i\cdot\frac{\lambda(\mathcal{B}_i)}{\lambda(\mathcal{B}_i)} = \underline{\phi}_i\cdot\frac{1}{\lambda(\mathcal{B}_i)}\int_{(y_u-\nicefrac{\delta_i}{2},y_u+\nicefrac{\delta_i}{2})}dy &= \frac{1}{\lambda(\mathcal{B}_i)}\int_{(y_u-\nicefrac{\delta_i}{2},y_u+\nicefrac{\delta_i}{2})}\underline{\phi}_idy
+% \\
+% &\leq \frac{1}{\lambda(\mathcal{B}_i)}\int_{(y_u-\nicefrac{\delta_i}{2},y_u+\nicefrac{\delta_i}{2})}\phi(y\vert x_u) dy \\
+% &\leq \frac{1}{\lambda(\mathcal{B}_i)}\int_{(y_u-\nicefrac{\delta_i}{2},y_u+\nicefrac{\delta_i}{2})}\overline{\phi_i} dy  = \overline{\phi}_i\,.
+%\end{align*}
+%Hence, for every $i\in\nats$, we have that $\underline{\phi}_i\leq\nicefrac{1}{\lambda(\mathcal{B}_i)}\mathbb{E}_{\observs\vert\states}[\ind{(y_u-\nicefrac{\delta_i}{2},y_u+\nicefrac{\delta_i}{2})}(Y_u)\vert X_u=x_u]\leq\overline{\phi}_i$, and since also clearly $\underline{\phi}_i\leq \phi(y_u\vert x_u)\leq \overline{\phi}_i$, it follows that
+%\begin{equation*}
+%\abs{\phi(y_u\vert x_u) - \frac{1}{\lambda(\mathcal{B}_i)}\mathbb{E}_{\observs\vert\states}[\ind{(y_u-\nicefrac{\delta_i}{2},y_u+\nicefrac{\delta_i}{2})}(Y_u)\vert X_u=x_u]} \leq \overline{\phi}_i - \underline{\phi}_i\,,
+%\end{equation*}
+%and so we see that it suffices to show that $\lim_{i\to\infty}\overline{\phi}_i - \underline{\phi}_i = 0$, or equivalently, that for every $\epsilon\in\realspos$, there is some $N\in\nats$ such that, for every $i>N$, $\overline{\phi}_i-\underline{\phi}_i < \epsilon$. So, fix any $\epsilon\in\realspos$. Since we assumed that $\phi(y\vert x_u)$ is continuous around $y_u$, there exists some $\delta\in\realspos$ such that, for every $\Delta\in(-\delta,\delta)$,
+%\begin{equation}\label{eq:dirac_bound_close_enough}
+%\abs{\phi(y_u\vert x_u) - \phi(y_u+\Delta\vert x_u)} < \frac{\epsilon}{4}\,.
+%\end{equation}
+%Consider this $\delta$. Then, since $\{\delta_i\}_{i\in\nats}\to 0^+$, there exists some $N\in\nats$ such that, for all $i>N$, $\delta_i < \delta$. Consider this $N$, and choose any $i>N$; it now remains to show that $\overline{\phi}_i-\underline{\phi}_i < \epsilon$.
+%
+%Let $\underline{\phi}_*\coloneqq \inf\{ \phi(y\vert x_u):y\in(y_u-\nicefrac{\delta}{2},y_u+\nicefrac{\delta}{2}) \}$ and $\overline{\phi}_*\coloneqq \sup\{ \phi(y\vert x_u):y\in(y_u-\nicefrac{\delta}{2},y_u+\nicefrac{\delta}{2}) \}$. Then, since $\delta_i<\delta$, we clearly have $(y_u-\nicefrac{\delta_i}{2},y_u+\nicefrac{\delta_i}{2})\subset (y_u-\nicefrac{\delta}{2},y_u+\nicefrac{\delta}{2})$, and hence $\underline{\phi}_* \leq \underline{\phi}_i$ and $\overline{\phi}_i\leq \overline{\phi}_*$. Therefore, it suffices to show that $\overline{\phi}_*-\underline{\phi}_* < \epsilon$. Since it follows trivially from Equation~\eqref{eq:dirac_bound_close_enough} that $\phi(y_u\vert x_u)-\underline{\phi}_*\leq\nicefrac{\epsilon}{4}$ and $\overline{\phi}_*-\phi(y_u\vert x_u)\leq\nicefrac{\epsilon}{4}$, we have
+%\begin{equation*}
+%\overline{\phi}_* - \underline{\phi}_* = \overline{\phi}_* - \phi(y_u\vert x_u) + \phi(y_u\vert x_u) - \underline{\phi}_* \leq \frac{\epsilon}{4}+\frac{\epsilon}{4} = \frac{\epsilon}{2} < \epsilon\,,
+%\end{equation*}
+%which concludes the proof.
+%\end{proof}
+
 
 %\begin{proof}{\bf of Proposition~\ref{prop:GBR_for_densities_is_limit_if_continuous}~}
 %We will show that, for any $\{\delta_i\}_{i\in\nats}\to 0^+$, it holds that
@@ -1417,10 +1511,10 @@ Consider any $y_u\in\observs_u$, and any sequence $\{O_u^i\}_{i\in\nats}$ that s
 \max\{\mu\in\reals\,:\,\lexp[\phi_u(y_u\vert X_u)(f(X_v)-\mu)]\geq 0\} = \lim_{i\to+\infty} \underline{\mathbb{E}}_\mathcal{Z}[f(X_v)\,\vert\,Y_u\in O_u^i]\,.
 \end{equation*}
 
-Fix any $\epsilon >0$ such that $\epsilon<\uexp[\phi_u(y_u\vert X_u)]$. Let $\mathcal{P}_\epsilon \coloneqq \{P\in\mathcal{Z}\,:\,\mathbb{E}_P(\phi_u(y_u\vert X_u))>\epsilon\}$. Clearly, $\mathcal{P}_\epsilon\neq\emptyset$, and furthermore $\underline{\mathbb{E}}_{\mathcal{P}_\epsilon}[\phi_u(y_u\vert X_u)] \geq \epsilon > 0$. Therefore, as we know from the proof of the statement of the present proposition---but under natural extension---it holds that
-\begin{equation*}
+Fix any $\epsilon >0$ such that $\epsilon<\uexp[\phi_u(y_u\vert X_u)]$. Let $\mathcal{P}_\epsilon \coloneqq \{P\in\mathcal{Z}\,:\,\mathbb{E}_P[\phi_u(y_u\vert X_u)]>\epsilon\}$. Clearly, $\mathcal{P}_\epsilon\neq\emptyset$, and furthermore $\underline{\mathbb{E}}_{\mathcal{P}_\epsilon}[\phi_u(y_u\vert X_u)] \geq \epsilon > 0$. Therefore, as we know from the proof of the statement of the present proposition---but under natural extension---it holds that
+\begin{equation}\label{eq:reg_ext_limit:subsets_converge_to_updated}
 \mu_\epsilon \coloneqq \underline{\mathbb{E}}_{\mathcal{P}_\epsilon}[f(X_v)\,\vert\,Y_u=y_u] = \lim_{i\to+\infty} \underline{\mathbb{E}}_{\mathcal{P}_\epsilon}[f(X_v)\,\vert\,Y_u\in O_u^i]\,,
-\end{equation*}
+\end{equation}
 under the obvious interpretation of the lower expectation.
 
 Because $\mathcal{P}_\epsilon\subseteq\{P\in\mathcal{Z}\,:\,\mathbb{E}_P[\phi_u(y_u\vert X_u)]>0\}$, we must have that
@@ -1450,20 +1544,45 @@ G_{\epsilon_k}(\mu_*+\epsilon) \coloneqq \underline{\mathbb{E}}_{\mathcal{P}_{\e
 Since $G_{\epsilon_k}$ is monotonically decreasing, and since $G_{\epsilon_k}(\mu_{\epsilon_k})=0$, it follows that $\mu_{\epsilon_k} < \mu_*+\epsilon$. Since we also know that $\mu_*\leq \mu_{\epsilon_k}$, we find $\mu_*\leq \mu_{\epsilon_k}<\mu_*+\epsilon$. Hence, by repeating the above for increasingly smaller choices of $\epsilon$, we can construct a subsequence $\{\mu_{i_k}\}_{k\in\nats}$ such that $\lim_{k\to+\infty}\mu_{i_k}=\mu_*$. Since this is a convergent subsequence of the sequence $\{\mu_i\}_{i\in\nats}$, which we know converges to $\mu_{\epsilon_*}$ itself, it must hold that $\mu_{\epsilon_*}=\mu_*$.
 
 To summarise, we have so far shown that
-\begin{equation*}
+\begin{equation}\label{eq:reg_ext_limit:updated_converges_in_subset}
 \lim_{i\to+\infty}\underline{\mathbb{E}}_{\mathcal{P}_{\epsilon_i}}[f(X_v)\,\vert\,Y_u=y_u] = \underline{\mathbb{E}}_{\mathcal{Z}}[f(X_v)\,\vert\,Y_u=y_u]\,.
-\end{equation*}
-We will next establish that the same property holds for the quantities $\underline{\mathbb{E}}_{\mathcal{P}_{\epsilon_i}}[f(X_v)\,\vert\,Y_u\in O_u^j]$. The final argument is then by diagonalisation over all sequences at the same time.
+\end{equation}
 
-So, consider any $j\in\nats$, and the corresponding sequence $\{\nu_{\epsilon_i}^j\}_{i\in\nats}$ defined by
+The problem is now that $\{P\in\mathcal{Z}\,:\,P(O_u^i)>0\}\supseteq \{P\in\mathcal{Z}\,:\,\mathbb{E}_P[\phi_u(y_u\vert X_u)]>0\}$.
+
+*****
+
+Now, consider again the sequence $\{\underline{\mathbb{E}}_{\mathcal{Z}}[f(X_v)\,\vert\,Y_u\in O_u^i]\}_{i\in\nats}$, and choose any convergent subsequence thereof; since the sequence is in the compact interval $[\min f, \max f]$, the Bolzano-Weierstrass theorem implies that at least one convergent subsequence exists. Let
 \begin{equation*}
-\nu_{\epsilon_i}^j \coloneqq \underline{\mathbb{E}}_{\mathcal{P}_{\epsilon_i}}[f(X_v)\,\vert\,Y_u\in O_u^j]\,.
+\nu_{k_*} \coloneqq \lim_{k\to+\infty} \underline{\mathbb{E}}_{\mathcal{Z}}[f(X_v)\,\vert\,Y_u\in O_u^{i_k}]
 \end{equation*}
-Let $\nu_*^j\coloneqq \underline{\mathbb{E}}_{\mathcal{Z}}[f(X_v)\,\vert\,Y_u\in O_u^j]$. 
+denote the limit of this subsequence. For any $\epsilon>0$, we clearly have $\nu_{k_*}\leq \mu_{\epsilon}$. Also we know from previous tries that $G(\nu_{k_*})=0$, whence also $\nu_{k_*}\leq \mu_*$.
 
-***** SHIT. I THINK THE NESTING IS NOW REVERSED. 
+*****
 
-Start by showing that $\underline{\mathbb{E}}_{\mathcal{P}_{\epsilon_i}}[\phi_u(y_u\vert X_y)]>0\Rightarrow \underline{\mathbb{E}}_{\mathcal{P}_{\epsilon_i}}[P_{\observs\vert\states}(O_u^j\vert X_u)]>0$ (should hold by convergence and monotonicity of measure).
+We next diagonalise over the sequences $\{O_u^i\}_{i\in\nats}$ and $\{\epsilon_i\}_{i\in\nats}$. That is, we will show that
+\begin{equation*}
+\lim_{i\to+\infty} \underline{\mathbb{E}}_{\mathcal{P}_{\epsilon_i}}[f(X_v)\,\vert\,Y_u\in O_u^i] = \underline{\mathbb{E}}_{\mathcal{Z}}[f(X_v)\,\vert\,Y_u=y_u]\,.
+\end{equation*}
+To this end, fix any $\epsilon>0$. Because of Equation~\eqref{eq:reg_ext_limit:subsets_converge_to_updated}, there is some $n\in\nats$ such that for all $j>n$,
+\begin{equation*}
+\abs{\underline{\mathbb{E}}_{\mathcal{P}_{\epsilon_i}}[f(X_v)\,\vert\,Y_u\in O_u^j] - \underline{\mathbb{E}}_{\mathcal{P}_{\epsilon_i}}[f(X_v)\,\vert\,Y_u=y_u]} < \epsilon\,.
+\end{equation*}
+Furthermore, due to Equation~\eqref{eq:reg_ext_limit:updated_converges_in_subset}, there is some $m\in\nats$ such that for all $i>m$,
+\begin{equation*}
+\abs{\underline{\mathbb{E}}_{\mathcal{P}_{\epsilon_i}}[f(X_v)\,\vert\,Y_u=y_u] - \underline{\mathbb{E}}_{\mathcal{Z}}[f(X_v)\,\vert\,Y_u=y_u]} < \epsilon\,.
+\end{equation*}
+%We will next establish that the same property holds for the quantities $\underline{\mathbb{E}}_{\mathcal{P}_{\epsilon_i}}[f(X_v)\,\vert\,Y_u\in O_u^j]$. The final argument is then by diagonalisation over all sequences at the same time.
+
+%So, consider any $j\in\nats$, and the corresponding sequence $\{\nu_{\epsilon_i}^j\}_{i\in\nats}$ defined by
+%\begin{equation*}
+%\nu_{\epsilon_i}^j \coloneqq \underline{\mathbb{E}}_{\mathcal{P}_{\epsilon_i}}[f(X_v)\,\vert\,Y_u\in O_u^j]\,.
+%\end{equation*}
+%Let $\nu_*^j\coloneqq \underline{\mathbb{E}}_{\mathcal{Z}}[f(X_v)\,\vert\,Y_u\in O_u^j]$. 
+
+%***** SHIT. I THINK THE NESTING IS NOW REVERSED. 
+
+%Start by showing that $\underline{\mathbb{E}}_{\mathcal{P}_{\epsilon_i}}[\phi_u(y_u\vert X_y)]>0\Rightarrow \underline{\mathbb{E}}_{\mathcal{P}_{\epsilon_i}}[P_{\observs\vert\states}(O_u^j\vert X_u)]>0$ (should hold by convergence and monotonicity of measure).
 %Due to nesting of the sets $\mathcal{P}_{\epsilon_i}$ and $\mathcal{Z}$, we again have that $\nu_*^j\leq \nu_{\epsilon_i}^j$, and $\nu_{\epsilon_{i+1}}^j\leq \nu_{\epsilon_i}^j$ for all $i\in\nats$. Again by the monotone convergence theorem, $\nu_{\epsilon_*}^j\coloneqq \lim_{i\to+\infty}\nu_{\epsilon_i}^j$ exists.
 
 %Let next
