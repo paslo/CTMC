@@ -1558,7 +1558,51 @@ To summarise, we have so far shown that
 \lim_{i\to+\infty}\underline{\mathbb{E}}_{\mathcal{P}_{\epsilon_i}}[f(X_v)\,\vert\,Y_u=y_u] = \underline{\mathbb{E}}_{\mathcal{Z}}[f(X_v)\,\vert\,Y_u=y_u]\,.
 \end{equation}
 
-The problem is now that $\{P\in\mathcal{Z}\,:\,P(O_u^i)>0\}\supseteq \{P\in\mathcal{Z}\,:\,\mathbb{E}_P[\phi_u(y_u\vert X_u)]>0\}$.
+The problem is now that $\{P\in\mathcal{Z}\,:\,P(O_u^i)>0\}\supseteq \{P\in\mathcal{Z}\,:\,\mathbb{E}_P[\phi_u(y_u\vert X_u)]>0\}$. We first imitate the above construction, this time for decreasing lower bounds on $P(O_u^i)$. To this end, fix any $j\in\nats$, and consider any $\delta>0$ such that $\delta < \uexp[P_{\observs\vert\states}(O_u^j\vert X_u)]$. Let $\mathcal{P}_\delta\coloneqq \{P\in\mathcal{Z}\,:\, \mathbb{E}_P[P_{\observs\vert\states}(O_u^j\vert X_u)] > \delta\}$; clearly, $\mathcal{P}_\delta\neq\emptyset$, and $\underline{\mathbb{E}}_{\mathcal{P}_\delta}[P_{\observs\vert\states}(O_u^j\vert X_u)] \geq \delta > 0$.
+
+For any sequence $\{\delta_i\}_{i\in\nats}\to 0^+$, we should now have that
+\begin{equation*}
+\lim_{i\to+\infty} \underline{\mathbb{E}}_{\mathcal{P}_{\delta_i}}[f(X_v)\,\vert\,Y_u\in O_u^j] = \underline{\mathbb{E}}_{\mathcal{Z}}[f(X_v)\,\vert\,Y_u\in O_u^j]\,.
+\end{equation*}
+***** Proof of the above omitted to see where this goes. Pretty sure that this holds. Lets try to diagonalise next. Choose $\{\delta_i\}_{i\in\nats}\to0^+$ such that $\delta_i < \uexp[P_{\observs\vert\states}(O_u^i\vert X_u)]$ for all $i\in\nats$. Assume w.l.o.g. that $\{\underline{\mathbb{E}}_{\mathcal{Z}}[f(X_v)\,\vert\,Y_u\in O_u^i]\}_{i\in\nats}$ converges.
+
+
+*****
+
+The below construction actually works quite well. Getting somewhere...
+
+*****
+
+Fix any $\epsilon>0$ such that $4\epsilon <\uexp[\phi_u(y_u\vert X_u)]$; this is possible since $\uexp[\phi_u(y_u\vert X_u)]>0$. Then there is some $n\in\nats$ such that for all $j>n$,
+\begin{equation}\label{eq:reg_ext_limit:density_approached}
+\norm{\phi_u(y_u\vert X_u) - \frac{P_{\observs\vert\states}(O_u^j\vert X_u)}{\lambda_j}} < \epsilon\,.
+\end{equation}
+Fix any such $j>n$. Let $\delta\coloneqq 2\lambda_j\epsilon$. **** I \emph{think} that actually $\{\lambda_i\}_{i\in\nats}\to 0$ necessarily, which means that we can get $\delta$ as small as we want independent of $\epsilon$.
+
+We now first show that there is always some $P\in\mathcal{Z}$ such that $\mathbb{E}_P[P_{\observs\vert\states}(O_u^j\vert X_u)] > \delta$, for the above choice of $\delta$. Because $\epsilon>0$, and since $\uexp[\phi_u(y_u\vert X_u)]>4\epsilon$, there is some $P\in\mathcal{Z}$ such that
+\begin{align*}
+4\epsilon < \uexp[\phi_u(y_u\vert X_u)] &< \mathbb{E}_P[\phi_u(y_u\vert X_u)] + \epsilon \\
+ &= \abs{\mathbb{E}_P[\phi_u(y_u\vert X_u)] - \frac{\mathbb{E}_P[P_{\observs\vert\states}(O_u^j\vert X_u)]}{\lambda_j} + \frac{\mathbb{E}_P[P_{\observs\vert\states}(O_u^j\vert X_u)]}{\lambda_j}} + \epsilon \\
+ &< 2\epsilon + \frac{\mathbb{E}_P[P_{\observs\vert\states}(O_u^j\vert X_u)]}{\lambda_j} \\
+2\epsilon &< \frac{\mathbb{E}_P[P_{\observs\vert\states}(O_u^j\vert X_u)]}{\lambda_j} \\
+2\lambda_j\epsilon &< \mathbb{E}_P[P_{\observs\vert\states}(O_u^j\vert X_u)]\,.
+\end{align*}
+
+Consider now any $P\in\mathcal{Z}$ for which $\mathbb{E}_P[P_{\observs\vert\states}(O_u^j\vert X_u)] > \delta$; as shown above, such a $P$ always exists. Then,
+\begin{align*}
+\frac{\delta}{\lambda_j} &< \frac{\mathbb{E}_P[P_{\observs\vert\states}(O_u^j\vert X_u)]}{\lambda_j} \\
+ &= \abs{\frac{\mathbb{E}_P[P_{\observs\vert\states}(O_u^j\vert X_u)]}{\lambda_j} - \mathbb{E}_P[\phi_u(y_u\vert X_u)] + \mathbb{E}_P[\phi_u(y_u\vert X_u)]} \\
+ &< \epsilon + \mathbb{E}_P[\phi_u(y_u\vert X_u)]\,,
+\end{align*}
+and hence
+\begin{equation*}
+\frac{\delta}{\lambda_j} = 2\epsilon < \epsilon + \mathbb{E}_P[\phi_u(y_u\vert X_u)]\,,
+\end{equation*}
+which clearly implies that $\epsilon < \mathbb{E}_P[\phi_u(y_u\vert X_u)]$. Therefore in particular,
+\begin{equation*}
+\emptyset\neq \{P\in\mathcal{Z}\,:\,\mathbb{E}_P[P_{\observs\vert\states}(O_u^j\vert X_u)] > 2\lambda_j\epsilon\} \subseteq \{P\in\mathcal{Z}\,:\,\mathbb{E}_P[\phi_u(y_u\vert X_u)] > \epsilon\}\,,
+\end{equation*}
+whenever $j\in\nats$ is such that Equation~\ref{eq:reg_ext_limit:density_approached} holds.
 
 *****
 
