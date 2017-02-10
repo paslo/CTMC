@@ -675,17 +675,27 @@ Another line of future research would be the development of algorithms to solve 
 
 We here provide some additional notation and previous results that we use throughout the proofs of our results.
 
-\subsection{Notation}
+\subsection{Additional Notation}
 
-We denote the reals as $\reals$, the non-negative reals as $\realsnonneg$, and the positive reals as $\realspos$. The natural numbers are denoted $\nats$, and we define $\natswith\coloneqq\nats\cup\{0\}$.
+For any sequence of time points $u=\{t_0,\ldots,t_n\}$, we write for any $t\in\realsnonneg$ that $u<t$ whenever $t_i<t$ for all $i\in\{0,\ldots,n\}$. Similarly, for any $u,v\in\mathcal{U}$, we write $u< v$ when all time-points in $u$ are strictly less than all time-points in $v$.
 
-Since we are working in a continuous-time setting, a \emph{time-point} is an element of $\realsnonneg$, and these are typically denoted $t$ or $s$. We also make extensive use of finite sequences of time points $u\subset\realsnonneg$. These are taken to be ordered, so that they may be written $u=t_0,\ldots,t_n$, for some $n\in\natswith$, and such that then $t_i<t_j$ for all $i,j\in\{0,\ldots,n\}$ for which $i< j$. Such sequences are usually denoted $u$ or $v$, and we denote the entire set of them by $\mathcal{U}$. We write $u<t$ when all time points in $u$ are less than $t$, and similarly for other inequalities. Similarly, we write $u<v$ when $u$ properly comes before $v$. The sets of sequences that satisfy such inequalities are denoted $\mathcal{U}_{<t}$ or $\mathcal{U}_{<v}$, again extending intuitively to other inequalities. We finally define $\mathcal{U}_\emptyset\coloneqq \mathcal{U}\setminus\{\emptyset\}$. We use set-theoretic notation to operate on such sequences, while preserving the ordering; i.e., we write $u\cup v$ for the ordered union of $u$ and $v$.
+Recall that for any $u\in\mathcal{U}$, we denote with $\gambles(\states_u)$ the set of all real-valued functions on $\states_u$. We endow these function spaces with the $L^\infty$-norm, i.e. the norm $\norm{f}$ of any $f\in\gambles(\states_u)$ is defined to be $\norm{f}\coloneqq\norm{f}_\infty=\max\{\abs{f(x_u)}\,:\,x_u\in\states_u\}$. Limits of functions are to be interpreted under this norm.
 
-Throughout, we consider some fixed, finite state space $\states$. A generic element of $\states$ will be denoted $x$. When considering the state-space at a specific time $t$, we write $\states_t\coloneqq\states$, and $x_t$ denotes a generic state-assignment at this time. When considering multiple time-points $u$ simultaneously, we denote the joint state-space as $\states_u\coloneqq\prod_{t_i\in u}\states_{t_i}$, a generic element of which is then denoted $x_u=(x_{t_0},\ldots,x_{t_n})$.
+Furthermore, we sometimes use the shorthand notation $\{a_i\}_{i\in\nats}\to c$ for convergent sequences of quantities, which should be read as $\lim_{i\to+\infty}a_i=c$. If this limit is approached from above or below, we write $\{a_i\}_{i\in\nats}\to c^+$ or $\{a_i\}_{i\in\nats}\to c^-$, respectively.
 
-For any $u\in\mathcal{U}_\emptyset$, we denote with $\gambles(\states_u)$ the set of all real-valued functions on $\states_u$. We endow these function spaces with the $L^\infty$-norm, i.e. the norm $\norm{f}$ of any $f\in\gambles(\states_u)$ is defined to be $\norm{f}\coloneqq\norm{f}_\infty=\max\{\abs{f(x_u)}\,:\,x_u\in\states_u\}$. Limits of functions are to be interpreted under this norm.
+\subsection{Useful Properties of ICTMC's}
 
-Furthermore, we often use the shorthand notation $\{a_i\}_{i\in\nats}\to c$ for convergent sequences of quantities, which should be read as $\lim_{i\to+\infty}a_i=c$. If this limit is approached from above or below, we write $\{a_i\}_{i\in\nats}\to c^+$ or $\{a_i\}_{i\in\nats}\to c^-$, respectively.
+The below states a very useful property of the lower expectation corresponding to ICTMC's, that we will require in some of our proofs.
+
+\begin{lemma}[Iterated Lower Expectation]\cite[Theorem 6.5]{krak2016ictmc}\label{lemma:iterated_lower}
+
+Let $\rateset$ be a non-empty, bounded and convex set of rate matrices, and let $\mathcal{M}$ be a non-empty set of probability mass functions on $\states_0$. Let $\mathbb{P}_{\rateset,\mathcal{M}}$ denote the corresponding ICTMC.
+
+Let $u\subset\realsnonneg$ be a finite (possibly empty) sequence of time-points, and consider any $v,w\in\mathcal{U}$ such that $u<v<w$. Choose any $f\in\gambles(\states_{u\cup v\cup w})$. Then,
+\begin{equation*}
+\lexp[f(X_u,X_v,X_w)\,\vert\,X_u] = \lexp\bigl[\lexp[f(X_u,X_v,X_w)\,\vert\,X_u,X_v]\,\vert\,X_u\bigr]\,.
+\end{equation*}
+\end{lemma}
 
 \section{Globally Required Proofs and Lemmas}
 
@@ -697,11 +707,11 @@ Consider any $u\in\mathcal{U}$ and any convergent sequence $\{f_i\}_{i\in\nats}\
 \begin{proof}
 We will show that, for every $\epsilon>0$, there is some $n\in\nats$ such that for all $i>n$, it holds that $\abs{\lexp[f_i(X_u)]-\lexp[f(X_u)]} < \epsilon$. So, consider any $\epsilon>0$, and define $\epsilon^*\coloneqq \nicefrac{\epsilon}{4}$. Because $\{f_i\}_{i\in\nats}\to f$, there is some $n\in\nats$ such that, for all $i>n$, it holds that $\norm{f_i - f}<\epsilon^*$. 
 
-Consider now any $i>n$. Because $\norm{f_i - f}<\epsilon^*$, it clearly holds for every $P\in\wprocesses_{\rateset,\mathcal{M}}$ that $\abs{\mathbb{E}_P[f_i(X_u)] - \mathbb{E}_P[f(X_u)]}<\epsilon^*$, and hence
+Consider now any $i>n$. Because $\norm{f_i - f}<\epsilon^*$, it clearly holds for every $P\in\mathbb{P}_{\rateset,\mathcal{M}}$ that $\abs{\mathbb{E}_P[f_i(X_u)] - \mathbb{E}_P[f(X_u)]}<\epsilon^*$, and hence
 \begin{equation}\label{eq:lemma_converges_expectation_close}
 \mathbb{E}_P[f_i(X_u)] - \epsilon^* < \mathbb{E}_P[f(X_u)] < \mathbb{E}_P[f_i(X_u)] + \epsilon^*\,.
 \end{equation}
-Furthermore, because $\lexp[\cdot]$ computes an infimum, there must be $P_i,P\in\wprocesses_{\rateset,\mathcal{M}}$ such that
+Furthermore, because $\lexp[\cdot]$ computes an infimum, there must be $P_i,P\in\mathbb{P}_{\rateset,\mathcal{M}}$ such that
 \begin{equation*}
 \mathbb{E}_{P_i}[f_i(X_u)] - \epsilon^* < \lexp[f_i(X_u)] \leq \mathbb{E}_{P}[f_i(X_u)]\,,
 \end{equation*}
@@ -1376,7 +1386,7 @@ g_{t_{i-1}}^+(x_{t_{i-1}}) &= g_{t_{i-1}}(x_{t_{i-1}})\cdot \lexp\left[g_{t_{i}}
  &= g_{t_{i-1}}(x_{t_{i-1}})\cdot \lexp\left[\prod_{j=i}^{n+1}g_{t_j}(X_{t_j})\,\vert\,X_{t_{i-1}}=x_{t_{i-1}}\right] \\ 
  &= \lexp\left[g_{t_{i-1}}(x_{t_{i-1}})\cdot\prod_{j=i}^{n+1}g_{t_j}(X_{t_j})\,\vert\,X_{t_{i-1}}=x_{t_{i-1}}\right]\,,
 \end{align*}
-where the first equality is by definition, the second is by the induction hypothesis, the third by iterated lower expectation (Proposition REF), and the final by non-negative homogeneity of lower expectation and the assumption that $g_{t_{i-1}}(x_{t_{i-1}})\geq 0$.
+where the first equality is by definition, the second is by the induction hypothesis, the third by iterated lower expectation (Lemma~\ref{lemma:iterated_lower}), and the final by non-negative homogeneity of lower expectation and the assumption that $g_{t_{i-1}}(x_{t_{i-1}})\geq 0$.
 
 For the other case, assume that $g_{t_{i-1}}(x_{t_{i-1}})< 0$. Then,
 \begin{align*}
@@ -1386,7 +1396,7 @@ g_{t_{i-1}}^+(x_{t_{i-1}}) &= g_{t_{i-1}}(x_{t_{i-1}})\cdot \uexp\left[g_{t_{i}}
 &= -g_{t_{i-1}}(x_{t_{i-1}})\cdot \lexp\left[-\prod_{j=i}^{n+1}g_{t_j}(X_{t_j})\,\vert\,X_{t_{i-1}}=x_{t_{i-1}}\right] \\
 &= \lexp\left[g_{t_{i-1}}(x_{t_{i-1}})\cdot\prod_{j=i}^{n+1}g_{t_j}(X_{t_j})\,\vert\,X_{t_{i-1}}=x_{t_{i-1}}\right]\,,
 \end{align*}
-where the first equality is by definition, the second equality by the induction hypothesis, the third by iterated upper expectation (Proposition REF), the fourth by conjugacy of upper- and lower expectation, and the final by non-negative homogeneity of lower expectation and the assumption that $g_{t_{i-1}}(x_{t_{i-1}})<0$.
+where the first equality is by definition, the second equality by the induction hypothesis, the third by iterated upper expectation (Lemma~\ref{lemma:iterated_lower} combined with conjugacy), the fourth by conjugacy of upper- and lower expectation, and the final by non-negative homogeneity of lower expectation and the assumption that $g_{t_{i-1}}(x_{t_{i-1}})<0$.
 
 Since this covers both cases in the definition of $g_{t_{i-1}}^+(x_{t_{i-1}})$, we find that
 \begin{equation*}
@@ -1396,7 +1406,7 @@ which concludes the proof for $g_{t_{i-1}}^+$. The proof for $g_{t_{i-1}}^-$ is 
 \end{proof}
 
 \begin{proof}{\bf of Proposition~\ref{prop:computing_product_funcs}~}
-By combining Lemma~\ref{lemma:product_func_induction} with iterated lower expectation (Proposition REF), we have
+By combining Lemma~\ref{lemma:product_func_induction} with iterated lower expectation (Lemma~\ref{lemma:iterated_lower}), we have
 \begin{equation*}
 \lexp\left[g_{t_0}^+(X_{t_0})\right] = \lexp\left[\lexp\left[\prod_{j=0}^{n+1}g_{t_j}(X_{t_j})\,\vert\,X_{t_0}\right]\right] = \lexp\left[\prod_{j=0}^{n+1}g_{t_j}(X_{t_j})\right] = \lexp\left[\prod_{t_i\in u'}g_{t_i}(X_{t_i})\right]\,,
 \end{equation*}
