@@ -516,7 +516,7 @@ Let $\mathcal{Z}$ be an ICTHMC, and consider any $u,v\in\mathcal{U}$, $y_u\in\ob
 whenever $\underline{\mathbb{E}}_\mathcal{Z}[\phi_u(y_u\vert X_u)] >0$, and is left undefined, otherwise.
 \end{definition}
 
-The reason that we here choose to update the model using natural extension, rather than regular extension, is that the latter leads to some interpretational difficulties that are somewhat outside the scope of the present paper\footnote{These difficulties arise even when $\phi_u(\cdot\,\vert X_u)$ is everywhere defined and continuous. To wit, as mentioned in Footnote~\ref{fnote:extra_condition}, the additional assumption on the sequence $\{O_u^i\}_{i\in\nats}$ that every $P(Y_u\in O_u^i)>0$, is then sufficient to guarantee a unique limit of conditional expectations for single processes $P$. However, we are here considering \emph{sets} of processes, and for a given sequence $\{O_u^i\}_{i\in\nats}$ this additional condition may hold for some processes in the set, yet fail to hold for others.}. In contrast, natural extension leads to the intuitive limit interpretation:
+The reason that we here choose to update the model using natural extension, rather than regular extension, is that the latter leads to some interpretational difficulties. In contrast, natural extension yields the intuitive limit interpretation\footnote{Proposition~\ref{prop:GBR_for_densities_is_limit_if_continuous} does not in general hold when we modify it and Definition~\ref{def:reg_ext_densities} to work with regular extension, i.e. when $\lexp[\phi_u(y_u\vert X_u)]=0$ but $\uexp[\phi_u(y_u\vert X_u)]>0$. However, a sufficient condition to obtain $\lexp[\phi_u(y_u\vert X_u)]>0$ is that $\phi_u(\cdot\vert X_u)$ is strictly positive on $\observs$; again, this should arguably hold for most practical applications. Nevertheless, if one does not mind losing this interpretation, we may note that the updated model that is so defined is still numerically well-behaved and computable; it still satisfies, \emph{mutatis mutandis}, Proposition~\ref{prop:GBR_for_densities_lower_zero}.}: 
 \begin{proposition}\label{prop:GBR_for_densities_is_limit_if_continuous}
 Let $\mathcal{Z}$ be an ICTHMC, and consider any $u,v\in\mathcal{U}$, $y_u\in\observs_u$, and $f\in\gambles(\states_v)$. Then, for a given sequence $\{O_u^i\}_{i\in\nats}$ in $\Sigma_u$ satisfying the assumptions above, if for some $\{\lambda_i\}_{i\in\nats}$ the quantity $\phi_u(y_u\,\vert\,X_u)$ exists, is real-valued, and satisfies $\lexp[\phi_u(y_u\vert X_u)]>0$, then the updated lower expectation satisfies $\underline{\mathbb{E}}_\mathcal{Z}[f(X_v)\vert Y_u=y_u] 
  = \lim_{i\to+\infty}\underline{\mathbb{E}}_\mathcal{Z}[f(X_v)\vert Y_u\in O_u^i]$.
@@ -651,15 +651,16 @@ In this work, we considered \emph{imprecise continuous-time hidden Markov chains
 
 Our main result is an efficient---polynomial runtime---algorithm to compute such lower expectations for functions that depend on the state-space at any given time-point. This algorithm can be used both when the output variables are discrete, and when they are continuous.
 
-With regard to future work, several natural next steps would seem to be apparent. For one, we intend in future work to further generalise this model class, by also allowing for an imprecise specification of the output variables. Second, a rigorous treatment of the interpretation of updating the model using regular extension, in the case of continuous output variables, seems to be prudent. For instance, at present we have neither a proof of, nor a counter example to, the statement of Proposition~\ref{prop:GBR_for_densities_is_limit_if_continuous} in the case of regular extension---i.e. when $\lexp[\phi_u(y_u\vert X_u)]=0$ but $\uexp[\phi_u(y_u\vert X_u)]>0$.
+With regard to future work, several natural next steps would seem to be apparent. For one, we intend in future work to further generalise and robustify this model class, by also allowing for an imprecise specification of the output variables. %Second, a rigorous treatment of the interpretation of updating the model using regular extension, in the case of continuous output variables, seems to be prudent. For instance, at present we have neither a proof of, nor a counter example to, the statement of Proposition~\ref{prop:GBR_for_densities_is_limit_if_continuous} in the case of regular extension---i.e. when $\lexp[\phi_u(y_u\vert X_u)]=0$ but $\uexp[\phi_u(y_u\vert X_u)]>0$.
 
-Another line of future research would be the development of algorithms to solve other inference problems for this model class. E.g., we might look into developing algorithms to compute the updated lower expectation of more general functions $f\in\gambles(\states_v)$, which depend on more than one time-point. In fact, algorithms for several such function classes should follow straightforwardly by combining results from \cite{krak2016ictmc} with the algorithm presented here. Another such problem is that of estimating state-sequences, given observed output-sequences---as was previously done for (discrete-time) iHMM's~\citep{DeBock:2014ts}. We believe that these previous results should also translate fairly naturally to the current setting.
+Another line of future research is the development of algorithms to solve other inference problems for this model class. E.g., we might look into developing algorithms to compute the updated lower expectation of more general functions $f\in\gambles(\states_v)$, which depend on more than one time-point. In fact, algorithms for several such function classes should follow straightforwardly by combining results from \cite{krak2016ictmc} with the algorithm presented here. Another such problem is that of estimating state-sequences, given observed output-sequences---as was previously done for (discrete-time) iHMM's~\citep{DeBock:2014ts}. We believe that these previous results should also 
+translate fairly naturally to the current setting.
 
 %Finally, we might look into developing algorithms to compute the updated lower expectation of more general functions $f\in\gambles(\states_v)$, which depend on the state-space at more than one time-point. In fact, one such algorithm follows straightforwardly from the results of the current paper, provided that the time-points $v$ are in the future with respect to the time-points $u$ at which the observations took place. This is due to a result from~\cite{krak2016ictmc}, which states that the lower expectation for ICTMC's satisfies the property of ``iterated lower expectation''. Combining this with the imprecise Markov property mentioned in Section~\ref{subsec:ictmc}, and writing $u=t_0,\ldots,t_n$, the function of interest in the generalised Bayes' rule can therefore be rewritten as
 %\begin{equation*}
-%$\lexp\left[\left(\prod_{i=0}^n g_{t_i}(X_{t_i})\right)\bigl(f(X_v) - \mu\bigr)\right] = \lexp\left[\left(\prod_{i=0}^n g_{t_i}(X_{t_i})\right)\left(\lexp[f(X_v)\vert X_{t_n}] - \mu\right)\right]$.
+%\lexp\left[\left(\prod_{i=0}^n g_{t_i}(X_{t_i})\right)\bigl(f(X_v) - \mu\bigr)\right] = \lexp\left[\left(\prod_{i=0}^n g_{t_i}(X_{t_i})\right)\left(\lexp[f(X_v)\vert X_{t_n}] - \mu\right)\right]\,.
 %\end{equation*}
-
+%
 %Therefore, it suffices to first compute the quantity $\lexp[f(X_v)\vert X_{t_n}]$, which can be done using \citep[Algorithm 3]{krak2016ictmc}. Since this is a function on a single time point $t_n$, we can then directly apply the results and algorithm from the current paper to compute $\underline{\mathbb{E}}_{\mathcal{Z}}[f(X_v)\,\vert\,Y_u\in O_u].$% or $\underline{\mathbb{E}}_{\mathcal{Z}}[f(X_v)\,\vert\,Y_u=y_u]$.
 
 \appendix
@@ -1110,6 +1111,69 @@ Due to Proposition~\ref{prop:GBR_for_densities_lower_zero}, we therefore conclud
 \end{align*}
 \end{proof}
 
+The below proves by counterexample that the regular extension version of Proposition~\ref{prop:GBR_for_densities_is_limit_if_continuous} does not hold in general.
+\begin{proposition}
+There exists some ICTHMC $\mathcal{Z}$, some sequences of time-points $u,v\in\mathcal{U}$, some function $f\in\gambles(\states_v)$, some $y_u\in\observs_u$, and some sequence $\{O_u^i\}_{i\in\nats}$ such that there is a sequence $\{\lambda_i\}_{i\in\nats}$ for which $\phi_u(y_u\vert X_u)$ exists, is real-valued, and $\uexp[\phi_u(y_u\vert X_u)]>0$, such that for the imprecise updated model under regular extension,
+\begin{equation*}
+\underline{\mathbb{E}}_\mathcal{Z}^\mathrm{R}[f(X_v)\,\vert\, Y_u=y_u] \coloneqq \inf\left\{ \mathbb{E}_P[f(X_v)\,\vert\,Y_u=y_u]\,:\,P\in\mathcal{Z}, \mathbb{E}_P[\phi_u(y_u\vert X_u)]>0  \right\}\,,
+\end{equation*}
+it holds that
+\begin{equation*}
+\underline{\mathbb{E}}_\mathcal{Z}^\mathrm{R}[f(X_v)\,\vert\, Y_u=y_u] \neq \lim_{i\to+\infty} \underline{\mathbb{E}}_\mathcal{Z}[f(X_v)\,\vert\, Y_u\in O_u^i]\,.
+\end{equation*}
+\end{proposition}
+\begin{proof}
+We give a proof by counterexample. To this end, let $\states\coloneqq\{x,\overline{x}\}$ be a binary state-space, and let $\observs\coloneqq [-1,1]$, with $\Sigma$ the Borel $\sigma$-algebra on $\observs$ under the usual topology. For the sequences of time-points, we choose $u=v=\{0\}$. Set $y_0\coloneqq 0$.
+
+The trick will be to choose the measures $P_{\observs\vert\states}(\cdot\vert x)$ and $P_{\observs\vert\states}(\cdot\vert \overline{x})$ so that the first gives $y_0$ strictly positive support (i.e. density), while the second assigns zero support (i.e. density) to $y_0$ but positive support (i.e. density) to the region around $y_0$. To this end, let $P_{\observs\vert\states}(\cdot\vert x)$ be the uniform distribution on $[-1,1]$.
+
+We construct the measure $P_{\observs\vert\states}(\cdot\vert \overline{x})$ in reverse, by constructing $\phi(\cdot\vert\overline{x})$ explicitly. To this end, for every $y\in\observs$, let
+\begin{equation*}
+\phi(y\vert\overline{x}) \coloneqq \abs{y}\,.
+\end{equation*}
+Clearly, $\int_\observs \phi(y\vert\overline{x})\,\mathrm{d}y = 1$, and furthermore $\phi(y_0\vert\overline{x})=0$. For every $O\in\Sigma$, let $P_{\observs\vert\states}(O\vert\overline{x})$ be defined by
+\begin{equation*}
+P_{\observs\vert\states}(O\vert\overline{x}) \coloneqq \int_O\phi(y\vert\overline{x})\,\mathrm{d}y\,.
+\end{equation*}
+For any sequence $\{O_0^i\}_{i\in\nats}$ of open intervals $O_0^i\coloneqq (y_0-\delta_i,y_0+\delta_i)$, with $\delta_i>0$ such that $\{\delta_i\}_{i\in\nats}\to0^+$, we then clearly have
+\begin{equation*}
+\phi(y_0\vert x) = \lim_{i\to+\infty} \frac{P_{\observs\vert\states}(O_0^i\vert x)}{\lambda(O_0^i)} = \lim_{i\to+\infty} \frac{\delta_i}{2\delta_i} = \frac{1}{2}\,,
+\end{equation*}
+and
+\begin{equation*}
+\phi(y\vert \overline{x}) = \lim_{i\to+\infty} \frac{P_{\observs\vert\states}(O_0^i\vert \overline{x})}{\lambda(O_0^i)} = \lim_{i\to+\infty} \frac{\delta_i^2}{2\delta_i} = \lim_{i\to+\infty} \frac{\delta_i}{2} = 0\,,
+\end{equation*}
+with $\lambda(O_0^i)$ the Lebesgue measure of $O_0^i$. Fix any such sequence $\{O_0^i\}_{i\in\nats}$, and let $\{\lambda_i\}_{i\in\nats}\coloneqq\{\lambda(O_0^i)\}_{i\in\nats}$ be the corresponding sequence.
+
+Let the set of initial distributions $\mathcal{M}$ be the entire set of probability mass functions on $\states_0$. Consider the two probability mass functions $P,\overline{P}$ on $\states_0$ such that $P(x)=1$, $P(\overline{x})=0$, and $\overline{P}(x)=0$, $\overline{P}(\overline{x})=1$; clearly, $P,\overline{P}\in\mathcal{M}$. Let $\rateset$ be any non-empty, bounded, and convex set of rate matrices with separately specified rows, and let $\mathbb{P}_{\rateset,\mathcal{M}}$ be the corresponding ICTMC. Construct $\mathcal{Z}$ from $\mathbb{P}_{\rateset,\mathcal{M}}$ and $(\observs,\Sigma,P_{\observs\vert\states})$ as in Definition~\ref{def:hidden_ictmc}. Let $f\in\gambles(\states_0)$ be defined by $f(x)\coloneqq 1$ and $f(\overline{x})\coloneqq -1$. 
+
+Clearly, $\uexp[\phi(y_0\vert X_0)]=\overline{\mathbb{E}}_\mathcal{M}[\phi(y_0\vert X_0)] = P(x)\phi(y_0\vert x) + P(\overline{x})\phi(y_0\vert \overline{x})=P(x)\phi(y_0\vert x) = \frac{1}{2}>0$, and so we can apply regular extension.
+
+Now, for any $P'\in\mathcal{Z}$ such that $\mathbb{E}_{P'}[\phi(y_0\vert X_0)]>0$, we have by Proposition~\ref{prop:precise_bayes_rule_densities} that
+\begin{equation*}
+\mathbb{E}_{P'}[f(X_0)\,\vert\,Y_0=y_0] = \frac{\mathbb{E}_{P'}[f(X_0)\phi(y_0\vert X_0)]}{\mathbb{E}_{P'}[\phi(y_0\vert X_0)]} = \frac{P(x)f(x)\phi(y_0\vert x)}{P(x)\phi(y_0\vert x)} = f(x) = 1\,,
+\end{equation*}
+because $\phi(y_0\vert \overline{x})=0$. Hence,
+\begin{align*}
+\underline{\mathbb{E}}_\mathcal{Z}^\mathrm{R}[f(X_0)\,\vert\, Y_0=y_0] &= \inf\left\{ \mathbb{E}_{P'}[f(X_0)\,\vert\,Y_0=y_0]\,:\,P'\in\mathcal{Z}, \mathbb{E}_{P'}[\phi(y_0\vert X_0)]>0  \right\} = 1\,.
+\end{align*}
+However, for any $i\in\nats$ we have for $\overline{P}\in\mathcal{M}$ that %$\mathbb{E}_P[P_{\observs\vert\states}(O_0^i\vert X_0)]>0$, and hence
+%\begin{align*}
+%\mathbb{E}_P[f(X_0)\,\vert\,Y_0\in O_0^i] = \frac{\mathbb{E}_P[f(X_0)P_{\observs\vert\states}(O_0^i\vert X_0)]}{\mathbb{E}_P[P_{\observs\vert\states}(O_0^i\vert X_0)]} = \frac{f(x)P_{\observs\vert\states}(O_0^i\vert x)}{P_{\observs\vert\states}(O_0^i\vert x)} = f(x) = 1\,,
+%\end{align*}
+%and, since also 
+$\mathbb{E}_{\overline{P}}[P_{\observs\vert\states}(O_0^i\vert X_0)]>0$, and so
+\begin{align*}
+\mathbb{E}_{\overline{P}}[f(X_0)\,\vert\,Y_0\in O_0^i] = \frac{\mathbb{E}_{\overline{P}}[f(X_0)P_{\observs\vert\states}(O_0^i\vert X_0)]}{\mathbb{E}_{\overline{P}}[P_{\observs\vert\states}(O_0^i\vert X_0)]} = \frac{f(\overline{x})P_{\observs\vert\states}(O_0^i\vert \overline{x})}{P_{\observs\vert\states}(O_0^i\vert \overline{x})} = f(\overline{x}) = -1\,,
+\end{align*}
+and since $\min f \leq \underline{\mathbb{E}}_\mathcal{Z}[f(X_0)\vert Y_0\in O_0^i] \leq \mathbb{E}_{\overline{P}}[f(X_0)\,\vert\,Y_0\in O_0^i]$, we have $\underline{\mathbb{E}}_\mathcal{Z}[f(X_0)\vert Y_0\in O_0^i]=-1$.
+
+We conclude from this that
+\begin{equation*}
+-1 =  \lim_{i\to+\infty} \underline{\mathbb{E}}_\mathcal{Z}[f(X_0)\vert Y_0\in O_0^i] \neq \underline{\mathbb{E}}_\mathcal{Z}^\mathrm{R}[f(X_0)\,\vert\, Y_0=y_0] = 1\,.
+\end{equation*}
+\end{proof}
+
 %We (probably still) need (some of) the following three results for the proof of Proposition~\ref{prop:precise_bayes_rule_densities}. *** Previously needed for statement of imprecise version, which I removed.
 %
 %\begin{proposition}\label{prop:decomp}
@@ -1510,7 +1574,6 @@ and similarly for the upper expectation.
 %\end{equation*}
 %and immediately suggest an algorithm with total runtime complexity $O(n\lvert\states\rvert C)$, where $C$ is again the time complexity of evaluating $L_{t_{i-1}}^{t_i}g_i$.
 
-\section{Testing some stuff}
 %
 %\begin{proposition}
 %The limit interpretation of the updated imprecise model with continuous outputs also holds under regular extension.
@@ -1708,72 +1771,5 @@ and similarly for the upper expectation.
 %which implies that $\mathbb{E}_P[P_{\observs\vert\states}(O_u^j\vert X_u)] > 0$. ***** SHOW THAT THIS IMPLIES $\mathbb{E}_P[\phi_u(y_u\vert X_u)]>0$.
 %
 %\end{proof}
-
-The below proves by counterexample that the regular extension version of Proposition~\ref{prop:GBR_for_densities_is_limit_if_continuous} does not hold in general.
-\begin{proposition}
-There exists some ICTHMC $\mathcal{Z}$, some sequences of time-points $u,v\in\mathcal{U}$, some function $f\in\gambles(\states_v)$, some $y_u\in\observs_u$, and some sequence $\{O_u^i\}_{i\in\nats}$ such that there is a sequence $\{\lambda_i\}_{i\in\nats}$ for which $\phi_u(y_u\vert X_u)$ exists, is real-valued, and $\uexp[\phi_u(y_u\vert X_u)]>0$, such that for the imprecise updated model under regular extension,
-\begin{equation*}
-\underline{\mathbb{E}}_\mathcal{Z}^\mathrm{R}[f(X_v)\,\vert\, Y_u=y_u] \coloneqq \inf\left\{ \mathbb{E}_P[f(X_v)\,\vert\,Y_u=y_u]\,:\,P\in\mathcal{Z}, \mathbb{E}_P[\phi_u(y_u\vert X_u)]>0  \right\}\,,
-\end{equation*}
-it holds that
-\begin{equation*}
-\underline{\mathbb{E}}_\mathcal{Z}^\mathrm{R}[f(X_v)\,\vert\, Y_u=y_u] \neq \lim_{i\to+\infty} \underline{\mathbb{E}}_\mathcal{Z}[f(X_v)\,\vert\, Y_u\in O_u^i]\,.
-\end{equation*}
-\end{proposition}
-\begin{proof}
-We give a proof by counterexample. To this end, let $\states\coloneqq\{x,\overline{x}\}$ be a binary state-space, and let $\observs\coloneqq \reals$, with $\Sigma$ the Borel $\sigma$-algebra on $\observs$ under the usual topology.
-
-For the sequences of time-points, we choose $u=v=\{0\}$, and we will drop the corresponding time-point subscripts for brevity. Set $y\coloneqq 0$.
-
-The trick will be to choose the measures $P_{\observs\vert\states}(y\vert x)$ and $P_{\observs\vert\states}(y\vert \overline{x})$ so that one of them gives $y$ strictly positive support (i.e. density), while the other assigns zero support to $y$ but positive support (i.e. density) to the region around $y$. So, let $P_{\observs\vert\states}(\cdot\vert x)$ be the standard Normal distribution with standard deviation one and mean equal to $y=0$.
-
-We construct the measure $P_{\observs\vert\states}(y\vert \overline{x})$ in reverse, by constructing $\phi(\cdot\vert\overline{x})$ explicitly. To this end, for every $\tilde{y}\in\observs$, let
-\begin{equation*}
-\phi(\tilde{y}\vert\overline{x}) \coloneqq \left\{\begin{array}{ll}
-\abs{\tilde{y}} & \text{if $\tilde{y}\in[-1,1]$, and} \\
-0 & \text{otherwise.}
-\end{array}\right.
-\end{equation*}
-Clearly, $\int_\observs \phi(\tilde{y}\vert\overline{x})\,\mathrm{d}\tilde{y} = 1$, and furthermore $\phi(y\vert\overline{x})=0$. For every $O\in\Sigma$, let $P_{\observs\vert\states}(O\vert\overline{x})$ be defined by
-\begin{equation*}
-P_{\observs\vert\states}(O\vert\overline{x}) \coloneqq \int_O\phi(\tilde{y}\vert\overline{x})\,\mathrm{d}\tilde{y}\,.
-\end{equation*}
-For any sequence $\{O^i\}_{i\in\nats}$ of open sets around $y$ that shrink to zero, we then clearly have
-\begin{equation*}
-\phi(y\vert x) = \frac{1}{\sqrt{2\pi}} = \lim_{i\to+\infty} \frac{P_{\observs\vert\states}(O^i\vert x)}{\lambda(O^i)}\,,
-\end{equation*}
-and
-\begin{equation*}
-\phi(y\vert \overline{x}) = 0 = \lim_{i\to+\infty} \frac{P_{\observs\vert\states}(O^i\vert \overline{x})}{\lambda(O^i)}\,,
-\end{equation*}
-with $\lambda(O^i)$ the Lebesgue measure of $O^i$. Fix any such sequence $\{O^i\}_{i\in\nats}$, and let $\{\lambda_i\}_{i\in\nats}\coloneqq\{\lambda(O^i)\}_{i\in\nats}$ be the corresponding sequence.
-
-Construct the set of initial distribution as $\mathcal{M}\coloneqq\{P,\overline{P}\}$, where $P,\overline{P}$ are probability mass functions on $\states_0$ such that $P(x)=1$, $P(\overline{x})=0$, and $\overline{P}(x)=0$, $\overline{P}(\overline{x})=1$. Let $\rateset$ be any non-empty, bounded, and convex set of rate matrices with separately specified rows, and let $\mathbb{P}_{\rateset,\mathcal{M}}$ be the corresponding ICTMC. Construct $\mathcal{Z}$ from $\mathbb{P}_{\rateset,\mathcal{M}}$ and $(\observs,\Sigma,P_{\observs\vert\states})$.
-
-Clearly, $\uexp[\phi(y\vert X_0)]=\overline{\mathbb{E}}_\mathcal{M}[\phi(y\vert X_0)] = P(x)\phi(y\vert x) + P(\overline{x})\phi(y\vert \overline{x})=P(x)\phi(y\vert x) = \frac{1}{\sqrt{2\pi}}>0$, and so we can apply regular extension.
-
-Let $f\in\gambles(\states_0)$ be defined by $f(x)\coloneqq 1$ and $f(\overline{x})\coloneqq -1$. Then, because $\mathbb{E}_P[\phi(y\vert X_0)] > 0$, by Proposition~\ref{prop:precise_bayes_rule_densities} we have that
-\begin{equation*}
-\mathbb{E}_P[f(X_0)\,\vert\,Y=y] = \frac{\mathbb{E}_P[f(X_0)\phi(y\vert X_0)]}{\mathbb{E}_P[\phi(y\vert X_0)]} = \frac{f(x)\phi(y\vert x)}{\phi(y\vert x)} = f(x) = 1\,.
-\end{equation*}
-On the other hand, $\mathbb{E}_{\overline{P}}[\phi(y\vert X_0)]=0$. Hence,
-\begin{align*}
-\underline{\mathbb{E}}_\mathcal{Z}^\mathrm{R}[f(X_0)\,\vert\, Y=y] &= \inf\left\{ \mathbb{E}_{P'}[f(X_0)\,\vert\,Y=y]\,:\,P'\in\mathcal{Z}, \mathbb{E}_{P'}[\phi_u(y\vert X_0)]>0  \right\} \\
- &= \mathbb{E}_P[f(X_0)\,\vert\,Y=y] \\
- &= 1\,.
-\end{align*}
-However, for any $i\in\nats$ we have $\mathbb{E}_P[P_{\observs\vert\states}(O^i\vert X_0)]>0$, and hence
-\begin{align*}
-\mathbb{E}_P[f(X_0)\,\vert\,Y\in O^i] = \frac{\mathbb{E}_P[f(X_0)P_{\observs\vert\states}(O^i\vert X_0)]}{\mathbb{E}_P[P_{\observs\vert\states}(O^i\vert X_0)]} = \frac{f(x)P_{\observs\vert\states}(O^i\vert x)}{P_{\observs\vert\states}(O^i\vert x)} = f(x) = 1\,,
-\end{align*}
-and, since also $\mathbb{E}_{\overline{P}}[P_{\observs\vert\states}(O^i\vert X_0)]>0$,
-\begin{align*}
-\mathbb{E}_{\overline{P}}[f(X_0)\,\vert\,Y\in O^i] = \frac{\mathbb{E}_{\overline{P}}[f(X_0)P_{\observs\vert\states}(O^i\vert X_0)]}{\mathbb{E}_{\overline{P}}[P_{\observs\vert\states}(O^i\vert X_0)]} = \frac{f(\overline{x})P_{\observs\vert\states}(O^i\vert \overline{x})}{P_{\observs\vert\states}(O^i\vert \overline{x})} = f(\overline{x}) = -1\,.
-\end{align*}
-It follows that for every $i\in\nats$, we have $\underline{\mathbb{E}}_\mathcal{Z}[f(X_0)\vert Y\in O^i]=-1$. Hence,
-\begin{equation*}
--1 =  \lim_{i\to+\infty} \underline{\mathbb{E}}_\mathcal{Z}[f(X_0)\vert Y\in O^i] \neq \underline{\mathbb{E}}_\mathcal{Z}^\mathrm{R}[f(X_0)\,\vert\, Y=y] = 1\,.
-\end{equation*}
-\end{proof}
 
 \end{document}
