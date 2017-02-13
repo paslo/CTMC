@@ -1511,134 +1511,192 @@ and similarly for the upper expectation.
 %and immediately suggest an algorithm with total runtime complexity $O(n\lvert\states\rvert C)$, where $C$ is again the time complexity of evaluating $L_{t_{i-1}}^{t_i}g_i$.
 
 \section{Testing some stuff}
-
-\begin{proposition}
-The limit interpretation of the updated imprecise model with continuous outputs also holds under regular extension.
-\end{proposition}
-\begin{proof}
-Consider any $y_u\in\observs_u$, and any sequence $\{O_u^i\}_{i\in\nats}$ that shrinks to $y_u$. Suppose that there is a sequence $\{\lambda_i\}_{i\in\nats}$ such that $\phi_u(y_u\vert X_u)$ exists, and satisfies $\uexp[\phi_u(y_u\vert X_u)]>0$. We will show that
-\begin{equation*}
-\max\{\mu\in\reals\,:\,\lexp[\phi_u(y_u\vert X_u)(f(X_v)-\mu)]\geq 0\} = \lim_{i\to+\infty} \underline{\mathbb{E}}_\mathcal{Z}[f(X_v)\,\vert\,Y_u\in O_u^i]\,.
-\end{equation*}
-
-Fix any $\epsilon >0$ such that $\epsilon<\uexp[\phi_u(y_u\vert X_u)]$. Let $\mathcal{P}_\epsilon \coloneqq \{P\in\mathcal{Z}\,:\,\mathbb{E}_P[\phi_u(y_u\vert X_u)]>\epsilon\}$. Clearly, $\mathcal{P}_\epsilon\neq\emptyset$, and furthermore $\underline{\mathbb{E}}_{\mathcal{P}_\epsilon}[\phi_u(y_u\vert X_u)] \geq \epsilon > 0$. Therefore, as we know from the proof of the statement of the present proposition---but under natural extension---it holds that
-\begin{equation}\label{eq:reg_ext_limit:subsets_converge_to_updated}
-\mu_\epsilon \coloneqq \underline{\mathbb{E}}_{\mathcal{P}_\epsilon}[f(X_v)\,\vert\,Y_u=y_u] = \lim_{i\to+\infty} \underline{\mathbb{E}}_{\mathcal{P}_\epsilon}[f(X_v)\,\vert\,Y_u\in O_u^i]\,,
-\end{equation}
-under the obvious interpretation of the lower expectation.
-
-Because $\mathcal{P}_\epsilon\subseteq\{P\in\mathcal{Z}\,:\,\mathbb{E}_P[\phi_u(y_u\vert X_u)]>0\}$, we must have that
-\begin{align*}
-\mu_* \coloneqq \underline{\mathbb{E}}_{\mathcal{Z}}[f(X_v)\,\vert\,Y_u=y_u] &= \inf\{\mathbb{E}_P[f(X_v)\,\vert\,Y_u=y_u]\,:\,P\in\mathcal{Z},\mathbb{E}_P[\phi_u(y_u\vert X_u)]>0\} \\
- &\leq \underline{\mathbb{E}}_{\mathcal{P}_\epsilon}[f(X_v)\,\vert\,Y_u=y_u] = \mu_\epsilon\,.
-\end{align*}
-
-Now, consider a sequence $\{\epsilon_i\}_{i\in\nats}\to 0^+$ in $\realspos$ such that $\epsilon_i<\uexp[\phi_u(y_u\vert X_u)]$ for all $i\in\nats$. Using the above notation, we will show that $\lim_{i\to\infty}\mu_{\epsilon_i}=\mu_*$. 
-
-First, note that $\mu_*\leq \mu_{\epsilon_i}$, and $\mu_{\epsilon_{i+1}}\leq \mu_{\epsilon_i}$ for all $i\in\nats$. In other words, $\{\mu_{\epsilon_i}\}_{i\in\nats}$ is a decreasing sequence which is bounded below by $\mu_*$; hence, by the monotone convergence theorem, the limit $\mu_{\epsilon_*}\coloneqq\lim_{i\to+\infty}\mu_{\epsilon_i}$ exists. Showing that $\mu_{\epsilon_*}=\mu_*$ is a bit more involved.
-
-First, define
-\begin{equation*}
-G(\mu) \coloneqq \lexp[\phi_u(y_u\vert X_u)\bigl(f(X_v) - \mu\bigr)]\,.
-\end{equation*}
-Note that $\mu_*=\max\{\mu\in\reals\,:\,G(\mu)\geq 0\}$ by the GBR. Now fix any $\epsilon>0$. Clearly, $G(\mu_* + \epsilon)< 0$.
-
-This implies that there is some $P\in\mathcal{Z}$ such that also
-\begin{equation*}
-\mathbb{E}_P[\phi_u(y_u\vert X_u)\bigl(f(X_v) - (\mu_*+\epsilon)\bigr)] < 0\,,
-\end{equation*}
-which implies that $\mathbb{E}_P[\phi_u(y_u\vert X_u)]>0$. Because $\{\epsilon_i\}_{i\in\nats}\to 0^+$, there is some $n\in\nats$ such that for all $k>n$, it holds that $\epsilon_k < \mathbb{E}_P[\phi_u(y_u\vert X_u)]$, and hence in particular $P\in\mathcal{P}_{\epsilon_k}$. It follows that
-\begin{equation*}
-G_{\epsilon_k}(\mu_*+\epsilon) \coloneqq \underline{\mathbb{E}}_{\mathcal{P}_{\epsilon_k}}[\phi_u(y_u\vert X_u)\bigl(f(X_v) - (\mu_*+\epsilon)\bigr)] \leq \mathbb{E}_P[\phi_u(y_u\vert X_u)\bigl(f(X_v) - (\mu_*+\epsilon)\bigr)] < 0\,.
-\end{equation*}
-Since $G_{\epsilon_k}$ is monotonically decreasing, and since $G_{\epsilon_k}(\mu_{\epsilon_k})=0$, it follows that $\mu_{\epsilon_k} < \mu_*+\epsilon$. Since we also know that $\mu_*\leq \mu_{\epsilon_k}$, we find $\mu_*\leq \mu_{\epsilon_k}<\mu_*+\epsilon$. Hence, by repeating the above for increasingly smaller choices of $\epsilon$, we can construct a subsequence $\{\mu_{i_k}\}_{k\in\nats}$ such that $\lim_{k\to+\infty}\mu_{i_k}=\mu_*$. Since this is a convergent subsequence of the sequence $\{\mu_i\}_{i\in\nats}$, which we know converges to $\mu_{\epsilon_*}$ itself, it must hold that $\mu_{\epsilon_*}=\mu_*$.
-
-To summarise, we have so far shown that
-\begin{equation}\label{eq:reg_ext_limit:updated_converges_in_subset}
-\lim_{i\to+\infty}\underline{\mathbb{E}}_{\mathcal{P}_{\epsilon_i}}[f(X_v)\,\vert\,Y_u=y_u] = \underline{\mathbb{E}}_{\mathcal{Z}}[f(X_v)\,\vert\,Y_u=y_u]\,.
-\end{equation}
-
-The problem is now that $\{P\in\mathcal{Z}\,:\,P(O_u^i)>0\}\supseteq \{P\in\mathcal{Z}\,:\,\mathbb{E}_P[\phi_u(y_u\vert X_u)]>0\}$. We first imitate the above construction, this time for decreasing lower bounds on $P(O_u^i)$. To this end, fix any $j\in\nats$, and consider any $\delta>0$ such that $\delta < \uexp[P_{\observs\vert\states}(O_u^j\vert X_u)]$. Let $\mathcal{P}_\delta\coloneqq \{P\in\mathcal{Z}\,:\, \mathbb{E}_P[P_{\observs\vert\states}(O_u^j\vert X_u)] > \delta\}$; clearly, $\mathcal{P}_\delta\neq\emptyset$, and $\underline{\mathbb{E}}_{\mathcal{P}_\delta}[P_{\observs\vert\states}(O_u^j\vert X_u)] \geq \delta > 0$.
-
-For any sequence $\{\delta_i\}_{i\in\nats}\to 0^+$, we should now have that
-\begin{equation*}
-\lim_{i\to+\infty} \underline{\mathbb{E}}_{\mathcal{P}_{\delta_i}}[f(X_v)\,\vert\,Y_u\in O_u^j] = \underline{\mathbb{E}}_{\mathcal{Z}}[f(X_v)\,\vert\,Y_u\in O_u^j]\,.
-\end{equation*}
-***** Proof of the above omitted to see where this goes. Pretty sure that this holds. Lets try to diagonalise next. Choose $\{\delta_i\}_{i\in\nats}\to0^+$ such that $\delta_i < \uexp[P_{\observs\vert\states}(O_u^i\vert X_u)]$ for all $i\in\nats$. Assume w.l.o.g. that $\{\underline{\mathbb{E}}_{\mathcal{Z}}[f(X_v)\,\vert\,Y_u\in O_u^i]\}_{i\in\nats}$ converges.
-
-
-*****
-
-The below construction actually works quite well. Getting somewhere...
-
-*****
-
-Fix any $\epsilon>0$ such that $4\epsilon <\uexp[\phi_u(y_u\vert X_u)]$; this is possible since $\uexp[\phi_u(y_u\vert X_u)]>0$. Then there is some $n\in\nats$ such that for all $j>n$,
-\begin{equation}\label{eq:reg_ext_limit:density_approached}
-\norm{\phi_u(y_u\vert X_u) - \frac{P_{\observs\vert\states}(O_u^j\vert X_u)}{\lambda_j}} < \epsilon\,.
-\end{equation}
-Fix any such $j>n$. Let $\delta\coloneqq 2\lambda_j\epsilon$. **** I \emph{think} that actually $\{\lambda_i\}_{i\in\nats}\to 0$ necessarily, which means that we can get $\delta$ as small as we want independent of $\epsilon$.
-
-We now first show that there is always some $P\in\mathcal{Z}$ such that $\mathbb{E}_P[P_{\observs\vert\states}(O_u^j\vert X_u)] > \delta$, for the above choice of $\delta$. Because $\epsilon>0$, and since $\uexp[\phi_u(y_u\vert X_u)]>4\epsilon$, there is some $P\in\mathcal{Z}$ such that
-\begin{align*}
-4\epsilon < \uexp[\phi_u(y_u\vert X_u)] &< \mathbb{E}_P[\phi_u(y_u\vert X_u)] + \epsilon \\
- &= \abs{\mathbb{E}_P[\phi_u(y_u\vert X_u)] - \frac{\mathbb{E}_P[P_{\observs\vert\states}(O_u^j\vert X_u)]}{\lambda_j} + \frac{\mathbb{E}_P[P_{\observs\vert\states}(O_u^j\vert X_u)]}{\lambda_j}} + \epsilon \\
- &< 2\epsilon + \frac{\mathbb{E}_P[P_{\observs\vert\states}(O_u^j\vert X_u)]}{\lambda_j} \\
-2\epsilon &< \frac{\mathbb{E}_P[P_{\observs\vert\states}(O_u^j\vert X_u)]}{\lambda_j} \\
-2\lambda_j\epsilon &< \mathbb{E}_P[P_{\observs\vert\states}(O_u^j\vert X_u)]\,.
-\end{align*}
-
-Consider now any $P\in\mathcal{Z}$ for which $\mathbb{E}_P[P_{\observs\vert\states}(O_u^j\vert X_u)] > \delta$; as shown above, such a $P$ always exists. Then,
-\begin{align*}
-\frac{\delta}{\lambda_j} &< \frac{\mathbb{E}_P[P_{\observs\vert\states}(O_u^j\vert X_u)]}{\lambda_j} \\
- &= \abs{\frac{\mathbb{E}_P[P_{\observs\vert\states}(O_u^j\vert X_u)]}{\lambda_j} - \mathbb{E}_P[\phi_u(y_u\vert X_u)] + \mathbb{E}_P[\phi_u(y_u\vert X_u)]} \\
- &< \epsilon + \mathbb{E}_P[\phi_u(y_u\vert X_u)]\,,
-\end{align*}
-and hence
-\begin{equation*}
-\frac{\delta}{\lambda_j} = 2\epsilon < \epsilon + \mathbb{E}_P[\phi_u(y_u\vert X_u)]\,,
-\end{equation*}
-which clearly implies that $\epsilon < \mathbb{E}_P[\phi_u(y_u\vert X_u)]$. Therefore in particular,
-\begin{equation*}
-\emptyset\neq \{P\in\mathcal{Z}\,:\,\mathbb{E}_P[P_{\observs\vert\states}(O_u^j\vert X_u)] > 2\lambda_j\epsilon\} \subseteq \{P\in\mathcal{Z}\,:\,\mathbb{E}_P[\phi_u(y_u\vert X_u)] > \epsilon\}\,,
-\end{equation*}
-whenever $j\in\nats$ is such that Equation~\ref{eq:reg_ext_limit:density_approached} holds.
-
-*****
-
-Now, consider again the sequence $\{\underline{\mathbb{E}}_{\mathcal{Z}}[f(X_v)\,\vert\,Y_u\in O_u^i]\}_{i\in\nats}$, and choose any convergent subsequence thereof; since the sequence is in the compact interval $[\min f, \max f]$, the Bolzano-Weierstrass theorem implies that at least one convergent subsequence exists. Let
-\begin{equation*}
-\nu_{k_*} \coloneqq \lim_{k\to+\infty} \underline{\mathbb{E}}_{\mathcal{Z}}[f(X_v)\,\vert\,Y_u\in O_u^{i_k}]
-\end{equation*}
-denote the limit of this subsequence. For any $\epsilon>0$, we clearly have $\nu_{k_*}\leq \mu_{\epsilon}$. Also we know from previous tries that $G(\nu_{k_*})=0$, whence also $\nu_{k_*}\leq \mu_*$.
-
-*****
-
-We next diagonalise over the sequences $\{O_u^i\}_{i\in\nats}$ and $\{\epsilon_i\}_{i\in\nats}$. That is, we will show that
-\begin{equation*}
-\lim_{i\to+\infty} \underline{\mathbb{E}}_{\mathcal{P}_{\epsilon_i}}[f(X_v)\,\vert\,Y_u\in O_u^i] = \underline{\mathbb{E}}_{\mathcal{Z}}[f(X_v)\,\vert\,Y_u=y_u]\,.
-\end{equation*}
-To this end, fix any $\epsilon>0$. Because of Equation~\eqref{eq:reg_ext_limit:subsets_converge_to_updated}, there is some $n\in\nats$ such that for all $j>n$,
-\begin{equation*}
-\abs{\underline{\mathbb{E}}_{\mathcal{P}_{\epsilon_i}}[f(X_v)\,\vert\,Y_u\in O_u^j] - \underline{\mathbb{E}}_{\mathcal{P}_{\epsilon_i}}[f(X_v)\,\vert\,Y_u=y_u]} < \epsilon\,.
-\end{equation*}
-Furthermore, due to Equation~\eqref{eq:reg_ext_limit:updated_converges_in_subset}, there is some $m\in\nats$ such that for all $i>m$,
-\begin{equation*}
-\abs{\underline{\mathbb{E}}_{\mathcal{P}_{\epsilon_i}}[f(X_v)\,\vert\,Y_u=y_u] - \underline{\mathbb{E}}_{\mathcal{Z}}[f(X_v)\,\vert\,Y_u=y_u]} < \epsilon\,.
-\end{equation*}
+%
+%\begin{proposition}
+%The limit interpretation of the updated imprecise model with continuous outputs also holds under regular extension.
+%\end{proposition}
+%\begin{proof}
+%Consider any $y_u\in\observs_u$, and any sequence $\{O_u^i\}_{i\in\nats}$ that shrinks to $y_u$. Suppose that there is a sequence $\{\lambda_i\}_{i\in\nats}$ such that $\phi_u(y_u\vert X_u)$ exists, and satisfies $\uexp[\phi_u(y_u\vert X_u)]>0$. We will show that
+%\begin{equation*}
+%\max\{\mu\in\reals\,:\,\lexp[\phi_u(y_u\vert X_u)(f(X_v)-\mu)]\geq 0\} = \lim_{i\to+\infty} \underline{\mathbb{E}}_\mathcal{Z}[f(X_v)\,\vert\,Y_u\in O_u^i]\,.
+%\end{equation*}
+%
+%Fix any $\epsilon >0$ such that $\epsilon<\uexp[\phi_u(y_u\vert X_u)]$. Let $\mathcal{P}_\epsilon \coloneqq \{P\in\mathcal{Z}\,:\,\mathbb{E}_P[\phi_u(y_u\vert X_u)]>\epsilon\}$. Clearly, $\mathcal{P}_\epsilon\neq\emptyset$, and furthermore $\underline{\mathbb{E}}_{\mathcal{P}_\epsilon}[\phi_u(y_u\vert X_u)] \geq \epsilon > 0$. Therefore, as we know from the proof of the statement of the present proposition---but under natural extension---it holds that
+%\begin{equation}\label{eq:reg_ext_limit:subsets_converge_to_updated}
+%\mu_\epsilon \coloneqq \underline{\mathbb{E}}_{\mathcal{P}_\epsilon}[f(X_v)\,\vert\,Y_u=y_u] = \lim_{i\to+\infty} \underline{\mathbb{E}}_{\mathcal{P}_\epsilon}[f(X_v)\,\vert\,Y_u\in O_u^i]\,,
+%\end{equation}
+%under the obvious interpretation of the lower expectation.
+%
+%Because $\mathcal{P}_\epsilon\subseteq\{P\in\mathcal{Z}\,:\,\mathbb{E}_P[\phi_u(y_u\vert X_u)]>0\}$, we must have that
+%\begin{align*}
+%\mu_* \coloneqq \underline{\mathbb{E}}_{\mathcal{Z}}[f(X_v)\,\vert\,Y_u=y_u] &= \inf\{\mathbb{E}_P[f(X_v)\,\vert\,Y_u=y_u]\,:\,P\in\mathcal{Z},\mathbb{E}_P[\phi_u(y_u\vert X_u)]>0\} \\
+% &\leq \underline{\mathbb{E}}_{\mathcal{P}_\epsilon}[f(X_v)\,\vert\,Y_u=y_u] = \mu_\epsilon\,.
+%\end{align*}
+%
+%Now, consider a sequence $\{\epsilon_i\}_{i\in\nats}\to 0^+$ in $\realspos$ such that $\epsilon_i<\uexp[\phi_u(y_u\vert X_u)]$ for all $i\in\nats$. Using the above notation, we will show that $\lim_{i\to\infty}\mu_{\epsilon_i}=\mu_*$. 
+%
+%First, note that $\mu_*\leq \mu_{\epsilon_i}$, and $\mu_{\epsilon_{i+1}}\leq \mu_{\epsilon_i}$ for all $i\in\nats$. In other words, $\{\mu_{\epsilon_i}\}_{i\in\nats}$ is a decreasing sequence which is bounded below by $\mu_*$; hence, by the monotone convergence theorem, the limit $\mu_{\epsilon_*}\coloneqq\lim_{i\to+\infty}\mu_{\epsilon_i}$ exists. Showing that $\mu_{\epsilon_*}=\mu_*$ is a bit more involved.
+%
+%First, define
+%\begin{equation*}
+%G(\mu) \coloneqq \lexp[\phi_u(y_u\vert X_u)\bigl(f(X_v) - \mu\bigr)]\,.
+%\end{equation*}
+%Note that $\mu_*=\max\{\mu\in\reals\,:\,G(\mu)\geq 0\}$ by the GBR. Now fix any $\epsilon>0$. Clearly, $G(\mu_* + \epsilon)< 0$.
+%
+%This implies that there is some $P\in\mathcal{Z}$ such that also
+%\begin{equation*}
+%\mathbb{E}_P[\phi_u(y_u\vert X_u)\bigl(f(X_v) - (\mu_*+\epsilon)\bigr)] < 0\,,
+%\end{equation*}
+%which implies that $\mathbb{E}_P[\phi_u(y_u\vert X_u)]>0$. Because $\{\epsilon_i\}_{i\in\nats}\to 0^+$, there is some $n\in\nats$ such that for all $k>n$, it holds that $\epsilon_k < \mathbb{E}_P[\phi_u(y_u\vert X_u)]$, and hence in particular $P\in\mathcal{P}_{\epsilon_k}$. It follows that
+%\begin{equation*}
+%G_{\epsilon_k}(\mu_*+\epsilon) \coloneqq \underline{\mathbb{E}}_{\mathcal{P}_{\epsilon_k}}[\phi_u(y_u\vert X_u)\bigl(f(X_v) - (\mu_*+\epsilon)\bigr)] \leq \mathbb{E}_P[\phi_u(y_u\vert X_u)\bigl(f(X_v) - (\mu_*+\epsilon)\bigr)] < 0\,.
+%\end{equation*}
+%Since $G_{\epsilon_k}$ is monotonically decreasing, and since $G_{\epsilon_k}(\mu_{\epsilon_k})=0$, it follows that $\mu_{\epsilon_k} < \mu_*+\epsilon$. Since we also know that $\mu_*\leq \mu_{\epsilon_k}$, we find $\mu_*\leq \mu_{\epsilon_k}<\mu_*+\epsilon$. Hence, by repeating the above for increasingly smaller choices of $\epsilon$, we can construct a subsequence $\{\mu_{i_k}\}_{k\in\nats}$ such that $\lim_{k\to+\infty}\mu_{i_k}=\mu_*$. Since this is a convergent subsequence of the sequence $\{\mu_i\}_{i\in\nats}$, which we know converges to $\mu_{\epsilon_*}$ itself, it must hold that $\mu_{\epsilon_*}=\mu_*$.
+%
+%To summarise, we have so far shown that
+%\begin{equation}\label{eq:reg_ext_limit:updated_converges_in_subset}
+%\lim_{i\to+\infty}\underline{\mathbb{E}}_{\mathcal{P}_{\epsilon_i}}[f(X_v)\,\vert\,Y_u=y_u] = \underline{\mathbb{E}}_{\mathcal{Z}}[f(X_v)\,\vert\,Y_u=y_u]\,.
+%\end{equation}
+%
+%The problem is now that $\{P\in\mathcal{Z}\,:\,P(O_u^i)>0\}\supseteq \{P\in\mathcal{Z}\,:\,\mathbb{E}_P[\phi_u(y_u\vert X_u)]>0\}$. We first imitate the above construction, this time for decreasing lower bounds on $P(O_u^i)$. To this end, fix any $j\in\nats$, and consider any $\delta>0$ such that $\delta < \uexp[P_{\observs\vert\states}(O_u^j\vert X_u)]$. Let $\mathcal{P}_\delta\coloneqq \{P\in\mathcal{Z}\,:\, \mathbb{E}_P[P_{\observs\vert\states}(O_u^j\vert X_u)] > \delta\}$; clearly, $\mathcal{P}_\delta\neq\emptyset$, and $\underline{\mathbb{E}}_{\mathcal{P}_\delta}[P_{\observs\vert\states}(O_u^j\vert X_u)] \geq \delta > 0$.
+%
+%For any sequence $\{\delta_i\}_{i\in\nats}\to 0^+$, we should now have that
+%\begin{equation*}
+%\lim_{i\to+\infty} \underline{\mathbb{E}}_{\mathcal{P}_{\delta_i}}[f(X_v)\,\vert\,Y_u\in O_u^j] = \underline{\mathbb{E}}_{\mathcal{Z}}[f(X_v)\,\vert\,Y_u\in O_u^j]\,.
+%\end{equation*}
+%***** Proof of the above omitted to see where this goes. Pretty sure that this holds. Lets try to diagonalise next. Choose $\{\delta_i\}_{i\in\nats}\to0^+$ such that $\delta_i < \uexp[P_{\observs\vert\states}(O_u^i\vert X_u)]$ for all $i\in\nats$. Assume w.l.o.g. that $\{\underline{\mathbb{E}}_{\mathcal{Z}}[f(X_v)\,\vert\,Y_u\in O_u^i]\}_{i\in\nats}$ converges to some limit $\nu_*$.
+%
+%Because each $\mathcal{P}_{\delta_i}\neq \emptyset$, if follows from Proposition~\ref{def:reg_ext_pos} that each $\underline{\mathbb{E}}_{\mathcal{P}_{\delta_i}}[f(X_v)\,\vert\,Y_u\in O_u^i]\in[\min f, \max f]$. Consider any convergent subsequence of this sequence; this clearly always exists. Let
+%\begin{equation*}
+%\nu_{k_*} \coloneqq \lim_{k\to+\infty} \nu_{i_k} \coloneqq \lim_{k\to+\infty} \underline{\mathbb{E}}_{\mathcal{P}_{\delta_{i_k}}}[f(X_v)\,\vert\,Y_u\in O_u^{i_k}]\,.
+%\end{equation*}
+%We want to show that $\nu_{k_*}=\nu_*$. We clearly have $\nu_{i_k}=\underline{\mathbb{E}}_{\mathcal{P}_{\delta_{i_k}}}[f(X_v)\,\vert\,Y_u\in O_u^{i_k}] \geq \underline{\mathbb{E}}_{\mathcal{Z}}[f(X_v)\,\vert\,Y_u\in O_u^{i_k}]$ for all $k\in\nats$, and hence $\nu_* \leq \nu_{k_*}$. If we choose the $\delta_i$ as below, we also have $\mathcal{P}_{\delta_i}\subseteq \mathcal{P}_{\epsilon}$, with the latter as defined above, and hence we should have
+%\begin{equation*}
+%\nu_* \leq \mu_*\leq \mu_{\epsilon} \leq \nu_{k_*}\,.
+%\end{equation*}
+%Decreasing $\epsilon$ should then shift $\nu_{k_*}$ to the left. The corresponding sequence is thus decreasing, and bounded below by $\mu_*$; it therefore converges to some limit $\xi_*$ such that $\nu_*\leq \mu_*\leq \xi_*$. It then remains to show that $\nu_*=\xi_*$. To show this: $\nu_*$ is arbitrarily approached by some $\underline{\mathbb{E}}_{\mathcal{Z}}[f(X_v)\,\vert\,Y_u\in O_u^{j}]$, which in turn is arbitrarily approached by some $P\in\mathcal{Z}$ for which $\mathbb{E}_P[P_{\observs\vert\states}(O_u^j\vert X_u)]>0$. Because $\{\epsilon_i\}_{i\in\nats}\to0$, there is some $n$ such that for all $i>n$, it holds that $\mathbb{E}_P[P_{\observs\vert\states}(O_u^j\vert X_u)] > 2\lambda_j\epsilon_i$. This implies $P\in\mathcal{P}_{2\lambda_j\epsilon_i}$, and hence in particular $\underline{\mathbb{E}}_{\mathcal{P}_{2\lambda_j\epsilon_i}}[f(X_v)\vert Y_u\in O_u^j] \leq \mathbb{E}_P[f(X_v)\vert Y_u\in O_u^j]$. This in turn implies
+%\begin{equation*}
+%\underline{\mathbb{E}}_{\mathcal{Z}}[f(X_v)\vert Y_u\in O_u^j] \leq \underline{\mathbb{E}}_{\mathcal{P}_{2\lambda_j\epsilon_i}}[f(X_v)\vert Y_u\in O_u^j] \leq \mathbb{E}_P[f(X_v)\vert Y_u\in O_u^j]\,,
+%\end{equation*}
+%which means that $\abs{\underline{\mathbb{E}}_{\mathcal{Z}}[f(X_v)\vert Y_u\in O_u^j] - \underline{\mathbb{E}}_{\mathcal{P}_{2\lambda_j\epsilon_i}}[f(X_v)\vert Y_u\in O_u^j]}$ is arbitrarily small by the choice of $P$.
+%
+%*****
+%
+%Honestly, best guess might be to show directly that it cannot happen. I.e., try to prove that $\mathbb{E}_P[\phi_u(y_u\vert X_u)]=0$ implies that it cannot approach $\nu_*$.
+%
+%Some observations: if $\mathbb{E}_P[\phi_u(y_u\vert X_u)]=0$ for some $P\in\mathcal{Z}$, then $\min\{\phi_u(y_u\vert x_u)\,:\,x_u\in\states_u\} = 0$. Let $\states_u^0\coloneqq \{x_u\in\states_u\,:\, \phi_u(y_u\vert x_u) = 0\}$; clearly then $\states_u^0\neq\emptyset$. We must now have that
+%\begin{equation*}
+%\sum_{x_u^0\in\states_u^0}P(X_u=x_u^0) = 1\,.
+%\end{equation*}
+%Choose $P_j$ such that it approaches $\underline{\mathbb{E}}_{\mathcal{Z}}[f(X_v)\,\vert\,Y_u\in O_u^j]$, increasingly better. Clearly, $\mathbb{E}_{P_j}[f(X_v)\,\vert\,Y_u\in O_u^j]\to \nu_*$. Suppose w.l.o.g. that $\mathbb{E}_{P_j}[\phi_u(y_u\vert X_u)]=0$ for each $j$; if this is impossible, then clearly $\nu_*=\mu_*$. Assume \emph{ex absurdo} that $\nu_*<\mu_*$, and define $\delta\coloneqq \mu_*-\nu_*$. Fix any $\epsilon>0$ such that $\epsilon<\delta$. There is some $P\in\mathcal{Z}$ with $\mathbb{E}_{P}[\phi_u(y_u\vert X_u)]>0$ such that $\mathbb{E}_P[f(X_v)\,\vert\,Y_u=y_u]-\epsilon < \mu_*$. Furthermore, there is some $j\in\nats$ such that $\mathbb{E}_{P_j}[f(X_v)\,\vert\,Y_u\in O_u^j] < \mathbb{E}_P[f(X_v)\,\vert\,Y_u=y_u]-\epsilon$. Can even get the $\epsilon$ on both sides. Hence,
+%\begin{equation*}
+%\mathbb{E}_{P_j}[f(X_v)\,\vert\,Y_u\in O_u^j] < \mathbb{E}_P[f(X_v)\,\vert\,Y_u=y_u]
+%\end{equation*}
+%What can we say about relation between $\mathbb{E}_{P_j}[P_{\observs\vert\states}(O_u^j\vert X_u)]$ and $\mathbb{E}_{P}[\phi_u(y_u\vert X_u)]$ ?
+%
+%*****
+%
+%*****
+%
+%Let $\psi_\gamma^j(X_u)\coloneqq \gamma\phi_u(y_u\vert X_u) + (1-\gamma)\nicefrac{P_{\observs\vert\states}(O_u^j\vert X_u)}{\lambda_j}$ for some fixed $\gamma\in (0,1)$. Then,
+%\begin{align*}
+%\norm{\phi_u(y_u\vert X_u) - \psi_\gamma^j(X_u)} &= \norm{\phi_u(y_u\vert X_u) - \gamma\phi_u(y_u\vert X_u) - (1-\gamma)\frac{P_{\observs\vert\states}(O_u^j\vert X_u)}{\lambda_j}} \\
+% &= (1-\gamma)\norm{\phi_u(y_u\vert X_u) - \frac{P_{\observs\vert\states}(O_u^j\vert X_u)}{\lambda_j}} \\
+% &< \norm{\phi_u(y_u\vert X_u) - \frac{P_{\observs\vert\states}(O_u^j\vert X_u)}{\lambda_j}}\,.
+%\end{align*}
+%Hence, $\lim_{j\to+\infty}\psi_\gamma^j(X_u)=\phi_u(y_u\vert X_u)$ for any choice of $\gamma$.
+%
+%Going to guess that therefore **** nope, begging the question
+%\begin{align*}
+% &\quad \lim_{j\to+\infty} \inf\left\{ \frac{\mathbb{E}_P[f(X_v)\psi_\gamma^j(X_u)]}{\mathbb{E}_P[\psi_\gamma^j(X_u)]} \,:\,P\in\mathcal{Z}, \mathbb{E}_P[\psi_\gamma^j(X_u)] > 0\right\} \\
+% & = \inf\left\{\frac{\mathbb{E}_P[f(X_v)\phi_u(y_u\vert X_u)]}{\mathbb{E}_P[\phi_u(y_u\vert X_u)]} \,:\,P\in\mathcal{Z}, \mathbb{E}_P[\phi_u(y_u\vert X_u)] > 0\right\} \\
+% &= \underline{\mathbb{E}}_\mathcal{Z}[f(X_v)\,\vert\,Y_u=y_u]
+%\end{align*}
+%At the same time, $\underline{\mathbb{E}}_\mathcal{Z}[f(X_v)\,\vert\,O_u^j]$ is arbitrarily approached by some $P\in\mathcal{Z}$ such that $\mathbb{E}_P[P_{\observs\vert\states}(O_u^j\vert X_u)]>0$. We then have two options for this $P$; either $\mathbb{E}_P[\phi_u(y_u\vert X_u)]>0$, or it is zero. In the first case, we also have $\underline{\mathbb{E}}_\mathcal{Z}[f(X_v)\,\vert\,Y_u=y_u] < \mathbb{E}_P[f(X_v)\,\vert\,Y_u=y_u]$, which suffices to end the proof. Suppose therefore that the other case holds, i.e. $\mathbb{E}_P[\phi_u(y_u\vert X_u)]=0$. We do however know that $\mathbb{E}_P[\psi_\gamma^j(X_u)]>0$, and in particular
+%\begin{equation*}
+%\mathbb{E}_P[\psi_\gamma^j(X_u)] = \mathbb{E}_P\left[\gamma\phi_u(y_u\vert X_u) + (1-\gamma)\frac{P_{\observs\vert\states}(O_u^j\vert X_u)}{\lambda_j}\right] = (1-\gamma)\mathbb{E}_P\left[\frac{P_{\observs\vert\states}(O_u^j\vert X_u)}{\lambda_j}\right]\,.
+%\end{equation*}
+%On the other hand,
+%\begin{align*}
+%\mathbb{E}_P[f(X_v)\psi_\gamma^j(X_u)] = \frac{(1-\gamma)}{\lambda_j}\mathbb{E}_P[f(X_v)P_{\observs\vert\states}(O_u^j\vert X_u)]\,,
+%\end{align*}
+%and hence
+%\begin{equation*}
+%\frac{\mathbb{E}_P[f(X_v)\psi_\gamma^j(X_u)]}{\mathbb{E}_P[\psi_\gamma^j(X_u)]} = \frac{\mathbb{E}_P[f(X_v)P_{\observs\vert\states}(O_u^j\vert X_u)]}{\mathbb{E}_P[P_{\observs\vert\states}(O_u^j\vert X_u)]} = \mathbb{E}_P[f(X_v)\,\vert\,Y_u\in O_u^j]\,.
+%\end{equation*}
+%This suffices to end the proof.
+%*****
+%
+%The below construction actually works quite well. Getting somewhere...
+%
+%*****
+%
+%Fix any $\epsilon>0$ such that $4\epsilon <\uexp[\phi_u(y_u\vert X_u)]$; this is possible since $\uexp[\phi_u(y_u\vert X_u)]>0$. Then there is some $n\in\nats$ such that for all $j>n$,
+%\begin{equation}\label{eq:reg_ext_limit:density_approached}
+%\norm{\phi_u(y_u\vert X_u) - \frac{P_{\observs\vert\states}(O_u^j\vert X_u)}{\lambda_j}} < \epsilon\,.
+%\end{equation}
+%Fix any such $j>n$. Let $\delta\coloneqq 2\lambda_j\epsilon$. **** I \emph{think} that actually $\{\lambda_i\}_{i\in\nats}\to 0$ necessarily, which means that we can get $\delta$ as small as we want independent of $\epsilon$.
+%
+%We now first show that there is always some $P\in\mathcal{Z}$ such that $\mathbb{E}_P[P_{\observs\vert\states}(O_u^j\vert X_u)] > \delta$, for the above choice of $\delta$. Because $\epsilon>0$, and since $\uexp[\phi_u(y_u\vert X_u)]>4\epsilon$, there is some $P\in\mathcal{Z}$ such that
+%\begin{align*}
+%4\epsilon < \uexp[\phi_u(y_u\vert X_u)] &< \mathbb{E}_P[\phi_u(y_u\vert X_u)] + \epsilon \\
+% &= \abs{\mathbb{E}_P[\phi_u(y_u\vert X_u)] - \frac{\mathbb{E}_P[P_{\observs\vert\states}(O_u^j\vert X_u)]}{\lambda_j} + \frac{\mathbb{E}_P[P_{\observs\vert\states}(O_u^j\vert X_u)]}{\lambda_j}} + \epsilon \\
+% &< 2\epsilon + \frac{\mathbb{E}_P[P_{\observs\vert\states}(O_u^j\vert X_u)]}{\lambda_j} \\
+%2\epsilon &< \frac{\mathbb{E}_P[P_{\observs\vert\states}(O_u^j\vert X_u)]}{\lambda_j} \\
+%2\lambda_j\epsilon &< \mathbb{E}_P[P_{\observs\vert\states}(O_u^j\vert X_u)]\,.
+%\end{align*}
+%
+%Consider now any $P\in\mathcal{Z}$ for which $\mathbb{E}_P[P_{\observs\vert\states}(O_u^j\vert X_u)] > \delta$; as shown above, such a $P$ always exists. Then,
+%\begin{align*}
+%\frac{\delta}{\lambda_j} &< \frac{\mathbb{E}_P[P_{\observs\vert\states}(O_u^j\vert X_u)]}{\lambda_j} \\
+% &= \abs{\frac{\mathbb{E}_P[P_{\observs\vert\states}(O_u^j\vert X_u)]}{\lambda_j} - \mathbb{E}_P[\phi_u(y_u\vert X_u)] + \mathbb{E}_P[\phi_u(y_u\vert X_u)]} \\
+% &< \epsilon + \mathbb{E}_P[\phi_u(y_u\vert X_u)]\,,
+%\end{align*}
+%and hence
+%\begin{equation*}
+%\frac{\delta}{\lambda_j} = 2\epsilon < \epsilon + \mathbb{E}_P[\phi_u(y_u\vert X_u)]\,,
+%\end{equation*}
+%which clearly implies that $\epsilon < \mathbb{E}_P[\phi_u(y_u\vert X_u)]$. Therefore in particular,
+%\begin{equation*}
+%\emptyset\neq \{P\in\mathcal{Z}\,:\,\mathbb{E}_P[P_{\observs\vert\states}(O_u^j\vert X_u)] > 2\lambda_j\epsilon\} \subseteq \{P\in\mathcal{Z}\,:\,\mathbb{E}_P[\phi_u(y_u\vert X_u)] > \epsilon\}\,,
+%\end{equation*}
+%whenever $j\in\nats$ is such that Equation~\ref{eq:reg_ext_limit:density_approached} holds.
+%
+%*****
+%
+%Now, consider again the sequence $\{\underline{\mathbb{E}}_{\mathcal{Z}}[f(X_v)\,\vert\,Y_u\in O_u^i]\}_{i\in\nats}$, and choose any convergent subsequence thereof; since the sequence is in the compact interval $[\min f, \max f]$, the Bolzano-Weierstrass theorem implies that at least one convergent subsequence exists. Let
+%\begin{equation*}
+%\nu_{k_*} \coloneqq \lim_{k\to+\infty} \underline{\mathbb{E}}_{\mathcal{Z}}[f(X_v)\,\vert\,Y_u\in O_u^{i_k}]
+%\end{equation*}
+%denote the limit of this subsequence. For any $\epsilon>0$, we clearly have $\nu_{k_*}\leq \mu_{\epsilon}$. Also we know from previous tries that $G(\nu_{k_*})=0$, whence also $\nu_{k_*}\leq \mu_*$.
+%
+%*****
+%
+%We next diagonalise over the sequences $\{O_u^i\}_{i\in\nats}$ and $\{\epsilon_i\}_{i\in\nats}$. That is, we will show that
+%\begin{equation*}
+%\lim_{i\to+\infty} \underline{\mathbb{E}}_{\mathcal{P}_{\epsilon_i}}[f(X_v)\,\vert\,Y_u\in O_u^i] = \underline{\mathbb{E}}_{\mathcal{Z}}[f(X_v)\,\vert\,Y_u=y_u]\,.
+%\end{equation*}
+%To this end, fix any $\epsilon>0$. Because of Equation~\eqref{eq:reg_ext_limit:subsets_converge_to_updated}, there is some $n\in\nats$ such that for all $j>n$,
+%\begin{equation*}
+%\abs{\underline{\mathbb{E}}_{\mathcal{P}_{\epsilon_i}}[f(X_v)\,\vert\,Y_u\in O_u^j] - \underline{\mathbb{E}}_{\mathcal{P}_{\epsilon_i}}[f(X_v)\,\vert\,Y_u=y_u]} < \epsilon\,.
+%\end{equation*}
+%Furthermore, due to Equation~\eqref{eq:reg_ext_limit:updated_converges_in_subset}, there is some $m\in\nats$ such that for all $i>m$,
+%\begin{equation*}
+%\abs{\underline{\mathbb{E}}_{\mathcal{P}_{\epsilon_i}}[f(X_v)\,\vert\,Y_u=y_u] - \underline{\mathbb{E}}_{\mathcal{Z}}[f(X_v)\,\vert\,Y_u=y_u]} < \epsilon\,.
+%\end{equation*}
 %We will next establish that the same property holds for the quantities $\underline{\mathbb{E}}_{\mathcal{P}_{\epsilon_i}}[f(X_v)\,\vert\,Y_u\in O_u^j]$. The final argument is then by diagonalisation over all sequences at the same time.
-
+%
 %So, consider any $j\in\nats$, and the corresponding sequence $\{\nu_{\epsilon_i}^j\}_{i\in\nats}$ defined by
 %\begin{equation*}
 %\nu_{\epsilon_i}^j \coloneqq \underline{\mathbb{E}}_{\mathcal{P}_{\epsilon_i}}[f(X_v)\,\vert\,Y_u\in O_u^j]\,.
 %\end{equation*}
 %Let $\nu_*^j\coloneqq \underline{\mathbb{E}}_{\mathcal{Z}}[f(X_v)\,\vert\,Y_u\in O_u^j]$. 
-
+%
 %***** SHIT. I THINK THE NESTING IS NOW REVERSED. 
-
+%
 %Start by showing that $\underline{\mathbb{E}}_{\mathcal{P}_{\epsilon_i}}[\phi_u(y_u\vert X_y)]>0\Rightarrow \underline{\mathbb{E}}_{\mathcal{P}_{\epsilon_i}}[P_{\observs\vert\states}(O_u^j\vert X_u)]>0$ (should hold by convergence and monotonicity of measure).
 %Due to nesting of the sets $\mathcal{P}_{\epsilon_i}$ and $\mathcal{Z}$, we again have that $\nu_*^j\leq \nu_{\epsilon_i}^j$, and $\nu_{\epsilon_{i+1}}^j\leq \nu_{\epsilon_i}^j$ for all $i\in\nats$. Again by the monotone convergence theorem, $\nu_{\epsilon_*}^j\coloneqq \lim_{i\to+\infty}\nu_{\epsilon_i}^j$ exists.
-
+%
 %Let next
 %\begin{equation*}
 %G^j(\nu) \coloneqq \lexp[P_{\observs\vert\states}(O_u^j\vert X_u)\bigl(f(X_v)-\nu\bigr)]\,.
@@ -1648,8 +1706,74 @@ Furthermore, due to Equation~\eqref{eq:reg_ext_limit:updated_converges_in_subset
 %\mathbb{E}_P[P_{\observs\vert\states}(O_u^j\vert X_u)\bigl(f(X_v)-(\nu_*^j+\epsilon)\bigr)] < 0\,,
 %\end{equation*}
 %which implies that $\mathbb{E}_P[P_{\observs\vert\states}(O_u^j\vert X_u)] > 0$. ***** SHOW THAT THIS IMPLIES $\mathbb{E}_P[\phi_u(y_u\vert X_u)]>0$.
+%
+%\end{proof}
 
+The below proves by counterexample that the regular extension version of Proposition~\ref{prop:GBR_for_densities_is_limit_if_continuous} does not hold in general.
+\begin{proposition}
+There exists some ICTHMC $\mathcal{Z}$, some sequences of time-points $u,v\in\mathcal{U}$, some function $f\in\gambles(\states_v)$, some $y_u\in\observs_u$, and some sequence $\{O_u^i\}_{i\in\nats}$ such that there is a sequence $\{\lambda_i\}_{i\in\nats}$ for which $\phi_u(y_u\vert X_u)$ exists, is real-valued, and $\uexp[\phi_u(y_u\vert X_u)]>0$, such that for the imprecise updated model under regular extension,
+\begin{equation*}
+\underline{\mathbb{E}}_\mathcal{Z}^\mathrm{R}[f(X_v)\,\vert\, Y_u=y_u] \coloneqq \inf\left\{ \mathbb{E}_P[f(X_v)\,\vert\,Y_u=y_u]\,:\,P\in\mathcal{Z}, \mathbb{E}_P[\phi_u(y_u\vert X_u)]>0  \right\}\,,
+\end{equation*}
+it holds that
+\begin{equation*}
+\underline{\mathbb{E}}_\mathcal{Z}^\mathrm{R}[f(X_v)\,\vert\, Y_u=y_u] \neq \lim_{i\to+\infty} \underline{\mathbb{E}}_\mathcal{Z}[f(X_v)\,\vert\, Y_u\in O_u^i]\,.
+\end{equation*}
+\end{proposition}
+\begin{proof}
+We give a proof by counterexample. To this end, let $\states\coloneqq\{x,\overline{x}\}$ be a binary state-space, and let $\observs\coloneqq \reals$, with $\Sigma$ the Borel $\sigma$-algebra on $\observs$ under the usual topology.
+
+For the sequences of time-points, we choose $u=v=\{0\}$, and we will drop the corresponding time-point subscripts for brevity. Set $y\coloneqq 0$.
+
+The trick will be to choose the measures $P_{\observs\vert\states}(y\vert x)$ and $P_{\observs\vert\states}(y\vert \overline{x})$ so that one of them gives $y$ strictly positive support (i.e. density), while the other assigns zero support to $y$ but positive support (i.e. density) to the region around $y$. So, let $P_{\observs\vert\states}(\cdot\vert x)$ be the standard Normal distribution with standard deviation one and mean equal to $y=0$.
+
+We construct the measure $P_{\observs\vert\states}(y\vert \overline{x})$ in reverse, by constructing $\phi(\cdot\vert\overline{x})$ explicitly. To this end, for every $\tilde{y}\in\observs$, let
+\begin{equation*}
+\phi(\tilde{y}\vert\overline{x}) \coloneqq \left\{\begin{array}{ll}
+\abs{\tilde{y}} & \text{if $\tilde{y}\in[-1,1]$, and} \\
+0 & \text{otherwise.}
+\end{array}\right.
+\end{equation*}
+Clearly, $\int_\observs \phi(\tilde{y}\vert\overline{x})\,\mathrm{d}\tilde{y} = 1$, and furthermore $\phi(y\vert\overline{x})=0$. For every $O\in\Sigma$, let $P_{\observs\vert\states}(O\vert\overline{x})$ be defined by
+\begin{equation*}
+P_{\observs\vert\states}(O\vert\overline{x}) \coloneqq \int_O\phi(\tilde{y}\vert\overline{x})\,\mathrm{d}\tilde{y}\,.
+\end{equation*}
+For any sequence $\{O^i\}_{i\in\nats}$ of open sets around $y$ that shrink to zero, we then clearly have
+\begin{equation*}
+\phi(y\vert x) = \frac{1}{\sqrt{2\pi}} = \lim_{i\to+\infty} \frac{P_{\observs\vert\states}(O^i\vert x)}{\lambda(O^i)}\,,
+\end{equation*}
+and
+\begin{equation*}
+\phi(y\vert \overline{x}) = 0 = \lim_{i\to+\infty} \frac{P_{\observs\vert\states}(O^i\vert \overline{x})}{\lambda(O^i)}\,,
+\end{equation*}
+with $\lambda(O^i)$ the Lebesgue measure of $O^i$. Fix any such sequence $\{O^i\}_{i\in\nats}$, and let $\{\lambda_i\}_{i\in\nats}\coloneqq\{\lambda(O^i)\}_{i\in\nats}$ be the corresponding sequence.
+
+Construct the set of initial distribution as $\mathcal{M}\coloneqq\{P,\overline{P}\}$, where $P,\overline{P}$ are probability mass functions on $\states_0$ such that $P(x)=1$, $P(\overline{x})=0$, and $\overline{P}(x)=0$, $\overline{P}(\overline{x})=1$. Let $\rateset$ be any non-empty, bounded, and convex set of rate matrices with separately specified rows, and let $\mathbb{P}_{\rateset,\mathcal{M}}$ be the corresponding ICTMC. Construct $\mathcal{Z}$ from $\mathbb{P}_{\rateset,\mathcal{M}}$ and $(\observs,\Sigma,P_{\observs\vert\states})$.
+
+Clearly, $\uexp[\phi(y\vert X_0)]=\overline{\mathbb{E}}_\mathcal{M}[\phi(y\vert X_0)] = P(x)\phi(y\vert x) + P(\overline{x})\phi(y\vert \overline{x})=P(x)\phi(y\vert x) = \frac{1}{\sqrt{2\pi}}>0$, and so we can apply regular extension.
+
+Let $f\in\gambles(\states_0)$ be defined by $f(x)\coloneqq 1$ and $f(\overline{x})\coloneqq -1$. Then, because $\mathbb{E}_P[\phi(y\vert X_0)] > 0$, by Proposition~\ref{prop:precise_bayes_rule_densities} we have that
+\begin{equation*}
+\mathbb{E}_P[f(X_0)\,\vert\,Y=y] = \frac{\mathbb{E}_P[f(X_0)\phi(y\vert X_0)]}{\mathbb{E}_P[\phi(y\vert X_0)]} = \frac{f(x)\phi(y\vert x)}{\phi(y\vert x)} = f(x) = 1\,.
+\end{equation*}
+On the other hand, $\mathbb{E}_{\overline{P}}[\phi(y\vert X_0)]=0$. Hence,
+\begin{align*}
+\underline{\mathbb{E}}_\mathcal{Z}^\mathrm{R}[f(X_0)\,\vert\, Y=y] &= \inf\left\{ \mathbb{E}_{P'}[f(X_0)\,\vert\,Y=y]\,:\,P'\in\mathcal{Z}, \mathbb{E}_{P'}[\phi_u(y\vert X_0)]>0  \right\} \\
+ &= \mathbb{E}_P[f(X_0)\,\vert\,Y=y] \\
+ &= 1\,.
+\end{align*}
+However, for any $i\in\nats$ we have $\mathbb{E}_P[P_{\observs\vert\states}(O^i\vert X_0)]>0$, and hence
+\begin{align*}
+\mathbb{E}_P[f(X_0)\,\vert\,Y\in O^i] = \frac{\mathbb{E}_P[f(X_0)P_{\observs\vert\states}(O^i\vert X_0)]}{\mathbb{E}_P[P_{\observs\vert\states}(O^i\vert X_0)]} = \frac{f(x)P_{\observs\vert\states}(O^i\vert x)}{P_{\observs\vert\states}(O^i\vert x)} = f(x) = 1\,,
+\end{align*}
+and, since also $\mathbb{E}_{\overline{P}}[P_{\observs\vert\states}(O^i\vert X_0)]>0$,
+\begin{align*}
+\mathbb{E}_{\overline{P}}[f(X_0)\,\vert\,Y\in O^i] = \frac{\mathbb{E}_{\overline{P}}[f(X_0)P_{\observs\vert\states}(O^i\vert X_0)]}{\mathbb{E}_{\overline{P}}[P_{\observs\vert\states}(O^i\vert X_0)]} = \frac{f(\overline{x})P_{\observs\vert\states}(O^i\vert \overline{x})}{P_{\observs\vert\states}(O^i\vert \overline{x})} = f(\overline{x}) = -1\,.
+\end{align*}
+It follows that for every $i\in\nats$, we have $\underline{\mathbb{E}}_\mathcal{Z}[f(X_0)\vert Y\in O^i]=-1$. Hence,
+\begin{equation*}
+-1 =  \lim_{i\to+\infty} \underline{\mathbb{E}}_\mathcal{Z}[f(X_0)\vert Y\in O^i] \neq \underline{\mathbb{E}}_\mathcal{Z}^\mathrm{R}[f(X_0)\,\vert\, Y=y] = 1\,.
+\end{equation*}
 \end{proof}
-
 
 \end{document}
