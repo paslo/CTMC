@@ -1772,4 +1772,69 @@ and similarly for the upper expectation.
 %
 %\end{proof}
 
+\section{Testing stuff}
+
+\begin{proposition}
+Consider the set
+\begin{equation*}
+\mathcal{P} \coloneqq \left\{P\in\mathcal{Z}\,:\,\text{$\mathbb{E}_P[f(X_v)\,\vert\,Y_u=y_u]$ exists}\right\}
+\end{equation*}
+Let the updated imprecise model be defined by
+\begin{equation*}
+\underline{\mathbb{E}}_{\mathcal{Z}}^\mathrm{L}[f(X_v)\,\vert\,Y_u=y_u] \coloneqq \inf\left\{ \mathbb{E}_P[f(X_v)\,\vert\,Y_u=y_u]\,:\,P\in\mathcal{P} \right\}\,,
+\end{equation*}
+whenever $\mathcal{P}\neq\emptyset$, and leave it undefined, otherwise.
+
+Then, if $\mathcal{P}\neq\emptyset$, it holds that
+\begin{equation*}
+\underline{\mathbb{E}}_{\mathcal{Z}}^\mathrm{L}[f(X_v)\,\vert\,Y_u=y_u] = \lim_{i\to+\infty} \underline{\mathbb{E}}_{\mathcal{Z}}[f(X_v)\,\vert\,Y_u\in O_u^i]\,.
+\end{equation*}
+\end{proposition}
+\begin{proof}
+This uses the following claim:
+\newline
+\newline
+{\bf Claim 1:~}\emph{If $\mathcal{P}\neq\emptyset$ then $\uexp[P_{\observs\vert\states}(O_u^i\vert X_u)]>0$ for all $i\in\nats$. (Pretty sure that this is true).}
+\newline
+\newline
+For notational brevity, let $\mu_i\coloneqq \underline{\mathbb{E}}_{\mathcal{Z}}[f(X_v)\,\vert\,Y_u\in O_u^i]$ for all $i\in\nats$. Then, by the above claim, $\{\mu_i\}_{i\in\nats}$ is well-defined, and furthermore $\mu_i\in[\min f, \max f]$ for all $i\in\nats$.
+
+Let $\{\mu_{i_k}\}_{k\in\nats}$ be any convergent subsequence of $\{\mu_i\}_{i\in\nats}$; the Bolzano-Weierstrass theorem implies the existence of at least one such subsequence. Let $\mu_{k_*}\coloneqq \lim_{k\to+\infty}\mu_{i_k}$.
+
+Fix any $P\in\mathcal{P}$. Then, for every $k\in\nats$, we have
+\begin{equation*}
+\mu_{i_k} \leq \mathbb{E}_P[f(X_v)\,\vert\,Y_u\in O_u^{i_k}]\,.
+\end{equation*}
+Because this holds for all $k\in\nats$, we must have
+\begin{equation*}
+\mu_{k_*} = \lim_{k\to+\infty}\mu_{i_k} \leq \lim_{k\to+\infty} \mathbb{E}_P[f(X_v)\,\vert\,Y_u\in O_u^{i_k}] = \mathbb{E}_P[f(X_v)\,\vert\,Y_u=y_u]\,,
+\end{equation*}
+and therefore clearly also for every $\epsilon>0$ we have
+\begin{equation*}
+\mu_{k_*} - \epsilon \leq \mathbb{E}_P[f(X_v)\,\vert\,Y_u=y_u] - \epsilon\,.
+\end{equation*}
+Furthermore, for every $\epsilon>0$, there is some $P\in\mathcal{P}$ such that
+\begin{equation*}
+\mathbb{E}_P[f(X_v)\,\vert\,Y_u=y_u] - \epsilon < \underline{\mathbb{E}}_{\mathcal{Z}}^\mathrm{L}[f(X_v)\,\vert\,Y_u=y_u]\,.
+\end{equation*}
+Combining with the above, we find
+\begin{equation*}
+\mu_{k_*} - \epsilon \leq \mathbb{E}_P[f(X_v)\,\vert\,Y_u=y_u] - \epsilon < \underline{\mathbb{E}}_{\mathcal{Z}}^\mathrm{L}[f(X_v)\,\vert\,Y_u=y_u]\,.
+\end{equation*}
+Because the $\epsilon>0$ was arbitrary, we conclude
+\begin{equation*}
+\mu_{k_*} \leq \underline{\mathbb{E}}_{\mathcal{Z}}^\mathrm{L}[f(X_v)\,\vert\,Y_u=y_u]\,.
+\end{equation*}
+To establish equality, we next prove the inequality in the other direction.
+
+Choose any sequence $\{\epsilon_k\}_{k\in\nats}\to 0^+$, and fix any $k\in\nats$. Then, there is some $P_k\in\mathcal{Z}$ such that $\mathbb{E}_{P_k}[P_{\observs\vert\states}(O_u^i\vert X_u)]>0$, and
+\begin{equation*}
+\mathbb{E}_{P_k}[f(X_v)\,\vert\,Y_u\in O_u^{i_k}] - \epsilon_k < \mu_{i_k}\,.
+\end{equation*}
+Furthermore, clearly, $\abs{\mu_{i_k} - \mathbb{E}_{P_k}[f(X_v)\,\vert\,Y_u\in O_u^{i_k}]} < \epsilon_k$. Repeating this construction for every $k\in\nats$, we obtain a sequence $\{ \mathbb{E}_{P_k}[f(X_v)\,\vert\,Y_u\in O_u^{i_k}] \}_{k\in\nats}$. We now first show that this sequence also converges to $\mu_{k_*}$. To this end, choose any $\epsilon>0$. Because $\{\mu_{i_k}\}_{k\in\nats}\to\mu_{k_*}$, there is some $n\in\nats$ such that, for all $k>n$, $\abs{\mu_{i_k}-\mu_{k_*}}<\nicefrac{\epsilon}{2}$. Furthermore, because $\{\epsilon_k\}_{k\in\nats}\to 0^+$, there is some $m\in\nats$ such that for all $k>m$, $\epsilon_k<\nicefrac{\epsilon}{2}$. Now choose any $k>\max\{n,m\}$. Then,
+\begin{align*}
+\abs{\mathbb{E}_{P_k}[f(X_v)\,\vert\,Y_u\in O_u^{i_k}] - \mu_{k_*}} &= \abs{\mathbb{E}_{P_k}[f(X_v)\,\vert\,Y_u\in O_u^{i_k}] - \mu_{i_k} + \mu_{i_k} - \mu_{k_*}}
+\end{align*}
+\end{proof}
+
 \end{document}
