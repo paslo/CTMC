@@ -273,7 +273,7 @@ A second novelty of the present paper is that, contrary to most of the work in t
 
 We denote the reals as $\reals$, the non-negative reals as $\realsnonneg$, and the positive reals as $\realspos$. The natural numbers are denoted by $\nats$, and we define $\natswith\coloneqq\nats\cup\{0\}$.
 
-Since we are working in a continuous-time setting, a \emph{time-point} is an element of $\realsnonneg$, and these are typically written $t$ or $s$. We also make extensive use of non-empty, finite sequences of time points $u\subset\realsnonneg$. These are taken to be ordered, so that they may be written $u=t_0,\ldots,t_n$, for some $n\in\natswith$, and such that then $t_i<t_j$ for all $i,j\in\{0,\ldots,n\}$ for which $i< j$. Such sequences are usually written $u$ or $v$, and we denote the entire set of them by $\mathcal{U}$.
+Since we are working in a continuous-time setting, a \emph{time-point} is an element of $\realsnonneg$, and these are typically denoted by $t$ or $s$. We also make extensive use of non-empty, finite sequences of time points $u\subset\realsnonneg$. These are taken to be ordered, so that they may be written $u=t_0,\ldots,t_n$, for some $n\in\natswith$, and such that then $t_i<t_j$ for all $i,j\in\{0,\ldots,n\}$ for which $i< j$. Such sequences are usually denoted by $u$ or $v$, and we let $\mathcal{U}$ be the entire set of them.
 
 Throughout, we consider some fixed, finite state space $\states$. A generic element of $\states$ will be denoted by $x$. When considering the state-space at a specific time $t$, we write $\states_t\coloneqq\states$, and $x_t$ denotes a generic state-assignment at this time. When considering multiple time-points $u$ simultaneously, we define the joint state-space as $\states_u\coloneqq\prod_{t_i\in u}\states_{t_i}$, of which $x_u=(x_{t_0},\ldots,x_{t_n})$ is a generic element.
 
@@ -299,29 +299,28 @@ This second type of parameter requires the concept of a \emph{rate matrix}. Such
 \begin{equation*}
 P(X_{t+\Delta}\,\vert\,X_t,X_u=x_u) \approx \bigl[I + \Delta Q_{t,x_u}\bigr](X_t, X_{t+\Delta})\,,
 \end{equation*}
-for some rate matrix $Q_{t,x_u}$, where $I$ denotes the $\lvert\states\rvert\times\lvert\states\rvert$ identity matrix, and where the quantity $[I + \Delta Q_{t,x_u}](X_t,X_{t+\Delta})$ denotes the element at the $X_t$-th row and $X_{t+\Delta}$-th column of the matrix $I + \Delta Q_{t,x_u}$. Note that in general, this rate matrix $Q_{t,x_u}$ may depend on the specific time $t$ and history $x_u$ at which this relationship is stated. %This rate matrix---or, more appropriately, time- and history-dependent family of rate matrices---parameterises the dynamic behaviour of a continuous-time stochastic process.
+for some rate matrix $Q_{t,x_u}$, where $I$ denotes the $\lvert\states\rvert\times\lvert\states\rvert$ identity matrix, and where the quantity $[I + \Delta Q_{t,x_u}](X_t,X_{t+\Delta})$ denotes the element at row $X_t$ and column $X_{t+\Delta}$ of the matrix $I + \Delta Q_{t,x_u}$. Note that in general, this rate matrix $Q_{t,x_u}$ may depend on the specific time $t$ and history $x_u$ at which this relationship is stated. %This rate matrix---or, more appropriately, time- and history-dependent family of rate matrices---parameterises the dynamic behaviour of a continuous-time stochastic process.
 
-When these rate matrices only depend on the time $t$ and not on the history $x_u$, i.e. when $Q_{t,x_u}=Q_t$ for all $t$ and all $x_u$, then it can be shown that $P$ satisfies the \emph{Markov property}: $P(X_s\,\vert\,X_t,X_u)=P(X_s\,\vert\,X_t)$. In this case, $P$ is called a \emph{continuous-time Markov chain}.
+If these rate matrices only depend on the time $t$ and not on the history $x_u$, i.e. if $Q_{t,x_u}=Q_t$ for all $t$ and all $x_u$, then it can be shown that $P$ satisfies the \emph{Markov property}: $P(X_s\,\vert\,X_t,X_u)=P(X_s\,\vert\,X_t)$. In this case, $P$ is called a \emph{continuous-time Markov chain}.
 
-Using this method of parameterisation, an \emph{imprecise continuous-time Markov chain} (ICTMC) is similarly parameterised using a \emph{set} of rate matrices $\rateset$, and a \emph{set} of initial distributions $\mathcal{M}$. The corresponding ICTMC, denoted $\mathbb{P}_{\rateset,\mathcal{M}}$, is the set of all continuous-time stochastic processes whose dynamics can be described using the elements of $\rateset$, and whose initial distributions are consistent with $\mathcal{M}$. That is, $\mathbb{P}_{\rateset,\mathcal{M}}$ is the set of stochastic processes $P$ for which $P(X_0)\in\mathcal{M}$, and for which $Q_{t,x_u}\in\rateset$ for every time $t$ and history $x_u$.
+Using this method of parameterisation, an \emph{imprecise continuous-time Markov chain} (ICTMC) is similarly parameterised using a \emph{set} of rate matrices $\rateset$, and a \emph{set} of initial distributions $\mathcal{M}$. The corresponding ICTMC, denoted by $\mathbb{P}_{\rateset,\mathcal{M}}$, is the set of all continuous-time stochastic processes whose dynamics can be described using the elements of $\rateset$, and whose initial distributions are consistent with $\mathcal{M}$. That is, $\mathbb{P}_{\rateset,\mathcal{M}}$ is the set of stochastic processes $P$ for which $P(X_0)\in\mathcal{M}$ and for which $Q_{t,x_u}\in\rateset$ for every time $t$ and history $x_u$.
 
 The \emph{lower expectation} with respect to this set $\mathbb{P}_{\rateset,\mathcal{M}}$ is then defined as
 \begin{equation*}
 \underline{\mathbb{E}}_{\rateset,\mathcal{M}}[\cdot\,\vert\,\cdot] \coloneqq \inf\left\{ \mathbb{E}_P[\cdot\,\vert\,\cdot]\,:\, P\in\mathbb{P}_{\rateset,\mathcal{M}} \right\}\,,
 \end{equation*}
-where $\mathbb{E}_P[\cdot\,\vert\,\cdot]$ denotes the expectation with respect to the (precise) stochastic process $P$. The corresponding \emph{upper expectation} $\uexp$ is defined as the \emph{supremum} expectation over the $\mathbb{E}_P$, which is derived through the well-known conjugacy property $\uexp[\cdot\,\vert\,\cdot]\coloneqq -\lexp[-\cdot\,\vert\,\cdot]$.
+where $\mathbb{E}_P[\cdot\,\vert\,\cdot]$ denotes the expectation with respect to the (precise) stochastic process $P$. The \emph{upper expectation} $\uexp$ is defined similarly, and is derived through the well-known conjugacy property $\uexp[\cdot\,\vert\,\cdot] = -\lexp[-\cdot\,\vert\,\cdot]$. Note that it suffices to focus on lower (or upper) expectations, and that lower (and upper) probabilities can be regarded as a special case; these can be computed as $\underline{P}_{\rateset,\mathcal{M}}(X_s=x\,\vert\,X_t) = \lexp[\ind{x}(X_s)\,\vert\,X_t]$, where $\ind{x}(X_s)$ is the indicator function on $x$ which satisfies $\ind{x}(x)=1$ and $\ind{x}(x')=0$ for all $x'\in\states$ such that $x\neq x'$.
 
-In the sequel, we will assume that $\mathcal{M}$ is non-empty, and that $\rateset$ is non-empty, bounded\footnote{That is, that there exists a $c\in\realsnonneg$ such that, for all $Q\in\rateset$ and $x\in\states$, it holds that $\abs{Q(x,x)}<c$.}, convex, and has \emph{separately specified rows}. This latter property states that $\rateset$ is closed under arbitrary recombination of rows from its elements; see~\citep[Definition 24]{krak2016ictmc} for the formal definition. %To clarify, let $Q(x,\cdot)$ denote the $x$-th row of any matrix $Q$. Then $\rateset$ has separately specified rows if, for any $Q_1,Q_2\in\rateset$ and any $x\in\states$, there exists a $Q\in\rateset$ such that $Q(x,\cdot)= Q_1(x,\cdot)$ and $Q(x',\cdot)= Q_2(x',\cdot)$ for all $x'\neq x$.
-
-Under the above assumptions, it has been shown that $\mathbb{P}_{\rateset,\mathcal{M}}$ satisfies an \emph{imprecise Markov property}: it holds that $\lexp[f(X_s)\,\vert\,X_t,X_u=x_u]=\lexp[f(X_s)\,\vert\,X_t]$ for all functions $f\in\gamblesX$, all times $t,s\in\realsnonneg$ such that $t\leq s$, and all histories $x_u$. This property explains why we call this model an imprecise continuous-time ``Markov'' chain.
+In the sequel, we will assume that $\mathcal{M}$ is non-empty, and that $\rateset$ is non-empty, bounded,\footnote{That is, that there exists a $c\in\realsnonneg$ such that, for all $Q\in\rateset$ and $x\in\states$, it holds that $\abs{Q(x,x)}<c$.} convex, and has \emph{separately specified rows}. This latter property states that $\rateset$ is closed under arbitrary recombination of rows from its elements; see~\citep[Definition 24]{krak2016ictmc} for a formal definition. %To clarify, let $Q(x,\cdot)$ denote the $x$-th row of any matrix $Q$. Then $\rateset$ has separately specified rows if, for any $Q_1,Q_2\in\rateset$ and any $x\in\states$, there exists a $Q\in\rateset$ such that $Q(x,\cdot)= Q_1(x,\cdot)$ and $Q(x',\cdot)= Q_2(x',\cdot)$ for all $x'\neq x$.
+Under these assumptions, $\mathbb{P}_{\rateset,\mathcal{M}}$ satisfies an \emph{imprecise Markov property}, in the sense that $\lexp[f(X_s)\,\vert\,X_t,X_u=x_u]=\lexp[f(X_s)\,\vert\,X_t]$. This property explains why we call this model an imprecise continuous-time ``Markov'' chain.
 
 \subsection{Computing Lower Expectations for ICTMC's}\label{subsec:ICTMC_computations}
 
-Because we want to focus in this paper on providing efficient methods of computation, we here briefly recall some previous results from~\citet{krak2016ictmc} about how to compute lower expectations for ICTMC's. We focus in particular on how to do this for functions on a single time-point $t$. Note that for such functions, the set $\gambles(\states_t)=\gamblesX$ can be interpreted as the vector space $\reals^{\lvert\states\rvert}$, since $\states$ is finite. This allows us to treat these functions $f\in\gamblesX$ as $\lvert\states\rvert$-dimensional vectors, which in particular allows us to represent linear maps from $\gamblesX$ to $\gamblesX$ using matrices.
+Because we want to focus in this paper on providing efficient methods of computation, we here briefly recall some previous results from~\citet{krak2016ictmc} about how to compute lower expectations for ICTMC's. We focus in particular on how to do this for functions on a single time-point. %Note that for such functions, the set $\gambles(\states_t)=\gamblesX$ can be interpreted as the vector space $\reals^{\lvert\states\rvert}$, since $\states$ is finite. This allows us to treat these functions $f\in\gamblesX$ as $\lvert\states\rvert$-dimensional vectors, which in particular allows us to represent linear maps from $\gamblesX$ to $\gamblesX$ using matrices.
 
-Now, from a computational viewpoint, it is useful to introduce the \emph{lower transition rate operator} $\lrate$ that corresponds to $\rateset$. This operator is a (non-linear) map from $\gamblesX$ to $\gamblesX$, which is defined for every function $f\in\gamblesX$ as
+From this computational viewpoint, it is useful to introduce the \emph{lower transition rate operator} $\lrate$ that corresponds to $\rateset$. This operator is a (non-linear) map from $\gamblesX$ to $\gamblesX$, defined for every $f\in\gamblesX$ and  $x\in\states$ as
 \begin{equation}\label{eq:lower_rate_is_inf}
-\lrate f \coloneqq \inf\{ Qf\,:\, Q\in\rateset \}\,.
+\left[\lrate f\right](x) \coloneqq \inf\left\{ \sum_{x'\in\states}Q(x,x')f(x')\,:\, Q\in\rateset \right\}\,.
 \end{equation}
 %Observe that, due to the definition of the infimum, we therefore have for every $x\in\states$ that
 %\begin{equation*}
@@ -329,7 +328,7 @@ Now, from a computational viewpoint, it is useful to introduce the \emph{lower t
 %\end{equation*}
 %Numerically, this makes the optimisation problem in Equation~\ref{eq:lower_rate_is_inf} somewhat easier to solve, since it allows us to perform this optimisation element-wise. Note also that the requirement that $\rateset$ has separately specified rows, therefore essentially allows the infimum in Equation~\eqref{eq:lower_rate_is_inf} to be ``reached'', at least up to closure of the set $\rateset$.
 
-This lower transition rate operator $\lrate$ can be used to compute the lower expectation of any function $f\in\gamblesX$, in the following way. For any $t,s\in\realsnonneg$, with $t\leq s$, it has been shown that
+Using this lower transition rate operator $\lrate$, we can compute conditional lower expectations in the following way. For any $t,s\in\realsnonneg$, with $t\leq s$, and any $f\in\gamblesX$, it has been shown that
 \begin{equation*}
 \lexp[f(X_s)\,\vert\,X_t] = \underline{\mathbb{E}}_\rateset[f(X_s)\,\vert\,X_t] \coloneqq \lim_{n\to+\infty}\left[I+\frac{(s-t)}{n}\lrate\right]^n f\,.
 \end{equation*}
@@ -337,7 +336,7 @@ The notation $\underline{\mathbb{E}}_\rateset$ is meant to indicate that this co
 \begin{equation}\label{eq:lower_exp_in_steps}
 \lexp[f(X_s)\,\vert\,X_t] = \underline{\mathbb{E}}_\rateset[f(X_s)\,\vert\,X_t] \approx \bigl[I + \Delta\lrate\,\bigr]^nf\,.
 \end{equation}
-Concretely, this means that if one is able to solve the minimisation problem in Equation~\eqref{eq:lower_rate_is_inf}---which is relatively straightforward for ``nice enough'' $\rateset$---then one can also compute the (conditional) lower expectation using the expression in Equation~\ref{eq:lower_exp_in_steps}. For illustration, we do this by first computing $f_1'\coloneqq \lrate f$ using Equation~\eqref{eq:lower_rate_is_inf}, and then computing $f_1\coloneqq f + \Delta f_1'$. Next, we compute $f_2'\coloneqq \lrate f_1$, from which we obtain $f_2\coloneqq f_1 + \Delta f_2'$. Proceeding in this fashion, after $n$ steps we then finally obtain $f_n \coloneqq [I+\Delta\lrate]f_{n-1} = \bigl[I+\Delta\lrate\bigr]^nf$, which is roughly the quantity of interest $\underline{\mathbb{E}}_{\rateset,\mathcal{M}}[f(X_s)\,\vert\,X_t]$ provided that $n$ was taken large enough\footnote{We refer the reader to~\citep[Proposition 8.5]{krak2016ictmc} for a theoretical bound on the minimum such $n$ that is required to ensure a given maximum error on the approximation in Equation~\eqref{eq:lower_exp_in_steps}. We here briefly note that this bound scales polynomially in every relevant parameter. This means that $\lexp[f(X_s)\,\vert\,X_t]$ is numerically computable in polynomial time, provided that $\rateset$ is such that Equation~\eqref{eq:lower_rate_is_inf} can also be solved in the same time-complexity order.}.
+Concretely, this means that if one is able to solve the minimisation problem in Equation~\eqref{eq:lower_rate_is_inf}---which is relatively straightforward for ``nice enough'' $\rateset$---then one can also compute conditional lower expectations using the expression in Equation~\ref{eq:lower_exp_in_steps}. In practice, we do this by first computing $f_1'\coloneqq \lrate f$ using Equation~\eqref{eq:lower_rate_is_inf}, and then computing $f_1\coloneqq f + \Delta f_1'$. Next, we compute $f_2'\coloneqq \lrate f_1$, from which we obtain $f_2\coloneqq f_1 + \Delta f_2'$. Proceeding in this fashion, after $n$ steps we then finally obtain $f_n \coloneqq [I+\Delta\lrate]f_{n-1} = \bigl[I+\Delta\lrate\bigr]^nf$, which is roughly the quantity of interest $\underline{\mathbb{E}}_{\rateset,\mathcal{M}}[f(X_s)\,\vert\,X_t]$ provided that $n$ was taken large enough.\footnote{We refer the reader to~\citep[Proposition 8.5]{krak2016ictmc} for a theoretical bound on the minimum such $n$ that is required to ensure a given maximum error on the approximation in Equation~\eqref{eq:lower_exp_in_steps}. We here briefly note that this bound scales polynomially in every relevant parameter. This means that $\lexp[f(X_s)\,\vert\,X_t]$ is numerically computable in polynomial time, provided that $\rateset$ is such that Equation~\eqref{eq:lower_rate_is_inf} can also be solved in the same time-complexity order.}
 
 As noted above, the conditional lower expectation $\lexp[f(X_s)\vert X_t]$ only depends on $\rateset$. Similarly, and in contrast, the unconditional lower expectation at time zero only depends on $\mathcal{M}$. That is,
 \begin{equation}\label{eq:unconditional_time_zero}
@@ -351,7 +350,7 @@ which can therefore be computed by combining Equations~\eqref{eq:lower_exp_in_st
 
 \section{Imprecise Continuous-Time Hidden Markov Chains}\label{sec:icthmc}
 
-In this section, we construct the \emph{hidden} model that is the subject of this paper. Our aim is to augment the stochastic processes that were introduced in the previous section, by adding random \emph{output} variables $Y_t$ whose distribution depends on the state $X_t$ obtained at the same time point $t$.
+In this section, we construct the \emph{hidden} model that is the subject of this paper. Our aim is to augment the stochastic processes that were introduced in the previous section, by adding random \emph{output} variables $Y_t$ whose distribution depends on the state $X_t$ at the same time point $t$.
 
 %As was mentioned in Section~\ref{sec:introduction}, the rigorous construction of such augmented processes is omitted from the present paper due to length considerations. The difficulty is essentially in the fact that continuous-time stochastic processes specify random variables $X_t$ for \emph{every} time point $t\in\realsnonneg$. A consequence of this is that one has to be somewhat careful to ensure that the complete construction remains ``well-behaved'' when adding random variables $Y_t$ at each of these time points.
 
@@ -364,18 +363,17 @@ In order to disambiguate the notation, we will henceforth denote stochastic proc
 
 We want to augment stochastic processes with random ``output variables'' $Y_t$, whose distribution depends on the state $X_t$. We here define the corresponding (conditional) distribution.
 
-We want this definition to be fairly general, and in particular do not want to stipulate that $Y_t$ should be either a discrete or a continuous random variable. To this end, we simply consider some set $\observs$ to be the outcome space of the random variable. We then let $\Sigma$ be some ($\sigma$-)algebra on $\observs$. Finally, for each $x\in\states$, we consider some probability measure $P_{\observs\vert\states}(\cdot\vert x)$ on $(\observs,\Sigma)$, with respect to which the random variable $Y_t$ can be defined.
+We want this definition to be fairly general, and in particular do not want to stipulate that $Y_t$ should be either a discrete or a continuous random variable. To this end, we simply consider some set $\observs$ to be the outcome space of the random variable. We then let $\Sigma$ be some algebra on $\observs$. Finally, for each $x\in\states$, we consider some finitely (and possibly $\sigma$-)additive probability measure $P_{\observs\vert\states}(\cdot\vert x)$ on $(\observs,\Sigma)$, with respect to which the random variable $Y_t$ can be defined.
 
 \begin{definition}[Output Model]
-An \emph{output model} is a tuple $(\observs,\Sigma,P_{\observs\vert \states})$, where $\observs$ is an outcome space, $\Sigma$ is a ($\sigma$-)algebra on $\observs$, and, for all $x\in\states$, $P_{\observs\vert\states}(\cdot\vert x)$ is a probability measure on $(\observs,\Sigma)$.
+An \emph{output model} is a tuple $(\observs,\Sigma,P_{\observs\vert \states})$, where $\observs$ is an outcome space, $\Sigma$ is an algebra on $\observs$, and, for all $x\in\states$, $P_{\observs\vert\states}(\cdot\vert x)$ is a finitely additive probability measure on $(\observs,\Sigma)$.
 \end{definition}
 
-When considering (multiple) explicit time points, we use notation analogous to that used for states; so, $\observs_t\coloneqq\observs$ for any time $t\in\realsnonneg$, and for any $u\in\mathcal{U}$, we write $\observs_u\coloneqq \observs_{t_0}\times\cdots\observs_{t_n}$. 
+When considering (multiple) explicit time points, we use notation analogous to that used for states; so, $\observs_t\coloneqq\observs$ for any time $t\in\realsnonneg$, and for any $u\in\mathcal{U}$, we write $\observs_u\coloneqq \prod_{t\in u}\observs_{t}$. 
 
-When considering the algebra $\Sigma$ at multiple time points, we let $\Sigma_u$ denote the set of events $O_u=O_{t_0}\times\cdots\times O_{t_n}$, constructed for all $O_{t_i}\in\Sigma$. %Note that $\Sigma_u$ is not the product ($\sigma$-)algebra proper; it only contains conjunctive statements between time-points. However, since we only want to describe (joint) observations of the random variables $Y_{t_i}$, this will suffice for our purposes. 
-This set $\Sigma_u$ lets us describe assessments of the form $(Y_{t_0}\in O_{t_0})$ \emph{and} $(Y_{t_1}\in O_{t_1})$ \emph{and} \ldots, and so on.  
-
-For such an $O_u\in\Sigma_u$, we use the shorthand notation $P_{\observs\vert\states}(O_u\vert X_u)\coloneqq \prod_{t\in u}P_{\observs\vert\states}(O_t\vert X_t)$ for the probability of the event $O_u$---i.e., this is given by the product measure over the time-points in $u$.
+We let $\Sigma_u$ denote the set of events $O_u=\prod_{t\in u}O_t$, where, for all $t\in u$, $O_{t}\in\Sigma$. %Note that $\Sigma_u$ is not the product ($\sigma$-)algebra proper; it only contains conjunctive statements between time-points. However, since we only want to describe (joint) observations of the random variables $Y_{t_i}$, this will suffice for our purposes. 
+This set $\Sigma_u$ lets us describe observations using assessments of the form $(Y_t\in O_t \text{~for all $t\in u$})$. %$(Y_{t_0}\in O_{t_0})$ \emph{and} $(Y_{t_1}\in O_{t_1})$ \emph{and} \ldots, and so on.  
+For any $O_u\in\Sigma_u$ and $x_u\in\states_u$, we use the shorthand notation $P_{\observs\vert\states}(O_u\vert x_u)\coloneqq \prod_{t\in u}P_{\observs\vert\states}(O_t\vert x_t)$.
 %The complete product ($\sigma$-)algebra is then denoted $\sigma(\Sigma_u)$, i.e., this is the ($\sigma$-)algebra that is generated by $\Sigma_u$. Intuitively, separately defining $\Sigma_u$ will be useful because it only contains conjunctive statements between time-points, whereas $\sigma(\Sigma_u)$ also contains statements with much more intricate dependencies between time points.
 
 %We then let $(\observs_u,\sigma(\Sigma_u),P_{\observs_u\vert\states_u})$ be the product probability space, where, for every $x_u\in\states_u$, $P_{\observs_u\vert\states_u}(\cdot\vert x_u)$ is the product measure over the $P_{\observs_{t_i}\vert\states_{t_i}}(\cdot\vert x_{t_i})=P_{\observs\vert\states}(\cdot\vert x_{t_i})$.
@@ -390,11 +388,10 @@ P(Y_t\in O_t,X_t=x_t,X_v=x_v) \coloneqq P_{\observs\vert\states}(O_t\,\vert\,x_t
 \end{equation*}
 Similarly, when considering multiple output observations at once---say for the entire sequence $u$---then we have for any $v\in\mathcal{U}$ such that $u\cap v=\emptyset$, any $x_u\in\states_u$ and $x_v\in\states_v$, and any $O_u\in\Sigma_u$ that
 \begin{equation*}
-P(Y_u\in O_u,X_u=x_u, X_v=x_v) \coloneqq P_\states(X_u=x_u,X_v=x_v)\prod_{t\in u} P_{\observs\vert\states}(O_{t}\,\vert\,x_{t})\,.
+P(Y_u\in O_u,X_u=x_u, X_v=x_v) \coloneqq P_{\observs\vert\states}(O_{u}\,\vert\,x_{u})P_\states(X_u=x_u,X_v=x_v)\,.
 \end{equation*}
-Other distributions can be derived by appropriate marginalisation from such joint distributions.
-
-We denote this augmented stochastic process as $P=P_{\observs\vert\states}\otimes P_\states$,
+Other probabilities can be derived by appropriate marginalisation.
+We denote the resulting augmented stochastic process as $P=P_{\observs\vert\states}\otimes P_\states$,
 %\begin{equation*}
 %P=P_{\observs\vert\states}\otimes P_\states\,,
 %\end{equation*}
@@ -406,7 +403,6 @@ An \emph{imprecise continuous-time hidden Markov chain} (ICTHMC) is a set of aug
 \begin{definition}[ICTHMC]\label{def:hidden_ictmc}
 Consider any ICTMC $\mathbb{P}_{\rateset,\mathcal{M}}$, and any output model $(\observs,\Sigma,P_{\observs\vert\states})$. Then, the corresponding \emph{imprecise continuous-time hidden Markov chain} $\mathcal{Z}$ is the set of augmented stochastic processes that is defined by
 $\mathcal{Z} \coloneqq \left\{ P_{\observs\vert\states}\otimes P_{\states} \,:\, P_{\states}\in\mathbb{P}_{\rateset,\mathcal{M}}\right\}$.
-
 The lower expectation with respect to $\mathcal{Z}$ will be denoted $\underline{\mathbb{E}}_\mathcal{Z}$.
 \end{definition}
 Note that we leave the parameters $\mathcal{M}$, $\rateset$ and $P_{\observs\vert\states}$ implicit in the notation of the ICTHMC $\mathcal{Z}$---we will henceforth take these parameters to be fixed.
@@ -422,9 +418,10 @@ Note that we leave the parameters $\mathcal{M}$, $\rateset$ and $P_{\observs\ver
 In the context of \emph{hidden} (continuous-time) Markov chains, it is typically assumed that the state $X_t$ that is obtained by the process at time $t$, cannot be directly observed---hence the term ``hidden''. Rather, we can only observe realisations of the output variable $Y_t$. %The problem of interest is then typically to make inferences about this state $X_t$, given what we know about the value of the variable $Y_t$. More generally, we may be interested in the joint states $X_v$ for some time points $v\in\mathcal{U}_\emptyset$, given observations about $Y_u$ at time points $u\in\mathcal{U}$; note that we do not necessarily require that $u=v$.
 
 Suppose then that we have observed that some event $(Y_u\in O_u)$ has taken place, with $O_u\in\Sigma_u$. We here use the terminology that we \emph{update} our model with these observations, after which the updated model reflects our revised beliefs about some quantity of interest. These updated beliefs, about some function $f\in\gambles(\states_v)$, say, are then denoted by
-\begin{equation*}
-\mathbb{E}_P[f(X_v)\,\vert\,Y_u\in O_u]\,,\quad\text{or similarly,}\quad\underline{\mathbb{E}}_\mathcal{Z}[f(X_v)\,\vert\,Y_u\in O_u]\,,
-\end{equation*}
+%\begin{equation*}
+$\mathbb{E}_P[f(X_v)\,\vert\,Y_u\in O_u]$ %\,,\quad\text{or similarly,}\quad
+or $\underline{\mathbb{E}}_\mathcal{Z}[f(X_v)\,\vert\,Y_u\in O_u]$, 
+%\end{equation*}
 depending on whether we are considering a precise or an imprecise model. In this section, we provide definitions and alternative expressions for such updated (lower) expectations.
 
 %Clearly, the notation that we use here is the same as what would be used for representing \emph{conditional} (lower) expectations. Indeed, when the event $(Y_u\in O_u)$ has strictly positive (lower) probability, it would seem rational to assume that the \emph{updated} belief corresponds to the \emph{conditional} belief---which, in the precise case, can be inferred by application of Bayes' rule. 
@@ -437,17 +434,17 @@ depending on whether we are considering a precise or an imprecise model. In this
 When our assertion $(Y_u\in O_u)$ about an observation at time points $u$ has positive probability, we can---in the precise case---update our model by application of Bayes' rule. The following gives a convenient expression for the updated expectation $\mathbb{E}_P[f(X_v)\,\vert\,Y_u\in O_u]$, which makes use of the independence assumptions in Section~\ref{sec:aug_stochastic_processes} for augmented stochastic processes.
 
 \begin{proposition}\label{prop:precise_conditioning_for_positive}
-Let $P$ be an augmented stochastic process, and consider any $u,v\in\mathcal{U}$, $O_u\in\Sigma_u$, and $f\in\gambles(\states_v)$. Then, the updated expectation is given by
+Let $P$ be an augmented stochastic process and consider any $u,v\in\mathcal{U}$, $O_u\in\Sigma_u$, and $f\in\gambles(\states_v)$. Then the updated expectation is given by
 \begin{equation*}
 \mathbb{E}_P[f(X_v)\,\vert\,Y_u\in O_u] \coloneqq \sum_{x_v\in\states_v}f(x_v)\frac{P(X_v=x_v, Y_u\in O_u)}{P(Y_u\in O_u)} = \frac{\mathbb{E}_{P_\states}[f(X_v)P_{\observs\vert\states}(O_u\vert X_u)]}{\mathbb{E}_{P_\states}[P_{\observs\vert\states}(O_u\,\vert\,X_u)]}\,,
 \end{equation*}
 whenever $P(Y_u\in O_u)=\mathbb{E}_{P_\states}[P_{\observs\vert\states}(O_u\,\vert\,X_u)]>0$, and is undefined, otherwise.
 \end{proposition}
 
-Having defined above how to update all the precise models $P\in\mathcal{Z}$, we will now update the imprecise model through \emph{regular extension}~\citep{Walley:1991vk}. This corresponds to simply discarding from $\mathcal{Z}$ those precise models that assign zero probability to $(Y_u\in O_u)$, updating the remaining models, and then computing the lower envelope over these updated remaining expectations.
+Having defined above how to update all the precise models $P\in\mathcal{Z}$, we will now update the imprecise model through \emph{regular extension}~\citep{Walley:1991vk}. This corresponds to simply discarding from $\mathcal{Z}$ those precise models that assign zero probability to $(Y_u\in O_u)$, updating the remaining models, and then computing their lower envelope.% over these updated remaining expectations.
 
 \begin{definition}\label{def:reg_ext_pos}
-Let $\mathcal{Z}$ be an ICTHMC, and consider any $u,v\in\mathcal{U}$, $O_u\in\Sigma_u$, and $f\in\gambles(\states_v)$. Then, the updated lower expectation is defined by
+Let $\mathcal{Z}$ be an ICTHMC and consider any $u,v\in\mathcal{U}$, $O_u\in\Sigma_u$, and $f\in\gambles(\states_v)$. Then the updated lower expectation is defined by
 \begin{equation*}
 \underline{\mathbb{E}}_{\mathcal{Z}}\bigl[f(X_v)\,\vert\,Y_u\in O_u\bigr] \coloneqq \inf\bigl\{ \mathbb{E}_P[f(X_v)\,\vert\,Y_u\in O_u]\,:\, P\in\mathcal{Z},\, P(Y_u\in O_u)>0 \bigr\}\,,
 \end{equation*}
@@ -456,9 +453,9 @@ whenever $\overline{P}_\mathcal{Z}(Y_u\in O_u)=\uexp[P_{\observs\vert\states}(O_
 %If $\overline{P}_\mathcal{Z}(Y_u\in O_u)=0$, then $\underline{\mathbb{E}}_{\mathcal{Z}}\bigl[f(X_v)\,\vert\,Y_u\in O_u\bigr]$ is left undefined.
 \end{definition}
 
-As is well known, the updated lower expectation that is obtained through regular extension can be computed using the \emph{generalised Bayes' rule}~\citep{Walley:1991vk}. The following proposition gives an expression for this generalised Bayes' rule, rewritten using some of the independence properties of the model. We will shortly see why this expression is useful from a computational perspective.
+As is well known, the updated lower expectation that is obtained through regular extension satisfies Walley's \emph{generalised Bayes' rule}~\citep{Walley:1991vk}. The following proposition gives an expression for this generalised Bayes' rule, rewritten using some of the independence properties of the model. We will shortly see why this expression is useful from a computational perspective.
 \begin{proposition}\label{prop:GBR_regular}
-Let $\mathcal{Z}$ be an ICTHMC, and consider any $u,v\in\mathcal{U}$, $O_u\in\Sigma_u$, and $f\in\gambles(\states_v)$. Then, if $\overline{P}_\mathcal{Z}(Y_u\in O_u) > 0$, the quantity $\underline{\mathbb{E}}_{\mathcal{Z}}\bigl[f(X_v)\,\vert\,Y_u\in O_u\bigr]$ satisfies
+Let $\mathcal{Z}$ be an ICTHMC and consider any $u,v\in\mathcal{U}$, $O_u\in\Sigma_u$, and $f\in\gambles(\states_v)$. Then, if $\overline{P}_\mathcal{Z}(Y_u\in O_u) > 0$, the quantity $\underline{\mathbb{E}}_{\mathcal{Z}}\bigl[f(X_v)\,\vert\,Y_u\in O_u\bigr]$ satisfies
 \begin{equation*}
 \underline{\mathbb{E}}_{\mathcal{Z}}\bigl[f(X_v)\,\vert\,Y_u\in O_u\bigr] = \max\left\{\mu\in\reals\,:\, \lexp\bigl[P_{\observs\vert\states}(O_u\vert X_u)\bigl(f(X_v) - \mu\bigr)\bigr] \geq 0\right\}\,.
 \end{equation*}
@@ -567,47 +564,64 @@ in Definitions~\ref{def:reg_ext_pos} or~\ref{def:reg_ext_densities} directly,
 we can focus on evaluating the function $\lexp\bigl[P_{\observs\vert\states}(O_u\vert X_u)\bigl(f(X_v) - \mu\bigr)\bigr]$,
 or its density-analogue, for some fixed value of $\mu$. Finding the updated lower expectation is then a matter of finding the maximum value of $\mu$ for which this quantity is non-negative. As we will discuss in Section~\ref{sec:gbr}, this is a relatively straightforward problem to solve numerically.
 
-Therefore, in order for this approach to be computationally tractable, we also require efficient algorithms to evaluate this quantity for a given value of $\mu$. In Section~\ref{sec:funcs_single_time}, we provide such an algorithm for the important case where the function $f$ depends on a single time-point.
+Therefore, in order for this approach to be computationally tractable, we require efficient algorithms that can evaluate this quantity for a given value of $\mu$. In Section~\ref{sec:funcs_single_time}, we provide such an algorithm for the important case where the function $f$ depends on a single time-point.
 
-We start by generalising the problem so that these results are applicable both for observations of the form $(Y_u\in O_u)$, and for point-observations $(Y_u=y_u)$ in an uncountable outcome space. Writing $u=t_0,\ldots,t_n$, we note that the independence assumptions in Section~\ref{sec:aug_stochastic_processes} imply that
+We first generalise the problem so that these results are applicable both for observations of the form $(Y_u\in O_u)$, and for point-observations $(Y_u=y_u)$ in an uncountable outcome space. Recall that
 \begin{equation*}
-P_{\observs\vert\states}(O_u\vert X_u) = \prod_{i=0}^nP_{\observs\vert\states}(O_{t_i}\vert X_{t_i})\,,\quad\quad\text{and,}\quad\quad \phi_u(y_u\vert X_u) = \prod_{i=0}^n\phi_{t_i}(y_{t_i}\vert X_{t_i})\,.
+P_{\observs\vert\states}(O_u\vert X_u) = \prod_{t\in u}P_{\observs\vert\states}(O_{t}\vert X_{t})\,\quad\quad\text{and}\quad\quad \phi_u(y_u\vert X_u) = \prod_{t\in u}\phi_{t}(y_{t}\vert X_{t})\,.
 \end{equation*}
 Hence, we can in both cases rewrite the function of interest as
-$\lexp\left[ \left(\prod_{i=0}^ng_{t_i}(X_{t_i})\right)\bigl(f(X_v) - \mu\bigr) \right]$,
-for some collection of functions $g_{t_i}\in\gambles(\states_{t_i})$ such that $g_{t_i}\geq 0$, for $i\in\{0,\ldots,n\}$.
+$\lexp\left[ \bigl(\prod_{t\in u}g_{t}(X_{t})\bigr)\bigl(f(X_v) - \mu\bigr) \right]$,
+for some collection of functions $g_{t}\in\gambles(\states_{t})$ such that $g_{t}\geq 0$, for all $t\in u$.
 
-In general, the computational complexity of evaluating this quantity depends both on the function $f$, and on how the time points $v$ relate to the time points $u$---whether we are performing inference ``into the future'' or ``into the past''. We treat some specific cases in the following sections.
+%In general, the computational complexity of evaluating this quantity depends both on the function $f$, and on how the time points $v$ relate to the time points $u$---whether we are performing inference ``into the future'' or ``into the past''. We treat some specific cases in the following sections.
 
 \subsection{Solving the Generalised Bayes' Rule}\label{sec:gbr}
 
-Finding the maximum value of $\mu$ for which the function of interest in the generalised Bayes' rule is non-negative, is relatively straightforward numerically. This is because this function, parameterised in $\mu$, is very well-behaved. The proposition below explicitly states some of these properties. These are essentially well-known, and can also be found in other work; see, e.g.,~\cite[Section 2.7.3]{de2015credal}. The statement below is therefore intended to briefly recall these properties, and is stated in the general form where we can also use it when working with densities.
+Finding the maximum value of $\mu$ for which the function of interest in the generalised Bayes' rule is non-negative, is relatively straightforward numerically. This is because this function, parameterised in $\mu$, is very well-behaved. The proposition below explicitly states some of these properties. These are essentially well-known, and can also be found in other work; see, e.g.,~\cite[Section 2.7.3]{de2015credal}. The statement below is therefore intended to briefly recall these properties, and is stated in a general form where we can also use it when working with densities.
 
 \begin{proposition}\label{prop:GBR_properties}
-Let $\mathbb{P}_{\rateset,\mathcal{M}}$ be an ICTMC, consider any $u,v\in\mathcal{U}$, any $f\in\gambles(\states_v)$, and, for all $t_i\in u$, any $g_{t_i}\in\gambles(\states_{t_i})$ such that $g_{t_i}\geq 0$. 
-Consider the function $G: \reals\to\reals$ that is given, for all $\mu\in\reals$, by $G(\mu)\coloneqq \lexp\left[\left(\prod_{i=0}^n g_{t_i}(X_{t_i})\right)\bigl(f(X_v) - \mu\bigr)\right]$.
+Let $\mathbb{P}_{\rateset,\mathcal{M}}$ be an ICTMC and consider any $u,v\in\mathcal{U}$, any $f\in\gambles(\states_v)$, and, for all $t\in u$, any $g_{t}\in\gambles(\states_{t})$ such that $g_{t}\geq 0$. 
+Consider the function $G: \reals\to\reals$ that is given, for all $\mu\in\reals$, by $G(\mu)\coloneqq \lexp\left[\left(\prod_{t\in u} g_{t}(X_{t})\right)\bigl(f(X_v) - \mu\bigr)\right]$.
 %Let $G:\reals\to\reals$ be a function defined for all $\mu\in\reals$, as
 %\begin{equation*}
 %G(\mu) \coloneqq \lexp\left[\left(\prod_{i=0}^n g_{t_i}(X_{t_i})\right)\bigl(f(X_v) - \mu\bigr)\right]\,.
 %\end{equation*}
-Then, this function: \customlabel{GBR:always:continuous}{(G1)} is continuous, \customlabel{GBR:always:monotone}{(G2)} is monotonically decreasing, \customlabel{GBR:always:concave}{(G3)} is concave, and \customlabel{GBR:always:root}{(G4)} has a root, i.e. $G(\mu)=0$ for some $\mu\in\reals$.
+%%%%%%%%%%%%%%%%%%%%%%%%%
+%Then, this function: \customlabel{GBR:always:continuous}{(G1)} is continuous, \customlabel{GBR:always:monotone}{(G2)} is monotonically decreasing, \customlabel{GBR:always:concave}{(G3)} is concave, and \customlabel{GBR:always:root}{(G4)} has a root, i.e. $G(\mu)=0$ for some $\mu\in\reals$.
+%
+%Furthermore, if $\lexp\bigl[\prod_{i=0}^n g_{t_i}(X_{t_i})\bigr] >0$, this function: 
+%\customlabel{GBR:low_pos:monotone}{(LG1)} is strictly monotonically decreasing, and \customlabel{GBR:low_pos:unique_root}{(LG2)} has a unique root.
+%
+%If instead $\lexp\bigl[\prod_{i=0}^n g_{t_i}(X_{t_i})\bigr]=0$ but $\uexp\bigl[\prod_{i=0}^n g_{t_i}(X_{t_i})\bigr] >0$, then this function: \customlabel{GBR:up_pos:max_root}{(UG1)} has a maximum root $\mu_*$, \customlabel{GBR:up_pos:zero_before}{(UG2)} satisfies $G(\mu)=0$ for all $\mu\leq \mu_*$ and, \customlabel{GBR:up_pos:monotone}{(UG3)} is strictly monotonically decreasing for $\mu\geq \mu_*$.
+%
+%If $\uexp\bigl[\prod_{i=0}^n g_{t_i}(X_{t_i})\bigr]=0$, this function: \customlabel{GBR:none_pos:zero}{(ZG1)} is identically zero, i.e. $G(\mu)=0$ for all $\mu\in\reals$.
+%%%%%%%%%%%%%%%%%%%%%%%%%
+Then the following properties hold: 
+\begin{enumerate}[label=G\arabic*:,ref=G\arabic*]
+\item $G(\mu)$ is continuous, non-increasing, concave, and has a root, i.e. $\exists \mu\in\reals:G(\mu)=0$. \label{GBR:always}
+\item If $\lexp\bigl[\prod_{t\in u} g_{t}(X_{t})\bigr] >0$, then $G(\mu)$ is (strictly) decreasing, and has a unique root. \label{GBR:low_pos}
+\item If $\lexp\bigl[\prod_{t\in u} g_{t}(X_{t})\bigr]=0$ but $\uexp\bigl[\prod_{t\in u} g_{t}(X_{t})\bigr] >0$, then $G(\mu)$ has a maximum root $\mu_*$, satisfies $G(\mu)=0$ for all $\mu\leq \mu_*$, and is (strictly) decreasing for $\mu\geq \mu_*$. \label{GBR:up_pos}
+\item If $\uexp\bigl[\prod_{t\in u} g_{t}(X_{t})\bigr]=0$, then $G(\mu)$ is identically zero, i.e. $\forall \mu\in\reals: G(\mu)=0$. \label{GBR:none_pos}
+\end{enumerate}
 
-Furthermore, if $\lexp\bigl[\prod_{i=0}^n g_{t_i}(X_{t_i})\bigr] >0$, this function: 
-\customlabel{GBR:low_pos:monotone}{(LG1)} is strictly monotonically decreasing, and \customlabel{GBR:low_pos:unique_root}{(LG2)} has a unique root.
-
-If instead $\lexp\bigl[\prod_{i=0}^n g_{t_i}(X_{t_i})\bigr]=0$ but $\uexp\bigl[\prod_{i=0}^n g_{t_i}(X_{t_i})\bigr] >0$, then this function: \customlabel{GBR:up_pos:max_root}{(UG1)} has a maximum root $\mu_*$, \customlabel{GBR:up_pos:zero_before}{(UG2)} satisfies $G(\mu)=0$ for all $\mu\leq \mu_*$ and, \customlabel{GBR:up_pos:monotone}{(UG3)} is strictly monotonically decreasing for $\mu\geq \mu_*$.
-
-If $\uexp\bigl[\prod_{i=0}^n g_{t_i}(X_{t_i})\bigr]=0$, this function: \customlabel{GBR:none_pos:zero}{(ZG1)} is identically zero, i.e. $G(\mu)=0$ for all $\mu\in\reals$.
+%\customlabel{GBR:always}{(AG)}: $G(\mu)$ is continuous, non-increasing, concave, and has a root, i.e. $\exists \mu\in\reals:G(\mu)=0$.
+%
+%\customlabel{GBR:low_pos}{(LG)}: If $\lexp\bigl[\prod_{t\in u} g_{t}(X_{t})\bigr] >0$, then $G(\mu)$ is (strictly) decreasing, and has a unique root.
+%
+%\customlabel{GBR:up_pos}{(UG)}: If $\lexp\bigl[\prod_{t\in u} g_{t}(X_{t})\bigr]=0$ but $\uexp\bigl[\prod_{t\in u} g_{t}(X_{t})\bigr] >0$, then $G(\mu)$ has a maximum root $\mu_*$, satisfies $G(\mu)=0$ for all $\mu\leq \mu_*$ and, is decreasing for $\mu\geq \mu_*$.
+%
+%\customlabel{GBR:none_pos}{(ZG)}: If $\uexp\bigl[\prod_{t\in u} g_{t}(X_{t})\bigr]=0$, then $G(\mu)$ is identically zero, i.e. $\forall \mu\in\reals: G(\mu)=0$.
 \end{proposition}
 
 Note that this function $G(\mu)$ in Proposition~\ref{prop:GBR_properties} can behave in three essentially different ways. These correspond to the cases where the observed event has strictly positive probability(/density) for \emph{all} processes in the set; to where it only has positive probability(/density) for \emph{some} processes; and to where it has \emph{zero} probability(/density) for \emph{all} processes.
-However, in the first two cases---which are the important ones to apply the generalised Bayes' rule---the function is ``well-behaved'' enough to make finding its maximum root a fairly simple task. For instance, a standard bisection/bracketing algorithm can be applied here; known in this context as Lavine's algorithm~\citep{cozman1997alternatives}.
+In the first two cases---which are the important ones to apply the generalised Bayes' rule---the function is ``well-behaved'' enough to make finding its maximum root a fairly simple task. For instance, a standard bisection/bracketing algorithm can be applied here, known in this context as Lavine's algorithm~\citep{cozman1997alternatives}.
 
-We sketch this method below. First, note that due to Propositions~\ref{prop:GBR_regular} and~\ref{prop:GBR_for_densities_lower_zero}, the maximum root will always be found in the interval $[\min f, \max f]$. The properties above therefore provide us with a way to check the required condition to apply regular/natural extension. That is, consider any $\mu>\max f$; if $G(\mu)<0$, we know from~\ref{GBR:none_pos:zero} that $\uexp[\prod_{i=0}^n g_{t_i}(X_{t_i})]>0$ by \emph{modus tollens}---regular extension can then be applied. We can also choose any $\mu<\min f$; then $G(\mu)>0$ similarly implies $\lexp\bigl[\prod_{i=0}^n g_{t_i}(X_{t_i})\bigr]>0$, due to~\ref{GBR:up_pos:zero_before}---we can then apply natural extension.
+We sketch this method below. First, note that due to Propositions~\ref{prop:GBR_regular} and~\ref{prop:GBR_for_densities_lower_zero}, the maximum root will always be found in the interval $[\min f, \max f]$. The properties above therefore provide us with a way to check the required condition for updating. That is, for any $\mu>\max f$, we have $G(\mu)<0$ if and only if $\uexp[\prod_{t\in u} g_{t}(X_{t})]>0$; the ``if'' direction follows from~\ref{GBR:up_pos}, and the ``only if'' part from contradiction with~\ref{GBR:none_pos}. Similarly, for any $\mu < \min f$, we have $G(\mu)>0$ if and only if $\lexp[\prod_{t\in u} g_{t}(X_{t})]>0$. Evaluating $G(\cdot)$ at these values of $\mu$ is therefore sufficient to check the requirements for updating the imprecise model. %if $G(\mu)<0$, we know from~\ref{GBR:none_pos:zero} that $\uexp[\prod_{i=0}^n g_{t_i}(X_{t_i})]>0$ by \emph{modus tollens}---regular extension can then be applied. We can also choose any $\mu<\min f$; then $G(\mu)>0$ similarly implies $\lexp\bigl[\prod_{i=0}^n g_{t_i}(X_{t_i})\bigr]>0$, due to~\ref{GBR:up_pos:zero_before}---we can then apply natural extension.
 
 The algorithm then starts by setting $\mu_-\coloneqq \min f$, and $\mu_+\coloneqq \max f$; if $G(\mu_+)=0$, we know that $\mu_+$ is the quantity of interest. Otherwise, proceed iteratively in the following way. Compute the half-way point $\mu\coloneqq \nicefrac{1}{2}(\mu_+-\mu_-)$; then, if $G(\mu)\geq 0$ set $\mu_-\coloneqq \mu$, otherwise set $\mu_+\coloneqq\mu$; then repeat. Clearly, the interval $[\mu_-,\mu_+]$ still contains the maximum root after each step. The procedure can be terminated whenever $(\mu_+-\mu_-)<\epsilon$, for some desired numerical precision $\epsilon>0$. Since the width of the interval is halved at each iteration, the runtime of this procedure is $O\bigl(\log\{(\max f - \min f)\epsilon^{-1}\}\bigr)$.
 
-Some ways to improve the numerical stability of the above procedure are discussed in \cite[Section 2.7.3]{de2015credal}. Other, more efficient, algorithms are presented by, e.g., \citet{cozman1997alternatives}. %Also note that, due to Propositions~\ref{prop:GBR_regular} and~\ref{prop:GBR_for_densities_lower_zero}, the maximum root will always be found in the interval $[\min f, \max f]$---this property might be helpful in practice.
+Some ways to improve the numerical stability of this procedure can be found in \cite[Section 2.7.3]{de2015credal}. %Other, more efficient, algorithms are presented by, e.g., \citet{cozman1997alternatives}. %Also note that, due to Propositions~\ref{prop:GBR_regular} and~\ref{prop:GBR_for_densities_lower_zero}, the maximum root will always be found in the interval $[\min f, \max f]$---this property might be helpful in practice.
 
 \subsection{Functions on a Single Time Point}\label{sec:funcs_single_time}
 
@@ -615,31 +629,31 @@ Having discussed an efficient method to find the maximum root of the function $G
 
 We focus on a particularly useful special case, which can be used to compute the updated lower expectation of a function $f\in\gambles(\states_s)$ on a single time point $s$, given observations at time points $u$. If $s\notin u$, then it will be notationally convenient to define $g_s\coloneqq f - \mu$, and to let $u'\coloneqq u\cup \{s\}$. We can then simply focus on computing
 \begin{equation*}
-\lexp\left[ \left(\prod_{i=0}^ng_{t_i}(X_{t_i})\right)\bigl(f(X_s) - \mu\bigr) \right] = \lexp\left[ \prod_{t_i\in u'}g_{t_i}(X_{t_i})\right]\,.
+\lexp\left[ \left(\prod_{t\in u}g_{t}(X_{t})\right)\bigl(f(X_s) - \mu\bigr) \right] = \lexp\left[ \prod_{t\in u'}g_{t}(X_{t})\right]\,.
 \end{equation*}
-On the other hand, if $s = t_i$ for some $t_i\in u$, we let $u'\coloneqq u$ and redefine $g_{t_i}$ as $\tilde{g}_{t_i}(x_{t_i})\coloneqq g_{t_i}(x_{t_i})\cdot (f(x_{t_i})-\mu)$---and then we immediately drop the $\tilde\,$-notation again. Clearly, then the above equality also holds; the point is simply to establish a uniform indexing notation over all time-points and functions. The right hand side of the above equality can now be computed using the following dynamic programming technique. 
+On the other hand, if $s = t$ for some $t\in u$, we let $u'\coloneqq u$ and replace $g_{t}(\cdot)$ by $g_{t}(\cdot)\bigl(f(\cdot)-\mu\bigr)$. Clearly, the above equality then also holds; the point is simply to establish a uniform indexing notation over all time-points and functions. The right hand side of the above equality can now be computed using the following dynamic programming technique. 
 
-For all $t_i\in u'$, we define auxiliary functions $g_{t_i}^+,g_{t_i}^-\in\gambles(\states_{t_i})$, as follows. Writing $u'=t_0,\ldots,t_{n+1}$, we define $g_{t_{n+1}}^+\coloneqq g_{t_{n+1}}^-\coloneqq g_{t_{n+1}}$. Then, for all $i\in\{0,\ldots,n\}$, define
+For all $t\in u'$, we define auxiliary functions $g_{t}^+,g_{t}^-\in\gambles(\states_{t})$, as follows. Writing $u'=t_0,\ldots,t_{n}$, let $g_{t_{n}}^+\coloneqq g_{t_{n}}^-\coloneqq g_{t_{n}}$. Then for all $t_i\in u'\setminus t_n$ and all $x_{t_i}\in\states_{t_i}$, define
 \begin{equation*}
 g_{t_i}^+(x_{t_i}) \coloneqq \left\{\begin{array}{ll}
-g_{t_i}(x_{t_i})\cdot\lexp[g_{t_{i+1}}^+(X_{t_{i+1}})\,\vert\, X_{t_i}=x_{t_i}] & \text{if $g_{t_i}(x_{t_i})\geq 0$, and} \\
-g_{t_i}(x_{t_i})\cdot\uexp[g_{t_{i+1}}^-(X_{t_{i+1}})\,\vert\, X_{t_i}=x_{t_i}] & \text{if $g_{t_i}(x_{t_i})<0$,}
-\end{array}\right.
+g_{t_i}(x_{t_i})\underline{\mathbb{E}}_\rateset[g_{t_{i+1}}^+(X_{t_{i+1}})\,\vert\, X_{t_i}=x_{t_i}] & \text{if $g_{t_i}(x_{t_i})\geq 0$,} \\
+g_{t_i}(x_{t_i})\overline{\mathbb{E}}_\rateset[g_{t_{i+1}}^-(X_{t_{i+1}})\,\vert\, X_{t_i}=x_{t_i}] & \text{if $g_{t_i}(x_{t_i})<0$}
+\end{array}\right.\vspace{-5pt}
 \end{equation*}
-and,
+and
 \begin{equation*}
 g_{t_i}^-(x_{t_i}) \coloneqq \left\{\begin{array}{ll}
-g_{t_i}(x_{t_i})\cdot\uexp[g_{t_{i+1}}^-(X_{t_{i+1}})\,\vert\, X_{t_i}=x_{t_i}] & \text{if $g_{t_i}(x_{t_i})\geq 0$, and} \\
-g_{t_i}(x_{t_i})\cdot\lexp[g_{t_{i+1}}^+(X_{t_{i+1}})\,\vert\, X_{t_i}=x_{t_i}] & \text{if $g_{t_i}(x_{t_i})<0$.}
+g_{t_i}(x_{t_i})\overline{\mathbb{E}}_\rateset[g_{t_{i+1}}^-(X_{t_{i+1}})\,\vert\, X_{t_i}=x_{t_i}] & \text{if $g_{t_i}(x_{t_i})\geq 0$,} \\
+g_{t_i}(x_{t_i})\underline{\mathbb{E}}_\rateset[g_{t_{i+1}}^+(X_{t_{i+1}})\,\vert\, X_{t_i}=x_{t_i}] & \text{if $g_{t_i}(x_{t_i})<0$.}
 \end{array}\right.
 \end{equation*}
-Clearly, backward recursion allows us to compute all these functions in a time-complexity order that is linear in the number of time points in $u'$. Practically, at each step, computing the quantities $\lexp[g_{t_{i+1}}^+(X_{t_{i+1}})\,\vert\, X_{t_i}=x_{t_i}]$ and $\uexp[g_{t_{i+1}}^-(X_{t_{i+1}})\,\vert\, X_{t_i}=x_{t_i}]$ can be done using Equation~\eqref{eq:lower_exp_in_steps} and the method described in Section~\ref{subsec:ICTMC_computations}. Due to the results in Reference~\citep{krak2016ictmc}, each of these quantities is computable in polynomial time. So, the total complexity of computing all these functions is clearly also polynomial. We now have the following result.
+Clearly, backward recursion allows us to compute all these functions in a time-complexity order that is linear in the number of time points in $u'$. Practically, at each step, computing the quantities $\underline{\mathbb{E}}_\rateset[g_{t_{i+1}}^+(X_{t_{i+1}})\,\vert\, X_{t_i}=x_{t_i}]$ and $\overline{\mathbb{E}}_\rateset[g_{t_{i+1}}^-(X_{t_{i+1}})\,\vert\, X_{t_i}=x_{t_i}]$ can be done using Equation~\eqref{eq:lower_exp_in_steps} and the method described in Section~\ref{subsec:ICTMC_computations}. Due to the results in Reference~\citep{krak2016ictmc}, each of these quantities is computable in polynomial time. So, the total complexity of computing all these functions is clearly also polynomial. We now have the following result.
 \begin{proposition}\label{prop:computing_product_funcs}
-For all $t_i\in u'$, let $g_{t_i}$, $g_{t_i}^+$ and $g_{t_i}^-$ be as defined above. Then, the function of interest is given by
+For all $t\in u'$, let $g_{t}$, $g_{t}^+$ and $g_{t}^-$ be as defined above. Then the function of interest is given by
 %\begin{equation*}
-$\lexp\left[\prod_{t_i\in u'}g_{t_i}(X_{t_i})\right] = \lexp\left[g_{t_0}^+(X_{t_0})\right]$. Also,
+$\lexp\left[\prod_{t\in u'}g_{t}(X_{t})\right] = \lexp\left[g_{t_0}^+(X_{t_0})\right]$. Also,
 %\,,\quad\quad\text{and,}\quad\quad
-$\uexp\left[\prod_{t_i\in u'}g_{t_i}(X_{t_i})\right]=\uexp\left[g_{t_0}^-(X_{t_0})\right]$%\,.
+$\uexp\left[\prod_{t\in u'}g_{t}(X_{t})\right]=\uexp\left[g_{t_0}^-(X_{t_0})\right]$%\,.
 .
 %\end{equation*}
 \end{proposition}
@@ -649,11 +663,11 @@ So, in order to evaluate the function of interest, it remains to compute $\lexp\
 
 In this work, we considered \emph{imprecise continuous-time hidden Markov chains}; an extension of \emph{imprecise continuous-time Markov chains} (ICTMC's), obtained by augmenting such ICTMC's with random \emph{output} variables. We focussed on the corresponding inference problem, \emph{viz.} to compute the lower expectation of functions on the state-space, given observed realisations of the output variables. 
 
-Our main result is an efficient---polynomial runtime---algorithm to compute such lower expectations for functions that depend on the state-space at any given time-point. This algorithm can be used both when the output variables are discrete, and when they are continuous.
+Our main result is an efficient---polynomial runtime---algorithm to compute such lower expectations for functions that depend on the state-space at any given time-point. This algorithm can be used both when the output variables are discrete and when they are continuous.
 
 With regard to future work, several natural next steps would seem to be apparent. For one, we intend in future work to further generalise and robustify this model class, by also allowing for an imprecise specification of the output variables. %Second, a rigorous treatment of the interpretation of updating the model using regular extension, in the case of continuous output variables, seems to be prudent. For instance, at present we have neither a proof of, nor a counter example to, the statement of Proposition~\ref{prop:GBR_for_densities_is_limit_if_continuous} in the case of regular extension---i.e. when $\lexp[\phi_u(y_u\vert X_u)]=0$ but $\uexp[\phi_u(y_u\vert X_u)]>0$.
 
-Another line of future research is the development of algorithms to solve other inference problems for this model class. E.g., we might look into developing algorithms to compute the updated lower expectation of more general functions $f\in\gambles(\states_v)$, which depend on more than one time-point. In fact, algorithms for several such function classes should follow straightforwardly by combining results from \cite{krak2016ictmc} with the algorithm presented here. Another such problem is that of estimating state-sequences, given observed output-sequences---as was previously done for (discrete-time) iHMM's~\citep{DeBock:2014ts}. We believe that these previous results should also 
+Another line of future research is the development of algorithms to solve other inference problems for this model class. E.g., we might look into developing algorithms to compute the updated lower expectation of functions $f\in\gambles(\states_v)$ that depend on more than one time-point. In fact, algorithms for several such function classes should follow straightforwardly by combining results from \cite{krak2016ictmc} with the algorithm presented here. Another such problem is that of estimating state-sequences, given observed output-sequences---as was previously done for (discrete-time) iHMM's~\citep{DeBock:2014ts}. We believe that these previous results should also 
 translate fairly naturally to the current setting.
 
 %Finally, we might look into developing algorithms to compute the updated lower expectation of more general functions $f\in\gambles(\states_v)$, which depend on the state-space at more than one time-point. In fact, one such algorithm follows straightforwardly from the results of the current paper, provided that the time-points $v$ are in the future with respect to the time-points $u$ at which the observations took place. This is due to a result from~\cite{krak2016ictmc}, which states that the lower expectation for ICTMC's satisfies the property of ``iterated lower expectation''. Combining this with the imprecise Markov property mentioned in Section~\ref{subsec:ictmc}, and writing $u=t_0,\ldots,t_n$, the function of interest in the generalised Bayes' rule can therefore be rewritten as
@@ -1772,69 +1786,5 @@ and similarly for the upper expectation.
 %
 %\end{proof}
 
-\section{Testing stuff}
-
-\begin{proposition}
-Consider the set
-\begin{equation*}
-\mathcal{P} \coloneqq \left\{P\in\mathcal{Z}\,:\,\text{$\mathbb{E}_P[f(X_v)\,\vert\,Y_u=y_u]$ exists}\right\}
-\end{equation*}
-Let the updated imprecise model be defined by
-\begin{equation*}
-\underline{\mathbb{E}}_{\mathcal{Z}}^\mathrm{L}[f(X_v)\,\vert\,Y_u=y_u] \coloneqq \inf\left\{ \mathbb{E}_P[f(X_v)\,\vert\,Y_u=y_u]\,:\,P\in\mathcal{P} \right\}\,,
-\end{equation*}
-whenever $\mathcal{P}\neq\emptyset$, and leave it undefined, otherwise.
-
-Then, if $\mathcal{P}\neq\emptyset$, it holds that
-\begin{equation*}
-\underline{\mathbb{E}}_{\mathcal{Z}}^\mathrm{L}[f(X_v)\,\vert\,Y_u=y_u] = \lim_{i\to+\infty} \underline{\mathbb{E}}_{\mathcal{Z}}[f(X_v)\,\vert\,Y_u\in O_u^i]\,.
-\end{equation*}
-\end{proposition}
-\begin{proof}
-This uses the following claim:
-\newline
-\newline
-{\bf Claim 1:~}\emph{If $\mathcal{P}\neq\emptyset$ then $\uexp[P_{\observs\vert\states}(O_u^i\vert X_u)]>0$ for all $i\in\nats$. (Pretty sure that this is true).}
-\newline
-\newline
-For notational brevity, let $\mu_i\coloneqq \underline{\mathbb{E}}_{\mathcal{Z}}[f(X_v)\,\vert\,Y_u\in O_u^i]$ for all $i\in\nats$. Then, by the above claim, $\{\mu_i\}_{i\in\nats}$ is well-defined, and furthermore $\mu_i\in[\min f, \max f]$ for all $i\in\nats$.
-
-Let $\{\mu_{i_k}\}_{k\in\nats}$ be any convergent subsequence of $\{\mu_i\}_{i\in\nats}$; the Bolzano-Weierstrass theorem implies the existence of at least one such subsequence. Let $\mu_{k_*}\coloneqq \lim_{k\to+\infty}\mu_{i_k}$.
-
-Fix any $P\in\mathcal{P}$. Then, for every $k\in\nats$, we have
-\begin{equation*}
-\mu_{i_k} \leq \mathbb{E}_P[f(X_v)\,\vert\,Y_u\in O_u^{i_k}]\,.
-\end{equation*}
-Because this holds for all $k\in\nats$, we must have
-\begin{equation*}
-\mu_{k_*} = \lim_{k\to+\infty}\mu_{i_k} \leq \lim_{k\to+\infty} \mathbb{E}_P[f(X_v)\,\vert\,Y_u\in O_u^{i_k}] = \mathbb{E}_P[f(X_v)\,\vert\,Y_u=y_u]\,,
-\end{equation*}
-and therefore clearly also for every $\epsilon>0$ we have
-\begin{equation*}
-\mu_{k_*} - \epsilon \leq \mathbb{E}_P[f(X_v)\,\vert\,Y_u=y_u] - \epsilon\,.
-\end{equation*}
-Furthermore, for every $\epsilon>0$, there is some $P\in\mathcal{P}$ such that
-\begin{equation*}
-\mathbb{E}_P[f(X_v)\,\vert\,Y_u=y_u] - \epsilon < \underline{\mathbb{E}}_{\mathcal{Z}}^\mathrm{L}[f(X_v)\,\vert\,Y_u=y_u]\,.
-\end{equation*}
-Combining with the above, we find
-\begin{equation*}
-\mu_{k_*} - \epsilon \leq \mathbb{E}_P[f(X_v)\,\vert\,Y_u=y_u] - \epsilon < \underline{\mathbb{E}}_{\mathcal{Z}}^\mathrm{L}[f(X_v)\,\vert\,Y_u=y_u]\,.
-\end{equation*}
-Because the $\epsilon>0$ was arbitrary, we conclude
-\begin{equation*}
-\mu_{k_*} \leq \underline{\mathbb{E}}_{\mathcal{Z}}^\mathrm{L}[f(X_v)\,\vert\,Y_u=y_u]\,.
-\end{equation*}
-To establish equality, we next prove the inequality in the other direction.
-
-Choose any sequence $\{\epsilon_k\}_{k\in\nats}\to 0^+$, and fix any $k\in\nats$. Then, there is some $P_k\in\mathcal{Z}$ such that $\mathbb{E}_{P_k}[P_{\observs\vert\states}(O_u^i\vert X_u)]>0$, and
-\begin{equation*}
-\mathbb{E}_{P_k}[f(X_v)\,\vert\,Y_u\in O_u^{i_k}] - \epsilon_k < \mu_{i_k}\,.
-\end{equation*}
-Furthermore, clearly, $\abs{\mu_{i_k} - \mathbb{E}_{P_k}[f(X_v)\,\vert\,Y_u\in O_u^{i_k}]} < \epsilon_k$. Repeating this construction for every $k\in\nats$, we obtain a sequence $\{ \mathbb{E}_{P_k}[f(X_v)\,\vert\,Y_u\in O_u^{i_k}] \}_{k\in\nats}$. We now first show that this sequence also converges to $\mu_{k_*}$. To this end, choose any $\epsilon>0$. Because $\{\mu_{i_k}\}_{k\in\nats}\to\mu_{k_*}$, there is some $n\in\nats$ such that, for all $k>n$, $\abs{\mu_{i_k}-\mu_{k_*}}<\nicefrac{\epsilon}{2}$. Furthermore, because $\{\epsilon_k\}_{k\in\nats}\to 0^+$, there is some $m\in\nats$ such that for all $k>m$, $\epsilon_k<\nicefrac{\epsilon}{2}$. Now choose any $k>\max\{n,m\}$. Then,
-\begin{align*}
-\abs{\mathbb{E}_{P_k}[f(X_v)\,\vert\,Y_u\in O_u^{i_k}] - \mu_{k_*}} &= \abs{\mathbb{E}_{P_k}[f(X_v)\,\vert\,Y_u\in O_u^{i_k}] - \mu_{i_k} + \mu_{i_k} - \mu_{k_*}}
-\end{align*}
-\end{proof}
 
 \end{document}
