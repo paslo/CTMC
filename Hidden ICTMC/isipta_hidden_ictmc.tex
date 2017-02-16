@@ -463,59 +463,80 @@ Let $\mathcal{Z}$ be an ICTHMC and consider any $u,v\in\mathcal{U}$, $O_u\in\Sig
 
 \subsection{Uncountable Outcome Spaces, Point Observations, and Probability Zero}\label{subsec:uncountable}
 
-An important special case where observations have probability zero for all precise models, but where we can still make informative inferences, is when we have an uncountable outcome space $\observs$ and the observations are points $y_u\in\observs_u$---i.e., when $Y_u$ is continuous. In this case, it is common practice to define the updated expectation $\mathbb{E}_P[f(X_v)\,\vert\,Y_u=y_u]$ as the limit of \emph{conditional} expectations, where each conditioning event is an increasingly smaller region around this point $y_u$. We will start by formalising this idea in a relatively abstract way, but will shortly make this practicable. For the sake of intuition, note that we are working towards the introduction of probability density functions.
+An important special case where observations have probability zero for all precise models, but where we can still make informative inferences, is when we have an uncountable outcome space $\observs$ and the observations are points $y_u\in\observs_u$---i.e., when $Y_u$ is continuous. In this case, it is common practice to define the updated expectation $\mathbb{E}_P[f(X_v)\,\vert\,Y_u=y_u]$ as a limit of \emph{conditional} expectations, where each conditioning event is an increasingly smaller region around this point $y_u$. We will start by formalising this idea in a relatively abstract way, but will shortly make this practicable. For the sake of intuition, note that we are working towards the introduction of probability density functions.
 
-Consider any $y_u\in\observs_u$, and choose a sequence $\{O_u^i\}_{i\in\nats}$ of events in $\Sigma_u$ which shrink to $y_u$---i.e., such that $O_u^i\supset O_u^{i+1}$ for all $i\in\nats$, and such that $\cap_{i\in\nats} O_u^i=\{y_u\}$. We then define
-\begin{equation*}
+Fix any $P\in\mathcal{Z}$, consider any $y_u\in\observs_u$ and choose a sequence $\{O_u^i\}_{i\in\nats}$ of events in $\Sigma_u$ which shrink to $y_u$---i.e., such that $O_u^i\supset O_u^{i+1}$ for all $i\in\nats$, and such that $\cap_{i\in\nats} O_u^i=\{y_u\}$. We then define
+\begin{equation}\label{eq:def:precise_updated_limit}
 \mathbb{E}_P[f(X_v)\,\vert\,Y_u=y_u] \coloneqq \lim_{i\to+\infty} \mathbb{E}_P[f(X_v)\,\vert\,Y_u\in O_u^i]\,.
-\end{equation*}
-This limit exists if there is a sequence $\{\lambda_i\}_{i\in\nats}$ in $\realsnonneg$ such that, for every $x_u\in\states_u$, the limit
+\end{equation}
+This limit exists if there is a sequence $\{\lambda_i\}_{i\in\nats}$ in $\realspos$ such that, for every $x_u\in\states_u$, the limit
 \begin{equation*}
 \phi_u(y_u\,\vert\, x_u) \coloneqq \lim_{i\to+\infty}\frac{P_{\observs\vert\states}(O_u^i\,\vert\, x_u)}{\lambda_i}
 \end{equation*}
 exists, is real-valued---in particular, finite---and satisfies $\mathbb{E}_{P_\states}[\phi_u(y_u\,\vert\,X_u)]>0$:
 \begin{proposition}\label{prop:precise_bayes_rule_densities}
-Let $P$ be an augmented stochastic process, and consider any $u,v\in\mathcal{U}$, $y_u\in\observs_u$, and $f\in\gambles(\states_v)$. Then, for a given sequence $\{O_u^i\}_{i\in\nats}$ in $\Sigma_u$ satisfying the assumptions above, if for some $\{\lambda_i\}_{i\in\nats}$ the quantity $\phi_u(y_u\,\vert\,X_u)$ exists, is real-valued, and $\mathbb{E}_{P_\states}[\phi_u(y_u\,\vert\,X_u)]>0$, then
+Let $P$ be an augmented stochastic process and consider any $u,v\in\mathcal{U}$, $y_u\in\observs_u$, and $f\in\gambles(\states_v)$. For any $\{O_u^i\}_{i\in\nats}$ in $\Sigma_u$ that shrinks to $y_u$, if for some $\{\lambda_i\}_{i\in\nats}$ in $\realspos$ the quantity $\phi_u(y_u\,\vert\,X_u)$ exists, is real-valued, and satisfies $\mathbb{E}_{P_\states}[\phi_u(y_u\,\vert\,X_u)]>0$, then
 \begin{equation}\label{eq:updated_expectation_is_limit}
-\mathbb{E}_P[f(X_v)\,\vert\,Y_u=y_u] = \lim_{i\to+\infty} \mathbb{E}_P[f(X_v)\,\vert\,Y_u\in O_u^i] = \frac{\mathbb{E}_{P_\states}[f(X_v)\phi_u(y_u\vert X_u)]}{\mathbb{E}_{P_\states}[\phi_u(y_u\,\vert\,X_u)]}\,.
+\mathbb{E}_P[f(X_v)\,\vert\,Y_u=y_u] \coloneqq \lim_{i\to+\infty} \mathbb{E}_P[f(X_v)\,\vert\,Y_u\in O_u^i] = \frac{\mathbb{E}_{P_\states}[f(X_v)\phi_u(y_u\vert X_u)]}{\mathbb{E}_{P_\states}[\phi_u(y_u\,\vert\,X_u)]}\,.
 \end{equation}
 \end{proposition}
 Note that $\mathbb{E}_P[f(X_v)\,\vert\,Y_u=y_u]$ is clearly dependent on the exact sequence $\{O_u^i\}_{i\in\nats}$. Unfortunately, this is the best we can hope for at the level of generality that we are currently dealing with. %---the extend to which this limit depends on how you approach it, depends on how ``well-behaved'' the measure $P_{\observs\vert\states}$ is around the point $y_u$. 
-For brevity, we nevertheless omit from the notation the updated expectation's dependency on this sequence---however, as we will note below, this should not be problematic for most practical applications.
+For brevity, we nevertheless omit from the notation the updated expectation's dependency on this sequence. However, as we will explain below, this should not be problematic for most practical applications.
 
-To make the above practicable, we can for example assume that if $\observs$ is uncountable, then it is the set $\observs=\reals^d$, for some $d\in\nats$, and that $\Sigma$ is the Borel $\sigma$-algebra on $\reals^d$ (with the usual topology). Furthermore, we then assume that, for every $x\in\states$, $P_{\observs\vert\states}(\cdot\,\vert x)$ is $\sigma$-additive on $\Sigma$, and absolutely continuous with respect to the Lebesgue measure $\lambda$ on $(\observs,\Sigma)$. 
+To make the above practicable, we can for example assume that if $\observs$ is uncountable, then it is the set $\observs=\reals^d$, for some $d\in\nats$, and that $\Sigma$ is the Borel $\sigma$-algebra on $\reals^d$ (with the usual topology). Furthermore, we then assume that, for every $x\in\states$, $P_{\observs\vert\states}(\cdot\,\vert x)$ is $\sigma$-additive on $\Sigma$, and absolutely continuous with respect to the Lebesgue measure $\lambda$ on $(\observs,\Sigma)$. For every $x\in\states$, by the Radon-Nikodym theorem we can then associate with $P_{\observs\vert\states}(\cdot\,\vert x)$ a function $\phi(\cdot\,\vert x):\observs\to\reals$ such that for all $O\in\Sigma$,
+\begin{equation*}
+P_{\observs\vert\states}(O\,\vert x) = \int_O \phi(y\vert x)\,\mathrm{d}y\,,
+\end{equation*}
+where the integral is understood in the Lebesgue sense. In other words, $\phi(\cdot\,\vert x)$ is ``the''\footnote{It is only uniquely defined up to a Lebesgue null-set. Of course, in practice we can typically identify it uniquely.} probability density function associated with the measure $P_{\observs\vert\states}(\cdot\,\vert x)$.
 
-Consider now any $y_u\in\observs_u$. Then, for any $t\in u$, we can consider a sequence $\{O_t^i\}_{i\in\nats}$ of open balls in $\observs$ that are centered on, and shrink to, $y_t$. Let $\lambda(O_t^i)$ denote the Lebesgue measure of $O_t^i$. Under the assumptions above, it can be shown that, for every $x_t\in\states_t$,
+Now choose any $y_u\in\observs_u$, any $t\in u$, and choose a sequence $\{O_t^i\}_{i\in\nats}$ of open balls in $\observs$ that are centered on, and shrink to, $y_t$. Fix any $x_u\in\states_u$. Then if $\phi(\cdot\vert x_t)$ is continuous at $y_t$, it can be shown that
 \begin{equation}\label{eq:density_is_limit}
-\phi_t(y_t\,\vert\,x_t) \coloneqq \lim_{i\to+\infty} \frac{P_{\observs\vert\states}(O_t^i\,\vert\,x_t)}{\lambda(O_t^i)}
+\phi(y_t\vert x_t) = \lim_{i\to+\infty} \frac{P_{\observs\vert\states}(O_t\vert x_t)}{\lambda(O_t^i)}\,,
 \end{equation}
-exists (and is real-valued) for $\lambda$-almost every $y_t\in\observs$; that is, it can only fail to exist for some $y_t$ in a set with Lebesgue measure zero. When viewed as a function of $y_t$, $\phi_t(\cdot\vert x_t)$ satisfies for any $O\in\Sigma$,
-\begin{equation}\label{eq:density_generates_measure}
-P_{\observs\vert\states}(O\vert x_t) = \int_{O}\phi_t(y\vert x_t) \,\mathrm{d}y\,,
-\end{equation}
-where the integral is understood in the Lebesgue sense. In other words, $\phi_t(\cdot\,\vert\,x_t)$ is the probability density function associated with the measure $P_{\observs\vert\states}(\cdot\,\vert\, x_t)$.
-
-Repeating the above construction for every $t\in u$, we can construct a sequence $\{O_u^i\}_{i\in\nats}$ such that $O_u^i=O_{t_0}^i\times O_{t_1}^i\times\cdots O_{t_n}^i$, where each $O_{t_j}^i$ is chosen as above. Letting then $\lambda_i\coloneqq \prod_{j=0}^n\lambda(O_{t_j}^i)$, it can be shown that $\phi_u(y_u\vert x_u)$ exists for $\lambda$-almost every $y_u\in\observs_u$, and satisfies $\phi_u(y_u\,\vert\,x_u) = \prod_{t\in u} \phi_t(y_t\,\vert\,x_t)$.
+where $\lambda(O_t^i)$ denotes the Lebesgue measure of $O_t^i$. Repeating this for every $t\in u$, we can construct the sequence $\{O_u^i\}_{i\in\nats}$ such that every $O_u^i\coloneqq \prod_{t\in u}O_t^i$, with each $O_t^i$ chosen as above. If we then choose the sequence $\{\lambda_i\}_{i\in\nats}$ as $\lambda_i\coloneqq \prod_{t\in u}\lambda(O_t^i)$ for each $i\in\nats$, it can be shown that
+\begin{equation*}
+\phi_u(y_u\vert x_u) = \prod_{t\in u}\phi(y_t\vert x_t)\,,
+\end{equation*}
+provided that each $\phi(y_t\vert x_t)$ satisfies Equation~\eqref{eq:density_is_limit}; continuity of every $\phi(\cdot \vert x_t)$ at the respective $y_t$ is a sufficient condition.
+%Consider now any $y_u\in\observs_u$. Then, for any $t\in u$, we can consider a sequence $\{O_t^i\}_{i\in\nats}$ of open balls in $\observs$ that are centered on, and shrink to, $y_t$. Let $\lambda(O_t^i)$ denote the Lebesgue measure of $O_t^i$. Under the assumptions above, it can be shown that, for every $x_t\in\states_t$,
+%\begin{equation}\label{eq:density_is_limit}
+%\phi_t(y_t\,\vert\,x_t) \coloneqq \lim_{i\to+\infty} \frac{P_{\observs\vert\states}(O_t^i\,\vert\,x_t)}{\lambda(O_t^i)}
+%\end{equation}
+%exists (and is real-valued) for $\lambda$-almost every $y_t\in\observs$; that is, it can only fail to exist for some $y_t$ in a set with Lebesgue measure zero. When viewed as a function of $y_t$, $\phi_t(\cdot\vert x_t)$ satisfies for any $O\in\Sigma$,
+%\begin{equation}\label{eq:density_generates_measure}
+%P_{\observs\vert\states}(O\vert x_t) = \int_{O}\phi_t(y\vert x_t) \,\mathrm{d}y\,,
+%\end{equation}
+%where the integral is understood in the Lebesgue sense. In other words, $\phi_t(\cdot\,\vert\,x_t)$ is the probability density function associated with the measure $P_{\observs\vert\states}(\cdot\,\vert\, x_t)$.
+%
+%Repeating the above construction for every $t\in u$, we can construct a sequence $\{O_u^i\}_{i\in\nats}$ such that $O_u^i=O_{t_0}^i\times O_{t_1}^i\times\cdots O_{t_n}^i$, where each $O_{t_j}^i$ is chosen as above. Letting then $\lambda_i\coloneqq \prod_{j=0}^n\lambda(O_{t_j}^i)$, it can be shown that $\phi_u(y_u\vert x_u)$ exists for $\lambda$-almost every $y_u\in\observs_u$, and satisfies $\phi_u(y_u\,\vert\,x_u) = \prod_{t\in u} \phi_t(y_t\,\vert\,x_t)$.
 It can therefore be seen that, under these assumptions, the right-hand side of Equation~\eqref{eq:updated_expectation_is_limit} is simply the well-known Bayes' updating rule for mixtures of densities. 
 
-In most practical applications, therefore, the function $\phi_u(\cdot\,\vert\,x_u)$ is known explicitly; one may assume, for example, that $Y_t$ follows a Normal distribution with some given parameters, and the functions $\phi_t(\cdot\,\vert\,x_t)$---and by extension, $\phi_u(\cdot\vert x_u)$---then follow immediately. Furthermore, arguably most of the density functions that one encounters in practice will be relatively ``well-behaved''---in particular, they will be everywhere defined and continuous. This solves the interpretation issue encountered above, \emph{viz.} that $\mathbb{E}_P[f(X_v)\vert Y_u=y_u]$ depends on the exact sequence $\{O_u^i\}_{i\in\nats}$: such densities correspond to measures $P_{\observs\vert\states}$ for which the limit in Equation~\eqref{eq:updated_expectation_is_limit} is independent of this sequence\footnote{\label{fnote:extra_condition}At least, the limit exists and is uniquely determined for all sequences $\{O_u^i\}_{i\in\nats}$ for which every $\mathbb{E}_P[f(X_v)\,\vert\,Y_u\in O_u^i]$ is well-defined. This in particular means we should only consider sequences for which every $P(Y_u\in O_u^i)>0$.}.
+In most practical applications, therefore, the function $\phi_u(\cdot\,\vert\,x_u)$ is known explicitly; one may assume, for example, that $Y_t$ follows a Normal distribution with parameters depending on $X_t$, and the functions $\phi(\cdot\,\vert\,x_t)$---and by extension, $\phi_u(\cdot\vert x_u)$---then follow immediately. Furthermore, arguably, most of the density functions that one encounters in practice will be continuous. This guarantees that the limit in Equation~\eqref{eq:density_is_limit} exists, and solves the interpretation issue that $\mathbb{E}_P[f(X_v)\vert Y_u=y_u]$ depends on the choice of $\{O_u^i\}_{i\in\nats}$; for continuous densities $\mathbb{E}_P[f(X_v)\vert Y_u=y_u]$ is independent of this sequence.\footnote{\label{fnote:extra_condition}At least, the limit then exists and is the same for all sequences $\{O_u^i\}_{i\in\nats}$ for which every $\mathbb{E}_P[f(X_v)\,\vert\,Y_u\in O_u^i]$ is well-defined. This in particular means that we should only consider sequences for which every $P(Y_u\in O_u^i)>0$.}
 
 %From a practical point of view, the exposition above may feel rather backwards. This was necessary here because we started from an abstract probability measure $P_{\observs\vert\states}$, from which we needed to derive the corresponding probability density function. In practice, this will typically be done the other way around---one may assume, for example, that $Y_t$ follows a Normal distribution with some given parameters, and the density function $\phi_t(\cdot\,\vert\,x_t)$ is then immediately known explicitly. In that case, one simply computes the value of $\phi_u(y_u\vert x_u)$ as a product of the density values $\phi_t(y_t\,\vert\,x_t)$---as above---which can then be used directly to make any computations of interest.
 
 %Moving on, the imprecise model will again be updated using regular extension\footnote{The condition $P(Y_u\in O_u^i)>0$ in Footnote~\ref{fnote:extra_condition} is not very problematic when focussing on single processes $P$, but we are here considering \emph{sets} of processes, and for a given sequence $\{O_u^i\}_{i\in\nats}$ this condition may hold for some processes in the set, yet fail to hold for others. This introduces some interpretational subtleties when using regular extension, whose formal treatment is unfortunately somewhat outside of the scope of this present paper. If one is uncomfortable with this, we could instead use \emph{natural extension} to update the imprecise model: modifying Definition~\ref{def:reg_ext_densities} to only define the updated lower expectation whenever $\lexp[\phi_u(y_u\vert X_u)]>0$. In that case the updated model can be shown to satisfy the intuitive limit interpretation: $\underline{\mathbb{E}}_{\mathcal{Z}}\bigl[f(X_v)\,\vert\,Y_u = y_u\bigr] = \lim_{i\to+\infty}\underline{\mathbb{E}}_{\mathcal{Z}}\bigl[f(X_v)\,\vert\,Y_u \in O_u^i\bigr]$.}; discarding the precise models for which the updated expectation is undefined, and computing the lower envelope over the remainder.
 
-Moving on, note that if $\phi_u(y_u\vert X_u)$ exists and satisfies $\lexp[\phi_u(y_u\vert X_u)]>0$, then the updated expectation $\mathbb{E}_P[f(X_v)\,\vert\,Y_u=y_u]$ is well-defined for every $P\in\mathcal{Z}$. Hence, we can then update the imprecise model using \emph{natural extension}~\citep{Walley:1991vk}:
+Moving on, note that if $\phi_u(y_u\vert X_u)$ exists and satisfies $\lexp[\phi_u(y_u\vert X_u)]>0$, then the updated expectation $\mathbb{E}_P[f(X_v)\,\vert\,Y_u=y_u]$ is well-defined for every $P\in\mathcal{Z}$. Hence, we can then update the imprecise model by updating each of the precise models that it consists of.
 \begin{definition}\label{def:reg_ext_densities}
-Let $\mathcal{Z}$ be an ICTHMC, and consider any $u,v\in\mathcal{U}$, $y_u\in\observs_u$, and $f\in\gambles(\states_v)$. Then, for a given sequence $\{O_u^i\}_{i\in\nats}$ in $\Sigma_u$ satisfying the assumptions above, if for some $\{\lambda_i\}_{i\in\nats}$ the quantity $\phi_u(y_u\,\vert\,X_u)$ exists and is real-valued, the updated lower expectation is given by 
+Let $\mathcal{Z}$ be an ICTHMC and consider any $u,v\in\mathcal{U}$, $y_u\in\observs_u$, and $f\in\gambles(\states_v)$. For any $\{O_u^i\}_{i\in\nats}$ in $\Sigma_u$ that shrinks to $y_u$, if for some $\{\lambda_i\}_{i\in\nats}$ in $\realspos$ the quantity $\phi_u(y_u\,\vert\,X_u)$ exists and is real-valued, the updated lower expectation is defined by
 \begin{equation*}
 \underline{\mathbb{E}}_{\mathcal{Z}}\bigl[f(X_v)\,\vert\,Y_u = y_u\bigr] \coloneqq \inf\{\mathbb{E}_P[f(X_v)\vert Y_u=y_u]\,:\,P\in\mathcal{Z}\}\,,
 \end{equation*}
 whenever $\underline{\mathbb{E}}_\mathcal{Z}[\phi_u(y_u\vert X_u)] >0$, and is left undefined, otherwise.
 \end{definition}
 
-The reason that we here choose to update the model using natural extension, rather than regular extension, is that the latter leads to some interpretational difficulties. In contrast, natural extension yields the intuitive limit interpretation\footnote{Proposition~\ref{prop:GBR_for_densities_is_limit_if_continuous} does not in general hold when we modify it and Definition~\ref{def:reg_ext_densities} to work with regular extension, i.e. when $\lexp[\phi_u(y_u\vert X_u)]=0$ but $\uexp[\phi_u(y_u\vert X_u)]>0$. Nevertheless, if one does not mind losing this interpretation, we may note that the updated model that is so defined is still numerically well-behaved and computable; it still satisfies, \emph{mutatis mutandis}, Proposition~\ref{prop:GBR_for_densities_lower_zero}. In any case, a sufficient condition to obtain $\lexp[\phi_u(y_u\vert X_u)]>0$ is that $\phi_u(\cdot\vert X_u)$ is strictly positive on $\observs$; again, this should arguably hold for most practical applications.}: 
+Similar to the results in Section~\ref{subsec:pos_prob}, this updated lower expectation satisfies a ``generalised Bayes' rule for mixtures of densities'', in the following sense.
+
+\begin{proposition}\label{prop:GBR_for_densities_lower_zero}
+Let $\mathcal{Z}$ be an ICTHMC and consider any $u,v\in\mathcal{U}$, $y_u\in\observs_u$, and $f\in\gambles(\states_v)$. For any $\{O_u^i\}_{i\in\nats}$ in $\Sigma_u$ that shrinks to $y_u$, if for some $\{\lambda_i\}_{i\in\nats}$ in $\realspos$ the quantity $\phi_u(y_u\,\vert\,X_u)$ exists, is real-valued, and satisfies $\lexp[\phi_u(y_u\vert X_u)]>0$, then
+\begin{equation*}
+\underline{\mathbb{E}}_{\mathcal{Z}}\bigl[f(X_v)\,\vert\,Y_u = y_u\bigr] = \max\left\{\mu\in\reals\,:\, \lexp\bigl[\phi_u(y_u\vert X_u)\bigl(f(X_v) - \mu\bigr)\bigr] \geq 0\right\}\,.
+\end{equation*}
+\end{proposition}
+Furthermore, this updated imprecise model satisfies the intuitive limit interpretation:
 \begin{proposition}\label{prop:GBR_for_densities_is_limit_if_continuous}
-Let $\mathcal{Z}$ be an ICTHMC, and consider any $u,v\in\mathcal{U}$, $y_u\in\observs_u$, and $f\in\gambles(\states_v)$. Then, for a given sequence $\{O_u^i\}_{i\in\nats}$ in $\Sigma_u$ satisfying the assumptions above, if for some $\{\lambda_i\}_{i\in\nats}$ the quantity $\phi_u(y_u\,\vert\,X_u)$ exists, is real-valued, and satisfies $\lexp[\phi_u(y_u\vert X_u)]>0$, then the updated lower expectation satisfies $\underline{\mathbb{E}}_\mathcal{Z}[f(X_v)\vert Y_u=y_u] 
+Let $\mathcal{Z}$ be an ICTHMC and consider any $u,v\in\mathcal{U}$, $y_u\in\observs_u$, and $f\in\gambles(\states_v)$. For any $\{O_u^i\}_{i\in\nats}$ in $\Sigma_u$ that shrinks to $y_u$, if for some $\{\lambda_i\}_{i\in\nats}$ in $\realspos$ the quantity $\phi_u(y_u\,\vert\,X_u)$ exists, is real-valued, and satisfies $\lexp[\phi_u(y_u\vert X_u)]>0$, then $\underline{\mathbb{E}}_\mathcal{Z}[f(X_v)\vert Y_u=y_u] 
  = \lim_{i\to+\infty}\underline{\mathbb{E}}_\mathcal{Z}[f(X_v)\vert Y_u\in O_u^i]$.
 %\begin{equation*}
 %\underline{\mathbb{E}}_\mathcal{Z}[f(X_v)\vert Y_u=y_u] 
@@ -523,14 +544,6 @@ Let $\mathcal{Z}$ be an ICTHMC, and consider any $u,v\in\mathcal{U}$, $y_u\in\ob
 %\end{equation*}
 \end{proposition}
 
-Similar to the results in Section~\ref{subsec:pos_prob}, this updated lower expectation can be computed by means of the ``generalised Bayes' rule for mixtures of densities'', as follows.
-
-\begin{proposition}\label{prop:GBR_for_densities_lower_zero}
-Let $\mathcal{Z}$ be an ICTHMC, and consider any $u,v\in\mathcal{U}$, $y_u\in\observs_u$, and $f\in\gambles(\states_v)$. Then, for a given sequence $\{O_u^i\}_{i\in\nats}$ in $\Sigma_u$ satisfying the assumptions above, if for some $\{\lambda_i\}_{i\in\nats}$ the quantity $\phi_u(y_u\,\vert\,X_u)$ exists, is real-valued, and satisfies $\lexp[\phi_u(y_u\vert X_u)]>0$,
-\begin{equation*}
-\underline{\mathbb{E}}_{\mathcal{Z}}\bigl[f(X_v)\,\vert\,Y_u = y_u\bigr] = \max\left\{\mu\in\reals\,:\, \lexp\bigl[\phi_u(y_u\vert X_u)\bigl(f(X_v) - \mu\bigr)\bigr] \geq 0\right\}\,.
-\end{equation*}
-\end{proposition}
 %
 %\begin{proposition}\label{prop:GBR_for_densities}
 %Suppose that $\observs$ is uncountable. Let $\mathcal{Z}$ be an ICTHMC, and consider any $v\in\mathcal{U}_\emptyset$, $u\in\mathcal{U}_{<v}$, $y_u\in\observs_u$, and $f\in\gambles(\states_v)$. Then, if $\lexp[\phi_u(y_u\vert X_u)]>0$,
