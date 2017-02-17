@@ -489,11 +489,11 @@ Let $P$ be an augmented stochastic process and consider any $u,v\in\mathcal{U}$,
 Note that $\mathbb{E}_P[f(X_v)\,\vert\,Y_u=y_u]$ is clearly dependent on the exact sequence $\{O_u^i\}_{i\in\nats}$. Unfortunately, this is the best we can hope for at the level of generality that we are currently dealing with. %---the extend to which this limit depends on how you approach it, depends on how ``well-behaved'' the measure $P_{\observs\vert\states}$ is around the point $y_u$. 
 For brevity, we nevertheless omit from the notation the updated expectation's dependency on this sequence. However, as we will explain below, this should not be problematic for most practical applications.
 
-It is also useful to note that $\phi_u(y_u\vert x_u)$ exists (and is real-valued) if and only if it can be constructed ``piecewise''. That is, if for every $t\in u$ there is a $\{\lambda_{\,t,i}\}_{i\in\nats}$ in $\realspos$ such that, for all $x_t\in\states_t$,
+It is also useful to note that $\phi_u(y_u\vert x_u)$ can often be constructed ``piecewise''. That is, if for every $t\in u$ there is a sequence $\{\lambda_{\,t,i}\}_{i\in\nats}$ in $\realspos$ such that, for all $x_t\in\states_t$,
 \begin{equation*}
 \phi_t(y_t\vert x_t)\coloneqq \lim_{i\to+\infty} \frac{P_{\observs\vert\states}(O_t^i\vert x_t)}{\lambda_{\,t,i}}
 \end{equation*}
-exists and is real-valued, then choosing $\{\lambda_i\}_{i\in\nats}$ as $\lambda_i\coloneqq \prod_{t\in u}\lambda_{\,t,i}$, yields $\phi_u(y_u\vert x_u)=\prod_{t\in u}\phi_t(y_t\vert x_t)$. The converse also holds, in that if for some $\{\lambda_i\}_{i\in\nats}$ the quantity $\phi_u(y_u\vert x_u)$ exists for all $x_u\in\states_u$, then for every $t\in u$ there is a $\{\lambda_{\,t,i}\}_{i\in\nats}$ in $\realspos$ such that $\phi_t(y_t\vert x_t)$ exists, and $\prod_{t\in u}\phi_t(y_t\vert x_t)=\phi_u(y_u\vert x_u)$. %However, this second direction is a bit less useful from a practical point of view, because it is an existential statement that does not determine the $\phi_t(y_t\vert x_t)$ uniquely.
+exists and is real-valued, then choosing $\{\lambda_i\}_{i\in\nats}$ as $\lambda_i\coloneqq \prod_{t\in u}\lambda_{\,t,i}$ yields $\phi_u(y_u\vert x_u)=\prod_{t\in u}\phi_t(y_t\vert x_t)$. The converse often also holds, in that if $\phi_u(y_u\vert x_u)$ exists there tend to be sequences $\{\lambda_{\,t,i}\}_{t\in\nats}$ so that $\phi_t(y_t\vert x_t)$ exists, and for which $\prod_{t\in u}\phi_t(y_t\vert x_t)=\phi_u(y_u\vert x_u)$. However, the ``often'' qualifier is a bit hard to make rigorous at this level of generality, and in any case this direction is less useful practically. %However, this second direction is a bit less useful from a practical point of view, because it is an existential statement that does not determine the $\phi_t(y_t\vert x_t)$ uniquely.
 
 Now, to make the above practicable, we can for example assume that if $\observs$ is uncountable, then it is the set $\observs=\reals^d$, for some $d\in\nats$, and that $\Sigma$ is the Borel $\sigma$-algebra on $\reals^d$. 
 For each $x\in\states$, we then assume that the measure $P_{\observs\vert\states}(\cdot\,\vert x)$ is induced by some given \emph{probability density function}: a measurable function $\psi(\cdot\,\vert x):\observs\to\realsnonneg$ such that $\int_\observs \psi(y\vert x)\,\mathrm{d}y=1$ and, for every $O\in\Sigma$,
@@ -1083,27 +1083,41 @@ using the above established existence and properties of the individual limits fo
 %\end{proof}
 
 
-The argument below proves the properties of the density $\phi_u$ that are claimed in Section~\ref{subsec:uncountable}, under the additional assumptions on $(\observs,\Sigma,P_{\observs\vert\states})$ that are imposed there.
+%The argument below proves the properties of the density $\phi_u$ that are claimed in Section~\ref{subsec:uncountable}, under the additional assumptions on $(\observs,\Sigma,P_{\observs\vert\states})$ that are imposed there.
+%
+%\begin{proof}
+%Due to the assumptions in Section~\ref{subsec:uncountable}, and by the Radon-Nikodym theorem, we can associate with $P_{\observs\vert\states}$ a measurable function $\psi_t:\observs_t\times\states_t\to\realsnonneg$ such that, for all $x_t\in\states_t$ and $O_t\in\Sigma_t$,
+%\begin{equation*}
+%P_{\observs\vert\states}(O_t\vert x_t) = \int_{O_t}\psi_t(y\vert x_t) \,\mathrm{d}y\,.
+%\end{equation*}
+%Furthermore, since $\int_{\observs}\psi_t(y\vert x_t) \,\mathrm{d}y = P_{\observs\vert\states}(\observs\vert x_t)=1$, $\psi_t(\cdot\vert x_t)$ is absolutely integrable on $\observs$. Therefore, by the Lebesgue differentiation theorem, for $\lambda$-almost every $y_t\in\observs_t$, and for any sequence $\{O_t^i\}_{i\in\nats}$ of open balls in $\observs$ that shrink to $y_t$, it holds that
+%\begin{equation*}
+%\psi_t(y_t\vert x_t) = \lim_{i\to+\infty} \frac{1}{\lambda(O_t^i)} \int_{O_t^i} \psi_t(y\vert x_t)\,\mathrm{d}y\,.
+%\end{equation*}
+%At those $y_t\in\observs_t$ where this equality holds, we then find using the choice of $\psi_t$ that
+%\begin{equation*}
+%\psi_t(y_t\vert x_t) = \lim_{i\to+\infty} \frac{1}{\lambda(O_t^i)} \int_{O_t^i} \psi(y\vert x_t)\,\mathrm{d}y = \lim_{i\to+\infty} \frac{P_{\observs\vert\states}(O_t^i\vert x_t)}{\lambda(O_t^i)}\,.
+%\end{equation*}
+%In other words, the limit expression on the r.h.s. of this equality exists (at least) $\lambda$-almost everywhere---and hence, the same is true for the limit in Equation~\eqref{eq:density_is_limit}. Furthermore, this implies that $\phi_t(\cdot\,\vert x_t)$ differs from $\psi_t(\cdot\,\vert x_t)$ at most on a set of Lebesgue measure zero---the above r.h.s. limit might still exist even if the other equalities do not hold. Due to the choice of $\psi_t$, this immediately implies Equation~\eqref{eq:density_generates_measure}.
+%
+%It now remains to prove the claimed properties about the function $\phi_u$. **** TODO: finish this
+%\end{proof}
 
-\begin{proof}
-Due to the assumptions in Section~\ref{subsec:uncountable}, and by the Radon-Nikodym theorem, we can associate with $P_{\observs\vert\states}$ a measurable function $\psi_t:\observs_t\times\states_t\to\realsnonneg$ such that, for all $x_t\in\states_t$ and $O_t\in\Sigma_t$,
-\begin{equation*}
-P_{\observs\vert\states}(O_t\vert x_t) = \int_{O_t}\psi_t(y\vert x_t) \,\mathrm{d}y\,.
-\end{equation*}
-Furthermore, since $\int_{\observs}\psi_t(y\vert x_t) \,\mathrm{d}y = P_{\observs\vert\states}(\observs\vert x_t)=1$, $\psi_t(\cdot\vert x_t)$ is absolutely integrable on $\observs$. Therefore, by the Lebesgue differentiation theorem, for $\lambda$-almost every $y_t\in\observs_t$, and for any sequence $\{O_t^i\}_{i\in\nats}$ of open balls in $\observs$ that shrink to $y_t$, it holds that
-\begin{equation*}
-\psi_t(y_t\vert x_t) = \lim_{i\to+\infty} \frac{1}{\lambda(O_t^i)} \int_{O_t^i} \psi_t(y\vert x_t)\,\mathrm{d}y\,.
-\end{equation*}
-At those $y_t\in\observs_t$ where this equality holds, we then find using the choice of $\psi_t$ that
-\begin{equation*}
-\psi_t(y_t\vert x_t) = \lim_{i\to+\infty} \frac{1}{\lambda(O_t^i)} \int_{O_t^i} \psi(y\vert x_t)\,\mathrm{d}y = \lim_{i\to+\infty} \frac{P_{\observs\vert\states}(O_t^i\vert x_t)}{\lambda(O_t^i)}\,.
-\end{equation*}
-In other words, the limit expression on the r.h.s. of this equality exists (at least) $\lambda$-almost everywhere---and hence, the same is true for the limit in Equation~\eqref{eq:density_is_limit}. Furthermore, this implies that $\phi_t(\cdot\,\vert x_t)$ differs from $\psi_t(\cdot\,\vert x_t)$ at most on a set of Lebesgue measure zero---the above r.h.s. limit might still exist even if the other equalities do not hold. Due to the choice of $\psi_t$, this immediately implies Equation~\eqref{eq:density_generates_measure}.
+The below proves some of the properties that are claimed in the main text of Section~\ref{subsec:uncountable}.
 
-It now remains to prove the claimed properties about the function $\phi_u$. **** TODO: finish this
+\begin{proof}{\bf of claims in Section~\ref{subsec:uncountable}~}
+We start by proving the claim that $\phi_u(y_u\vert x_u)$ exists and is real-valued if it can be constructed ``piecewise'', as explained in the main text. So, fix any $y_u\in\observs_u$, choose any sequence $\{O_u^i\}_{i\in\nats}$ in $\Sigma_u$  that shrinks to $y_u$, and suppose that for every $t\in u$, there is a sequence $\{\lambda_{\,t,i}\}_{i\in\nats}$ in $\realspos$ such that, for all $x_t\in\states_t$,
+\begin{equation*}
+\phi_t(y_t\vert x_t) \coloneqq \lim_{i\to+\infty} \frac{P_{\observs\vert\states}(O_t^i\vert x_t)}{\lambda_{\,t,i}}
+\end{equation*}
+exists and is real-valued. Recall that, for every $x_u\in\states_u$ and every $i\in\nats$, we have $P_{\observs\vert\states}(O_u^i\vert x_u)=\prod_{t\in u}P_{\observs\vert\states}(O_t^i\vert x_t)$. So, by choosing $\{\lambda_i\}_{i\in\nats}$ as $\lambda_i\coloneqq \prod_{t\in u}\lambda_{\,t,i}$, it follows that for every $x_u\in\states_u$,
+\begin{equation*}
+\phi_u(y_u\vert x_u) = \lim_{i\to+\infty} \frac{P_{\observs\vert\states}(O_u^i\vert x_u)}{\lambda_i} = \lim_{i\to+\infty} \prod_{t\in u}\frac{P_{\observs\vert\states}(O_t^i\vert x_t)}{\lambda_{\,t,i}} = \prod_{t\in u}\lim_{i\to+\infty} \frac{P_{\observs\vert\states}(O_t^i\vert x_t)}{\lambda_{\,t,i}} = \prod_{t\in u} \phi_t(y_t\vert x_t)\,,
+\end{equation*}
+using the existence of the $\phi(y_t\vert x_t)$ for the third equality. Hence, $\phi_u(y_u\vert x_u)$ exists and, since each $\phi_t(y_t\vert x_t)$, $t\in u$, is real-valued, so is $\phi_u(y_u\vert x_u)$. This concludes the proof of this statement.
+
 \end{proof}
 
-We give the proof of Proposition~\ref{prop:GBR_for_densities_lower_zero} before that of Proposition~\ref{prop:GBR_for_densities_is_limit_if_continuous}; we need the statement of the former to prove the latter.
 \begin{proof}{\bf of Proposition~\ref{prop:GBR_for_densities_lower_zero}~}
 This is a special case of Lemma~\ref{lemma:general_regular_extension}, obtained by setting $g(X_u)\coloneqq \phi_u(y_u\vert X_u)$ in that lemma's statement, and applying Proposition~\ref{prop:precise_bayes_rule_densities} to the quantities $\mathbb{E}_P[f(X_v)\,\vert\,Y_u=y_u]$.
 \end{proof}
@@ -1165,9 +1179,9 @@ Due to Proposition~\ref{prop:GBR_for_densities_lower_zero}, we therefore conclud
 \end{align*}
 \end{proof}
 
-The below proves by counterexample that the regular extension version of Proposition~\ref{prop:GBR_for_densities_is_limit_if_continuous} does not hold in general.
+The below proves the properties of the first of the alternative imprecise updating methods suggested in Section~\ref{subsec:uncountable}.
 \begin{proposition}
-There exists some ICTHMC $\mathcal{Z}$, some sequences of time-points $u,v\in\mathcal{U}$, some function $f\in\gambles(\states_v)$, some $y_u\in\observs_u$, and some sequence $\{O_u^i\}_{i\in\nats}$ such that there is a sequence $\{\lambda_i\}_{i\in\nats}$ for which $\phi_u(y_u\vert X_u)$ exists, is real-valued, and $\uexp[\phi_u(y_u\vert X_u)]>0$, such that for the imprecise updated model under regular extension,
+There exists some ICTHMC $\mathcal{Z}$, some sequences of time-points $u,v\in\mathcal{U}$, some function $f\in\gambles(\states_v)$, some $y_u\in\observs_u$, and some sequence $\{O_u^i\}_{i\in\nats}$ such that there is a sequence $\{\lambda_i\}_{i\in\nats}$ for which $\phi_u(y_u\vert X_u)$ exists, is real-valued, and $\uexp[\phi_u(y_u\vert X_u)]>0$, such that for
 \begin{equation*}
 \underline{\mathbb{E}}_\mathcal{Z}^\mathrm{R}[f(X_v)\,\vert\, Y_u=y_u] \coloneqq \inf\left\{ \mathbb{E}_P[f(X_v)\,\vert\,Y_u=y_u]\,:\,P\in\mathcal{Z}, \mathbb{E}_P[\phi_u(y_u\vert X_u)]>0  \right\}\,,
 \end{equation*}
@@ -1177,7 +1191,7 @@ it holds that
 \end{equation*}
 \end{proposition}
 \begin{proof}
-We give a proof by counterexample. To this end, let $\states\coloneqq\{x,\overline{x}\}$ be a binary state-space, and let $\observs\coloneqq [-1,1]$, with $\Sigma$ the Borel $\sigma$-algebra on $\observs$ under the usual topology. For the sequences of time-points, we choose $u=v=\{0\}$. Set $y_0\coloneqq 0$.
+Because the claim is existential, a proof by example suffices. To this end, let $\states\coloneqq\{x,\overline{x}\}$ be a binary state-space, and let $\observs\coloneqq [-1,1]$, with $\Sigma$ the Borel $\sigma$-algebra on $\observs$ under the usual topology. For the sequences of time-points, we choose $u=v=\{0\}$. Set $y_0\coloneqq 0$.
 
 The trick will be to choose the measures $P_{\observs\vert\states}(\cdot\vert x)$ and $P_{\observs\vert\states}(\cdot\vert \overline{x})$ so that the first gives $y_0$ strictly positive support (i.e. density), while the second assigns zero support (i.e. density) to $y_0$ but positive support (i.e. density) to the region around $y_0$. To this end, let $P_{\observs\vert\states}(\cdot\vert x)$ be the uniform distribution on $[-1,1]$.
 
