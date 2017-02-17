@@ -484,21 +484,22 @@ Let $P$ be an augmented stochastic process and consider any $u,v\in\mathcal{U}$,
 Note that $\mathbb{E}_P[f(X_v)\,\vert\,Y_u=y_u]$ is clearly dependent on the exact sequence $\{O_u^i\}_{i\in\nats}$. Unfortunately, this is the best we can hope for at the level of generality that we are currently dealing with. %---the extend to which this limit depends on how you approach it, depends on how ``well-behaved'' the measure $P_{\observs\vert\states}$ is around the point $y_u$. 
 For brevity, we nevertheless omit from the notation the updated expectation's dependency on this sequence. However, as we will explain below, this should not be problematic for most practical applications.
 
-Furthermore, it is useful to note that $\phi_u(y_u\vert x_u)$ exists (and is real-valued) if it can be constructed ``piecewise''. That is, if for every $t\in u$ there is a $\{\lambda_{\,t,i}\}_{i\in\nats}$ in $\realspos$ such that
+It is also useful to note that $\phi_u(y_u\vert x_u)$ exists (and is real-valued) if and only if it can be constructed ``piecewise''. That is, if for every $t\in u$ there is a $\{\lambda_{\,t,i}\}_{i\in\nats}$ in $\realspos$ such that, for all $x_t\in\states_t$,
 \begin{equation*}
 \phi_t(y_t\vert x_t)\coloneqq \lim_{i\to+\infty} \frac{P_{\observs\vert\states}(O_t^i\vert x_t)}{\lambda_{\,t,i}}
 \end{equation*}
-exists and is real-valued, then choosing $\{\lambda_i\}_{i\in\nats}$ as $\lambda_i\coloneqq \prod_{t\in u}\lambda_{\,t,i}$, yields $\phi_u(y_u\vert x_u)=\prod_{t\in u}\phi_t(y_t\vert x_t)$.
+exists and is real-valued, then choosing $\{\lambda_i\}_{i\in\nats}$ as $\lambda_i\coloneqq \prod_{t\in u}\lambda_{\,t,i}$, yields $\phi_u(y_u\vert x_u)=\prod_{t\in u}\phi_t(y_t\vert x_t)$. The converse also holds, in that if for some $\{\lambda_i\}_{i\in\nats}$ the quantity $\phi_u(y_u\vert x_u)$ exists for all $x_u\in\states_u$, then for every $t\in u$ there is a $\{\lambda_{\,t,i}\}_{i\in\nats}$ in $\realspos$ such that $\phi_t(y_t\vert x_t)$ exists, and $\prod_{t\in u}\phi_t(y_t\vert x_t)=\phi_u(y_u\vert x_u)$. %However, this second direction is a bit less useful from a practical point of view, because it is an existential statement that does not determine the $\phi_t(y_t\vert x_t)$ uniquely.
 
 Now, to make the above practicable, we can for example assume that if $\observs$ is uncountable, then it is the set $\observs=\reals^d$, for some $d\in\nats$, and that $\Sigma$ is the Borel $\sigma$-algebra on $\reals^d$. 
-Furthermore, for each $x\in\states$, we then assume that the measure $P_{\observs\vert\states}(\cdot\,\vert x)$ is induced by some given \emph{probability density function} $\psi(\cdot\,\vert x):\observs\to\realsnonneg$, in the sense that for every $O\in\Sigma$,
+For each $x\in\states$, we then assume that the measure $P_{\observs\vert\states}(\cdot\,\vert x)$ is induced by some given \emph{probability density function}: a measurable function $\psi(\cdot\,\vert x):\observs\to\realsnonneg$ such that $\int_\observs \psi(y\vert x)\,\mathrm{d}y=1$ and, for every $O\in\Sigma$,
 %Furthermore, we then assume that for every $x\in\states$, $P_{\observs\vert\states}(\cdot\,\vert x)$ is $\sigma$-additive on $\Sigma$, and absolutely continuous with respect to the Lebesgue measure $\lambda$ on $(\observs,\Sigma)$. For every $x\in\states$, by the Radon-Nikodym theorem we can then associate with $P_{\observs\vert\states}(\cdot\,\vert x)$ a function $\phi(\cdot\,\vert x):\observs\to\reals$ such that for all $O\in\Sigma$,
 \begin{equation*}
-P_{\observs\vert\states}(O\,\vert x) \coloneqq \int_O \psi(y\vert x)\,\mathrm{d}y\,.
+P_{\observs\vert\states}(O\,\vert x) \coloneqq \int_O \psi(y\vert x)\,\mathrm{d}y\,,
 \end{equation*}
+where the integrals are understood in the Lebesgue sense.
 %where the integral is understood in the Lebesgue sense. In other words, $\phi(\cdot\,\vert x)$ is ``the''\footnote{It is only uniquely determined up to a Lebesgue null-set. Of course, in practice we can typically identify it uniquely.} probability density function associated with the measure $P_{\observs\vert\states}(\cdot\,\vert x)$.
 
-Now choose any $y_u\in\observs_u$, any $t\in u$, any sequence $\{O_t^i\}_{i\in\nats}$ of open balls in $\observs_t$ that are centered on, and shrink to, $y_t$, and fix any $x_u\in\states_u$. Then if $\psi(\cdot\vert x_t)$ is continuous at $y_t$, it can be shown that
+Then choose any $y_u\in\observs_u$, any $t\in u$, any sequence $\{O_t^i\}_{i\in\nats}$ of open balls in $\observs_t$ that are centered on, and shrink to, $y_t$, and fix any $x_u\in\states_u$. If $\psi(\cdot\vert x_t)$ is continuous at $y_t$, it can be shown that
 \begin{equation}\label{eq:density_is_limit}
 \phi_t(y_t\vert x_t) = \lim_{i\to+\infty} \frac{P_{\observs\vert\states}(O_t^i\vert x_t)}{\lambda(O_t^i)} = \psi(y_t\vert x_t)\,,
 \end{equation}
@@ -518,7 +519,7 @@ provided that each $\phi_t(y_t\vert x_t)$ satisfies Equation~\eqref{eq:density_i
 %where the integral is understood in the Lebesgue sense. In other words, $\phi_t(\cdot\,\vert\,x_t)$ is the probability density function associated with the measure $P_{\observs\vert\states}(\cdot\,\vert\, x_t)$.
 %
 %Repeating the above construction for every $t\in u$, we can construct a sequence $\{O_u^i\}_{i\in\nats}$ such that $O_u^i=O_{t_0}^i\times O_{t_1}^i\times\cdots O_{t_n}^i$, where each $O_{t_j}^i$ is chosen as above. Letting then $\lambda_i\coloneqq \prod_{j=0}^n\lambda(O_{t_j}^i)$, it can be shown that $\phi_u(y_u\vert x_u)$ exists for $\lambda$-almost every $y_u\in\observs_u$, and satisfies $\phi_u(y_u\,\vert\,x_u) = \prod_{t\in u} \phi_t(y_t\,\vert\,x_t)$.
-It can now be seen that, under these assumptions, the right-hand side of Equation~\eqref{eq:updated_expectation_is_limit} is the well-known Bayes' updating rule for mixtures of densities. 
+It can now be seen that, under these assumptions, the right-hand side of Equation~\eqref{eq:updated_expectation_is_limit} is simply the well-known Bayes' updating rule for mixtures of densities. 
 
 In most practical applications, therefore, the function $\phi_u(\cdot\,\vert\,x_u)$ is known explicitly; one may assume, for example, that $Y_t$ follows a Normal distribution with parameters depending on $X_t$, and the functions $\phi_t(\cdot\,\vert\,x_t)$---and by extension, $\phi_u(\cdot\vert x_u)$---then follow directly by identification with $\psi(\cdot\,\vert x_t)$. Furthermore, arguably, most of the density functions that one encounters in practice will be continuous. This guarantees that the limit in Equation~\eqref{eq:density_is_limit} exists, and solves the interpretation issue that $\mathbb{E}_P[f(X_v)\vert Y_u=y_u]$ depends on the choice of $\{O_u^i\}_{i\in\nats}$; for continuous densities, the updated expectation $\mathbb{E}_P[f(X_v)\vert Y_u=y_u]$ is independent of this sequence.\footnote{\label{fnote:extra_condition}At least, the limit then exists and is the same for all sequences $\{O_u^i\}_{i\in\nats}$ for which every $\mathbb{E}_P[f(X_v)\,\vert\,Y_u\in O_u^i]$ is well-defined. This in particular means that we should only consider sequences for which every $P(Y_u\in O_u^i)>0$.}
 
@@ -600,9 +601,9 @@ or its density-analogue, for some fixed value of $\mu$. Finding the updated lowe
 
 Therefore, in order for this approach to be computationally tractable, we require efficient algorithms that can evaluate this quantity for a given value of $\mu$. In Section~\ref{sec:funcs_single_time}, we provide such an algorithm for the important case where the function $f$ depends on a single time-point.
 
-We first generalise the problem so that these results are applicable both for observations of the form $(Y_u\in O_u)$, and for point-observations $(Y_u=y_u)$ in an uncountable outcome space. Recall that %$P_{\observs\vert\states}(O_u\vert X_u) = \prod_{t\in u}P_{\observs\vert\states}(O_{t}\vert X_{t})$ and $\phi_u(y_u\vert X_u) = \prod_{t\in u}\phi_{t}(y_{t}\vert X_{t})$. 
+We first generalise the problem so that these results are applicable both for observations of the form $(Y_u\in O_u)$, and for point-observations $(Y_u=y_u)$ in an uncountable outcome space. Recall that%$P_{\observs\vert\states}(O_u\vert X_u) = \prod_{t\in u}P_{\observs\vert\states}(O_{t}\vert X_{t})$ and $\phi_u(y_u\vert X_u) = \prod_{t\in u}\phi_{t}(y_{t}\vert X_{t})$. 
 \begin{equation*}
-P_{\observs\vert\states}(O_u\vert X_u) = \prod_{t\in u}P_{\observs\vert\states}(O_{t}\vert X_{t})\,\quad\quad\text{and}\quad\quad \phi_u(y_u\vert X_u) = \prod_{t\in u}\phi_{t}(y_{t}\vert X_{t})\,.
+P_{\observs\vert\states}(O_u\vert X_u) = \prod_{t\in u}P_{\observs\vert\states}(O_{t}\vert X_{t})\,\quad\quad\text{and}\quad\quad \phi_u(y_u\vert X_u) = \prod_{t\in u}\phi_{t}(y_{t}\vert X_{t})\,.\vspace{-5pt}
 \end{equation*}
 Hence, we can in both cases rewrite the function of interest as
 $\lexp\left[ \bigl(\prod_{t\in u}g_{t}(X_{t})\bigr)\bigl(f(X_v) - \mu\bigr) \right]$,
@@ -612,7 +613,7 @@ for some collection of functions $g_{t}\in\gambles(\states_{t})$ such that $g_{t
 
 \subsection{Solving the Generalised Bayes' Rule}\label{sec:gbr}
 
-Finding the maximum value of $\mu$ for which the function of interest in the generalised Bayes' rule is non-negative, is relatively straightforward numerically. This is because this function, parameterised in $\mu$, is very well-behaved. The proposition below explicitly states some of these properties. These are essentially well-known, and can also be found in other work; see, e.g.,~\cite[Section 2.7.3]{de2015credal}. The statement below is therefore intended to briefly recall these properties, and is stated in a general form where we can also use it when working with densities.
+Finding the maximum value of $\mu$ for which the function of interest in the generalised Bayes' rule is non-negative, is relatively straightforward numerically. This is because this function, parameterised in $\mu$, is very well-behaved. The proposition below explicitly states some of its properties. These are essentially well-known, and can also be found in other work; see, e.g.,~\cite[Section 2.7.3]{de2015credal}. The statement below is therefore intended to briefly recall these properties, and is stated in a general form where we can also use it when working with densities.
 
 \begin{proposition}\label{prop:GBR_properties}
 Let $\mathbb{P}_{\rateset,\mathcal{M}}$ be an ICTMC and consider any $u,v\in\mathcal{U}$, any $f\in\gambles(\states_v)$, and, for all $t\in u$, any $g_{t}\in\gambles(\states_{t})$ such that $g_{t}\geq 0$. 
@@ -631,11 +632,11 @@ Consider the function $G: \reals\to\reals$ that is given, for all $\mu\in\reals$
 %
 %If $\uexp\bigl[\prod_{i=0}^n g_{t_i}(X_{t_i})\bigr]=0$, this function: \customlabel{GBR:none_pos:zero}{(ZG1)} is identically zero, i.e. $G(\mu)=0$ for all $\mu\in\reals$.
 %%%%%%%%%%%%%%%%%%%%%%%%%
-Then the following properties hold: 
+Then the following properties hold: \vspace{-2pt}
 \begin{enumerate}[label=G\arabic*:,ref=G\arabic*]
-\item $G(\mu)$ is continuous, non-increasing, concave, and has a root, i.e. $\exists \mu\in\reals:G(\mu)=0$. \label{GBR:always}
-\item If $\lexp\bigl[\prod_{t\in u} g_{t}(X_{t})\bigr] >0$, then $G(\mu)$ is (strictly) decreasing, and has a unique root. \label{GBR:low_pos}
-\item If $\lexp\bigl[\prod_{t\in u} g_{t}(X_{t})\bigr]=0$ but $\uexp\bigl[\prod_{t\in u} g_{t}(X_{t})\bigr] >0$, then $G(\mu)$ has a maximum root $\mu_*$, satisfies $G(\mu)=0$ for all $\mu\leq \mu_*$, and is (strictly) decreasing for $\mu\geq \mu_*$. \label{GBR:up_pos}
+\item $G(\mu)$ is continuous, non-increasing, concave, and has a root, i.e. $\exists \mu\in\reals:G(\mu)=0$. \label{GBR:always} \vspace{-3pt}
+\item If $\lexp\bigl[\prod_{t\in u} g_{t}(X_{t})\bigr] >0$, then $G(\mu)$ is (strictly) decreasing, and has a unique root. \label{GBR:low_pos} \vspace{-3pt}
+\item If $\lexp\bigl[\prod_{t\in u} g_{t}(X_{t})\bigr]=0$ but $\uexp\bigl[\prod_{t\in u} g_{t}(X_{t})\bigr] >0$, then $G(\mu)$ has a maximum root $\mu_*$, satisfies $G(\mu)=0$ for all $\mu\leq \mu_*$, and is (strictly) decreasing for $\mu\geq \mu_*$. \label{GBR:up_pos} \vspace{-3pt}
 \item If $\uexp\bigl[\prod_{t\in u} g_{t}(X_{t})\bigr]=0$, then $G(\mu)$ is identically zero, i.e. $\forall \mu\in\reals: G(\mu)=0$. \label{GBR:none_pos}
 \end{enumerate}
 
@@ -693,7 +694,7 @@ $\uexp\left[\prod_{t\in u'}g_{t}(X_{t})\right]=\uexp\left[g_{t_0}^-(X_{t_0})\rig
 \end{proposition}
 So, in order to evaluate the function of interest, it remains to compute $\lexp\left[g_{t_0}^+(X_{t_0})\right]$. Since $g_{t_0}^+$ is a function on a single time point $t_0$, this can again be done in polynomial time, using Equation~\eqref{eq:unconditional_lower_exp}.
 
-\section{Conclusions}\label{sec:conclusions}
+\section{Conclusion}\label{sec:conclusions}
 
 In this work, we considered \emph{imprecise continuous-time hidden Markov chains}; an extension of \emph{imprecise continuous-time Markov chains} (ICTMC's), obtained by augmenting such ICTMC's with random \emph{output} variables. We focussed on the corresponding inference problem, \emph{viz.} to compute the lower expectation of functions on the state-space, given observed realisations of the output variables. 
 
