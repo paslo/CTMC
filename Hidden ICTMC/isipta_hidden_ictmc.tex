@@ -320,7 +320,7 @@ Under these assumptions, $\mathbb{P}_{\rateset,\mathcal{M}}$ satisfies an \emph{
 
 Because we want to focus in this paper on providing efficient methods of computation, we here briefly recall some previous results from~\citet{krak2016ictmc} about how to compute lower expectations for ICTMC's. We focus in particular on how to do this for functions on a single time-point. %Note that for such functions, the set $\gambles(\states_t)=\gamblesX$ can be interpreted as the vector space $\reals^{\lvert\states\rvert}$, since $\states$ is finite. This allows us to treat these functions $f\in\gamblesX$ as $\lvert\states\rvert$-dimensional vectors, which in particular allows us to represent linear maps from $\gamblesX$ to $\gamblesX$ using matrices.
 
-From this computational viewpoint, it is useful to introduce the \emph{lower transition rate operator} $\lrate$ that corresponds to $\rateset$. This operator is a (non-linear) map from $\gamblesX$ to $\gamblesX$, defined for every $f\in\gamblesX$ and  $x\in\states$ as
+To this end, it is useful to introduce the \emph{lower transition rate operator} $\lrate$ that corresponds to $\rateset$. This operator is a map from $\gamblesX$ to $\gamblesX$, defined for every $f\in\gamblesX$ and  $x\in\states$ as
 \begin{equation}\label{eq:lower_rate_is_inf}
 \left[\lrate f\right](x) \coloneqq \inf\left\{ \sum_{x'\in\states}Q(x,x')f(x')\,:\, Q\in\rateset \right\}\,.
 \end{equation}
@@ -521,7 +521,7 @@ provided that each $\phi_t(y_t\vert x_t)$ satisfies Equation~\eqref{eq:density_i
 %where the integral is understood in the Lebesgue sense. In other words, $\phi_t(\cdot\,\vert\,x_t)$ is the probability density function associated with the measure $P_{\observs\vert\states}(\cdot\,\vert\, x_t)$.
 %
 %Repeating the above construction for every $t\in u$, we can construct a sequence $\{O_u^i\}_{i\in\nats}$ such that $O_u^i=O_{t_0}^i\times O_{t_1}^i\times\cdots O_{t_n}^i$, where each $O_{t_j}^i$ is chosen as above. Letting then $\lambda_i\coloneqq \prod_{j=0}^n\lambda(O_{t_j}^i)$, it can be shown that $\phi_u(y_u\vert x_u)$ exists for $\lambda$-almost every $y_u\in\observs_u$, and satisfies $\phi_u(y_u\,\vert\,x_u) = \prod_{t\in u} \phi_t(y_t\,\vert\,x_t)$.
-It can now be seen that, under these assumptions, the right-hand side of Equation~\eqref{eq:updated_expectation_is_limit} is simply the well-known Bayes' updating rule for mixtures of densities. 
+It can now be seen that, under these assumptions, the right-hand side of Equation~\eqref{eq:updated_expectation_is_limit} is simply the well-known Bayes' rule for (finite) mixtures of densities. 
 
 In most practical applications, therefore, the function $\phi_u(\cdot\,\vert\,x_u)$ is known explicitly; one may assume, for example, that $Y_t$ follows a Normal distribution with parameters depending on $X_t$, and the functions $\phi_t(\cdot\,\vert\,x_t)$---and by extension, $\phi_u(\cdot\vert x_u)$---then follow directly by identification with $\psi(\cdot\,\vert x_t)$. Furthermore, arguably, most of the density functions that one encounters in practice will be continuous. This guarantees that the limit in Equation~\eqref{eq:density_is_limit} exists, and solves the interpretation issue that $\mathbb{E}_P[f(X_v)\vert Y_u=y_u]$ depends on the choice of $\{O_u^i\}_{i\in\nats}$; for continuous densities, the updated expectation $\mathbb{E}_P[f(X_v)\vert Y_u=y_u]$ is independent of this sequence.\footnote{\label{fnote:extra_condition}At least, the limit then exists and is the same for all sequences $\{O_u^i\}_{i\in\nats}$ for which every $\mathbb{E}_P[f(X_v)\,\vert\,Y_u\in O_u^i]$ is well-defined. This in particular means that we should only consider sequences for which every $P(Y_u\in O_u^i)>0$.}
 
@@ -696,16 +696,16 @@ $\uexp\left[\prod_{t\in u'}g_{t}(X_{t})\right]=\uexp\left[g_{t_0}^-(X_{t_0})\rig
 \end{proposition}
 So, in order to evaluate the function of interest, it remains to compute $\lexp\left[g_{t_0}^+(X_{t_0})\right]$. Since $g_{t_0}^+$ is a function on a single time point $t_0$, this can again be done in polynomial time, using Equation~\eqref{eq:unconditional_lower_exp}.
 
-\section{Conclusion}\label{sec:conclusions}
+\section{Conclusions and Future Work}\label{sec:conclusions}
 
-In this work, we considered \emph{imprecise continuous-time hidden Markov chains}; an extension of \emph{imprecise continuous-time Markov chains} (ICTMC's), obtained by augmenting such ICTMC's with random \emph{output} variables. We focussed on the corresponding inference problem, \emph{viz.} to compute the lower expectation of functions on the state-space, given observed realisations of the output variables. 
+We considered the problem of performing inference with \emph{imprecise continuous-time hidden Markov chains}; an extension of \emph{imprecise continuous-time Markov chains} (ICTMC's) obtained by augmenting such ICTMC's with random \emph{output} variables. %We focussed on the corresponding inference problem,
+%That is, the problem of computing lower expectations of functions on the state-space, given observed realisations of the output variables. 
+Our main result is an efficient, polynomial runtime, algorithm to compute lower expectations of functions that depend on the state-space at any given time-point, given a collection of observations of the output variables. This algorithm can be used both when the outputs are discrete and when they are continuous.
 
-Our main result is an efficient---polynomial runtime---algorithm to compute such lower expectations for functions that depend on the state-space at any given time-point. This algorithm can be used both when the output variables are discrete and when they are continuous.
-
-%With regard to future work, several natural next steps would seem to be apparent. For one, we intend in future work to further generalise and robustify this model class, by also allowing for an imprecise specification of the output variables.
-
-%Another line of future research is the development of algorithms to solve other inference problems for this model class. E.g., we might look into developing algorithms to compute the updated lower expectation of functions $f\in\gambles(\states_v)$ that depend on more than one time-point. In fact, algorithms for several such function classes should follow straightforwardly by combining results from \cite{krak2016ictmc} with the algorithm presented here. Another such problem is that of estimating state-sequences, given observed output-sequences---as was previously done for (discrete-time) iHMM's~\citep{DeBock:2014ts}. We believe that these previous results should also 
-%translate fairly naturally to the current setting.
+In future work, we intend to further generalise this model, by also allowing for imprecise output variables. Furthermore, we aim to develop algorithms for other inference problems for this model. 
+%Another line of future research is the development of algorithms to solve other inference problems for this model class. 
+For example, to compute updated lower expectations of functions $f\in\gambles(\states_v)$ that depend on more than one time-point. Another such problem is that of estimating state-sequences, given observed output-sequences---as was previously done for (discrete-time) iHMM's~\citep{DeBock:2014ts}. We believe that these previous results should 
+translate fairly naturally to the current setting.
 
 %Finally, we might look into developing algorithms to compute the updated lower expectation of more general functions $f\in\gambles(\states_v)$, which depend on the state-space at more than one time-point. In fact, one such algorithm follows straightforwardly from the results of the current paper, provided that the time-points $v$ are in the future with respect to the time-points $u$ at which the observations took place. This is due to a result from~\cite{krak2016ictmc}, which states that the lower expectation for ICTMC's satisfies the property of ``iterated lower expectation''. Combining this with the imprecise Markov property mentioned in Section~\ref{subsec:ictmc}, and writing $u=t_0,\ldots,t_n$, the function of interest in the generalised Bayes' rule can therefore be rewritten as
 %\begin{equation*}
