@@ -231,19 +231,22 @@ Ghent University (Belgium)
 \name Arno Siebes$^\dagger$ \email a.p.j.m.siebes@uu.nl
 }
 \maketitle
-
+\vspace{-7pt}
 % \noindent
 % {\it Ghent University, Data Science Lab, Technologiepark -- Zwijnaarde 914, 9052 Zwijnaarde, Belgium}
 
 
 \begin{abstract}
-We consider the problem of performing inference with \emph{imprecise continuous-time hidden Markov chains} (ICTHMC's). This model robustifies continuous-time hidden Markov chains against higher-order model uncertainty, using the theory of \emph{imprecise probabilities}. %In analogy to the well-known---discrete-time---(imprecise) hidden Markov models, 
-An ICTHMC is an \emph{imprecise continuous-time Markov chain} (ICTMC), augmented with random \emph{output} variables whose distribution depends on the state of the ICTMC. The inference problem amounts to computing lower expectations of functions on the ICTMC's state-space, given observations of the output variables.
+We consider the problem of performing inference with \emph{imprecise continuous-time hidden Markov chains}. This model class robustifies \emph{continuous-time hidden Markov chains} against higher-order model uncertainty, using the theory of \emph{imprecise probabilities}. In analogy to the well-known discrete-time (imprecise) hidden Markov models, 
+such a model is an \emph{imprecise continuous-time Markov chain}, augmented with random \emph{output} variables whose distribution depends on the state of this imprecise continuous-time Markov chain. The inference problem amounts to computing lower expectations of functions on this state-space, given observations of the output variables.%\vspace{-4pt}
 
-We develop and investigate this problem with very few assumptions on the output variables; in particular, they can be chosen to be either discrete or continuous random variables. Our main result is a polynomial runtime algorithm to compute the lower expectation of functions on the state-space at any given time-point, given a collection of observations of the output variables.
+We develop and investigate this problem with very few assumptions on the output variables; in particular, they can be chosen to be either discrete or continuous random variables. Our main result is a polynomial runtime algorithm to compute the lower expectation of functions on the state-space at any given time-point, given a collection of observations of the output variables.\vspace{-3pt}
 \end{abstract}
+%\begin{keywords}
+%aap
+%\end{keywords}
 
-\section{Introduction}\label{sec:introduction}
+\section{Introduction}\label{sec:introduction}%\vspace{-5pt}
 
 A continuous-time Markov chain (CTMC) is a stochastic model that describes the evolution of a dynamical system under uncertainty. Specifically, it provides a measure of the uncertainty of how such a system might move through a finite state-space, as time elapses in a continuous fashion. There are various ways in which this model class can be extended.
 
@@ -654,7 +657,7 @@ Then the following properties hold: \vspace{-2pt}
 Note that this function $G(\mu)$ in Proposition~\ref{prop:GBR_properties} can behave in three essentially different ways. These correspond to the cases where the observed event has strictly positive probability(/density) for \emph{all} processes in the set; to where it only has positive probability(/density) for \emph{some} processes; and to where it has \emph{zero} probability(/density) for \emph{all} processes.
 In the first two cases---which are the important ones to apply the generalised Bayes' rule---the function is ``well-behaved'' enough to make finding its maximum root a fairly simple task. For instance, a standard bisection/bracketing algorithm can be applied here, known in this context as Lavine's algorithm~\citep{cozman1997alternatives}.
 
-We sketch this method below. First, note that due to Propositions~\ref{prop:GBR_regular} and~\ref{prop:GBR_for_densities_lower_zero}, the maximum root will always be found in the interval $[\min f, \max f]$. The properties above therefore provide us with a way to check the required condition for updating. That is, for any $\mu>\max f$, we have $G(\mu)<0$ if and only if $\uexp[\prod_{t\in u} g_{t}(X_{t})]>0$; the ``if'' direction follows from~\ref{GBR:up_pos}, and the ``only if'' part from contradiction with~\ref{GBR:none_pos}. Similarly, for any $\mu < \min f$, we have $G(\mu)>0$ if and only if $\lexp[\prod_{t\in u} g_{t}(X_{t})]>0$. Evaluating $G(\cdot)$ at these values of $\mu$ is therefore sufficient to check the requirements for updating the imprecise model. %if $G(\mu)<0$, we know from~\ref{GBR:none_pos:zero} that $\uexp[\prod_{i=0}^n g_{t_i}(X_{t_i})]>0$ by \emph{modus tollens}---regular extension can then be applied. We can also choose any $\mu<\min f$; then $G(\mu)>0$ similarly implies $\lexp\bigl[\prod_{i=0}^n g_{t_i}(X_{t_i})\bigr]>0$, due to~\ref{GBR:up_pos:zero_before}---we can then apply natural extension.
+We sketch this method below. First, note that due to Propositions~\ref{prop:GBR_regular} and~\ref{prop:GBR_for_densities_lower_zero}, the maximum root will always be found in the interval $[\min f, \max f]$. The properties above therefore provide us with a way to check the required condition for updating. That is, for any $\mu>\max f$, we have $G(\mu)<0$ if and only if $\uexp[\prod_{t\in u} g_{t}(X_{t})]>0$; the ``if'' direction follows from~\ref{GBR:up_pos}, and the ``only if'' part from contradiction with~\ref{GBR:none_pos}. Similarly, for any $\mu < \min f$, we have $G(\mu)>0$ if and only if $\lexp[\prod_{t\in u} g_{t}(X_{t})]>0$. Evaluating $G(\cdot)$ at these values of $\mu$ is therefore sufficient to check the requirements for updating, e.g. whether or not $\lexp[\prod_{t\in u}g_t(X_t)]=\lexp[\phi_u(y_u\vert X_t)]>0$. %if $G(\mu)<0$, we know from~\ref{GBR:none_pos:zero} that $\uexp[\prod_{i=0}^n g_{t_i}(X_{t_i})]>0$ by \emph{modus tollens}---regular extension can then be applied. We can also choose any $\mu<\min f$; then $G(\mu)>0$ similarly implies $\lexp\bigl[\prod_{i=0}^n g_{t_i}(X_{t_i})\bigr]>0$, due to~\ref{GBR:up_pos:zero_before}---we can then apply natural extension.
 
 The algorithm then starts by setting $\mu_-\coloneqq \min f$, and $\mu_+\coloneqq \max f$; if $G(\mu_+)=0$, we know that $\mu_+$ is the quantity of interest. Otherwise, proceed iteratively in the following way. Compute the half-way point $\mu\coloneqq \nicefrac{1}{2}(\mu_+-\mu_-)$; then, if $G(\mu)\geq 0$ set $\mu_-\coloneqq \mu$, otherwise set $\mu_+\coloneqq\mu$; then repeat. Clearly, the interval $[\mu_-,\mu_+]$ still contains the maximum root after each step. The procedure can be terminated whenever $(\mu_+-\mu_-)<\epsilon$, for some desired numerical precision $\epsilon>0$. Since the width of the interval is halved at each iteration, the runtime of this procedure is $O\bigl(\log\{(\max f - \min f)\epsilon^{-1}\}\bigr)$.
 
