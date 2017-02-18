@@ -879,16 +879,37 @@ Expanding the left hand side as in Equation~\eqref{eq:gbr_linear_expansion}, we 
  &= \mathbb{E}_{P_\states}\bigl[g(X_u)\bigl(f(X_v)-(\mu+\Delta)\bigr)\bigr] \\
  &\geq G(\mu+\Delta)\,,
 \end{align*}
-where the first inequality follows from the fact that $\Delta$ and $\lexp[g(X_u)]$ are strictly positive, and $\lexp[g(X_u)]<\mathbb{E}_{P_\states}\bigl[g(X_u)\bigr]$ since $P_\states\in\mathbb{P}_{\rateset,\mathcal{M}}$. Combining with Equation~\eqref{eq:gbr_prop:approached_closeby} shows that
+where the first inequality follows from the fact that $\Delta$ and $\lexp[g(X_u)]$ are strictly positive, and $\lexp[g(X_u)]\leq \mathbb{E}_{P_\states}\bigl[g(X_u)\bigr]$ since $P_\states\in\mathbb{P}_{\rateset,\mathcal{M}}$. Combining with Equation~\eqref{eq:gbr_prop:approached_closeby} shows that
 \begin{equation*}
 G(\mu+\Delta) \leq \mathbb{E}_{P_\states}\bigl[g(X_u)\bigl(f(X_v)-\mu\bigr)\bigr] - \epsilon < G(\mu)\,,
 \end{equation*}
 which concludes the proof.
 
-For statement \ref{GBR:low_pos:unique_root}, i.e. that $G$ has a \emph{unique} root under the assumption that $\lexp[g(X_u)]>0$, note that we already know that $G$ has at least one root, i.e. $G(\mu)=0$ for some $\mu\in\reals$. By combining with statement \ref{GBR:low_pos:monotone}, i.e. strict monotonicity under the assumption that $\lexp[g(X_u)]>0$, the uniqueness of this root follows immediately.
+To prove that $G(\cdot)$ has a \emph{unique} root under the assumption that $\lexp[g(X_u)]>0$, note that we already know that $G(\cdot)$ has at least one root, i.e. $G(\mu)=0$ for some $\mu\in\reals$. By combining with the fact that $G(\cdot)$ is strictly decreasing under the assumption that $\lexp[g(X_u)]>0$, the uniqueness of this root follows immediately.
 
-We do not explicitly prove properties \ref{GBR:up_pos:max_root}, \ref{GBR:up_pos:zero_before} and \ref{GBR:up_pos:monotone}, as they are essentially included in the statement and proof of Lemma~\ref{lemma:general_regular_extension}. In particular, the statement of that lemma establishes that $G$ has a maximum root $\mu_*$ (and in fact identifies it), which proves \ref{GBR:up_pos:max_root}. The proof of that lemma notes as the penultimate step that $G(\mu)=0$ for all $\mu\leq \mu_*$, proving \ref{GBR:up_pos:zero_before}. The fact that $G(\mu)$ is strictly monotonically decreasing for $\mu\geq \mu_*$, i.e. \ref{GBR:up_pos:monotone}, follows straightforwardly by combining the argument for statement \ref{GBR:low_pos:monotone} with the construction made in the proof of Lemma~\ref{lemma:general_regular_extension}.
+We next prove~\ref{GBR:up_pos}. Lemma~\ref{lemma:general_regular_extension} below states that $G(\cdot)$ has a maximum root if $\uexp[g(X_u)]>0$, so we do not need to prove this here. It will be useful to note that Corollary~\ref{cor:lower_hidden_is_lower_chain} below identifies this maximum root $\mu_*$ as
+\begin{equation}\label{eq:gbr_prop:max_root}
+\mu_* \coloneqq \max\{\mu\in\reals\,:\,G(\mu)\geq 0\} = \inf\left\{ \frac{\mathbb{E}_{P_\states}\bigl[f(X_v)g(X_u)\bigr]}{\mathbb{E}_{P_\states}\bigl[g(X_u)\bigr]}\,:\, P\in\mathbb{P}_{\rateset,\mathcal{M}},\,\mathbb{E}_{P_\states}\bigl[g(X_u)\bigr]>0 \right\}\,.
+\end{equation}
+We will now prove that $G(\mu)=0$ for all $\mu\leq\mu_*$ when $\lexp[g(X_u)]=0$ but $\uexp[g(X_u)]>0$. So, consider any $\mu<\mu_*$ (the case for $\mu=\mu_*$ is trivial). Since $\mu<\mu_*$, we already know that $G(\mu)$ is non-negative because $G(\cdot)$ is non-increasing; so, it suffices to show that $G(\mu)$ is non-positive. Now, for every $P_\states\in\mathbb{P}_{\rateset,\mathcal{M}}$ we have that
+\begin{equation}\label{eq:gbr_prop:bound_value}
+\begin{split}
+\mathbb{E}_{P_\states}\bigl[g(X_u)\bigl(f(X_v) - \mu\bigr)\bigr] &= \sum_{x_{u\cup v}} P_\states(X_{u\cup v}=x_{u\cup v})g(x_u)\bigl(f(x_v)-\mu\bigr) \\
+ &\leq \sum_{x_{u\cup v}} P_\states(X_{u\cup v}=x_{u\cup v})g(x_u)\abs{f(x_v)-\mu} \\
+ &\leq \sum_{x_{u\cup v}} P_\states(X_{u\cup v}=x_{u\cup v})g(x_u)\norm{f(X_v)-\mu} \\
+ &= \sum_{x_{u}} P_\states(X_{u}=x_{u})g(x_u)\norm{f(X_v)-\mu} \\
+ &= \norm{f(X_v)-\mu}\mathbb{E}_{P_\states}\bigl[g(X_u)\bigr]\,,
+\end{split}
+\end{equation}
+where the first inequality follows from the fact that $g\geq 0$, the second inequality is due to the definition of the norm $\norm{\cdot}$, and the second equality follows from the law of total probability (that is, $X_v$ is marginalised out). Since $G(\mu)\leq \mathbb{E}_{P_\states}\bigl[g(X_u)\bigl(f(X_v) - \mu\bigr)\bigr]$, it follows from the above that if $\norm{f(X_v)-\mu}=0$ then $G(\mu)\leq 0$, in which case we are done. 
 
+Hence, we can assume without loss of generality that $\norm{f(X_v)-\mu}>0$. Choose any $\epsilon\in\realspos$. Then, because $\lexp[g(X_u)]=0$, there is some $P_\states\in\mathbb{P}_{\rateset,\mathcal{M}}$ such that $\mathbb{E}_{P_\states}[g(X_u)] < \nicefrac{\epsilon}{\norm{f(X_v)-\mu}}$, which implies that
+\begin{equation*}
+\epsilon > \norm{f(X_v)-\mu}\mathbb{E}_{P_\states}[g(X_u)] \geq \mathbb{E}_{P_\states}\bigl[g(X_u)\bigl(f(X_v) - \mu\bigr)\bigr] \geq G(\mu)\,,
+\end{equation*}
+using Equation~\eqref{eq:gbr_prop:bound_value} for the second inequality. Since the $\epsilon\in\realspos$ was arbitrary, this implies that $G(\mu)$ is non-positive, which concludes the proof.
+
+\quad\newline\newline
 We finally prove~\ref{GBR:none_pos}, i.e. that $G(\mu)$ is identically zero whenever $\uexp[g(X_u)]=0$. Clearly, this assumption implies that $\mathbb{E}_{P_\states}[g(X_u)]=0$ for all $P_\states\in\mathbb{P}_{\rateset,\mathcal{M}}$. Therefore, and since $g\geq 0$, it follows from Lemma~\ref{lemma:conditioning_zero_means_bayes_zero} that for any $\mu\in\reals$, it holds that $\mathbb{E}_{P_\states}\bigl[g(X_u)\bigl(f(X_v) - \mu\bigr)\bigr]=0$ for all $P_\states\in\mathbb{P}_{\rateset,\mathcal{M}}$. It immediately follows that indeed $G(\mu)=0$ for all $\mu\in\reals$.
 \end{proof}
 
@@ -969,6 +990,13 @@ from which we conclude that $\lexp\bigl[g(X_u)\bigl(f(X_v)-\mu\bigr)\bigr]$ is s
 \begin{equation*}
 \inf\left\{\frac{\mathbb{E}_P[f(X_v)g(X_u)]}{\mathbb{E}_P[g(X_u)]}\,:\,P\in\mathcal{P}\right\} = \mu_* = \max\left\{ \mu\in\reals\,:\, \lexp[g(X_u)(f(X_v) - \mu)] \geq 0 \right\}
 \end{equation*}
+\end{proof}
+
+\begin{corollary}\label{cor:lower_hidden_is_lower_chain}
+todo
+\end{corollary}
+\begin{proof}
+straightforward
 \end{proof}
 
 
