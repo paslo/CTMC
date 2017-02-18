@@ -743,9 +743,7 @@ Furthermore, we sometimes use the shorthand notation $\{a_i\}_{i\in\nats}\to c$ 
 The below states a very useful property of the lower expectation corresponding to ICTMC's, that we will require in some of our proofs.
 
 \begin{lemma}[Iterated Lower Expectation]\cite[Theorem 6.5]{krak2016ictmc}\label{lemma:iterated_lower}
-
 Let $\rateset$ be a non-empty, bounded and convex set of rate matrices, and let $\mathcal{M}$ be a non-empty set of probability mass functions on $\states_0$. Let $\mathbb{P}_{\rateset,\mathcal{M}}$ denote the corresponding ICTMC.
-
 Let $u\subset\realsnonneg$ be a finite (possibly empty) sequence of time-points, and consider any $v,w\in\mathcal{U}$ such that $u<v<w$. Choose any $f\in\gambles(\states_{u\cup v\cup w})$. Then,
 \begin{equation*}
 \lexp[f(X_u,X_v,X_w)\,\vert\,X_u] = \lexp\bigl[\lexp[f(X_u,X_v,X_w)\,\vert\,X_u,X_v]\,\vert\,X_u\bigr]\,.
@@ -757,113 +755,141 @@ Let $u\subset\realsnonneg$ be a finite (possibly empty) sequence of time-points,
 The following result is essentially well-known, but we repeat it here for the sake of completeness.
 
 \begin{lemma}\label{lemma:limit_lexp_is_lexp_limit}
-Consider any $u\in\mathcal{U}$ and any convergent sequence $\{f_i\}_{i\in\nats}\to f$ in $\gambles(\states_u)$. Then, $\lim_{i\to\infty}\lexp[f_i(X_u)]=\lexp[f(X_u)]$.
+Let $\mathbb{P}_{\rateset,\mathcal{M}}$ be an ICTMC and consider any $u\in\mathcal{U}$ and any $\{f_i\}_{i\in\nats}\to f$ in $\gambles(\states_u)$. Then $\lim_{i\to+\infty}\lexp[f_i(X_u)]=\lexp[f(X_u)]$.
 \end{lemma}
 \begin{proof}
-We will show that, for every $\epsilon>0$, there is some $n\in\nats$ such that for all $i>n$, it holds that $\abs{\lexp[f_i(X_u)]-\lexp[f(X_u)]} < \epsilon$. So, consider any $\epsilon>0$, and define $\epsilon^*\coloneqq \nicefrac{\epsilon}{4}$. Because $\{f_i\}_{i\in\nats}\to f$, there is some $n\in\nats$ such that, for all $i>n$, it holds that $\norm{f_i - f}<\epsilon^*$. 
+Keeping $u$ fixed, then since $\lexp[\,\cdot\,]\,:\,\gambles(\states_u)\to\reals$ is an infimum over precise expectations $\mathbb{E}_{P_\states}[\,\cdot\,]\,:\,\gambles(\states_u)\to\reals$, with $P_\states\in\mathbb{P}_{\rateset,\mathcal{M}}$, we know from~\cite[Theorem 3.3.3]{Walley:1991vk} that $\lexp[\,\cdot\,]$ is a coherent lower prevision on $\gambles(\states_u)$. Therefore, the statement follows directly from~\cite[Proposition 2.6.1.$\ell$]{Walley:1991vk} and the definition of our norm $\norm{\cdot}$ on $\gambles(\states_u)$.
+\end{proof}
+%
+%\begin{lemma}\label{lemma:limit_lexp_is_lexp_limit}
+%Consider any $u\in\mathcal{U}$ and any convergent sequence $\{f_i\}_{i\in\nats}\to f$ in $\gambles(\states_u)$. Then, $\lim_{i\to\infty}\lexp[f_i(X_u)]=\lexp[f(X_u)]$.
+%\end{lemma}
+%\begin{proof}
+%We will show that, for every $\epsilon>0$, there is some $n\in\nats$ such that for all $i>n$, it holds that $\abs{\lexp[f_i(X_u)]-\lexp[f(X_u)]} < \epsilon$. So, consider any $\epsilon>0$, and define $\epsilon^*\coloneqq \nicefrac{\epsilon}{4}$. Because $\{f_i\}_{i\in\nats}\to f$, there is some $n\in\nats$ such that, for all $i>n$, it holds that $\norm{f_i - f}<\epsilon^*$. 
+%
+%Consider now any $i>n$. Because $\norm{f_i - f}<\epsilon^*$, it clearly holds for every $P\in\mathbb{P}_{\rateset,\mathcal{M}}$ that $\abs{\mathbb{E}_P[f_i(X_u)] - \mathbb{E}_P[f(X_u)]}<\epsilon^*$, and hence
+%\begin{equation}\label{eq:lemma_converges_expectation_close}
+%\mathbb{E}_P[f_i(X_u)] - \epsilon^* < \mathbb{E}_P[f(X_u)] < \mathbb{E}_P[f_i(X_u)] + \epsilon^*\,.
+%\end{equation}
+%Furthermore, because $\lexp[\cdot]$ computes an infimum, there must be $P_i,P\in\mathbb{P}_{\rateset,\mathcal{M}}$ such that
+%\begin{equation*}
+%\mathbb{E}_{P_i}[f_i(X_u)] - \epsilon^* < \lexp[f_i(X_u)] \leq \mathbb{E}_{P}[f_i(X_u)]\,,
+%\end{equation*}
+%and,
+%\begin{equation*}
+%\mathbb{E}_{P}[f(X_u)] - \epsilon^* < \lexp[f(X_u)] \leq \mathbb{E}_{P_i}[f(X_u)]\,.
+%\end{equation*}
+%Applying Equation~\eqref{eq:lemma_converges_expectation_close} to the r.h.s. of these equalities, we find that
+%\begin{equation*}
+%\mathbb{E}_{P_i}[f_i(X_u)] - \epsilon^* < \mathbb{E}_{P}[f(X_u)] + \epsilon^*\,,\quad\text{and,}\quad \mathbb{E}_{P}[f(X_u)] - \epsilon^* < \mathbb{E}_{P_i}[f_i(X_u)] + \epsilon^*\,,
+%\end{equation*}
+%which when combined implies
+%\begin{equation*}
+%\mathbb{E}_{P_i}[f_i(X_u)] - 2\epsilon^* < \mathbb{E}_{P}[f(X_u)] < \mathbb{E}_{P_i}[f_i(X_u)] + 2\epsilon^*\,,
+%\end{equation*}
+%or in other words that $\abs{\mathbb{E}_{P_i}[f_i(X_u)] - \mathbb{E}_{P}[f(X_u)]} < 2\epsilon^*$.
+%
+%Now, by the choice of $P_i$ and $P$, we have
+%\begin{align*}
+% &\quad \abs{\lexp[f_i(X_u)]-\lexp[f(X_u)]} \\
+% &\leq \abs{\lexp[f_i(X_u)] - \mathbb{E}_{P_i}[f_i(X_u)]} + \abs{\lexp[f(X_u)] - \mathbb{E}_{P}[f(X_u)]} + \abs{\mathbb{E}_{P_i}[f_i(X_u)] - \mathbb{E}_{P}[f(X_u)]} \\
+% &< \epsilon^* + \epsilon^* + 2\epsilon^* = 4\epsilon^* = \epsilon\,.
+%\end{align*}
+%\end{proof}
 
-Consider now any $i>n$. Because $\norm{f_i - f}<\epsilon^*$, it clearly holds for every $P\in\mathbb{P}_{\rateset,\mathcal{M}}$ that $\abs{\mathbb{E}_P[f_i(X_u)] - \mathbb{E}_P[f(X_u)]}<\epsilon^*$, and hence
-\begin{equation}\label{eq:lemma_converges_expectation_close}
-\mathbb{E}_P[f_i(X_u)] - \epsilon^* < \mathbb{E}_P[f(X_u)] < \mathbb{E}_P[f_i(X_u)] + \epsilon^*\,.
-\end{equation}
-Furthermore, because $\lexp[\cdot]$ computes an infimum, there must be $P_i,P\in\mathbb{P}_{\rateset,\mathcal{M}}$ such that
-\begin{equation*}
-\mathbb{E}_{P_i}[f_i(X_u)] - \epsilon^* < \lexp[f_i(X_u)] \leq \mathbb{E}_{P}[f_i(X_u)]\,,
-\end{equation*}
-and,
-\begin{equation*}
-\mathbb{E}_{P}[f(X_u)] - \epsilon^* < \lexp[f(X_u)] \leq \mathbb{E}_{P_i}[f(X_u)]\,.
-\end{equation*}
-Applying Equation~\eqref{eq:lemma_converges_expectation_close} to the r.h.s. of these equalities, we find that
-\begin{equation*}
-\mathbb{E}_{P_i}[f_i(X_u)] - \epsilon^* < \mathbb{E}_{P}[f(X_u)] + \epsilon^*\,,\quad\text{and,}\quad \mathbb{E}_{P}[f(X_u)] - \epsilon^* < \mathbb{E}_{P_i}[f_i(X_u)] + \epsilon^*\,,
-\end{equation*}
-which when combined implies
-\begin{equation*}
-\mathbb{E}_{P_i}[f_i(X_u)] - 2\epsilon^* < \mathbb{E}_{P}[f(X_u)] < \mathbb{E}_{P_i}[f_i(X_u)] + 2\epsilon^*\,,
-\end{equation*}
-or in other words that $\abs{\mathbb{E}_{P_i}[f_i(X_u)] - \mathbb{E}_{P}[f(X_u)]} < 2\epsilon^*$.
+We provide the proof of Proposition~\ref{prop:GBR_properties} below; this is not in chronological order with respect to the main text, but it states a number of convenient properties that are required in the proofs of statements that appear before Proposition~\ref{prop:GBR_properties}. We first need the following lemma.
 
-Now, by the choice of $P_i$ and $P$, we have
+\begin{lemma}\label{lemma:conditioning_zero_means_bayes_zero}
+Let $P_\states$ be a stochastic process and consider any $u,v\in\mathcal{U}$, any $f\in\gambles(\states_v)$, and any $g\in\gambles(\states_u)$ such that $g\geq 0$. If $\mathbb{E}_{P_\states}[g(X_u)]=0$, then for all $\mu\in\reals$ it holds that
+\begin{equation*}
+\mathbb{E}_{P_\states}\bigl[g(X_u)\bigl(f(X_v) - \mu\bigr)\bigr]=0\,.
+\end{equation*}
+\end{lemma}
+\begin{proof}
+Because $\mathbb{E}_{P_\states}[g(X_u)]=0$, and since $g\geq 0$, we must clearly have that
+\begin{equation*}
+P_\states(X_u=x_u) = 0\,,
+\end{equation*}
+for all $x_u\in\states_u$ for which $g(x_u)\neq 0$. Let $\states_u^0\coloneqq\{x_u\in\states_u\,:\,g(x_u)\neq 0\}$. Then clearly for any $x_u\in\states_u^0$ it holds for all $x_v\in\states_v$ that also $P_\states(X_u=x_u,X_v=x_v)=0$. Therefore,
 \begin{align*}
- &\quad \abs{\lexp[f_i(X_u)]-\lexp[f(X_u)]} \\
- &\leq \abs{\lexp[f_i(X_u)] - \mathbb{E}_{P_i}[f_i(X_u)]} + \abs{\lexp[f(X_u)] - \mathbb{E}_{P}[f(X_u)]} + \abs{\mathbb{E}_{P_i}[f_i(X_u)] - \mathbb{E}_{P}[f(X_u)]} \\
- &< \epsilon^* + \epsilon^* + 2\epsilon^* = 4\epsilon^* = \epsilon\,.
+\mathbb{E}_{P_\states}\bigl[g(X_u)\bigl(f(X_v) - \mu\bigr)\bigr] &= \sum_{x_{u\cup v}\in\states_{u\cup v}} P_\states(X_u=x_u,X_v=x_v)g(x_u)\bigl(f(x_v) - \mu\bigr) \\
+ &= \sum_{x_{u}\in\states_{u}}\sum_{x_v\in\states_v} P_\states(X_u=x_u,X_v=x_v)g(x_u)\bigl(f(x_v) - \mu\bigr) \\
+ &= \sum_{x_{u}\in\states_u^0}\sum_{x_v\in\states_v} P_\states(X_u=x_u,X_v=x_v)g(x_u)\bigl(f(x_v) - \mu\bigr) \\
+ &\quad\quad + \sum_{x_{u}\in\states_{u}\setminus \states_u^0}\sum_{x_v\in\states_v} P_\states(X_u=x_u,X_v=x_v)g(x_u)\bigl(f(x_v) - \mu\bigr) \\
+ &= \sum_{x_{u}\in\states_u^0}\sum_{x_v\in\states_v} 0g(x_u)\bigl(f(x_v) - \mu\bigr) \\
+ &\quad\quad + \sum_{x_{u}\in\states_{u}\setminus \states_u^0}\sum_{x_v\in\states_v} P_\states(X_u=x_u,X_v=x_v)0\bigl(f(x_v) - \mu\bigr) \\
+ &= 0\,.
 \end{align*}
 \end{proof}
 
-We provide the proof of Proposition~\ref{prop:GBR_properties} below; this is out of chronological order with respect to the main text, but it states a number of convenient properties of the function of interest for the Generalised Bayes' Rule, which are required in the proofs of some statements that appear before the statement of this proposition.
-
 \begin{proof}{\bf of Proposition~\ref{prop:GBR_properties}~}
-For brevity, define $g\in\gambles(\states_u)$ as $g(x_u)\coloneqq \prod_{i=0}^n g_{t_i}(x_{t_i})$ for all $x_u\in\states_u$.
+For brevity, define $g\in\gambles(\states_u)$ as $g(x_u)\coloneqq \prod_{t\in u} g_{t}(x_{t})$ for all $x_u\in\states_u$.
 
-For \ref{GBR:always:continuous}, i.e. continuity, consider any $\mu\in\reals$. We will prove that $G$ is continuous at $\mu$, or in other words, that for every sequence $\{\mu_i\}_{i\in\nats}\to\mu$ it holds that $\lim_{i\to\infty}G(\mu_i)=G(\mu)$. So, choose any sequence $\{\mu_i\}_{i\in\nats}\to\mu$, and consider the induced sequence of functions $\bigl\{g(X_u)\bigl(f(X_v) - \mu_i\bigr)\bigr\}_{i\in\nats}$ in $\gambles(\states_{u\cup v})$. Then, since $\{\mu_i\}_{i\in\nats}\to\mu$, clearly also $\lim_{i\to\infty}g(X_u)\bigl(f(X_v) - \mu_i\bigr)=g(X_u)\bigl(f(X_v) - \mu\bigr)$. Using Lemma~\ref{lemma:limit_lexp_is_lexp_limit}, we therefore have
+We start by proving Property~\ref{GBR:always}. For continuity, consider any $\mu\in\reals$. We will prove that $G$ is continuous in $\mu$, or in other words, that for every sequence $\{\mu_i\}_{i\in\nats}\to\mu$ it holds that $\lim_{i\to\infty}G(\mu_i)=G(\mu)$. So, choose any sequence $\{\mu_i\}_{i\in\nats}\to\mu$, and consider the induced sequence of functions $\bigl\{g(X_u)\bigl(f(X_v) - \mu_i\bigr)\bigr\}_{i\in\nats}$ in $\gambles(\states_{u\cup v})$. Then, since $\{\mu_i\}_{i\in\nats}\to\mu$, clearly also $\lim_{i\to+\infty}g(X_u)\bigl(f(X_v) - \mu_i\bigr)=g(X_u)\bigl(f(X_v) - \mu\bigr)$. Using Lemma~\ref{lemma:limit_lexp_is_lexp_limit}, we therefore find that
 \begin{equation*}
 \lim_{i\to\infty}\lexp[g(X_u)\bigl(f(X_v) - \mu_i\bigr)] = \lexp[g(X_u)\bigl(f(X_v) - \mu\bigr)]\,,
 \end{equation*}
-or in other words, that $\lim_{i\to\infty}G(\mu_i) = G(\mu)$. Since the sequence $\{\mu_i\}_{i\in\nats}$ was arbitrary, this concludes the proof.
+or in other words, that $\lim_{i\to+\infty}G(\mu_i) = G(\mu)$. Since the sequence $\{\mu_i\}_{i\in\nats}$ was arbitrary, this concludes the proof.
 
-We next prove \ref{GBR:always:monotone}, i.e. that $G$ is monotonically decreasing. To this end, fix any $P\in\mathbb{P}_{\rateset,\mathcal{M}}$. Then, by linearity of expectation,
+We next prove that $G$ is non-increasing. To this end, fix any $P_\states\in\mathbb{P}_{\rateset,\mathcal{M}}$. Then, by the linearity of expectation operators,
 \begin{align}\label{eq:gbr_linear_expansion}
-\mathbb{E}_P\bigl[g(X_u)\bigl(f(X_v) - \mu\bigr)\bigr] = \mathbb{E}_P[g(X_u)f(X_v)] - \mu\mathbb{E}_P[g(X_u)]\,.
+\mathbb{E}_{P_\states}\bigl[g(X_u)\bigl(f(X_v) - \mu\bigr)\bigr] = \mathbb{E}_{P_\states}[g(X_u)f(X_v)] - \mu\mathbb{E}_{P_\states}[g(X_u)]\,.
 \end{align}
-Since by assumption $g\geq 0$, it must hold that $\mathbb{E}_P[g(X_u)]\geq 0$, and hence, that $\mathbb{E}_P\bigl[g(X_u)\bigl(f(X_v) - \mu\bigr)\bigr]$ is monotonically decreasing in $\mu$. Since this is true for all $P\in\mathbb{P}_{\rateset,\mathcal{M}}$, we find that $G(\mu)$ is a lower envelope over monotonically decreasing functions, which must therefore be monotonically decreasing itself. This concludes the proof.
+Since by assumption $g\geq 0$, it must hold that $\mathbb{E}_{P_\states}[g(X_u)]\geq 0$, and so, that $\mathbb{E}_{P_\states}\bigl[g(X_u)\bigl(f(X_v) - \mu\bigr)\bigr]$ is non-increasing in $\mu$. Since this is true for all ${P_\states}\in\mathbb{P}_{\rateset,\mathcal{M}}$, we find that $G(\mu)$ is a lower envelope of non-increasing functions, which must therefore be non-increasing itself. This concludes the proof.
 
-For \ref{GBR:always:concave}, i.e. concavity, fix any $\mu,\nu\in\reals$, and choose any $\lambda\in[0,1]$. Let $\mu'\coloneqq \lambda\mu + (1-\lambda)\nu$. We need to show that $\lambda G(\mu) + (1-\lambda)G(\nu) \leq G(\mu')$. To this end, fix any $\epsilon\in\realspos$. Then, there is some $P\in\mathbb{P}_{\rateset,\mathcal{M}}$ such that
-\begin{equation*}
-\mathbb{E}_P\left[g(X_u)\bigl(f(X_v) - \mu'\bigr)\right] - \epsilon < G(\mu').
-\end{equation*}
-By expanding the convex combination $\mu'$ using linearity of expectation, we find
+For concavity, fix any $\mu,\nu\in\reals$, and choose any $\lambda\in[0,1]$. Let $\mu'\coloneqq \lambda\mu + (1-\lambda)\nu$. We need to show that $\lambda G(\mu) + (1-\lambda)G(\nu) \leq G(\mu')$. To this end, fix any $\epsilon\in\realspos$. Then, there is some ${P_\states}\in\mathbb{P}_{\rateset,\mathcal{M}}$ such that
+\begin{equation}\label{eq:gbr_prop:convex_approached}
+\mathbb{E}_{P_\states}\left[g(X_u)\bigl(f(X_v) - \mu'\bigr)\right] - \epsilon < G(\mu').
+\end{equation}
+By expanding the convex combination $\mu'$ using the linearity of expectation operators, we find that
 \begin{align*}
- &\quad \mathbb{E}_P\left[g(X_u)\bigl(f(X_v) - \mu'\bigr)\right] \\
- &= \mathbb{E}_P\left[g(X_u)f(X_v)\right] - \mu'\cdot\mathbb{E}_P\left[g(X_u)\right] \\
- &= \mathbb{E}_P\left[g(X_u)f(X_v)\right] - \lambda\mu\cdot\mathbb{E}_P\left[g(X_u)\right] - (1-\lambda)\nu\cdot\mathbb{E}_P\left[g(X_u)\right] \\
- &= \bigl(\lambda + (1-\lambda)\bigr)\cdot\mathbb{E}_P\left[g(X_u)f(X_v)\right] - \lambda\mu\cdot\mathbb{E}_P\left[g(X_u)\right] - (1-\lambda)\nu\cdot\mathbb{E}_P\left[g(X_u)\right] \\
- &= \lambda\cdot\mathbb{E}_P\left[g(X_u)f(X_v)\right] - \lambda\mu\cdot\mathbb{E}_P\left[g(X_u)\right] +(1-\lambda)\cdot\mathbb{E}_P\left[g(X_u)f(X_v)\right] - (1-\lambda)\nu\cdot\mathbb{E}_P\left[g(X_u)\right] \\
- &= \lambda\cdot\mathbb{E}_P\left[g(X_u)\bigl(f(X_v) - \mu\bigr)\right] + (1-\lambda)\cdot\mathbb{E}_P\left[g(X_u)\bigl(f(X_v) - \nu\bigr)\right] \\
- &\geq \lambda\cdot\lexp\left[g(X_u)\bigl(f(X_v) - \mu\bigr)\right] + (1-\lambda)\cdot\lexp\left[g(X_u)\bigl(f(X_v) - \nu\bigr)\right] \\
+\mathbb{E}_{P_\states}\left[g(X_u)\bigl(f(X_v) - \mu'\bigr)\right]  &= \mathbb{E}_{P_\states}\left[g(X_u)f(X_v)\right] - \mu'\mathbb{E}_{P_\states}\left[g(X_u)\right] \\
+ &= \mathbb{E}_{P_\states}\left[g(X_u)f(X_v)\right] - \lambda\mu\mathbb{E}_{P_\states}\left[g(X_u)\right] - (1-\lambda)\nu\mathbb{E}_{P_\states}\left[g(X_u)\right] \\
+ &= \bigl(\lambda + (1-\lambda)\bigr)\mathbb{E}_{P_\states}\left[g(X_u)f(X_v)\right] - \lambda\mu\mathbb{E}_{P_\states}\left[g(X_u)\right] - (1-\lambda)\nu\mathbb{E}_{P_\states}\left[g(X_u)\right] \\
+ &= \lambda\mathbb{E}_{P_\states}\left[g(X_u)f(X_v)\right] - \lambda\mu\mathbb{E}_{P_\states}\left[g(X_u)\right] \\
+ &\quad\quad\quad +(1-\lambda)\mathbb{E}_{P_\states}\left[g(X_u)f(X_v)\right] - (1-\lambda)\nu\mathbb{E}_{P_\states}\left[g(X_u)\right] \\
+ &= \lambda\mathbb{E}_{P_\states}\left[g(X_u)\bigl(f(X_v) - \mu\bigr)\right] + (1-\lambda)\mathbb{E}_{P_\states}\left[g(X_u)\bigl(f(X_v) - \nu\bigr)\right] \\
+ &\geq \lambda\lexp\left[g(X_u)\bigl(f(X_v) - \mu\bigr)\right] + (1-\lambda)\lexp\left[g(X_u)\bigl(f(X_v) - \nu\bigr)\right] \\
  &= \lambda G(\mu) + (1-\lambda) G(\nu)\,,
 \end{align*}
-where the inequality follows from the fact that $\lambda$ and $(1-\lambda)$ are non-negative, and $P\in\mathbb{P}_{\rateset,\mathcal{M}}$---hence in particular $\lexp\leq\mathbb{E}_P$.
-Combining with the earlier above inequality, we find
+where the inequality follows from the fact that $\lambda$ and $(1-\lambda)$ are non-negative, and $P_\states\in\mathbb{P}_{\rateset,\mathcal{M}}$---hence in particular $\lexp\leq\mathbb{E}_{P_\states}$.
+Combining with Equation~\eqref{eq:gbr_prop:convex_approached}, we find that
 \begin{equation*}
-\lambda G(\mu) + (1-\lambda) G(\nu) -\epsilon \leq \mathbb{E}_P\left[g(X_u)\bigl(f(X_v) - \mu'\bigr)\right] - \epsilon < G(\mu')\,.
+\lambda G(\mu) + (1-\lambda) G(\nu) -\epsilon \leq \mathbb{E}_{P_\states}\left[g(X_u)\bigl(f(X_v) - \mu'\bigr)\right] - \epsilon < G(\mu')\,.
 \end{equation*}
 Since the $\epsilon\in\realspos$ was arbitrary, this concludes the proof.
 
-We now first prove \ref{GBR:none_pos:zero}, i.e. that $G(\mu)$ is identically zero whenever $\uexp[g(X_u)]=0$. Clearly, this assumption implies that $\mathbb{E}_P[g(X_u)]=0$ for all $P\in\mathbb{P}_{\rateset,\mathcal{M}}$. Therefore, since $g\geq 0$, we must have that $\mathbb{E}_P[g(X_u)\vert X_v=x_v]=0$ for all $x_v\in\states_v$. By the law of iterated expectation, we therefore have
+To prove that the function has a root, first consider any $\mu<\min f$. Then, for every $P_\states\in\mathbb{P}_{\rateset,\mathcal{M}}$, using the assumption that $g\geq 0$,
 \begin{equation*}
-\mathbb{E}_P[f(X_v)g(X_u)] = \mathbb{E}_P\bigl[f(X_v)\mathbb{E}_P[g(X_u)\vert X_v]\bigr] = 0\,,
+\mathbb{E}_{P_\states}[g(X_u)f(X_v)] \geq \mathbb{E}_{P_\states}[g(X_u)\min f] = \mu\mathbb{E}_{P_\states}[g(X_u)]\,,
 \end{equation*}
-and hence, by combining with Equation~\ref{eq:gbr_linear_expansion}, that $\mathbb{E}_P\bigl[g(X_u)\bigl(f(X_v) - \mu\bigr)\bigr]=0$. Since this is true for all $P\in\mathbb{P}_{\rateset,\mathcal{M}}$, we clearly have that $G$ is indeed zero for all choices of $\mu$.
+and hence, using Equation~\eqref{eq:gbr_linear_expansion}, we find that $\mathbb{E}_{P_\states}\bigl[g(X_u)\bigl(f(X_v)-\mu\bigr)\bigr] \geq 0$. Since this is true for all $P_\states\in \mathbb{P}_{\rateset,\mathcal{M}}$, we find that $G(\mu)\geq 0$ for this choice of $\mu$. Next, consider any $\nu>\max f$. Then by a completely analogous argument---just reverse the inequalities---we find that $G(\nu)\leq 0$ for this choice of $\nu$. Therefore, and since we already know that $G(\cdot)$ is continuous, by the intermediate value theorem there must now be some $\mu_*\in[\mu,\nu]$ such that $G(\mu_*)=0$. This concludes the proof.
 
-For statement \ref{GBR:always:root}, i.e. that it has at least one root, we distinguish two cases. First, assume that $\uexp[g(X_u)]=0$. Then, by \ref{GBR:none_pos:zero}, $G(\mu)$ is identically zero and hence, in this case it trivially has at least one root.
 
-Suppose for the other case that $\uexp[g(X_u)]>0$, and set $\mu\coloneqq \min f$. Then for every $P\in\mathbb{P}_{\rateset,\mathcal{M}}$, using the assumption $g\geq 0$,
+We next prove \ref{GBR:low_pos}, and start by showing that $G(\cdot)$ is (strictly) decreasing if $\lexp[g(X_u)]>0$. To this end, consider any $\mu\in\reals$ and any $\Delta\in\realspos$. We need to show that $G(\mu)>G(\mu+\Delta)$. Let $\epsilon\coloneqq \Delta \lexp[g(X_u)]$; clearly then $\epsilon>0$. Therefore, there is some $P_\states\in\mathbb{P}_{\rateset,\mathcal{M}}$ such that
+\begin{equation}\label{eq:gbr_prop:approached_closeby}
+\mathbb{E}_{P_\states}\bigl[g(X_u)\bigl(f(X_v)-\mu\bigr)\bigr] - \epsilon < G(\mu)\,.
+\end{equation}
+Expanding the left hand side as in Equation~\eqref{eq:gbr_linear_expansion}, we find
+\begin{align*}
+\mathbb{E}_{P_\states}\bigl[g(X_u)\bigl(f(X_v)-\mu\bigr)\bigr] - \epsilon &= \mathbb{E}_{P_\states}\bigl[g(X_u)f(X_v)\bigr] - \mu \mathbb{E}_{P_\states}\bigl[g(X_u)\bigr] - \epsilon \\
+ &= \mathbb{E}_{P_\states}\bigl[g(X_u)f(X_v)\bigr] - \mu \mathbb{E}_{P_\states}\bigl[g(X_u)\bigr] - \Delta\lexp[g(X_u)] \\
+ &\geq \mathbb{E}_{P_\states}\bigl[g(X_u)f(X_v)\bigr] - \mu \mathbb{E}_{P_\states}\bigl[g(X_u)\bigr] - \Delta\mathbb{E}_{P_\states}\bigl[g(X_u)\bigr] \\
+ &= \mathbb{E}_{P_\states}\bigl[g(X_u)f(X_v)\bigr] - (\mu+\Delta) \mathbb{E}_{P_\states}\bigl[g(X_u)\bigr] \\
+ &= \mathbb{E}_{P_\states}\bigl[g(X_u)\bigl(f(X_v)-(\mu+\Delta)\bigr)\bigr] \\
+ &\geq G(\mu+\Delta)\,,
+\end{align*}
+where the first inequality follows from the fact that $\Delta$ and $\lexp[g(X_u)]$ are strictly positive, and $\lexp[g(X_u)]<\mathbb{E}_{P_\states}\bigl[g(X_u)\bigr]$ since $P_\states\in\mathbb{P}_{\rateset,\mathcal{M}}$. Combining with Equation~\eqref{eq:gbr_prop:approached_closeby} shows that
 \begin{equation*}
-\mathbb{E}_P[g(X_u)f(X_v)] \geq \mathbb{E}_P[g(X_u)(\min f)] = \mu\mathbb{E}_P[g(X_u)]\,,
+G(\mu+\Delta) \leq \mathbb{E}_{P_\states}\bigl[g(X_u)\bigl(f(X_v)-\mu\bigr)\bigr] - \epsilon < G(\mu)\,,
 \end{equation*}
-and hence, using Equation~\eqref{eq:gbr_linear_expansion}, we have $\mathbb{E}_P\bigl[g(X_u)\bigl(f(X_v) - \mu\bigr)\bigr] \geq 0$. Since this is true for every $P\in\mathbb{P}_{\rateset,\mathcal{M}}$, we find that $G(\mu)\geq 0$ for this choice of $\mu$. So, the function is non-negative at this $\mu$, and clearly, if it is zero, we are done.
-
-Hence, we can assume without loss of generality that $G(\mu) > 0$. Because we also assumed that $\uexp[g(X_u)] > 0$, there must be some $P\in\mathbb{P}_{\rateset,\mathcal{M}}$ such that $\mathbb{E}_P[g(X_u)]>0$. Using this $P$, define
-\begin{equation*}
-\nu \coloneqq \frac{\mathbb{E}_P[g(X_u)f(X_v)]}{\mathbb{E}_P[g(X_u)]}\,.
-\end{equation*}
-For this same choice of $P$, we then have
-\begin{equation*}
-\mathbb{E}_P\bigl[g(X_u)\bigl(f(X_v) - \nu\bigr)\bigr] = \mathbb{E}_P[g(X_u)f(X_v)] - \nu\mathbb{E}_P[g(X_u)] = 0\,,
-\end{equation*}
-using the choice of $\nu$ to establish the second equality. Since $P\in\mathbb{P}_{\rateset,\mathcal{M}}$, we now have
-\begin{equation*}
-G(\nu) \leq \mathbb{E}_P\bigl[g(X_u)\bigl(f(X_v) - \nu\bigr)\bigr] = 0\,,
-\end{equation*}
-and since we know that $G$ is monotonically decreasing, that $\mu\leq \nu$. Since we also know that $G$ is continuous, by the intermediate value theorem, there must now be some $\mu'\in [\mu,\nu]$ such that $G(\mu') = 0$. This concludes the proof that $G$ has at least one root.
-
-We next prove \ref{GBR:low_pos:monotone}, i.e. \emph{strict} monotonicity under the assumption that $\lexp[g(X_u)]>0$. Clearly, this assumption implies that $\mathbb{E}_P[g(X_u)]>0$ for all $P\in\mathbb{P}_{\rateset,\mathcal{M}}$, which, using Equation~\ref{eq:gbr_linear_expansion}, implies that $G$ is a lower envelope over strictly monotonically decreasing functions that each have a constant derivative in $\mu$---the latter property is notable because this prevents the formation of accumulation points, towards some lower bound, as $\mu$ is increased. This therefore implies that $G$ is strictly monotonically decreasing itself.
+which concludes the proof.
 
 For statement \ref{GBR:low_pos:unique_root}, i.e. that $G$ has a \emph{unique} root under the assumption that $\lexp[g(X_u)]>0$, note that we already know that $G$ has at least one root, i.e. $G(\mu)=0$ for some $\mu\in\reals$. By combining with statement \ref{GBR:low_pos:monotone}, i.e. strict monotonicity under the assumption that $\lexp[g(X_u)]>0$, the uniqueness of this root follows immediately.
 
 We do not explicitly prove properties \ref{GBR:up_pos:max_root}, \ref{GBR:up_pos:zero_before} and \ref{GBR:up_pos:monotone}, as they are essentially included in the statement and proof of Lemma~\ref{lemma:general_regular_extension}. In particular, the statement of that lemma establishes that $G$ has a maximum root $\mu_*$ (and in fact identifies it), which proves \ref{GBR:up_pos:max_root}. The proof of that lemma notes as the penultimate step that $G(\mu)=0$ for all $\mu\leq \mu_*$, proving \ref{GBR:up_pos:zero_before}. The fact that $G(\mu)$ is strictly monotonically decreasing for $\mu\geq \mu_*$, i.e. \ref{GBR:up_pos:monotone}, follows straightforwardly by combining the argument for statement \ref{GBR:low_pos:monotone} with the construction made in the proof of Lemma~\ref{lemma:general_regular_extension}.
+
+We finally prove~\ref{GBR:none_pos}, i.e. that $G(\mu)$ is identically zero whenever $\uexp[g(X_u)]=0$. Clearly, this assumption implies that $\mathbb{E}_{P_\states}[g(X_u)]=0$ for all $P_\states\in\mathbb{P}_{\rateset,\mathcal{M}}$. Therefore, and since $g\geq 0$, it follows from Lemma~\ref{lemma:conditioning_zero_means_bayes_zero} that for any $\mu\in\reals$, it holds that $\mathbb{E}_{P_\states}\bigl[g(X_u)\bigl(f(X_v) - \mu\bigr)\bigr]=0$ for all $P_\states\in\mathbb{P}_{\rateset,\mathcal{M}}$. It immediately follows that indeed $G(\mu)=0$ for all $\mu\in\reals$.
 \end{proof}
 
 The following lemma states a more general version of the result that the generalised Bayes' rule computes the updated lower expectation of a model under regular extension. We state it here because we use the result for various proofs throughout this appendix.
@@ -1114,8 +1140,12 @@ exists and is real-valued. Recall that, for every $x_u\in\states_u$ and every $i
 \begin{equation*}
 \phi_u(y_u\vert x_u) = \lim_{i\to+\infty} \frac{P_{\observs\vert\states}(O_u^i\vert x_u)}{\lambda_i} = \lim_{i\to+\infty} \prod_{t\in u}\frac{P_{\observs\vert\states}(O_t^i\vert x_t)}{\lambda_{\,t,i}} = \prod_{t\in u}\lim_{i\to+\infty} \frac{P_{\observs\vert\states}(O_t^i\vert x_t)}{\lambda_{\,t,i}} = \prod_{t\in u} \phi_t(y_t\vert x_t)\,,
 \end{equation*}
-using the existence of the $\phi(y_t\vert x_t)$ for the third equality. Hence, $\phi_u(y_u\vert x_u)$ exists and, since each $\phi_t(y_t\vert x_t)$, $t\in u$, is real-valued, so is $\phi_u(y_u\vert x_u)$. This concludes the proof of this statement.
+using the existence of the $\phi_t(y_t\vert x_t)$ for the third equality. Hence, $\phi_u(y_u\vert x_u)$ exists and, since each $\phi_t(y_t\vert x_t)$, $t\in u$, is real-valued, so is $\phi_u(y_u\vert x_u)$. This concludes the proof of this statement.
 
+Final try. Fix $t\in u$. Then, for all $i\in\nats$,
+\begin{equation*}
+P_{\observs\vert\states}(O_u^{i+1}\vert x_u) \leq P_{\observs\vert\states}(O_u^{i}\vert x_u)
+\end{equation*}
 \end{proof}
 
 \begin{proof}{\bf of Proposition~\ref{prop:GBR_for_densities_lower_zero}~}
