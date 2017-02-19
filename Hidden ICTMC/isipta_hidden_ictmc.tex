@@ -909,7 +909,7 @@ using Equation~\eqref{eq:gbr_prop:bound_value} for the second inequality. Since 
 
 We next show that $G(\cdot)$ is strictly decreasing for $\mu>\mu_*$. So consider any $\mu\in\reals$ such that $\mu>\mu_*$, and any $\Delta\in\realspos$; we need to show that $G(\mu)>G(\mu+\Delta)$. Because $\mu>\mu_*$, and since $\mu_*=\max\{\mu\in\reals\,:\,G(\mu)\geq 0\}$, we know that $G(\mu)<0$.
 
-First note that for any $\epsilon\in\realspos$, there is $P_{\states}\in\mathbb{P}_{\rateset,\mathcal{M}}$ for which
+First note that for any $\epsilon\in\realspos$, there is some $P_{\states}\in\mathbb{P}_{\rateset,\mathcal{M}}$ for which
 \begin{equation*}
 G(\mu) > \mathbb{E}_{P_\states}\bigl[g(X_u)\bigl(f(X_v)-\mu\bigr)\bigr] - \epsilon\,,
 \end{equation*}
@@ -967,53 +967,54 @@ We finally prove~\ref{GBR:none_pos}, i.e. that $G(\mu)$ is identically zero when
 The following lemma states a more general version of the result that the generalised Bayes' rule computes the updated lower expectation of a model under regular extension. We state it here because we use the result for various proofs throughout this appendix.
 
 \begin{lemma}\label{lemma:general_regular_extension}
-Let $\mathcal{Z}$ be an ICTHMC, and consider any $u,v\in\mathcal{U}$, $f\in\gambles(\states_v)$, and $g\in\gambles(\states_u)$ such that $g\geq 0$. Then, if $\uexp[g(X_u)]>0$, it holds that
-\begin{equation*}
-\max\left\{\mu\in\reals\,:\, \lexp\bigl[g(X_u)\bigl(f(X_v) - \mu\bigr)\bigr] \geq 0\right\} = \inf\left\{ \frac{\mathbb{E}_P[f(X_v)g(X_u)]}{\mathbb{E}_P[g(X_u)]}\,:\,P\in\mathcal{Z}, \mathbb{E}_P[g(X_u)]>0 \right\}\,.
-\end{equation*}
+Let $\mathbb{P}_{\rateset,\mathcal{M}}$ be an ICTMC, and consider any $u,v\in\mathcal{U}$, $f\in\gambles(\states_v)$, and $g\in\gambles(\states_u)$ such that $g\geq 0$. Then, if $\uexp[g(X_u)]>0$, it holds that
+\begin{align*}
+ &\max\left\{\mu\in\reals\,:\, \lexp\bigl[g(X_u)\bigl(f(X_v) - \mu\bigr)\bigr] \geq 0\right\} \\
+ &\quad\quad = \inf\left\{ \frac{\mathbb{E}_{P_\states}[f(X_v)g(X_u)]}{\mathbb{E}_{P_\states}[g(X_u)]}\,:\,{P_\states}\in\mathbb{P}_{\rateset,\mathcal{M}}, \mathbb{E}_{P_\states}[g(X_u)]>0 \right\}\,.
+\end{align*}
 \end{lemma}
 \begin{proof}
-Let $\mathcal{P}\coloneqq \left\{ P\in\mathcal{Z}\,:\, \mathbb{E}_P[g(X_u)] > 0\right\}$, and note that $\mathcal{P}$ is non-empty due to the assumption that $\uexp[g(X_u)]>0$. For all $P\in\mathcal{P}$, define
+Let $\mathcal{P}\coloneqq \left\{ {P_\states}\in\mathbb{P}_{\rateset,\mathcal{M}}\,:\, \mathbb{E}_{P_\states}[g(X_u)] > 0\right\}$, and note that $\mathcal{P}$ is non-empty due to the assumption that $\uexp[g(X_u)]>0$. For all ${P_\states}\in\mathcal{P}$, define
 \begin{equation*}
-\mu_P \coloneqq \frac{\mathbb{E}_P[f(X_v)g(X_u)]}{\mathbb{E}_P[g(X_u)]}\,,
+\mu_{P_\states} \coloneqq \frac{\mathbb{E}_{P_\states}[f(X_v)g(X_u)]}{\mathbb{E}_{P_\states}[g(X_u)]}\,,
 \end{equation*}
 and let $\mu_*$ be defined by
 \begin{equation*}
-\mu_* \coloneqq \inf\left\{\mu_P\,:\,P\in\mathcal{P} \right\}\,.
+\mu_* \coloneqq \inf\left\{\mu_{P_\states}\,:\,{P_\states}\in\mathcal{P} \right\}\,.
 \end{equation*}
-Now define the following function, parameterised in $\mu$,
+Now define the following function, parameterised in $\mu\in\reals$,
 \begin{equation*}
-\underline{\mathbb{E}}[g(X_u)(f(X_v) - \mu)] \coloneqq \inf\{\mathbb{E}_P[g(X_u)(f(X_v) - \mu)]\,:\,P\in\mathcal{P} \}\,,
+\underline{\mathbb{E}}[g(X_u)(f(X_v) - \mu)] \coloneqq \inf\{\mathbb{E}_{P_\states}[g(X_u)(f(X_v) - \mu)]\,:\,{P_\states}\in\mathcal{P} \}\,,
 \end{equation*}
-and consider $\underline{\mathbb{E}}[g(X_u)(f(X_v) - \mu_*)]$. We start by showing that this quantity is non-negative. To this end, fix any $\epsilon>0$. Then, there is some $P\in\mathcal{P}$ such that
+and consider $\underline{\mathbb{E}}[g(X_u)(f(X_v) - \mu_*)]$. We start by showing that this quantity is non-negative. To this end, fix any $\epsilon>0$. Then, there is some ${P_\states}\in\mathcal{P}$ such that
 \begin{equation*}
-\mathbb{E}_P[g(X_u)(f(X_v) - \mu_*)] - \epsilon < \underline{\mathbb{E}}[g(X_u)(f(X_v) - \mu_*)]\,.
+\mathbb{E}_{P_\states}[g(X_u)(f(X_v) - \mu_*)] - \epsilon < \underline{\mathbb{E}}[g(X_u)(f(X_v) - \mu_*)]\,.
 \end{equation*}
-Using Equation~\eqref{eq:gbr_linear_expansion}, the function $\mathbb{E}_P[g(X_u)(f(X_v) - \mu)]$ is monotonically decreasing in $\mu$. Therefore, and since $\mu_*\leq \mu_P$, we have
+Using Equation~\eqref{eq:gbr_linear_expansion}, the function $\mathbb{E}_{P_\states}[g(X_u)(f(X_v) - \mu)]$ is non-increasing in $\mu$. Therefore, and since $\mu_*\leq \mu_{P_\states}$, we have
 \begin{equation*}
-\mathbb{E}_P[g(X_u)(f(X_v) - \mu_P)] - \epsilon \leq \mathbb{E}_P[g(X_u)(f(X_v) - \mu_*)] - \epsilon < \underline{\mathbb{E}}[g(X_u)(f(X_v) - \mu_*)]\,.
+\mathbb{E}_{P_\states}[g(X_u)(f(X_v) - \mu_{P_\states})] - \epsilon \leq \mathbb{E}_{P_\states}[g(X_u)(f(X_v) - \mu_*)] - \epsilon < \underline{\mathbb{E}}[g(X_u)(f(X_v) - \mu_*)]\,.
 \end{equation*}
-Due to the choice of $\mu_P$, we have $\mathbb{E}_P[g(X_u)(f(X_v) - \mu_P)]=0$, and so we find that
+Due to the choice of $\mu_{P_\states}$, we have $\mathbb{E}_{P_\states}[g(X_u)(f(X_v) - \mu_{P_\states})]=0$, and so we find that
 \begin{equation*}
 -\epsilon < \underline{\mathbb{E}}[g(X_u)(f(X_v) - \mu_*)]\,.
 \end{equation*}
 Since this is true for every $\epsilon>0$, we conclude that $0\leq \underline{\mathbb{E}}[g(X_u)(f(X_v) - \mu_*)]$. Next, we show that this quantity is also non-positive, or in other words, that $\mu_*$ is a root of this function. 
 
-To this end, fix any $\epsilon>0$, and define $\epsilon'\coloneqq \nicefrac{\epsilon}{\uexp[g(X_u)]}$; since by assumption $\uexp[g(X_u)]>0$, we have $\epsilon' >0$. Now consider $P\in\mathcal{P}$ such that
+To this end, fix any $\epsilon>0$, and define $\epsilon'\coloneqq \nicefrac{\epsilon}{\uexp[g(X_u)]}$; since by assumption $\uexp[g(X_u)]>0$, we have $\epsilon' >0$. Now consider ${P_\states}\in\mathcal{P}$ such that
 \begin{equation*}
-\mu_P - \epsilon' < \mu_*\,.
+\mu_{P_\states} - \epsilon' < \mu_*\,.
 \end{equation*}
-Then, since $\underline{\mathbb{E}}[g(X_u)(f(X_v) - \mu)]$ is monotonically decreasing in $\mu$, we have
+Then, since $\underline{\mathbb{E}}[g(X_u)(f(X_v) - \mu)]$ is non-increasing in $\mu$---because it is a lower envelope of non-increasing functions---we have that
 \begin{equation*}
-\underline{\mathbb{E}}[g(X_u)(f(X_v) - \mu_*)] \leq \underline{\mathbb{E}}[g(X_u)(f(X_v) - (\mu_P - \epsilon'))]\leq \mathbb{E}_P[g(X_u)(f(X_v) - (\mu_P - \epsilon'))]\,.
+\underline{\mathbb{E}}[g(X_u)(f(X_v) - \mu_*)] \leq \underline{\mathbb{E}}[g(X_u)(f(X_v) - (\mu_{P_\states} - \epsilon'))]\leq \mathbb{E}_{P_\states}[g(X_u)(f(X_v) - (\mu_{P_\states} - \epsilon'))]\,.
 \end{equation*}
-Expanding the r.h.s. using linearity of expectation, and by the definition of $\mu_P$, we then have
+Expanding the r.h.s. using the linearity of expectation operators, and by the definition of $\mu_{P_\states}$, we then have
 \begin{equation*}
-\mathbb{E}_P[g(X_u)(f(X_v) - (\mu_P - \epsilon'))] = \mathbb{E}_P[g(X_u)f(X_v)] - \mu_P\mathbb{E}_P[g(X_u)] + \epsilon'\mathbb{E}_P[g(X_u)] = \epsilon'\mathbb{E}_P[g(X_u)]\,,
+\mathbb{E}_{P_\states}[g(X_u)(f(X_v) - (\mu_{P_\states} - \epsilon'))] = \mathbb{E}_{P_\states}[g(X_u)f(X_v)] - \mu_{P_\states}\mathbb{E}_{P_\states}[g(X_u)] + \epsilon'\mathbb{E}_{P_\states}[g(X_u)] = \epsilon'\mathbb{E}_{P_\states}[g(X_u)]\,,
 \end{equation*}
-and since $P\in\mathcal{P}\subseteq\mathcal{Z}$,
+and since ${P_\states}\in\mathcal{P}\subseteq\mathbb{P}_{\rateset,\mathcal{M}}$,
 \begin{equation*}
-\epsilon'\mathbb{E}_P[g(X_u)] \leq \epsilon'\uexp[g(X_u)]=\epsilon\,,
+\epsilon'\mathbb{E}_{P_\states}[g(X_u)] \leq \epsilon'\uexp[g(X_u)]=\epsilon\,,
 \end{equation*}
 and so we find that
 \begin{equation*}
@@ -1024,30 +1025,69 @@ Since this is true for every $\epsilon>0$, and since we already know that $\unde
 \underline{\mathbb{E}}[g(X_u)(f(X_v) - \mu_*)] = 0\,.
 \end{equation*}
 
-Now consider any $\mu' > \mu_*$. There must then be some $P\in\mathcal{P}$ such that $\mu_*\leq \mu_P < \mu'$, and furthermore,
+Now consider any $\mu' > \mu_*$. There must then be some ${P_\states}\in\mathcal{P}$ such that $\mu_*\leq \mu_{P_\states} < \mu'$, and furthermore,
 \begin{equation*}
-\underline{\mathbb{E}}[g(X_u)(f(X_v) - \mu')] \leq \mathbb{E}_P[g(X_u)(f(X_v) - \mu')] < \mathbb{E}_P[g(X_u)(f(X_v) - \mu_P)] = 0\,,
+\underline{\mathbb{E}}[g(X_u)(f(X_v) - \mu')] \leq \mathbb{E}_{P_\states}[g(X_u)(f(X_v) - \mu')] < \mathbb{E}_{P_\states}[g(X_u)(f(X_v) - \mu_{P_\states})] = 0\,,
 \end{equation*}
-where the strict inequality follows from the fact that $\mathbb{E}_P[g(X_u)(f(X_v) - \mu)]$ is strictly monotonically decreasing, and $\mu_P<\mu'$. Since this is true for every $\mu'>\mu_*$, we conclude that
+where the strict inequality follows from the fact that $\mathbb{E}_{P_\states}[g(X_u)(f(X_v) - \mu)]$ is strictly decreasing, and $\mu_{P_\states}<\mu'$. Since this is true for every $\mu'>\mu_*$, we conclude that
 \begin{equation*}
 \mu_* = \max\left\{ \mu\in\reals\,:\, \underline{\mathbb{E}}[g(X_u)(f(X_v) - \mu)] \geq 0 \right\}\,.
 \end{equation*}
 
-Furthermore, as was essentially already established in the proof of case~\ref{GBR:always:root} in Proposition~\ref{prop:GBR_properties}, the function $\mathbb{E}_P\bigl[g(X_u)\bigl(f(X_v)-\mu\bigr)\bigr]$ is identically zero for all $P\in\mathcal{Z}$ for which $\mathbb{E}_P[g(X_u)]=0$, that is, those $P\in\mathcal{Z}$ that are not in $\mathcal{P}$. Hence, we have 
+We now distinguish two cases. Either $\mathcal{P}=\mathbb{P}_{\rateset,\mathcal{M}}$, in which case
+\begin{equation*}
+\underline{\mathbb{E}}[g(X_u)(f(X_v) - \mu)] = \lexp[g(X_u)(f(X_v) - \mu)]\,,
+\end{equation*}
+from which we find that
+\begin{align*}
+\max\left\{ \mu\in\reals\,:\, \underline{\mathbb{E}}[g(X_u)(f(X_v) - \mu)] \geq 0 \right\} &= \max\left\{ \mu\in\reals\,:\, \lexp[g(X_u)(f(X_v) - \mu)] \geq 0 \right\} \\
+ &= \mu_* \\
+ &= \inf\left\{\frac{\mathbb{E}_{P_\states}[f(X_v)g(X_u)]}{\mathbb{E}_{P_\states}[g(X_u)]}\,:\,P_\states\in\mathcal{P}\right\} \\
+ &= \inf\left\{\frac{\mathbb{E}_{P_\states}[f(X_v)g(X_u)]}{\mathbb{E}_{P_\states}[g(X_u)]}\,:\,P_\states\in\mathbb{P}_{\rateset,\mathcal{M}},\,\mathbb{E}_{P_\states}[g(X_u)]>0\right\}\,,
+\end{align*}
+and we are done.
+
+So, we can assume without loss of generality that the other case holds, i.e. that $\mathcal{P}\neq \mathbb{P}_{\rateset,\mathcal{M}}$. Let $\mathcal{P}_0\coloneqq \mathbb{P}_{\rateset,\mathcal{M}}\setminus \mathcal{P}$. Due to the definition of $\mathcal{P}$, we then have for every $P_\states\in\mathcal{P}_0$ that $\mathbb{E}_{P_\states}[g(X_u)]=0$. It follows from Lemma~\ref{lemma:conditioning_zero_means_bayes_zero} that $\mathbb{E}_{P_\states}\bigl[g(X_u)\bigl(f(X_v)-\mu\bigr)\bigr]=0$ for all $\mu\in\reals$ and all $P_\states\in\mathcal{P}_0$. Hence,
+\begin{equation*}
+\inf\left\{ \mathbb{E}_{P_\states}\bigl[g(X_u)\bigl(f(X_v)-\mu\bigr)\bigr]\,:\,P_\states\in\mathcal{P}_0 \right\} = 0\,,
+\end{equation*}
+for all $\mu\in\reals$. Because $\mathcal{P}\cup\mathcal{P}_0=\mathbb{P}_{\rateset,\mathcal{M}}$, we therefore have
 \begin{equation*}
 \lexp\bigl[g(X_u)\bigl(f(X_v)-\mu\bigr)\bigr] = \min\left\{\underline{\mathbb{E}}[g(X_u)(f(X_v) - \mu)],\,0 \right\}\,,
 \end{equation*}
-from which we conclude that $\lexp\bigl[g(X_u)\bigl(f(X_v)-\mu\bigr)\bigr]$ is strictly negative whenever $\underline{\mathbb{E}}[g(X_u)(f(X_v) - \mu)]$ is. In other words, we have that
-\begin{equation*}
-\inf\left\{\frac{\mathbb{E}_P[f(X_v)g(X_u)]}{\mathbb{E}_P[g(X_u)]}\,:\,P\in\mathcal{P}\right\} = \mu_* = \max\left\{ \mu\in\reals\,:\, \lexp[g(X_u)(f(X_v) - \mu)] \geq 0 \right\}
-\end{equation*}
+and so we conclude that $\lexp\bigl[g(X_u)\bigl(f(X_v)-\mu\bigr)\bigr]$ is negative if and only if $\underline{\mathbb{E}}[g(X_u)(f(X_v) - \mu)]$ is negative. In other words, we here also find that
+\begin{align*}
+\max\left\{ \mu\in\reals\,:\, \lexp[g(X_u)(f(X_v) - \mu)] \geq 0 \right\} &= \max\left\{ \mu\in\reals\,:\, \underline{\mathbb{E}}[g(X_u)(f(X_v) - \mu)] \geq 0 \right\} \\
+ &= \mu_* \\
+ &= \inf\left\{\frac{\mathbb{E}_{P_\states}[f(X_v)g(X_u)]}{\mathbb{E}_{P_\states}[g(X_u)]}\,:\,{P_\states}\in\mathcal{P}\right\} \\
+ = \inf&\left\{\frac{\mathbb{E}_{P_\states}[f(X_v)g(X_u)]}{\mathbb{E}_{P_\states}[g(X_u)]}\,:\,{P_\states}\in\mathbb{P}_{\rateset,\mathcal{M}},\,\mathbb{E}_{P_\states}[g(X_u)]>0\right\}\,.
+\end{align*}
 \end{proof}
 
-\begin{corollary}\label{cor:lower_hidden_is_lower_chain}
-todo
+The following lemmas relate an ICTHMC $\mathcal{Z}$ with the ICTMC $\mathbb{P}_{\rateset,\mathcal{M}}$ from which it was constructed. The idea behind all these results is that $\mathcal{Z}$ contains an augmented process $P=P_{\observs\vert\states}\otimes P_\states$ for every $P_\states\in \mathbb{P}_{\rateset,\mathcal{M}}$. Furthermore, $P_\states$ fully determines the probabilities of $P$ that are only concerned with states. As such, (lower) expectations of functions that are only concerned with states, will be the same for all these objects.
+
+\begin{lemma}\label{lemma:state_expectation_doesnt_depend_on_outputs}
+Let $P=P_{\observs\vert\states}\otimes P_\states$ be an augmented stochastic process and consider any $u\in\mathcal{U}$ and any $f\in\gambles(\states_u)$. Then $\mathbb{E}_P[f(X_u)] = \mathbb{E}_{P_\states}[f(X_u)]$.
+\end{lemma}
+\begin{proof}
+Trivial consequence of the construction of augmented stochastic processes in Section~\ref{sec:aug_stochastic_processes}.
+\end{proof}
+
+\begin{lemma}\label{lemma:state_lower_expectation_doesnt_depend_on_outputs}
+Let $\mathcal{Z}$ be an ICTHMC with corresponding ICTMC $\mathbb{P}_{\rateset,\mathcal{M}}$ and consider any $u\in\mathcal{U}$ and any $f\in\gambles(\states_u)$. Then $\underline{\mathbb{E}}_\mathcal{Z}[f(X_u)]=\lexp[f(X_u)]$.
+\end{lemma}
+\begin{proof}
+Trivial consequence of Definition~\ref{def:hidden_ictmc} and Lemma~\ref{lemma:state_expectation_doesnt_depend_on_outputs}.
+\end{proof}
+
+\begin{corollary}\label{cor:lower_hidden_is_root_chain}
+Let $\mathcal{Z}$ be an ICTHMC, and consider any $u,v\in\mathcal{U}$, $f\in\gambles(\states_v)$, and $g\in\gambles(\states_u)$ such that $g\geq 0$. Then, if $\uexp[g(X_u)]>0$, it holds that
+\begin{equation*}
+\max\left\{\mu\in\reals\,:\, \lexp\bigl[g(X_u)\bigl(f(X_v) - \mu\bigr)\bigr] \geq 0\right\} = \inf\left\{ \frac{\mathbb{E}_{P_\states}[f(X_v)g(X_u)]}{\mathbb{E}_{P_\states}[g(X_u)]}\,:\,P\in\mathcal{Z}, \mathbb{E}_{P_\states}[g(X_u)]>0 \right\}\,.
+\end{equation*}
 \end{corollary}
 \begin{proof}
-straightforward
+Trivial consequence of Lemmas~\ref{lemma:general_regular_extension},~\ref{lemma:state_expectation_doesnt_depend_on_outputs}, and~\ref{lemma:state_lower_expectation_doesnt_depend_on_outputs}.
 \end{proof}
 
 
