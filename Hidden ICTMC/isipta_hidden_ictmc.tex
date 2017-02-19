@@ -1090,28 +1090,54 @@ Let $\mathcal{Z}$ be an ICTHMC, and consider any $u,v\in\mathcal{U}$, $f\in\gamb
 Trivial consequence of Lemmas~\ref{lemma:general_regular_extension},~\ref{lemma:state_expectation_doesnt_depend_on_outputs}, and~\ref{lemma:state_lower_expectation_doesnt_depend_on_outputs}.
 \end{proof}
 
+Similar to the above, due to the independence assumptions on augmented stochastic processes and the fact that we use a fixed output distribution $P_{\observs\vert\states}$, (lower) probabilities of outputs can be conveniently rewritten as follows.
+\begin{lemma}\label{lemma:output_probability_is_expectation}
+Let $P=P_{\observs\vert\states}\otimes P_\states$ be an augmented stochastic process and consider any $u\in\mathcal{U}$ and any $O_u\in\Sigma_u$. Then $P(Y_u\in O_u)=\mathbb{E}_{P_\states}[P_{\observs\vert\states}(O_u\vert X_u)]$.
+\end{lemma}
+\begin{proof}
+Due to the construction of augmented stochastic processes in Section~\ref{sec:aug_stochastic_processes}, we have that
+\begin{equation*}
+P(Y_u\in O_u) = \sum_{x_u\in\states_u} P(Y_u\in O_u, X_u=x_u) 
+ = \sum_{x_u\in\states_u} P_{\observs\vert\states}(O_u\vert x_u)P_\states(X_u=x_u) 
+ = \mathbb{E}_{P_\states}[P_{\observs\vert\states}(O_u\vert X_u)]\,.
+\end{equation*}
+\end{proof}
+\begin{lemma}\label{lemma:lower_output_probability_is_expectation}
+Let $\mathcal{Z}$ be an ICTHMC with corresponding ICTMC $\mathbb{P}_{\rateset,\mathcal{M}}$ and consider any $u\in\mathcal{U}$ and $O_u\in\Sigma_u$. Then $\underline{P}_{\mathcal{Z}}(Y_u\in O_u)=\lexp[P_{\observs\vert\states}(O_u\vert X_u)]$.
+\end{lemma}
+\begin{proof}
+Trivial consequence of Definition~\ref{def:hidden_ictmc} and Lemma~\ref{lemma:output_probability_is_expectation}.
+\end{proof}
 
 \section{Proofs and Lemmas for the Results in Section~\ref{subsec:pos_prob}}
 
 \begin{proof}{\bf of Proposition~\ref{prop:precise_conditioning_for_positive}~}
-This follows from some simple manipulations:
-\begin{align*}
-\mathbb{E}_P[f(X_v)\,\vert\,Y_u\in O_u] &= \sum_{x_v\in\states_v} f(x_v)\frac{P(X_v=x_v, Y_u\in O_u)}{P(Y_u\in O_u)} \\
- &= \sum_{x_v\in\states_v} f(x_v)\sum_{x_u\in\states_u}\frac{P(X_v=x_v, X_u=x_u, Y_u\in O_u)}{P(Y_u\in O_u)} \\
- &= \sum_{x_v\in\states_v} f(x_v)\sum_{x_u\in\states_u}\frac{P(Y_u\in O_u\,\vert\,X_v=x_v, X_u=x_u)P(X_v=x_v, X_u=x_u)}{P(Y_u\in O_u)} \\
- &= \sum_{x_v\in\states_v} f(x_v)\sum_{x_u\in\states_u}\frac{P(Y_u\in O_u\,\vert\,X_u=x_u)P(X_v=x_v, X_u=x_u)}{P(Y_u\in O_u)} \\
- &= \sum_{x_{u\cup v}\in\states_{u\cup v}} f(x_v)\frac{P(Y_u\in O_u\,\vert\,X_u=x_u)P(X_v=x_v, X_u=x_u)}{P(Y_u\in O_u)} \\
- &= \frac{\mathbb{E}_P[f(X_v)P(Y_u\in O_u\vert X_u)]}{P(Y_u\in O_u)} \\
- &= \frac{\mathbb{E}_P[f(X_v)P(Y_u\in O_u\vert X_u)]}{\mathbb{E}_P[P(Y_u\in O_u\,\vert\,X_u)]} \\
-  &= \frac{\mathbb{E}_{P_\states}[f(X_v)P_{\observs\vert\states}(O_u\vert X_u)]}{\mathbb{E}_{P_\states}[P_{\observs\vert\states}(O_u\,\vert\,X_u)]} \,,
-\end{align*}
-where the first equality is by definition of Bayes' rule, the second equality is by the law of total probability, the third by the basic properties of probability, the fourth using the independence property in the definition of augmented stochastic processes, the sixth is simple rearrangement of terms, the seventh is by definition of expectation, the eight is by law of total probability and the definition of expectation, and the final equality is due to the construction of augmented processes in Section~\ref{sec:aug_stochastic_processes}.
+The result follows from some simple manipulations, but we need to keep track of the overlap $u\cap v$ between the time-points of interest to prevent double-counting those time-points. Let $w\coloneqq u\setminus v$; then clearly $v\cup w = v\cup (u\setminus v) = u\cup (v\setminus u)=u\cup v$.
 
+Starting from the definition of $\mathbb{E}_P[f(X_v)\,\vert\,Y_u\in O_u]$ using Bayes' rule, we find
+\begin{align*}
+\mathbb{E}_P[f(X_v)\,\vert\,Y_u\in O_u] &\coloneqq \sum_{x_v\in\states_v} f(x_v)\frac{P(X_v=x_v, Y_u\in O_u)}{P(Y_u\in O_u)} \\
+&= \sum_{x_v\in\states_v} \sum_{x_w\in\states_w} f(x_v)\frac{P(X_v=x_v, X_w=x_w, Y_u\in O_u)}{P(Y_u\in O_u)} \\
+&= \sum_{x_u\in\states_u}\sum_{x_{v\setminus u}\in\states_{v\setminus u}} f(x_v)\frac{P(X_u=x_u, X_{v\setminus u}=x_{v\setminus u}, Y_u\in O_u)}{P(Y_u\in O_u)} \\
+&= \sum_{x_u\in\states_u}\sum_{x_{v\setminus u}\in\states_{v\setminus u}} f(x_v)\frac{P_{\observs\vert\states}(O_u\vert x_u)P_\states(X_u=x_u, X_{v\setminus u}=x_{v\setminus u})}{P(Y_u\in O_u)}\,,
+\end{align*}
+where the first equality is by definition, the second is by the basic rules of probability, the third is by changing the indexing using $v\cup w=u\cup(v\setminus u)$, and the fourth is by the definition of augmented stochastic processes in Section~\ref{sec:aug_stochastic_processes}. Joining the indexing using $u\cup(v\setminus u)=u\cup v$, we find that
+\begin{align*}
+\mathbb{E}_P[f(X_v)\,\vert\,Y_u\in O_u] &= \sum_{x_u\in\states_u}\sum_{x_{v\setminus u}\in\states_{v\setminus u}} f(x_v)\frac{P_{\observs\vert\states}(O_u\vert x_u)P_\states(X_u=x_u, X_{v\setminus u}=x_{v\setminus u})}{P(Y_u\in O_u)} \\
+ &= \sum_{x_{u\cup v}\in\states_{u\cup v}} f(x_v)\frac{P_{\observs\vert\states}(O_u\vert x_u)P_\states(X_{u\cup v}=x_{u\cup v})}{P(Y_u\in O_u)} \\
+ &= \frac{\mathbb{E}_{P_\states}[f(X_v)P_{\observs\vert\states}(O_u\vert X_u)]}{P(Y_u\in O_u)}\,,
+\end{align*}
+where the third equality is by the definition of expectation. Applying Lemma~\ref{lemma:output_probability_is_expectation} to the denominator, we finally obtain
+\begin{equation*}
+\mathbb{E}_P[f(X_v)\,\vert\,Y_u\in O_u] = \frac{\mathbb{E}_{P_\states}[f(X_v)P_{\observs\vert\states}(O_u\vert X_u)]}{\mathbb{E}_{P_\states}[P_{\observs\vert\states}(O_u\vert X_u)]}\,.
+\end{equation*}
 \end{proof}
 
 
 \begin{proof}{\bf of Proposition~\ref{prop:GBR_regular}~}
-This is a special case of Lemma~\ref{lemma:general_regular_extension}, obtained by setting $g(X_u)\coloneqq P_{\observs\vert\states}(O_u\vert X_u)$ in that lemma's statement, and applying Proposition~\ref{prop:precise_conditioning_for_positive} to the quantities $\mathbb{E}_P[f(X_v)\,\vert\,Y_u\in O_u]$.
+This is a special case of Corollary~\ref{cor:lower_hidden_is_root_chain}. To see this, set $g(X_u)\coloneqq P_{\observs\vert\states}(O_u\vert X_u)$ in that corollary's statement, and apply Proposition~\ref{prop:precise_conditioning_for_positive} to the quantities $\mathbb{E}_P[f(X_v)\,\vert\,Y_u\in O_u]$.
+
+The hypothesis $\overline{P}_\mathcal{Z}(Y_u\in O_u)>0$ then implies the hypothesis $\uexp[g(X_u)]>0$ of Corollary~\ref{cor:lower_hidden_is_root_chain}, due to Lemma~\ref{lemma:lower_output_probability_is_expectation}.
 \end{proof}
 
 \section{Proofs and Lemmas for the Results in Section~\ref{subsec:uncountable}}
