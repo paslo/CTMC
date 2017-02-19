@@ -1371,8 +1371,22 @@ Due to Proposition~\ref{prop:GBR_for_densities_lower_zero}, we therefore conclud
 \end{align*}
 \end{proof}
 
-The below proves the properties of the first of the alternative imprecise updating methods suggested in Section~\ref{subsec:uncountable}.
-\begin{proposition}
+The following two proposition prove the properties of the first of the alternative imprecise updating methods suggested in Section~\ref{subsec:uncountable}.
+\begin{proposition}\label{prop:regular_is_computable}
+Let $\mathcal{Z}$ be an ICTHMC and consider any $u,v\in\mathcal{U}$, $y_u\in\observs_u$, and $f\in\gambles(\states_v)$. For any $\{O_u^i\}_{i\in\nats}$ in $\Sigma_u$ that shrinks to $y_u$, if for some $\{\lambda_i\}_{i\in\nats}$ in $\realspos$ the quantity $\phi_u(y_u\vert X_u)$ exists, is real-valued, and satisfies $\uexp[\phi_u(y_u\vert X_u)]>0$, then the model defined by
+\begin{equation*}
+\underline{\mathbb{E}}_\mathcal{Z}^\mathrm{R}[f(X_v)\,\vert\,Y_u=y_u] \coloneqq \inf\left\{\mathbb{E}_P[f(X_v)\,\vert\,Y_u=y_u]\,:\,P\in\mathcal{Z},\,\mathbb{E}_{P_\states}[\phi_u(y_u\vert X_u)]>0\right\}\,,
+\end{equation*}
+satisfies
+\begin{equation*}
+\underline{\mathbb{E}}_\mathcal{Z}^\mathrm{R}[f(X_v)\,\vert\,Y_u=y_u] = \max\{\mu\in\reals\,:\,\lexp\bigl[\phi_u(y_u\vert X_u)\bigl(f(X_v)-\mu\bigr)\bigr] \geq 0\}\,.
+\end{equation*}
+\end{proposition}
+\begin{proof}
+This is a special case of Corollary~\ref{cor:lower_hidden_is_root_chain}, obtained by setting $g(X_u)\coloneqq \phi_u(y_u\vert X_u)$ in that corollary's statement, and applying Proposition~\ref{prop:precise_bayes_rule_densities} to the quantities $\mathbb{E}_P[f(X_v)\,\vert\,Y_u=y_u]$.
+\end{proof}
+
+\begin{proposition}\label{prop:counter_example_regular}
 There exists some ICTHMC $\mathcal{Z}$, some sequences of time-points $u,v\in\mathcal{U}$, some function $f\in\gambles(\states_v)$, some $y_u\in\observs_u$, and some sequence $\{O_u^i\}_{i\in\nats}$ such that there is a sequence $\{\lambda_i\}_{i\in\nats}$ for which $\phi_u(y_u\vert X_u)$ exists, is real-valued, and $\uexp[\phi_u(y_u\vert X_u)]>0$, such that for
 \begin{equation*}
 \underline{\mathbb{E}}_\mathcal{Z}^\mathrm{R}[f(X_v)\,\vert\, Y_u=y_u] \coloneqq \inf\left\{ \mathbb{E}_P[f(X_v)\,\vert\,Y_u=y_u]\,:\,P\in\mathcal{Z}, \mathbb{E}_P[\phi_u(y_u\vert X_u)]>0  \right\}\,,
@@ -1387,7 +1401,7 @@ Because the claim is existential, a proof by example suffices. To this end, let 
 
 The trick will be to choose the measures $P_{\observs\vert\states}(\cdot\vert x)$ and $P_{\observs\vert\states}(\cdot\vert \overline{x})$ so that the first gives $y_0$ strictly positive support (i.e. density), while the second assigns zero support (i.e. density) to $y_0$ but positive support (i.e. density) to the region around $y_0$. To this end, let $P_{\observs\vert\states}(\cdot\vert x)$ be the uniform distribution on $[-1,1]$.
 
-We construct the measure $P_{\observs\vert\states}(\cdot\vert \overline{x})$ in reverse, by constructing $\phi(\cdot\vert\overline{x})$ explicitly. To this end, for every $y\in\observs$, let
+We define the measure $P_{\observs\vert\states}(\cdot\vert \overline{x})$ by constructing $\phi(\cdot\vert\overline{x})$ explicitly. So, for every $y\in\observs$, let
 \begin{equation*}
 \phi(y\vert\overline{x}) \coloneqq \abs{y}\,.
 \end{equation*}
@@ -1407,7 +1421,7 @@ with $\lambda(O_0^i)$ the Lebesgue measure of $O_0^i$. Fix any such sequence $\{
 
 Let the set of initial distributions $\mathcal{M}$ be the entire set of probability mass functions on $\states_0$. Consider the two probability mass functions $P,\overline{P}$ on $\states_0$ such that $P(x)=1$, $P(\overline{x})=0$, and $\overline{P}(x)=0$, $\overline{P}(\overline{x})=1$; clearly, $P,\overline{P}\in\mathcal{M}$. Let $\rateset$ be any non-empty, bounded, and convex set of rate matrices with separately specified rows, and let $\mathbb{P}_{\rateset,\mathcal{M}}$ be the corresponding ICTMC. Construct $\mathcal{Z}$ from $\mathbb{P}_{\rateset,\mathcal{M}}$ and $(\observs,\Sigma,P_{\observs\vert\states})$ as in Definition~\ref{def:hidden_ictmc}. Let $f\in\gambles(\states_0)$ be defined by $f(x)\coloneqq 1$ and $f(\overline{x})\coloneqq -1$. 
 
-Clearly, $\uexp[\phi(y_0\vert X_0)]=\overline{\mathbb{E}}_\mathcal{M}[\phi(y_0\vert X_0)] = P(x)\phi(y_0\vert x) + P(\overline{x})\phi(y_0\vert \overline{x})=P(x)\phi(y_0\vert x) = \frac{1}{2}>0$, and so we can apply regular extension.
+Clearly, $\uexp[\phi(y_0\vert X_0)]=\overline{\mathbb{E}}_\mathcal{M}[\phi(y_0\vert X_0)] = P(x)\phi(y_0\vert x) + P(\overline{x})\phi(y_0\vert \overline{x})=P(x)\phi(y_0\vert x) = \frac{1}{2}>0$, and so the model $\underline{\mathbb{E}}_\mathcal{Z}^\mathrm{R}[f(X_v)\,\vert\, Y_u=y_u]$ is well-defined.
 
 Now, for any $P'\in\mathcal{Z}$ such that $\mathbb{E}_{P'}[\phi(y_0\vert X_0)]>0$, we have by Proposition~\ref{prop:precise_bayes_rule_densities} that
 \begin{equation*}
@@ -1432,6 +1446,36 @@ We conclude from this that
 \begin{equation*}
 -1 =  \lim_{i\to+\infty} \underline{\mathbb{E}}_\mathcal{Z}[f(X_0)\vert Y_0\in O_0^i] \neq \underline{\mathbb{E}}_\mathcal{Z}^\mathrm{R}[f(X_0)\,\vert\, Y_0=y_0] = 1\,.
 \end{equation*}
+\end{proof}
+
+The following result proves the claim that the \emph{second} alternative imprecise updating method from Section~\ref{subsec:uncountable} does not in general satisfy the generalised Bayes' rule for mixtures of densities.
+\begin{corollary}
+There exists some ICTHMC $\mathcal{Z}$, some sequences of time-points $u,v\in\mathcal{U}$, some function $f\in\gambles(\states_v)$, some $y_u\in\observs_u$, and some sequence $\{O_u^i\}_{i\in\nats}$ such that
+\begin{equation*}
+\{P\in\mathcal{Z}\,:\,\text{$\mathbb{E}_P[f(X_v)\,\vert\,Y_u=y_u]$ exists}\}\neq\emptyset\,,
+\end{equation*}
+and so that for
+\begin{equation*}
+\underline{\mathbb{E}}_\mathcal{Z}^\mathrm{L}[f(X_v)\,\vert\, Y_u=y_u]\coloneqq \inf\bigl\{\mathbb{E}_P[f(X_v)\,\vert\,Y_u=y_u]\,:\,P\in\mathcal{Z},\,\text{$\mathbb{E}_P[f(X_v)\,\vert\,Y_u=y_u]$ exists}\bigr\}
+\end{equation*}
+it holds that
+\begin{equation*}
+\underline{\mathbb{E}}_\mathcal{Z}^\mathrm{L}[f(X_v)\,\vert\, Y_u=y_u] \neq \max\{\mu\in\reals\,:\,\lexp\bigl[\phi_u(X_u)\bigl(f(X_v)-\mu\bigr)\bigr]\geq 0\}\,.
+\end{equation*}
+\end{corollary}
+\begin{proof}
+The claim is existential, so a proof by example suffices. Let $\mathcal{Z}$, $u,v\in\mathcal{U}$, $y_u\in\observs_u$, $f\in\gambles(\states_v)$, and $\{O_u^i\}_{i\in\nats}$ in $\Sigma_u$ be the same as in the example/proof of Proposition~\ref{prop:counter_example_regular}.
+
+Then, as we know from that example, $\mathbb{E}_P[f(X_v)\,\vert\,Y_u=y_u]$ exists for all $P\in\mathcal{Z}$, and furthermore
+\begin{equation*}
+\underline{\mathbb{E}}_\mathcal{Z}^\mathrm{L}[f(X_v)\,\vert\, Y_u=y_u] = \mathbb{E}_{\overline{P}}[f(X_v)\,\vert\,Y_u=y_u] = -1\,.
+\end{equation*}
+However, we also know from that example that
+\begin{align*}
+1 &= \inf\left\{\mathbb{E}_P[f(X_v)\,\vert\,Y_u=y_u]\,:\,P\in\mathcal{Z},\,\mathbb{E}_{P_\states}[\phi(y_0\vert X_0)]>0\right\} \\
+ &= \max\{\mu\in\reals\,:\,\lexp\bigl[\phi_u(X_u)\bigl(f(X_v)-\mu\bigr)\bigr]\geq 0\}\,,
+\end{align*}
+where the second equality follows from Proposition~\ref{prop:regular_is_computable}.
 \end{proof}
 
 %We (probably still) need (some of) the following three results for the proof of Proposition~\ref{prop:precise_bayes_rule_densities}. *** Previously needed for statement of imprecise version, which I removed.
