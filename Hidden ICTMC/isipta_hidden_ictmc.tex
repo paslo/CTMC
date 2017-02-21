@@ -530,7 +530,7 @@ provided that each $\phi_t(y_t\vert x_t)$ satisfies Equation~\eqref{eq:density_i
 %Repeating the above construction for every $t\in u$, we can construct a sequence $\{O_u^i\}_{i\in\nats}$ such that $O_u^i=O_{t_0}^i\times O_{t_1}^i\times\cdots O_{t_n}^i$, where each $O_{t_j}^i$ is chosen as above. Letting then $\lambda_i\coloneqq \prod_{j=0}^n\lambda(O_{t_j}^i)$, it can be shown that $\phi_u(y_u\vert x_u)$ exists for $\lambda$-almost every $y_u\in\observs_u$, and satisfies $\phi_u(y_u\,\vert\,x_u) = \prod_{t\in u} \phi_t(y_t\,\vert\,x_t)$.
 It can now be seen that, under these assumptions, the right-hand side of Equation~\eqref{eq:updated_expectation_is_limit} is simply the well-known Bayes' rule for (finite) mixtures of densities. 
 
-In most practical applications, therefore, the function $\phi_u(\cdot\,\vert\,x_u)$ is known explicitly; one may assume, for example, that $Y_t$ follows a Normal distribution with parameters depending on $X_t$, and the functions $\phi_t(\cdot\,\vert\,x_t)$---and by extension, $\phi_u(\cdot\vert x_u)$---then follow directly by identification with $\psi(\cdot\,\vert x_t)$. Furthermore, arguably, most of the density functions that one encounters in practice will be continuous and strictly positive at $y_t$. This guarantees that the limit in Equation~\eqref{eq:density_is_limit} exists, and largely solves the interpretation issue mentioned above: when $\phi_u(y_u\vert X_u)=\prod_{t\in u}\psi(y_t\vert X_t)$ is continuous and positive at $y_u$, $\mathbb{E}_P[f(X_v)\,\vert\,Y_u=y_u]$ exists and is the same for (almost)\footnote{\label{fnote:limit_required_properties}It requires that all $P(Y_u\in O_u^i)>0$, and that the sequence $\{O_u^i\}_{i\in\nats}$ does not shrink ``too irregularly''; meaning that for all $t\in u$ there is some $c_t\in\realspos$ such that, for all $i\in\nats$, $\lambda(O_t^i)\geq c_t\lambda(B_t^i)$ for some open ball $B_t^i\in\observs$ that contains $O_t^i$.} all sequences $\{O_u^i\}_{i\in\nats}$. 
+In most practical applications, therefore, the function $\phi_u(\cdot\,\vert\,x_u)$ is known explicitly; one may assume, for example, that $Y_t$ follows a Normal distribution with parameters depending on $X_t$, and the functions $\phi_t(\cdot\,\vert\,x_t)$---and by extension, $\phi_u(\cdot\vert x_u)$---then follow directly by identification with $\psi(\cdot\,\vert x_t)$. Furthermore, arguably, most of the density functions that one encounters in practice will be continuous and strictly positive at $y_t$. This guarantees that the limit in Equation~\eqref{eq:density_is_limit} exists, and largely solves the interpretation issue mentioned above: when $\phi_u(y_u\vert X_u)=\prod_{t\in u}\psi(y_t\vert X_t)$ is continuous and positive at $y_u$, $\mathbb{E}_P[f(X_v)\,\vert\,Y_u=y_u]$ exists and is the same for almost\footnote{\label{fnote:limit_required_properties}It requires that all $P(Y_u\in O_u^i)>0$, and that the sequence $\{O_u^i\}_{i\in\nats}$ does not shrink ``too irregularly''; meaning that for all $t\in u$ there is some $c_t\in\realspos$ such that, for all $i\in\nats$, $\lambda(O_t^i)\geq c_t\lambda(B_t^i)$ for some open ball $B_t^i\in\observs$ that contains $O_t^i$.} all sequences $\{O_u^i\}_{i\in\nats}$. 
 %\footnote{\label{fnote:extra_condition}At least, the limit then exists and is the same for all sequences $\{O_u^i\}_{i\in\nats}$ for which every $\mathbb{E}_P[f(X_v)\,\vert\,Y_u\in O_u^i]$ is well-defined. This in particular means that we should only consider sequences for which every $P(Y_u\in O_u^i)>0$.}
 
 %From a practical point of view, the exposition above may feel rather backwards. This was necessary here because we started from an abstract probability measure $P_{\observs\vert\states}$, from which we needed to derive the corresponding probability density function. In practice, this will typically be done the other way around---one may assume, for example, that $Y_t$ follows a Normal distribution with some given parameters, and the density function $\phi_t(\cdot\,\vert\,x_t)$ is then immediately known explicitly. In that case, one simply computes the value of $\phi_u(y_u\vert x_u)$ as a product of the density values $\phi_t(y_t\,\vert\,x_t)$---as above---which can then be used directly to make any computations of interest.
@@ -1315,10 +1315,9 @@ Furthermore, because the sequence $\{B_i\}_{i\in\nats}$ is centred on, and shrin
 \begin{align*}
 \abs{\frac{1}{\lambda(B_i)}\int_{B_i}\psi(\gamma)\,\mathrm{d}\gamma - \psi(y)} &= \abs{\frac{1}{\lambda(B_i)}\int_{B_i}\psi(\gamma) - \psi(y)\,\mathrm{d}\gamma} \\
  &\leq \frac{1}{\lambda(B_i)}\int_{B_i}\abs{\psi(\gamma) - \psi(y)}\,\mathrm{d}\gamma \\
- &< \frac{1}{\lambda(B_i)}\int_{B_i}\epsilon\,\mathrm{d}\gamma \\
- &= \frac{\epsilon}{\lambda(B_i)}\int_{B_i}1\,\mathrm{d}\gamma \\
- &= \frac{\epsilon}{\lambda(B_i)}\lambda(B_i) \\
- & \epsilon\,.
+ &< \frac{1}{\lambda(B_i)}\int_{B_i}\epsilon\,\mathrm{d}\gamma
+ = \frac{\epsilon}{\lambda(B_i)}\int_{B_i}1\,\mathrm{d}\gamma
+ = \frac{\epsilon}{\lambda(B_i)}\lambda(B_i)=\epsilon.
 \end{align*}
 \end{proof}
 
@@ -1333,17 +1332,17 @@ exists and is real-valued. Recall that, for every $x_u\in\states_u$ and every $i
 \end{equation*}
 using the existence of the $\phi_t(y_t\vert x_t)$ for the third equality. Hence, $\phi_u(y_u\vert x_u)$ exists and, since each $\phi_t(y_t\vert x_t)$, $t\in u$, is real-valued, so is $\phi_u(y_u\vert x_u)$. This concludes the proof of this statement.
 
-Next, we prove that the limit expression, and in particular the second equality, in Equation~\eqref{eq:density_is_limit} are true when $\psi(\cdot\vert x_t)$ is continuous (at $y_t$). To this end, note that $P_{\observs\vert\states}(\cdot\,\vert x_t)$ was defined as
+Next, we prove that the limit expression, and in particular the second equality, in Equation~\eqref{eq:density_is_limit} are true when $\psi(\cdot\vert x_t)$ is continuous (at $y_t$). To this end, note that $P_{\observs\vert\states}(\cdot\,\vert x_t)$ was defined by
 \begin{equation*}
 P_{\observs\vert\states}(O\,\vert x_t) \coloneqq \int_O \psi(y\vert x_t)\,\mathrm{d}y\,,
 \end{equation*}
-for all $O\in\Sigma$. For the sequence of open balls $\{O_t^i\}_{i\in\nats}$ that are centred on, and shrink to, $y_t$, we therefore need to prove that
+for all $O\in\Sigma$. For a sequence of open balls $\{O_t^i\}_{i\in\nats}$ that are centred on, and shrink to, $y_t$, we therefore need to prove that
 \begin{equation*}
 \psi(y_t\vert x_t) = \lim_{i\to+\infty}\frac{P_{\observs\vert\states}(O_t^i\vert x_t)}{\lambda(O_t^i)} = \lim_{i\to+\infty}\frac{1}{\lambda(O_t^i)}\int_{O_t^i}\psi(y\vert x_t)\,\mathrm{d} y\,.
 \end{equation*}
 Because $\psi(y_t\vert x_t)$ is by assumption continuous at $y_t$, this result follows immediately from Lemma~\ref{lemma:lebesgue_differentiation_theorem}.
 
-We finally prove the claim that $\mathbb{E}_P[f(X_v)\,\vert\,Y_u=y_u]$ is the same for (almost) every sequence $\{O_u^i\}_{i\in\nats}$ that shrinks to $y_u$, provided that each $P_{\observs\vert\states}(\cdot\vert x_t)$ was constructed from a continuous and strictly positive density $\psi(\cdot\,\vert x_t)$, for all $x_t\in\states$. To this end, assume that $\{O_u^i\}_{i\in\nats}$ satisfies the assumptions in Footnote~\ref{fnote:limit_required_properties}; i.e. that $P(Y_u\in O_u^i)>0$ for all $i\in\nats$ and that, for all $t\in u$, there is some $c_t\in\realspos$ such that $\lambda(O_t^i)\geq c_t\lambda(B_t^i)$ for some open ball $B_t^i\in\observs$ that contains $O_t^i$, for all $i\in\nats$.
+We finally prove the claim that $\mathbb{E}_P[f(X_v)\,\vert\,Y_u=y_u]$ is the same for almost every sequence $\{O_u^i\}_{i\in\nats}$ that shrinks to $y_u$, provided that for all $x_t\in\states$, $P_{\observs\vert\states}(\cdot\vert x_t)$ is constructed from a density $\psi(\cdot\,\vert x_t)$ that is continuous and strictly positive at $y_t$. To this end, assume that $\{O_u^i\}_{i\in\nats}$ satisfies the assumptions in Footnote~\ref{fnote:limit_required_properties}; i.e. that $P(Y_u\in O_u^i)>0$ for all $i\in\nats$ and that, for all $t\in u$, there is some $c_t\in\realspos$ such that, for all $i\in\nats$, $\lambda(O_t^i)\geq c_t\lambda(B_t^i)$ for some open ball $B_t^i\in\observs$ that contains $O_t^i$.
 
 Using this latter property, we can without loss of generality assume that $B_t^i\supset B_t^{i+1}$ for all $i\in\nats$, since also $O_t^i\supset O_t^{i+1}$. In particular, because also $\cap_{i\in\nats}O_t^i=\{y_t\}$, we can choose the sequence of balls $\{B_t^i\}_{i\in\nats}$ such that it also shrinks to $y_t$. 
 
@@ -1356,20 +1355,20 @@ is independent of this sequence $\{O_u^i\}_{i\in\nats}$. We will prove this ``pi
 \psi(y_t\vert x_t) = \lim_{i\to+\infty} \frac{P_{\observs\vert\states}(O_t^i\vert x_t)}{\lambda(O_t^i)}\,.
 \end{equation*}
 
-So, consider any $t\in u$. Note that we have $P_{\observs\vert\states}(O_t^i\vert x_t)\coloneqq \int_{O_t^i}\psi(y\vert x_t)\,\mathrm{d}y$ by definition. Now choose any $\epsilon\in\realspos$, and define $\epsilon'\coloneqq\epsilon c_t$. Because $\psi(\cdot\vert x_t)$ is continuous at $y_t$, there is some open ball $B_*\in\observs$ that is centred on $y_t$, and such that for all $y\in B_*$,
+So, consider any $t\in u$. Note that we have $P_{\observs\vert\states}(O_t^i\vert x_t)\coloneqq \int_{O_t^i}\psi(y\vert x_t)\,\mathrm{d}y$ by definition. Now choose any $\epsilon\in\realspos$ and define $\epsilon'\coloneqq\epsilon c_t$. Because $\psi(\cdot\vert x_t)$ is continuous at $y_t$, there is some open ball $B_*\in\observs$ that is centred on $y_t$, and such that for all $y\in B_*$,
 \begin{equation*}
-\abs{\psi(y_t) - \psi(y)} < \epsilon'\,.
+\abs{\psi(y_t\vert x_t) - \psi(y\vert x_t)} < \epsilon'\,.
 \end{equation*}
-Furthermore, because the sequence $\{B_t^i\}_{i\in\nats}$ shrinks to $y_t$, there is some $n\in\nats$ such that, for all $i>n$, it holds that $B_t^i\subset B_*$. Furthermore, because each $O_t^i\subset B_t^i$, also clearly $O_t^i\subset B_*$ for all $i>n$. Now consider any $i>n$. Then,
+Furthermore, because the sequence $\{B_t^i\}_{i\in\nats}$ shrinks to $y_t$, there is some $n\in\nats$ such that, for all $i>n$, it holds that $B_t^i\subset B_*$. Furthermore, because each $O_t^i\subset B_t^i$, also clearly $O_t^i\subset B_*$ for all $i>n$. Now consider any $i>n$. Then, *** I don't see the point of $c_t$... If I choose $\epsilon'=\epsilon$, it seems to me that in the derivation below, I'm done already after the second equality. ***
 \begin{align*}
 \abs{\psi(y_t\vert x_t) - \frac{P_{\observs\vert\states}(O_t^i\vert x_t)}{\lambda(O_t^i)}} &= \abs{\psi(y_t\vert x_t) - \frac{1}{\lambda(O_t^i)}\int_{O_t^i}\psi(y\vert x_t)\,\mathrm{d}y} \\
  &\leq \frac{1}{\lambda(O_t^i)}\int_{O_t^i}\abs{\psi(y\vert x_t) - \psi(y_t\vert x_t)}\,\mathrm{d}y \\
- &< \frac{1}{\lambda(O_t^i)}\int_{O_t^i}\epsilon'\,\mathrm{d}y \\
- &= \frac{\epsilon'}{\lambda(O_t^i)}\int_{O_t^i}1\,\mathrm{d}y \\
- &\leq \frac{\epsilon'}{\lambda(O_t^i)}\int_{B_t^i}1\,\mathrm{d}y \\
- &\leq \frac{\epsilon'}{c_t\lambda(B_t^i)}\int_{B_t^i}1\,\mathrm{d}y \\
- &= \frac{\epsilon'}{c_t} \\
- &= \epsilon\,,
+ &< \frac{1}{\lambda(O_t^i)}\int_{O_t^i}\epsilon'\,\mathrm{d}y\\
+ &= \frac{\epsilon'}{\lambda(O_t^i)}\int_{O_t^i}1\,\mathrm{d}y 
+ \leq \frac{\epsilon'}{\lambda(O_t^i)}\int_{B_t^i}1\,\mathrm{d}y 
+ \leq \frac{\epsilon'}{c_t\lambda(B_t^i)}\int_{B_t^i}1\,\mathrm{d}y
+ = \frac{\epsilon'}{c_t}
+ = \epsilon,
 \end{align*}
 where the final inequality used the assumption $\lambda(O_t^i)\geq c_t\lambda(B_t^i)$. 
 
@@ -1377,7 +1376,7 @@ So, we conclude that indeed
 \begin{equation*}
 \psi(y_t\vert x_t) = \lim_{i\to+\infty}\frac{P_{\observs\vert\states}(O_t^i\vert x_t)}{\lambda(O_t^i)}\,,
 \end{equation*}
-as claimed. Because this holds for all $t\in u$, it follows from the above that
+as claimed. Because this holds for all $t\in u$, it follows from the above that *** doesn't this require some extra steps (such as the factorisation of the Lebesgue integral)? ***
 \begin{equation*}
 \phi_u(y_u\vert x_u) = \lim_{i\to+\infty}\frac{P_{\observs\vert\states}(O_u^i\vert x_u)}{\lambda(O_u^i)} = \prod_{t\in u}\psi(y_t\vert x_t)\,,
 \end{equation*}
@@ -1402,7 +1401,7 @@ This implies that there is some $n\in\nats$ such that for all $j>n$,
 \begin{equation*}
 \frac{\mathbb{E}_{P_\states}[P_{\observs\vert\states}(O_u^j\vert X_u)]}{\lambda_j} > 0\,,
 \end{equation*}
-which implies that also $\mathbb{E}_{P_\states}[P_{\observs\vert\states}(O_u^j\vert X_u)] >0$. Furthermore, since $O_u^i\supset O_u^{i+1}$, we have $P_{\observs\vert\states}(O_u^i\vert x_u)\geq P_{\observs\vert\states}(O_u^{i+1}\vert x_u)$ for all $x_u\in\states_u$ by monotonicity of measure. It follows that also for all $k\leq n$
+which implies that also $\mathbb{E}_{P_\states}[P_{\observs\vert\states}(O_u^j\vert X_u)] >0$. Furthermore, since $O_u^i\supset O_u^{i+1}$, we have that $P_{\observs\vert\states}(O_u^i\vert x_u)\geq P_{\observs\vert\states}(O_u^{i+1}\vert x_u)$ for all $x_u\in\states_u$, by monotonicity of measure. It follows that also for all $k\leq n$
 \begin{equation*}
 \mathbb{E}_{P_\states}[P_{\observs\vert\states}(O_u^k\vert X_u)] \geq \mathbb{E}_{P_\states}[P_{\observs\vert\states}(O_u^j\vert X_u)] > 0\,.
 \end{equation*}
