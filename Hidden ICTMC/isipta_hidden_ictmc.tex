@@ -815,7 +815,7 @@ Keeping $u$ fixed, then since $\lexp[\,\cdot\,]\,:\,\gambles(\states_u)\to\reals
 We provide the proof of Proposition~\ref{prop:GBR_properties} below; this is not in chronological order with respect to the main text, but it states a number of convenient properties that are required in the proofs of statements that appear before Proposition~\ref{prop:GBR_properties}. We first need the following lemma.
 
 \begin{lemma}\label{lemma:conditioning_zero_means_bayes_zero}
-Let $P_\states$ be a stochastic process and consider any $u,v\in\mathcal{U}$, any $f\in\gambles(\states_v)$, and any $g\in\gambles(\states_u)$ such that $g\geq 0$. If $\mathbb{E}_{P_\states}[g(X_u)]=0$, then for all $\mu\in\reals$ it holds that
+Let $P_\states$ be a stochastic process and consider any $u,v\in\mathcal{U}$, any $f\in\gambles(\states_v)$ and any $g\in\gambles(\states_u)$ such that $g\geq 0$. If\/ $\mathbb{E}_{P_\states}[g(X_u)]=0$, then for all $\mu\in\reals$ it holds that
 \begin{equation*}
 \mathbb{E}_{P_\states}\bigl[g(X_u)\bigl(f(X_v) - \mu\bigr)\bigr]=0\,.
 \end{equation*}
@@ -825,15 +825,14 @@ Because $\mathbb{E}_{P_\states}[g(X_u)]=0$, and since $g\geq 0$, we must clearly
 \begin{equation*}
 P_\states(X_u=x_u) = 0\,,
 \end{equation*}
-for all $x_u\in\states_u$ for which $g(x_u)\neq 0$. Let $\states_u^0\coloneqq\{x_u\in\states_u\,:\,g(x_u)\neq 0\}$. Then clearly for any $x_u\in\states_u^0$ it holds for all $x_v\in\states_v$ that also $P_\states(X_u=x_u,X_v=x_v)=0$. Therefore,
+for all $x_u\in\states_u$ for which $g(x_u)\neq 0$. Let $\states_u^0\coloneqq\{x_u\in\states_u\,:\,g(x_u)\neq 0\}$. Then clearly for any $x_u\in\states_u^0$ it holds for all $x_{v\setminus u}\in\states_{v\setminus u}$ that also $P_\states(X_u=x_u,X_{v\setminus u}=x_{v\setminus u})=0$. Hence, for all $x_u\in\states_u$ and $x_{v\setminus u}\in\states_{v\setminus u}$, we find that $P_\states(X_u=x_u,X_{v\setminus u}=x_{v\setminus u})g(x_u)=0$. Therefore,
 \begin{align*}
-\mathbb{E}_{P_\states}\bigl[g(X_u)\bigl(f(X_v) - \mu\bigr)\bigr] &= \sum_{x_{u\cup v}\in\states_{u\cup v}} P_\states(X_u=x_u,X_v=x_v)g(x_u)\bigl(f(x_v) - \mu\bigr) \\
- &= \sum_{x_{u}\in\states_{u}}\sum_{x_v\in\states_v} P_\states(X_u=x_u,X_v=x_v)g(x_u)\bigl(f(x_v) - \mu\bigr) \\
- &= \sum_{x_{u}\in\states_u^0}\sum_{x_v\in\states_v} P_\states(X_u=x_u,X_v=x_v)g(x_u)\bigl(f(x_v) - \mu\bigr) \\
- &\quad\quad + \sum_{x_{u}\in\states_{u}\setminus \states_u^0}\sum_{x_v\in\states_v} P_\states(X_u=x_u,X_v=x_v)g(x_u)\bigl(f(x_v) - \mu\bigr) \\
- &= \sum_{x_{u}\in\states_u^0}\sum_{x_v\in\states_v} 0g(x_u)\bigl(f(x_v) - \mu\bigr) \\
- &\quad\quad + \sum_{x_{u}\in\states_{u}\setminus \states_u^0}\sum_{x_v\in\states_v} P_\states(X_u=x_u,X_v=x_v)0\bigl(f(x_v) - \mu\bigr) \\
- &= 0\,.
+\mathbb{E}_{P_\states}\bigl[g(X_u)\bigl(f(X_v) - \mu\bigr)\bigr] &= \sum_{x_{u\cup v}\in\states_{u\cup v}} P_\states(X_{u\cup v}=x_{u\cup v})g(x_u)\bigl(f(x_v) - \mu\bigr) \\
+ &= \sum_{x_{u}\in\states_{u}}\sum_{x_{v\setminus u}\in\states_{v\setminus u}} P_\states(X_u=x_u,X_{v\setminus u}=x_{v\setminus u})g(x_u)\bigl(f(x_v) - \mu\bigr)=0. %\\
+ % &= \sum_{x_{u}\in\states_u^0}\sum_{x_{v\setminus u}\in\states_{v\setminus u}} P_\states(X_u=x_u,X_{v\setminus u}=x_{v\setminus u})g(x_u)\bigl(f(x_v) - \mu\bigr) \\
+ % &\quad\quad + \sum_{x_{u}\in\states_{u}\setminus \states_u^0}\sum_{x_{v\setminus u}\in\states_{v\setminus u}}P_\states(X_u=x_u,X_{v\setminus u}=x_{v\setminus u})g(x_u)\bigl(f(x_v) - \mu\bigr) \\
+ % &= \sum_{x_{u}\in\states_u^0}\sum_{x_{v\setminus u}\in\states_{v\setminus u}} 0g(x_u)\bigl(f(x_v) - \mu\bigr) \\
+ % &\quad\quad + \sum_{x_{u}\in\states_{u}\setminus \states_u^0}\sum_{x_{v\setminus u}\in\states_{v\setminus u}} P_\states(X_u=x_u,X_{v\setminus u}=x_{v\setminus u})0\bigl(f(x_v) - \mu\bigr)= 0\,.
 \end{align*}
 \end{proof}
 
