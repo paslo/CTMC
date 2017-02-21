@@ -1816,13 +1816,13 @@ where the second equality follows from Proposition~\ref{prop:regular_is_computab
 
 We need the following lemma for the proof of Proposition~\ref{prop:computing_product_funcs}.
 \begin{lemma}\label{lemma:product_func_induction}
-For all $t\in u'$, let $g_{t}$, $g_{t}^+$ and $g_{t}^-$ be as defined in Section~\ref{sec:funcs_single_time}. Then, for all $t_i\in u'$,
+For all $i\in\{0,\dots,n\}$, let $g_{t_i}$, $g_{t_i}^+$ and $g_{t_i}^-$ be as defined in Section~\ref{sec:funcs_single_time}. Then for all $i\in\{0,\dots,n\}$:
 \begin{equation*}
 g_{t_i}^+ = \underline{\mathbb{E}}_{\rateset}\left[\prod_{j=i}^{n}g_{t_j}(X_{t_j})\,\Bigg\vert\,X_{t_i}\right] \quad\quad\text{and} \quad\quad g_{t_i}^- = \overline{\mathbb{E}}_{\rateset}\left[\prod_{j=i}^{n}g_{t_j}(X_{t_j})\,\Bigg\vert\,X_{t_i}\right]\,.
 \end{equation*}
 \end{lemma}
 \begin{proof}
-We provide a proof by induction. Clearly, the result is trivial for $t_i=t_{n}$. So, assume that it is true for $i$. We show that it is then also true for $i-1$ (with $i>0$).
+We provide a proof by induction. Clearly, the result is trivial for $i=n$. So, assume that it is true for $i$. We show that it is then also true for $i-1$ (with $i>0$).
 
 We focus on $g_{t_{i-1}}^+$, and consider the two cases in its definition separately. So, consider any $x_{t_{i-1}}\in\states_{t_{i-1}}$. Then, if $g_{t_{i-1}}(x_{t_{i-1}})\geq 0$, we have
 \begin{align*}
@@ -1845,7 +1845,7 @@ where the first equality is by definition, the second equality by the induction 
 
 Since this covers both cases in the definition of $g_{t_{i-1}}^+(x_{t_{i-1}})$, we find that
 \begin{equation*}
-g_{t_{i-1}}^+(X_{t_{i-1}}) = \underline{\mathbb{E}}_{\rateset}\left[g_{t_{i-1}}(X_{t_{i-1}})\prod_{j=i}^{n}g_{t_j}(X_{t_j})\,\Bigg\vert\,X_{t_{i-1}}\right] = \underline{\mathbb{E}}_{\rateset}\left[\prod_{j={i-1}}^{n}g_{t_j}(X_{t_j})\,\Bigg\vert\,X_{t_{i-1}}\right]\,,
+g_{t_{i-1}}^+(X_{t_{i-1}}) = \underline{\mathbb{E}}_{\rateset}\left[g_{t_{i-1}}(X_{t_{i-1}})\prod_{j=i}^{n}g_{t_j}(X_{t_j})\,\Bigg\vert\,X_{t_{i-1}}\right] = \underline{\mathbb{E}}_{\rateset}\left[\prod_{j={i-1}}^{n}g_{t_j}(X_{t_j})\,\Bigg\vert\,X_{t_{i-1}}\right],
 \end{equation*}
 which concludes the proof for $g_{t_{i-1}}^+$. The proof for $g_{t_{i-1}}^-$ is completely analogous.
 \end{proof}
