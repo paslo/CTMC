@@ -981,7 +981,7 @@ We finally prove~\ref{GBR:none_pos}, i.e. that $G(\mu)$ is identically zero when
 The following lemma states a more general version of the result that the generalised Bayes' rule computes the updated lower expectation of a model under regular extension. We state it here because we use the result for various proofs throughout this appendix.
 
 \begin{lemma}\label{lemma:general_regular_extension}
-Let $\mathbb{P}_{\rateset,\mathcal{M}}$ be an ICTMC, and consider any $u,v\in\mathcal{U}$, $f\in\gambles(\states_v)$, and $g\in\gambles(\states_u)$ such that $g\geq 0$. Then, if $\uexp[g(X_u)]>0$, it holds that
+Let $\mathbb{P}_{\rateset,\mathcal{M}}$ be an ICTMC, and consider any $u,v\in\mathcal{U}$, $f\in\gambles(\states_v)$ and $g\in\gambles(\states_u)$ such that $g\geq 0$. Then, if $\uexp[g(X_u)]>0$, it holds that
 \begin{multline*}
  \max\left\{\mu\in\reals\,:\, \lexp\bigl[g(X_u)\bigl(f(X_v) - \mu\bigr)\bigr] \geq 0\right\} \\
  = \inf\left\{ \frac{\mathbb{E}_{P_\states}[f(X_v)g(X_u)]}{\mathbb{E}_{P_\states}[g(X_u)]}\,:\,{P_\states}\in\mathbb{P}_{\rateset,\mathcal{M}}, \mathbb{E}_{P_\states}[g(X_u)]>0 \right\}\,.
@@ -1023,9 +1023,9 @@ Then, since $\underline{\mathbb{E}}[g(X_u)(f(X_v) - \mu)]$ is non-increasing in 
 \underline{\mathbb{E}}[g(X_u)(f(X_v) - \mu_*)] \leq \underline{\mathbb{E}}[g(X_u)(f(X_v) - (\mu_{P_\states} - \epsilon'))]\leq \mathbb{E}_{P_\states}[g(X_u)(f(X_v) - (\mu_{P_\states} - \epsilon'))]\,.
 \end{equation*}
 Expanding the r.h.s. using the linearity of expectation operators, and by the definition of $\mu_{P_\states}$, we then have
-\begin{equation*}
-\mathbb{E}_{P_\states}[g(X_u)(f(X_v) - (\mu_{P_\states} - \epsilon'))] = \mathbb{E}_{P_\states}[g(X_u)f(X_v)] - \mu_{P_\states}\mathbb{E}_{P_\states}[g(X_u)] + \epsilon'\mathbb{E}_{P_\states}[g(X_u)] = \epsilon'\mathbb{E}_{P_\states}[g(X_u)]\,,
-\end{equation*}
+\begin{multline*}
+\mathbb{E}_{P_\states}[g(X_u)(f(X_v) - (\mu_{P_\states} - \epsilon'))]\\ = \mathbb{E}_{P_\states}[g(X_u)f(X_v)] - \mu_{P_\states}\mathbb{E}_{P_\states}[g(X_u)] + \epsilon'\mathbb{E}_{P_\states}[g(X_u)] = \epsilon'\mathbb{E}_{P_\states}[g(X_u)]\,,
+\end{multline*}
 and since ${P_\states}\in\mathcal{P}\subseteq\mathbb{P}_{\rateset,\mathcal{M}}$,
 \begin{equation*}
 \epsilon'\mathbb{E}_{P_\states}[g(X_u)] \leq \epsilon'\uexp[g(X_u)]=\epsilon\,,
@@ -1047,64 +1047,58 @@ where the strict inequality follows from the fact that $\mathbb{E}_{P_\states}[g
 \begin{equation*}
 \mu_* = \max\left\{ \mu\in\reals\,:\, \underline{\mathbb{E}}[g(X_u)(f(X_v) - \mu)] \geq 0 \right\}\,.
 \end{equation*}
-
-We now distinguish two cases. Either $\mathcal{P}=\mathbb{P}_{\rateset,\mathcal{M}}$, in which case
+Hence, because of our definition for $\mu_*$, we are left to prove that
+\begin{equation}\label{eq:addedequation}
+\max\left\{ \mu\in\reals\,:\, \underline{\mathbb{E}}[g(X_u)(f(X_v) - \mu)] \geq 0 \right\}=\max\left\{ \mu\in\reals\,:\, \lexp[g(X_u)(f(X_v) - \mu)] \geq 0 \right\}.
+\end{equation}
+If $\mathcal{P}=\mathbb{P}_{\rateset,\mathcal{M}}$, this is trivially true.
+Therefore, we can assume without loss of generality that $\mathcal{P}\neq \mathbb{P}_{\rateset,\mathcal{M}}$. Let $\mathcal{P}_0\coloneqq \mathbb{P}_{\rateset,\mathcal{M}}\setminus \mathcal{P}$. Due to the definition of $\mathcal{P}$, we then have for every $P_\states\in\mathcal{P}_0$ that $\mathbb{E}_{P_\states}[g(X_u)]=0$. It follows from Lemma~\ref{lemma:conditioning_zero_means_bayes_zero} that $\mathbb{E}_{P_\states}\bigl[g(X_u)\bigl(f(X_v)-\mu\bigr)\bigr]=0$ for all $\mu\in\reals$ and all $P_\states\in\mathcal{P}_0$. Hence,
 \begin{equation*}
-\underline{\mathbb{E}}[g(X_u)(f(X_v) - \mu)] = \lexp[g(X_u)(f(X_v) - \mu)]\,,
+\inf\left\{ \mathbb{E}_{P_\states}\bigl[g(X_u)\bigl(f(X_v)-\mu\bigr)\bigr]\,:\,P_\states\in\mathcal{P}_0 \right\} = 0
+\text{ for all $\mu\in\reals$.}
 \end{equation*}
-from which we find that
-\begin{align*}
-\max\left\{ \mu\in\reals\,:\, \underline{\mathbb{E}}[g(X_u)(f(X_v) - \mu)] \geq 0 \right\} &= \max\left\{ \mu\in\reals\,:\, \lexp[g(X_u)(f(X_v) - \mu)] \geq 0 \right\} \\
- &= \mu_* \\
- &= \inf\left\{\frac{\mathbb{E}_{P_\states}[f(X_v)g(X_u)]}{\mathbb{E}_{P_\states}[g(X_u)]}\,:\,P_\states\in\mathcal{P}\right\} \\
- &= \inf\left\{\frac{\mathbb{E}_{P_\states}[f(X_v)g(X_u)]}{\mathbb{E}_{P_\states}[g(X_u)]}\,:\,P_\states\in\mathbb{P}_{\rateset,\mathcal{M}},\,\mathbb{E}_{P_\states}[g(X_u)]>0\right\}\,,
-\end{align*}
-and we are done.
-
-So, we can assume without loss of generality that the other case holds, i.e. that $\mathcal{P}\neq \mathbb{P}_{\rateset,\mathcal{M}}$. Let $\mathcal{P}_0\coloneqq \mathbb{P}_{\rateset,\mathcal{M}}\setminus \mathcal{P}$. Due to the definition of $\mathcal{P}$, we then have for every $P_\states\in\mathcal{P}_0$ that $\mathbb{E}_{P_\states}[g(X_u)]=0$. It follows from Lemma~\ref{lemma:conditioning_zero_means_bayes_zero} that $\mathbb{E}_{P_\states}\bigl[g(X_u)\bigl(f(X_v)-\mu\bigr)\bigr]=0$ for all $\mu\in\reals$ and all $P_\states\in\mathcal{P}_0$. Hence,
-\begin{equation*}
-\inf\left\{ \mathbb{E}_{P_\states}\bigl[g(X_u)\bigl(f(X_v)-\mu\bigr)\bigr]\,:\,P_\states\in\mathcal{P}_0 \right\} = 0\,,
-\end{equation*}
-for all $\mu\in\reals$. Because $\mathcal{P}\cup\mathcal{P}_0=\mathbb{P}_{\rateset,\mathcal{M}}$, we therefore have
+Because $\mathcal{P}\cup\mathcal{P}_0=\mathbb{P}_{\rateset,\mathcal{M}}$, we therefore have
 \begin{equation*}
 \lexp\bigl[g(X_u)\bigl(f(X_v)-\mu\bigr)\bigr] = \min\left\{\underline{\mathbb{E}}[g(X_u)(f(X_v) - \mu)],\,0 \right\}\,,
 \end{equation*}
-and so we conclude that $\lexp\bigl[g(X_u)\bigl(f(X_v)-\mu\bigr)\bigr]$ is negative if and only if $\underline{\mathbb{E}}[g(X_u)(f(X_v) - \mu)]$ is negative. In other words, we here also find that
-\begin{align*}
-\max\left\{ \mu\in\reals\,:\, \lexp[g(X_u)(f(X_v) - \mu)] \geq 0 \right\} &= \max\left\{ \mu\in\reals\,:\, \underline{\mathbb{E}}[g(X_u)(f(X_v) - \mu)] \geq 0 \right\} \\
- &= \mu_* \\
- &= \inf\left\{\frac{\mathbb{E}_{P_\states}[f(X_v)g(X_u)]}{\mathbb{E}_{P_\states}[g(X_u)]}\,:\,{P_\states}\in\mathcal{P}\right\} \\
- = \inf&\left\{\frac{\mathbb{E}_{P_\states}[f(X_v)g(X_u)]}{\mathbb{E}_{P_\states}[g(X_u)]}\,:\,{P_\states}\in\mathbb{P}_{\rateset,\mathcal{M}},\,\mathbb{E}_{P_\states}[g(X_u)]>0\right\}\,.
-\end{align*}
+and so we conclude that $\lexp\bigl[g(X_u)\bigl(f(X_v)-\mu\bigr)\bigr]$ is negative if and only if $\underline{\mathbb{E}}[g(X_u)(f(X_v) - \mu)]$ is negative. This clearly implies Equation~\eqref{eq:addedequation}.
+% \begin{align*}
+% \max\left\{ \mu\in\reals\,:\, \lexp[g(X_u)(f(X_v) - \mu)] \geq 0 \right\} &= \max\left\{ \mu\in\reals\,:\, \underline{\mathbb{E}}[g(X_u)(f(X_v) - \mu)] \geq 0 \right\} \\
+%  &= \mu_* \\
+%  &= \inf\left\{\frac{\mathbb{E}_{P_\states}[f(X_v)g(X_u)]}{\mathbb{E}_{P_\states}[g(X_u)]}\,:\,{P_\states}\in\mathcal{P}\right\} \\
+%  = \inf&\left\{\frac{\mathbb{E}_{P_\states}[f(X_v)g(X_u)]}{\mathbb{E}_{P_\states}[g(X_u)]}\,:\,{P_\states}\in\mathbb{P}_{\rateset,\mathcal{M}},\,\mathbb{E}_{P_\states}[g(X_u)]>0\right\}\,.
+% \end{align*}
 \end{proof}
 
-The following lemmas relate an ICTHMC $\mathcal{Z}$ with the ICTMC $\mathbb{P}_{\rateset,\mathcal{M}}$ from which it was constructed. The idea behind all these results is that $\mathcal{Z}$ contains an augmented process $P=P_{\observs\vert\states}\otimes P_\states$ for every $P_\states\in \mathbb{P}_{\rateset,\mathcal{M}}$. Furthermore, $P_\states$ fully determines the probabilities of $P$ that are only concerned with states. As such, (lower) expectations of functions that are only concerned with states, will be the same for all these objects.
+%The following lemmas relate an ICTHMC $\mathcal{Z}$ with the ICTMC $\mathbb{P}_{\rateset,\mathcal{M}}$ from which it was constructed. The idea behind all these results is that $\mathcal{Z}$ contains an augmented process $P=P_{\observs\vert\states}\otimes P_\states$ for every $P_\states\in \mathbb{P}_{\rateset,\mathcal{M}}$. Furthermore, $P_\states$ fully determines the probabilities of $P$ that are only concerned with states. As such, (lower) expectations of functions that are only concerned with states, will be the same for all these objects.
 
-\begin{lemma}\label{lemma:state_expectation_doesnt_depend_on_outputs}
-Let $P=P_{\observs\vert\states}\otimes P_\states$ be an augmented stochastic process and consider any $u\in\mathcal{U}$ and any $f\in\gambles(\states_u)$. Then $\mathbb{E}_P[f(X_u)] = \mathbb{E}_{P_\states}[f(X_u)]$.
-\end{lemma}
-\begin{proof}
-Trivial consequence of the construction of augmented stochastic processes in Section~\ref{sec:aug_stochastic_processes}.
-\end{proof}
+% \begin{lemma}\label{lemma:state_expectation_doesnt_depend_on_outputs}
+% Let $P=P_{\observs\vert\states}\otimes P_\states$ be an augmented stochastic process and consider any $u\in\mathcal{U}$ and any $f\in\gambles(\states_u)$. Then $\mathbb{E}_P[f(X_u)] = \mathbb{E}_{P_\states}[f(X_u)]$.
+% \end{lemma}
+% \begin{proof}
+% Trivial consequence of the construction of augmented stochastic processes in Section~\ref{sec:aug_stochastic_processes}.
+% \end{proof}
 
-\begin{lemma}\label{lemma:state_lower_expectation_doesnt_depend_on_outputs}
-Let $\mathcal{Z}$ be an ICTHMC with corresponding ICTMC $\mathbb{P}_{\rateset,\mathcal{M}}$ and consider any $u\in\mathcal{U}$ and any $f\in\gambles(\states_u)$. Then $\underline{\mathbb{E}}_\mathcal{Z}[f(X_u)]=\lexp[f(X_u)]$.
-\end{lemma}
-\begin{proof}
-Trivial consequence of Definition~\ref{def:hidden_ictmc} and Lemma~\ref{lemma:state_expectation_doesnt_depend_on_outputs}.
-\end{proof}
+% \begin{lemma}\label{lemma:state_lower_expectation_doesnt_depend_on_outputs}
+% Let $\mathcal{Z}$ be an ICTHMC with corresponding ICTMC $\mathbb{P}_{\rateset,\mathcal{M}}$ and consider any $u\in\mathcal{U}$ and any $f\in\gambles(\states_u)$. Then $\underline{\mathbb{E}}_\mathcal{Z}[f(X_u)]=\lexp[f(X_u)]$.
+% \end{lemma}
+% \begin{proof}
+% Trivial consequence of Definition~\ref{def:hidden_ictmc} and Lemma~\ref{lemma:state_expectation_doesnt_depend_on_outputs}.
+% \end{proof}
 
 \begin{corollary}\label{cor:lower_hidden_is_root_chain}
-Let $\mathcal{Z}$ be an ICTHMC, and consider any $u,v\in\mathcal{U}$, $f\in\gambles(\states_v)$, and $g\in\gambles(\states_u)$ such that $g\geq 0$. Then, if $\uexp[g(X_u)]>0$, it holds that
-\begin{equation*}
-\max\left\{\mu\in\reals\,:\, \lexp\bigl[g(X_u)\bigl(f(X_v) - \mu\bigr)\bigr] \geq 0\right\} = \inf\left\{ \frac{\mathbb{E}_{P_\states}[f(X_v)g(X_u)]}{\mathbb{E}_{P_\states}[g(X_u)]}\,:\,P\in\mathcal{Z}, \mathbb{E}_{P_\states}[g(X_u)]>0 \right\}\,.
-\end{equation*}
+Let $\mathcal{Z}$ be an ICTHMC, and consider any $u,v\in\mathcal{U}$, $f\in\gambles(\states_v)$ and $g\in\gambles(\states_u)$ such that $g\geq 0$. Then, if $\uexp[g(X_u)]>0$, it holds that
+\begin{multline*}
+\max\left\{\mu\in\reals\,:\, \lexp\bigl[g(X_u)\bigl(f(X_v) - \mu\bigr)\bigr] \geq 0\right\}\\ = \inf\left\{ \frac{\mathbb{E}_{P_\states}[f(X_v)g(X_u)]}{\mathbb{E}_{P_\states}[g(X_u)]}\,:\,P\in\mathcal{Z}, \mathbb{E}_{P_\states}[g(X_u)]>0 \right\}\,.
+\end{multline*}
 \end{corollary}
 \begin{proof}
-Trivial consequence of Lemmas~\ref{lemma:general_regular_extension} and~\ref{lemma:state_expectation_doesnt_depend_on_outputs}, and Definition~\ref{def:hidden_ictmc}.
+Trivial consequence of Lemma~\ref{lemma:general_regular_extension} %and~\ref{lemma:state_expectation_doesnt_depend_on_outputs}, and
+Definition~\ref{def:hidden_ictmc}.
 \end{proof}
 
-Similar to the above, due to the independence assumptions on augmented stochastic processes and the fact that we use a fixed output distribution $P_{\observs\vert\states}$, (lower) probabilities of outputs can be conveniently rewritten as follows.
+%Similar to the above, 
+Due to the independence assumptions on augmented stochastic processes and the fact that we use a fixed output distribution $P_{\observs\vert\states}$, (lower) probabilities of outputs can be conveniently rewritten as follows.
 \begin{lemma}\label{lemma:output_probability_is_expectation}
 Let $P=P_{\observs\vert\states}\otimes P_\states$ be an augmented stochastic process and consider any $u\in\mathcal{U}$ and any $O_u\in\Sigma_u$. Then $P(Y_u\in O_u)=\mathbb{E}_{P_\states}[P_{\observs\vert\states}(O_u\vert X_u)]$.
 \end{lemma}
@@ -1113,11 +1107,11 @@ Due to the construction of augmented stochastic processes in Section~\ref{sec:au
 \begin{equation*}
 P(Y_u\in O_u) = \sum_{x_u\in\states_u} P(Y_u\in O_u, X_u=x_u) 
  = \sum_{x_u\in\states_u} P_{\observs\vert\states}(O_u\vert x_u)P_\states(X_u=x_u) 
- = \mathbb{E}_{P_\states}[P_{\observs\vert\states}(O_u\vert X_u)]\,.
+ = \mathbb{E}_{P_\states}[P_{\observs\vert\states}(O_u\vert X_u)].
 \end{equation*}
 \end{proof}
 \begin{lemma}\label{lemma:lower_output_probability_is_expectation}
-Let $\mathcal{Z}$ be an ICTHMC with corresponding ICTMC $\mathbb{P}_{\rateset,\mathcal{M}}$ and consider any $u\in\mathcal{U}$ and $O_u\in\Sigma_u$. Then $\underline{P}_{\mathcal{Z}}(Y_u\in O_u)=\lexp[P_{\observs\vert\states}(O_u\vert X_u)]$.
+Let $\mathcal{Z}$ be an ICTHMC with corresponding ICTMC $\mathbb{P}_{\rateset,\mathcal{M}}$ and consider any $u\in\mathcal{U}$ and $O_u\in\Sigma_u$. Then $\overline{P}_{\mathcal{Z}}(Y_u\in O_u)=\uexp[P_{\observs\vert\states}(O_u\vert X_u)]$.
 \end{lemma}
 \begin{proof}
 Trivial consequence of Definition~\ref{def:hidden_ictmc} and Lemma~\ref{lemma:output_probability_is_expectation}.
@@ -1135,7 +1129,7 @@ Starting from the definition of $\mathbb{E}_P[f(X_v)\,\vert\,Y_u\in O_u]$ using 
 &= \sum_{x_u\in\states_u}\sum_{x_{v\setminus u}\in\states_{v\setminus u}} f(x_v)\frac{P(X_u=x_u, X_{v\setminus u}=x_{v\setminus u}, Y_u\in O_u)}{P(Y_u\in O_u)} \\
 &= \sum_{x_u\in\states_u}\sum_{x_{v\setminus u}\in\states_{v\setminus u}} f(x_v)\frac{P_{\observs\vert\states}(O_u\vert x_u)P_\states(X_u=x_u, X_{v\setminus u}=x_{v\setminus u})}{P(Y_u\in O_u)}\,,
 \end{align*}
-where the first equality is by definition, the second is by the basic rules of probability, the third is by changing the indexing using $v\cup w=u\cup(v\setminus u)$, and the fourth is by the definition of augmented stochastic processes in Section~\ref{sec:aug_stochastic_processes}. Joining the indexing using $u\cup(v\setminus u)=u\cup v$, we find that
+where the first equality is by definition, the second is by the basic rules of probability, the third is by changing the indexing using $v\cup w=u\cup(v\setminus u)$, and the fourth is by the definition of augmented stochastic processes in Section~\ref{sec:aug_stochastic_processes}. Joining the indexes using $u\cup(v\setminus u)=u\cup v$, we find that
 \begin{align*}
 \mathbb{E}_P[f(X_v)\,\vert\,Y_u\in O_u] &= \sum_{x_u\in\states_u}\sum_{x_{v\setminus u}\in\states_{v\setminus u}} f(x_v)\frac{P_{\observs\vert\states}(O_u\vert x_u)P_\states(X_u=x_u, X_{v\setminus u}=x_{v\setminus u})}{P(Y_u\in O_u)} \\
  &= \sum_{x_{u\cup v}\in\states_{u\cup v}} f(x_v)\frac{P_{\observs\vert\states}(O_u\vert x_u)P_\states(X_{u\cup v}=x_{u\cup v})}{P(Y_u\in O_u)} \\
@@ -1149,7 +1143,7 @@ where the third equality is by the definition of expectation. Applying Lemma~\re
 
 
 \begin{proof}{\bf of Proposition~\ref{prop:GBR_regular}~}
-This is a special case of Corollary~\ref{cor:lower_hidden_is_root_chain}. To see this, set $g(X_u)\coloneqq P_{\observs\vert\states}(O_u\vert X_u)$ in that corollary's statement, and apply Proposition~\ref{prop:precise_conditioning_for_positive} to the quantities $\mathbb{E}_P[f(X_v)\,\vert\,Y_u\in O_u]$.
+This is a special case of Corollary~\ref{cor:lower_hidden_is_root_chain}. To see this, set $g(X_u)\coloneqq P_{\observs\vert\states}(O_u\vert X_u)$ in that corollary's statement, apply Proposition~\ref{prop:precise_conditioning_for_positive} to the quantities $\mathbb{E}_P[f(X_v)\,\vert\,Y_u\in O_u]$ and apply Lemma~\ref{lemma:output_probability_is_expectation} to the quantities $P(Y_u\in O_u)$.
 
 The hypothesis $\overline{P}_\mathcal{Z}(Y_u\in O_u)>0$ then implies the hypothesis $\uexp[g(X_u)]>0$ of Corollary~\ref{cor:lower_hidden_is_root_chain}, due to Lemma~\ref{lemma:lower_output_probability_is_expectation}.
 \end{proof}
