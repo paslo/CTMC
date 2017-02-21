@@ -300,7 +300,7 @@ An ICTMC will be defined below as a specific set of \emph{continuous-time stocha
 
 It will be convenient to have a way to numerically parameterise such a stochastic process $P$. For this, we require two different kinds of parameters. First, we need the specification of the initial distribution $P(X_0)$ over the state at time zero; this simply requires the specification of some probability mass function on $\states_0$. Second, we need to parameterise the dynamic behaviour of the model.
 
-This second type of parameter requires the concept of a \emph{rate matrix}. Such a rate matrix $Q$ is a real-valued $\lvert\states\rvert\times\lvert\states\rvert$ matrix, whose off-diagonal elements are non-negative, and whose every row sums to zero---thus, the diagonal elements are non-positive. Such a rate matrix may be interpreted as describing the ``rate of change'' of the conditional probability $P(X_s\,\vert\,X_t,X_u=x_u)$, when $s$ is close to $t$. In this conditional probability, it is assumed that $u<t$, whence the state assignment $x_u$ is called the \emph{history}. For small enough $\Delta\in\realspos$, we may now write that
+In order to describe this dynamic behaviour, we require the concept of a \emph{rate matrix}. Such a rate matrix $Q$ is a real-valued $\lvert\states\rvert\times\lvert\states\rvert$ matrix, whose off-diagonal elements are non-negative, and whose every row sums to zero---thus, the diagonal elements are non-positive. Such a rate matrix may be interpreted as describing the ``rate of change'' of the conditional probability $P(X_s\,\vert\,X_t,X_u=x_u)$, when $s$ is close to $t$. In this conditional probability, it is assumed that $u<t$, whence the state assignment $x_u$ is called the \emph{history}. For small enough $\Delta\in\realspos$, we may now write that
 \begin{equation*}
 P(X_{t+\Delta}\,\vert\,X_t,X_u=x_u) \approx \bigl[I + \Delta Q_{t,x_u}\bigr](X_t, X_{t+\Delta})\,,
 \end{equation*}
@@ -325,7 +325,7 @@ Because we want to focus in this paper on providing efficient methods of computa
 
 To this end, it is useful to introduce the \emph{lower transition rate operator} $\lrate$ that corresponds to $\rateset$. This operator is a map from $\gamblesX$ to $\gamblesX$, defined for every $f\in\gamblesX$ and  $x\in\states$ as
 \begin{equation}\label{eq:lower_rate_is_inf}
-\left[\lrate f\right](x) \coloneqq \inf\left\{ \sum_{x'\in\states}Q(x,x')f(x')\,:\, Q\in\rateset \right\}\,.
+\left[\,\lrate f\right](x) \coloneqq \inf\left\{ \sum_{x'\in\states}Q(x,x')f(x')\,:\, Q\in\rateset \right\}\,.
 \end{equation}
 %Observe that, due to the definition of the infimum, we therefore have for every $x\in\states$ that
 %\begin{equation*}
@@ -493,7 +493,7 @@ It is also useful to note that $\phi_u(y_u\vert x_u)$ can often be constructed `
 \begin{equation*}
 \phi_t(y_t\vert x_t)\coloneqq \lim_{i\to+\infty} \frac{P_{\observs\vert\states}(O_t^i\vert x_t)}{\lambda_{\,t,i}}
 \end{equation*}
-exists and is real-valued, then choosing $\{\lambda_i\}_{i\in\nats}$ as $\lambda_i\coloneqq \prod_{t\in u}\lambda_{\,t,i}$ yields $\phi_u(y_u\vert x_u)=\prod_{t\in u}\phi_t(y_t\vert x_t)$. The converse often also holds, in that if $\phi_u(y_u\vert x_u)$ exists there tend to be sequences $\{\lambda_{\,t,i}\}_{t\in\nats}$ so that $\phi_t(y_t\vert x_t)$ exists, and for which $\prod_{t\in u}\phi_t(y_t\vert x_t)=\phi_u(y_u\vert x_u)$. However, the ``often'' qualifier is a bit hard to make rigorous at this level of generality, and in any case this direction is less useful practically. %However, this second direction is a bit less useful from a practical point of view, because it is an existential statement that does not determine the $\phi_t(y_t\vert x_t)$ uniquely.
+exists and is real-valued, then choosing $\{\lambda_i\}_{i\in\nats}$ as $\lambda_i\coloneqq \prod_{t\in u}\lambda_{\,t,i}$ yields $\phi_u(y_u\vert x_u)=\prod_{t\in u}\phi_t(y_t\vert x_t)$. The converse often also holds, in that if $\phi_u(y_u\vert x_u)$ exists there tend to be sequences $\{\lambda_{\,t,i}\}_{t\in\nats}$ so that $\phi_t(y_t\vert x_t)$ exists, and for which $\prod_{t\in u}\phi_t(y_t\vert x_t)=\phi_u(y_u\vert x_u)$. The ``often'' qualifier is a bit hard to make rigorous at this level of generality, but, in any case, this direction is less useful practically. %However, this second direction is a bit less useful from a practical point of view, because it is an existential statement that does not determine the $\phi_t(y_t\vert x_t)$ uniquely.
 
 Now, to make the above practicable, we can for example assume that if $\observs$ is uncountable, then it is the set $\observs=\reals^d$, for some $d\in\nats$, and that $\Sigma$ is the Borel $\sigma$-algebra on $\reals^d$. 
 For each $x\in\states$, we then assume that the measure $P_{\observs\vert\states}(\cdot\,\vert x)$ is induced by some given \emph{probability density function}: a measurable function $\psi(\cdot\,\vert x):\observs\to\realsnonneg$ such that $\int_\observs \psi(y\vert x)\,\mathrm{d}y=1$ and, for every $O\in\Sigma$,
@@ -688,7 +688,7 @@ g_{t_i}(x_{t_i})\overline{\mathbb{E}}_\rateset[g_{t_{i+1}}^-(X_{t_{i+1}})\,\vert
 g_{t_i}(x_{t_i})\underline{\mathbb{E}}_\rateset[g_{t_{i+1}}^+(X_{t_{i+1}})\,\vert\, X_{t_i}=x_{t_i}] & \text{if $g_{t_i}(x_{t_i})<0$.}
 \end{array}\right.\vspace{5pt}
 \end{equation*}
-Clearly, backward recursion allows us to compute all these functions in a time-complexity order that is linear in the number of time points in $u'$. Practically, at each step, computing the quantities $\underline{\mathbb{E}}_\rateset[g_{t_{i+1}}^+(X_{t_{i+1}})\,\vert\, X_{t_i}=x_{t_i}]$ and $\overline{\mathbb{E}}_\rateset[g_{t_{i+1}}^-(X_{t_{i+1}})\,\vert\, X_{t_i}=x_{t_i}]$ can be done using Equation~\eqref{eq:lower_exp_in_steps} and the method described in Section~\ref{subsec:ICTMC_computations}. Due to the results in Reference~\citep{krak2016ictmc}, each of these quantities is computable in polynomial time. So, the total complexity of computing all these functions is clearly also polynomial. We now have the following result.
+Clearly, backward recursion allows us to compute all these functions in a time-complexity order that is linear in the number of time points in $u'$. Practically, at each step, computing the quantities $\underline{\mathbb{E}}_\rateset[g_{t_{i+1}}^+(X_{t_{i+1}})\,\vert\, X_{t_i}=x_{t_i}]$ and $\overline{\mathbb{E}}_\rateset[g_{t_{i+1}}^-(X_{t_{i+1}})\,\vert\, X_{t_i}=x_{t_i}]$ can be done using Equation~\eqref{eq:lower_exp_in_steps} and the method described in Section~\ref{subsec:ICTMC_computations}. Due to the results in~\citep{krak2016ictmc}, each of these quantities is computable in polynomial time. So, the total complexity of computing all these functions is clearly also polynomial. We now have the following result.
 \begin{proposition}\label{prop:computing_product_funcs}
 For all $t\in u'$, let $g_{t}$, $g_{t}^+$ and $g_{t}^-$ be as defined above. Then the function of interest is given by
 %\begin{equation*}
@@ -837,7 +837,7 @@ For brevity, define $g\in\gambles(\states_u)$ as $g(x_u)\coloneqq \prod_{t\in u}
 
 We start by proving Property~\ref{GBR:always}. For continuity, consider any $\mu\in\reals$. We will prove that $G$ is continuous in $\mu$, or in other words, that for every sequence $\{\mu_i\}_{i\in\nats}\to\mu$ it holds that $\lim_{i\to\infty}G(\mu_i)=G(\mu)$. So, choose any sequence $\{\mu_i\}_{i\in\nats}\to\mu$, and consider the induced sequence of functions $\bigl\{g(X_u)\bigl(f(X_v) - \mu_i\bigr)\bigr\}_{i\in\nats}$ in $\gambles(\states_{u\cup v})$. Then, since $\{\mu_i\}_{i\in\nats}\to\mu$, clearly also $\lim_{i\to+\infty}g(X_u)\bigl(f(X_v) - \mu_i\bigr)=g(X_u)\bigl(f(X_v) - \mu\bigr)$. Using Lemma~\ref{lemma:limit_lexp_is_lexp_limit}, we therefore find that
 \begin{equation*}
-\lim_{i\to\infty}\lexp[g(X_u)\bigl(f(X_v) - \mu_i\bigr)] = \lexp[g(X_u)\bigl(f(X_v) - \mu\bigr)]\,,
+\lim_{i\to+\infty}\lexp[g(X_u)\bigl(f(X_v) - \mu_i\bigr)] = \lexp[g(X_u)\bigl(f(X_v) - \mu\bigr)]\,,
 \end{equation*}
 or in other words, that $\lim_{i\to+\infty}G(\mu_i) = G(\mu)$. Since the sequence $\{\mu_i\}_{i\in\nats}$ was arbitrary, this concludes the proof.
 
