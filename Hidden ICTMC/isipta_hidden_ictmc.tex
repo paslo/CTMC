@@ -1181,8 +1181,7 @@ By the limit definition of $\mathbb{E}_P[f(X_v)\,\vert\,Y_u=y_u]$, and applying 
  &= \lim_{i\to+\infty} \frac{\mathbb{E}_{P_\states}[f(X_v)P_{\observs\vert\states}(O_u^i\vert X_u)]}{\mathbb{E}_{P_\states}[P_{\observs\vert\states}(O_u^i\vert X_u)]} \\
  &= \lim_{i\to+\infty} \frac{\lambda_i}{\lambda_i}\frac{\mathbb{E}_{P_\states}[f(X_v)P_{\observs\vert\states}(O_u^i\vert X_u)]}{\mathbb{E}_{P_\states}[P_{\observs\vert\states}(O_u^i\vert X_u)]} \\
  &= \lim_{i\to+\infty} \frac{\nicefrac{\mathbb{E}_{P_\states}[f(X_v)P_{\observs\vert\states}(O_u^i\vert X_u)]}{\lambda_i}}{\nicefrac{\mathbb{E}_{P_\states}[P_{\observs\vert\states}(O_u^i\vert X_u)]}{\lambda_i}} \\
- &= \frac{\lim_{i\to+\infty} \nicefrac{\mathbb{E}_{P_\states}[f(X_v)P_{\observs\vert\states}(O_u^i\vert X_u)]}{\lambda_i}}{\lim_{i\to+\infty} \nicefrac{\mathbb{E}_{P_\states}[P_{\observs\vert\states}(O_u^i\vert X_u)]}{\lambda_i}} \\
- &= \frac{\mathbb{E}_{P_\states}[f(X_v)\phi_u(y_u\vert X_u)]}{\mathbb{E}_{P_\states}[\phi_u(y_u\vert X_u)]}\,,
+ &= \frac{\lim_{i\to+\infty} \nicefrac{\mathbb{E}_{P_\states}[f(X_v)P_{\observs\vert\states}(O_u^i\vert X_u)]}{\lambda_i}}{\lim_{i\to+\infty} \nicefrac{\mathbb{E}_{P_\states}[P_{\observs\vert\states}(O_u^i\vert X_u)]}{\lambda_i}}= \frac{\mathbb{E}_{P_\states}[f(X_v)\phi_u(y_u\vert X_u)]}{\mathbb{E}_{P_\states}[\phi_u(y_u\vert X_u)]},
 \end{align*}
 using the above established existence and properties of the individual limits for the penultimate step.
 
@@ -1297,7 +1296,7 @@ using the above established existence and properties of the individual limits fo
 The below proves some of the properties that are claimed in the main text of Section~\ref{subsec:uncountable}. We first need the following result, which is essentially well-known, but which we repeat here for the sake of completeness.
 
 \begin{lemma}\label{lemma:lebesgue_differentiation_theorem}
-Fix $d\in\nats$, and consider any absolutely integrable function $\psi:\reals^d\to \reals$. Then, for any $y\in\reals^d$ and any sequence $\{B_i\}_{i\in\nats}$ of open balls that are centred on, and shrink to, $y$, if $\psi$ is continuous at $y$ it holds that
+Fix $d\in\nats$ and consider any absolutely integrable function $\psi:\reals^d\to \reals$. Then, for any $y\in\reals^d$ and any sequence $\{B_i\}_{i\in\nats}$ of open balls that are centred on, and shrink to, $y$, if $\psi$ is continuous at $y$ it holds that
 \begin{equation*}
 \psi(y) = \lim_{i\to+\infty} \frac{1}{\lambda(B_i)}\int_{B_i}\psi(\gamma)\,\mathrm{d}\gamma\,,
 \end{equation*}
@@ -1419,19 +1418,19 @@ Therefore, and by the non-negative homogeneity of lower expectations, it also ho
 \lexp\left[\frac{P_{\observs\vert\states}(O_u^i\vert X_u)}{\lambda_i}\bigl(f(X_v) - \mu_i\bigr)\right] = 0\,.
 \end{equation}
 
-Let now $\{\mu_{i_k}\}_{k\in\nats}$ be any convergent subsequence; since the sequence $\{\mu_i\}_{i\in\nats}$ is in the compact interval $[\min f,\max f]$, the Bolzano-Weierstrass theorem implies that at least one such subsequence exists. Let $\mu_{k_*}\coloneqq \lim_{k\to+\infty}\mu_{i_k}$.
+Let now $\{\mu_{i_k}\}_{k\in\nats}$ be any convergent subsequence; since the sequence $\{\mu_i\}_{i\in\nats}$ is in the compact interval $[\min f,\max f]$, the Bolzano-Weierstrass theorem implies that at least one such subsequence exists. Let $\mu_{*}\coloneqq \lim_{k\to+\infty}\mu_{i_k}$.
 
 We now clearly have that
 \begin{equation*}
-\lim_{k\to+\infty} \frac{P_{\observs\vert\states}(O_u^{i_k}\vert X_u)}{\lambda_{i_k}}\bigl(f(X_v) - \mu_{i_k}\bigr) = \phi_u(y_u\vert X_u)\bigl(f(X_v) - \mu_{k_*}\bigr)\,,
+\lim_{k\to+\infty} \frac{P_{\observs\vert\states}(O_u^{i_k}\vert X_u)}{\lambda_{i_k}}\bigl(f(X_v) - \mu_{i_k}\bigr) = \phi_u(y_u\vert X_u)\bigl(f(X_v) - \mu_{*}\bigr)\,,
 \end{equation*}
 and therefore, by Lemma~\ref{lemma:limit_lexp_is_lexp_limit}, that
 \begin{equation*}
-\lim_{k\to+\infty} \lexp\left[\frac{P_{\observs\vert\states}(O_u^{i_k}\vert X_u)}{\lambda_{i_k}}\bigl(f(X_v) - \mu_{i_k}\bigr)\right] = \lexp\left[\phi_u(y_u\vert X_u)\bigl(f(X_v) - \mu_{k_*}\bigr)\right]\,.
+\lim_{k\to+\infty} \lexp\left[\frac{P_{\observs\vert\states}(O_u^{i_k}\vert X_u)}{\lambda_{i_k}}\bigl(f(X_v) - \mu_{i_k}\bigr)\right] = \lexp\left[\phi_u(y_u\vert X_u)\bigl(f(X_v) - \mu_{*}\bigr)\right]\,.
 \end{equation*}
-Furthermore, using Equation~\eqref{eq:nat_ext_limit:steps_are_roots}, we find that $\lexp\left[\phi_u(y_u\vert X_u)\bigl(f(X_v) - \mu_{k_*}\bigr)\right] = 0$.
+Furthermore, using Equation~\eqref{eq:nat_ext_limit:steps_are_roots}, we find that $\lexp\left[\phi_u(y_u\vert X_u)\bigl(f(X_v) - \mu_{*}\bigr)\right] = 0$.
 
-Due to Proposition~\ref{prop:GBR_properties}, and because $\lexp[\phi_u(y_u\vert X_u)]>0$, we conclude that $\mu_{k_*}$ corresponds to the unique root $\mu_*$ of the function $G(\mu)\coloneqq \lexp\left[\phi_u(y_u\vert X_u)\bigl(f(X_v) - \mu\bigr)\right]$. Furthermore, since the convergent subsequence $\{\mu_{i_k}\}_{k\in\nats}$ was arbitrary, we find that $\mu_*$ is the limit of \emph{every} convergent subsequence of $\{\mu_i\}_{i\in\nats}$.
+Due to Proposition~\ref{prop:GBR_properties}, and because $\lexp[\phi_u(y_u\vert X_u)]>0$, we conclude that $\mu_{*}$ corresponds to the unique root of the function $G(\mu)\coloneqq \lexp\left[\phi_u(y_u\vert X_u)\bigl(f(X_v) - \mu\bigr)\right]$. Furthermore, since the convergent subsequence $\{\mu_{i_k}\}_{k\in\nats}$ was arbitrary, we find that $\mu_*$ is the limit of \emph{every} convergent subsequence of $\{\mu_i\}_{i\in\nats}$.
 
 We next show that $\{\mu_i\}_{i\in\nats}$ itself also converges to $\mu_*$. Assume \emph{ex absurdo} that this is false. Then, there is some $\epsilon>0$ such that, for all $n\in\nats$, there is some $k>n$ such that $\abs{\mu_k - \mu_*} \geq \epsilon$. This implies that we can construct a subsequence $\{\mu_{i_k}\}_{k\in\nats}$ such that $\abs{\mu_{i_k}-\mu_*}\geq \epsilon$ for all $k\in\nats$. This subsequence is again in the compact interval $[\min f, \max f]$, which implies that it has a convergent subsequence $\{\mu_{i_{k_\ell}}\}_{\ell\in\nats}$, and clearly $\lim_{\ell\to+\infty}\mu_{i_{k_\ell}} \neq \mu_*$ because $\abs{\mu_{i_{k_\ell}} - \mu_*}\geq\epsilon$ for all $\ell\in\nats$. However, since $\{\mu_{i_{k_\ell}}\}_{\ell\in\nats}$ is a convergent subsequence of the original sequence $\{\mu_i\}_{i\in\nats}$, this contradicts our above conclusions. Hence, we must have that indeed $\lim_{i\to\infty}\mu_i=\mu_*$.
 
@@ -1442,9 +1441,8 @@ Since we already know that $\mu_*$ is the unique root of the function $G(\mu)$ d
 Due to Proposition~\ref{prop:GBR_for_densities_lower_zero}, we therefore conclude
 \begin{align*}
 \underline{\mathbb{E}}_\mathcal{Z}[f(X_v)\,\vert\,Y_u=y_u] &= \max\left\{\mu\in\reals\,:\, \lexp\left[\phi_u(y_u\vert X_u)\bigl(f(X_v) - \mu\bigr)\right] \geq 0\right\} \\
- &= \mu_* \\
- &= \lim_{i\to+\infty} \mu_i \\
- &= \lim_{i\to+\infty} \underline{\mathbb{E}}_\mathcal{Z}[f(X_v)\,\vert\,Y_u\in O_u^i]\,.
+ &= \mu_* = \lim_{i\to+\infty} \mu_i 
+ = \lim_{i\to+\infty} \underline{\mathbb{E}}_\mathcal{Z}[f(X_v)\,\vert\,Y_u\in O_u^i]\,.
 \end{align*}
 \end{proof}
 
