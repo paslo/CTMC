@@ -646,7 +646,7 @@ Then the following properties hold: \vspace{-2pt}
 \begin{enumerate}[label=G\arabic*:,ref=G\arabic*]
 \item $G$ is continuous, non-increasing, concave, and has a root, i.e. $\exists \mu\in\reals:G(\mu)=0$. \label{GBR:always} \vspace{-3pt}
 \item If\/ $\lexp\bigl[\prod_{t\in u} g_{t}(X_{t})\bigr] >0$, then $G$ is (strictly) decreasing, and has a unique root. \label{GBR:low_pos} \vspace{-3pt}
-\item If\/ $\lexp\bigl[\prod_{t\in u} g_{t}(X_{t})\bigr]=0$ but $\uexp\bigl[\prod_{t\in u} g_{t}(X_{t})\bigr] >0$, then $G$ has a maximum root $\mu_*$, satisfies $G(\mu)=0$ for all $\mu\leq \mu_*$, and is (strictly) decreasing for $\mu\geq \mu_*$. \label{GBR:up_pos} \vspace{-3pt}
+\item If\/ $\lexp\bigl[\prod_{t\in u} g_{t}(X_{t})\bigr]=0$ but $\uexp\bigl[\prod_{t\in u} g_{t}(X_{t})\bigr] >0$, then $G$ has a maximum root $\mu_*$, satisfies $G(\mu)=0$ for all $\mu\leq \mu_*$, and is (strictly) decreasing for $\mu>\mu_*$. \label{GBR:up_pos} \vspace{-3pt}
 \item If\/ $\uexp\bigl[\prod_{t\in u} g_{t}(X_{t})\bigr]=0$, then $G$ is identically zero, i.e. $\forall \mu\in\reals: G(\mu)=0$. \label{GBR:none_pos}
 \end{enumerate}
 
@@ -857,11 +857,11 @@ For concavity, fix any $\mu,\nu\in\reals$, and choose any $\lambda\in[0,1]$. Let
 \end{equation}
 By expanding the convex combination $\mu'$ using the linearity of expectation operators, we find that
 \begin{align*}
-\mathbb{E}_{P_\states}\left[g(X_u)\bigl(f(X_v) - \mu'\bigr)\right]  &= \mathbb{E}_{P_\states}\left[g(X_u)f(X_v)\right] - \mu'\mathbb{E}_{P_\states}\left[g(X_u)\right] \\
+&\mathbb{E}_{P_\states}\left[g(X_u)\bigl(f(X_v) - \mu'\bigr)\right]\\  &= \mathbb{E}_{P_\states}\left[g(X_u)f(X_v)\right] - \mu'\mathbb{E}_{P_\states}\left[g(X_u)\right] \\
  &= \mathbb{E}_{P_\states}\left[g(X_u)f(X_v)\right] - \lambda\mu\mathbb{E}_{P_\states}\left[g(X_u)\right] - (1-\lambda)\nu\mathbb{E}_{P_\states}\left[g(X_u)\right] \\
  &= \bigl(\lambda + (1-\lambda)\bigr)\mathbb{E}_{P_\states}\left[g(X_u)f(X_v)\right] - \lambda\mu\mathbb{E}_{P_\states}\left[g(X_u)\right] - (1-\lambda)\nu\mathbb{E}_{P_\states}\left[g(X_u)\right] \\
- &= \lambda\mathbb{E}_{P_\states}\left[g(X_u)f(X_v)\right] - \lambda\mu\mathbb{E}_{P_\states}\left[g(X_u)\right] \\
- &\quad\quad\quad +(1-\lambda)\mathbb{E}_{P_\states}\left[g(X_u)f(X_v)\right] - (1-\lambda)\nu\mathbb{E}_{P_\states}\left[g(X_u)\right] \\
+ &= \lambda\mathbb{E}_{P_\states}\left[g(X_u)f(X_v)\right] - \lambda\mu\mathbb{E}_{P_\states}\left[g(X_u)\right]
++(1-\lambda)\mathbb{E}_{P_\states}\left[g(X_u)f(X_v)\right] - (1-\lambda)\nu\mathbb{E}_{P_\states}\left[g(X_u)\right] \\
  &= \lambda\mathbb{E}_{P_\states}\left[g(X_u)\bigl(f(X_v) - \mu\bigr)\right] + (1-\lambda)\mathbb{E}_{P_\states}\left[g(X_u)\bigl(f(X_v) - \nu\bigr)\right] \\
  &\geq \lambda\lexp\left[g(X_u)\bigl(f(X_v) - \mu\bigr)\right] + (1-\lambda)\lexp\left[g(X_u)\bigl(f(X_v) - \nu\bigr)\right] \\
  &= \lambda G(\mu) + (1-\lambda) G(\nu)\,,
@@ -877,10 +877,10 @@ To prove that the function has a root, first consider any $\mu<\min f$. Then, fo
 \begin{equation*}
 \mathbb{E}_{P_\states}[g(X_u)f(X_v)] \geq \mathbb{E}_{P_\states}[g(X_u)\min f] = \mu\mathbb{E}_{P_\states}[g(X_u)]\,,
 \end{equation*}
-and hence, using Equation~\eqref{eq:gbr_linear_expansion}, we find that $\mathbb{E}_{P_\states}\bigl[g(X_u)\bigl(f(X_v)-\mu\bigr)\bigr] \geq 0$. Since this is true for all $P_\states\in \mathbb{P}_{\rateset,\mathcal{M}}$, we find that $G(\mu)\geq 0$ for this choice of $\mu$. Next, consider any $\nu>\max f$. Then by a completely analogous argument---just reverse the inequalities---we find that $G(\nu)\leq 0$ for this choice of $\nu$. Therefore, and since we already know that $G(\cdot)$ is continuous, by the intermediate value theorem there must now be some $\mu_*\in[\mu,\nu]$ such that $G(\mu_*)=0$. This concludes the proof.
+and hence, using Equation~\eqref{eq:gbr_linear_expansion}, we find that $\mathbb{E}_{P_\states}\bigl[g(X_u)\bigl(f(X_v)-\mu\bigr)\bigr] \geq 0$. Since this is true for all $P_\states\in \mathbb{P}_{\rateset,\mathcal{M}}$, we find that $G(\mu)\geq 0$ for this choice of $\mu$. Next, consider any $\nu>\max f$. Then by a completely analogous argument---just reverse the inequalities---we find that $G(\nu)\leq 0$ for this choice of $\nu$. Therefore, and since we already know that $G$ is continuous, by the intermediate value theorem there must now be some $\mu_*\in[\mu,\nu]$ such that $G(\mu_*)=0$. This concludes the proof.
 
 
-We next prove \ref{GBR:low_pos}, and start by showing that $G(\cdot)$ is (strictly) decreasing if $\lexp[g(X_u)]>0$. To this end, consider any $\mu\in\reals$ and any $\Delta\in\realspos$. We need to show that $G(\mu)>G(\mu+\Delta)$. Let $\epsilon\coloneqq \Delta \lexp[g(X_u)]$; clearly then $\epsilon>0$. Therefore, there is some $P_\states\in\mathbb{P}_{\rateset,\mathcal{M}}$ such that
+We next prove \ref{GBR:low_pos}, and start by showing that $G$ is (strictly) decreasing if $\lexp[g(X_u)]>0$. To this end, consider any $\mu\in\reals$ and any $\Delta\in\realspos$. We need to show that $G(\mu)>G(\mu+\Delta)$. Let $\epsilon\coloneqq \Delta \lexp[g(X_u)]$; clearly then $\epsilon>0$. Therefore, there is some $P_\states\in\mathbb{P}_{\rateset,\mathcal{M}}$ such that
 \begin{equation}\label{eq:gbr_prop:approached_closeby}
 \mathbb{E}_{P_\states}\bigl[g(X_u)\bigl(f(X_v)-\mu\bigr)\bigr] - \epsilon < G(\mu)\,.
 \end{equation}
@@ -899,21 +899,20 @@ G(\mu+\Delta) \leq \mathbb{E}_{P_\states}\bigl[g(X_u)\bigl(f(X_v)-\mu\bigr)\bigr
 \end{equation*}
 which concludes the proof.
 
-To prove that $G(\cdot)$ has a \emph{unique} root under the assumption that $\lexp[g(X_u)]>0$, note that we already know that $G(\cdot)$ has at least one root, i.e. $G(\mu)=0$ for some $\mu\in\reals$. By combining with the fact that $G(\cdot)$ is strictly decreasing under the assumption that $\lexp[g(X_u)]>0$, the uniqueness of this root follows immediately.
+To prove that $G$ has a \emph{unique} root under the assumption that $\lexp[g(X_u)]>0$, note that we already know that $G$ has at least one root, i.e. $G(\mu)=0$ for some $\mu\in\reals$. By combining with the fact that $G$ is strictly decreasing under the assumption that $\lexp[g(X_u)]>0$, the uniqueness of this root follows immediately.
 
-We next prove~\ref{GBR:up_pos}. Lemma~\ref{lemma:general_regular_extension} below states that $G(\cdot)$ has a maximum root if $\uexp[g(X_u)]>0$, so we do not need to prove this here. So, let $\mu_*\coloneqq \max\{\mu\in\reals\,:\,G(\mu)\geq 0\}$ be this maximum root.
+We next prove~\ref{GBR:up_pos}. Lemma~\ref{lemma:general_regular_extension} below states that $G$ has a maximum root if $\uexp[g(X_u)]>0$, so we do not need to prove this here. So, let $\mu_*\coloneqq \max\{\mu\in\reals\,:\,G(\mu)\geq 0\}$ be this maximum root.
 
-We will now prove that $G(\mu)=0$ for all $\mu\leq\mu_*$ when $\lexp[g(X_u)]=0$ but $\uexp[g(X_u)]>0$. So, consider any $\mu<\mu_*$ (the case for $\mu=\mu_*$ is trivial). Since $\mu<\mu_*$, we already know that $G(\mu)$ is non-negative because $G(\cdot)$ is non-increasing; so, it suffices to show that $G(\mu)$ is non-positive. Now, for every $P_\states\in\mathbb{P}_{\rateset,\mathcal{M}}$ we have that
-\begin{equation}\label{eq:gbr_prop:bound_value}
-\begin{split}
-\mathbb{E}_{P_\states}\bigl[g(X_u)\bigl(f(X_v) - \mu\bigr)\bigr] &= \sum_{x_{u\cup v}} P_\states(X_{u\cup v}=x_{u\cup v})g(x_u)\bigl(f(x_v)-\mu\bigr) \\
- &\leq \sum_{x_{u\cup v}} P_\states(X_{u\cup v}=x_{u\cup v})g(x_u)\abs{f(x_v)-\mu} \\
- &\leq \sum_{x_{u\cup v}} P_\states(X_{u\cup v}=x_{u\cup v})g(x_u)\norm{f-\mu} \\
- &= \sum_{x_{u}} P_\states(X_{u}=x_{u})g(x_u)\norm{f-\mu} \\
- &= \norm{f-\mu}\mathbb{E}_{P_\states}\bigl[g(X_u)\bigr]\,,
-\end{split}
-\end{equation}
-where the first inequality follows from the fact that $g\geq 0$, the second inequality is due to the definition of the norm $\norm{\cdot}$, and the second equality follows from the law of total probability (that is, $X_v$ is marginalised out). Since $G(\mu)\leq \mathbb{E}_{P_\states}\bigl[g(X_u)\bigl(f(X_v) - \mu\bigr)\bigr]$, it follows from the above that if $\norm{f-\mu}=0$ then $G(\mu)\leq 0$, in which case we are done. 
+We will now prove that $G(\mu)=0$ for all $\mu\leq\mu_*$ when $\lexp[g(X_u)]=0$ but $\uexp[g(X_u)]>0$. So, consider any $\mu<\mu_*$ (the case for $\mu=\mu_*$ is trivial). Since $\mu<\mu_*$, we already know that $G(\mu)$ is non-negative because $G$ is non-increasing; so, it suffices to show that $G(\mu)$ is non-positive. Now, for every $P_\states\in\mathbb{P}_{\rateset,\mathcal{M}}$ we have that
+\begin{align}
+\mathbb{E}_{P_\states}\bigl[g(X_u)\bigl(f(X_v) - \mu\bigr)\bigr] 
+&= \sum_{x_{u\cup v}} P_\states(X_{u\cup v}=x_{u\cup v})g(x_u)\bigl(f(x_v)-\mu\bigr) \notag\\
+ &\leq \sum_{x_{u\cup v}} P_\states(X_{u\cup v}=x_{u\cup v})g(x_u)\abs{f(x_v)-\mu} \notag\\
+ &\leq \sum_{x_{u\cup v}} P_\states(X_{u\cup v}=x_{u\cup v})g(x_u)\norm{f-\mu} \notag\\
+ &= \sum_{x_{u}} P_\states(X_{u}=x_{u})g(x_u)\norm{f-\mu}= \norm{f-\mu}\mathbb{E}_{P_\states}\bigl[g(X_u)\bigr],
+\label{eq:gbr_prop:bound_value}
+\end{align}
+where the first inequality follows from the fact that $g\geq 0$, the second inequality is due to the definition of the norm $\norm{\cdot}$, and the second equality follows from the law of total probability (that is, $X_{v\setminus u}$ is marginalised out). Since $G(\mu)\leq \mathbb{E}_{P_\states}\bigl[g(X_u)\bigl(f(X_v) - \mu\bigr)\bigr]$, it follows from the above that if $\norm{f-\mu}=0$ then $G(\mu)\leq 0$, in which case we are done. 
 
 Hence, we can assume without loss of generality that $\norm{f-\mu}>0$. Choose any $\epsilon\in\realspos$. Then, because $\lexp[g(X_u)]=0$, there is some $P_\states\in\mathbb{P}_{\rateset,\mathcal{M}}$ such that $\mathbb{E}_{P_\states}[g(X_u)] < \nicefrac{\epsilon}{\norm{f-\mu}}$, which implies that
 \begin{equation*}
@@ -921,7 +920,7 @@ Hence, we can assume without loss of generality that $\norm{f-\mu}>0$. Choose an
 \end{equation*}
 using Equation~\eqref{eq:gbr_prop:bound_value} for the second inequality. Since the $\epsilon\in\realspos$ was arbitrary, this implies that $G(\mu)$ is non-positive, which concludes the proof.
 
-We next show that $G(\cdot)$ is strictly decreasing for $\mu>\mu_*$. So consider any $\mu\in\reals$ such that $\mu>\mu_*$, and any $\Delta\in\realspos$; we need to show that $G(\mu)>G(\mu+\Delta)$. Because $\mu>\mu_*$, and since $\mu_*=\max\{\mu\in\reals\,:\,G(\mu)\geq 0\}$, we know that $G(\mu)<0$.
+We next show that $G$ is strictly decreasing for $\mu>\mu_*$. So consider any $\mu\in\reals$ such that $\mu>\mu_*$, and any $\Delta\in\realspos$; we need to show that $G(\mu)>G(\mu+\Delta)$. Because $\mu>\mu_*$, and since $\mu_*=\max\{\mu\in\reals\,:\,G(\mu)\geq 0\}$, we know that $G(\mu)<0$.
 
 First note that for any $\epsilon\in\realspos$, there is some $P_{\states}\in\mathbb{P}_{\rateset,\mathcal{M}}$ for which
 \begin{equation*}
@@ -933,10 +932,10 @@ and clearly also
 \end{equation*}
 Therefore,
 \begin{align*}
-G(\mu)+\epsilon &> \mathbb{E}_{P_\states}\bigl[g(X_u)\bigl(f(X_v)-\mu\bigr)\bigr] \\
+G(\mu)+\epsilon > \mathbb{E}_{P_\states}\bigl[g(X_u)\bigl(f(X_v)-\mu\bigr)\bigr] 
  &\geq \mathbb{E}_{P_\states}\bigl[g(X_u)\bigl(f(X_v)-\mu\bigr)\bigr] - \mathbb{E}_{P_\states}\bigl[g(X_u)\bigl(f(X_v)-\mu_*\bigr)\bigr] \\
- &= -\mu\mathbb{E}_{P_\states}[g(X_u)] + \mu_*\mathbb{E}_{P_\states}[g(X_u)] \\
- &= (\mu_*-\mu)\mathbb{E}_{P_\states}[g(X_u)]
+ &= -\mu\mathbb{E}_{P_\states}[g(X_u)] + \mu_*\mathbb{E}_{P_\states}[g(X_u)]
+ = (\mu_*-\mu)\mathbb{E}_{P_\states}[g(X_u)]
 \end{align*}
 and so, negating both sides and noting again that $G(\mu)<0$,
 \begin{equation*}
@@ -951,16 +950,17 @@ for any $P_\states$ that $\epsilon$-approaches $G(\mu)$.
 The idea is now the following: Equation~\eqref{eq:gbr_prop:lower_bound_slope} provides a lower bound on the (absolute magnitude of the) slope of the function $\mathbb{E}_{P_\states}\bigl[g(X_u)\bigl(f(X_v)-\mu\bigr)\bigr]$ for any $P_\states$ that $\epsilon$-approaches $G(\mu)$. Since this function can still be a distance of $\epsilon$ above $G(\mu)$, we now need to make sure that the slope is such that this function will decrease by more than $\epsilon$ after increasing $\mu$ by $\Delta$; this will guarantee that this function becomes strictly lower than $G(\mu)$ when evaluated at $\mu+\Delta$, and since it is an upper bound on $G(\mu+\Delta)$, this will complete the proof.
 
 Note that this lower bound increases as we decrease $\epsilon$. In order to ensure that we get a large enough slope, we now solve the following for $\epsilon$:
-\begin{equation}
-\begin{split}\label{eq:gbr_prop:solving_for_slope}
-\Delta\frac{\abs{G(\mu)}-\epsilon}{\mu-\mu_*} &> \epsilon \\
-\frac{\Delta\abs{G(\mu)}}{\mu-\mu_*} - \frac{\Delta\epsilon}{\mu-\mu_*} &> \epsilon \\
-\frac{\Delta\abs{G(\mu)}}{\mu-\mu_*} &> \epsilon + \frac{\Delta\epsilon}{\mu-\mu_*} \\
-\Delta\abs{G(\mu)} &> (\mu-\mu_*)\epsilon + \Delta\epsilon \\
-\Delta\abs{G(\mu)} &> \epsilon\bigl((\mu-\mu_*) + \Delta\bigr) \\
-\frac{\Delta\abs{G(\mu)}}{\Delta + (\mu-\mu_*)} &> \epsilon\,.
-\end{split}
-\end{equation}
+\begin{align}
+\Delta\frac{\abs{G(\mu)}-\epsilon}{\mu-\mu_*} > \epsilon 
+&\asa
+\frac{\Delta\abs{G(\mu)}}{\mu-\mu_*} - \frac{\Delta\epsilon}{\mu-\mu_*} > \epsilon\notag\\
+&\asa
+\frac{\Delta\abs{G(\mu)}}{\mu-\mu_*} > \epsilon + \frac{\Delta\epsilon}{\mu-\mu_*} \notag\\
+&\asa\Delta\abs{G(\mu)} > (\mu-\mu_*)\epsilon + \Delta\epsilon \notag\\
+&\asa\Delta\abs{G(\mu)} > \epsilon\bigl((\mu-\mu_*) + \Delta\bigr)
+\asa
+\frac{\Delta\abs{G(\mu)}}{\Delta + (\mu-\mu_*)} > \epsilon.\label{eq:gbr_prop:solving_for_slope}
+\end{align}
 So, choose any $\epsilon\in\realspos$ such that $\epsilon< \nicefrac{\Delta\abs{G(\mu)}}{(\Delta + \mu-\mu_*)}$; since the right-hand side is clearly strictly positive, this is always possible. Then there is some $P_\states\in\mathbb{P}_{\rateset,\mathcal{M}}$ such that
 \begin{equation*}
 \mathbb{E}_{P_\states}\bigl[g(X_u)\bigl(f(X_v)-\mu\bigr)\bigr] - \epsilon < G(\mu)\,.
@@ -982,10 +982,10 @@ The following lemma states a more general version of the result that the general
 
 \begin{lemma}\label{lemma:general_regular_extension}
 Let $\mathbb{P}_{\rateset,\mathcal{M}}$ be an ICTMC, and consider any $u,v\in\mathcal{U}$, $f\in\gambles(\states_v)$, and $g\in\gambles(\states_u)$ such that $g\geq 0$. Then, if $\uexp[g(X_u)]>0$, it holds that
-\begin{align*}
- &\quad \max\left\{\mu\in\reals\,:\, \lexp\bigl[g(X_u)\bigl(f(X_v) - \mu\bigr)\bigr] \geq 0\right\} \\
- &= \inf\left\{ \frac{\mathbb{E}_{P_\states}[f(X_v)g(X_u)]}{\mathbb{E}_{P_\states}[g(X_u)]}\,:\,{P_\states}\in\mathbb{P}_{\rateset,\mathcal{M}}, \mathbb{E}_{P_\states}[g(X_u)]>0 \right\}\,.
-\end{align*}
+\begin{multline*}
+ \max\left\{\mu\in\reals\,:\, \lexp\bigl[g(X_u)\bigl(f(X_v) - \mu\bigr)\bigr] \geq 0\right\} \\
+ = \inf\left\{ \frac{\mathbb{E}_{P_\states}[f(X_v)g(X_u)]}{\mathbb{E}_{P_\states}[g(X_u)]}\,:\,{P_\states}\in\mathbb{P}_{\rateset,\mathcal{M}}, \mathbb{E}_{P_\states}[g(X_u)]>0 \right\}\,.
+\end{multline*}
 \end{lemma}
 \begin{proof}
 Let $\mathcal{P}\coloneqq \left\{ {P_\states}\in\mathbb{P}_{\rateset,\mathcal{M}}\,:\, \mathbb{E}_{P_\states}[g(X_u)] > 0\right\}$, and note that $\mathcal{P}$ is non-empty due to the assumption that $\uexp[g(X_u)]>0$. For all ${P_\states}\in\mathcal{P}$, define
