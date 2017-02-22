@@ -131,58 +131,7 @@
 }
 \makeatother
 
-%\title{Efficient Computation of Updated Lower Expectations for\\ Imprecise Continuous-Time Hidden Markov Chains}
 
-% \author[1]{Thomas E. Krak\thanks{t.e.krak@uu.nl}}
-% \author[2]{Jasper de Bock\thanks{jasper.debock@ugent.be}}
-% \affil[1]{Universiteit Utrecht}
-% \affil[2]{Ghent University}
-
-%\renewcommand\Authfont{\flushleft\textsc}
-%\renewcommand\Affilfont{\normalfont\normalsize}
-%\setlength{\affilsep}{1em}
-
-%\author{Thomas Krak \and Jasper De Bock \and Arno Siebes}
-
-%\author[*]{Thomas Krak}
-%\author[$\dagger$]{Jasper De Bock}
-%
-%\affil[ ]{${}^*$\texttt{t.e.krak@uu.nl}}
-%\affil[ ]{Utrecht University\\
-%Department of Information and Computing Sciences\\Princetonplein 5, De Uithof\\
-%3584 CC Utrecht\\
-%The Netherlands}
-%
-%\affil[ ]{}
-%
-%\affil[$\dagger$]{\texttt{jasper.debock@ugent.be}}
-%\affil[ ]{Ghent University\\
-%Department of Electronics and Information Systems\\
-%Technologiepark -- Zwijnaarde 914 \\
-%9052 Zwijnaarde \\ 
-%Belgium}
-
-%\author{\normalfont Thomas Krak
-%\large\hfill\texttt{t.e.krak@uu.nl}}
-%\affil{Utrecht University\\
-%Department of Information and Computing Sciences\\Princetonplein 5, De Uithof \\
-%3584 CC Utrecht \\
-%The Netherlands}
-%\author{\normalfont Jasper De Bock\large\hfill\texttt{jasper.debock@ugent.be}}
-%\affil{Ghent University\\
-% Department of Electronics and Information Systems\\
-%Technologiepark -- Zwijnaarde 914 \\
-%9052 Zwijnaarde \\ 
-%Belgium
-%}
-%\author{\normalfont Arno Siebes
-%\large\hfill\texttt{a.p.j.m.siebes@uu.nl}}
-%\affil{Utrecht University\\
-%Department of Information and Computing Sciences\\Princetonplein 5, De Uithof \\
-%3584 CC Utrecht \\
-%The Netherlands
-%\vspace{-0.4cm}}
-%\author{Thomas Krak and Jasper de Bock}
 \usepackage{color,soul,booktabs}
 \setulcolor{blue}
 \newcommand{\BibTeX}{\textsc{B\kern-0.1emi\kern-0.017emb}\kern-0.15em\TeX}
@@ -193,32 +142,7 @@
 
 \begin{document}
 
-% \author{{\bf Thomas E. Krak} \\ Utrecht}
-% \address{Utrecht University}
-% \curraddr{}
-% \email{t.e.krak@uu.nl}
-% \thanks{}
 
-%\author{Jasper de Bock \\ Ghent}
-%\address{Ghent University}
-
-%\author{
-	%{\bf Thomas E. Krak} \quad\quad {\bf Jasper de Bock} \\
-%	Utrecht University \quad Ghent University \\
-	%Department of Information and Computing Sciences \\
-	%Princetonplein 5, De Uithof \\
-	%3584 CC Utrecht \\
-	%The Netherlands \\
-%	\texttt{\quad\quad t.e.krak@uu.nl} \quad\quad \texttt{jasper.debock@ugent.be}
-%\and
-	%{\bf Jasper de Bock} \\
-%	Ghent University \\
-	%SYSTeMS Research Group \\
-	%Technologiepark -- Zwijnaarde 914 \\
-	%9052 Zwijnaarde \\ 
-	%Belgium \\
-%	\texttt{jasper.debock@ugent.be}
-%}
 \title{Efficient Computation of Updated Lower Expectations for\\ Imprecise Continuous-Time Hidden Markov Chains}
 \author{\name Thomas Krak \email t.e.krak@uu.nl\\
 \addr $^\dagger$ Department of Information and Computing Sciences\\
@@ -232,22 +156,13 @@ Ghent University (Belgium)
 }
 \maketitle
 \vspace{-7pt}
-% \noindent
-% {\it Ghent University, Data Science Lab, Technologiepark -- Zwijnaarde 914, 9052 Zwijnaarde, Belgium}
 
 
 \begin{abstract}We consider the problem of performing inference with \emph{imprecise continuous-time hidden Markov chains}, that is, \emph{imprecise continuous-time Markov chains} that are augmented with random \emph{output} variables whose distribution depends on the hidden state of the chain. The prefix `imprecise' refers to the fact that we do not consider a classical continuous-time Markov chain, but replace it with a robust extension that allows us to represent various types of model uncertainty, using the theory of \emph{imprecise probabilities}. The inference problem amounts to computing lower expectations of functions on the state-space of the chain, given observations of the output variables.
 
 
-
-%We consider the problem of performing inference with \emph{imprecise continuous-time hidden Markov chains}. This model class robustifies \emph{continuous-time hidden Markov chains} against higher-order model uncertainty, using the theory of \emph{imprecise probabilities}. In analogy to the well-known discrete-time (imprecise) hidden Markov models, 
-%such a model is an \emph{imprecise continuous-time Markov chain}, augmented with random \emph{output} variables whose distribution depends on the state of this imprecise continuous-time Markov chain. The inference problem amounts to computing lower expectations of functions on this state-space, given observations of the output variables.
-
 We develop and investigate this problem with very few assumptions on the output variables; in particular, they can be chosen to be either discrete or continuous random variables. Our main result is a polynomial runtime algorithm to compute the lower expectation of functions on the state-space at any given time-point, given a collection of observations of the output variables.\vspace{-3pt}
 \end{abstract}
-%\begin{keywords}
-%aap
-%\end{keywords}
 
 \section{Introduction}\label{sec:introduction}%\vspace{-5pt}
 
@@ -255,19 +170,15 @@ A continuous-time Markov chain (CTMC) is a stochastic model that describes the e
 
 One such extension are continuous-time \emph{hidden} Markov chains (CTHMC's)~\citep{wei2002continuous}. Such a CTHMC is a stochastic model that contains a continuous-time Markov chain as a latent variable---that is, the actual realised behaviour of the system cannot be directly observed. This model furthermore incorporates random \emph{output} variables, which depend probabilistically on the current state of the system, and it is rather realisations of these variables that one observes. Through this stochastic dependency between the output variables and the states in which the system might be, one can perform inferences about quantities of interest that depend on these states---even though they have not been, or cannot be, observed directly.
 
-%As should be clear from the terminology, both of these types of models satisfy the eponymous Markov property. Loosely speaking, this property states that if we know the current state of the system, then any future behaviour will be independent of the entire history up to the current state. This simplifying assumption is typically rather critical to ensure that working with such models is computationally tractable. Nevertheless, we would argue that it is also often an unrealistic assumption to impose on the model, and so it would seem to be of interest to robustify such models against cases where this assumption might not hold.
-
-Another extension of CTMC's, arising from the theory of \emph{imprecise probabilities}~\citep{Walley:1991vk}, are \emph{imprecise continuous-time Markov chains} (ICTMC's)~\citep{Skulj:2015cq, krak2016ictmc}. This extension can be used to robustify against uncertain numerical parameter assessments, as well as the simplifying assumptions of time-homogeneity and that the model should satisfy the Markov property. %A brief explanation of this extension can be found in Section~\ref{subsec:ictmc} below. 
+Another extension of CTMC's, arising from the theory of \emph{imprecise probabilities}~\citep{Walley:1991vk}, are \emph{imprecise continuous-time Markov chains} (ICTMC's)~\citep{Skulj:2015cq, krak2016ictmc}. This extension can be used to robustify against uncertain numerical parameter assessments, as well as the simplifying assumptions of time-homogeneity and that the model should satisfy the Markov property. 
 Simply put, an ICTMC is a \emph{set} of continuous-time stochastic processes, some of which are ``traditional'' time-homogeneous CTMC's. However, this set also contains more complicated processes, which are non-homogeneous and do not satisfy the Markov property.
 
-%It should be clear from the above that CTHMC's are essentially the continuous-time analogue of the well-known (discrete-time) \emph{hidden Markov models} (HMM's). This HMM model class has many successful applications in modelling systems where the ``time'' dimension is discrete, for instance in predicting sequences of characters in optical character recognition. In contrast, CTHMC's may be used to model systems where the time dimension is more naturally described as continuous, for instance in modelling the behaviour of biological systems over time. It was only relatively recently that an expectation-maximisation algorithm for parameter estimation in CTHMC's was first described in the literature REF. This same paper showed that CTHMC's outperformed the previous state-of-the-art in certain disease-progress prediction tasks, specifically in modelling the development of glaucoma and Alzheimer's disease.
 
 
 In this current work, we combine these two extensions by considering \emph{imprecise continuous-time hidden Markov chains}---a stochastic model analogous to a CTHMC, but where the latent CTMC is replaced by an ICTMC. We will focus in particular on practical aspects of the corresponding inference problem. That is, we provide results on how to efficiently compute lower expectations of functions on the state-space, given observed realisations of the output variables. 
 
 Throughout, all results are stated without proof. We have made available an extended version of this work~\citep{krak2017icthmc}, which includes an appendix containing the proofs of all our results.
 
-%The paper is organised as follows. We introduce some notation in Section~\ref{sec:prelim}, and there also briefly recall the definitions and most important properties of ICTMC's. In particular, we there also summarise previous results on how to efficiently compute lower expectations for ICTMC's. In Section~\ref{sec:icthmc}, we introduce the hidden model on which we focus in this work. Next, in Section~\ref{sec:updating_model}, we discuss the problem of making inferences about the latent process, given some observations. Subsequently, in Section~\ref{sec:inference_algos}, we discuss how to efficiently solve this inference problem. We then compare and relate these results to other work in the literature, in Section~\ref{sec:related}, and finally close with conclusions and some pointers to future work, in Section~\ref{sec:conclusions}.
 
 \subsection{Related Work}\label{sec:related}
 
@@ -293,13 +204,6 @@ We here briefly recall the most important properties of imprecise continuous-tim
 
 An ICTMC will be defined below as a specific set of \emph{continuous-time stochastic processes}. Simply put, a continuous-time stochastic process is a joint probability distribution over random variables $X_t$, for each time $t\in\realsnonneg$, where each random variable $X_t$ takes values in $\states$. 
 
-%If such a stochastic process $P$ satisfies the \emph{Markov property}---see Equation~\eqref{eq:Markov_property} below---then $P$ is called a \emph{continuous-time Markov chain} (CTMC). The Markov property states that, for time points $t,s\in\realsnonneg$ such that $t\leq s$, and for any sequence of time points $u\in\mathcal{U}_{<t}$, it holds that
-%\begin{equation}\label{eq:Markov_property}
-%P(X_s\,\vert\,X_t=x_t,X_u=x_u) = P(X_s\,\vert\,X_t=x_t)\,.
-%\end{equation}
-%Intuitively, this means that once we know the state $x_t$ obtained at time $t$, the probability distribution over any state $X_s$ in the future---with respect to $t$---is independent of the history $x_u$ at time points $u$ that precede $t$.
-
-%Since we want to ultimately describe \emph{sets} of stochastic processes, it will be convenient to have a way to numerically parameterise such a CTMC---or more generally, such a continuous-time stochastic process. To this end, we require two different kinds of parameters. First of all, we need the specification of the initial distribution $P(X_0)$ over the state at time zero; this simply requires the specification of some probability mass function on $\states_0$.
 
 It will be convenient to have a way to numerically parameterise such a stochastic process $P$. For this, we require two different kinds of parameters. First, we need the specification of the initial distribution $P(X_0)$ over the state at time zero; this simply requires the specification of some probability mass function on $\states_0$. Second, we need to parameterise the dynamic behaviour of the model.
 
@@ -307,7 +211,7 @@ In order to describe this dynamic behaviour, we require the concept of a \emph{r
 \begin{equation*}
 P(X_{t+\Delta}\,\vert\,X_t,X_u=x_u) \approx \bigl[I + \Delta Q_{t,x_u}\bigr](X_t, X_{t+\Delta})\,,
 \end{equation*}
-for some rate matrix $Q_{t,x_u}$, where $I$ denotes the $\lvert\states\rvert\times\lvert\states\rvert$ identity matrix, and where the quantity $[I + \Delta Q_{t,x_u}](X_t,X_{t+\Delta})$ denotes the element at the $X_t$-row and $X_{t+\Delta}$-column of the matrix $I + \Delta Q_{t,x_u}$. Note that in general, this rate matrix $Q_{t,x_u}$ may depend on the specific time $t$ and history $x_u$ at which this relationship is stated. %This rate matrix---or, more appropriately, time- and history-dependent family of rate matrices---parameterises the dynamic behaviour of a continuous-time stochastic process.
+for some rate matrix $Q_{t,x_u}$, where $I$ denotes the $\lvert\states\rvert\times\lvert\states\rvert$ identity matrix, and where the quantity $[I + \Delta Q_{t,x_u}](X_t,X_{t+\Delta})$ denotes the element at the $X_t$-row and $X_{t+\Delta}$-column of the matrix $I + \Delta Q_{t,x_u}$. Note that in general, this rate matrix $Q_{t,x_u}$ may depend on the specific time $t$ and history $x_u$ at which this relationship is stated. 
 
 If these rate matrices only depend on the time $t$ and not on the history $x_u$, i.e. if $Q_{t,x_u}=Q_t$ for all $t$ and all $x_u$, then it can be shown that $P$ satisfies the \emph{Markov property}: $P(X_s\,\vert\,X_t,X_u)=P(X_s\,\vert\,X_t)$. In this case, $P$ is called a \emph{continuous-time Markov chain}.
 
@@ -319,23 +223,19 @@ The \emph{lower expectation} with respect to this set $\mathbb{P}_{\rateset,\mat
 \end{equation*}
 where $\mathbb{E}_P[\cdot\,\vert\,\cdot]$ denotes the expectation with respect to the (precise) stochastic process $P$. The \emph{upper expectation} $\uexp$ is defined similarly, and is derived through the well-known conjugacy property $\uexp[\cdot\,\vert\,\cdot] = -\lexp[-\cdot\,\vert\,\cdot]$. Note that it suffices to focus on lower (or upper) expectations, and that \emph{lower} (and \emph{upper}) \emph{probabilities} can be regarded as a special case; for example, for any $A\subseteq\states$, we have that $\underline{P}_{\rateset,\mathcal{M}}(X_s\in A\,\vert\,X_t) \coloneqq \inf\{P(X_s\in A\vert X_t)\,:\,P\in\mathbb{P}_{\rateset,\mathcal{M}}\}=\lexp[\ind{A}(X_s)\,\vert\,X_t]$, where $\ind{A}$ is the indicator of $A$, defined for all $x\in\states$ by $\ind{A}(x)\coloneqq1$ if $x\in A$ and $\ind{A}(x)\coloneqq0$ otherwise.
 
-In the sequel, we will assume that $\mathcal{M}$ is non-empty, and that $\rateset$ is non-empty, bounded,\footnote{That is, that there exists a $c\in\realsnonneg$ such that, for all $Q\in\rateset$ and $x\in\states$, it holds that $\abs{Q(x,x)}<c$.} convex, and has \emph{separately specified rows}. This latter property states that $\rateset$ is closed under arbitrary recombination of rows from its elements; see~\citep[Definition 24]{krak2016ictmc} for a formal definition. %To clarify, let $Q(x,\cdot)$ denote the $x$-th row of any matrix $Q$. Then $\rateset$ has separately specified rows if, for any $Q_1,Q_2\in\rateset$ and any $x\in\states$, there exists a $Q\in\rateset$ such that $Q(x,\cdot)= Q_1(x,\cdot)$ and $Q(x',\cdot)= Q_2(x',\cdot)$ for all $x'\neq x$.
+In the sequel, we will assume that $\mathcal{M}$ is non-empty, and that $\rateset$ is non-empty, bounded,\footnote{That is, that there exists a $c\in\realsnonneg$ such that, for all $Q\in\rateset$ and $x\in\states$, it holds that $\abs{Q(x,x)}<c$.} convex, and has \emph{separately specified rows}. This latter property states that $\rateset$ is closed under arbitrary recombination of rows from its elements; see~\citep[Definition 24]{krak2016ictmc} for a formal definition. 
 Under these assumptions, $\mathbb{P}_{\rateset,\mathcal{M}}$ satisfies an \emph{imprecise Markov property}, in the sense that $\lexp[f(X_s)\,\vert\,X_t,X_u=x_u]=\lexp[f(X_s)\,\vert\,X_t]$. This property explains why we call this model an imprecise continuous-time ``Markov'' chain.
 
 \subsection{Computing Lower Expectations for ICTMC's}\label{subsec:ICTMC_computations}
 
-Because we want to focus in this paper on providing efficient methods of computation, we here briefly recall some previous results from~\citet{krak2016ictmc} about how to compute lower expectations for ICTMC's. We focus in particular on how to do this for functions on a single time-point. %Note that for such functions, the set $\gambles(\states_t)=\gamblesX$ can be interpreted as the vector space $\reals^{\lvert\states\rvert}$, since $\states$ is finite. This allows us to treat these functions $f\in\gamblesX$ as $\lvert\states\rvert$-dimensional vectors, which in particular allows us to represent linear maps from $\gamblesX$ to $\gamblesX$ using matrices.
+Because we want to focus in this paper on providing efficient methods of computation, we here briefly recall some previous results from~\citet{krak2016ictmc} about how to compute lower expectations for ICTMC's. We focus in particular on how to do this for functions on a single time-point. 
 
 To this end, it is useful to introduce the \emph{lower transition rate operator} $\lrate$ that corresponds to $\rateset$. This operator is a map from $\gamblesX$ to $\gamblesX$, defined for every $f\in\gamblesX$ by
 \begin{equation}\label{eq:lower_rate_is_inf}
 \left[\,\lrate f\right](x) \coloneqq \inf\left\{ \sum_{x'\in\states}Q(x,x')f(x')\,:\, Q\in\rateset \right\}
 ~~\text{for all $x\in\states$}.
 \end{equation}
-%Observe that, due to the definition of the infimum, we therefore have for every $x\in\states$ that
-%\begin{equation*}
-%[\lrate f](x) = \inf\{[Qf](x)\,:\,Q\in\rateset\} = \inf\left\{ \sum_{x'\in\states}Q(x,x')f(x')\,:\,Q\in\rateset \right\}\,.
-%\end{equation*}
-%Numerically, this makes the optimisation problem in Equation~\ref{eq:lower_rate_is_inf} somewhat easier to solve, since it allows us to perform this optimisation element-wise. Note also that the requirement that $\rateset$ has separately specified rows, therefore essentially allows the infimum in Equation~\eqref{eq:lower_rate_is_inf} to be ``reached'', at least up to closure of the set $\rateset$.
+
 
 Using this lower transition rate operator $\lrate$, we can compute conditional lower expectations in the following way. For any $t,s\in\realsnonneg$, with $t\leq s$, and any $f\in\gamblesX$, it has been shown that
 \begin{equation*}
@@ -362,12 +262,11 @@ which can therefore be computed by combining Equations~\eqref{eq:lower_exp_in_st
 
 In this section, we construct the \emph{hidden} model that is the subject of this paper. Our aim is to augment the stochastic processes that were introduced in the previous section, by adding random \emph{output} variables $Y_t$ whose distribution depends on the state $X_t$ at the same time point $t$.
 
-%As was mentioned in Section~\ref{sec:introduction}, the rigorous construction of such augmented processes is omitted from the present paper due to length considerations. The difficulty is essentially in the fact that continuous-time stochastic processes specify random variables $X_t$ for \emph{every} time point $t\in\realsnonneg$. A consequence of this is that one has to be somewhat careful to ensure that the complete construction remains ``well-behaved'' when adding random variables $Y_t$ at each of these time points.
 
-We want to focus in this paper on the more practical aspect of solving the inference problem of interest, i.e., computing lower expectations on the state-space \emph{given some observations}. %Therefore, it suffices for our present purposes to only augment the model at the time points at which these observations were made. In other words, 
-Hence, we will assume that we are given some finite sequence of time points, and we then only consider these time points in augmenting the model.
-%We introduce the notion of an \emph{observable model}, i.e., the distribution of the $Y_t$, in Section~\ref{sec:observs}. In Section~\ref{sec:aug_stochastic_processes} we then augment stochastic processes, as discussed in the previous section, with such observable models. 
-In order to disambiguate the notation, we will henceforth denote stochastic processes as $P_\states$, to emphasise that they are only concerned with the state-space. %Using these augmented stochastic processes, we finally define the imprecise hidden model that is the subject of this paper, in Section~\ref{subsec:ICTHMC}.
+
+We want to focus in this paper on the more practical aspect of solving the inference problem of interest, i.e., computing lower expectations on the state-space \emph{given some observations}.
+Hence, we will assume that we are given some finite sequence of time points, and we then only consider these time points in augmenting the model. 
+In order to disambiguate the notation, we will henceforth denote stochastic processes as $P_\states$, to emphasise that they are only concerned with the state-space. 
 
 \subsection{Output Variables}\label{sec:observs}
 
@@ -381,16 +280,14 @@ An \emph{output model} is a tuple $(\observs,\Sigma,P_{\observs\vert \states})$,
 
 When considering (multiple) explicit time points, we use notation analogous to that used for states; so, $\observs_t\coloneqq\observs$ for any time $t\in\realsnonneg$, and for any $u\in\mathcal{U}$, we write $\observs_u\coloneqq \prod_{t\in u}\observs_{t}$. 
 
-We let $\Sigma_u$ denote the set of all events of the type $O_u=\times_{t\in u}O_t$, where, for all $t\in u$, $O_{t}\in\Sigma$. %Note that $\Sigma_u$ is not the product ($\sigma$-)algebra proper; it only contains conjunctive statements between time-points. However, since we only want to describe (joint) observations of the random variables $Y_{t_i}$, this will suffice for our purposes. 
-This set $\Sigma_u$ lets us describe observations using assessments of the form $(Y_t\in O_t \text{~for all $t\in u$})$. %$(Y_{t_0}\in O_{t_0})$ \emph{and} $(Y_{t_1}\in O_{t_1})$ \emph{and} \ldots, and so on.  
+We let $\Sigma_u$ denote the set of all events of the type $O_u=\times_{t\in u}O_t$, where, for all $t\in u$, $O_{t}\in\Sigma$. 
+This set $\Sigma_u$ lets us describe observations using assessments of the form $(Y_t\in O_t \text{~for all $t\in u$})$.   
 For any $O_u\in\Sigma_u$ and $x_u\in\states_u$, we also adopt the shorthand notation $P_{\observs\vert\states}(O_u\vert x_u)\coloneqq \prod_{t\in u}P_{\observs\vert\states}(O_t\vert x_t)$.
-%The complete product ($\sigma$-)algebra is then denoted $\sigma(\Sigma_u)$, i.e., this is the ($\sigma$-)algebra that is generated by $\Sigma_u$. Intuitively, separately defining $\Sigma_u$ will be useful because it only contains conjunctive statements between time-points, whereas $\sigma(\Sigma_u)$ also contains statements with much more intricate dependencies between time points.
 
-%We then let $(\observs_u,\sigma(\Sigma_u),P_{\observs_u\vert\states_u})$ be the product probability space, where, for every $x_u\in\states_u$, $P_{\observs_u\vert\states_u}(\cdot\vert x_u)$ is the product measure over the $P_{\observs_{t_i}\vert\states_{t_i}}(\cdot\vert x_{t_i})=P_{\observs\vert\states}(\cdot\vert x_{t_i})$.
 
 \subsection{Augmented Stochastic Processes}\label{sec:aug_stochastic_processes}
 We now use this notion of an output model to define the stochastic model $P$ that corresponds to a---precise---continuous-time \emph{hidden} stochastic process. 
-So, consider some fixed output model $(\observs,\Sigma,P_{\observs\vert\states})$, some fixed continuous-time stochastic process $P_\states$ and some fixed, non-empty and finite sequence of time-points $u\in\mathcal{U}$ on which observations of the outputs may take place. %Our aim will be to construct a joint model $P$ which extends $P_\states$ by introducing observable random variables $Y_t$ for each $t\in u$, where each $Y_t$ is distributed according to $P_{\observs\vert\states}$ depending on the state $X_t$. Such a $P$ will be called an \emph{augmented stochastic process}.
+So, consider some fixed output model $(\observs,\Sigma,P_{\observs\vert\states})$, some fixed continuous-time stochastic process $P_\states$ and some fixed, non-empty and finite sequence of time-points $u\in\mathcal{U}$ on which observations of the outputs may take place. 
 
 We assume that $Y_t$ is conditionally independent of \emph{every} other variable in the model, given the state $X_t$. This means that the construction of the augmented process $P$ is relatively straightforward; we can simply multiply $P_{\observs\vert\states}(\cdot\,\vert\,X_t)$ with any distribution $P_\states(X_t,\cdot)$ that includes $X_t$ to obtain the joint distribution including $Y_t$. That is, for any $t\in u$ and $v\in\mathcal{U}$ such that $t\notin v$, any $x_t\in\states_t$ and $x_v\in\states_v$, and any $O_t\in\Sigma$,
 \begin{equation*}
@@ -402,10 +299,7 @@ P(Y_u\in O_u,X_u=x_u, X_v=x_v) \coloneqq P_{\observs\vert\states}(O_{u}\,\vert\,
 \end{equation*}
 Other probabilities can be derived by appropriate marginalisation.
 We denote the resulting augmented stochastic process as $P=P_{\observs\vert\states}\otimes P_\states$,
-%\begin{equation*}
-%P=P_{\observs\vert\states}\otimes P_\states\,,
-%\end{equation*}
-for the specific output model $P_{\observs\vert\states}$ and stochastic process $P_\states$ that were taken to be fixed in this section.% The sequence of time points $u$ on which the observations take place is left implicit for notational brevity. This method of notation now allows us to introduce the imprecise hidden model that is the subject of this paper, as follows.
+for the specific output model $P_{\observs\vert\states}$ and stochastic process $P_\states$ that were taken to be fixed in this section.
 
 \subsection{Imprecise Continuous-Time Hidden Markov Chains}\label{subsec:ICTHMC}
 
@@ -417,30 +311,19 @@ The lower expectation with respect to $\mathcal{Z}$ will be denoted by $\underli
 \end{definition}
 Note that we leave the parameters $\mathcal{M}$, $\rateset$ and $P_{\observs\vert\states}$ implicit in the notation of the ICTHMC $\mathcal{Z}$---we will henceforth take these parameters to be fixed.
 
-%Furthermore, note that $\mathcal{Z}$ contains an augmented stochastic process $P_{\observs\vert\states}\otimes P_{\states}$ for every $P_{\states}\in\mathbb{P}_{\rateset,\states}$. Hence, it follows immediately that for any function $f\in\gambles(\states_v)$ that only depends on the state space $\states_v$, and for any $u\in\mathcal{U}$, we have that $\underline{\mathbb{E}}_\mathcal{Z}[f(X_v)\,\vert\,X_u]=\lexp[f(X_v)\,\vert\,X_u]$. 
-
-%Similarly, since the observable model $(\observs,\Sigma,P_{\observs\vert\states})$ is shared by all augmented processes in $\mathcal{Z}$, the (lower) expectation of functions that only depend on observations $Y_u$, given the states $X_u$ at these same time points, can be derived directly from the observable model itself. That is, for any\footnote{This is actually false, but we feel that the intuition behind the statement is worthwhile. In particular, this clearly does hold for indicator functions $\ind{O_u}(Y_u)$ on events $O_u\in\Sigma_u$, whence $\underline{P}_\mathcal{Z}(O_u\vert X_u)=P_{\observs\vert\states}(O_u\vert X_u)$.
-
-%The more general statement holds for functions for which the expectation can be defined, and for which the dependencies between the time-points $u$ are not ``too strong''---it might not hold for indicators on events $O_u\in\sigma(\Sigma_u)$ for example. Both notions are somewhat cumbersome to make precise given the level of generality at which we defined observable models, and the present lack of rigour in defining the augmented stochastic processes.} function $f:\observs_u\to\reals$, we have $\underline{\mathbb{E}}_\mathcal{Z}[f(Y_u)\,\vert\,X_u]=\mathbb{E}_{P_{\observs\vert\states}}[f(Y_u)\,\vert\,X_u]$.
 
 \section{Updating the Model}\label{sec:updating_model}
 
-In the context of \emph{hidden} (continuous-time) Markov chains, it is typically assumed that the state $X_t$ that is obtained by the process at time $t$, cannot be directly observed---hence the term ``hidden''. Rather, we can only observe realisations of the output variable $Y_t$. %The problem of interest is then typically to make inferences about this state $X_t$, given what we know about the value of the variable $Y_t$. More generally, we may be interested in the joint states $X_v$ for some time points $v\in\mathcal{U}_\emptyset$, given observations about $Y_u$ at time points $u\in\mathcal{U}$; note that we do not necessarily require that $u=v$.
+In the context of \emph{hidden} (continuous-time) Markov chains, it is typically assumed that the state $X_t$ that is obtained by the process at time $t$, cannot be directly observed---hence the term ``hidden''. Rather, we can only observe realisations of the output variable $Y_t$. 
 
 Suppose then that we have observed that some event $(Y_u\in O_u)$ has taken place, with $O_u\in\Sigma_u$. We here use the terminology that we \emph{update} our model with these observations, after which the updated model reflects our revised beliefs about some quantity of interest. These updated beliefs, about some function $f\in\gambles(\states_v)$, say, are then denoted by
-%\begin{equation*}
-$\mathbb{E}_P[f(X_v)\,\vert\,Y_u\in O_u]$ %\,,\quad\text{or similarly,}\quad
+$\mathbb{E}_P[f(X_v)\,\vert\,Y_u\in O_u]$
 or $\underline{\mathbb{E}}_\mathcal{Z}[f(X_v)\,\vert\,Y_u\in O_u]$, 
-%\end{equation*}
 depending on whether we are considering a precise or an imprecise model. In this section, we provide definitions and alternative expressions for such updated (lower) expectations.
 
-%Clearly, the notation that we use here is the same as what would be used for representing \emph{conditional} (lower) expectations. Indeed, when the event $(Y_u\in O_u)$ has strictly positive (lower) probability, it would seem rational to assume that the \emph{updated} belief corresponds to the \emph{conditional} belief---which, in the precise case, can be inferred by application of Bayes' rule. 
-
-%However, when this event has probability zero, but was nevertheless observed, the \emph{conditional} belief/expectation cannot be determined in the precise case, and is vacuous in the imprecise case. Nevertheless, we may in some situations still be able to \emph{update} our model in some rational way, to reflect our revised beliefs given this observation. This, then, explains the choice of terminology employed here. We will shortly give some specific examples where this is indeed possible.
 
 \subsection{Observations with Positive (Upper) Probability}\label{subsec:pos_prob}
 
-%As noted above, 
 When our assertion $(Y_u\in O_u)$ about an observation at time points $u$ has positive probability, we can---in the precise case---update our model by application of Bayes' rule. The following gives a convenient expression for the updated expectation $\mathbb{E}_P[f(X_v)\,\vert\,Y_u\in O_u]$, which makes use of the independence assumptions in Section~\ref{sec:aug_stochastic_processes} for augmented stochastic processes.
 
 \begin{proposition}\label{prop:precise_conditioning_for_positive}
@@ -451,7 +334,7 @@ Let $P$ be an augmented stochastic process and consider any $u,v\in\mathcal{U}$,
 whenever $P(Y_u\in O_u)=\mathbb{E}_{P_\states}[P_{\observs\vert\states}(O_u\,\vert\,X_u)]>0$, and is left undefined, otherwise.
 \end{proposition}
 
-Having defined above how to update all the precise models $P\in\mathcal{Z}$, we will now update the imprecise model through \emph{regular extension}~\citep{Walley:1991vk}. This corresponds to simply discarding from $\mathcal{Z}$ those precise models that assign zero probability to $(Y_u\in O_u)$, updating the remaining models, and then computing their lower envelope.% over these updated remaining expectations.
+Having defined above how to update all the precise models $P\in\mathcal{Z}$, we will now update the imprecise model through \emph{regular extension}~\citep{Walley:1991vk}. This corresponds to simply discarding from $\mathcal{Z}$ those precise models that assign zero probability to $(Y_u\in O_u)$, updating the remaining models, and then computing their lower envelope.
 
 \begin{definition}\label{def:reg_ext_pos}
 Let $\mathcal{Z}$ be an ICTHMC and consider any $u,v\in\mathcal{U}$, $O_u\in\Sigma_u$ and $f\in\gambles(\states_v)$. Then the updated lower expectation is defined by
@@ -459,8 +342,6 @@ Let $\mathcal{Z}$ be an ICTHMC and consider any $u,v\in\mathcal{U}$, $O_u\in\Sig
 \underline{\mathbb{E}}_{\mathcal{Z}}\bigl[f(X_v)\,\vert\,Y_u\in O_u\bigr] \coloneqq \inf\bigl\{ \mathbb{E}_P[f(X_v)\,\vert\,Y_u\in O_u]\,:\, P\in\mathcal{Z},\, P(Y_u\in O_u)>0 \bigr\}\,,
 \end{equation*}
 whenever $\overline{P}_\mathcal{Z}(Y_u\in O_u)=\uexp[P_{\observs\vert\states}(O_u\,\vert\,X_u)]>0$, and is left undefined, otherwise.
-%
-%If $\overline{P}_\mathcal{Z}(Y_u\in O_u)=0$, then $\underline{\mathbb{E}}_{\mathcal{Z}}\bigl[f(X_v)\,\vert\,Y_u\in O_u\bigr]$ is left undefined.
 \end{definition}
 
 As is well known, the updated lower expectation that is obtained through regular extension satisfies Walley's \emph{generalised Bayes' rule}~\citep{Walley:1991vk}. The following proposition gives an expression for this generalised Bayes' rule, rewritten using some of the independence properties of the model. We will shortly see why this expression is useful from a computational perspective.
@@ -490,53 +371,34 @@ Let $P$ be an augmented stochastic process and consider any $u,v\in\mathcal{U}$,
 \mathbb{E}_P[f(X_v)\,\vert\,Y_u=y_u] \coloneqq \lim_{i\to+\infty} \mathbb{E}_P[f(X_v)\,\vert\,Y_u\in O_u^i] = \frac{\mathbb{E}_{P_\states}[f(X_v)\phi_u(y_u\vert X_u)]}{\mathbb{E}_{P_\states}[\phi_u(y_u\,\vert\,X_u)]}\,.
 \end{equation}
 \end{proposition}
-Note that $\mathbb{E}_P[f(X_v)\,\vert\,Y_u=y_u]$ is clearly dependent on the exact sequence $\{O_u^i\}_{i\in\nats}$. Unfortunately, this is the best we can hope for at the level of generality that we are currently dealing with. %---the extend to which this limit depends on how you approach it, depends on how ``well-behaved'' the measure $P_{\observs\vert\states}$ is around the point $y_u$. 
+Note that $\mathbb{E}_P[f(X_v)\,\vert\,Y_u=y_u]$ is clearly dependent on the exact sequence $\{O_u^i\}_{i\in\nats}$. Unfortunately, this is the best we can hope for at the level of generality that we are currently dealing with. 
 For brevity, we nevertheless omit from the notation the updated expectation's dependency on this sequence. However, as we will explain below, this should not be problematic for most practical applications.
 
 It is also useful to note that $\phi_u(y_u\vert x_u)$ can often be constructed ``piecewise''. That is, if for every $t\in u$ there is a sequence $\{\lambda_{\,t,i}\}_{i\in\nats}$ in $\realspos$ such that, for all $x_t\in\states_t$,
 \begin{equation*}
 \phi_t(y_t\vert x_t)\coloneqq \lim_{i\to+\infty} \frac{P_{\observs\vert\states}(O_t^i\vert x_t)}{\lambda_{\,t,i}}
 \end{equation*}
-exists and is real-valued, then choosing $\{\lambda_i\}_{i\in\nats}$ as $\lambda_i\coloneqq \prod_{t\in u}\lambda_{\,t,i}$ yields $\phi_u(y_u\vert x_u)=\prod_{t\in u}\phi_t(y_t\vert x_t)$. The converse often also holds, in that if $\phi_u(y_u\vert x_u)$ exists there tend to be sequences $\{\lambda_{\,t,i}\}_{t\in\nats}$ so that $\phi_t(y_t\vert x_t)$ exists, and for which $\prod_{t\in u}\phi_t(y_t\vert x_t)=\phi_u(y_u\vert x_u)$. The ``often'' qualifier is a bit hard to make rigorous at this level of generality, but, in any case, this direction is less useful practically. %However, this second direction is a bit less useful from a practical point of view, because it is an existential statement that does not determine the $\phi_t(y_t\vert x_t)$ uniquely.
+exists and is real-valued, then choosing $\{\lambda_i\}_{i\in\nats}$ as $\lambda_i\coloneqq \prod_{t\in u}\lambda_{\,t,i}$ yields $\phi_u(y_u\vert x_u)=\prod_{t\in u}\phi_t(y_t\vert x_t)$. The converse often also holds, in that if $\phi_u(y_u\vert x_u)$ exists there tend to be sequences $\{\lambda_{\,t,i}\}_{t\in\nats}$ so that $\phi_t(y_t\vert x_t)$ exists, and for which $\prod_{t\in u}\phi_t(y_t\vert x_t)=\phi_u(y_u\vert x_u)$. The ``often'' qualifier is a bit hard to make rigorous at this level of generality, but, in any case, this direction is less useful practically. 
 
 Now, to make the above practicable, we can for example assume that if $\observs$ is uncountable, then it is the set $\observs=\reals^d$, for some $d\in\nats$, and that $\Sigma$ is the Borel $\sigma$-algebra on $\reals^d$. 
 For each $x\in\states$, we then assume that the measure $P_{\observs\vert\states}(\cdot\,\vert x)$ is induced by some given \emph{probability density function}: a measurable function $\psi(\cdot\,\vert x):\observs\to\realsnonneg$ such that $\int_\observs \psi(y\vert x)\,\mathrm{d}y=1$ and, for every $O\in\Sigma$,
-%Furthermore, we then assume that for every $x\in\states$, $P_{\observs\vert\states}(\cdot\,\vert x)$ is $\sigma$-additive on $\Sigma$, and absolutely continuous with respect to the Lebesgue measure $\lambda$ on $(\observs,\Sigma)$. For every $x\in\states$, by the Radon-Nikodym theorem we can then associate with $P_{\observs\vert\states}(\cdot\,\vert x)$ a function $\phi(\cdot\,\vert x):\observs\to\reals$ such that for all $O\in\Sigma$,
 \begin{equation*}
 P_{\observs\vert\states}(O\,\vert x) \coloneqq \int_O \psi(y\vert x)\,\mathrm{d}y\,,
 \end{equation*}
 where the integrals are understood in the Lebesgue sense.
-%where the integral is understood in the Lebesgue sense. In other words, $\phi(\cdot\,\vert x)$ is ``the''\footnote{It is only uniquely determined up to a Lebesgue null-set. Of course, in practice we can typically identify it uniquely.} probability density function associated with the measure $P_{\observs\vert\states}(\cdot\,\vert x)$.
 
 Then choose any $y_u\in\observs_u$, any $t\in u$, any sequence $\{O_t^i\}_{i\in\nats}$ of open balls in $\observs_t$ that are centred on, and shrink to, $y_t$, and fix any $x_u\in\states_u$. If $\psi(\cdot\vert x_t)$ is continuous at $y_t$, it can be shown that
 \begin{equation}\label{eq:density_is_limit}
 \phi_t(y_t\vert x_t) = \lim_{i\to+\infty} \frac{P_{\observs\vert\states}(O_t^i\vert x_t)}{\lambda(O_t^i)} = \psi(y_t\vert x_t)\,,
 \end{equation}
 where $\lambda(O_t^i)$ denotes the Lebesgue measure of $O_t^i$. So, we can construct the sequence $\{O_u^i\}_{i\in\nats}$ such that every $O_u^i\coloneqq \prod_{t\in u}O_t^i$, with each $O_t^i$ chosen as above. If we then choose the sequence $\{\lambda_i\}_{i\in\nats}$ as $\lambda_i\coloneqq \prod_{t\in u}\lambda(O_t^i)$ for each $i\in\nats$, we find 
-%\begin{equation*}
 $\phi_u(y_u\vert x_u) = \prod_{t\in u}\phi_t(y_t\vert x_t)=\prod_{t\in u}\psi(y_t\vert x_t)$, 
-%\end{equation*}
-provided that each $\phi_t(y_t\vert x_t)$ satisfies Equation~\eqref{eq:density_is_limit}. %; again, continuity of every $\psi(\cdot \vert x_t)$ at the corresponding $y_t$ is a sufficient condition.
-%Consider now any $y_u\in\observs_u$. Then, for any $t\in u$, we can consider a sequence $\{O_t^i\}_{i\in\nats}$ of open balls in $\observs$ that are centered on, and shrink to, $y_t$. Let $\lambda(O_t^i)$ denote the Lebesgue measure of $O_t^i$. Under the assumptions above, it can be shown that, for every $x_t\in\states_t$,
-%\begin{equation}\label{eq:density_is_limit}
-%\phi_t(y_t\,\vert\,x_t) \coloneqq \lim_{i\to+\infty} \frac{P_{\observs\vert\states}(O_t^i\,\vert\,x_t)}{\lambda(O_t^i)}
-%\end{equation}
-%exists (and is real-valued) for $\lambda$-almost every $y_t\in\observs$; that is, it can only fail to exist for some $y_t$ in a set with Lebesgue measure zero. When viewed as a function of $y_t$, $\phi_t(\cdot\vert x_t)$ satisfies for any $O\in\Sigma$,
-%\begin{equation}\label{eq:density_generates_measure}
-%P_{\observs\vert\states}(O\vert x_t) = \int_{O}\phi_t(y\vert x_t) \,\mathrm{d}y\,,
-%\end{equation}
-%where the integral is understood in the Lebesgue sense. In other words, $\phi_t(\cdot\,\vert\,x_t)$ is the probability density function associated with the measure $P_{\observs\vert\states}(\cdot\,\vert\, x_t)$.
-%
-%Repeating the above construction for every $t\in u$, we can construct a sequence $\{O_u^i\}_{i\in\nats}$ such that $O_u^i=O_{t_0}^i\times O_{t_1}^i\times\cdots O_{t_n}^i$, where each $O_{t_j}^i$ is chosen as above. Letting then $\lambda_i\coloneqq \prod_{j=0}^n\lambda(O_{t_j}^i)$, it can be shown that $\phi_u(y_u\vert x_u)$ exists for $\lambda$-almost every $y_u\in\observs_u$, and satisfies $\phi_u(y_u\,\vert\,x_u) = \prod_{t\in u} \phi_t(y_t\,\vert\,x_t)$.
+provided that each $\phi_t(y_t\vert x_t)$ satisfies Equation~\eqref{eq:density_is_limit}. 
 It can now be seen that, under these assumptions, the right-hand side of Equation~\eqref{eq:updated_expectation_is_limit} is simply the well-known Bayes' rule for (finite) mixtures of densities. 
 
 In most practical applications, therefore, the function $\phi_u(\cdot\,\vert\,x_u)$ is known explicitly; one may assume, for example, that $Y_t$ follows a Normal distribution with parameters depending on $X_t$, and the functions $\phi_t(\cdot\,\vert\,x_t)$---and by extension, $\phi_u(\cdot\vert x_u)$---then follow directly by identification with $\psi(\cdot\,\vert x_t)$. Furthermore, arguably, most of the density functions that one encounters in practice will be continuous and strictly positive at $y_t$. This guarantees that the limit in Equation~\eqref{eq:density_is_limit} exists, and largely solves the interpretation issue mentioned above: when $\phi_u(y_u\vert X_u)=\prod_{t\in u}\psi(y_t\vert X_t)$ is continuous and positive at $y_u$, $\mathbb{E}_P[f(X_v)\,\vert\,Y_u=y_u]$ exists and is the same for almost\footnote{\label{fnote:limit_required_properties}
 It suffices if, for all $t\in u$, there is a sequence of open balls $\{B_t^i\}_{i\in\nats}$ in $\observs$ that shrinks to $y_t$ such that, for all $i\in\nats$, $O_t^i$ has positive Lebesgue measure and is contained in $B_t^i$.} all sequences $\{O_u^i\}_{i\in\nats}$. 
-%\footnote{\label{fnote:extra_condition}At least, the limit then exists and is the same for all sequences $\{O_u^i\}_{i\in\nats}$ for which every $\mathbb{E}_P[f(X_v)\,\vert\,Y_u\in O_u^i]$ is well-defined. This in particular means that we should only consider sequences for which every $P(Y_u\in O_u^i)>0$.}
 
-%From a practical point of view, the exposition above may feel rather backwards. This was necessary here because we started from an abstract probability measure $P_{\observs\vert\states}$, from which we needed to derive the corresponding probability density function. In practice, this will typically be done the other way around---one may assume, for example, that $Y_t$ follows a Normal distribution with some given parameters, and the density function $\phi_t(\cdot\,\vert\,x_t)$ is then immediately known explicitly. In that case, one simply computes the value of $\phi_u(y_u\vert x_u)$ as a product of the density values $\phi_t(y_t\,\vert\,x_t)$---as above---which can then be used directly to make any computations of interest.
-
-%Moving on, the imprecise model will again be updated using regular extension\footnote{The condition $P(Y_u\in O_u^i)>0$ in Footnote~\ref{fnote:extra_condition} is not very problematic when focussing on single processes $P$, but we are here considering \emph{sets} of processes, and for a given sequence $\{O_u^i\}_{i\in\nats}$ this condition may hold for some processes in the set, yet fail to hold for others. This introduces some interpretational subtleties when using regular extension, whose formal treatment is unfortunately somewhat outside of the scope of this present paper. If one is uncomfortable with this, we could instead use \emph{natural extension} to update the imprecise model: modifying Definition~\ref{def:reg_ext_densities} to only define the updated lower expectation whenever $\lexp[\phi_u(y_u\vert X_u)]>0$. In that case the updated model can be shown to satisfy the intuitive limit interpretation: $\underline{\mathbb{E}}_{\mathcal{Z}}\bigl[f(X_v)\,\vert\,Y_u = y_u\bigr] = \lim_{i\to+\infty}\underline{\mathbb{E}}_{\mathcal{Z}}\bigl[f(X_v)\,\vert\,Y_u \in O_u^i\bigr]$.}; discarding the precise models for which the updated expectation is undefined, and computing the lower envelope over the remainder.
 
 Moving on, note that if $\phi_u(y_u\vert X_u)$ exists and satisfies $\lexp[\phi_u(y_u\vert X_u)]>0$, then the updated expectation $\mathbb{E}_P[f(X_v)\,\vert\,Y_u=y_u]$ is well-defined for every $P\in\mathcal{Z}$. Hence, we can then update the imprecise model by updating each of the precise models that it consists of.
 \begin{definition}\label{def:reg_ext_densities}
@@ -559,10 +421,6 @@ Furthermore, this updated imprecise model can be given an intuitive limit interp
 \begin{proposition}\label{prop:GBR_for_densities_is_limit_if_continuous}
 Let $\mathcal{Z}$ be an ICTHMC and consider any $u,v\in\mathcal{U}$, $y_u\in\observs_u$ and $f\in\gambles(\states_v)$. For any $\{O_u^i\}_{i\in\nats}$ in $\Sigma_u$ that shrinks to $y_u$, if for some $\{\lambda_i\}_{i\in\nats}$ in $\realspos$ the quantity $\phi_u(y_u\,\vert\,X_u)$ exists, is real-valued, and satisfies $\lexp[\phi_u(y_u\vert X_u)]>0$, then $\underline{\mathbb{E}}_\mathcal{Z}[f(X_v)\vert Y_u=y_u] 
  = \lim_{i\to+\infty}\underline{\mathbb{E}}_\mathcal{Z}[f(X_v)\vert Y_u\in O_u^i]$.
-%\begin{equation*}
-%\underline{\mathbb{E}}_\mathcal{Z}[f(X_v)\vert Y_u=y_u] 
-% = \lim_{i\to+\infty}\underline{\mathbb{E}}_\mathcal{Z}[f(X_v)\vert Y_u\in O_u^i]
-%\end{equation*}
 \end{proposition}
 
 Now, recall that the requirement $\lexp[\phi_u(y_u\vert X_u)]>0$ for updating the imprecise model is a sufficient condition to guarantee that \emph{all} the precise updated models are well-defined. However, one may wonder whether it is also possible to update the imprecise model under weaker conditions. Indeed, one obvious idea would be to define the updated model more generally as
@@ -577,50 +435,23 @@ On the other hand, we recall that the existence of $\phi_u(y_u\vert X_u)$ and th
 \end{equation*}
 whenever $\{P\in\mathcal{Z}\,:\,~\text{$\mathbb{E}_P[f(X_v)\,\vert\,Y_u=y_u]$ exists}\}\neq\emptyset$. We conjecture that this updated model \emph{does} satisfy the limit interpretation, but on the other hand, it is possible to show that this, in turn, no longer satisfies the above generalised Bayes' rule. That makes this updating scheme somewhat troublesome from a practical point of view because, as we discuss below, the expression in Equation~\eqref{eq:gbr_densities} is crucial for our method of efficient computation of the updated lower expectation.
 
-%
-%\begin{proposition}\label{prop:GBR_for_densities}
-%Suppose that $\observs$ is uncountable. Let $\mathcal{Z}$ be an ICTHMC, and consider any $v\in\mathcal{U}_\emptyset$, $u\in\mathcal{U}_{<v}$, $y_u\in\observs_u$, and $f\in\gambles(\states_v)$. Then, if $\lexp[\phi_u(y_u\vert X_u)]>0$,
-%\begin{equation*}
-%\underline{\mathbb{E}}_{\mathcal{Z}}\bigl[f(X_v)\,\vert\,Y_u = y_u\bigr] = \inf\{\mathbb{E}_P[f(X_v)\vert Y_u=y_u]\,:\,P\in\mathcal{Z}\}\,.
-%\end{equation*}
-%\end{proposition}
-%\begin{proof}
-%This is a special case of Lemma~\ref{lemma:general_regular_extension}, obtained by setting $g(X_u)\coloneqq \phi_u(y_u\vert X_u)$ in that lemma's statement, and applying Proposition~\ref{prop:precise_bayes_rule_densities} to the quantities $\mathbb{E}_P[f(X_v)\,\vert\,Y_u=y_u]$.
-%\end{proof}
-
-%%% ATTN: I'm removing the below proposition since it's somewhat outside the scope of where this paper is heading (and in fact, isn't specific to ICT(H)MC's at all). Might put back in for extended version though.
-
-%So, we know from the above that each of the updated precise models is interpreted as a limit of updated models, and furthermore that the updated imprecise model corresponds to the lower envelope over these limits. One might then wonder, at this point, whether the updated imprecise model itself corresponds to a limit of updated imprecise models. It turns out that this is indeed the case, provided that $\lexp[\phi_u(y_u\vert X_u)]>0$.
-%
-%\begin{proposition}\label{prop:GBR_for_densities_is_limit_if_continuous}
-%Let $(\observs,\Sigma,P_{\observs\vert\states})$ be an observable model satisfying the assumptions above, let $\mathcal{Z}$ be an ICTHMC, and consider any $v\in\mathcal{U}_\emptyset$, $u\in\mathcal{U}$, $y_u\in\observs_u$, and $f\in\gambles(\states_v)$. Then, if $\lexp[\phi_u(y_u\vert X_u)]>0$,
-%\begin{align*}
-%\underline{\mathbb{E}}_\mathcal{Z}[f(X_v)\vert Y_u=y_u] %&= \max\left\{ \mu\in\reals : \lexp\left[ \phi(y_u\vert X_u)\bigl(f(X_s) -\mu \bigr)\right] \geq 0\right\} \\
-% &= \lim_{B_u\to y_u}\underline{\mathbb{E}}_\mathcal{Z}[f(X_v)\vert Y_u\in B_u]
-%\end{align*}
-%\end{proposition}
 
 \section{Inference Algorithms}\label{sec:inference_algos}
 
-In the previous section, we have seen that we can use the generalised Bayes' rule for updating our ICTHMC with some given observations. From a computational point of view, this is particularly useful because, rather than having to solve the non-linear optimisation problems %of computing
+In the previous section, we have seen that we can use the generalised Bayes' rule for updating our ICTHMC with some given observations. From a computational point of view, this is particularly useful because, rather than having to solve the non-linear optimisation problems 
 in Definitions~\ref{def:reg_ext_pos} or~\ref{def:reg_ext_densities} directly, 
-%\begin{equation*}
-%\inf\bigl\{\mathbb{E}_P[f(X_v)\vert Y_u\in O_u]\,:\, P\in\mathcal{Z},P(Y_u\in O_u)>0\bigr\}\,,
-%\end{equation*}
 we can focus on evaluating the function $\lexp\bigl[P_{\observs\vert\states}(O_u\vert X_u)\bigl(f(X_v) - \mu\bigr)\bigr]$,
 or its density-analogue, for some fixed value of $\mu$. Finding the updated lower expectation is then a matter of finding the maximum value of $\mu$ for which this quantity is non-negative. As we will discuss in Section~\ref{sec:gbr}, this is a relatively straightforward problem to solve numerically.
 
 Therefore, in order for this approach to be computationally tractable, we require efficient algorithms that can evaluate this quantity for a given value of $\mu$. In Section~\ref{sec:funcs_single_time}, we provide such an algorithm for the important case where the function $f$ depends on a single time-point.
 
-We first generalise the problem so that these results are applicable both for observations of the form $(Y_u\in O_u)$, and for point-observations $(Y_u=y_u)$ in an uncountable outcome space. Recall that%$P_{\observs\vert\states}(O_u\vert X_u) = \prod_{t\in u}P_{\observs\vert\states}(O_{t}\vert X_{t})$ and $\phi_u(y_u\vert X_u) = \prod_{t\in u}\phi_{t}(y_{t}\vert X_{t})$. 
+We first generalise the problem so that these results are applicable both for observations of the form $(Y_u\in O_u)$, and for point-observations $(Y_u=y_u)$ in an uncountable outcome space. Recall that 
 \begin{equation*}
 P_{\observs\vert\states}(O_u\vert X_u) = \prod_{t\in u}P_{\observs\vert\states}(O_{t}\vert X_{t})\,\quad\quad\text{and}\quad\quad \phi_u(y_u\vert X_u) = \prod_{t\in u}\phi_{t}(y_{t}\vert X_{t})\,.\vspace{-5pt}
 \end{equation*}
 In both cases, we can rewrite this expression as $\prod_{t\in u}g_{t}(X_{t})$, where, for all $t\in u$, $g_{t}\in\gambles(\states_{t})$ and $g_{t}\geq 0$. The function of interest is then
 $\lexp\left[ \bigl(\prod_{t\in u}g_{t}(X_{t})\bigr)\bigl(f(X_v) - \mu\bigr) \right]$ and the sign conditions in Propositions~\ref{prop:GBR_regular} and~\ref{prop:GBR_for_densities_lower_zero} reduce to $\uexp[\prod_{t\in u} g_{t}(X_{t})]>0$ and $\lexp[\prod_{t\in u} g_{t}(X_{t})]>0$, respectively.
 
-
-%In general, the computational complexity of evaluating this quantity depends both on the function $f$, and on how the time points $v$ relate to the time points $u$---whether we are performing inference ``into the future'' or ``into the past''. We treat some specific cases in the following sections.
 
 \subsection{Solving the Generalised Bayes' Rule}\label{sec:gbr}
 
@@ -629,20 +460,6 @@ Finding the maximum value of $\mu$ for which the function of interest in the gen
 \begin{proposition}\label{prop:GBR_properties}
 Let $\mathbb{P}_{\rateset,\mathcal{M}}$ be an ICTMC and consider any $u,v\in\mathcal{U}$, any $f\in\gambles(\states_v)$ and, for all $t\in u$, any $g_{t}\in\gambles(\states_{t})$ such that $g_{t}\geq 0$. 
 Consider the function $G: \reals\to\reals$ that is given, for all $\mu\in\reals$, by $G(\mu)\coloneqq \lexp\left[\left(\prod_{t\in u} g_{t}(X_{t})\right)\bigl(f(X_v) - \mu\bigr)\right]$.
-%Let $G:\reals\to\reals$ be a function defined for all $\mu\in\reals$, as
-%\begin{equation*}
-%G(\mu) \coloneqq \lexp\left[\left(\prod_{i=0}^n g_{t_i}(X_{t_i})\right)\bigl(f(X_v) - \mu\bigr)\right]\,.
-%\end{equation*}
-%%%%%%%%%%%%%%%%%%%%%%%%%
-%Then, this function: \customlabel{GBR:always:continuous}{(G1)} is continuous, \customlabel{GBR:always:monotone}{(G2)} is monotonically decreasing, \customlabel{GBR:always:concave}{(G3)} is concave, and \customlabel{GBR:always:root}{(G4)} has a root, i.e. $G(\mu)=0$ for some $\mu\in\reals$.
-%
-%Furthermore, if $\lexp\bigl[\prod_{i=0}^n g_{t_i}(X_{t_i})\bigr] >0$, this function: 
-%\customlabel{GBR:low_pos:monotone}{(LG1)} is strictly monotonically decreasing, and \customlabel{GBR:low_pos:unique_root}{(LG2)} has a unique root.
-%
-%If instead $\lexp\bigl[\prod_{i=0}^n g_{t_i}(X_{t_i})\bigr]=0$ but $\uexp\bigl[\prod_{i=0}^n g_{t_i}(X_{t_i})\bigr] >0$, then this function: \customlabel{GBR:up_pos:max_root}{(UG1)} has a maximum root $\mu_*$, \customlabel{GBR:up_pos:zero_before}{(UG2)} satisfies $G(\mu)=0$ for all $\mu\leq \mu_*$ and, \customlabel{GBR:up_pos:monotone}{(UG3)} is strictly monotonically decreasing for $\mu\geq \mu_*$.
-%
-%If $\uexp\bigl[\prod_{i=0}^n g_{t_i}(X_{t_i})\bigr]=0$, this function: \customlabel{GBR:none_pos:zero}{(ZG1)} is identically zero, i.e. $G(\mu)=0$ for all $\mu\in\reals$.
-%%%%%%%%%%%%%%%%%%%%%%%%%
 Then the following properties hold: \vspace{-2pt}
 \begin{enumerate}[label=G\arabic*:,ref=G\arabic*]
 \item $G$ is continuous, non-increasing, concave, and has a root, i.e. $\exists \mu\in\reals:G(\mu)=0$. \label{GBR:always} \vspace{-3pt}
@@ -650,24 +467,16 @@ Then the following properties hold: \vspace{-2pt}
 \item If\/ $\lexp\bigl[\prod_{t\in u} g_{t}(X_{t})\bigr]=0$ but $\uexp\bigl[\prod_{t\in u} g_{t}(X_{t})\bigr] >0$, then $G$ has a maximum root $\mu_*$, satisfies $G(\mu)=0$ for all $\mu\leq \mu_*$, and is (strictly) decreasing for $\mu>\mu_*$. \label{GBR:up_pos} \vspace{-3pt}
 \item If\/ $\uexp\bigl[\prod_{t\in u} g_{t}(X_{t})\bigr]=0$, then $G$ is identically zero, i.e. $\forall \mu\in\reals: G(\mu)=0$. \label{GBR:none_pos}
 \end{enumerate}
-
-%\customlabel{GBR:always}{(AG)}: $G(\mu)$ is continuous, non-increasing, concave, and has a root, i.e. $\exists \mu\in\reals:G(\mu)=0$.
-%
-%\customlabel{GBR:low_pos}{(LG)}: If $\lexp\bigl[\prod_{t\in u} g_{t}(X_{t})\bigr] >0$, then $G(\mu)$ is (strictly) decreasing, and has a unique root.
-%
-%\customlabel{GBR:up_pos}{(UG)}: If $\lexp\bigl[\prod_{t\in u} g_{t}(X_{t})\bigr]=0$ but $\uexp\bigl[\prod_{t\in u} g_{t}(X_{t})\bigr] >0$, then $G(\mu)$ has a maximum root $\mu_*$, satisfies $G(\mu)=0$ for all $\mu\leq \mu_*$ and, is decreasing for $\mu\geq \mu_*$.
-%
-%\customlabel{GBR:none_pos}{(ZG)}: If $\uexp\bigl[\prod_{t\in u} g_{t}(X_{t})\bigr]=0$, then $G(\mu)$ is identically zero, i.e. $\forall \mu\in\reals: G(\mu)=0$.
 \end{proposition}
 
 Note that the function $G$ in Proposition~\ref{prop:GBR_properties} can behave in three essentially different ways. These correspond to the cases where the observed event has strictly positive probability(/density) for \emph{all} processes in the set; to where it only has positive probability(/density) for \emph{some} processes; and to where it has \emph{zero} probability(/density) for \emph{all} processes.
 In the first two cases---which are the important ones to apply the generalised Bayes' rule---the function is ``well-behaved'' enough to make finding its maximum root a fairly simple task. For instance, a standard bisection/bracketing algorithm can be applied here, known in this context as Lavine's algorithm~\citep{cozman1997alternatives}.
 
-We sketch this method below. First, note that due to Propositions~\ref{prop:GBR_regular} and~\ref{prop:GBR_for_densities_lower_zero}, the maximum root will always be found in the interval $[\min f, \max f]$. The properties above therefore provide us with a way to check the sign conditions for updating. That is, for any $\mu>\max f$, we see that $G(\mu)<0$ if and only if $\uexp[\prod_{t\in u} g_{t}(X_{t})]>0$; %the ``if'' direction follows from~\ref{GBR:up_pos}, and the ``only if'' part from contradiction with~\ref{GBR:none_pos}. Similarly, 
-similarly, for any $\mu < \min f$, we see that $G(\mu)>0$ if and only if $\lexp[\prod_{t\in u} g_{t}(X_{t})]>0$. Evaluating $G$ at such values of $\mu$ is therefore sufficient to check the sign conditions in Propositions~\ref{prop:GBR_regular} and~\ref{prop:GBR_for_densities_lower_zero}.%, e.g. whether or not $\lexp[\prod_{t\in u}g_t(X_t)]=\lexp[\phi_u(y_u\vert X_t)]>0$. %if $G(\mu)<0$, we know from~\ref{GBR:none_pos:zero} that $\uexp[\prod_{i=0}^n g_{t_i}(X_{t_i})]>0$ by \emph{modus tollens}---regular extension can then be applied. We can also choose any $\mu<\min f$; then $G(\mu)>0$ similarly implies $\lexp\bigl[\prod_{i=0}^n g_{t_i}(X_{t_i})\bigr]>0$, due to~\ref{GBR:up_pos:zero_before}---we can then apply natural extension.
+We sketch this method below. First, note that due to Propositions~\ref{prop:GBR_regular} and~\ref{prop:GBR_for_densities_lower_zero}, the maximum root will always be found in the interval $[\min f, \max f]$. The properties above therefore provide us with a way to check the sign conditions for updating. That is, for any $\mu>\max f$, we see that $G(\mu)<0$ if and only if $\uexp[\prod_{t\in u} g_{t}(X_{t})]>0$;  
+similarly, for any $\mu < \min f$, we see that $G(\mu)>0$ if and only if $\lexp[\prod_{t\in u} g_{t}(X_{t})]>0$. Evaluating $G$ at such values of $\mu$ is therefore sufficient to check the sign conditions in Propositions~\ref{prop:GBR_regular} and~\ref{prop:GBR_for_densities_lower_zero}.
 
 The algorithm now starts by setting $\mu_-\coloneqq \min f$, and $\mu_+\coloneqq \max f$; if $G(\mu_+)=0$, we know that $\mu_+$ is the quantity of interest. Otherwise, proceed iteratively in the following way. Compute the half-way point $\mu\coloneqq \nicefrac{1}{2}(\mu_+-\mu_-)$; then, if $G(\mu)\geq 0$ set $\mu_-\coloneqq \mu$, otherwise set $\mu_+\coloneqq\mu$; then repeat. Clearly, the interval $[\mu_-,\mu_+]$ still contains the maximum root after each step. The procedure can be terminated whenever $(\mu_+-\mu_-)<\epsilon$, for some desired numerical precision $\epsilon>0$. Since the width of the interval is halved at each iteration, the runtime of this procedure is $O\bigl(\log\{(\max f - \min f)\epsilon^{-1}\}\bigr)$.
-Methods for improving the numerical stability of this procedure can be found in \cite[Section 2.7.3]{de2015credal}. %Other, more efficient, algorithms are presented by, e.g., \citet{cozman1997alternatives}. %Also note that, due to Propositions~\ref{prop:GBR_regular} and~\ref{prop:GBR_for_densities_lower_zero}, the maximum root will always be found in the interval $[\min f, \max f]$---this property might be helpful in practice.
+Methods for improving the numerical stability of this procedure can be found in \cite[Section 2.7.3]{de2015credal}. 
 
 \subsection{Functions on a Single Time Point}\label{sec:funcs_single_time}
 
@@ -696,38 +505,25 @@ g_{t_i}(x_{t_i})\underline{\mathbb{E}}_\rateset[g_{t_{i+1}}^+(X_{t_{i+1}})\,\ver
 Clearly, backward recursion allows us to compute all these functions in a time-complexity order that is linear in the number of time points in $u'$. Practically, at each step, computing the quantities $\underline{\mathbb{E}}_\rateset[g_{t_{i+1}}^+(X_{t_{i+1}})\,\vert\, X_{t_i}=x_{t_i}]$ and $\overline{\mathbb{E}}_\rateset[g_{t_{i+1}}^-(X_{t_{i+1}})\,\vert\, X_{t_i}=x_{t_i}]$ can be done using Equation~\eqref{eq:lower_exp_in_steps} and the method described in Section~\ref{subsec:ICTMC_computations}. Due to the results in~\citep{krak2016ictmc}, each of these quantities is computable in polynomial time. So, the total complexity of computing all these functions is clearly also polynomial. We now have the following result.
 \begin{proposition}\label{prop:computing_product_funcs}
 For all $t\in u'$, let $g_{t}$, $g_{t}^+$ and $g_{t}^-$ be as defined above. Then the function of interest is given by
-%\begin{equation*}
 $\lexp\left[\prod_{t\in u'}g_{t}(X_{t})\right] = \lexp\left[g_{t_0}^+(X_{t_0})\right]$. Also,
-%\,,\quad\quad\text{and,}\quad\quad
-$\uexp\left[\prod_{t\in u'}g_{t}(X_{t})\right]=\uexp\left[g_{t_0}^-(X_{t_0})\right]$%\,.
-.
-%\end{equation*}
+$\uexp\left[\prod_{t\in u'}g_{t}(X_{t})\right]=\uexp\left[g_{t_0}^-(X_{t_0})\right]$.
 \end{proposition}
 So, in order to evaluate the function of interest, it remains to compute $\lexp\left[g_{t_0}^+(X_{t_0})\right]$. Since $g_{t_0}^+$ is a function on a single time point $t_0$, this can again be done in polynomial time, using Equation~\eqref{eq:unconditional_lower_exp}.
 
 \section{Conclusions and Future Work}\label{sec:conclusions}
 
-We considered the problem of performing inference with \emph{imprecise continuous-time hidden Markov chains}; an extension of \emph{imprecise continuous-time Markov chains} obtained by augmenting them with random \emph{output} variables. %We focussed on the corresponding inference problem,
-%That is, the problem of computing lower expectations of functions on the state-space, given observed realisations of the output variables. 
+We considered the problem of performing inference with \emph{imprecise continuous-time hidden Markov chains}; an extension of \emph{imprecise continuous-time Markov chains} obtained by augmenting them with random \emph{output} variables. 
 Our main result is an efficient, polynomial runtime, algorithm to compute lower expectations of functions that depend on the state-space at any given time-point, given a collection of observations of the output variables. This algorithm can be used both when the outputs are discrete and when they are continuous.
 
 In future work, we intend to further generalise this model, by also allowing for imprecise output variables. Furthermore, we also aim to develop algorithms for other inference problems,
-%Another line of future research is the development of algorithms to solve other inference problems for this model class. 
 such as the problem of computing updated lower expectations of functions $f\in\gambles(\states_v)$ that depend on more than one time-point. Another such problem is that of estimating state-sequences given observed output-sequences---as was previously done for (discrete-time) iHMM's~\citep{DeBock:2014ts}. We believe that these previous results should 
 translate fairly naturally to the current setting.
 
-%Finally, we might look into developing algorithms to compute the updated lower expectation of more general functions $f\in\gambles(\states_v)$, which depend on the state-space at more than one time-point. In fact, one such algorithm follows straightforwardly from the results of the current paper, provided that the time-points $v$ are in the future with respect to the time-points $u$ at which the observations took place. This is due to a result from~\cite{krak2016ictmc}, which states that the lower expectation for ICTMC's satisfies the property of ``iterated lower expectation''. Combining this with the imprecise Markov property mentioned in Section~\ref{subsec:ictmc}, and writing $u=t_0,\ldots,t_n$, the function of interest in the generalised Bayes' rule can therefore be rewritten as
-%\begin{equation*}
-%\lexp\left[\left(\prod_{i=0}^n g_{t_i}(X_{t_i})\right)\bigl(f(X_v) - \mu\bigr)\right] = \lexp\left[\left(\prod_{i=0}^n g_{t_i}(X_{t_i})\right)\left(\lexp[f(X_v)\vert X_{t_n}] - \mu\right)\right]\,.
-%\end{equation*}
-%
-%Therefore, it suffices to first compute the quantity $\lexp[f(X_v)\vert X_{t_n}]$, which can be done using \citep[Algorithm 3]{krak2016ictmc}. Since this is a function on a single time point $t_n$, we can then directly apply the results and algorithm from the current paper to compute $\underline{\mathbb{E}}_{\mathcal{Z}}[f(X_v)\,\vert\,Y_u\in O_u].$% or $\underline{\mathbb{E}}_{\mathcal{Z}}[f(X_v)\,\vert\,Y_u=y_u]$.
 
 \appendix
 
 \acks{The work in this paper was partially supported by the Research Foundation - Flanders (FWO) and the H2020-MSCA-ITN-2016 UTOPIAE, grant agreement 722734.}
 
-%\bibliographystyle{plain}
 \bibliography{general}
 
 \newpage
@@ -776,42 +572,6 @@ Let $\mathbb{P}_{\rateset,\mathcal{M}}$ be an ICTMC and consider any $u\in\mathc
 Keeping $u$ fixed, then since $\lexp[\,\cdot\,]\,:\,\gambles(\states_u)\to\reals$ is an infimum over precise expectations $\mathbb{E}_{P_\states}[\,\cdot\,]\,:\,\gambles(\states_u)\to\reals$, with $P_\states\in\mathbb{P}_{\rateset,\mathcal{M}}$, we know from~\cite[Theorem 3.3.3]{Walley:1991vk} that $\lexp[\,\cdot\,]$ is a coherent lower prevision on $\gambles(\states_u)$. Therefore, the statement follows directly from~\cite[Proposition 2.6.1.$\ell$]{Walley:1991vk} and the definition of our norm $\norm{\cdot}$ on $\gambles(\states_u)$.
 \end{proof}
 
-%
-%\begin{lemma}\label{lemma:limit_lexp_is_lexp_limit}
-%Consider any $u\in\mathcal{U}$ and any convergent sequence $\{f_i\}_{i\in\nats}\to f$ in $\gambles(\states_u)$. Then, $\lim_{i\to\infty}\lexp[f_i(X_u)]=\lexp[f(X_u)]$.
-%\end{lemma}
-%\begin{proof}
-%We will show that, for every $\epsilon>0$, there is some $n\in\nats$ such that for all $i>n$, it holds that $\abs{\lexp[f_i(X_u)]-\lexp[f(X_u)]} < \epsilon$. So, consider any $\epsilon>0$, and define $\epsilon^*\coloneqq \nicefrac{\epsilon}{4}$. Because $\{f_i\}_{i\in\nats}\to f$, there is some $n\in\nats$ such that, for all $i>n$, it holds that $\norm{f_i - f}<\epsilon^*$. 
-%
-%Consider now any $i>n$. Because $\norm{f_i - f}<\epsilon^*$, it clearly holds for every $P\in\mathbb{P}_{\rateset,\mathcal{M}}$ that $\abs{\mathbb{E}_P[f_i(X_u)] - \mathbb{E}_P[f(X_u)]}<\epsilon^*$, and hence
-%\begin{equation}\label{eq:lemma_converges_expectation_close}
-%\mathbb{E}_P[f_i(X_u)] - \epsilon^* < \mathbb{E}_P[f(X_u)] < \mathbb{E}_P[f_i(X_u)] + \epsilon^*\,.
-%\end{equation}
-%Furthermore, because $\lexp[\cdot]$ computes an infimum, there must be $P_i,P\in\mathbb{P}_{\rateset,\mathcal{M}}$ such that
-%\begin{equation*}
-%\mathbb{E}_{P_i}[f_i(X_u)] - \epsilon^* < \lexp[f_i(X_u)] \leq \mathbb{E}_{P}[f_i(X_u)]\,,
-%\end{equation*}
-%and,
-%\begin{equation*}
-%\mathbb{E}_{P}[f(X_u)] - \epsilon^* < \lexp[f(X_u)] \leq \mathbb{E}_{P_i}[f(X_u)]\,.
-%\end{equation*}
-%Applying Equation~\eqref{eq:lemma_converges_expectation_close} to the r.h.s. of these equalities, we find that
-%\begin{equation*}
-%\mathbb{E}_{P_i}[f_i(X_u)] - \epsilon^* < \mathbb{E}_{P}[f(X_u)] + \epsilon^*\,,\quad\text{and,}\quad \mathbb{E}_{P}[f(X_u)] - \epsilon^* < \mathbb{E}_{P_i}[f_i(X_u)] + \epsilon^*\,,
-%\end{equation*}
-%which when combined implies
-%\begin{equation*}
-%\mathbb{E}_{P_i}[f_i(X_u)] - 2\epsilon^* < \mathbb{E}_{P}[f(X_u)] < \mathbb{E}_{P_i}[f_i(X_u)] + 2\epsilon^*\,,
-%\end{equation*}
-%or in other words that $\abs{\mathbb{E}_{P_i}[f_i(X_u)] - \mathbb{E}_{P}[f(X_u)]} < 2\epsilon^*$.
-%
-%Now, by the choice of $P_i$ and $P$, we have
-%\begin{align*}
-% &\quad \abs{\lexp[f_i(X_u)]-\lexp[f(X_u)]} \\
-% &\leq \abs{\lexp[f_i(X_u)] - \mathbb{E}_{P_i}[f_i(X_u)]} + \abs{\lexp[f(X_u)] - \mathbb{E}_{P}[f(X_u)]} + \abs{\mathbb{E}_{P_i}[f_i(X_u)] - \mathbb{E}_{P}[f(X_u)]} \\
-% &< \epsilon^* + \epsilon^* + 2\epsilon^* = 4\epsilon^* = \epsilon\,.
-%\end{align*}
-%\end{proof}
 
 We provide the proof of Proposition~\ref{prop:GBR_properties} below; this is not in chronological order with respect to the main text, but it states a number of convenient properties that are required in the proofs of statements that appear before Proposition~\ref{prop:GBR_properties}. We first need the following lemma.
 
@@ -829,11 +589,7 @@ P_\states(X_u=x_u) = 0\,,
 for all $x_u\in\states_u$ for which $g(x_u)\neq 0$. Let $\states_u^0\coloneqq\{x_u\in\states_u\,:\,g(x_u)\neq 0\}$. Then clearly for any $x_u\in\states_u^0$ it holds for all $x_{v\setminus u}\in\states_{v\setminus u}$ that also $P_\states(X_u=x_u,X_{v\setminus u}=x_{v\setminus u})=0$. Hence, for all $x_u\in\states_u$ and $x_{v\setminus u}\in\states_{v\setminus u}$, we find that $P_\states(X_u=x_u,X_{v\setminus u}=x_{v\setminus u})g(x_u)=0$. Therefore,
 \begin{align*}
 \mathbb{E}_{P_\states}\bigl[g(X_u)\bigl(f(X_v) - \mu\bigr)\bigr] &= \sum_{x_{u\cup v}\in\states_{u\cup v}} P_\states(X_{u\cup v}=x_{u\cup v})g(x_u)\bigl(f(x_v) - \mu\bigr) \\
- &= \sum_{x_{u}\in\states_{u}}\sum_{x_{v\setminus u}\in\states_{v\setminus u}} P_\states(X_u=x_u,X_{v\setminus u}=x_{v\setminus u})g(x_u)\bigl(f(x_v) - \mu\bigr)=0. %\\
- % &= \sum_{x_{u}\in\states_u^0}\sum_{x_{v\setminus u}\in\states_{v\setminus u}} P_\states(X_u=x_u,X_{v\setminus u}=x_{v\setminus u})g(x_u)\bigl(f(x_v) - \mu\bigr) \\
- % &\quad\quad + \sum_{x_{u}\in\states_{u}\setminus \states_u^0}\sum_{x_{v\setminus u}\in\states_{v\setminus u}}P_\states(X_u=x_u,X_{v\setminus u}=x_{v\setminus u})g(x_u)\bigl(f(x_v) - \mu\bigr) \\
- % &= \sum_{x_{u}\in\states_u^0}\sum_{x_{v\setminus u}\in\states_{v\setminus u}} 0g(x_u)\bigl(f(x_v) - \mu\bigr) \\
- % &\quad\quad + \sum_{x_{u}\in\states_{u}\setminus \states_u^0}\sum_{x_{v\setminus u}\in\states_{v\setminus u}} P_\states(X_u=x_u,X_{v\setminus u}=x_{v\setminus u})0\bigl(f(x_v) - \mu\bigr)= 0\,.
+ &= \sum_{x_{u}\in\states_{u}}\sum_{x_{v\setminus u}\in\states_{v\setminus u}} P_\states(X_u=x_u,X_{v\setminus u}=x_{v\setminus u})g(x_u)\bigl(f(x_v) - \mu\bigr)=0. 
 \end{align*}
 \end{proof}
 
@@ -1063,29 +819,9 @@ Because $\mathcal{P}\cup\mathcal{P}_0=\mathbb{P}_{\rateset,\mathcal{M}}$, we the
 \lexp\bigl[g(X_u)\bigl(f(X_v)-\mu\bigr)\bigr] = \min\left\{\underline{\mathbb{E}}[g(X_u)(f(X_v) - \mu)],\,0 \right\}\,,
 \end{equation*}
 and so we conclude that $\lexp\bigl[g(X_u)\bigl(f(X_v)-\mu\bigr)\bigr]$ is negative if and only if $\underline{\mathbb{E}}[g(X_u)(f(X_v) - \mu)]$ is negative. This clearly implies Equation~\eqref{eq:addedequation}.
-% \begin{align*}
-% \max\left\{ \mu\in\reals\,:\, \lexp[g(X_u)(f(X_v) - \mu)] \geq 0 \right\} &= \max\left\{ \mu\in\reals\,:\, \underline{\mathbb{E}}[g(X_u)(f(X_v) - \mu)] \geq 0 \right\} \\
-%  &= \mu_* \\
-%  &= \inf\left\{\frac{\mathbb{E}_{P_\states}[f(X_v)g(X_u)]}{\mathbb{E}_{P_\states}[g(X_u)]}\,:\,{P_\states}\in\mathcal{P}\right\} \\
-%  = \inf&\left\{\frac{\mathbb{E}_{P_\states}[f(X_v)g(X_u)]}{\mathbb{E}_{P_\states}[g(X_u)]}\,:\,{P_\states}\in\mathbb{P}_{\rateset,\mathcal{M}},\,\mathbb{E}_{P_\states}[g(X_u)]>0\right\}\,.
-% \end{align*}
 \end{proof}
 
-%The following lemmas relate an ICTHMC $\mathcal{Z}$ with the ICTMC $\mathbb{P}_{\rateset,\mathcal{M}}$ from which it was constructed. The idea behind all these results is that $\mathcal{Z}$ contains an augmented process $P=P_{\observs\vert\states}\otimes P_\states$ for every $P_\states\in \mathbb{P}_{\rateset,\mathcal{M}}$. Furthermore, $P_\states$ fully determines the probabilities of $P$ that are only concerned with states. As such, (lower) expectations of functions that are only concerned with states, will be the same for all these objects.
 
-% \begin{lemma}\label{lemma:state_expectation_doesnt_depend_on_outputs}
-% Let $P=P_{\observs\vert\states}\otimes P_\states$ be an augmented stochastic process and consider any $u\in\mathcal{U}$ and any $f\in\gambles(\states_u)$. Then $\mathbb{E}_P[f(X_u)] = \mathbb{E}_{P_\states}[f(X_u)]$.
-% \end{lemma}
-% \begin{proof}
-% Trivial consequence of the construction of augmented stochastic processes in Section~\ref{sec:aug_stochastic_processes}.
-% \end{proof}
-
-% \begin{lemma}\label{lemma:state_lower_expectation_doesnt_depend_on_outputs}
-% Let $\mathcal{Z}$ be an ICTHMC with corresponding ICTMC $\mathbb{P}_{\rateset,\mathcal{M}}$ and consider any $u\in\mathcal{U}$ and any $f\in\gambles(\states_u)$. Then $\underline{\mathbb{E}}_\mathcal{Z}[f(X_u)]=\lexp[f(X_u)]$.
-% \end{lemma}
-% \begin{proof}
-% Trivial consequence of Definition~\ref{def:hidden_ictmc} and Lemma~\ref{lemma:state_expectation_doesnt_depend_on_outputs}.
-% \end{proof}
 
 \begin{corollary}\label{cor:lower_hidden_is_root_chain}
 Let $\mathcal{Z}$ be an ICTHMC, and consider any $u,v\in\mathcal{U}$, $f\in\gambles(\states_v)$ and $g\in\gambles(\states_u)$ such that $g\geq 0$. Then, if $\uexp[g(X_u)]>0$, it holds that
@@ -1094,11 +830,9 @@ Let $\mathcal{Z}$ be an ICTHMC, and consider any $u,v\in\mathcal{U}$, $f\in\gamb
 \end{multline*}
 \end{corollary}
 \begin{proof}
-Trivial consequence of Lemma~\ref{lemma:general_regular_extension} %and~\ref{lemma:state_expectation_doesnt_depend_on_outputs}, and
-Definition~\ref{def:hidden_ictmc}.
+Trivial consequence of Lemma~\ref{lemma:general_regular_extension} and Definition~\ref{def:hidden_ictmc}.
 \end{proof}
 
-%Similar to the above, 
 Due to the independence assumptions on augmented stochastic processes and the fact that we use a fixed output distribution $P_{\observs\vert\states}$, (lower) probabilities of outputs can be conveniently rewritten as follows.
 \begin{lemma}\label{lemma:output_probability_is_expectation}
 Let $P=P_{\observs\vert\states}\otimes P_\states$ be an augmented stochastic process and consider any $u\in\mathcal{U}$ and any $O_u\in\Sigma_u$. Then $P(Y_u\in O_u)=\mathbb{E}_{P_\states}[P_{\observs\vert\states}(O_u\vert X_u)]$.
@@ -1189,110 +923,7 @@ using the above established existence and properties of the individual limits fo
 \end{proof}
 
 
-%*************************
-%
-%
-%We need the following result for the proofs of Propositions~\ref{prop:GBR_for_densities} and~\ref{prop:GBR_for_densities_is_limit_if_continuous}.
-%\begin{lemma}\label{lemma:unique_root}
-%Suppose that $\lexp\left[ \phi(y_u\vert X_u)\bigl(f(X_s) -\mu \bigr)\right] = \lexp\left[ \phi(y_u\vert X_u)\bigl(f(X_s) -\mu' \bigr)\right] = 0$ for some $\mu,\mu'\in\reals$. Then, if $\lexp[\phi(y_u\vert X_u)]>0$, it holds that $\mu=\mu'$.
-%\end{lemma}
-%\begin{proof}
-%Let $\mu,\mu'$ be any two roots of the function of interest, and assume without loss of generality that $\mu\leq\mu'$. Fix any $\epsilon>0$, and define $\epsilon^*\coloneqq \epsilon\cdot \lexp\left[\phi(y_u\vert X_u) \right]$. Since $\lexp[\phi(y_u\vert X_u)] > 0$, it clearly holds that $\epsilon^*>0$. Now, since
-%\begin{equation*}
-%0 = \lexp\left[ \phi(y_u\vert X_u)\bigl(f(X_s) -\mu \bigr)\right] = \inf\left\{ \mathbb{E}_P\left[ \phi(y_u\vert X_u)\bigl(f(X_s) -\mu \bigr)\right] \,:\, P\in\wprocesses_{\rateset,\mathcal{M}}\right\}\,,
-%\end{equation*}
-%there must exist some process $P_\mu\in\wprocesses_{\rateset,\mathcal{M}}$ such that $0\leq \mathbb{E}_{P_\mu}\left[ \phi(y_u\vert X_u)\bigl(f(X_s) -\mu \bigr)\right] < \epsilon^*$.
-%
-%By linearity of expectation, we have for any $\nu$ that
-%\begin{align*}
-%\mathbb{E}_{P_\mu}\left[ \phi(y_u\vert X_u)\bigl(f(X_s) -\nu \bigr)\right] %&= \mathbb{E}_{P_\mu}\left[ \phi(y_u\vert X_u)f(X_s) - \phi(y_u\vert X_u)\nu \right] %\\
-% &= \mathbb{E}_{P_\mu}\left[ \phi(y_u\vert X_u)f(X_s) \right] - \mathbb{E}_{P_\mu}\left[\phi(y_u\vert X_u)\nu \right] \\
-% = \mathbb{E}_{P_\mu}\left[ \phi(y_u\vert X_u)f(X_s) \right] - \nu\mathbb{E}_{P_\mu}\left[\phi(y_u\vert X_u) \right]\,,
-%\end{align*}
-%and hence, we see that the function $\mathbb{E}_{P_\mu}\left[ \phi(y_u\vert X_u)\bigl(f(X_s) -\nu \bigr)\right]$ is monotonically decreasing in $\nu$. Since by assumption $\mu\leq\mu'$, and combining with the above, we see that
-%\begin{equation*}
-%\mathbb{E}_{P_\mu}\left[ \phi(y_u\vert X_u)\bigl(f(X_s) -\mu' \bigr)\right] \leq \mathbb{E}_{P_\mu}\left[ \phi(y_u\vert X_u)\bigl(f(X_s) -\mu \bigr)\right] < \epsilon^*\,.
-%\end{equation*}
-%
-%Furthermore, since $\mu'$ is also a root, we have that
-%\begin{equation*}
-%0 = \lexp\left[ \phi(y_u\vert X_u)\bigl(f(X_s) -\mu' \bigr)\right] \leq \mathbb{E}_{P_\mu}\left[ \phi(y_u\vert X_u)\bigl(f(X_s) -\mu' \bigr)\right]\,,
-%\end{equation*}
-%and hence, combining with the above,
-%\begin{equation*}
-%0 \leq \mathbb{E}_{P_\mu}\left[ \phi(y_u\vert X_u)\bigl(f(X_s) -\mu' \bigr)\right] \leq \mathbb{E}_{P_\mu}\left[ \phi(y_u\vert X_u)\bigl(f(X_s) -\mu \bigr)\right] < \epsilon^*\,,
-%\end{equation*}
-%which clearly implies that
-%\begin{equation*}
-%\mathbb{E}_{P_\mu}\left[ \phi(y_u\vert X_u)\bigl(f(X_s) -\mu \bigr)\right] - \mathbb{E}_{P_\mu}\left[ \phi(y_u\vert X_u)\bigl(f(X_s) -\mu' \bigr)\right] < \epsilon^*\,.
-%\end{equation*}
-%Expanding this difference using linearity of expectation, we have
-%\begin{align*}
-% &\quad \mathbb{E}_{P_\mu}\left[ \phi(y_u\vert X_u)\bigl(f(X_s) -\mu \bigr)\right] - \mathbb{E}_{P_\mu}\left[ \phi(y_u\vert X_u)\bigl(f(X_s) -\mu' \bigr)\right] 
-% &= -\mu\mathbb{E}_{P_\mu}\left[\prod_{i=0}^n\phi(y_{t_i}\vert X_{t_i}) \right] + \mu'\mathbb{E}_{P_\mu}\left[\prod_{i=0}^n\phi(y_{t_i}\vert X_{t_i}) \right] \\
-% = (\mu' - \mu)\mathbb{E}_{P_\mu}\left[\phi(y_u\vert X_u) \right]\,,
-%\end{align*}
-%and hence that $(\mu' - \mu) < \nicefrac{\epsilon^*}{\mathbb{E}_{P_\mu}\left[\phi(y_u\vert X_u) \right]}$. Since $\mathbb{E}_{P_\mu}\left[\phi(y_u\vert X_u) \right] \geq \lexp\left[\phi(y_u\vert X_u) \right]$, we find
-%\begin{align*}
-%(\mu' - \mu) &< \frac{\epsilon^*}{\mathbb{E}_{P_\mu}\left[\phi(y_u\vert X_u) \right]} \leq \frac{\epsilon^*}{\lexp\left[\phi(y_u\vert X_u) \right]} = \frac{\epsilon\cdot\lexp\left[\phi(y_u\vert X_u) \right]}{\lexp\left[\phi(y_u\vert X_u) \right]} = \epsilon\,.
-%\end{align*}
-%Hence, we have found that $(\mu' - \mu) = \abs{\mu'-\mu} < \epsilon$, using the assumption $\mu\leq \mu'$ to establish the equality. Since this is true for every $\epsilon>0$, we conclude that indeed $\mu=\mu'$.
-%\end{proof}
-%
-%\begin{proof}[Proof of Proposition~\ref{prop:GBR_for_densities}]
-%Let $\mu$ be the unique root of $\lexp[\phi(y_u\vert X_u)\bigl(f(X_s)-\mu\bigr)]$.
-%Then, clearly,
-%\begin{equation*}
-%0 = \lexp[\phi(y_u\vert X_u)\bigl(f(X_s)-\mu\bigr)] \leq \mathbb{E}_P[\phi(y_u\vert X_u)\bigl(f(X_s)-\mu\bigr)]\,,
-%\end{equation*}
-%for every $P\in\wprocesses_{\rateset,\mathcal{M}}$. By linearity of expectation,
-%\begin{align*}
-%\mathbb{E}_P[\phi(y_u\vert X_u)\bigl(f(X_s)-\mu\bigr)] &= \mathbb{E}_P[\phi(y_u\vert X_u)f(X_s)]-\mu\mathbb{E}_P[\phi(y_u\vert X_u)]\,,
-%\end{align*}
-%and hence
-%\begin{align*}
-%0 &\leq \mathbb{E}_P[\phi(y_u\vert X_u)f(X_s)] - \mu\mathbb{E}_P[\phi(y_u\vert X_u)] \\
-%\mu\mathbb{E}_P[\phi(y_u\vert X_u)] &\leq \mathbb{E}_P[\phi(y_u\vert X_u)f(X_s)] \\
-%\mu &\leq \frac{\mathbb{E}_P[\phi(y_u\vert X_u)f(X_s)]}{\mathbb{E}_P[\phi(y_u\vert X_u)]} = \mathbb{E}_P[f(X_s)\vert Y_u=y_u]\,,
-%\end{align*}
-%which clearly implies that
-%\begin{equation*}
-%\mu \leq \inf\{\mathbb{E}_P[f(X_s)\vert Y_u=y_u]\,:\,P\in\mathcal{Z}\}\,.
-%\end{equation*}
-%
-%So, $\mu$ is a lower bound on $\inf\{\mathbb{E}_P[f(X_s)\vert Y_u=y_u]\,:\,P\in\mathcal{Z}\}$. It remains to show that this bound is tight, or equivalently, that for every $\epsilon>0$, there is some $P\in\mathcal{Z}$, such that $\mathbb{E}_P[f(X_s)\vert Y_u=y_u]-\mu < \epsilon$. So, fix any $\epsilon>0$, and let $\epsilon^*\coloneqq \epsilon\cdot\lexp[\phi(y_u\vert X_u)]$. Since by assumption $\lexp[\phi(y_u\vert X_u)]>0$, we clearly have that $\epsilon^*>0$. Therefore, and since $\mu$ is a root of $\lexp[\phi(y_u\vert X_u)\bigl(f(X_s)-\mu\bigr)]$, there must exist some $P\in\wprocesses_{\rateset,\mathcal{M}}$ such that
-%\begin{equation*}
-%0 \leq \mathbb{E}_P[\phi(y_u\vert X_u)\bigl(f(X_s)-\mu\bigr)] < \epsilon^*\,.
-%\end{equation*}
-%Hence, by linearity of expectation,
-%\begin{align*}
-%\mathbb{E}_P[\phi(y_u\vert X_u)f(X_s)]-\mu\mathbb{E}_P[\phi(y_u\vert X_u)] &< \epsilon^* \\
-%\mathbb{E}_P[\phi(y_u\vert X_u)f(X_s)] &< \mu\mathbb{E}_P[\phi(y_u\vert X_u)] + \epsilon^* \\
-%\frac{\mathbb{E}_P[\phi(y_u\vert X_u)f(X_s)]}{\mathbb{E}_P[\phi(y_u\vert X_u)]} &< \mu + \frac{\epsilon}{\mathbb{E}_P[\phi(y_u\vert X_u)]} \\
-%\mathbb{E}_P[f(X_s)\vert Y_u=y_u] - \mu &< \frac{\epsilon^*}{\mathbb{E}_P[\phi(y_u\vert X_u)]} \leq \frac{\epsilon^*}{\lexp[\phi(y_u\vert X_u)]} = \epsilon\,.
-%\end{align*}
-%\end{proof}
 
-
-%The argument below proves the properties of the density $\phi_u$ that are claimed in Section~\ref{subsec:uncountable}, under the additional assumptions on $(\observs,\Sigma,P_{\observs\vert\states})$ that are imposed there.
-%
-%\begin{proof}
-%Due to the assumptions in Section~\ref{subsec:uncountable}, and by the Radon-Nikodym theorem, we can associate with $P_{\observs\vert\states}$ a measurable function $\psi_t:\observs_t\times\states_t\to\realsnonneg$ such that, for all $x_t\in\states_t$ and $O_t\in\Sigma_t$,
-%\begin{equation*}
-%P_{\observs\vert\states}(O_t\vert x_t) = \int_{O_t}\psi_t(y\vert x_t) \,\mathrm{d}y\,.
-%\end{equation*}
-%Furthermore, since $\int_{\observs}\psi_t(y\vert x_t) \,\mathrm{d}y = P_{\observs\vert\states}(\observs\vert x_t)=1$, $\psi_t(\cdot\vert x_t)$ is absolutely integrable on $\observs$. Therefore, by the Lebesgue differentiation theorem, for $\lambda$-almost every $y_t\in\observs_t$, and for any sequence $\{O_t^i\}_{i\in\nats}$ of open balls in $\observs$ that shrink to $y_t$, it holds that
-%\begin{equation*}
-%\psi_t(y_t\vert x_t) = \lim_{i\to+\infty} \frac{1}{\lambda(O_t^i)} \int_{O_t^i} \psi_t(y\vert x_t)\,\mathrm{d}y\,.
-%\end{equation*}
-%At those $y_t\in\observs_t$ where this equality holds, we then find using the choice of $\psi_t$ that
-%\begin{equation*}
-%\psi_t(y_t\vert x_t) = \lim_{i\to+\infty} \frac{1}{\lambda(O_t^i)} \int_{O_t^i} \psi(y\vert x_t)\,\mathrm{d}y = \lim_{i\to+\infty} \frac{P_{\observs\vert\states}(O_t^i\vert x_t)}{\lambda(O_t^i)}\,.
-%\end{equation*}
-%In other words, the limit expression on the r.h.s. of this equality exists (at least) $\lambda$-almost everywhere---and hence, the same is true for the limit in Equation~\eqref{eq:density_is_limit}. Furthermore, this implies that $\phi_t(\cdot\,\vert x_t)$ differs from $\psi_t(\cdot\,\vert x_t)$ at most on a set of Lebesgue measure zero---the above r.h.s. limit might still exist even if the other equalities do not hold. Due to the choice of $\psi_t$, this immediately implies Equation~\eqref{eq:density_generates_measure}.
-%
-%It now remains to prove the claimed properties about the function $\phi_u$. **** TODO: finish this
-%\end{proof}
 
 The below proves some of the properties that are claimed in the main text of Section~\ref{subsec:uncountable}. We first need the following result, which is essentially well-known, but which we repeat here for the sake of completeness.
 
@@ -1345,9 +976,7 @@ Because $\psi(y_t\vert x_t)$ is by assumption continuous at $y_t$, this result f
 
 We finally prove the claim that $\mathbb{E}_P[f(X_v)\,\vert\,Y_u=y_u]$ is the same for almost every sequence $\{O_u^i\}_{i\in\nats}$ that shrinks to $y_u$, provided that for all $x_t\in\states$, $P_{\observs\vert\states}(\cdot\vert x_t)$ is constructed from a density $\psi(\cdot\,\vert x_t)$ that is continuous and strictly positive at $y_t$. To this end, assume that $\{O_u^i\}_{i\in\nats}$ satisfies the assumptions in Footnote~\ref{fnote:limit_required_properties}; i.e. that for all $t\in u$, there is a sequence of open balls $\{B_t^i\}_{i\in\nats}$ in $\observs$ that shrinks to $y_t$ such that, for all $i\in\nats$, $\lambda(O_t^i)>0$ and $O_t^i\subseteq B_t^i$.
 
-%$\lambda(O_t^i)>0$ for all $t\in u$ and $i\in\nats$ and that, for all $t\in u$ and $i\in\nats$, there are open balls $B_t^i\supset O_t^i$ such that $B_t^i\supset B_t^{i+1}$ for all $i\in\nats$, and $\cap_{i\in\nats}B_t^i=\{y_t\}$.
 
-%Due to Proposition~\ref{prop:precise_bayes_rule_densities}, 
 We start by showing that
 \begin{equation*}
 \phi_u(y_u\vert x_u) = \lim_{i\to+\infty} \frac{P_{\observs\vert\states}(O_u^i\vert x_u)}{\lambda(O_u^i)}
@@ -1370,10 +999,6 @@ Furthermore, because the sequence $\{B_t^i\}_{i\in\nats}$ shrinks to $y_t$, ther
  = \frac{\epsilon}{\lambda(O_t^i)}\int_{O_t^i}1\,\mathrm{d}y 
  = \frac{\epsilon}{\lambda(O_t^i)}\lambda(O_t^i)
  = \epsilon\,.
-% \leq \frac{\epsilon'}{\lambda(O_t^i)}\int_{B_t^i}1\,\mathrm{d}y 
-% \leq \frac{\epsilon'}{c_t\lambda(B_t^i)}\int_{B_t^i}1\,\mathrm{d}y
-% = \frac{\epsilon'}{c_t}
-% = \epsilon,
 \end{align*}
 So, we conclude that indeed
 \begin{equation*}
@@ -1494,7 +1119,7 @@ and
 \begin{equation*}
 \phi(y_0\vert \overline{x}) = \lim_{i\to+\infty} \frac{P_{\observs\vert\states}(O_0^i\vert \overline{x})}{\lambda(O_0^i)} = \lim_{i\to+\infty} \frac{\delta_i^2}{2\delta_i} = \lim_{i\to+\infty} \frac{\delta_i}{2} = 0\,,
 \end{equation*}
-where $\lambda(O_0^i)$ is the Lebesgue measure of $O_0^i$. Fix any such sequence $\{O_0^i\}_{i\in\nats}$ and let $\{\lambda_i\}_{i\in\nats}\coloneqq\{\lambda(O_0^i)\}_{i\in\nats}$.% be the corresponding sequence.
+where $\lambda(O_0^i)$ is the Lebesgue measure of $O_0^i$. Fix any such sequence $\{O_0^i\}_{i\in\nats}$ and let $\{\lambda_i\}_{i\in\nats}\coloneqq\{\lambda(O_0^i)\}_{i\in\nats}$.
 
 Let the set of initial distributions $\mathcal{M}$ be the entire set of probability mass functions on $\states_0$. Consider the two probability mass functions $P_1,P_2$ on $\states_0$ such that $P_1(x)=1$, $P_1(\overline{x})=0$, and $P_2(x)=0$, $P_2(\overline{x})=1$; clearly, $P_1,P_2\in\mathcal{M}$. Let $\rateset$ be any non-empty, bounded, and convex set of rate matrices with separately specified rows, and let $\mathbb{P}_{\rateset,\mathcal{M}}$ be the corresponding ICTMC. Construct $\mathcal{Z}$ from $\mathbb{P}_{\rateset,\mathcal{M}}$ and $(\observs,\Sigma,P_{\observs\vert\states})$ as in Definition~\ref{def:hidden_ictmc}. Let $f\in\gambles(\states_0)$ be defined by $f(x)\coloneqq 1$ and $f(\overline{x})\coloneqq -1$. 
 
@@ -1508,11 +1133,7 @@ because $\phi(y_0\vert \overline{x})=0$. Hence,
 \begin{align*}
 \underline{\mathbb{E}}_\mathcal{Z}^\mathrm{R}[f(X_0)\,\vert\, Y_0=y_0] &= \inf\left\{ \mathbb{E}_{P}[f(X_0)\,\vert\,Y_0=y_0]\,:\,P\in\mathcal{Z}, \mathbb{E}_{P}[\phi(y_0\vert X_0)]>0  \right\} = 1\,.
 \end{align*}
-However, for any $i\in\nats$, since $P_2\in\mathcal{M}$, there is some $P\in\mathcal{Z}$ such that %$\mathbb{E}_P[P_{\observs\vert\states}(O_0^i\vert X_0)]>0$, and hence
-%\begin{align*}
-%\mathbb{E}_P[f(X_0)\,\vert\,Y_0\in O_0^i] = \frac{\mathbb{E}_P[f(X_0)P_{\observs\vert\states}(O_0^i\vert X_0)]}{\mathbb{E}_P[P_{\observs\vert\states}(O_0^i\vert X_0)]} = \frac{f(x)P_{\observs\vert\states}(O_0^i\vert x)}{P_{\observs\vert\states}(O_0^i\vert x)} = f(x) = 1\,,
-%\end{align*}
-%and, since also 
+However, for any $i\in\nats$, since $P_2\in\mathcal{M}$, there is some $P\in\mathcal{Z}$ such that 
 \begin{equation*}
 P(Y_0\in O_0^i)=\mathbb{E}_{P_\states}[P_{\observs\vert\states}(O_0^i\vert X_0)]=\mathbb{E}_{P_2}[P_{\observs\vert\states}(O_0^i\vert X_0)]=P_{\observs\vert\states}(O_0^i\vert \overline{x})>0,
 \end{equation*}
@@ -1562,11 +1183,11 @@ Since this exhaustively covers all cases, we conclude that $\mathbb{E}_P[f(X_0)\
 \end{equation*}
 which means that $\underline{\mathbb{E}}_\mathcal{Z}^\mathrm{L}[f(X_v)\,\vert\, Y_u=y_u]$ is well-defined.
 
-Furthermore, it follows from the above that, for all $P\in\mathcal{Z}$, we have either $\mathbb{E}_P[f(X_0)\vert Y_0=y_0]=1$, or $\mathbb{E}_P[f(X_0)\vert Y_0=y_0]=-1$. Also, since $P_1\in\mathcal{M}$, there is at least one $P\in\mathcal{Z}$ for which the former case applies. Hence, it follows that
+Furthermore, it follows from the above that, for all $P\in\mathcal{Z}$, we have either $\mathbb{E}_P[f(X_0)\vert Y_0=y_0]=1$, or $\mathbb{E}_P[f(X_0)\vert Y_0=y_0]=-1$. Also, since $P_2\in\mathcal{M}$, there is at least one $P\in\mathcal{Z}$ for which the second case applies. Hence, it follows that
 \begin{align*}
 \underline{\mathbb{E}}_\mathcal{Z}^\mathrm{L}[f(X_v)\,\vert\, Y_u=y_u] &\coloneqq \inf\bigl\{\mathbb{E}_P[f(X_v)\,\vert\,Y_u=y_u]\,:\,P\in\mathcal{Z},\,\text{$\mathbb{E}_P[f(X_v)\,\vert\,Y_u=y_u]$ exists}\bigr\}= -1.
 \end{align*}
-However, we also know that, for any $P\in\mathcal{Z}$, if $\mathbb{E}_{P_\states}[\phi(y_0\vert X_0)]>0$, then $\mathbb{E}_{P}[f(X_0)\vert Y_0=y_0]=1$. Therefore,
+However, we also know that, for any $P\in\mathcal{Z}$, if $\mathbb{E}_{P_\states}[\phi(y_0\vert X_0)]>0$, then $\mathbb{E}_{P}[f(X_0)\vert Y_0=y_0]=1$. Since $P_1\in\mathcal{M}$, there is at least one $P\in\mathcal{Z}$ for which this holds. Therefore,
 \begin{align*}
 1 &= \inf\left\{\mathbb{E}_P[f(X_v)\,\vert\,Y_u=y_u]\,:\,P\in\mathcal{Z},\,\mathbb{E}_{P_\states}[\phi(y_0\vert X_0)]>0\right\} \\
  &= \max\{\mu\in\reals\,:\,\lexp\bigl[\phi_u(X_u)\bigl(f(X_v)-\mu\bigr)\bigr]\geq 0\}\,,
@@ -1578,261 +1199,6 @@ where the second equality follows from Proposition~\ref{prop:regular_is_computab
 \end{equation*}
 \end{proof}
 
-%We (probably still) need (some of) the following three results for the proof of Proposition~\ref{prop:precise_bayes_rule_densities}. *** Previously needed for statement of imprecise version, which I removed.
-%
-%\begin{proposition}\label{prop:decomp}
-%Let $\mathcal{Z}$ be an ICTHMC, and consider any $v\in\mathcal{U}_\emptyset$, $u\in\mathcal{U}$, $f\in\gambles(\states_v)$, and $g\in\gambles(\observs_u)$. Then,
-%\begin{equation*}
-%\underline{\mathbb{E}}_\mathcal{Z}\left[ f(X_v)g(Y_u) \right] = \lexp\left[ f(X_v)\mathbb{E}_{\observs\vert\states}[g(Y_u)\vert X_u] \right] 
-%\end{equation*}
-%\end{proposition}
-%\begin{proof}
-%Fix any $P\in\mathcal{Z}$. Then,
-%\begin{align*}
-%\mathbb{E}_P\bigl[ f(X_v)g(Y_u) \bigr] &= \mathbb{E}_P\bigl[ \mathbb{E}_P\left[ f(X_v)g(Y_u) \vert X_v,X_u \right] \bigr] \\
-%&= \mathbb{E}_P\bigl[ f(X_v)\mathbb{E}_P[ g(Y_u) \vert X_v,X_u ] \bigr] \\
-%&= \mathbb{E}_P\bigl[ f(X_v)\mathbb{E}_P[ g(Y_u) \vert X_u ] \bigr] \\
-%&= \mathbb{E}_{P_\states}\bigl[ f(X_v)\mathbb{E}_{\observs\vert\states}[ g(Y_u) \vert X_u ] \bigr] \,,
-%\end{align*}
-%where the first and second equality follow from the basic properties of expectation, the third equality is due to the independence assumptions in Section~\ref{sec:aug_stochastic_processes}, and the final equality uses the facts that the (outer) expectation is only concerned with states, and that the probability $P_{\observs\vert\states}$ is shared by all $P\in\mathcal{Z}$. Since this is true for every $P\in\mathcal{Z}$, the result now follows.
-%\end{proof}
-%
-%\begin{lemma}\label{lemma:dirac_delta_gets_density_value}
-%Consider any sequence $\{\delta_i\}_{i\in\nats}\to 0^+$ in $\realspos$. Then, if $\phi(y_u\vert x_u)$ is continuous around $y_u$,
-%\begin{equation*}
-%\lim_{i\to\infty} \frac{1}{\lambda(\mathcal{B}_i)}\mathbb{E}_{\observs\vert\states}[\ind{(y_u-\nicefrac{\delta_i}{2},y_u+\nicefrac{\delta_i}{2})}(Y_u)\vert X_u=x_u] = \phi(y_u\vert x_u)\,,
-%\end{equation*}
-%where $\lambda(\mathcal{B}_i)\coloneqq \lambda((y_u-\nicefrac{\delta_i}{2},y_u+\nicefrac{\delta_i}{2}))$ is Lebesgue measure of the region $(y_u-\nicefrac{\delta_i}{2},y_u+\nicefrac{\delta_i}{2})$.
-%\end{lemma}
-%\begin{proof}
-%Fix any $i\in\nats$, and note that
-%\begin{align*}
-%\mathbb{E}_{\observs\vert\states}[\ind{(y_u-\nicefrac{\delta_i}{2},y_u+\nicefrac{\delta_i}{2})}(Y_u)\vert X_u=x_u] &= \int_{\observs_u}\ind{(y_u-\nicefrac{\delta_i}{2},y_u+\nicefrac{\delta_i}{2})}(y)\phi(y\vert x_u) dy 
-%= \int_{(y_u-\nicefrac{\delta_i}{2},y_u+\nicefrac{\delta_i}{2})}\phi(y\vert x_u) dy\,.
-%\end{align*}
-%Let $\underline{\phi}_i\coloneqq \inf\{\phi(y\vert x_u):y\in(y_u-\nicefrac{\delta_i}{2},y_u+\nicefrac{\delta_i}{2})\}$ and $\overline{\phi}_i\coloneqq \sup\{\phi(y\vert x_u):y\in(y_u-\nicefrac{\delta_i}{2},y_u+\nicefrac{\delta_i}{2})\}$. Then, since $\underline{\phi}_i \leq \phi(y\vert x_u)\leq \overline{\phi}_i$ for all $y\in(y_u-\nicefrac{\delta_i}{2},y_u+\nicefrac{\delta_i}{2})$, we clearly have that
-%\begin{align*}
-%\underline{\phi}_i = \underline{\phi}_i\cdot\frac{\lambda(\mathcal{B}_i)}{\lambda(\mathcal{B}_i)} = \underline{\phi}_i\cdot\frac{1}{\lambda(\mathcal{B}_i)}\int_{(y_u-\nicefrac{\delta_i}{2},y_u+\nicefrac{\delta_i}{2})}dy &= \frac{1}{\lambda(\mathcal{B}_i)}\int_{(y_u-\nicefrac{\delta_i}{2},y_u+\nicefrac{\delta_i}{2})}\underline{\phi}_idy
-% \\
-% &\leq \frac{1}{\lambda(\mathcal{B}_i)}\int_{(y_u-\nicefrac{\delta_i}{2},y_u+\nicefrac{\delta_i}{2})}\phi(y\vert x_u) dy \\
-% &\leq \frac{1}{\lambda(\mathcal{B}_i)}\int_{(y_u-\nicefrac{\delta_i}{2},y_u+\nicefrac{\delta_i}{2})}\overline{\phi_i} dy  = \overline{\phi}_i\,.
-%\end{align*}
-%Hence, for every $i\in\nats$, we have that $\underline{\phi}_i\leq\nicefrac{1}{\lambda(\mathcal{B}_i)}\mathbb{E}_{\observs\vert\states}[\ind{(y_u-\nicefrac{\delta_i}{2},y_u+\nicefrac{\delta_i}{2})}(Y_u)\vert X_u=x_u]\leq\overline{\phi}_i$, and since also clearly $\underline{\phi}_i\leq \phi(y_u\vert x_u)\leq \overline{\phi}_i$, it follows that
-%\begin{equation*}
-%\abs{\phi(y_u\vert x_u) - \frac{1}{\lambda(\mathcal{B}_i)}\mathbb{E}_{\observs\vert\states}[\ind{(y_u-\nicefrac{\delta_i}{2},y_u+\nicefrac{\delta_i}{2})}(Y_u)\vert X_u=x_u]} \leq \overline{\phi}_i - \underline{\phi}_i\,,
-%\end{equation*}
-%and so we see that it suffices to show that $\lim_{i\to\infty}\overline{\phi}_i - \underline{\phi}_i = 0$, or equivalently, that for every $\epsilon\in\realspos$, there is some $N\in\nats$ such that, for every $i>N$, $\overline{\phi}_i-\underline{\phi}_i < \epsilon$. So, fix any $\epsilon\in\realspos$. Since we assumed that $\phi(y\vert x_u)$ is continuous around $y_u$, there exists some $\delta\in\realspos$ such that, for every $\Delta\in(-\delta,\delta)$,
-%\begin{equation}\label{eq:dirac_bound_close_enough}
-%\abs{\phi(y_u\vert x_u) - \phi(y_u+\Delta\vert x_u)} < \frac{\epsilon}{4}\,.
-%\end{equation}
-%Consider this $\delta$. Then, since $\{\delta_i\}_{i\in\nats}\to 0^+$, there exists some $N\in\nats$ such that, for all $i>N$, $\delta_i < \delta$. Consider this $N$, and choose any $i>N$; it now remains to show that $\overline{\phi}_i-\underline{\phi}_i < \epsilon$.
-%
-%Let $\underline{\phi}_*\coloneqq \inf\{ \phi(y\vert x_u):y\in(y_u-\nicefrac{\delta}{2},y_u+\nicefrac{\delta}{2}) \}$ and $\overline{\phi}_*\coloneqq \sup\{ \phi(y\vert x_u):y\in(y_u-\nicefrac{\delta}{2},y_u+\nicefrac{\delta}{2}) \}$. Then, since $\delta_i<\delta$, we clearly have $(y_u-\nicefrac{\delta_i}{2},y_u+\nicefrac{\delta_i}{2})\subset (y_u-\nicefrac{\delta}{2},y_u+\nicefrac{\delta}{2})$, and hence $\underline{\phi}_* \leq \underline{\phi}_i$ and $\overline{\phi}_i\leq \overline{\phi}_*$. Therefore, it suffices to show that $\overline{\phi}_*-\underline{\phi}_* < \epsilon$. Since it follows trivially from Equation~\eqref{eq:dirac_bound_close_enough} that $\phi(y_u\vert x_u)-\underline{\phi}_*\leq\nicefrac{\epsilon}{4}$ and $\overline{\phi}_*-\phi(y_u\vert x_u)\leq\nicefrac{\epsilon}{4}$, we have
-%\begin{equation*}
-%\overline{\phi}_* - \underline{\phi}_* = \overline{\phi}_* - \phi(y_u\vert x_u) + \phi(y_u\vert x_u) - \underline{\phi}_* \leq \frac{\epsilon}{4}+\frac{\epsilon}{4} = \frac{\epsilon}{2} < \epsilon\,,
-%\end{equation*}
-%which concludes the proof.
-%\end{proof}
-
-
-%\begin{proof}{\bf of Proposition~\ref{prop:GBR_for_densities_is_limit_if_continuous}~}
-%We will show that, for any $\{\delta_i\}_{i\in\nats}\to 0^+$, it holds that
-%\begin{equation*}
-%\lim_{i\to \infty}\underline{\mathbb{E}}_\mathcal{Z}[f(X_v)\vert Y_u\in (y_u-\nicefrac{\delta_i}{2},y_u+\nicefrac{\delta_i}{2})] = \max\left\{ \mu\in\reals : \lexp\left[ \phi(y_u\vert X_u)\bigl(f(X_v) -\mu \bigr)\right] \geq 0\right\}\,.
-%\end{equation*}
-%So, consider any sequence $\{\delta_i\}_{i\in\nats}\to 0^+$. Note first of all that, because $\lexp[\phi(y_u\vert X_u)]>0$, and due to continuity of $\phi(y_u\vert X_u)$, we must also have $\lexp[\phi(y_u + \Delta \vert X_u)]>0$ for all $\Delta$ in some interval $(-\delta,\delta)$. Therefore, and due to monotonicity of measure, it follows that we must also have $\lexp[\mathbb{E}_{\observs\vert\states}[\ind{(y_u-\nicefrac{\delta_i}{2},y_u+\nicefrac{\delta_i}{2})}(Y_u)\vert X_u]]>0$ for all $i\in\nats$.
-%
-%Now, define an induced sequence $\{\mu_i\}_{i\in\nats}$ by
-%\begin{equation*}
-%\mu_i \coloneqq \underline{\mathbb{E}}_{\mathcal{Z}}[f(X_v)\vert Y_u\in (y_u-\nicefrac{\delta_i}{2},y_u+\nicefrac{\delta_i}{2})] = \max\left\{ \mu\in\reals : \underline{\mathbb{E}}_{\mathcal{Z}}\left[ \ind{(y_u-\nicefrac{\delta_i}{2},y_u+\nicefrac{\delta_i}{2})}(Y_u)\bigl( f(X_v) - \mu \bigr) \right] \geq 0\right\}\,,
-%\end{equation*}
-%and note in particular that then
-%\begin{equation*}
-%\underline{\mathbb{E}}_{\mathcal{Z}}\left[ \ind{(y_u-\nicefrac{\delta_i}{2},y_u+\nicefrac{\delta_i}{2})}(Y_u)\bigl( f(X_v) - \mu_i \bigr) \right] = 0\,,
-%\end{equation*}
-%for every $i\in\nats$. Hence, using Proposition~\ref{prop:decomp} we have that, for every $i\in\nats$,
-%\begin{equation*}
-%0 = \underline{\mathbb{E}}_{\mathcal{Z}}\left[ \ind{(y_u-\nicefrac{\delta_i}{2},y_u+\nicefrac{\delta_i}{2})}(Y_u)\bigl( f(X_v) - \mu_i \bigr) \right] = \lexp\left[ \mathbb{E}_{\observs\vert\states}[\ind{(y_u-\nicefrac{\delta_i}{2},y_u+\nicefrac{\delta_i}{2})}(Y_u)\vert X_u]\bigl( f(X_v) - \mu_i \bigr) \right]\,.
-%\end{equation*}
-%For every $i\in\nats$, let $\lambda(\mathcal{B}_i)\coloneqq \lambda((y_u-\nicefrac{\delta_i}{2},y_u+\nicefrac{\delta_i}{2}))$ denote Lebesgue measure of the region $(y_u-\nicefrac{\delta_i}{2},y_u+\nicefrac{\delta_i}{2})$.
-%Then, by non-negative homogeneity, we have
-%\begin{equation}\label{eq:all_steps_zero}
-%0 = \lexp\left[\frac{1}{\lambda(\mathcal{B}_i)} \mathbb{E}_{\observs\vert\states}[\ind{(y_u-\nicefrac{\delta_i}{2},y_u+\nicefrac{\delta_i}{2})}(Y_u)\vert X_u]\bigl( f(X_v) - \mu_i \bigr) \right]\,.
-%\end{equation}
-%
-%Now, since $\mu_i = \underline{\mathbb{E}}_{\mathcal{Z}}[f(X_v)\vert Y_u\in (y_u-\nicefrac{\delta_i}{2},y_u+\nicefrac{\delta_i}{2})]$, it follows that $\min f\leq \mu_i\leq \max f$ and therefore, that the sequence $\{\mu_i\}_{i\in\nats}$ exists in the (compact) interval $[\min f, \max f]$. Let now $\{\mu_{i_j}\}_{j\in\nats}$ be any convergent subsequence of $\{\mu_i\}_{i\in\nats}$, for which $\lim_{j\to\infty}\mu_{i_j}=:\mu_{j_*}\in[\min f,\max f]$---the existence of such a sequence is guaranteed by the Bolzano-Weierstrass theorem.
-%
-%Since the sequence $\{\mu_{i_j}\}_{j\in\nats}$ is convergent, we clearly also have that the sequence $\{f(X_v)-\mu_{i_j}\}_{j\in\nats}$ in $\gambles(\states_v)$ is convergent. Furthermore, as we know from Lemma~\ref{lemma:dirac_delta_gets_density_value}, the sequence 
-%\begin{equation*}
-%\left\{\frac{1}{\lambda(\mathcal{B}_{i_j})} \mathbb{E}_{\observs\vert\states}[\ind{(y_u-\nicefrac{\delta_{i_j}}{2},y_u+\nicefrac{\delta_{i_j}}{2})}(Y_u)\vert X_u]\right\}_{j\in\nats}
-%\end{equation*}
-%in $\gambles(\states_u)$ is convergent as well. Therefore in particular, we see that
-%\begin{equation*}
-%\lim_{j\to\infty} \frac{1}{\lambda(\mathcal{B}_{i_j})} \mathbb{E}_{\observs\vert\states}[\ind{(y_u-\nicefrac{\delta_{i_j}}{2},y_u+\nicefrac{\delta_{i_j}}{2})}(Y_u)\vert X_u](f(X_v) - \mu_{i_j}) = \phi(y_u\vert X_u)(f(X_v) - \mu_{j_*})\,.
-%\end{equation*}
-%Using Lemma~\ref{lemma:limit_lexp_is_lexp_limit}, we therefore find
-%\begin{equation*}
-%\lim_{j\to\infty} \lexp\left[\frac{1}{\lambda(\mathcal{B}_{i_j})} \mathbb{E}_{\observs\vert\states}[\ind{(y_u-\nicefrac{\delta_{i_j}}{2},y_u+\nicefrac{\delta_{i_j}}{2})}(Y_u)\vert X_u](f(X_v) - \mu_{i_j})\right] = \lexp[\phi(y_u\vert X_u)(f(X_v) - \mu_{j_*})]\,,
-%\end{equation*}
-%and, using Equation~\eqref{eq:all_steps_zero}, that $\lexp[\phi(y_u\vert X_u)(f(X_v) - \mu_{j_*})] = 0$.
-%
-%Since we know from Proposition~\ref{prop:GBR_properties} that the function $\lexp[\phi(y_u\vert X_u)(f(X_v) - \mu)]$ has a unique root (because by assumption $\lexp[\phi(y_u\vert X_u)]>0$), say $\mu_*$, we conclude from this that $\mu_{j_*}=\mu_*$. Furthermore, since the convergent subsequence $\{\mu_{i_j}\}_{j\in\nats}$ was arbitrary, we find that $\mu_*$ is the limit of \emph{every} convergent subsequence of $\{\mu_i\}_{i\in\nats}$.
-%
-%We now first show that the original sequence $\{\mu_i\}_{i\in\nats}$ also converges, and that $\lim_{i\to\infty}\mu_i = \mu_{*}$. To this end, assume \emph{ex absurdo} that this is false. Then, there exists some $\epsilon\in\realspos$ such that, for every $N\in\nats$, there is some $k>N$ for which $\abs{\mu_k - \mu_{*}} \geq \epsilon$. Therefore, we can construct a subsequence $\{\mu_{i_k}\}_{k\in\nats}$ such that $\abs{\mu_{i_k}-\mu_{*}}\geq \epsilon$, for all $k\in\nats$. Using a similar argument to the above, this sequence is in the (compact) interval $[\min f, \max f]$ and therefore has a convergent subsequence $\{\mu_{i_{k_\ell}}\}_{\ell\in\nats}$, with $\lim_{\ell\to\infty}\mu_{i_{k_\ell}} =: \mu_{\ell_*}$ satisfying $\abs{\mu_{\ell_*} - \mu_{*}}\geq\epsilon$. However, the sequence $\{\mu_{i_{k_\ell}}\}_{\ell\in\nats}$ is clearly a convergent subsequence of $\{\mu_i\}_{i\in\nats}$ and hence, as we have just seen, we must have $\lim_{\ell\to\infty}\mu_{i_{k_\ell}} = \mu_{\ell_*} = \mu_{*}$. This contradicts the fact that $\abs{\mu_{\ell_*} - \mu_{*}}\geq\epsilon$ and hence, we can conclude that $\{\mu_i\}_{i\in\nats}$ converges to a $\mu_*$.
-%
-%In summary, we have shown that $\lim_{i\to \infty}\underline{\mathbb{E}}_\mathcal{Z}[f(X_v)\vert Y_u\in (y_u-\nicefrac{\delta_i}{2},y_u+\nicefrac{\delta_i}{2})]$ exists and is equal to $\mu_*$. The remainder of the proof is now straightforward. Since we know from Proposition~\ref{prop:GBR_properties} that $\lexp\left[ \phi(y_u\vert X_u)\bigl(f(X_v) -\mu \bigr)\right]$ is strictly monotonically decreasing in $\mu$, and that this function has a unique root---which we know is given by $\mu_*$---we must have that $\lexp\left[ \phi(y_u\vert X_u)\bigl(f(X_v) -\mu \bigr)\right] < 0$ for every $\mu>\mu_*$, 
-%or in other words, that
-%\begin{equation*}
-%\lim_{i\to \infty}\underline{\mathbb{E}}_\mathcal{Z}[f(X_v)\vert Y_u\in (y_u-\nicefrac{\delta_i}{2},y_u+\nicefrac{\delta_i}{2})] = \mu_* = \max\left\{ \mu\in\reals : \lexp\left[ \phi(y_u\vert X_u)\bigl(f(X_v) -\mu \bigr)\right] \geq 0\right\}\,.
-%\end{equation*}
-%Since this holds for every sequence $\{\delta_i\}_{i\in\nats}\to 0^+$, we conclude that indeed, as claimed,
-%\begin{align*}
-% \underline{\mathbb{E}}_\mathcal{Z}[f(X_v)\vert Y_u=y_u] %\\
-%&= \max\left\{ \mu\in\reals : \lexp\left[ \phi(y_u\vert X_u)\bigl(f(X_v) -\mu \bigr)\right] \geq 0\right\} \\
-% &= \lim_{\delta\to 0^+}\underline{\mathbb{E}}_\mathcal{Z}[f(X_v)\vert Y_u\in (y_u-\nicefrac{\delta}{2},y_u+\nicefrac{\delta}{2})] \,.
-%\end{align*}
-%\end{proof}
-
-%\begin{remark}
-%The below contains some notes / failed proof attempts to generalise the above result to hold under regular extension.
-%
-%********************
-%
-%We next establish that this limit $\mu_{i_*}$ is independent of the exact subsequence $\{\mu_{i_j}\}_{j\in\nats}$. To this end, consider any sequence $\{\epsilon_{j}\}_{j\in\nats}\to 0^+$. Then, for all $j\in\nats$, due to the definition of $\mu_{i_j}$, it follows from Proposition~\ref{prop:GBR_regular} that there is some $P_j\in\mathcal{Z}$ such that $\mathbb{E}_{P_j}[\mathbb{E}_{\observs\vert\states}[\ind{(y_u-\nicefrac{\delta_{i_j}}{2},y_u+\nicefrac{\delta_{i_j}}{2})}(Y_u)\vert X_u]]>0$, and for which
-%\begin{equation*}
-%\mu_{i_j}\leq \nu_j\coloneqq \frac{\mathbb{E}_{P_j}\bigl[f(X_v)\mathbb{E}_{\observs\vert\states}[\ind{(y_u-\nicefrac{\delta_{i_j}}{2},y_u+\nicefrac{\delta_{i_j}}{2})}(Y_u)\vert X_u]\bigr]}{\mathbb{E}_{P_j}[\mathbb{E}_{\observs\vert\states}[\ind{(y_u-\nicefrac{\delta_{i_j}}{2},y_u+\nicefrac{\delta_{i_j}}{2})}(Y_u)\vert X_u]]} < \mu_{i_j} + \epsilon_j\,.
-%\end{equation*}
-%Since $\{\epsilon_j\}_{j\in\nats}\to 0^+$, and because $\{\mu_{i_j}\}_{j\in\nats}\to \mu_{i_*}$, this clearly implies that also $\{\nu_j\}_{j\in\nats}\to \mu_{i_*}$.
-%
-%Therefore, we see that also
-%\begin{equation}\label{}
-%\lim_{j\to\infty} \lexp\left[\frac{1}{\delta_{i_j}} \mathbb{E}_{\observs\vert\states}[\ind{(y_u-\nicefrac{\delta_{i_j}}{2},y_u+\nicefrac{\delta_{i_j}}{2})}(Y_u)\vert X_u](f(X_v) - \nu_j)\right] = \lexp[\phi(y_u\vert X_u)(f(X_v) - \mu_{i_*})]
-%\end{equation}
-%Furthermore, for all $j\in\nats$, we clearly have
-%\begin{align*}
-% &\quad \lexp\left[\frac{1}{\delta_{i_j}} \mathbb{E}_{\observs\vert\states}[\ind{(y_u-\nicefrac{\delta_{i_j}}{2},y_u+\nicefrac{\delta_{i_j}}{2})}(Y_u)\vert X_u](f(X_v) - \nu_j)\right] \\
-% &\leq
-% &\quad \mathbb{E}_{P_j}\left[\frac{1}{\delta_{i_j}} \mathbb{E}_{\observs\vert\states}[\ind{(y_u-\nicefrac{\delta_{i_j}}{2},y_u+\nicefrac{\delta_{i_j}}{2})}(Y_u)\vert X_u](f(X_v) - \nu_j)\right] \\
-% &= \frac{1}{\delta_{i_j}}\mathbb{E}_{P_j}\left[ f(X_v) \mathbb{E}_{\observs\vert\states}[\ind{(y_u-\nicefrac{\delta_{i_j}}{2},y_u+\nicefrac{\delta_{i_j}}{2})}(Y_u)\vert X_u]\right] - \frac{\nu_j}{\delta_{i_j}}\mathbb{E}_{P_j}\left[ \mathbb{E}_{\observs\vert\states}[\ind{(y_u-\nicefrac{\delta_{i_j}}{2},y_u+\nicefrac{\delta_{i_j}}{2})}(Y_u)\vert X_u]\right] \\
-% &= 0\,,
-%\end{align*}
-%from which it follows that
-%\begin{equation*}
-%\lim_{j\to\infty} \mathbb{E}_{P_j}\left[\frac{1}{\delta_{i_j}} \mathbb{E}_{\observs\vert\states}[\ind{(y_u-\nicefrac{\delta_{i_j}}{2},y_u+\nicefrac{\delta_{i_j}}{2})}(Y_u)\vert X_u](f(X_v) - \nu_j)\right] = 0\,.
-%\end{equation*}
-%Invoking Lemma~\ref{lemma:dirac_delta_gets_density_value} once more, and taking limits separately, we find
-%\begin{equation}\label{eq:precise_limit_also_approaches}
-% \lim_{j\to\infty} \mathbb{E}_{P_j}\left[\frac{1}{\delta_{i_j}} \mathbb{E}_{\observs\vert\states}[\ind{(y_u-\nicefrac{\delta_{i_j}}{2},y_u+\nicefrac{\delta_{i_j}}{2})}(Y_u)\vert X_u](f(X_v) - \nu_j)\right] = \lim_{j\to\infty} \mathbb{E}_{P_j}\left[\phi(y_u\vert X_u)(f(X_v) - \nu_j)\right] = 0\,.
-%\end{equation}
-%
-%*** 
-%
-%okay, let's see if I can set the below $\epsilon$ to something useful.
-%
-%possible options: 
-%\begin{itemize}
-%\item Construct a subsequence such that precise func is non-positive, then set $\epsilon=0$.
-%\item Construct a subsequence such that $\mathbb{E}_{P_j}[\phi(y_u\vert X_u)]$ are all greater than a given value, set $\epsilon$ to that value (times $\Delta$).
-%\item All smaller than some value? Not sure if that helps.
-%\end{itemize}
-%
-%Assume $\mathbb{E}_{P_j}\left[\phi(y_u\vert X_u)(f(X_v) - \nu_j)\right]>0$, which implies $\mathbb{E}_{P_j}[\phi(y_u\vert X_u)]>0$, but now furthermore assume $\lim_{j\to\infty}\mathbb{E}_{P_j}[\phi(y_u\vert X_u)]=0$ (or at least in every convergent subsequence, which exists). This is the worst case scenario.
-%
-%** Show that $\abs{\tilde{\nu}_j - \nu_j}\to 0$, which implies $\tilde{\nu}_j\to\mu_{i_*}$ from the right, which means that we can get strictly in between $\mu_{i_*}$ and $\mu'$, which gives us the desired slope since we know we are exactly zero at $\tilde{\nu}_j$ and are strictly monotonically decreasing in $j$'s precise function.
-%
-%Maybe force $j$ such that
-%\begin{align*}
-%\uexp\left[\phi(y_u\vert X_u)(f(X_v)-\mu_{i_*}) - \frac{1}{\delta_{i_j}}\mathbb{E}_{\observs\vert\states}[\ind{(y_u-\nicefrac{\delta_{i_j}}{2},y_u+\nicefrac{\delta_{i_j}}{2})}(Y_u)\vert X_u](f(X_v) - \mu_{i_*})\right] < \epsilon\,, \\
-%\text{and}, \\
-%\uexp\left[\phi(y_u\vert X_u)(f(X_v)-\mu_{*}) - \frac{1}{\delta_{i_j}}\mathbb{E}_{\observs\vert\states}[\ind{(y_u-\nicefrac{\delta_{i_j}}{2},y_u+\nicefrac{\delta_{i_j}}{2})}(Y_u)\vert X_u](f(X_v) - \mu_{*})\right] < \epsilon
-%\end{align*}
-%This is definitely possible. Then take $\nu_j\to\mu_{i_*}$ as before. Write $\psi_j(y_u\vert X_u)$ for the delta, for convenience. We clearly have $\tilde{\nu}_j > \mu_*$.
-%
-%\begin{align*}
-%0 &= \mathbb{E}_{P_j}\left[\phi(y_u\vert X_u)(f(X_v)-\tilde{\nu}_j)\right] - \mathbb{E}_{P_j}\left[\psi_j(y_u\vert X_u)(f(X_v)-\nu_j)\right] \\
-% &= \mathbb{E}_{P_j}\left[\phi(y_u\vert X_u)f(X_v)-\psi_j(y_u\vert X_u)f(X_v)\right] - \tilde{\nu}_j\mathbb{E}_{P_j}\left[\phi(y_u\vert X_u)\right] + \nu_j\mathbb{E}_{P_j}\left[\psi_j(y_u\vert X_u)\right] \\
-% &= \mathbb{E}_{P_j}\left[\phi(y_u\vert X_u)f(X_v)-\psi_j(y_u\vert X_u)f(X_v)\right] + \mu_{i_*}\mathbb{E}_{P_j}\left[\phi(y_u\vert X_u)\right] - \mu_{i_*}\mathbb{E}_{P_j}\left[\phi(y_u\vert X_u)\right] \\
-% &\quad\quad - \tilde{\nu}_j\mathbb{E}_{P_j}\left[\phi(y_u\vert X_u)\right] + \nu_j\mathbb{E}_{P_j}\left[\psi_j(y_u\vert X_u)\right] \\
-% &= \mathbb{E}_{P_j}\left[\phi(y_u\vert X_u)(f(X_v)-\mu_{i_*})-\psi_j(y_u\vert X_u)f(X_v)\right] + (\mu_{i_*} - \tilde{\nu}_j)\mathbb{E}_{P_j}\left[\phi(y_u\vert X_u)\right]  \\
-% &\quad\quad + \nu_j\mathbb{E}_{P_j}\left[\psi_j(y_u\vert X_u)\right] \\
-% &= \mathbb{E}_{P_j}\left[\phi(y_u\vert X_u)(f(X_v)-\mu_{i_*})-\psi_j(y_u\vert X_u)(f(X_v)-\mu_{i_*})\right] \\
-% &\quad\quad + (\mu_{i_*} - \tilde{\nu_j})\mathbb{E}_{P_j}\left[\phi(y_u\vert X_u)\right] + (\nu_j-\mu_{i_*})\mathbb{E}_{P_j}\left[\psi_j(y_u\vert X_u)\right] \\
-%\end{align*}
-%
-%Actually maybe go the other way. Choose $P_j$ so that $\phi$ is satisfied: $\mathbb{E}_{P_j}[\phi(y_u\vert X_u)] >0$, and
-%\begin{equation*}
-%\mu_* \leq \tilde{\nu}_j < \mu_* + \epsilon_j\,.
-%\end{equation*}
-%This also has the advantage that due to continuity, $\mathbb{E}_{P_j}[\phi(y_u\vert X_u)] >0\Rightarrow \mathbb{E}_{P_j}[\psi_j(y_u\vert X_u)]>0$.
-%
-%\begin{align*}
-%0 &= \mathbb{E}_{P_j}[\phi(y_u\vert X_u)(f(X_v) - \tilde{\nu}_j)] \\
-% &= \mathbb{E}_{P_j}[f(X_v)\phi(y_u\vert X_u)] - \tilde{\nu}_j\mathbb{E}_{P_j}[\phi(y_u\vert X_u)] \\
-% &= \mathbb{E}_{P_j}[f(X_v)\phi(y_u\vert X_u) - f(X_v)\psi_j(y_u\vert X_u)] + \mathbb{E}_{P_j}[f(X_v)\psi_j(y_u\vert X_u)] - \tilde{\nu}_j\mathbb{E}_{P_j}[\phi(y_u\vert X_u)] \\
-% &= \mathbb{E}_{P_j}[f(X_v)\phi(y_u\vert X_u) - f(X_v)\psi_j(y_u\vert X_u)] + \mathbb{E}_{P_j}[f(X_v)\psi_j(y_u\vert X_u)] \\
-% &\quad\quad - \tilde{\nu}_j\mathbb{E}_{P_j}[\phi(y_u\vert X_u)] + \tilde{\nu}_j\mathbb{E}_{P_j}[\psi_j(y_u\vert X_u)] - \tilde{\nu}_j\mathbb{E}_{P_j}[\psi_j(y_u\vert X_u)] \\
-% &= \mathbb{E}_{P_j}[f(X_v)\phi(y_u\vert X_u) - f(X_v)\psi_j(y_u\vert X_u)] + \tilde{\nu}_j\mathbb{E}_{P_j}[\psi_j(y_u\vert X_u) - \phi(y_u\vert X_u)] \\
-% &\quad\quad + \mathbb{E}_{P_j}[\psi_j(y_u\vert X_u)(f(X_v) - \tilde{\nu}_j)]
-%\end{align*}
-%Afschatbaar naar twee kanten, dus
-%\begin{equation*}
-%-\epsilon_j < \mathbb{E}_{P_j}[\psi_j(y_u\vert X_u)(f(X_v) - \tilde{\nu}_j)] < \epsilon_j\,.
-%\end{equation*}
-%We also know that
-%\begin{equation*}
-%0 = \lexp[\psi_j(y_u\vert X_u)(f(X_v) - \mu_{i_j})] \leq \mathbb{E}_{P_j}[\psi_j(y_u\vert X_u)(f(X_v) - \mu_{i_j})]
-%\end{equation*}
-%and
-%\begin{align*}
-% &\quad \mathbb{E}_{P_j}[\psi_j(y_u\vert X_u)(f(X_v) - \mu_{i_j})] \\
-% &= \mathbb{E}_{P_j}[\psi_j(y_u\vert X_u)(f(X_v) - \mu_{i_j})]
-%\end{align*}
-%
-%*******************
-%
-%New plan:
-%\begin{itemize}
-%\item Assume ex absurdo that $\mu_*>\mu_{i_*}$.
-%\item Then we can approach the $\phi$ GBR strictly to the right of $\mu_{i_j}$, using some $\tilde{\nu}<\mu_*$, once the sequence is close enough to $\mu_{i_*}$;
-%\item Far enough in the sequence, $\phi$ and $\psi_j$ become so close that we can cap the wiggle room of all precise processes;
-%\item This yields a point $\tilde{\nu}>\mu_{i_j}$ for which the $\psi_j$ GBR is still non-negative, which contradicts the definition of $\mu_{i_j}$.
-%\end{itemize}
-%Assuming we're approaching $\mu_{i_*}$ from the left, we have
-%\begin{equation*}
-%\left\{\lexp[\psi_{j}(y_u\vert X_u)(f(X_v)-\mu_*)]\right\}_{j\in\nats} \to 0^-
-%\end{equation*}
-%
-%Choose $P_j$ and $\nu_j$ as before. Then,
-%\begin{align*}
-%\lexp[\psi_{j}(y_u\vert X_u)(f(X_v)-\mu_*)] &\leq \mathbb{E}_{P_j}[\psi_{j}(y_u\vert X_u)(f(X_v)-\mu_*)] \\
-% &= \mathbb{E}_{P_j}[\psi_{j}(y_u\vert X_u)(f(X_v)-\nu_j)] - (\mu_* - \nu_j)\mathbb{E}_{P_j}[\psi_{j}(y_u\vert X_u)] \\
-% &= -(\mu_* - \nu_j)\mathbb{E}_{P_j}[\psi_{j}(y_u\vert X_u)] \\
-% &= -(\mu_* - \nu_j)(\mathbb{E}_{P_j}[\psi_{j}(y_u\vert X_u)-\phi(y_u\vert X_u)] + \mathbb{E}_{P_j}[\phi(y_u\vert X_u)]) \\
-% &= -(\mu_* - \nu_j)\mathbb{E}_{P_j}[\psi_{j}(y_u\vert X_u)-\phi(y_u\vert X_u)] - (\mu_* - \nu_j)\mathbb{E}_{P_j}[\phi(y_u\vert X_u)]
-%\end{align*}
-%
-%
-%*******************
-%
-%
-%***
-%
-%Now, consider any $\mu'>\mu_{i_*}$, and define $\Delta\coloneqq \nicefrac{(\mu'-\mu_{i_*})}{2}$. Because $\{\nu_j\}_{j\in\nats}\to\mu_{i_*}$, there is then some $N\in\nats$ such that, for all $j>N$, it holds that $\nu_j<\mu'-\Delta$. Next, define $\epsilon\coloneqq TODO$. Due to Equation~\eqref{eq:precise_limit_also_approaches}, there is then some $N'\in\nats$ such that, for all $j>N'$, it holds that
-%\begin{equation*}
-%\mathbb{E}_{P_j}\left[\phi(y_u\vert X_u)(f(X_v) - \nu_j)\right] < \epsilon\,.
-%\end{equation*}
-%Consider now any $j>\max\{N,N'\}$. Because $P_j\in\mathcal{Z}$, we then find that
-%\begin{align*}
-%\lexp\left[\phi(y_u\vert X_u)(f(X_v) - \mu')\right] &\leq \mathbb{E}_{P_j}\left[\phi(y_u\vert X_u)(f(X_v) - \mu')\right] \\
-% &= \mathbb{E}_{P_j}\left[f(X_v)\phi(y_u\vert X_u)\right] - \mu'\mathbb{E}_{P_j}\left[\phi(y_u\vert X_u)\right] \\
-% = \mathbb{E}_{P_j}\left[f(X_v)\phi(y_u\vert X_u)\right] - \nu_j\mathbb{E}_{P_j}\left[\phi(y_u\vert X_u)\right] &+ \nu_j\mathbb{E}_{P_j}\left[\phi(y_u\vert X_u)\right] - \mu'\mathbb{E}_{P_j}\left[\phi(y_u\vert X_u)\right] \\
-% &< \epsilon + \nu_j\mathbb{E}_{P_j}\left[\phi(y_u\vert X_u)\right] - \mu'\mathbb{E}_{P_j}\left[\phi(y_u\vert X_u)\right] \\
-% &= \epsilon - (\mu' - \nu_j)\mathbb{E}_{P_j}\left[\phi(y_u\vert X_u)\right] \\
-% &< \epsilon - \Delta\mathbb{E}_{P_j}\left[\phi(y_u\vert X_u)\right] \\
-%\end{align*}
-%
-%********************
-%\end{remark}
 
 
 \section{Proofs of the Results in Section~\ref{sec:inference_algos}}
@@ -1881,300 +1247,7 @@ By combining Lemma~\ref{lemma:product_func_induction} with iterated lower expect
 and similarly for the upper expectation.
 \end{proof}
 
-%\begin{proof}{\bf of Proposition~\ref{prop:arbitrary_future_functions}~}
-%Due to iterated lower expectation (Proposition REF), we have
-%\begin{equation*}
-%\lexp\left[\left(\prod_{i=0}^n g_{t_i}(X_{t_i})\right)\bigl(f(X_v) - \mu\bigr)\right] = \lexp\left[\lexp\left[\left(\prod_{i=0}^n g_{t_i}(X_{t_i})\right)\bigl(f(X_v) - \mu\bigr)\,\bigl\vert\,X_u\right]\right]\,.
-%\end{equation*}
-%Now consider any $x_u\in\states_u$. Then,
-%\begin{align*}
-%\lexp\left[\left(\prod_{i=0}^n g_{t_i}(X_{t_i})\right)\bigl(f(X_v) - \mu\bigr)\,\bigl\vert\,X_u=x_u\right] &= \lexp\left[\left(\prod_{i=0}^n g_{t_i}(x_{t_i})\right)\bigl(f(X_v) - \mu\bigr)\,\bigl\vert\,X_u=x_u\right] \\
-%&= \left(\prod_{i=0}^n g_{t_i}(x_{t_i})\right)\cdot\lexp\left[\bigl(f(X_v) - \mu\bigr)\,\bigl\vert\,X_u=x_u\right] \\
-%&= \left(\prod_{i=0}^n g_{t_i}(x_{t_i})\right)\cdot\left(\lexp\left[f(X_v)\,\vert\,X_u=x_u\right] - \mu\right) \\
-%&= \left(\prod_{i=0}^n g_{t_i}(x_{t_i})\right)\cdot\left(\lexp\left[f(X_v)\,\vert\,X_{t_n}=x_{t_n}\right] - \mu\right)\,,
-%\end{align*}
-%where the first equality is due to the basic properties of (lower) expectation, the second by non-negative homogeneity of lower expectation and the assumption that $g_{t_i}\geq 0$, the third by basic properties of lower expectation, and the fourth by the imprecise Markov property of ICTMC's (Proposition REF), and the assumption that $u<v$.
-%
-%Since this is true for all $x_u\in\states_u$, we therefore have
-%\begin{align*}
-% &\lexp\left[\lexp\left[\left(\prod_{i=0}^n g_{t_i}(X_{t_i})\right)\bigl(f(X_v) - \mu\bigr)\,\bigl\vert\,X_u\right]\right] \\
-% &\quad\quad= \lexp\left[\left(\prod_{i=0}^n g_{t_i}(X_{t_i})\right)\cdot\left(\lexp\left[f(X_v)\,\vert\,X_{t_n}\right] - \mu\right)\right]\,.
-%\end{align*}
-%\end{proof}
 
-%\section{Computing Functions that are Products}
-%
-%
-%
-%We here adopt a small change of notation compared to the above, to prevent having to deal with special cases. Consider any $u'\in\mathcal{U}_{\emptyset}$ such that $u'=t_0,t_1,\ldots,t_n$ with $n\geq 1$, define $u\coloneqq u'\setminus t_0$ and, for all $i\in\{1,\ldots,n\}$, consider any $g_i\in\gambles(\states_{t_i})$. Let $f\in\gambles(\states_u)$ be defined as $f(x_u)\coloneqq \prod_{i=1}^n g_i(x_{t_i})$, for all $x_u\in\states_u$, with $x_{t_i}\in x_u$ for all $i\in\{1,\ldots,n\}$. We now seek to compute
-%\begin{align*}
-%\underline{\mathbb{E}}_{\rateset,\mathcal{M}}^\mathrm{W}\left[f(X_u)\vert X_{t_0}\right] &= \underline{\mathbb{E}}_{\rateset,\mathcal{M}}^\mathrm{W}\left[f(X_{t_1},\ldots,X_{t_n})\vert X_{t_0}\right] = \underline{\mathbb{E}}_{\rateset,\mathcal{M}}^\mathrm{W}\left[\prod_{i=1}^ng_i(X_{t_i})\vert X_{t_0}\right]\,.
-%\end{align*}
-%If all the $g_i$, $i\in\{1,\ldots,n\}$, satisfy $g_i\geq 0$, we can apply the same procedure as described for functions that are sums, exchanging sums for products where appropriate. However, the general case is slightly more involved since we cannot simply factorise out the non-negative functions (i.e. lower expectations only satisfy non-negative homogeneity). However, the below dynamic programming procedure does the trick.
-%
-%Define $\tilde{g}_n^+\coloneqq\tilde{g}_n^-\coloneqq g_n$ and, for all $i\in\{1,\ldots,n-1\}$, define
-%\begin{equation*}
-%\tilde{g}_i^+(x_{t_i}) \coloneqq \left\{\begin{array}{ll}
-%g_i(x_{t_i})\cdot \underline{\mathbb{E}}_{\rateset,\mathcal{M}}^\mathrm{W}\left[ \tilde{g}_{i+1}^+(X_{t_{i+1}}) \vert X_{t_i}=x_{t_i} \right] & \text{if $g_i(x_{t_i})\geq 0$, and} \\
-%g_i(x_{t_i})\cdot \overline{\mathbb{E}}_{\rateset,\mathcal{M}}^\mathrm{W}\left[ \tilde{g}_{i+1}^-(X_{t_{i+1}}) \vert X_{t_i}=x_{t_i} \right] & \text{if $g_i(x_{t_i})<0$\,,} \\
-%\end{array}\right.
-%\end{equation*}
-%and,
-%\begin{equation*}
-%\tilde{g}_i^-(x_{t_i}) \coloneqq \left\{\begin{array}{ll}
-%g_i(x_{t_i})\cdot \overline{\mathbb{E}}_{\rateset,\mathcal{M}}^\mathrm{W}\left[ \tilde{g}_{i+1}^-(X_{t_{i+1}}) \vert X_{t_i}=x_{t_i} \right] & \text{if $g_i(x_{t_i})\geq 0$, and} \\
-%g_i(x_{t_i})\cdot \underline{\mathbb{E}}_{\rateset,\mathcal{M}}^\mathrm{W}\left[ \tilde{g}_{i+1}^+(X_{t_{i+1}}) \vert X_{t_i}=x_{t_i} \right] & \text{if $g_i(x_{t_i})<0$\,,} \\
-%\end{array}\right.
-%\end{equation*}
-%for all $x_{t_i}\in\states_{t_i}$. Clearly, backward recursion (dynamic programming) allows us to compute all these functions in linear time w.r.t. $n$. We now have the following result.
-%\begin{proposition}
-%For any $i\in\{1,\ldots,n\}$, it holds that
-%\begin{equation*}
-%\underline{\mathbb{E}}_{\rateset,\mathcal{M}}^\mathrm{W}[\tilde{g}_i^+(X_{t_i})\,\vert\, X_{t_{i-1}}] = \underline{\mathbb{E}}_{\rateset,\mathcal{M}}^\mathrm{W}\left[ \prod_{j=i}^n g_j(X_{t_j}) \vert X_{t_{i-1}} \right]\,,
-%\quad\text{and,}\quad
-%\overline{\mathbb{E}}_{\rateset,\mathcal{M}}^\mathrm{W}[\tilde{g}_i^-(X_{t_i})\,\vert\, X_{t_{i-1}}] = \overline{\mathbb{E}}_{\rateset,\mathcal{M}}^\mathrm{W}\left[ \prod_{j=i}^n g_j(X_{t_j}) \vert X_{t_{i-1}} \right]\,.
-%\end{equation*}
-%\end{proposition}
-%\begin{proof}
-%We provide a proof by (backward) induction. Clearly, the result is trivial for $i=n$. Now, assume that it is true for $i$ (with $i\geq 2$). We show that it is also true for $i-1$. Hence, we will show that
-%\begin{equation*}
-%\underline{\mathbb{E}}_{\rateset,\mathcal{M}}^\mathrm{W}[\tilde{g}_{i-1}^+(X_{t_{i-1}})\,\vert\, X_{t_{i-2}}] = \underline{\mathbb{E}}_{\rateset,\mathcal{M}}^\mathrm{W}\left[ \prod_{j={i-1}}^n g_j(X_{t_j}) \vert X_{t_{i-2}} \right]\,,
-%\end{equation*}
-%and similarly for the second statement. We start from the definition of $\tilde{g}_{i-1}^+$, and consider the two cases in that definition separately. So, consider any $x_{t_{i-1}}\in\states_{t_{i-1}}$. Then, if $g_{i-1}(x_{t_{i-1}}) \geq 0$, we find
-%\begin{align*}
-%\tilde{g}_{i-1}^+(x_{t_{i-1}}) &= g_{i-1}(x_{t_{i-1}})\cdot \underline{\mathbb{E}}_{\rateset,\mathcal{M}}^\mathrm{W}\left[ \tilde{g}_{i}^+(X_{t_{i}}) \vert X_{t_{i-1}}=x_{t_{i-1}} \right]
-% = g_{i-1}(x_{t_{i-1}})\cdot \underline{\mathbb{E}}_{\rateset,\mathcal{M}}^\mathrm{W}\left[ \prod_{j=i}^ng_j(X_{t_j}) \vert X_{t_{i-1}}=x_{t_{i-1}} \right] \\
-% &= \underline{\mathbb{E}}_{\rateset,\mathcal{M}}^\mathrm{W}\left[ g_{i-1}(x_{t_{i-1}})\cdot\prod_{j=i}^ng_j(X_{t_j}) \vert X_{t_{i-1}}=x_{t_{i-1}} \right] 
-% = \underline{\mathbb{E}}_{\rateset,\mathcal{M}}^\mathrm{W}\left[ \prod_{j=i-1}^ng_j(X_{t_j}) \vert X_{t_{i-1}}=x_{t_{i-1}} \right]\,,
-%\end{align*}
-%where the first equality is by definition, the second equality follows from the induction hypothesis, the third equality follows from non-negative homogeneity of lower expectation, and the last equality follows from the basic rules of (lower) expectation (i.e., $\underline{\mathbb{E}}[f(X,Y)\vert X=x]=\underline{\mathbb{E}}[f(x,Y)\vert X=x]$).
-%
-%If, on the other hand, $g_{i-1}(x_{t_{i-1}}) < 0$, we find
-%\begin{align*}
-%\tilde{g}_{i-1}^+(x_{t_{i-1}}) = g_{i-1}(x_{t_{i-1}})\cdot \overline{\mathbb{E}}_{\rateset,\mathcal{M}}^\mathrm{W}\left[ \tilde{g}_{i}^-(X_{t_{i}}) \vert X_{t_{i-1}}=x_{t_{i-1}} \right]
-% &= g_{i-1}(x_{t_{i-1}})\cdot \overline{\mathbb{E}}_{\rateset,\mathcal{M}}^\mathrm{W}\left[ \prod_{j=i}^n g_j(X_{t_j}) \vert X_{t_{i-1}}=x_{t_{i-1}} \right] \\
-% = g_{i-1}(x_{t_{i-1}})\cdot -\underline{\mathbb{E}}_{\rateset,\mathcal{M}}^\mathrm{W}\left[ - \prod_{j=i}^n g_j(X_{t_j}) \vert X_{t_{i-1}}=x_{t_{i-1}} \right]
-% &= \lvert g_{i-1}(x_{t_{i-1}})\rvert \cdot \underline{\mathbb{E}}_{\rateset,\mathcal{M}}^\mathrm{W}\left[ - \prod_{j=i}^n g_j(X_{t_j}) \vert X_{t_{i-1}}=x_{t_{i-1}} \right] \\
-% = \underline{\mathbb{E}}_{\rateset,\mathcal{M}}^\mathrm{W}\left[ -\lvert g_{i-1}(x_{t_{i-1}})\rvert\cdot \prod_{j=i}^n g_j(X_{t_j}) \vert X_{t_{i-1}}=x_{t_{i-1}} \right] 
-% &= \underline{\mathbb{E}}_{\rateset,\mathcal{M}}^\mathrm{W}\left[  g_{i-1}(x_{t_{i-1}})\cdot \prod_{j=i}^n g_j(X_{t_j}) \vert X_{t_{i-1}}=x_{t_{i-1}} \right] \\
-% &= \underline{\mathbb{E}}_{\rateset,\mathcal{M}}^\mathrm{W}\left[   \prod_{j=i-1}^n g_j(X_{t_j}) \vert X_{t_{i-1}}=x_{t_{i-1}} \right]\,,
-%\end{align*}
-%where the first equality is by definition, the second equality follows from the induction hypothesis, the third equality follows from conjugacy of lower- and upper expectation, the fourth equality follows from the assumption that $g_{i-1}(x_{t_{i-1}}) < 0$, the fifth equality follows from non-negative homogeneity of upper expectation, and the last equality follows from the basic rules of (lower) expectation, as above.
-%
-%So, in both cases, we find that
-%\begin{equation*}
-%\tilde{g}_{i-1}^+(x_{t_{i-1}}) = \underline{\mathbb{E}}_{\rateset,\mathcal{M}}^\mathrm{W}\left[   \prod_{j=i-1}^n g_j(X_{t_j}) \vert X_{t_{i-1}}=x_{t_{i-1}} \right]\,.
-%\end{equation*}
-%Since this is true for every $x_{t_{i-1}}\in\states_{t_{i-1}}$, we now find by substitution that
-%\begin{align*}
-%&\underline{\mathbb{E}}_{\rateset,\mathcal{M}}^\mathrm{W}\left[ \tilde{g}_{i-1}^+(X_{t_{i-1}}) \vert X_{t_{i-2}} \right] = \underline{\mathbb{E}}_{\rateset,\mathcal{M}}^\mathrm{W}\left[ \underline{\mathbb{E}}_{\rateset,\mathcal{M}}^\mathrm{W}\left[   \prod_{j=i-1}^n g_j(X_{t_j}) \vert X_{t_{i-1}} \right] \vert X_{t_{i-2}} \right] \\
-%=&~ \underline{\mathbb{E}}_{\rateset,\mathcal{M}}^\mathrm{W}\left[ \underline{\mathbb{E}}_{\rateset,\mathcal{M}}^\mathrm{W}\left[   \prod_{j=i-1}^n g_j(X_{t_j}) \vert X_{t_{i-1}}, X_{t_{i-2}} \right] \vert X_{t_{i-2}} \right] = \underline{\mathbb{E}}_{\rateset,\mathcal{M}}^\mathrm{W}\left[   \prod_{j=i-1}^n g_j(X_{t_j}) \vert X_{t_{i-2}} \right]\,,
-%\end{align*}
-%where the second equality follows from the imprecise Markov property of $\wprocesses_{\rateset,\mathcal{M}}$, and the third equality follows from the rule of iterated lower expectation. This concludes the proof for the first statement. The proof for the second statement is the same, \emph{mutatis mutandis}.
-%\end{proof}
-%In particular, the above result implies that
-%\begin{equation*}
-%\underline{\mathbb{E}}_{\rateset,\mathcal{M}}^\mathrm{W}\left[ \tilde{g}_1^+(X_{t_1})\vert X_{t_0} \right] = \underline{\mathbb{E}}_{\rateset,\mathcal{M}}^\mathrm{W}\left[ \prod_{i=1}^ng(X_{t_i})\vert X_{t_0} \right] = \underline{\mathbb{E}}_{\rateset,\mathcal{M}}^\mathrm{W}\left[ f(X_u) \vert X_{t_0} \right]\,,
-%\end{equation*}
-%and immediately suggest an algorithm with total runtime complexity $O(n\lvert\states\rvert C)$, where $C$ is again the time complexity of evaluating $L_{t_{i-1}}^{t_i}g_i$.
-
-%
-%\begin{proposition}
-%The limit interpretation of the updated imprecise model with continuous outputs also holds under regular extension.
-%\end{proposition}
-%\begin{proof}
-%Consider any $y_u\in\observs_u$, and any sequence $\{O_u^i\}_{i\in\nats}$ that shrinks to $y_u$. Suppose that there is a sequence $\{\lambda_i\}_{i\in\nats}$ such that $\phi_u(y_u\vert X_u)$ exists, and satisfies $\uexp[\phi_u(y_u\vert X_u)]>0$. We will show that
-%\begin{equation*}
-%\max\{\mu\in\reals\,:\,\lexp[\phi_u(y_u\vert X_u)(f(X_v)-\mu)]\geq 0\} = \lim_{i\to+\infty} \underline{\mathbb{E}}_\mathcal{Z}[f(X_v)\,\vert\,Y_u\in O_u^i]\,.
-%\end{equation*}
-%
-%Fix any $\epsilon >0$ such that $\epsilon<\uexp[\phi_u(y_u\vert X_u)]$. Let $\mathcal{P}_\epsilon \coloneqq \{P\in\mathcal{Z}\,:\,\mathbb{E}_P[\phi_u(y_u\vert X_u)]>\epsilon\}$. Clearly, $\mathcal{P}_\epsilon\neq\emptyset$, and furthermore $\underline{\mathbb{E}}_{\mathcal{P}_\epsilon}[\phi_u(y_u\vert X_u)] \geq \epsilon > 0$. Therefore, as we know from the proof of the statement of the present proposition---but under natural extension---it holds that
-%\begin{equation}\label{eq:reg_ext_limit:subsets_converge_to_updated}
-%\mu_\epsilon \coloneqq \underline{\mathbb{E}}_{\mathcal{P}_\epsilon}[f(X_v)\,\vert\,Y_u=y_u] = \lim_{i\to+\infty} \underline{\mathbb{E}}_{\mathcal{P}_\epsilon}[f(X_v)\,\vert\,Y_u\in O_u^i]\,,
-%\end{equation}
-%under the obvious interpretation of the lower expectation.
-%
-%Because $\mathcal{P}_\epsilon\subseteq\{P\in\mathcal{Z}\,:\,\mathbb{E}_P[\phi_u(y_u\vert X_u)]>0\}$, we must have that
-%\begin{align*}
-%\mu_* \coloneqq \underline{\mathbb{E}}_{\mathcal{Z}}[f(X_v)\,\vert\,Y_u=y_u] &= \inf\{\mathbb{E}_P[f(X_v)\,\vert\,Y_u=y_u]\,:\,P\in\mathcal{Z},\mathbb{E}_P[\phi_u(y_u\vert X_u)]>0\} \\
-% &\leq \underline{\mathbb{E}}_{\mathcal{P}_\epsilon}[f(X_v)\,\vert\,Y_u=y_u] = \mu_\epsilon\,.
-%\end{align*}
-%
-%Now, consider a sequence $\{\epsilon_i\}_{i\in\nats}\to 0^+$ in $\realspos$ such that $\epsilon_i<\uexp[\phi_u(y_u\vert X_u)]$ for all $i\in\nats$. Using the above notation, we will show that $\lim_{i\to\infty}\mu_{\epsilon_i}=\mu_*$. 
-%
-%First, note that $\mu_*\leq \mu_{\epsilon_i}$, and $\mu_{\epsilon_{i+1}}\leq \mu_{\epsilon_i}$ for all $i\in\nats$. In other words, $\{\mu_{\epsilon_i}\}_{i\in\nats}$ is a decreasing sequence which is bounded below by $\mu_*$; hence, by the monotone convergence theorem, the limit $\mu_{\epsilon_*}\coloneqq\lim_{i\to+\infty}\mu_{\epsilon_i}$ exists. Showing that $\mu_{\epsilon_*}=\mu_*$ is a bit more involved.
-%
-%First, define
-%\begin{equation*}
-%G(\mu) \coloneqq \lexp[\phi_u(y_u\vert X_u)\bigl(f(X_v) - \mu\bigr)]\,.
-%\end{equation*}
-%Note that $\mu_*=\max\{\mu\in\reals\,:\,G(\mu)\geq 0\}$ by the GBR. Now fix any $\epsilon>0$. Clearly, $G(\mu_* + \epsilon)< 0$.
-%
-%This implies that there is some $P\in\mathcal{Z}$ such that also
-%\begin{equation*}
-%\mathbb{E}_P[\phi_u(y_u\vert X_u)\bigl(f(X_v) - (\mu_*+\epsilon)\bigr)] < 0\,,
-%\end{equation*}
-%which implies that $\mathbb{E}_P[\phi_u(y_u\vert X_u)]>0$. Because $\{\epsilon_i\}_{i\in\nats}\to 0^+$, there is some $n\in\nats$ such that for all $k>n$, it holds that $\epsilon_k < \mathbb{E}_P[\phi_u(y_u\vert X_u)]$, and hence in particular $P\in\mathcal{P}_{\epsilon_k}$. It follows that
-%\begin{equation*}
-%G_{\epsilon_k}(\mu_*+\epsilon) \coloneqq \underline{\mathbb{E}}_{\mathcal{P}_{\epsilon_k}}[\phi_u(y_u\vert X_u)\bigl(f(X_v) - (\mu_*+\epsilon)\bigr)] \leq \mathbb{E}_P[\phi_u(y_u\vert X_u)\bigl(f(X_v) - (\mu_*+\epsilon)\bigr)] < 0\,.
-%\end{equation*}
-%Since $G_{\epsilon_k}$ is monotonically decreasing, and since $G_{\epsilon_k}(\mu_{\epsilon_k})=0$, it follows that $\mu_{\epsilon_k} < \mu_*+\epsilon$. Since we also know that $\mu_*\leq \mu_{\epsilon_k}$, we find $\mu_*\leq \mu_{\epsilon_k}<\mu_*+\epsilon$. Hence, by repeating the above for increasingly smaller choices of $\epsilon$, we can construct a subsequence $\{\mu_{i_k}\}_{k\in\nats}$ such that $\lim_{k\to+\infty}\mu_{i_k}=\mu_*$. Since this is a convergent subsequence of the sequence $\{\mu_i\}_{i\in\nats}$, which we know converges to $\mu_{\epsilon_*}$ itself, it must hold that $\mu_{\epsilon_*}=\mu_*$.
-%
-%To summarise, we have so far shown that
-%\begin{equation}\label{eq:reg_ext_limit:updated_converges_in_subset}
-%\lim_{i\to+\infty}\underline{\mathbb{E}}_{\mathcal{P}_{\epsilon_i}}[f(X_v)\,\vert\,Y_u=y_u] = \underline{\mathbb{E}}_{\mathcal{Z}}[f(X_v)\,\vert\,Y_u=y_u]\,.
-%\end{equation}
-%
-%The problem is now that $\{P\in\mathcal{Z}\,:\,P(O_u^i)>0\}\supseteq \{P\in\mathcal{Z}\,:\,\mathbb{E}_P[\phi_u(y_u\vert X_u)]>0\}$. We first imitate the above construction, this time for decreasing lower bounds on $P(O_u^i)$. To this end, fix any $j\in\nats$, and consider any $\delta>0$ such that $\delta < \uexp[P_{\observs\vert\states}(O_u^j\vert X_u)]$. Let $\mathcal{P}_\delta\coloneqq \{P\in\mathcal{Z}\,:\, \mathbb{E}_P[P_{\observs\vert\states}(O_u^j\vert X_u)] > \delta\}$; clearly, $\mathcal{P}_\delta\neq\emptyset$, and $\underline{\mathbb{E}}_{\mathcal{P}_\delta}[P_{\observs\vert\states}(O_u^j\vert X_u)] \geq \delta > 0$.
-%
-%For any sequence $\{\delta_i\}_{i\in\nats}\to 0^+$, we should now have that
-%\begin{equation*}
-%\lim_{i\to+\infty} \underline{\mathbb{E}}_{\mathcal{P}_{\delta_i}}[f(X_v)\,\vert\,Y_u\in O_u^j] = \underline{\mathbb{E}}_{\mathcal{Z}}[f(X_v)\,\vert\,Y_u\in O_u^j]\,.
-%\end{equation*}
-%***** Proof of the above omitted to see where this goes. Pretty sure that this holds. Lets try to diagonalise next. Choose $\{\delta_i\}_{i\in\nats}\to0^+$ such that $\delta_i < \uexp[P_{\observs\vert\states}(O_u^i\vert X_u)]$ for all $i\in\nats$. Assume w.l.o.g. that $\{\underline{\mathbb{E}}_{\mathcal{Z}}[f(X_v)\,\vert\,Y_u\in O_u^i]\}_{i\in\nats}$ converges to some limit $\nu_*$.
-%
-%Because each $\mathcal{P}_{\delta_i}\neq \emptyset$, if follows from Proposition~\ref{def:reg_ext_pos} that each $\underline{\mathbb{E}}_{\mathcal{P}_{\delta_i}}[f(X_v)\,\vert\,Y_u\in O_u^i]\in[\min f, \max f]$. Consider any convergent subsequence of this sequence; this clearly always exists. Let
-%\begin{equation*}
-%\nu_{k_*} \coloneqq \lim_{k\to+\infty} \nu_{i_k} \coloneqq \lim_{k\to+\infty} \underline{\mathbb{E}}_{\mathcal{P}_{\delta_{i_k}}}[f(X_v)\,\vert\,Y_u\in O_u^{i_k}]\,.
-%\end{equation*}
-%We want to show that $\nu_{k_*}=\nu_*$. We clearly have $\nu_{i_k}=\underline{\mathbb{E}}_{\mathcal{P}_{\delta_{i_k}}}[f(X_v)\,\vert\,Y_u\in O_u^{i_k}] \geq \underline{\mathbb{E}}_{\mathcal{Z}}[f(X_v)\,\vert\,Y_u\in O_u^{i_k}]$ for all $k\in\nats$, and hence $\nu_* \leq \nu_{k_*}$. If we choose the $\delta_i$ as below, we also have $\mathcal{P}_{\delta_i}\subseteq \mathcal{P}_{\epsilon}$, with the latter as defined above, and hence we should have
-%\begin{equation*}
-%\nu_* \leq \mu_*\leq \mu_{\epsilon} \leq \nu_{k_*}\,.
-%\end{equation*}
-%Decreasing $\epsilon$ should then shift $\nu_{k_*}$ to the left. The corresponding sequence is thus decreasing, and bounded below by $\mu_*$; it therefore converges to some limit $\xi_*$ such that $\nu_*\leq \mu_*\leq \xi_*$. It then remains to show that $\nu_*=\xi_*$. To show this: $\nu_*$ is arbitrarily approached by some $\underline{\mathbb{E}}_{\mathcal{Z}}[f(X_v)\,\vert\,Y_u\in O_u^{j}]$, which in turn is arbitrarily approached by some $P\in\mathcal{Z}$ for which $\mathbb{E}_P[P_{\observs\vert\states}(O_u^j\vert X_u)]>0$. Because $\{\epsilon_i\}_{i\in\nats}\to0$, there is some $n$ such that for all $i>n$, it holds that $\mathbb{E}_P[P_{\observs\vert\states}(O_u^j\vert X_u)] > 2\lambda_j\epsilon_i$. This implies $P\in\mathcal{P}_{2\lambda_j\epsilon_i}$, and hence in particular $\underline{\mathbb{E}}_{\mathcal{P}_{2\lambda_j\epsilon_i}}[f(X_v)\vert Y_u\in O_u^j] \leq \mathbb{E}_P[f(X_v)\vert Y_u\in O_u^j]$. This in turn implies
-%\begin{equation*}
-%\underline{\mathbb{E}}_{\mathcal{Z}}[f(X_v)\vert Y_u\in O_u^j] \leq \underline{\mathbb{E}}_{\mathcal{P}_{2\lambda_j\epsilon_i}}[f(X_v)\vert Y_u\in O_u^j] \leq \mathbb{E}_P[f(X_v)\vert Y_u\in O_u^j]\,,
-%\end{equation*}
-%which means that $\abs{\underline{\mathbb{E}}_{\mathcal{Z}}[f(X_v)\vert Y_u\in O_u^j] - \underline{\mathbb{E}}_{\mathcal{P}_{2\lambda_j\epsilon_i}}[f(X_v)\vert Y_u\in O_u^j]}$ is arbitrarily small by the choice of $P$.
-%
-%*****
-%
-%Honestly, best guess might be to show directly that it cannot happen. I.e., try to prove that $\mathbb{E}_P[\phi_u(y_u\vert X_u)]=0$ implies that it cannot approach $\nu_*$.
-%
-%Some observations: if $\mathbb{E}_P[\phi_u(y_u\vert X_u)]=0$ for some $P\in\mathcal{Z}$, then $\min\{\phi_u(y_u\vert x_u)\,:\,x_u\in\states_u\} = 0$. Let $\states_u^0\coloneqq \{x_u\in\states_u\,:\, \phi_u(y_u\vert x_u) = 0\}$; clearly then $\states_u^0\neq\emptyset$. We must now have that
-%\begin{equation*}
-%\sum_{x_u^0\in\states_u^0}P(X_u=x_u^0) = 1\,.
-%\end{equation*}
-%Choose $P_j$ such that it approaches $\underline{\mathbb{E}}_{\mathcal{Z}}[f(X_v)\,\vert\,Y_u\in O_u^j]$, increasingly better. Clearly, $\mathbb{E}_{P_j}[f(X_v)\,\vert\,Y_u\in O_u^j]\to \nu_*$. Suppose w.l.o.g. that $\mathbb{E}_{P_j}[\phi_u(y_u\vert X_u)]=0$ for each $j$; if this is impossible, then clearly $\nu_*=\mu_*$. Assume \emph{ex absurdo} that $\nu_*<\mu_*$, and define $\delta\coloneqq \mu_*-\nu_*$. Fix any $\epsilon>0$ such that $\epsilon<\delta$. There is some $P\in\mathcal{Z}$ with $\mathbb{E}_{P}[\phi_u(y_u\vert X_u)]>0$ such that $\mathbb{E}_P[f(X_v)\,\vert\,Y_u=y_u]-\epsilon < \mu_*$. Furthermore, there is some $j\in\nats$ such that $\mathbb{E}_{P_j}[f(X_v)\,\vert\,Y_u\in O_u^j] < \mathbb{E}_P[f(X_v)\,\vert\,Y_u=y_u]-\epsilon$. Can even get the $\epsilon$ on both sides. Hence,
-%\begin{equation*}
-%\mathbb{E}_{P_j}[f(X_v)\,\vert\,Y_u\in O_u^j] < \mathbb{E}_P[f(X_v)\,\vert\,Y_u=y_u]
-%\end{equation*}
-%What can we say about relation between $\mathbb{E}_{P_j}[P_{\observs\vert\states}(O_u^j\vert X_u)]$ and $\mathbb{E}_{P}[\phi_u(y_u\vert X_u)]$ ?
-%
-%*****
-%
-%*****
-%
-%Let $\psi_\gamma^j(X_u)\coloneqq \gamma\phi_u(y_u\vert X_u) + (1-\gamma)\nicefrac{P_{\observs\vert\states}(O_u^j\vert X_u)}{\lambda_j}$ for some fixed $\gamma\in (0,1)$. Then,
-%\begin{align*}
-%\norm{\phi_u(y_u\vert X_u) - \psi_\gamma^j(X_u)} &= \norm{\phi_u(y_u\vert X_u) - \gamma\phi_u(y_u\vert X_u) - (1-\gamma)\frac{P_{\observs\vert\states}(O_u^j\vert X_u)}{\lambda_j}} \\
-% &= (1-\gamma)\norm{\phi_u(y_u\vert X_u) - \frac{P_{\observs\vert\states}(O_u^j\vert X_u)}{\lambda_j}} \\
-% &< \norm{\phi_u(y_u\vert X_u) - \frac{P_{\observs\vert\states}(O_u^j\vert X_u)}{\lambda_j}}\,.
-%\end{align*}
-%Hence, $\lim_{j\to+\infty}\psi_\gamma^j(X_u)=\phi_u(y_u\vert X_u)$ for any choice of $\gamma$.
-%
-%Going to guess that therefore **** nope, begging the question
-%\begin{align*}
-% &\quad \lim_{j\to+\infty} \inf\left\{ \frac{\mathbb{E}_P[f(X_v)\psi_\gamma^j(X_u)]}{\mathbb{E}_P[\psi_\gamma^j(X_u)]} \,:\,P\in\mathcal{Z}, \mathbb{E}_P[\psi_\gamma^j(X_u)] > 0\right\} \\
-% & = \inf\left\{\frac{\mathbb{E}_P[f(X_v)\phi_u(y_u\vert X_u)]}{\mathbb{E}_P[\phi_u(y_u\vert X_u)]} \,:\,P\in\mathcal{Z}, \mathbb{E}_P[\phi_u(y_u\vert X_u)] > 0\right\} \\
-% &= \underline{\mathbb{E}}_\mathcal{Z}[f(X_v)\,\vert\,Y_u=y_u]
-%\end{align*}
-%At the same time, $\underline{\mathbb{E}}_\mathcal{Z}[f(X_v)\,\vert\,O_u^j]$ is arbitrarily approached by some $P\in\mathcal{Z}$ such that $\mathbb{E}_P[P_{\observs\vert\states}(O_u^j\vert X_u)]>0$. We then have two options for this $P$; either $\mathbb{E}_P[\phi_u(y_u\vert X_u)]>0$, or it is zero. In the first case, we also have $\underline{\mathbb{E}}_\mathcal{Z}[f(X_v)\,\vert\,Y_u=y_u] < \mathbb{E}_P[f(X_v)\,\vert\,Y_u=y_u]$, which suffices to end the proof. Suppose therefore that the other case holds, i.e. $\mathbb{E}_P[\phi_u(y_u\vert X_u)]=0$. We do however know that $\mathbb{E}_P[\psi_\gamma^j(X_u)]>0$, and in particular
-%\begin{equation*}
-%\mathbb{E}_P[\psi_\gamma^j(X_u)] = \mathbb{E}_P\left[\gamma\phi_u(y_u\vert X_u) + (1-\gamma)\frac{P_{\observs\vert\states}(O_u^j\vert X_u)}{\lambda_j}\right] = (1-\gamma)\mathbb{E}_P\left[\frac{P_{\observs\vert\states}(O_u^j\vert X_u)}{\lambda_j}\right]\,.
-%\end{equation*}
-%On the other hand,
-%\begin{align*}
-%\mathbb{E}_P[f(X_v)\psi_\gamma^j(X_u)] = \frac{(1-\gamma)}{\lambda_j}\mathbb{E}_P[f(X_v)P_{\observs\vert\states}(O_u^j\vert X_u)]\,,
-%\end{align*}
-%and hence
-%\begin{equation*}
-%\frac{\mathbb{E}_P[f(X_v)\psi_\gamma^j(X_u)]}{\mathbb{E}_P[\psi_\gamma^j(X_u)]} = \frac{\mathbb{E}_P[f(X_v)P_{\observs\vert\states}(O_u^j\vert X_u)]}{\mathbb{E}_P[P_{\observs\vert\states}(O_u^j\vert X_u)]} = \mathbb{E}_P[f(X_v)\,\vert\,Y_u\in O_u^j]\,.
-%\end{equation*}
-%This suffices to end the proof.
-%*****
-%
-%The below construction actually works quite well. Getting somewhere...
-%
-%*****
-%
-%Fix any $\epsilon>0$ such that $4\epsilon <\uexp[\phi_u(y_u\vert X_u)]$; this is possible since $\uexp[\phi_u(y_u\vert X_u)]>0$. Then there is some $n\in\nats$ such that for all $j>n$,
-%\begin{equation}\label{eq:reg_ext_limit:density_approached}
-%\norm{\phi_u(y_u\vert X_u) - \frac{P_{\observs\vert\states}(O_u^j\vert X_u)}{\lambda_j}} < \epsilon\,.
-%\end{equation}
-%Fix any such $j>n$. Let $\delta\coloneqq 2\lambda_j\epsilon$. **** I \emph{think} that actually $\{\lambda_i\}_{i\in\nats}\to 0$ necessarily, which means that we can get $\delta$ as small as we want independent of $\epsilon$.
-%
-%We now first show that there is always some $P\in\mathcal{Z}$ such that $\mathbb{E}_P[P_{\observs\vert\states}(O_u^j\vert X_u)] > \delta$, for the above choice of $\delta$. Because $\epsilon>0$, and since $\uexp[\phi_u(y_u\vert X_u)]>4\epsilon$, there is some $P\in\mathcal{Z}$ such that
-%\begin{align*}
-%4\epsilon < \uexp[\phi_u(y_u\vert X_u)] &< \mathbb{E}_P[\phi_u(y_u\vert X_u)] + \epsilon \\
-% &= \abs{\mathbb{E}_P[\phi_u(y_u\vert X_u)] - \frac{\mathbb{E}_P[P_{\observs\vert\states}(O_u^j\vert X_u)]}{\lambda_j} + \frac{\mathbb{E}_P[P_{\observs\vert\states}(O_u^j\vert X_u)]}{\lambda_j}} + \epsilon \\
-% &< 2\epsilon + \frac{\mathbb{E}_P[P_{\observs\vert\states}(O_u^j\vert X_u)]}{\lambda_j} \\
-%2\epsilon &< \frac{\mathbb{E}_P[P_{\observs\vert\states}(O_u^j\vert X_u)]}{\lambda_j} \\
-%2\lambda_j\epsilon &< \mathbb{E}_P[P_{\observs\vert\states}(O_u^j\vert X_u)]\,.
-%\end{align*}
-%
-%Consider now any $P\in\mathcal{Z}$ for which $\mathbb{E}_P[P_{\observs\vert\states}(O_u^j\vert X_u)] > \delta$; as shown above, such a $P$ always exists. Then,
-%\begin{align*}
-%\frac{\delta}{\lambda_j} &< \frac{\mathbb{E}_P[P_{\observs\vert\states}(O_u^j\vert X_u)]}{\lambda_j} \\
-% &= \abs{\frac{\mathbb{E}_P[P_{\observs\vert\states}(O_u^j\vert X_u)]}{\lambda_j} - \mathbb{E}_P[\phi_u(y_u\vert X_u)] + \mathbb{E}_P[\phi_u(y_u\vert X_u)]} \\
-% &< \epsilon + \mathbb{E}_P[\phi_u(y_u\vert X_u)]\,,
-%\end{align*}
-%and hence
-%\begin{equation*}
-%\frac{\delta}{\lambda_j} = 2\epsilon < \epsilon + \mathbb{E}_P[\phi_u(y_u\vert X_u)]\,,
-%\end{equation*}
-%which clearly implies that $\epsilon < \mathbb{E}_P[\phi_u(y_u\vert X_u)]$. Therefore in particular,
-%\begin{equation*}
-%\emptyset\neq \{P\in\mathcal{Z}\,:\,\mathbb{E}_P[P_{\observs\vert\states}(O_u^j\vert X_u)] > 2\lambda_j\epsilon\} \subseteq \{P\in\mathcal{Z}\,:\,\mathbb{E}_P[\phi_u(y_u\vert X_u)] > \epsilon\}\,,
-%\end{equation*}
-%whenever $j\in\nats$ is such that Equation~\ref{eq:reg_ext_limit:density_approached} holds.
-%
-%*****
-%
-%Now, consider again the sequence $\{\underline{\mathbb{E}}_{\mathcal{Z}}[f(X_v)\,\vert\,Y_u\in O_u^i]\}_{i\in\nats}$, and choose any convergent subsequence thereof; since the sequence is in the compact interval $[\min f, \max f]$, the Bolzano-Weierstrass theorem implies that at least one convergent subsequence exists. Let
-%\begin{equation*}
-%\nu_{k_*} \coloneqq \lim_{k\to+\infty} \underline{\mathbb{E}}_{\mathcal{Z}}[f(X_v)\,\vert\,Y_u\in O_u^{i_k}]
-%\end{equation*}
-%denote the limit of this subsequence. For any $\epsilon>0$, we clearly have $\nu_{k_*}\leq \mu_{\epsilon}$. Also we know from previous tries that $G(\nu_{k_*})=0$, whence also $\nu_{k_*}\leq \mu_*$.
-%
-%*****
-%
-%We next diagonalise over the sequences $\{O_u^i\}_{i\in\nats}$ and $\{\epsilon_i\}_{i\in\nats}$. That is, we will show that
-%\begin{equation*}
-%\lim_{i\to+\infty} \underline{\mathbb{E}}_{\mathcal{P}_{\epsilon_i}}[f(X_v)\,\vert\,Y_u\in O_u^i] = \underline{\mathbb{E}}_{\mathcal{Z}}[f(X_v)\,\vert\,Y_u=y_u]\,.
-%\end{equation*}
-%To this end, fix any $\epsilon>0$. Because of Equation~\eqref{eq:reg_ext_limit:subsets_converge_to_updated}, there is some $n\in\nats$ such that for all $j>n$,
-%\begin{equation*}
-%\abs{\underline{\mathbb{E}}_{\mathcal{P}_{\epsilon_i}}[f(X_v)\,\vert\,Y_u\in O_u^j] - \underline{\mathbb{E}}_{\mathcal{P}_{\epsilon_i}}[f(X_v)\,\vert\,Y_u=y_u]} < \epsilon\,.
-%\end{equation*}
-%Furthermore, due to Equation~\eqref{eq:reg_ext_limit:updated_converges_in_subset}, there is some $m\in\nats$ such that for all $i>m$,
-%\begin{equation*}
-%\abs{\underline{\mathbb{E}}_{\mathcal{P}_{\epsilon_i}}[f(X_v)\,\vert\,Y_u=y_u] - \underline{\mathbb{E}}_{\mathcal{Z}}[f(X_v)\,\vert\,Y_u=y_u]} < \epsilon\,.
-%\end{equation*}
-%We will next establish that the same property holds for the quantities $\underline{\mathbb{E}}_{\mathcal{P}_{\epsilon_i}}[f(X_v)\,\vert\,Y_u\in O_u^j]$. The final argument is then by diagonalisation over all sequences at the same time.
-%
-%So, consider any $j\in\nats$, and the corresponding sequence $\{\nu_{\epsilon_i}^j\}_{i\in\nats}$ defined by
-%\begin{equation*}
-%\nu_{\epsilon_i}^j \coloneqq \underline{\mathbb{E}}_{\mathcal{P}_{\epsilon_i}}[f(X_v)\,\vert\,Y_u\in O_u^j]\,.
-%\end{equation*}
-%Let $\nu_*^j\coloneqq \underline{\mathbb{E}}_{\mathcal{Z}}[f(X_v)\,\vert\,Y_u\in O_u^j]$. 
-%
-%***** SHIT. I THINK THE NESTING IS NOW REVERSED. 
-%
-%Start by showing that $\underline{\mathbb{E}}_{\mathcal{P}_{\epsilon_i}}[\phi_u(y_u\vert X_y)]>0\Rightarrow \underline{\mathbb{E}}_{\mathcal{P}_{\epsilon_i}}[P_{\observs\vert\states}(O_u^j\vert X_u)]>0$ (should hold by convergence and monotonicity of measure).
-%Due to nesting of the sets $\mathcal{P}_{\epsilon_i}$ and $\mathcal{Z}$, we again have that $\nu_*^j\leq \nu_{\epsilon_i}^j$, and $\nu_{\epsilon_{i+1}}^j\leq \nu_{\epsilon_i}^j$ for all $i\in\nats$. Again by the monotone convergence theorem, $\nu_{\epsilon_*}^j\coloneqq \lim_{i\to+\infty}\nu_{\epsilon_i}^j$ exists.
-%
-%Let next
-%\begin{equation*}
-%G^j(\nu) \coloneqq \lexp[P_{\observs\vert\states}(O_u^j\vert X_u)\bigl(f(X_v)-\nu\bigr)]\,.
-%\end{equation*}
-%Again, $\nu_*^j=\max\{\nu\in\reals\,:\,G^j(\nu)\geq 0\}$ by the GBR. For any $\epsilon>0$, we have $G^j(\nu_*^j+\epsilon) < 0$. Hence, there is a $P\in\mathcal{Z}$ such that also
-%\begin{equation*}
-%\mathbb{E}_P[P_{\observs\vert\states}(O_u^j\vert X_u)\bigl(f(X_v)-(\nu_*^j+\epsilon)\bigr)] < 0\,,
-%\end{equation*}
-%which implies that $\mathbb{E}_P[P_{\observs\vert\states}(O_u^j\vert X_u)] > 0$. ***** SHOW THAT THIS IMPLIES $\mathbb{E}_P[\phi_u(y_u\vert X_u)]>0$.
-%
-%\end{proof}
 
 
 \end{document}
