@@ -1,0 +1,105 @@
+\documentclass[twoside,11pt]{letter}
+
+\begin{document}
+
+Dear Sir/Madam,
+
+We would very much like to thank you for the time and effort that you took in reviewing our paper ``Efficient Computation of Updated Lower Expectations for ICTHMC's'' for the 2017 ISIPTA conference.
+
+We have tried to incorporate your feedback and suggestions into the final version of the paper, page limit constraints allowing. So as not to give the impression that unincorporated feedback was ignored, we have attached our responses to the points raised in your review.
+
+With kind regards,
+
+Thomas Krak\\
+Jasper De Bock\\
+Arno Siebes
+\newline\newline
+
+\newpage
+{\bf Reviewer 1}
+
+\ldots \\
+{\bf 
+My main concern is that I think that some of the choices made in the paper should be better justified: 
+
+-For instance, when discussing imprecise continuous time markov chains they assume that any possible rate matrix can be combined with any possible initial model. What if this is not the case? I guess that since the approach is based on lower envelopes some loss of information is unavoidable; still, more precise models may be of interest in practice. }
+
+You're right, of course, that this assumption might lead to overly conservative bounds. In principle, the dependence between initial model and dynamic behaviour can be made as arbitrarily complex as desired. The obvious drawback is that computability then breaks down, which is why we stick to this (indeed possibly oversimplified) model. We have not addressed this comment in the final version due to page limit constraints.
+
+{\bf 
+-Similarly, the assumption of a bounded $\mathcal{Q}$ is not discussed, although this seems less problematic. }
+
+Due to page limit constraints we are unfortunately unable to give an in-depth discussion on this subject. (For the interested reader, we would like to refer back to (Krak et al., 2016) for more discussion). The intuitive argument is that unbounded $\mathcal{Q}$ implies (near) instantaneous state-switching. Computability concerns aside, it is not even clear whether the inference problem is then well-posed; consider a process that can move from state $A$ to $B$ and back from $B$ to $A$, where both transitions occur instantaneously---what does it mean to ask about the probability of being in state $A$ at some time $t>0$?
+
+{\bf 
+-Some of the comments about the behaviour of the model are too vague (if $\mathcal{M}$ is 'nice enough', or that the converse 'often' holds). I'd suggest to be more specific here. }
+
+We have made the ``nice enough'' assumption a bit more explicit, by noting that it for example might be closed and convex. Since $\mathcal{M}$ is just a set of probability mass functions, the same assumptions apply that are pervasive throughout the IP literature. 
+
+We removed the ``the converse\ldots '' comment entirely in the final version, because in hindsight we agreed that it didn't add much due to its vagueness and we needed some additional space to incorporate other comments.
+
+{\bf
+-The authors (without mentioning its name) decide to work with the strong product in Definition 2, since they take the envelope of the products of precise models. This is fine of course, but since there are many different definitions of independent products for sets of probabilities I think you should mention why you take this approach here. One possible line would be that you try to be as informative as possible with the little information you have since this seems to be also behind the use of regular extension; but if so you should discuss it.
+} 
+
+We have added some discussion below Definition 2 to address this. Do note that since the output models are precise (in the current definition), there is no functional difference between assuming strong independence or epistemic irrelevance.
+
+{\bf
+-The measurability assumptions you make in section 3.1 were unclear to me, since in the end there are still a few problems with conditioning and also they are not made for other elements of the model. 
+}
+
+We regret to say that we do not entirely understand which measurability assumptions you're referring to here.
+
+{\bf
+-Another point is that the well-behaviour of the regular extension is dependent on working on finite possibility spaces, since otherwise it may not produced an updated model that is coherent with the unconditional one. 
+}
+
+While true, we do not entirely see why this would be problematic. While coherence between unconditional and \emph{conditional} models is indeed desirable, we are explicitly \emph{updating} the model rather than \emph{conditioning} it.
+
+{\bf *** JASPER, KAN JIJ HIER EVENTUEEL NOG WAT OVER UITWIJDEN? *** }
+
+{\bf
+-Also, even in the first two cases you discuss in the last paragraph of page 10 there is a solution, they are not equivalent, since in one Generalised Bayes Rule has a unique solution and in the other it does not (and you must somewhat arbitrarily choose the most informative one). Also, for the third case you may mention solutions in the literature of imprecise probabilities such as full conditional measures or sets of desirable gambles. }
+
+This is true, but note that we are using the GBR merely as a computational tool, with the definition of the updated model being phrased in terms of sets of precise models. This naturally leads to the maximum solution of the GBR being the unique value corresponding to the updated lower expectation. (This is in contrast to using the GBR to \emph{define} the updated model itself, in which case there indeed need not be a unique solution and one must choose which solution to use).
+
+{\bf
+-Finally, I'd like the authors to be more specific on their approach to the generalised Bayes rule for density functions, showing that really in a number of interesting cases the method they propose works effectively...it may be the case, but after reading the paper I was not sure about whether the examples here were some lucky instances or not. Perhaps you can expand a bit this part. }
+
+We regret to say that we do not entirely understand which examples you're referring to here. Also, in light of the previous comment, note that we are simply defining the updated imprecise model as the set of updated precise models---the GBR is here again simply a computational tool to find the value of the corresponding lower expectation.
+
+\newpage
+{\bf Reviewer 2}
+
+\ldots
+
+{\bf
+My only "important" comment regards Definition 2, where an imprecise continuous-time hidden Markov model is \emph{defined} using a fixed/precise output model. IMHO it would be better to define the model allowing imprecise output, and then to assume a fixed output model (in this work). Otherwise, references in future work could become ambiguous w.r.t. to the definition of such models. }
+
+We appreciate the comment, and have added some discussion below Definition 2. We have however decided to stick to the current definition, for two reasons. First, (even if we were to keep the output model precise as a special case), the imprecise definition leads to some technical and notational difficulties that are difficult to tackle within the page limits of the current paper---mostly when we then also allow the output model to vary at different time-points. Second, it would force us into making a choice for the specific corresponding independence assumptions, e.g. strong independence or epistemic irrelevance, and the above-mentioned time-(in)dependence. Since it is currently unclear which of these choices is most desirable, we are not at present willing to commit to such a choice. (Making the ``wrong'' choice now would also invalidate the advantage that you mention w.r.t. future work).
+
+{\bf
+I wonder whether the typical much simpler "trick" of transforming continuous (fintely-many) observed variables into binary random variables wouldn't be as general as the current approach (at least in what concerns the algorithm), while still mathematical precise. Could the authors please point out any advantage of allowing continuous variables in their model (given the inferences they entertain)? }
+
+We regret to say that we are not entirely sure which ``trick'' you are referring to here. However, one obvious advantage to explicitly using continuous variables/density functions would pertain to doing predictive inference on the outputs themselves.
+
+{\bf
+Another very useful inference in practice is to compute the probability/density of evidence. This can be used to classify sequences according to a collection of (imprecise) models. Perhaps the authors would like to include that possibility in the conclusion. }
+
+This is indeed interesting, and we have added it as suggested.
+\newpage
+{\bf Reviewer 3}
+
+\ldots
+
+{\bf
+I think the authors could have made the paper more understandable with an example. }
+
+We agree, and indeed would have liked to incorporate an example had the page limit constraints allowed for this.
+
+{\bf
+Furthermore, practical utility should be also stressed: What can we say about prediction of future observations? What can we say about the evolution of the hidden process? Do its properties changes upon observations? Is it possible to make use of the algorithm (or a revised version) to simulate future behaviour (at least within some bands)? }
+
+These are indeed interesting questions that we should investigate in future work. Unfortunately, the page limit constraints do not allow us to add this research to the present paper.
+
+\end{document}

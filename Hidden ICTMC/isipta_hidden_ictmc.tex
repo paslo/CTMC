@@ -255,7 +255,7 @@ Furthermore, the unconditional lower expectation at an arbitrary time $t\in\real
 \begin{equation}\label{eq:unconditional_lower_exp}
 \underline{\mathbb{E}}_{\rateset,\mathcal{M}}[f(X_t)] = \underline{\mathbb{E}}_{\mathcal{M}}\bigl[\underline{\mathbb{E}}_{\rateset}[f(X_t)\,\vert\,X_0]\bigr]\,,
 \end{equation}
-which can therefore be computed by combining Equations~\eqref{eq:lower_exp_in_steps} and~\eqref{eq:unconditional_time_zero}. In particular, from a practical point of view, it suffices to first compute the conditional lower expectation $\underline{\mathbb{E}}_{\rateset}[f(X_t)\,\vert\,X_0]$, using Equation~\eqref{eq:lower_exp_in_steps}. Once this quantity is obtained, it remains to compute the right-hand side of Equation~\eqref{eq:unconditional_time_zero}, which again is relatively straightforward when $\mathcal{M}$ is ``nice enough''.
+which can therefore be computed by combining Equations~\eqref{eq:lower_exp_in_steps} and~\eqref{eq:unconditional_time_zero}. In particular, from a practical point of view, it suffices to first compute the conditional lower expectation $\underline{\mathbb{E}}_{\rateset}[f(X_t)\,\vert\,X_0]$, using Equation~\eqref{eq:lower_exp_in_steps}. Once this quantity is obtained, it remains to compute the right-hand side of Equation~\eqref{eq:unconditional_time_zero}, which again is relatively straightforward when $\mathcal{M}$ is ``nice enough'', e.g., closed and convex.
 
 \section{Imprecise Continuous-Time Hidden Markov Chains}\label{sec:icthmc}
 
@@ -299,6 +299,7 @@ P(Y_u\in O_u,X_u=x_u, X_v=x_v) \coloneqq P_{\observs\vert\states}(O_{u}\,\vert\,
 Other probabilities can be derived by appropriate marginalisation.
 We denote the resulting augmented stochastic process as $P=P_{\observs\vert\states}\otimes P_\states$,
 for the specific output model $P_{\observs\vert\states}$ and stochastic process $P_\states$ that were taken to be fixed in this section.
+\vspace{-8pt}
 
 \subsection{Imprecise Continuous-Time Hidden Markov Chains}\label{subsec:ICTHMC}
 
@@ -308,23 +309,25 @@ Consider any ICTMC $\mathbb{P}_{\rateset,\mathcal{M}}$, and any output model $(\
 $\mathcal{Z} \coloneqq \left\{ P_{\observs\vert\states}\otimes P_{\states} \,:\, P_{\states}\in\mathbb{P}_{\rateset,\mathcal{M}}\right\}$.
 The lower expectation with respect to $\mathcal{Z}$ will be denoted by $\underline{\mathbb{E}}_\mathcal{Z}$.
 \end{definition}
-Note that we leave the parameters $\mathcal{M}$, $\rateset$ and $P_{\observs\vert\states}$ implicit in the notation of the ICTHMC $\mathcal{Z}$---we will henceforth take these parameters to be fixed.
+Observe that we take the output model to be precise, and shared by all processes in the set. One further generalisation that we aim to make in the future is to also allow for an imprecise specification of this output model. However, this would force us into choosing an appropriate mode of independence; e.g., whether to enforce the independence assumptions made in Section~\ref{sec:aug_stochastic_processes}, leading to strong independence, or by only enforcing the lower envelopes to have these independence properties, leading to epistemic irrelevance. It is currently unclear which choice should be preferred, e.g. with regard to computability, so at present we prefer to focus on this simpler model.
 
+Finally, note that we leave the parameters $\mathcal{M}$, $\rateset$ and $P_{\observs\vert\states}$ implicit in the notation of the ICTHMC $\mathcal{Z}$---we will henceforth take these parameters to be fixed.
+\vspace{-8pt}
 
 \section{Updating the Model}\label{sec:updating_model}
 
-In the context of \emph{hidden} (continuous-time) Markov chains, it is typically assumed that the state $X_t$ that is obtained by the process at time $t$, cannot be directly observed---hence the term ``hidden''. Rather, we can only observe realisations of the output variable $Y_t$. 
+%In the context of \emph{hidden} (continuous-time) Markov chains, it is typically assumed that the state $X_t$ that is obtained by the process at time $t$, cannot be directly observed---hence the term ``hidden''. Rather, we can only observe realisations of the output variable $Y_t$. 
 
-Suppose then that we have observed that some event $(Y_u\in O_u)$ has taken place, with $O_u\in\Sigma_u$. We here use the terminology that we \emph{update} our model with these observations, after which the updated model reflects our revised beliefs about some quantity of interest. These updated beliefs, about some function $f\in\gambles(\states_v)$, say, are then denoted by
+Suppose that we have observed that some event $(Y_u\in O_u)$ has taken place, with $O_u\in\Sigma_u$. We here use the terminology that we \emph{update} our model with these observations, after which the updated model reflects our revised beliefs about some quantity of interest. These updated beliefs, about some function $f\in\gambles(\states_v)$, say, are then denoted by
 $\mathbb{E}_P[f(X_v)\,\vert\,Y_u\in O_u]$
 or $\underline{\mathbb{E}}_\mathcal{Z}[f(X_v)\,\vert\,Y_u\in O_u]$, 
 depending on whether we are considering a precise or an imprecise model. In this section, we provide definitions and alternative expressions for such updated (lower) expectations.
-
+\vspace{-8pt}
 
 \subsection{Observations with Positive (Upper) Probability}\label{subsec:pos_prob}
 
 When our assertion $(Y_u\in O_u)$ about an observation at time points $u$ has positive probability, we can---in the precise case---update our model by application of Bayes' rule. The following gives a convenient expression for the updated expectation $\mathbb{E}_P[f(X_v)\,\vert\,Y_u\in O_u]$, which makes use of the independence assumptions in Section~\ref{sec:aug_stochastic_processes} for augmented stochastic processes.
-
+\vspace{-8pt}
 \begin{proposition}\label{prop:precise_conditioning_for_positive}
 Let $P$ be an augmented stochastic process and consider any $u,v\in\mathcal{U}$, $O_u\in\Sigma_u$ and $f\in\gambles(\states_v)$. Then the updated expectation is given by
 \begin{equation*}
@@ -377,7 +380,8 @@ It is also useful to note that $\phi_u(y_u\vert x_u)$ can often be constructed `
 \begin{equation*}
 \phi_t(y_t\vert x_t)\coloneqq \lim_{i\to+\infty} \frac{P_{\observs\vert\states}(O_t^i\vert x_t)}{\lambda_{\,t,i}}
 \end{equation*}
-exists and is real-valued, then choosing $\{\lambda_i\}_{i\in\nats}$ as $\lambda_i\coloneqq \prod_{t\in u}\lambda_{\,t,i}$ yields $\phi_u(y_u\vert x_u)=\prod_{t\in u}\phi_t(y_t\vert x_t)$. The converse often also holds, in that if $\phi_u(y_u\vert x_u)$ exists there tend to be sequences $\{\lambda_{\,t,i}\}_{t\in\nats}$ so that $\phi_t(y_t\vert x_t)$ exists, and for which $\prod_{t\in u}\phi_t(y_t\vert x_t)=\phi_u(y_u\vert x_u)$. The ``often'' qualifier is a bit hard to make rigorous at this level of generality, but, in any case, this direction is less useful practically. 
+exists and is real-valued, then choosing $\{\lambda_i\}_{i\in\nats}$ as $\lambda_i\coloneqq \prod_{t\in u}\lambda_{\,t,i}$ yields $\phi_u(y_u\vert x_u)=\prod_{t\in u}\phi_t(y_t\vert x_t)$. 
+%The converse often also holds, in that if $\phi_u(y_u\vert x_u)$ exists there tend to be sequences $\{\lambda_{\,t,i}\}_{t\in\nats}$ so that $\phi_t(y_t\vert x_t)$ exists, and for which $\prod_{t\in u}\phi_t(y_t\vert x_t)=\phi_u(y_u\vert x_u)$. The ``often'' qualifier is a bit hard to make rigorous at this level of generality, but, in any case, this direction is less useful practically. 
 
 Now, to make the above practicable, we can for example assume that if $\observs$ is uncountable, then it is the set $\observs=\reals^d$, for some $d\in\nats$, and that $\Sigma$ is the Borel $\sigma$-algebra on $\reals^d$. 
 For each $x\in\states$, we then assume that the measure $P_{\observs\vert\states}(\cdot\,\vert x)$ is induced by some given \emph{probability density function}: a measurable function $\psi(\cdot\,\vert x):\observs\to\realsnonneg$ such that $\int_\observs \psi(y\vert x)\,\mathrm{d}y=1$ and, for every $O\in\Sigma$,
@@ -511,18 +515,17 @@ So, in order to evaluate the function of interest, it remains to compute $\lexp\
 
 \section{Conclusions and Future Work}\label{sec:conclusions}
 
-We considered the problem of performing inference with \emph{imprecise continuous-time hidden Markov chains}; an extension of \emph{imprecise continuous-time Markov chains} obtained by augmenting them with random \emph{output} variables. 
-Our main result is an efficient, polynomial runtime, algorithm to compute lower expectations of functions that depend on the state-space at any given time-point, given a collection of observations of the output variables. This algorithm can be used both when the outputs are discrete and when they are continuous.
+We considered the problem of performing inference with \emph{imprecise continuous-time hidden Markov chains}; an extension of \emph{imprecise continuous-time Markov chains} obtained by augmenting them with random \emph{output} variables, which may be either discrete or continuous.
+Our main result is an efficient, polynomial runtime, algorithm to compute lower expectations of functions that depend on the state-space at any given time-point, given a collection of observations of the output variables. %This algorithm can be used both when the outputs are discrete and when they are continuous.
 
 In future work, we intend to further generalise this model, by also allowing for imprecise output variables. Furthermore, we also aim to develop algorithms for other inference problems,
-such as the problem of computing updated lower expectations of functions $f\in\gambles(\states_v)$ that depend on more than one time-point. Another such problem is that of estimating state-sequences given observed output-sequences---as was previously done for (discrete-time) iHMM's~\citep{DeBock:2014ts}. We believe that these previous results should 
-translate fairly naturally to the current setting.
-
+such as the problem of computing updated lower expectations of functions $f\in\gambles(\states_v)$ that depend on more than one time-point. Similarly, we aim to investigate predictive output inferences, i.e., the lower probability/density of observations, which has uses in classification problems. Another such problem is that of estimating state-sequences given observed output-sequences---as was previously done for (discrete-time) iHMM's~\citep{DeBock:2014ts}. %We believe that these previous results should translate fairly naturally to the current setting.
+\vspace{-9pt}
 
 \appendix
 
-\acks{The work in this paper was partially supported by the Research Foundation - Flanders (FWO) and the H2020-MSCA-ITN-2016 UTOPIAE, grant agreement 722734.}
-
+\acks{The work in this paper was partially supported by the Research Foundation - Flanders (FWO) and the H2020-MSCA-ITN-2016 UTOPIAE, grant agreement 722734. The authors would like to thank three anonymous referees for their helpful comments and suggestions.}
+\vspace{-4pt}
 \bibliography{general}
 
 \newpage
