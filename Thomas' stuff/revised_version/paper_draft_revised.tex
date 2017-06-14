@@ -20,6 +20,8 @@
 \usepackage{algorithmicx}
 \usepackage{algpseudocode}
 
+\usepackage{thm-restate}
+
 \usepackage{graphicx}
 
 
@@ -106,7 +108,6 @@
    \mathopen{\vphantom{#2}}^{#1}%
    \kern-\scriptspace%
    #2}
-
 
 \title{Imprecise Continuous-Time Markov Chains\raggedright}
 
@@ -269,6 +270,8 @@ We denote the reals as $\reals$, the non-negative reals as $\realsnonneg$, the p
 
 Infinite sequences of quantities will be denoted $\{a_i\}_{i\in\nats}$, possibly with limit statements of the form $\{a_i\}_{i\in\nats}\to c$, which should be interpreted as $\lim_{i\to\infty}a_i=c$. If the elements of such a sequence belong to a space that is endowed with an ordering relation, we may write $\{a_i\}_{i\in\nats}\to c^+$ or $\{a_i\}_{i\in\nats}\to c^-$ if the limit is approached from above or below, respectively.
 
+When working with suprema and infima, we will sometimes use the shorthand notation $\sup\{\cdot\}<\infty$ to mean that there exists a $c\in\reals$ such that $\sup\{\cdot\}< c$, and similarly for $\inf\{\cdot\}>-\infty$.
+
 For any set $A$ and any subset $C$ of $A$, we use $\ind{C}$ to denote the indicator of $C$, defined for all $a\in A$ by $\ind{C}(a)=1$ if $a\in C$ and $\ind{C}(a)=0$, otherwise. If $C$ is a singleton $C=\{c\}$, we may instead write $\ind{c}\coloneqq\ind{\{c\}}$.
 
 \subsection{Sequences of Time Points}\label{subsec:sequencesoftimepoints}
@@ -381,9 +384,12 @@ $T(x,y)\geq0$ for all $x,y\in\states$.
 \noindent We will use $\mathbb{T}$ to denote the set of all transition matrices.
 \end{definition}
 
-\begin{proposition}\label{lemma:compositiontransitionmatrix}
+%\begin{proposition}\label{lemma:compositiontransitionmatrix}
+%For any two transition matrices $T_1$ and $T_2$, their composition $T_1T_2$ is also a transition matrix.
+%\end{proposition}
+\begin{restatable}{proposition}{lemmacompositiontransitionmatrix}\label{lemma:compositiontransitionmatrix}
 For any two transition matrices $T_1$ and $T_2$, their composition $T_1T_2$ is also a transition matrix.
-\end{proposition}
+\end{restatable}
 
 The interpretation in the context of Markov chains goes as follows. The elements $T(x,y)$ of a transition matrix $T$ describe the probability of the Markov chain ending up in state $y$ at the next time point, given that it is currently in state $x$. In other words, the row $T(x,\cdot)$ contains the state-transition probabilities, conditional on currently being in state $x$. We will make this connection more explicit when we formalise continuous-time stochastic processes in Section~\ref{sec:stochastic_processes}.
 
@@ -407,15 +413,17 @@ The connection between transition matrices and rate matrices is perhaps best ill
 
 A rate matrix $Q$ is then used to describe the transition matrix $T_t^{t+\Delta}$ after a small period of time, $\Delta$, has elapsed. Specifically, the scaled matrix $\Delta Q$ serves as a linear approximation of the change from $T_t^t$ to $T_t^{t+\Delta}$. The following proposition states that, for small enough $\Delta$, this linear change still results in a transition matrix.
 
-\begin{proposition}\label{prop:stochastic_from_rate_matrix}
+\begin{restatable}{proposition}{propstochasticfromratematrix}
+\label{prop:stochastic_from_rate_matrix}
 Consider any transition rate matrix $Q\in\mathcal{R}$, and any $\Delta\in\realsnonneg$ such that $\Delta \norm{Q}\leq 1$. Then the matrix $(I+\Delta Q)$ is a transition matrix.
-\end{proposition}
+\end{restatable}
 This also explains the terminology used; a rate matrix describes the ``rate of change'' of a (continuously) time-dependent transition matrix over a small period of time.
 
 Of course, this notion can also be reversed; given a transition matrix $T_t^{t+\Delta}$, what is the change that it underwent compared to $T_t^t=I$? The following proposition states that such a change can always be described using a rate matrix.
-\begin{proposition}\label{prop:rate_from_stochastic_matrix}
+\begin{restatable}{proposition}{propratefromstochasticmatrix}
+\label{prop:rate_from_stochastic_matrix}
 Consider any transition matrix $T$, and any $\Delta\in\realspos$. Then, the matrix $\nicefrac{1}{\Delta}(T-I)$ is a transition rate matrix.
-\end{proposition}
+\end{restatable}
 Note that Proposition~\ref{prop:rate_from_stochastic_matrix} essentially states that the finite-difference $\nicefrac{1}{\Delta}(T_t^{t+\Delta} - T_t^t)$ is a rate matrix. Intuitively, if we now take the limit as this $\Delta$ goes to zero, this states that the derivative of a continuously time-dependent transition matrix is given by some rate matrix $Q\in\mathcal{R}$---assuming that this limit exists, of course. We will make this connection more explicit in Section~\ref{sec:stochastic_processes}.
 
 We next introduce a function that is often seen in the context of continuous-time Markov chains: the \emph{matrix exponential}~\cite{van2006study} $e^{Q\Delta}$ of $Q \Delta$, with $Q$ a rate matrix and $\Delta\in\reals_{\geq0}$. 
@@ -427,12 +435,13 @@ Consider a rate matrix $Q\in\mathcal{R}$ and any $\Delta\in\realsnonneg$. Then $
 
 We conclude this section with some comments about \emph{sets} of rate matrices. First, note that the set of \emph{all} rate matrices, $\mathcal{R}$, is closed under finite sums and multiplication with non-negative scalars. Consider now any set $\rateset\subseteq\mathcal{R}$ of rate matrices. Then $\rateset$ is said to be \emph{non-empty} if $\rateset\neq\emptyset$ and $\rateset$ is said to be \emph{bounded} if $\norm{\rateset}<+\infty$. The following proposition provides a simple alternative characterisation of boundedness.
 
-\begin{proposition}\label{prop:alternativedefforbounded}
+\begin{restatable}{proposition}{propalternativedefforbounded}
+\label{prop:alternativedefforbounded}
 A set of rate matrices $\rateset\subseteq\mathcal{R}$ is bounded if and only if
 \begin{equation}\label{eq:alternative_bounded}
 \inf\left\{Q(x,x)\colon Q\in\rateset\right\}>-\infty\text{~~for all $x\in\states$.}
 \end{equation}
-\end{proposition}
+\end{restatable}
 
 
 \subsection{Transition Matrix Systems that are Well-Behaved}
@@ -476,11 +485,10 @@ T_t^s=e^{Q(s-t)}
 We call this family $\mathcal{T}_Q$ the \emph{exponential transition matrix system} corresponding to $Q$.
 \end{definition}
 
-
-\begin{proposition}
+\begin{restatable}{proposition}{propsystemQ}
 \label{prop:systemQ}
 For any $Q\in\mathcal{R}$, $\mathcal{T}_Q$ is a well-behaved transition matrix system.
-\end{proposition}
+\end{restatable}
 
 This exponential transition matrix system corresponding to a $Q\in\mathcal{R}$ will turn out to play a large role in the context of continuous-time Markov chains. We return to this in Section~\ref{sec:cont_time_markov_chains}.
 
@@ -494,14 +502,15 @@ For any transition matrix system $\mathcal{T}$ and any such closed interval $\ma
 We call such a family $\mathcal{T}^{\mathbf{I}}$ a \emph{restricted transition matrix system} on $\mathbf{I}$. The set of all restricted transition matrix systems on $\mathbf{I}$ is denoted by $\mathbfcal{T}^{\mathbf{I}}$.
 
 
-
-\begin{proposition}\label{prop:restr_trans_mat_system_if_semigroup}
+\begin{restatable}{proposition}{proprestrtransmatsystemifsemigroup}
+\label{prop:restr_trans_mat_system_if_semigroup}
 Consider any closed interval $\mathbf{I}\subseteq\realsnonneg$, and let $\mathcal{T}^{\mathbf{I}}$ be a family of transition matrices $T_t^s$ that is defined for all $t,s\in\mathbf{I}$ with $t\leq s$. Then $\mathcal{T}^{\mathbf{I}}$ is a restricted transition matrix system on $\mathbf{I}$ if and only if, for all $t,r,s\in\mathbf{I}$ with $t\leq r\leq s$, it holds that $T_t^s = T_t^rT_r^s$ and $T_t^t=I$.
-\end{proposition}
+\end{restatable}
 
 We call a restricted transition matrix system $\mathcal{T}^{\mathbf{I}}$ well-behaved if it is the restriction to $\mathbf{I}$ of a well-behaved transition matrix system.
 
-\begin{proposition}\label{prop:well_restr_trans_mat_system_if_limsup}
+\begin{restatable}{proposition}{propwellrestrtransmatsystemiflimsup}
+\label{prop:well_restr_trans_mat_system_if_limsup}
 Consider any closed interval $\mathbf{I}\subseteq\realsnonneg$, and let $\mathcal{T}^{\mathbf{I}}$ be a restricted transition matrix system on $\mathbf{I}$. Then $\mathcal{T}^{\mathbf{I}}$ is well-behaved if and only if
 \begin{equation}\label{eq:wellbehavedrestrictedtransitionmatrixsystem}%\label{eq:wellbehavedhistorictransitionmatrix}
 (\forall t\in\mathbf{I}^+)~\limsup_{\Delta\to 0^{+}}\frac{1}{\Delta}\norm{T_{t}^{t+\Delta}-I}<+\infty\,
@@ -509,7 +518,7 @@ Consider any closed interval $\mathbf{I}\subseteq\realsnonneg$, and let $\mathca
 (\forall t\in\mathbf{I}^-)~\limsup_{\Delta\to 0^{+}}\frac{1}{\Delta}\norm{T_{t-\Delta}^t-I}<+\infty\,,
 \end{equation}
 where $\mathbf{I}^+\coloneqq\mathbf{I}\setminus\{\sup\mathbf{I}\}$ and $\mathbf{I}^-\coloneqq\mathbf{I}\setminus\{\min\mathbf{I}\}$.
-\end{proposition}
+\end{restatable}
 
 
 Now, because these restricted transition matrix systems are only defined on some given closed interval, it will be useful to define a concatenation operator between two such systems. 
@@ -526,9 +535,10 @@ T_t^s \coloneqq \begin{cases}
 where $r\coloneqq\max\mathbf{I}=\min\mathbf{J}$, and $\presuper{i}T_t^s$ and $\presuper{j}T_t^s$ denote the transition matrices corresponding to $\mathcal{T}^{\mathbf{I}}$ and $\mathcal{T}^{\mathbf{J}}$, respectively.
 \end{definition}
 
-\begin{proposition}\label{prop:concat_restr_trans_mat_systems_is_system}
+\begin{restatable}{proposition}{propconcatrestrtransmatsystemsissystem}
+\label{prop:concat_restr_trans_mat_systems_is_system}
 Consider two closed intervals $\mathbf{I},\mathbf{J}\subseteq\realsnonneg$ such that $\max\mathbf{I}=\min\mathbf{J}$, and any two restricted transition matrix systems $\mathcal{T}^{\mathbf{I}}$ and $\mathcal{T}^{\mathbf{J}}$. Then their concatenation $\mathcal{T}^{\mathbf{I}\cup \mathbf{J}} \coloneqq \mathcal{T}^{\mathbf{I}}\otimes \mathcal{T}^{\mathbf{J}}$ is a restricted transition matrix system on $\mathbf{I}\cup\mathbf{J}$. Furthermore, if both $\mathcal{T}^{\mathbf{I}}$ and $\mathcal{T}^{\mathbf{J}}$ are well behaved, then $\mathcal{T}^{\mathbf{I}\cup\mathbf{J}}$ is also well-behaved.
-\end{proposition}
+\end{restatable}
 
 \begin{exmp}\label{exmp:combinetwoexponentials}
 Consider any two rate matrices $Q_1,Q_2\in\mathcal{R}$ such that $Q_1\neq Q_2$, and let $\mathcal{T}_{Q_1}$ and $\mathcal{T}_{Q_2}$ be their exponential transition matrix systems, which, as we know from Proposition~\ref{prop:systemQ}, are well-behaved. Now choose any $r\in\realsnonneg$ and define
@@ -545,9 +555,10 @@ d(\mathcal{T}^{\mathbf{I}},\mathcal{S}^{\mathbf{I}}) \coloneqq \sup\left\{\norm{
 \end{equation}
 where, for all $t,s\in\mathbf{I}$, it is understood that $T_t^s$ corresponds to $\mathcal{T}^{\mathbf{I}}$ and $S_t^s$ to $\mathcal{S}^{\mathbf{I}}$. This metric allows us to state the following result.
 
-\begin{proposition}\label{lemma:restricted_trans_mat_system_cauchy_converges}
+\begin{restatable}{proposition}{lemmarestrictedtransmatsystemcauchyconverges}
+\label{lemma:restricted_trans_mat_system_cauchy_converges}
 Consider any interval $\mathbf{I}\subseteq\realsnonneg$ and let $d$ be the metric that is defined in Equation~\eqref{eq:trans_mat_system_metric}. The metric space $\smash{(\mathbfcal{T}^{\mathbf{I}},d)}$ is then complete.
-\end{proposition}
+\end{restatable}
 Note that this result includes as a special case that the set $\mathbfcal{T}$ of all (unrestricted) transition matrix systems is complete. The following example illustrates how this result can be used.
 
 
@@ -821,7 +832,7 @@ Consider a variable $X$ that takes values $\omega$ in some non-empty---possibly 
 We call any subset $E$ of $\Omega$ an event, we use $\power$ to denote the set of all such events, and we let $\nonemptypower\coloneqq\power\setminus\{\emptyset\}$ be the set of all non-empty events. 
 A subject's uncertainty about the value of $X$ can then be described by means of a full conditional probability~\cite{Dubins:1975ej}.
 
-\begin{definition}[Full conditional probability]\label{def:cond_prob}
+\begin{definition}[Full Conditional Probability]\label{def:cond_prob}
 A full conditional probability $P$ is a real-valued map from $\power\times\nonemptypower$ to $\reals$ that satisfies the following axioms. For all $A,B\in\power$ and all \mbox{$C,D\in\nonemptypower$}:
 \vspace{5pt}
 
@@ -899,9 +910,10 @@ Let $P$ be a coherent conditional probability on $\mathcal{C}\subseteq\power\tim
 \end{theorem}
 In particular, it is therefore always possible to extend a coherent conditional probability $P$ on $\mathcal{C}$, to a coherent conditional probability on $\power\times\nonemptypower$. Due to Theorem~\ref{theo:fullcoherent}, this extension is a full conditional probability. The following makes this explicit.
 
-\begin{corollary}\label{corol:coherentextendable}
+\begin{restatable}{corollary}{corolcoherentextendable}
+\label{corol:coherentextendable}
 Let $P$ be a real-valued map from $\mathcal{C}\subseteq\power\times\nonemptypower$ to $\reals$. Then $P$ is a coherent conditional probability if and only if it can be extended to a full conditional probability.
-\end{corollary}
+\end{restatable}
 Note, therefore, that if $P$ is a coherent conditional probability on $\mathcal{C}$, we can equivalently say that it is the restriction of a full conditional probability. Hence, any coherent conditional probability on $\mathcal{C}$ is guaranteed to satisfy properties~\ref{def:coh_prob_2}-\ref{def:coh_prob_6}. However, as was essentially already illustrated in Example~\ref{exmp:F1F4cannotbeextended}, and as our next example makes explicit, the converse is not true.
 
 \begin{exmp}
@@ -967,10 +979,10 @@ That being said, we can now finally formalise our definition of a (continuous-ti
 A \emph{stochastic process} is a coherent conditional probability on $\mathcal{C}^\mathrm{SP}$. We denote the set of all stochastic processes by $\processes$.
 \end{definition}
 
-
-\begin{corollary}\label{corol:processiffrestriction}
+\begin{restatable}{corollary}{corolprocessiffrestriction}
+\label{corol:processiffrestriction}
 Let $P$ be a real-valued map from $\mathcal{C}^\mathrm{SP}$ to $\reals$. Then $P$ is a stochastic process if and only if it is the restriction of a full conditional probability.
-\end{corollary}
+\end{restatable}
 
 There are two reason why we restrict ourselves to the domain $\mathcal{C}^\mathrm{SP}$. The most important reason is simply that all of the results in this paper can be expressed using only this domain, because they are all concerned with events or functions that depend on a finite number of time points. The second reason is that this restriction will allow us to state  uniqueness results that do not extend to larger domains; see for example~Corollary~\ref{cor:rate_has_unique_homogen_markov_process}. However, it is important to realise that our restriction of the domain does not impose any real limitations, because, as we know from Theorem~\ref{theo:largerdomain}, the domain of a coherent conditional probability---and hence also a stochastic process---can always be extended (although not uniquely). In fact, as briefly touched upon in the conclusions of this paper, it is even possible to consider extensions that are $\sigma$-additive.
 
@@ -1110,7 +1122,8 @@ For notational convenience, we allow $u$ to be empty, in which case $T_{t,\,x_u}
 
 The following proposition establishes some simple properties of these corresponding (history-dependent) transition matrices.
 
-\begin{proposition}\label{prop:stochasticprocess:simpleproperties}
+\begin{restatable}{proposition}{propstochasticprocesssimpleproperties}
+\label{prop:stochasticprocess:simpleproperties}
 Let $P\in\processes$ be a stochastic process.  
 Then, for any $t,s\in\realsnonneg$ such that $t\leq s$, any sequence of time points $u\in\mathcal{U}_{<t}$, and any state assignment $x_u\in\states_u$, the corresponding (history dependent) transition matrix $T_{t,\,x_u}^s$ is---as its name suggests---a transition matrix, and $T_{t,\,x_u}^t=I$. Furthermore, $P$ is well-behaved if and only if, for every---possibly empty---time sequence $u\in\mathcal{U}$, any $x_u\in\states_u$ and any $t\in\reals_{\geq0}$ such that $t>u$:
 \begin{equation}\label{eq:def:well-behaved:right:matrix}
@@ -1121,7 +1134,7 @@ and, if $t\neq0$,
 \limsup_{\Delta\to 0^{+}}\frac{1}{\Delta}\norm{T_{t-\Delta,x_u}^{t}-I}<+\infty.
 \end{equation}
 \vspace{-4pt}
-\end{proposition}
+\end{restatable}
 
 \begin{remark}\label{remark:expectationT}
 Note that for any $P\in\processes$, the corresponding transition matrix $T_{t, x_u}^s$ is a map from $\gamblesX$ to $\gamblesX$, that can therefore be applied to any $f\in\gamblesX$. Furthermore, for any $x_t\in\states$, we have that
@@ -1262,12 +1275,13 @@ Furthermore, the \emph{outer partial derivative} of $T_{t,x_u}^t$ is defined as
 
 For well-behaved processes $P\in\wprocesses$, as our next result shows, these outer partial derivatives are always non-empty, bounded and closed.
 
-\begin{proposition}\label{prop:boundednon-emptyandclosed}
+\begin{restatable}{proposition}{propboundednonemptyandclosed}
+\label{prop:boundednon-emptyandclosed}
 Consider any $P\in\wprocesses$. Then $\overline{\partial}_{+}
 {T^t_{t,\,x_u}}$, $\overline{\partial}_{-}
 {T^t_{t,\,x_u}}$ and $\overline{\partial}
 {T^t_{t,\,x_u}}$ are non-empty, bounded and closed subsets of $\mathcal{R}$.
-\end{proposition}
+\end{restatable}
 
 The following two examples provide this result with some intuition. Example~\ref{exmp:outerderivative} illustrates the validity of the result, while Example~\ref{exmp:emptyouterderivative} shows that the requirement that $P$ must be well-behaved is essential for the result to be true.
 
@@ -1341,7 +1355,8 @@ which, since $\epsilon>0$, contradicts the fact that $\smash{\lim_{i\to+\infty}\
 
 We end this section with two additional properties of the outer partial derivatives of well-behaved stochastic processes. First, as we establish in our next result, they satisfy an $\epsilon-\delta$ expression that is similar to the limit expression of a partial derivative.
 
-\begin{proposition}\label{prop:outerderivativebehaveslikelimit}
+\begin{restatable}{proposition}{propouterderivativebehaveslikelimit}
+\label{prop:outerderivativebehaveslikelimit}
 Consider any well-behaved stochastic process $P\in\wprocesses$. Then, for any $t\in\realsnonneg$, any sequence of time points $u\in\mathcal{U}_{<t}$, any state assignment $x_u\in\states_u$, and any $\epsilon>0$, there is some $\delta>0$ such that, for all $0<\Delta<\delta$:
 \begin{equation}
 \label{eq:outerderivativebehaveslikelimit1}
@@ -1358,11 +1373,12 @@ and, if $t\neq0$,
 \norm{\frac{1}{\Delta}
 (T^{t}_{t-\Delta,\,x_u}-I)-Q}<\epsilon.
 \end{equation}\vspace{-5pt}
-\end{proposition}
+\end{restatable}
 
 Secondly, these outer partial derivatives are a proper generalisation of directional partial derivatives. In particular, if the latter exist, their values correspond exactly to the single element of the former.
 
-\begin{corollary}\label{corol:outersingleton}
+\begin{restatable}{corollary}{coroloutersingleton}
+\label{corol:outersingleton}
 Consider any $P\in\wprocesses$. Then $\smash{\overline{\partial}_{+}
 {T^t_{t,\,x_u}}}$ is a singleton if and only if $\smash{\partial_{+}
 {T^t_{t,\,x_u}}}$ exists and, in that case, $\smash{\overline{\partial}_{+}
@@ -1372,7 +1388,7 @@ Consider any $P\in\wprocesses$. Then $\smash{\overline{\partial}_{+}
 {T^t_{t,\,x_u}}}$, and for $\smash{\overline{\partial}
 {T^t_{t,\,x_u}}}$ and $\smash{\partial
 {T^t_{t,\,x_u}}}$.
-\end{corollary}
+\end{restatable}
 
 
 \section{Continuous-Time Markov Chains}\label{sec:cont_time_markov_chains}
@@ -1393,15 +1409,17 @@ T_t^s = T_t^rT_r^s.
 \end{equation}
 In this context, this property is known as the \emph{Chapman-Kolmogorov equation} or the semi-group property~\cite{liggett2010continuous}. Indeed, this is the same semi-group property that we defined in Section~\ref{sec:systems} to hold for transition matrix systems $\mathcal{T}$. The following result should therefore not be surprising.
 
-\begin{proposition}\label{prop:Markovhassystem}
+\begin{restatable}{proposition}{propMarkovhassystem}
+\label{prop:Markovhassystem}
 Consider a Markov chain $P\in\mprocesses$ and let $\mathcal{T}_P$ be the corresponding family of transition matrices. Then $\mathcal{T}_P$ is a transition matrix system. Furthermore, $\mathcal{T}_P$ is well-behaved if and only if $P$ is well-behaved.
-\end{proposition}
+\end{restatable}
 
 At this point we know that every (well-behaved) Markov chain has a corresponding (well-behaved) transition matrix system. Our next result establishes that the converse is true as well: every (well-behaved) transition matrix system has a corresponding (well-behaved) Markov chain, and for a given initial distribution, this Markov chain is even unique.
 
-\begin{theorem}\label{theo:uniqueMarkovchain}
+\begin{restatable}{theorem}{theouniqueMarkovchain}
+\label{theo:uniqueMarkovchain}
 Let $p$ be any probability mass function on $\states$ and let $\mathcal{T}$ be a transition matrix system. Then there is a unique Markov chain $P\in\mprocesses$ such that $\mathcal{T}_P=\mathcal{T}$ and, for all $y\in\states$, $P(X_0=y)=p(y)$. Furthermore, $P$ is well-behaved if and only if $\mathcal{T}$ is well-behaved.
-\end{theorem}
+\end{restatable}
 
 Hence, Markov chains---and well-behaved Markov chains in particular---are completely characterised by their transition matrices and their initial distribution. Our next example uses this result to formally establish the existence of the Markov chains that were used in Examples~\ref{exmp:well-behaved-no-deriv} and~\ref{exmp:emptyouterderivative}. Furthermore, it also illustrates that not every Markov chain is well-behaved.
 
@@ -1429,24 +1447,27 @@ We denote the set of all homogeneous Markov chains by $\hmprocesses$ and use $\w
 
 Recall now from Section~\ref{sec:systems} the exponential transition matrix system $\mathcal{T}_Q$ corresponding to some $Q\in\mathcal{R}$. As we have seen, the transition matrices of such a system were defined by $T_t^s = e^{Q(s-t)}$. This family $\mathcal{T}_Q$ therefore clearly satisfies Equation~\ref{eq:homogeneousMarkov}. Furthermore, by Proposition~\ref{prop:systemQ}, $\mathcal{T}_Q$ is well-behaved. Hence, we have the following result.
 
-\begin{corollary}\label{cor:rate_has_unique_homogen_markov_process}
+\begin{restatable}{corollary}{corratehasuniquehomogenmarkovprocess}
+\label{cor:rate_has_unique_homogen_markov_process}
 Consider any rate matrix $Q\in\mathcal{R}$ and let $p$ be an arbitrary probability mass function on $\states$. Then there is a unique Markov chain $P\in\mprocesses$ such that $\mathcal{T}_P=\mathcal{T}_Q$ and, for all $y\in\mathcal{X}$, $P(X_0=y)=p(y)$. Furthermore, this unique Markov chain is well-behaved and homogeneous.
-\end{corollary}
+\end{restatable}
 
 
 Our next result strengthens this connection between well-behaved homogeneous Markov chains and exponential transition matrix systems.
 
-\begin{theorem}\label{theo:homogeneoushasQ}
+\begin{restatable}{theorem}{theohomogeneoushasQ}
+\label{theo:homogeneoushasQ}
 For any well-behaved homogeneous Markov chain $P\in\whmprocesses$, there is a unique rate matrix $Q\in\mathcal{R}$ such that $\mathcal{T}_P=\mathcal{T}_Q$.\footnote{Although our proof for this result starts from scratch, this result is essentially well known. Our version of it should be regarded as a (re)formulation that is adapted to our terminology and notation and, in particular, to our use of coherent and/or full conditional probabilities.}
-\end{theorem}
+\end{restatable}
 
 Hence, any well-behaved homogeneous Markov chain $P\in\whmprocesses$ is completely characterised by its initial distribution and a rate matrix $Q\in\mathcal{R}$. We will denote this rate matrix by $Q_P$.
 
 
 The dynamic behaviour of well-behaved homogeneous Markov chains is furthermore particularly easy to describe, as shown by the next result.
-\begin{proposition}\label{prop:Q_is_singleton_deriv_for_homogen}
+\begin{restatable}{proposition}{propQissingletonderivforhomogen}
+\label{prop:Q_is_singleton_deriv_for_homogen}
 Consider any well-behaved homogeneous Markov chain $P\in\whmprocesses$ and let $Q_P\in\mathcal{R}$ be its corresponding rate matrix. Then $\partial T_t^t=\partial_+T_t^t=\partial_-T_t^t=Q_P$ and $\smash{\overline{\partial}}T_t^t=\smash{\overline{\partial}_+}T_t^t=\smash{\overline{\partial}_-}T_t^t=\{Q_P\}$.
-\end{proposition}
+\end{restatable}
 
 \subsection{Non-homogeneous Markov chains}\label{sec:nonhomogen_markov}
 
@@ -1466,9 +1487,10 @@ One technique for constructing transition matrix systems that is particularly im
 For example, the transition matrix systems $\mathcal{T}_i$, $i\in\nats_0$, that we defined in Equation~\eqref{eq:def:sequenceinexample3} are all of this form.
 As we know from Propositions~\ref{prop:systemQ} and~\ref{prop:concat_restr_trans_mat_systems_is_system}, transition matrix systems that are of this form are always well-behaved. The following result is therefore a trivial consequence of Theorem~\ref{theo:uniqueMarkovchain}.
 
-\begin{proposition}\label{prop:finite_different_rate_matrix_has_process}
+\begin{restatable}{proposition}{propfinitedifferentratematrixhasprocess}
+\label{prop:finite_different_rate_matrix_has_process}
 Let $p$ be an arbitrary probability mass function on $\states$, let $u=t_0,\ldots,t_n$ be a finite sequence of time points in $\mathcal{U}_\emptyset$, and let $Q_0,\ldots,Q_{n+1}\in\rateset$ be a collection of rate matrices. Then there is a well-behaved continuous-time Markov chain $P\in\wmprocesses$ such that $P(X_0=y)=p(y)$ for all $y\in\mathcal{X}$ and such that $\mathcal{T}_P$ is given by Equation~\eqref{eq:nonhomogen_in_process_set_system_composition}.
-\end{proposition}
+\end{restatable}
 
 
 \section{Imprecise Continuous-Time Markov chains}
@@ -1493,7 +1515,8 @@ If $P$ is consistent with $\rateset$, we will write $P\sim\rateset$.
 \end{definition}
 
 
-Thus, when a process is consistent with a set of rate matrices $\rateset$, we know that its dynamics can always be described using the rate matrices in that set. However, we do not know which of these rate matrices $Q\in\rateset$ describe the dynamics at any given time $t\in\realsnonneg$ or for any given history $x_u\in\states_u$. Furthermore, consistency of a process with a set of rate matrices $\rateset$ does not tell us anything about the initial distribution of the process. 
+Thus, when a process is consistent with a set of rate matrices $\rateset$, we know that its dynamics can always be described using the rate matrices in that set. However, we do not know which of these rate matrices $Q\in\rateset$ describe the dynamics at any given time $t\in\realsnonneg$ or for any given history $x_u\in\states_u$. 
+Furthermore, consistency of a process with a set of rate matrices $\rateset$ does not tell us anything about the initial distribution of the process. 
 Therefore, we also introduce the concept of consistency with a set of initial distributions~$\mathcal{M}$.
 
 \begin{definition}[Consistency with a set of initial distributions]\label{def:consistent_process_initialdistribution}
@@ -1532,12 +1555,13 @@ Following Definition~\ref{def:consistent_process_set}, we will write $\wprocesse
  Since the sets $\whmprocesses$, $\wmprocesses$ and $\wprocesses$
  are nested, it should be clear that this also true for the corresponding types of \ictmc's.
 
-\begin{proposition}\label{prop:markov_set_subset_of_nonmarkov_set}
+\begin{restatable}{proposition}{propmarkovsetsubsetofnonmarkovset}
+\label{prop:markov_set_subset_of_nonmarkov_set}
 Consider any bounded set of rate matrices $\rateset$, and any non-empty set $\mathcal{M}$ of probability mass functions on $\states$. Then,
 \begin{equation*}
 \whmprocesses_{\rateset,\mathcal{M}} \subseteq \wmprocesses_{\rateset,\mathcal{M}} \subseteq \wprocesses_{\rateset,\mathcal{M}}\,.
 \end{equation*}
-\end{proposition}
+\end{restatable}
 
 
 
@@ -1571,9 +1595,10 @@ Since $\wmprocesses_{\rateset,\mathcal{M}}$ is a subset of $\wprocesses_{\ratese
 \exampleend
 \end{exmp}
 
-\begin{proposition}\label{prop:nonhomogeneous_in_process_set}
+\begin{restatable}{proposition}{propnonhomogeneousinprocessset}
+\label{prop:nonhomogeneous_in_process_set}
 Consider any non-empty bounded set of rate matrices $\rateset$ and let $\mathcal{M}$ be any non-empty set of probability mass functions on $\states$. Then for any $p\in\mathcal{M}$, any ordered finite sequence of time points $u=t_0,\ldots,t_n$ in $\mathcal{U}_\emptyset$ and any collection of rate matrices $Q_0,\ldots,Q_{n+1}\in\rateset$, there is a well-behaved continuous-time Markov chain $P\in\wmprocesses_{\rateset,\,\mathcal{M}}$ such that $P(X_0=y)=p(y)$ for all $y\in\mathcal{X}$ and such that $\mathcal{T}_P$ is given by Equation~\eqref{eq:nonhomogen_in_process_set_system_composition}.
-\end{proposition}
+\end{restatable}
 
 We conclude this section with some notes about closure properties of the different types of \ictmc's that we consider, which are particularly useful for existence proofs. In particular, we focus on closure properties under recombination of known elements---colloquially, the ``piecing together'' of two or more processes to construct a new process that belongs to the same \ictmc.
 
@@ -1585,8 +1610,8 @@ Clearly, a similar procedure is impossible for $\whmprocesses_{\rateset,\mathcal
 
 However, for our most general type of \ictmc, which is $\wprocesses_{\rateset,\mathcal{M}}$, it turns out to be possible to recombine elements in an even more general, history-dependent way. That is, if $\rateset$ is convex, then it is possible, for fixed time points $u\in\mathcal{U}$, to choose for every history $x_u\in\states_u$ a different process $P_{x_u}\in\wprocesses_{\rateset,\mathcal{M}}$, and to recombine these into a process $P$ that agrees with these $P_{x_u}$ conditional on the specific history $x_u$. Furthermore, the distribution on the time points $u$ can be chosen to agree with any element $\smash{P_{\emptyset}\in \wprocesses_{\rateset,\mathcal{M}}}$. The following result guarantees that this new process $P$ will again belong to $\wprocesses_{\rateset,\mathcal{M}}$.
 
-
-\begin{theorem}\label{theo:aanelkaarplakken}
+\begin{restatable}{theorem}{theoaanelkaarplakken}
+\label{theo:aanelkaarplakken}
 Consider a non-empty convex set of rate matrices $\rateset\subseteq\mathcal{R}$, and any non-empty set $\mathcal{M}$ of probability mass functions on $\states$.
 Fix a finite sequence of time points $u\in\mathcal{U}$. Choose any $P_\emptyset\in\wprocesses_{\rateset,\,\mathcal{M}}$ and, for all $x_u\in\states_u$, choose some $\smash{P_{x_u}\in\wprocesses_{\rateset,\,\mathcal{M}}}$. Then there is a stochastic process $\smash{P\in\wprocesses_{\rateset,\,\mathcal{M}}}$ such that, for all $u_1,u_2\subseteq u$ such that $u_1<u_2$, all $x_u\in\states_u$ and all $A\in\mathcal{A}_u$:
 \begin{equation}\label{eq:theo:aanelkaarplakken:equalsfirst}
@@ -1598,7 +1623,7 @@ and
 P(A\vert X_u=x_u)=P_{x_u}(A\vert X_u=x_u).
 \vspace{7pt}
 \end{equation}
-\end{theorem}
+\end{restatable}
 
 
 \subsection{Lower Expectations for \ictmc's}\label{subsec:ictmc_types}
@@ -1637,14 +1662,15 @@ In particular, one of the main aims of this paper is to provide methods to compu
 First of all, it can be shown that if $\rateset$ is a non-empty, bounded, convex and closed set of rate matrices, then the conditional lower expectations $\underline{\mathbb{E}}_{\rateset}^\mathrm{W}$, $\underline{\mathbb{E}}_{\rateset}^\mathrm{WM}$ and $\underline{\mathbb{E}}_{\rateset}^\mathrm{WHM}$ are actually minima---rather than infima---because they are always reached by some element of their corresponding \ictmc. However, the proof of this claim is rather involved and requires some technical machinery that is outside of the scope of this paper; we intend to publish these and related results separately in future work.
 
 Moving on, we know from Section~\ref{subsec:types_ictmc} that the sets $\whmprocesses_{\rateset,\mathcal{M}}$, $\wmprocesses_{\rateset,\mathcal{M}}$ and $\wprocesses_{\rateset,\mathcal{M}}$ are nested subsets of each other. As an immediate consequence, their corresponding lower expectations provide (lower) bounds for each other.
-\begin{proposition}\label{prop:lower_exp_markov_bounded_by_nonmarkov}
+\begin{restatable}{proposition}{proplowerexpmarkovboundedbynonmarkov}
+\label{prop:lower_exp_markov_bounded_by_nonmarkov}
 Consider any non-empty bounded set of rate matrices $\rateset$, and any non-empty set $\mathcal{M}$ of probability mass functions on $\states$. Then,
 \begin{equation*}
 \underline{\mathbb{E}}_{\rateset,\mathcal{M}}^\mathrm{W}[\cdot\,\vert\,\cdot] \leq
 \underline{\mathbb{E}}_{\rateset,\mathcal{M}}^\mathrm{WM}[\cdot\,\vert\,\cdot] \leq
 \underline{\mathbb{E}}_{\rateset,\mathcal{M}}^\mathrm{WHM}[\cdot\,\vert\,\cdot]\,.
 \end{equation*}
-\end{proposition}
+\end{restatable}
 
 Generally speaking, the inequalities in this proposition can be---and often are---strict; for the first inequality, we will illustrate this further on in this section, in Figure~\ref{fig:homogeneousCounterExample}, whereas for the second inequality, this can be seen by comparing Examples~\ref{exmp:num_multivar_func_nonmarkov} and \ref{exmp:num_counterexample_markov} in Section~\ref{sec:decomposition}.
 
@@ -1655,12 +1681,13 @@ For now, we first provide a useful property of the lower expectation $\smash{\un
 \end{equation}
 This equality is well-known, and is called the \emph{law of iterated expectation}. Rather remarkably, if $\rateset$ is convex, then the lower expectation $\underline{\mathbb{E}}^{\mathrm{W}}_{\rateset,\,\mathcal{M}}$ satisfies a similar property. The proof for this so-called law of iterated \emph{lower} expectation is based on Theorem~\ref{theo:aanelkaarplakken}.
 
-\begin{theorem}\label{theorem:decomposition_multivar}
+\begin{restatable}{theorem}{theoremdecompositionmultivar}
+\label{theorem:decomposition_multivar}
 Let $\rateset$ be an arbitrary non-empty, bounded, and convex set of rate matrices, and consider any non-empty set $\mathcal{M}$ of probability mass functions on $\states$. Then for any $u,v,w\in\mathcal{U}$ such that $u<v<w$ and any $f\in\gambles(\states_{u\cup v\cup w})$:
 \begin{equation}\label{eq:lower_exp_factorizes}
 \underline{\mathbb{E}}^{\mathrm{W}}_{\rateset,\,\mathcal{M}}\left[f(X_u,X_v,X_w)\,\vert\,X_u\right] = \underline{\mathbb{E}}^{\mathrm{W}}_{\rateset,\,\mathcal{M}}\Bigl[\underline{\mathbb{E}}^{\mathrm{W}}_{\rateset,\,\mathcal{M}}\left[f(X_u,X_v,X_w)\,\vert\,X_u,X_v\right] \Big\vert\,X_u\Bigr]\,. 
 \end{equation}
-\end{theorem}
+\end{restatable}
 The reason why this result is useful, is because it essentially allows us to compute lower expectations recursively. In particular, instead of computing a lower expectation for all time points simultaneously, we can focus on each of the time points separately, and eliminate them one by one. We will revisit this idea Section~\ref{sec:funcs_multi_time_points}, where we will use it to develop efficient algorithms.
 
 For now, we would like to draw attention to the fact that Theorem~\ref{theorem:decomposition_multivar} relies heavily on the fact that the individual elements of $\smash{\wprocesses_{\rateset,\mathcal{M}}}$ do no need to satisfy the Markov property, in the sense that they can have history-dependent probabilities. Therefore, unfortunately, the result in Theorem~\ref{theorem:decomposition_multivar} does not extend to $\smash{\underline{\mathbb{E}}_{\rateset,\mathcal{M}}^\mathrm{WM}}$ or $\smash{\underline{\mathbb{E}}_{\rateset,\mathcal{M}}^\mathrm{WHM}}$. Since Theorem~\ref{theorem:decomposition_multivar} simplifies considerably the process of computing the lower expectation $\underline{\mathbb{E}}_{\rateset,\mathcal{M}}^\mathrm{W}$, this suggests that the qualitative differences between the three types of \ictmc's that we consider make some of their corresponding lower expectations harder to compute than others. In fact, we will show in Section~\ref{sec:funcs_multi_time_points} that $\wprocesses_{\rateset\,,\mathcal{M}}$ is in some sense the easiest set to do this for, exactly because of Theorem~\ref{theorem:decomposition_multivar}.
@@ -1845,9 +1872,10 @@ $\norm{\lt A - \lt B} \leq \norm{A - B}$. \label{LT:differencenorm}
 \vspace{0pt}
 \end{definition}
 
-\begin{proposition}\label{lemma:compositioncoherence}
+\begin{restatable}{proposition}{lemmacompositioncoherence}
+\label{lemma:compositioncoherence}
 For any two lower transition operators $\lt,\underline{S}\in\underline{\mathbb{T}}$, their composition $\lt\,\underline{S}$ is again a lower transition operator.% $\left(\lt\,\underline{S}\right)\in\underline{\mathbb{T}}$.
-\end{proposition}
+\end{restatable}
 
 The first thing to note is that any transition matrix $T$ will also satisfy properties~\ref{LT:bounded_min}-\ref{LT:homo}, and hence is also a lower transition operator. It is therefore clear that lower transition operators are a generalisation of transition matrices.
 
@@ -1879,9 +1907,10 @@ Due to the correspondence between transition matrices and conditional expectatio
 
 We conclude with the following result about the set $\underline{\mathbb{T}}$ of all lower transition operators, which states that this set is a complete metric space with respect to our usual norm.
 
-\begin{proposition}\label{lemma:completemetricspace}
+\begin{restatable}{proposition}{lemmacompletemetricspace}
+\label{lemma:completemetricspace}
 The metric space $(\underline{\mathbb{T}},d)$ is complete with respect to the metric $d$ that is induced by our usual norm $\norm{\cdot}$.
-\end{proposition}
+\end{restatable}
 
 \subsection{Lower Transition Rate Operators}\label{sec:connections_rate}
 
@@ -1934,9 +1963,10 @@ So consider any non-empty bounded set $\rateset\subseteq\mathcal{R}$ of rate mat
 the resulting function $\lrate f$ is again an element of $\gamblesX$,\footnote{Since $\rateset$ is bounded,~\ref{N:normAf} implies that, for all $Q\in\rateset$, $\norm{Qf}\leq\norm{Q}\norm{f}\leq\norm{\rateset}\norm{f}<+\infty$. Therefore, and since $\rateset$ is non-empty, the components of $\lrate f$ are bounded below by $-\norm{\rateset}\norm{f}$, which implies that $\lrate f$ is a real-valued function on $\states$.}
 and therefore, $\lrate$ is a map from $\gamblesX$ to $\gamblesX$. We call this operator $\lrate$, as defined by Equation~\eqref{eq:correspondinglowertrans}, the \emph{lower envelope} of $\rateset$. It is a matter of straightforward verification to see that $\lrate$ is a lower transition rate operator.
 
-\begin{proposition}\label{prop:lowerenvelopeislowertrans}
+\begin{restatable}{proposition}{proplowerenvelopeislowertrans}
+\label{prop:lowerenvelopeislowertrans}
 For any non-empty bounded set $\rateset\subseteq\mathcal{R}$ of rate matrices, the corresponding operator $\lrate\colon\gamblesX\to\gamblesX$, as defined by Equation~\eqref{eq:correspondinglowertrans}, is a lower transition rate operator.
-\end{proposition}
+\end{restatable}
 
 \noindent
 Inspired by this result, we will also refer to the lower envelope of $\rateset$ as the \emph{lower transition rate operator that corresponds to $\rateset$}.  
@@ -1969,9 +1999,10 @@ Qf\geq\lrate f\text{ for all $f\in\gamblesX$}
 \end{equation}
 As our next result shows, this set $\rateset_{\lrate}$ is non-empty and bounded, and has $\lrate$ as its lower envelope. Even stronger, the infimum in Equation~\eqref{eq:correspondinglowertrans} is reached---can be replaced by a minimum.
 
-\begin{proposition}\label{prop:dominating_nonempty_bounded}
+\begin{restatable}{proposition}{propdominatingnonemptybounded}
+\label{prop:dominating_nonempty_bounded}
 Consider a lower transition rate operator $\lrate$ and let $\rateset_{\lrate}$ be the corresponding set of dominating rate matrices, as defined by Equation~\eqref{eq:dominatingratematrices}. Then $\rateset_{\lrate}$ is non-empty and bounded and, for all $f\in\gamblesX$, there is some $Q\in\rateset_{\lrate}$ such that $\lrate f=Qf$.
-\end{proposition}
+\end{restatable}
 
 \noindent
 Because of this result, and since---as discussed above---every non-empty bounded set of rate matrices that has $\lrate$ as its lower envelope is a subset of $\rateset_{\lrate}$, it follows that $\rateset_{\lrate}$ is the largest non-empty bounded set of rate matrices that has $\lrate$ as its lower envelope.
@@ -1990,16 +2021,18 @@ Q\in\mathcal{R}
 where, for every $x\in\states$, $\rateset_x\coloneqq\{Q(x,\cdot)\colon Q\in\rateset\}$ is some given set of rows from which the $x$-row $Q(x,\cdot)$ of the rate matrices $Q$ in $\rateset$ is selected, independently of the other rows.
 \end{definition}
 
-\begin{proposition}\label{prop:dominatingproperties}
+\begin{restatable}{proposition}{propdominatingproperties}
+\label{prop:dominatingproperties}
 Consider a lower transition rate operator $\lrate$ and let $\rateset_{\lrate}$ be the corresponding set of dominating rate matrices, as defined by Equation~\eqref{eq:dominatingratematrices}. Then $\rateset_{\lrate}$ is closed and convex, and has separately specified rows.
-\end{proposition}
+\end{restatable}
 
 \noindent
 These additional properties characterise $\rateset_{\lrate}$ completely, in the sense that no other set satisfies them.
 
-\begin{proposition}\label{prop:dominating_unique_characterization}
+\begin{restatable}{proposition}{propdominatinguniquecharacterization}
+\label{prop:dominating_unique_characterization}
 Consider any non-empty, bounded, closed and convex set of rate matrices $\rateset\subseteq\mathcal{R}$ with separately specified rows that has $\lrate$ as its lower envelope. Then $\rateset=\rateset_{\lrate}$.
-\end{proposition}
+\end{restatable}
 
 \begin{exmp}\label{ex:dominatingset}
 Let $\rateset_1$ and $\rateset_2$ be constructed as in Example~\ref{example:different_sets_same_lower_rate}, and let $\lrate\coloneqq\lrate_1=\lrate_2$ be their common lower transition rate operator. As we are about to show, the corresponding set of dominating rate matrices $\rateset_{\lrate}$ is then equal to
@@ -2045,35 +2078,39 @@ where, as in Section~\ref{subsec:sequencesoftimepoints}, for every $i\in\{1,\ldo
 
 However, before we can do that, we first need to establish that this limit indeed exists. To this end, we start by providing a bound on the distance between two operators $\Phi_u$ and $\Phi_{u*}$.
 
-\begin{proposition}\label{prop:differencebetweenu}
+\begin{restatable}{proposition}{propdifferencebetweenu}
+\label{prop:differencebetweenu}
 Consider any $t,s\in\realsnonneg$ with $t\leq s$, any $\delta\in\realspos$ such that $\delta\norm{\lrate}\leq1$, and any $u,u^*\in\mathcal{U}_{[t,s]}$ such that $\sigma(u)\leq\delta$ and $\sigma(u^*)\leq\delta$. Let $C\coloneqq s-t$. Then
 \begin{equation*}
 \norm{\Phi_u-\Phi_{u^*}}\leq 2\delta C\norm{\lrate}^2\,.
 \end{equation*}\\[-27pt]
-\end{proposition}
+\end{restatable}
 
 Note, therefore, that the distance $\norm{\Phi_u - \Phi_{u^*}}$ vanishes as we make $\sigma(u)$ and $\sigma(u^*)$ smaller and smaller. This allows us to state the following result.
 
-\begin{corollary}\label{corol:cauchy}
+\begin{restatable}{corollary}{corolcauchy}
+\label{corol:cauchy}
 For every sequence $\{u_i\}_{i\in\nats}$ in $\mathcal{U}_{[t,s]}$ such that $\lim_{i\to\infty}\sigma(u_i)=0$, the corresponding sequence $\{\Phi_{u_i}\}_{i\in\nats}$ is Cauchy.
-\end{corollary}
+\end{restatable}
 
 Since we already know that, for partitions $u$ that are sufficiently fine, $\Phi_u$ is a lower transition operator, Proposition~\ref{lemma:completemetricspace} now implies that this Cauchy sequence converges to a limit, and that this limit is again a lower transition operator.
 
-\begin{corollary}\label{corol:limitexistsandiscoherent}
+\begin{restatable}{corollary}{corollimitexistsandiscoherent}
+\label{corol:limitexistsandiscoherent}
 For every sequence $\{u_i\}_{i\in\nats}$ in $\mathcal{U}_{[t,s]}$ such that $\lim_{i\to\infty}\sigma(u_i)=0$, the corresponding sequence $\{\Phi_{u_i}\}_{i\in\nats}$ converges to a lower transition operator.
-\end{corollary}
+\end{restatable}
 
 Finally, as our next result establishes, this limit is unique, in the sense that it is independent of the choice of $\{u_i\}_{i\in\nats}$.
 
-\begin{theorem}\label{theo:convergencelowerbound}
+\begin{restatable}{theorem}{theoconvergencelowerbound}
+\label{theo:convergencelowerbound}
 For any $t,s\in\realsnonneg$ such that $t\leq s$ and any lower transition rate operator $\lrate$, there is a unique lower transition operator $\lt\in\underline{\mathbb{T}}$ such that 
 \begin{equation}\label{eq:theo:convergencelowerbound}
 (\forall\epsilon>0)\,
 (\exists\delta>0)\,
 (\forall u\in\mathcal{U}_{[t,s]}\colon\sigma(u)\leq\delta)~\norm{\lt - \Phi_u}\leq\epsilon.
 \end{equation}
-\end{theorem}
+\end{restatable}
 
 Note that the $\epsilon-\delta$ expression in Theorem~\ref{theo:convergencelowerbound} is a limit statement. Specifically, it is a limit of operators $\Phi_{u}$ corresponding to increasingly finer partitions $u$ of the interval $[t,s]$. In the sequel, whenever such a unique limit exists and equals some lower transition operator $\lt$, we will denote it as
 \begin{equation}\label{eq:net_limit_lower_trans}
@@ -2101,29 +2138,32 @@ Let $\lrate$ be an arbitrary lower transition rate operator. Then, the \emph{low
 
 Our first result is that this family $\smash{\underline{\mathcal{T}}_{\lrate}}$ satisfies the same semi-group property that was found to hold for the transition matrix system $\mathcal{T}_P$ of a Markov chain $P\in\mprocesses$ in Section~\ref{sec:cont_time_markov_chains}.
 
-\begin{proposition}\label{prop:lower_trans_system_is_system}
+\begin{restatable}{proposition}{proplowertranssystemissystem}
+\label{prop:lower_trans_system_is_system}
 Let $\lrate$ be an arbitrary lower transition rate operator, and let $\underline{\mathcal{T}}_{\lrate}$ be the corresponding lower transition operator system. Then, for all $t,r,s\in\realsnonneg$ such that $t\leq r\leq s$, it holds that
 \begin{equation*}
 L_t^s = L_t^rL_r^s.
 \vspace{6pt}
 \end{equation*}
 Furthermore, for all $t\in\realsnonneg$, we have that $L_t^t=I$.
-\end{proposition}
+\end{restatable}
 
 Our next result is that this family $\underline{\mathcal{T}}_{\lrate}$ is time-homogeneous:
 
-\begin{proposition}\label{prop:lower_transition_is_homogeneous}
+\begin{restatable}{proposition}{proplowertransitionishomogeneous}
+\label{prop:lower_transition_is_homogeneous}
 Let $\lrate$ be an arbitrary lower transition rate operator, and let $\smash{\underline{\mathcal{T}}_{\lrate}}$ be the corresponding lower transition operator system. Then, for all $t,s\in\realsnonneg$ such that $t\leq s$, we have that $L_t^s=L_0^{s-t}$.
-\end{proposition}
+\end{restatable}
 
 Finally, we find that the derivatives of these lower transition operators always exist, and that they furthermore satisfy the following simple equalities.
 
-\begin{proposition}\label{prop:lower_transition_has_deriv}
+\begin{restatable}{proposition}{proplowertransitionhasderiv}
+\label{prop:lower_transition_has_deriv}
 Let $\lrate$ be an arbitrary lower transition rate operator, and let $\underline{\mathcal{T}}_{\lrate}$ be the corresponding lower transition operator system. Then, for all $t,s\in\realsnonneg$ such that $t\leq s$, it holds that\footnote{If $0=t<s$, the derivative with respect to $t$ is taken to be a right derivative. If $t=s$, the derivative with respect to $s$ is taken to be a right derivative and the derivative with respect to $t$ is taken to be a left derivative (or becomes meaningless if $t=0$).}
 \begin{equation*}
 \frac{\partial}{\partial t}\lbound_t^s=-\lrate\lbound_t^s\,\quad\text{and}\quad\frac{\partial}{\partial s}\lbound_t^s=\lrate\lbound_t^s.\vspace{7pt}
 \end{equation*}
-\end{proposition}
+\end{restatable}
 We would like to point out here that the derivatives in this result are not taken pointwise, but are taken with respect to the operator norm. For example, for $t=0$ and $s>0$, Proposition~\ref{prop:lower_transition_has_deriv} does not state that
 \vspace{3pt}
 \begin{equation}\label{eq:pointwisedifferential}
@@ -2168,33 +2208,36 @@ In order to establish a connection between the operator $L_t^s$ and the lower ex
 
 To start with, as the following result shows, for any lower transition rate operator $\lrate$, the corresponding lower transition operator $L_t^s$ provides a lower bound on the conditional expectations $\mathbb{E}_P[f(X_s)\,\vert\,X_t=x_t,X_u=x_u]$ of any well-behaved stochastic process $\smash{P\in\wprocesses_\rateset}$ that is consistent with a set of rate matrices $\rateset$ that has $\lrate$ as its the lower envelope.
 
-\begin{proposition}\label{theorem:nonmarkov_single_var_lower_bounded}
+\begin{restatable}{proposition}{theoremnonmarkovsinglevarlowerbounded}
+\label{theorem:nonmarkov_single_var_lower_bounded}
 Consider a non-empty bounded set of rate matrices $\rateset$ whose corresponding lower transition rate operator is $\lrate$, and let $\smash{\underline{\mathcal{T}}_{\lrate}}$ be the corresponding lower transition operator system. Then, for any $\smash{P\in\wprocesses_\rateset}$, any $t,s\in\realsnonneg$ such that $t\leq s$, any $u\in\mathcal{U}_{<t}$, any $x_t\in\states$ and $x_u\in\states_u$, and any $f\in\gamblesX$:
 \begin{equation*}
  \mathbb{E}_P[f(X_s)\,\vert\,X_t=x_t,X_u=x_u]\geq[L_{t}^s f](x_t).
 \end{equation*}
-\end{proposition}
+\end{restatable}
 
 Notice that this result is stated for stochastic processes $P$ in $\smash{\wprocesses_{\rateset}}$, whose initial distributions $P(X_0)$ are not required to belong to some given set of initial distributions $\mathcal{M}$. However, of course, since $\wprocesses_{\rateset,\,\mathcal{M}}$ is a clearly a subset of $\wprocesses_{\rateset}$, the same result also holds for any choice of such $\mathcal{M}$.
 
 Our next result establishes that the bound in Proposition~\ref{theorem:nonmarkov_single_var_lower_bounded} is tight if $\rateset$ has separately specified rows. Specifically, we show that $L_t^sf$ can then be approximated to arbitrary precision by carefully choosing a Markov process $P$ from the set $\wmprocesses_{\rateset,\,\mathcal{M}}$.
 
-\begin{proposition}\label{theorem:lower_markov_bound_is_tight}
+\begin{restatable}{proposition}{theoremlowermarkovboundistight}
+\label{theorem:lower_markov_bound_is_tight}
 Let $\mathcal{M}$ be a non-empty set of probability mass functions on $\states$, let $\rateset$ be a non-empty bounded set of rate matrices that has separately specified rows, with corresponding lower transition rate operator $\lrate$, and let $\smash{\underline{\mathcal{T}}_{\lrate}}$ be the corresponding lower transition operator system. Then for all $t,s\in\realsnonneg$ such that $t\leq s$, all $f\in\gamblesX$, and all $\epsilon\in\realspos$, there is a well-behaved Markov chain $P\in\wmprocesses_{\rateset,\,\mathcal{M}}$ such that
 \begin{equation*}
 \abs{\mathbb{E}_P[f(X_s)\,\vert\,X_t=x_t]-[\lbound_t^sf](x_t)} < \epsilon
 ~\text{ for all $x_t\in\states$.}
 \end{equation*}
-\end{proposition}
+\end{restatable}
 
 Together, Propositions~\ref{theorem:nonmarkov_single_var_lower_bounded} and~\ref{theorem:lower_markov_bound_is_tight} establish a strong connection between the operator $L_t^s$ and the lower expectations that correspond to $\smash{\wmprocesses_{\rateset,\mathcal{M}}}$ or $\smash{\wprocesses_{\rateset,\mathcal{M}}}$. In particular, for $\rateset$ with separately specified rows, and for functions $f(X_s)$ that depend on the state $X_s$ at a single time point $s$ in the future, these three objects end up being identical.
 
-\begin{corollary}\label{cor:lower_operator_is_infimum}
+\begin{restatable}{corollary}{corloweroperatorisinfimum}
+\label{cor:lower_operator_is_infimum}
 Let $\mathcal{M}$ be a non-empty set of probability mass functions on $\states$, let $\rateset$ be a non-empty bounded set of rate matrices that has separately specified rows, with corresponding lower transition rate operator $\lrate$, and let $\underline{\mathcal{T}}_{\lrate}$ be the corresponding lower transition operator system. Then, for all $t,s\in\realsnonneg$ such that $t\leq s$, all $u\in\mathcal{U}_{<t}$, $x_u\in\states_u$ and $x_t\in\states$, and all $f\in\gamblesX$:
 \begin{align*}
 \underline{\mathbb{E}}^{\mathrm{W}}_{\,\rateset,\,\mathcal{M}}[f(X_s)\,\vert\,X_t=x_t,X_u=x_u]=\underline{\mathbb{E}}^{\mathrm{WM}}_{\,\rateset,\,\mathcal{M}}[f(X_s)\,\vert\,X_t=x_t,X_u=x_u] =\left[L_t^sf\right](x_t).
 \end{align*}\\[-25pt]
-\end{corollary}
+\end{restatable}
 
 Hence, we find that there is indeed a correspondence between the operator $L_t^s$ and the lower expectations that correspond to \ictmc's.
 
@@ -2226,14 +2269,14 @@ where $\underline{\mathbb{E}}$ is the lower expectation with respect to $\mathca
 
 A common feature of these sets of stochastic processes $\mathcal{P}$, is that each of their elements $P$ is well-behaved and consistent with $\rateset_{\lrate}$. An obvious question, then, is whether this feature is necessary in order for Equation~\eqref{eq:EequalsLformathcalP} to hold. The following result establishes that this is indeed the case. 
 
-
-\begin{theorem}\label{theo:dominating_rate_processes_max_set}
+\begin{restatable}{theorem}{theodominatingrateprocessesmaxset}
+\label{theo:dominating_rate_processes_max_set}
 Let $\lrate$ be an arbitrary lower transition rate operator, with $\rateset_{\lrate}$ its set of dominating rate matrices, and let $\smash{\underline{\mathcal{T}}_{\lrate}}$ be the corresponding lower transition operator system. Then the largest set of stochastic processes $\mathcal{P}$ for which the corresponding conditional lower expectation operator $\underline{\mathbb{E}}[\cdot\,\vert\,\cdot]$---as defined in Equation~\eqref{eq:genericlowerexpectation}---satisfies
 \begin{equation*}
 \underline{\mathbb{E}}[f(X_s)\,\vert\,X_t=x_t,X_u=x_u]=[L_t^sf](x_t)
 \end{equation*}
 for all $t,s\in\realsnonneg$ such that $t\leq s$, all $u\in\mathcal{U}_{<t}$, all $x_t\in\states$ and $x_u\in\states_u$, and every $f\in\gamblesX$, is the set $\wprocesses_{\rateset_{\lrate}}$.
-\end{theorem}
+\end{restatable}
 
 
 We regard this result as a vindication for our choice to focus on \emph{well-behaved} stochastic processes---instead of more restricted ones, such as, say, continuous or differentiable stochastic processes. Since our aim here is to use $L_t^s$ as a representational and computational tool for lower expectations, it follows from this result that in order to be able to do this, it is indeed necessary to impose this minimal property of well-behavedness.
@@ -2244,7 +2287,8 @@ An important consequence of the fact that the lower expectations $\underline{\ma
 
 The construction of the operator $L_t^s$ in Section~\ref{sec:lowertrans} already suggests how we can do this; namely, by using a finite-precision approximation of $L_t^s$ using the auxiliary operator $\Phi_u\coloneqq \prod_{i=1}^n(I+\Delta_i\lrate)$. Recall from Section~\ref{sec:lowertrans} that the approximation of $L_t^s$ by $\Phi_u$ becomes better as we take $u\in\mathcal{U}_{[t,s]}$ to be an increasingly finer partition of the interval $[t,s]$. The following result tells us exactly how fine this partition needs to be for a specific function $f\in\gamblesX$, in order to guarantee an $\epsilon$-error bound on $L_t^sf$.
 
-\begin{proposition}\label{prop:approximation_error_bound}
+\begin{restatable}{proposition}{propapproximationerrorbound}
+\label{prop:approximation_error_bound}
 Let $\lrate$ be a lower transition rate operator, choose any $t,s\in\realsnonneg$ such that $t\leq s$, and let $L_t^s$ be the lower transition operator corresponding to $\lrate$. Then for any $f\in\gamblesX$ and $\epsilon\in\realspos$, if we choose any $n\in\nats$ such that
 \begin{equation*}
 n \geq\max\left\{
@@ -2258,7 +2302,7 @@ we are guaranteed that
 \norm{L_t^sf - \prod_{i=1}^n(I + \Delta\lrate)f} \leq \epsilon,
 \end{equation*}
 with $\Delta\coloneqq \nicefrac{(s-t)}{n}$.
-\end{proposition}
+\end{restatable}
 
 Simply put, this result tells us that if we can compute $\lrate g$ for all $g\in\gamblesX$, then we can also approximate the quantity $L_t^sf$ to arbitrary precision, for any given $f\in\gamblesX$. Therefore, and because of our results in Section~\ref{sec:single_var_lower_exp}, if $\lrate$ is the lower transition rate operator that corresponds to a given set $\rateset$ that is non-empty, bounded and has separately specified rows, the non-linear optimization problem of computing $\underline{\mathbb{E}}_\rateset^\mathrm{WM}[f(X_s)\vert X_t=x_t,X_u=x_u]$ or $\underline{\mathbb{E}}_\rateset^\mathrm{W}[f(X_s)\vert X_t=x_t,X_u=x_u]$ reduces to the problem of computing $\lrate g_i$ for $n$ different functions $g_i\in\gamblesX$, with $n\in\nats$ as in Proposition~\ref{prop:approximation_error_bound}.
 
@@ -2493,12 +2537,13 @@ In order to unify our notation, we therefore stipulate the following convention.
 
 Using this notational convention, the following corollary formalises the fact that our previous results also apply to functions in $\gambles(\states_{u\cup s})$.
 
-\begin{corollary}\label{cor:inf_works_for_single_future_var}
+\begin{restatable}{corollary}{corinfworksforsinglefuturevar}
+\label{cor:inf_works_for_single_future_var}
 Let $\mathcal{M}$ be an arbitrary non-empty set of probability mass functions on $\states$, let $\rateset$ be an arbitrary non-empty bounded set of rate matrices that has separately specified rows, with corresponding lower transition rate operator $\lrate$, and let $\underline{\mathcal{T}}_{\lrate}$ be the corresponding lower transition operator system. Then, for all $s\in\realspos$, all $u\in\mathcal{U}_{<s}$ such that $u\neq\emptyset$ and all $f\in\gambles(\states_{u\cup s})$:
 \begin{equation*}
 \underline{\mathbb{E}}^\mathrm{W}_{\,\rateset,\,\mathcal{M}}[f(X_u,X_s)\,\vert\,X_u]=\underline{\mathbb{E}}^{\mathrm{WM}}_{\,\rateset,\,\mathcal{M}}[f(X_u,X_s)\,\vert\,X_u]=\left[L_{t_n}^s f\right](X_u).\vspace{3pt}
 \end{equation*}
-\end{corollary}
+\end{restatable}
 
 Now, since $L_{t_n}^sf$ must be read as a separate application of the operator $L_{t_n}^s$ to every $f_{x_u}$, for $x_u\in\states_u$, it follows that we can compute $L_{t_n}^sf$ by applying Algorithm~\ref{alg:compute_singlevar} multiple times.
 The method for this computation is outlined in Algorithm~\ref{alg:compute_singlevar_multiple_past}, which can be read as follows. 
@@ -2554,14 +2599,14 @@ In this way, our original problem, which was to compute $\underline{\mathbb{E}}_
 
 We can now simply apply this step over and over again, by repeatedly removing the last remaining time point $s_{m-1}, s_{m-2},\ldots,s_{0}$ and, at each step, replacing the inner lower expectation with the operator $L_{s_{m-2}}^{s_{m-1}},L_{s_{m-3}}^{s_{m-2}},\ldots,L_{t_n}^{s_0}$. Because $v$ is finite, this process eventually stops, and we then obtain the following result.
 
-
-\begin{corollary}\label{cor:composition_lower_trans}
+\begin{restatable}{corollary}{corcompositionlowertrans}
+\label{cor:composition_lower_trans}
 Let $\mathcal{M}$ be a non-empty set of probability mass functions on $\states$, let $\rateset$ be a non-empty, bounded and convex set of rate matrices that has separately specified rows, with lower transition rate operator $\lrate$, and let $\smash{\underline{\mathcal{T}}_{\lrate}}$ be the corresponding lower transition operator system. Then, for any $u=t_0,\ldots,t_n$ and $v={s_0,\ldots,s_m}$ in $\mathcal{U}_\emptyset$ such that $u<v$, and any $f\in\gambles(\states_{u\cup v})$:
 \vspace{2pt}
 \begin{equation}\label{eq:composition_lower_trans}
 \underline{\mathbb{E}}^{\mathrm{W}}_{\,\rateset,\,\mathcal{M}}[f(X_u,X_v)\,\vert\,X_u]=L_{t_n}^{s_0}L_{s_0}^{s_1}\cdots L_{s_{m-1}}^{s_m}f.\\[5pt]
 \end{equation}
-\end{corollary}
+\end{restatable}
 
 
 The following example numerically illustrates the use of Corollary~\ref{cor:composition_lower_trans} for computing the conditional lower expectation of a function that depends on the state at multiple time points.
@@ -2747,7 +2792,8 @@ Another typical situation is when $\mathcal{M}$ is specified by means of linear 
 
 Regardless of the type of {\ictmc} that we consider, $\underline{\mathbb{E}}_{\mathcal{M}}$ allows us to compute the lower expectation of functions that depend on the initial state $X_0$.
 
-\begin{proposition}\label{prop:computeinitial}
+\begin{restatable}{proposition}{propcomputeinitial}
+\label{prop:computeinitial}
 Let $\mathcal{M}$ be a non-empty set of probability mass functions on $\states$ and let $\rateset$ be a non-empty bounded set of rate matrices. Then for all $f\in\gamblesX$:
 \begin{equation*}
 \underline{\mathbb{E}}^\mathrm{W}_{\rateset,\mathcal{M}}[f(X_0)]
@@ -2758,11 +2804,12 @@ Let $\mathcal{M}$ be a non-empty set of probability mass functions on $\states$ 
 =
 \underline{\mathbb{E}}_{\mathcal{M}}[f].\vspace{4pt}
 \end{equation*}
-\end{proposition}
+\end{restatable}
 
 For functions that depend on some non-initial state $X_s$, with $s>0$, the operator $\underline{\mathbb{E}}_{\mathcal{M}}$ still allows us to compute their lower expectation, by combining it with Algorithm~\ref{alg:compute_singlevar}. However, this only works for {\ictmc}'s that are of the type $\wprocesses_{\rateset,\mathcal{M}}$ or $\wmprocesses_{\rateset,\mathcal{M}}$.
 
-\begin{proposition}\label{prop:computemarginal}
+\begin{restatable}{proposition}{propcomputemarginal}
+\label{prop:computemarginal}
 Let $\mathcal{M}$ be a non-empty set of probability mass functions on $\states$ and let $\rateset$ be a non-empty bounded set of rate matrices that has separately specified rows, with lower transition rate operator $\lrate$. Then for any $s\in\realsnonneg$ and any $f\in\gamblesX$:
 \begin{equation*}
 \underline{\mathbb{E}}^\mathrm{W}_{\rateset,\mathcal{M}}[f(X_s)]
@@ -2771,18 +2818,19 @@ Let $\mathcal{M}$ be a non-empty set of probability mass functions on $\states$ 
 =
 \underline{\mathbb{E}}_{\mathcal{M}}[L_0^s f].\vspace{5pt}
 \end{equation*}
-\end{proposition}
+\end{restatable}
 
 For {\ictmc}'s that are of the type $\wprocesses_{\rateset,\mathcal{M}}$, this result generalises to functions that depend on multiple time points. Computing the lower expectation of such a function can then be done by combining $\underline{\mathbb{E}}_{\mathcal{M}}$ with Algorithm~\ref{alg:compute_multivar}.
 
-\begin{proposition}\label{prop:computeunconditional}
+\begin{restatable}{proposition}{propcomputeunconditional}
+\label{prop:computeunconditional}
 Let $\mathcal{M}$ be a non-empty set of probability mass functions on $\states$ and let $\rateset$ be a non-empty, bounded, convex set of rate matrices that has separately specified rows, with lower transition rate operator $\lrate$. Then for any $u=t_0,\dots,t_n$ in $\mathcal{U}_{\emptyset}$ such that $t_0=0$, and any $f\in\gambles(\states_u)$:
 \begin{equation*}
 \underline{\mathbb{E}}_{\rateset,\,\mathcal{M}}^\mathrm{W}[f(X_u)]
 =
 \underline{\mathbb{E}}_{\mathcal{M}}[L_{t_0}^{t_1}L_{t_1}^{t_2}\cdots L_{t_{n-1}}^{t_n}f].\vspace{5pt}
 \end{equation*}
-\end{proposition}
+\end{restatable}
 \noindent
 In this result, the requirement $t_0=0$ is a purely formal one, and imposes no actual restrictions. Whenever $0\notin u$, it suffices to first replace $f(X_u)$ by its trivial extension $f^*(X_0,X_u)$ to $\states_{0\cup u}$, defined by $f^*(x_0,x_u)\coloneqq f(x_u)$ for all $x_0\in\states$ and $x_u\in\states_u$. Since $f^*(X_0,X_u)$ is then identical to $f(X_u)$, this addition of $X_0$ to the domain is merely a notational trick, and will clearly not influence the result of the computations. 
 
@@ -2940,12 +2988,13 @@ The coherence of $P$ is now equivalent to requiring that any such bet \emph{avoi
 
 \section{Proofs and Lemmas for the results in Section~\ref{sec:systems}}\label{app:systems}
 
-\begin{proof}[Proof of Proposition~\ref{lemma:compositiontransitionmatrix}]
+\lemmacompositiontransitionmatrix*
+\begin{proof}
 Simply check each of the properties.
 \end{proof}
 
-
-\begin{proof}[Proof of Proposition~\ref{prop:stochastic_from_rate_matrix}]
+\propstochasticfromratematrix*
+\begin{proof}%[Proof of Proposition~\ref{prop:stochastic_from_rate_matrix}]
 \ref{def:T:sumone} follows from \ref{def:Q:sumzero}: for all $x\in\states$, \ref{def:Q:sumzero} implies that
 \begin{equation*}
 \sum_{y\in\states} [I + \Delta Q](x,y) = \sum_{y\in\states}I(x,y) + \Delta \sum_{y\in\states}Q(x,y) = 1+\Delta 0=1.
@@ -2953,11 +3002,13 @@ Simply check each of the properties.
 \ref{def:T:nonneg} follows from~\ref{def:Q:nonnegoffdiagonal} and because $0\leq \Delta\norm{Q} \leq 1$: for all $x,y\in\states$ such that $x\neq y$, $0\leq\Delta\norm{Q} \leq 1$ implies that $[I+\Delta Q](x,x)=1+\Delta Q(x,x)\geq 1-\Delta\norm{Q}\geq0$, and \ref{def:Q:nonnegoffdiagonal} and $\Delta\geq0$ imply that $[I+\Delta Q](x,y)=\Delta Q(x,y)\geq0$.
 \end{proof}
 
-\begin{proof}[Proof of Proposition~\ref{prop:rate_from_stochastic_matrix}]
+\propratefromstochasticmatrix*
+\begin{proof}
 This proof is analogous to that of Proposition~\ref{prop:stochastic_from_rate_matrix}; simply verify each of the properties in Definition~\ref{def:rate_matrix}.
 \end{proof}
 
-\begin{proof}[Proof of Proposition~\ref{prop:alternativedefforbounded}]
+\propalternativedefforbounded*
+\begin{proof}
 We start by proving that Equation~\eqref{eq:alternative_bounded} implies $\norm{\rateset}<+\infty$. 
  To this end, assume that Equation~\eqref{eq:alternative_bounded} holds. Since $\states$ is finite, it then follows that
 \begin{align*}
@@ -2984,7 +3035,8 @@ For any $Q\in\mathcal{R}$, we have that
 \end{equation*}
 \end{lemma}
 
-\begin{proof}[Proof of Proposition~\ref{prop:systemQ}]
+\propsystemQ*
+\begin{proof}
 We start by showing that $\mathcal{T}_Q$ is a transition matrix system. Because of Proposition~\ref{prop:stochastic_from_exponential}, $\mathcal{T}_Q$ is clearly a family of transition matrices. Consider now any $t,r,s\in\realsnonneg$ such that $t\leq r\leq s$. It then follows from the definition of $\mathcal{T}_Q$ and~\cite[Theorem 2.1.1]{norris1998markov} that $T_t^s=T_t^rT_r^s$, and $T_t^t=I$. Because the $t,r,s$ are arbitrary, it follows from Definition~\ref{def:trans_mat_system} that $\mathcal{T}_Q$ is a transition matrix system.
 
 To prove that $\mathcal{T}_Q$ is well-behaved, note that for any $t\in\realsnonneg$, because of Definition~\ref{def:systemfromQ},
@@ -2997,7 +3049,8 @@ To prove that $\mathcal{T}_Q$ is well-behaved, note that for any $t\in\realsnonn
 where the first inequality follows from Proposition~\ref{prop:norm_properties}, the second equality follows from Lemma~\ref{lemma:deriv_exponential_trans} and the final inequality follows from the fact that $Q$ is real-valued. Because this holds for any $t\in\realsnonneg$, the first condition in Equation~\eqref{eq:wellbehavedtransitionmatrixsystem} is satisfied. A similar argument shows that also the second condition is satisfied for all $t\in\realspos$, and hence $\mathcal{T}_Q$ is well-behaved.
 \end{proof}
 
-\begin{proof}[Proof of Proposition~\ref{prop:restr_trans_mat_system_if_semigroup}]
+\proprestrtransmatsystemifsemigroup*
+\begin{proof}
 If $\mathcal{T}^{\mathbf{I}}$ is a restricted transition matrix system, then, by definition, it is the restriction to $\mathbf{I}$ of some transition matrix system $\mathcal{T}$. Therefore, the `only if' part of this result follows trivially from Definition~\ref{def:trans_mat_system}.
 
 For the `if' part, we need to prove that for any family of transition matrices $\mathcal{T}^{\mathbf{I}}$ such that, for all $t,r,s\in\mathbf{I}$ with $t\leq r\leq s$, it holds that $T_t^s = T_t^rT_r^s$ and $T_t^t=I$, there is a transition matrix system $\mathcal{T}$ that coincides with $\mathcal{T}^{\mathbf{I}}$ on $\mathbf{I}$. In order to prove this, it suffices to show that the unique family of transition matrices $\mathcal{T}$ that coincides with $\mathcal{T}^{\mathbf{I}}$ on $\mathbf{I}$ and that is otherwise defined by
@@ -3017,13 +3070,15 @@ I &\text{ if $\sup\mathbf{I}<t$}
 is a transition matrix system. This is a matter of straightforward verification.
 \end{proof}
 
-\begin{proof}[Proof of Proposition~\ref{prop:well_restr_trans_mat_system_if_limsup}]
+\propwellrestrtransmatsystemiflimsup*
+\begin{proof}
 If $\mathcal{T}^{\mathbf{I}}$ is well-behaved, then, by definition, it is the restriction to $\mathbf{I}$ of a well-behaved transition matrix system $\mathcal{T}$. Therefore, the `only if' part of this result follows trivially from Definition~\ref{def:well_behaved_trans_mat_system}.
 
 For the `if' part, we need to show that for any restricted transition matrix system $\mathcal{T}^\mathbf{I}$ on $\mathbf{I}$ that satisfies Equation~\eqref{eq:wellbehavedrestrictedtransitionmatrixsystem}, there is a well-behaved transition matrix system $\mathcal{T}$ that coincides with $\mathcal{T}^\mathbf{I}$ on $\mathbf{I}$. Let $\mathcal{T}$ be constructed as in the proof of Proposition~\ref{prop:restr_trans_mat_system_if_semigroup}. Then, as explained in that proof, $\mathcal{T}$ is a transition matrix system that coincides with $\mathcal{T}^{\mathbf{I}}$ on $\mathbf{I}$. Therefore, it suffices to prove that $\mathcal{T}$ is well-behaved. We start by proving the first part of Equation~\eqref{eq:wellbehavedtransitionmatrixsystem}. So consider any $t\in\realsnonneg$. If $t\in\mathbf{I}^+$, then the desired inequality follows from Equation~\eqref{eq:wellbehavedrestrictedtransitionmatrixsystem}. If $t\notin\mathbf{I}^+$, then either $t<\min\mathbf{I}$ or $t\geq\sup\mathbf{I}$, and therefore, for sufficiently small $\Delta>0$, it follows from Equation~\eqref{eq:prop:restr_trans_mat_system_if_semigroup} that $T_t^{t+\Delta}=I$, thereby making the desired inequality trivially true. The second part of Equation~\eqref{eq:wellbehavedtransitionmatrixsystem} can be proved similarly.
 \end{proof}
 
-\begin{proof}[Proof of Proposition~\ref{prop:concat_restr_trans_mat_systems_is_system}]
+\propconcatrestrtransmatsystemsissystem*
+\begin{proof}
 For all $t,s\in\mathbf{I}\cup\mathbf{J}$ such that $t\leq s$, it follows from Proposition~\ref{lemma:compositiontransitionmatrix} that the matrix $T_t^s$ that corresponds to $\mathcal{T}^{\mathbf{I}\cup\mathbf{J}}$ is a transition matrix. Furthermore, for all $t\in\mathbf{I}\cup\mathbf{J}$, we have that either $t\in\mathbf{I}$ or $t\in\mathbf{J}$. In either case, we have that $T_t^t=I$, because either $T_t^t=\presuper{i}T_t^t=I$ or $T_t^t=\presuper{j}T_t^t=I$, with $\presuper{i}T_t^t$ and $\presuper{j}T_t^t$ corresponding to $\mathcal{T}^{\mathbf{I}}$ and $\mathcal{T}^{\mathbf{J}}$, respectively. Next, we show that for all $t,q,s\in\mathbf{I}\cup\mathbf{J}$ with $t\leq q\leq s$, it holds that
 \begin{equation*}
 T_t^s = T_t^qT_q^s\,.
@@ -3060,7 +3115,8 @@ Let $T_1,\ldots,T_n$ and $S_1,\ldots,S_n$ be two finite sequences of transition 
 This is a special case of Lemma~\ref{lemma:recursive_lower_trans}, which states a more general version. We have included this version separately because Lemma~\ref{lemma:recursive_lower_trans} uses concepts that, on a chronological reading of this paper, would be undefined at this point.
 \end{proof}
 
-\begin{proof}[Proof of Proposition~\ref{lemma:restricted_trans_mat_system_cauchy_converges}]
+\lemmarestrictedtransmatsystemcauchyconverges*
+\begin{proof}
 Consider any sequence $\{\mathcal{T}_i^{\mathbf{I}}\}_{i\in\nats}$ in $\mathbfcal{T}^{\mathbf{I}}$ that is Cauchy. We will prove that this sequence converges to a limit that belongs to $\mathbfcal{T}^{\mathbf{I}}$. For all $i\in\nats$ and any $t,s\in\mathbf{I}$ such that $t\leq s$, we will use $\presuper{i}T_t^s$ to denote the transition matrix that corresponds to $\mathcal{T}_i^{\mathbf{I}}$. 
 
 Since $\{\mathcal{T}_i^{\mathbf{I}}\}_{i\in\nats}$ is Cauchy, 
@@ -3205,21 +3261,25 @@ P(A\cap C\vert C)
 \ref{def:coh_prob_2b} follows from Equation~\eqref{eq:extracohprop1} and~\ref{def:coh_prob_2}. \ref{def:coh_prob_7} follows from Equations~\eqref{eq:extracohprop1} and~\eqref{eq:extracohprop2}. \ref{def:coh_prob_8} follows from \ref{def:coh_prob_3}, by letting $B\coloneqq\emptyset$. \ref{def:coh_prob_5} follows trivially from \ref{def:coh_prob_1}.
 \end{proof}
 
-
-\begin{proof}[Proof of Corollary~\ref{corol:coherentextendable}]
+\corolcoherentextendable*
+\begin{proof}
 First assume that $P$ can be extended to a full conditional probability $P^*$. Theorem~\ref{theo:fullcoherent} then implies that $P^*$ is a coherent conditional probability, and therefore, since $P$ is the restriction of $P^*$ to $\mathcal{C}$, it clearly follows from Definition~\ref{def:coherence} that $P$ is a coherent conditional probability.
 
 Conversely, if $P$ is a coherent conditional probability on $\mathcal{C}$, it follows from Theorem~\ref{theo:largerdomain} that $P$ can be extended to a coherent conditional probability $P^*$ on $\power\times\nonemptypower$, which, because of Theorem~\ref{theo:fullcoherent}, is a full conditional probability.
 \end{proof}
-\begin{proof}[Proof of Corollary~\ref{corol:processiffrestriction}]
+
+\corolprocessiffrestriction*
+\begin{proof}
 Trivial consequence of Corollary~\ref{corol:coherentextendable}.
 \end{proof}
-\begin{proof}[Proof of Proposition~\ref{prop:stochasticprocess:simpleproperties}]
+
+\propstochasticprocesssimpleproperties*
+\begin{proof}
 The first part of the statement follows trivially from Corollary~\ref{corol:processiffrestriction} and Definitions~\ref{def:stoch_matrix} and \ref{def:cond_prob}. The second part is an immediate consequence of Definition~\ref{def:well-behaved} and Equation~\eqref{eq:normofmatrix}.
 \end{proof}
 
-
-\begin{proof}[Proof of Proposition~\ref{prop:boundednon-emptyandclosed}]
+\propboundednonemptyandclosed*
+\begin{proof}
 We only give the proof for $\smash{\overline{\partial}_{+}
 {T^t_{t,\,x_u}}}$. The proof for $\smash{\overline{\partial}_{-}
 {T^t_{t,\,x_u}}}$ is completely analogous. The proof for $\smash{\overline{\partial}
@@ -3276,7 +3336,8 @@ which implies that sequence $\{Q_k\}_{k\in\nats}$ converges to $Q^*$. On the oth
 {T^t_{t,\,x_u}}}$.
 \end{proof}
 
-\begin{proof}[Proof of Proposition~\ref{prop:outerderivativebehaveslikelimit}]
+\propouterderivativebehaveslikelimit*
+\begin{proof}
 Fix any $\epsilon>0$.
 Assume \emph{ex absurdo} that
 \begin{equation*}
@@ -3297,13 +3358,15 @@ with $Q_k$ defined as in Equation~\eqref{eq:sequenceofQsinproof}. As we know fro
 {T^t_{t,\,x_u}}$, it follows from Equation~\eqref{eq:boundednonelement} that $\lim_{i\to+\infty}\norm{Q_{k_i}-Q^*}\geq\epsilon>0$. From this contradiction, it follows that there must be some $\delta_1>0$ such that Equation~\eqref{eq:outerderivativebehaveslikelimit1} holds for all $0<\Delta<\delta_1$. Similarly, using a completely analogous argument, we infer that if $t\neq0$, there must be some $\delta_2>0$ such that Equation~\eqref{eq:outerderivativebehaveslikelimit2} holds for all $0<\Delta<\delta_2$. Now let $\delta\coloneqq\min\{\delta_1,\delta_2\}$ if $t\neq0$ and let $\delta\coloneqq\delta_1$ if $t=0$.
 \end{proof}
 
-\begin{proof}[Proof of Corollary~\ref{corol:outersingleton}]
+\coroloutersingleton*
+\begin{proof}
 This follows trivially from Proposition~\ref{prop:outerderivativebehaveslikelimit}.
 \end{proof}
 
 \section{Proofs and Lemmas for the results in Section~\ref{sec:cont_time_markov_chains}}
 
-\begin{proof}[Proof of Proposition~\ref{prop:Markovhassystem}]
+\propMarkovhassystem*
+\begin{proof}
 Consider any Markov chain $P\in\mprocesses$, with $\mathcal{T}_P$ its corresponding family of transition matrices. Then, because $P$ is a stochastic process, it follows from Proposition~\ref{prop:stochasticprocess:simpleproperties} that $T_t^t=I$ for all $t\in\realsnonneg$. 
 
 Consider now any $t,r,s\in\realsnonneg$ with $t\leq r\leq s$. We need to show that $T_t^s=T_t^rT_r^s$. If $t=r$, we have that $T_t^s=T_t^rT_r^s=IT_r^s=T_t^s$, and hence the result follows trivially. Similarly, the claim is trivial for $r=s$. Hence, it remains to show that the claim holds for $t < r < s$. It follows from Definition~\ref{def:markov_property} that for all $x_t,x_r,x_s\in\states$,
@@ -3329,7 +3392,8 @@ and hence, by the rules of matrix multiplication, we find that $T_t^s=T_t^rT_r^s
 The fact that $\mathcal{T}_P$ is well-behaved if and only if $P$ is well-behaved follows immediately from Definition~\ref{def:well_behaved_trans_mat_system} and Proposition~\ref{prop:stochasticprocess:simpleproperties} because the Markov property implies that $T_{t,\,x_u}^{t+\Delta}=T_{t}^{t+\Delta}$ and $T_{t-\Delta,\,x_u}^{t}=T_{t-\Delta}^{t}$.
 \end{proof}
 
-\begin{proof}[Proof of Theorem~\ref{theo:uniqueMarkovchain}]
+\theouniqueMarkovchain*
+\begin{proof}
 Let
 \begin{multline*}
 \mathcal{C}\coloneqq\{
@@ -3573,11 +3637,13 @@ P_j(X_{v_i}=z_{v_i}\vert X_u=x_u, X_{v_1}=z_{v_1}, \dots, X_{v_{i-1}}=z_{v_{i-1}
 which implies that $P_1(A\vert X_u=x_u)=P_2(A\vert X_u=x_u)$. Since this is the case for any $(A,X_u=x_u)\in\mathcal{C}^\mathrm{SP}$, it follows that $P_1=P_2$.
 \end{proof}
 
-\begin{proof}[Proof of Corollary~\ref{cor:rate_has_unique_homogen_markov_process}]
+\corratehasuniquehomogenmarkovprocess*
+\begin{proof}
 Since we know from Proposition~\ref{prop:systemQ} that $\mathcal{T}_Q$ is a well-behaved transition matrix system, it follows from Theorem~\ref{theo:uniqueMarkovchain} that there is a unique Markov chain $P\in\mprocesses$ such that $\mathcal{T}_P=\mathcal{T}_Q$ and, for all $y\in\mathcal{X}$, $P(X_0=y)=p(y)$, and that this Markov chain is furthermore well-behaved. Since it---trivially---follows from Definition~\ref{def:systemfromQ} that $\mathcal{T}_Q$ satisfies Equation~\eqref{eq:homogeneousMarkov}, Definition~\ref{def:homogeneousMarkov} implies that $P$ is homogeneous.
 \end{proof}
 
-\begin{proof}[Proof of Theorem~\ref{theo:homogeneoushasQ}]
+\theohomogeneoushasQ*
+\begin{proof}
 Because of Proposition~\ref{prop:boundednon-emptyandclosed}, we know that $\overline{\partial}_{+}
 {T^0_{0}}$ is a non-empty bounded set of rate matrices, which implies that there is some real $B>0$ such that $\norm{Q'}\leq B$ for all $Q'\in\overline{\partial}_{+}
 {T^0_{0}}$. Let $Q$ be any element of $\overline{\partial}_{+}
@@ -3700,7 +3766,8 @@ or equivalently, that $\mathcal{T}_P=\mathcal{T}_Q$.
 Finally, we prove that $Q$ is unique. Assume \emph{ex absurdo} that this is not the case, or equivalently, that there are rate matrices $Q_1$ and $Q_2$, with $Q_1\neq Q_2$, such that $\mathcal{T}_P=\mathcal{T}_{Q_1}$ and $\mathcal{T}_P=\mathcal{T}_{Q_2}$. For all $\Delta>0$, we then have that $T_0^\Delta=e^{Q_1\Delta}=e^{Q_2\Delta}$, and therefore, it follows from Lemma~\ref{lemma:deriv_exponential_trans} that $\partial_+T_0^0=Q_1$ and $\partial_+T_0^0=Q_2$, which implies that $Q_1=Q_2$. From this contradiction, it follows that $Q$ is indeed unique.
 \end{proof}
 
-\begin{proof}[Proof of Proposition~\ref{prop:Q_is_singleton_deriv_for_homogen}]
+\propQissingletonderivforhomogen*
+\begin{proof}
 The result about the partial derivatives is an immediate consequence of Lemma~\ref{lemma:deriv_exponential_trans} and the fact that $T^{t+\Delta}_{t}=T^{t}_{t-\Delta}=e^{Q\Delta}$. The result about the outer partial derivatives then follows from Corollary~\ref{corol:outersingleton}.
 \end{proof}
 
@@ -3708,18 +3775,20 @@ The result about the partial derivatives is an immediate consequence of Lemma~\r
 
 \section{Proofs for the results in Section~\ref{sec:iCTMC}}
 
-\begin{proof}[Proof of Proposition~\ref{prop:markov_set_subset_of_nonmarkov_set}]This is immediate from Definitions~\ref{def:consistent_process_set} and~\ref{def:process_sets} and the fact that $\whmprocesses\subseteq\wmprocesses\subseteq\wprocesses$.
+\propmarkovsetsubsetofnonmarkovset*
+\begin{proof}This is immediate from Definitions~\ref{def:consistent_process_set} and~\ref{def:process_sets} and the fact that $\whmprocesses\subseteq\wmprocesses\subseteq\wprocesses$.
 \end{proof}
 
-\begin{proof}[Proof of Proposition~\ref{prop:nonhomogeneous_in_process_set}]
+\propnonhomogeneousinprocessset*
+\begin{proof}
 Proposition~\ref{prop:finite_different_rate_matrix_has_process} implies the existence of a process $P\in\wmprocesses$ such that $P(X_0=y)$ for all $y\in\mathcal{X}$ and such that $\mathcal{T}_P$ satisfies Equation~\eqref{eq:nonhomogen_in_process_set_system_composition}. It remains to show that $P\in\wmprocesses_{\rateset,\,\mathcal{M}}$. Because of Equation~\eqref{eq:consistentwmprocessesalternative}, and since we already know that $p\in\mathcal{M}$, this means that we have to show that $\smash{\overline{\partial}}T_t^t\subseteq\rateset$ for all $t\in\realsnonneg$. To this end, consider any $t\in\realsnonneg$.
 
 We consider several cases. If $t<t_0$, then $\smash{\overline{\partial}}T_t^t$ corresponds to $\mathcal{T}_{Q_0}^{[0,t_0]}$, and it then follows from Proposition~\ref{prop:Q_is_singleton_deriv_for_homogen} that $\smash{\overline{\partial}}T_t^t=\{Q_0\}\subseteq\rateset$. If $t>t_n$, then $\smash{\overline{\partial}}T_t^t$ corresponds to $\smash{\mathcal{T}_{Q_{n+1}}^{[t_n,\infty)}}$, in which case $\smash{\overline{\partial}}T_t^t=\{Q_{n+1}\}\subseteq\rateset$. Similarly, if there is some $i\in\{1,\ldots,n\}$ such that $t\in(t_{i-1},t_i)$, then $\smash{\overline{\partial}}T_t^t$ corresponds to $\smash{\mathcal{T}_{Q_i}^{[t_{i-1},t_i]}}$, and therefore $\smash{\overline{\partial}}T_t^t=\{Q_i\}\subseteq\rateset$. 
 The only remaining case is when $t=t_i\neq0$ for some $i\in\{0,\ldots,n\}$. In this case, we have that $\smash{\overline{\partial}}_+T_t^t=\{Q_{i+1}\}$ and, if $t\neq0$, that $\smash{\overline{\partial}}_-T_t^t=\{Q_i\}$, and therefore, it follows from Definition~\ref{def:direc_partial_deriv} that $\smash{\overline{\partial}}T_t^t\subseteq\rateset$.
 \end{proof}
 
-
-\begin{proof}[Proof of Theorem~\ref{theo:aanelkaarplakken}]
+\theoaanelkaarplakken*
+\begin{proof}
 This proof is rather lengthy, and consists of two parts. First, we will show that there exists a stochastic process $P$ that satisfies Equations~\eqref{eq:theo:aanelkaarplakken:equalsfirst} and~\eqref{eq:theo:aanelkaarplakken:equalssecond}, by constructing it as the extension of a coherent conditional probability on a set of events $\mathcal{C}\subset\mathcal{C}^\mathrm{SP}$. Next, we will finish the proof by showing that $P\in\wprocesses_{\rateset,\,\mathcal{M}}$, as desired.
 
 Let $\mathcal{C}\coloneqq\mathcal{C}_\emptyset\cup(\bigcup_{x_u\in\states_u}\mathcal{C}_{x_u})$, with
@@ -4079,11 +4148,13 @@ If instead $\smash{Q^*\in\overline{\partial}_{-}
 Hence, since we already know that $P$ is a well-behaved stochastic process such that $P(X_0)\in\mathcal{M}$, it follows that $P\in\wprocesses_{\rateset,\,\mathcal{M}}$.
 \end{proof}
 
-\begin{proof}[Proof of Proposition~\ref{prop:lower_exp_markov_bounded_by_nonmarkov}]
+\proplowerexpmarkovboundedbynonmarkov*
+\begin{proof}
 This result is an immediate consequence of Proposition \ref{prop:markov_set_subset_of_nonmarkov_set} and Definition~\ref{def:lower_exp}.
 \end{proof}
 
-\begin{proof}[Proof of Theorem~\ref{theorem:decomposition_multivar}]
+\theoremdecompositionmultivar*
+\begin{proof}
 Let $g(X_u,X_v)\coloneqq\underline{\mathbb{E}}^{\mathrm{W}}_{\rateset,\,\mathcal{M}}\left[f(X_u,X_v,X_w)\vert\,X_u,X_v\right]$ and fix any $x_u\in\states_u$.
 For any $P\in\wprocesses_{\rateset,\,\mathcal{M}}$, it then follows from the basic properties of expectations (which follow from~\ref{def:coh_prob_2}--\ref{def:coh_prob_6}) and Definition~\ref{def:lower_exp} that
 \begin{align*}
@@ -4151,7 +4222,8 @@ $\underline{\mathbb{E}}^{\mathrm{W}}_{\rateset,\,\mathcal{M}}\left[f(X_u,X_v,X_w
 
 \section{Proofs and Lemmas for the results in Section~\ref{sec:lowertrans}}
 
-\begin{proof}[Proof of Proposition~\ref{lemma:compositioncoherence}]
+\lemmacompositioncoherence*
+\begin{proof}
 Consider any $f,g\in\gamblesX$, $\lambda\in\realsnonneg$ and $x\in\states$. Since $\underline{T}$ and $\underline{S}$ are lower transition operators, they both satisfy~\ref{LT:bounded_min}, and therefore, we find that
 \begin{align*}
 [\underline{T}\underline{S}f](x)
@@ -4195,7 +4267,8 @@ Consider any sequence $\{\lt_i\}_{i\in\nats}$ of lower transition operators such
 Let $\lt$ be a lower transition operator, and consider any sequence $\{\lt_i\}_{i\in\nats}$ of lower transition operators. Then, $\lt=\lim_{i\to\infty}\lt_i$ if and only if $\lt f=\lim_{i\to\infty}\lt_i f$ for all $f\in\gamblesX$.
 \end{lemma}
 
-\begin{proof}[Proof of Proposition~\ref{lemma:completemetricspace}]
+\lemmacompletemetricspace*
+\begin{proof}
 Consider any sequence $\{\lt_i\}_{i\in\nats}$ of lower transition operators that is Cauchy with respect to the operator norm $\norm{\cdot}$. We will prove that $\{\lt_i\}_{i\in\nats}$ converges to a limit $\lt\colon\gamblesX\to\gamblesX$ that is itself a lower transition operator.
 
 Consider any $f\in\gamblesX$ and $x\in\states$. For any $k,\ell\in\nats$, \eqref{N:normAf} then implies that
@@ -4210,12 +4283,13 @@ Therefore, and because $\{\lt_i\}_{i\in\nats}$ is Cauchy with respect to the nor
 Let $\lt\colon\gamblesX\to\gamblesX$ be the unique operator that maps any $f\in\gamblesX$ to $\lt f$. It then follows from Lemma~\ref{lemma:lowertrans_if_pointwise_limit} that $\lt$ is a lower transition operator. Therefore, and because we already know that $\lt f=\lim_{i\to+\infty}\lt_i f$ for all $f\in\gamblesX$, it now follows from Lemma~\ref{lemma:lowertrans_limit_iff_pointwise_limit} that $\lim_{i\to+\infty}\lt_i=\lt$.
 \end{proof}
 
-
-\begin{proof}[Proof of Proposition~\ref{prop:lowerenvelopeislowertrans}]
+\proplowerenvelopeislowertrans*
+\begin{proof}
 Consider any $Q\in\rateset$. It then follows from Definition~\ref{def:rate_matrix} that the matrix $Q$, when regarded as a map from $\gamblesX$ to $\gamblesX$, satisfies \ref{LR:constantzero}--\ref{LR:homo}. Since each of these properties is preserved under taking lower envelopes, it follows that $\lrate$ satisfies \ref{LR:constantzero}--\ref{LR:homo}, which means that $\lrate$ is a lower transition rate operator.
 \end{proof}
 
-\begin{proof}[Proof of Proposition~\ref{prop:dominating_nonempty_bounded}]
+\propdominatingnonemptybounded*
+\begin{proof}
 We will start by showing that, for every $f\in\gamblesX$, there is some $\smash{Q\in\rateset_{\lrate}}$ such that $\lrate f=Qf$. To this end, fix any $f\in\gamblesX$. Now choose $\Delta>0$ small enough such that $\smash{0\leq\Delta\norm{\lrate}\leq 1}$ (this always possible because of property~\ref{LR:normlratefinite}) and define $\lt\coloneqq I+\Delta\lrate$. Since $\lrate$ is a lower transition rate operator, it then follows from Proposition~\ref{lemma:normQsmallenough} that $\lt$ is a lower transition operator. For any $x\in\states$, we now consider the operator $\lt_x\colon\gamblesX\to\reals$, as defined by Equation~\eqref{eq:lowerprevisionfromlt}, which is a coherent lower prevision. Because of \cite[Theorem~3.3.3(b)]{Walley:1991vk}, this implies the existence of an expectation operator $\mathbb{E}_x$ on $\gamblesX$---Reference~\cite{Walley:1991vk} calls this a linear prevision on $\gamblesX$---such that $\mathbb{E}_xg\geq\lt_xg$ for all $g\in\gamblesX$ and $\mathbb{E}_xf=\lt_xf$. Let $P_x$ be the unique probability mass function that corresponds to $\mathbb{E}_x$. For all $x,y\in\states$, we now let $T(x,y)\coloneqq P_x(y)\coloneqq \mathbb{E}_x(\ind{y})$. Then $T$ is clearly a transition matrix. Furthermore, for every $x\in\states$ and $g\in\gamblesX$, we have that $(Tg)(x)=\mathbb{E}_xg$. Hence, it follows that $Tg\geq\lt g$ for all $g\in\gamblesX$ and that $Tf=\lt f$. Now let $Q\coloneqq\nicefrac{1}{\Delta}(T-I)$, which, because of Proposition~\ref{prop:rate_from_stochastic_matrix}, is a rate matrix. Since $Tf=\lt f$, it then follows that
 \begin{equation*}
 Qf=\frac{1}{\Delta}(Tf-f)=\frac{1}{\Delta}(\lt f-f)=\lrate f.
@@ -4229,7 +4303,8 @@ We end this proof by showing that $\rateset_{\lrate}$ is bounded. Consider any $
 Since $x\in\states$ is arbitrary, Proposition~\ref{prop:alternativedefforbounded} now guarantees that $\rateset_{\lrate}$ is bounded. 
 \end{proof}
 
-\begin{proof}[Proof of Proposition~\ref{prop:dominatingproperties}]
+\propdominatingproperties*
+\begin{proof}
 We start by showing that $\rateset_{\lrate}$ is closed, or equivalently, that for any converging sequence $\{Q_i\}_{i\in\nats}$ in $\rateset_{\lrate}$, the limit $Q\coloneqq\lim_{i\to+\infty}Q_i$ is again an element of $\rateset_{\lrate}$. Since $\{Q_i\}_{i\in\nats}$ belongs to the bounded set of rate matrices $\rateset_{\lrate}$---see Proposition~\ref{prop:dominating_nonempty_bounded}---we know that the limit $Q$ is a real-valued matrix, and therefore, since~\ref{def:Q:sumzero} and~\ref{def:Q:nonnegoffdiagonal} are clearly both preserved under taking limits, $Q$ is a rate matrix. Now, assume \emph{ex absurdo} that $Q\notin\rateset_{\lrate}$. Then, by Equation~\eqref{eq:dominatingratematrices}, there is some $f\in\gamblesX$ and some $x\in\states$ such that $\smash{\left[Qf\right](x) < \left[\lrate f\right](x)}$, and therefore some $\epsilon\in\realspos$ such that $[Qf](x) + \epsilon < [\lrate f](x)$. Hence, since $\lim_{i\to+\infty}Q_i=Q$, there is some $i^*\in\nats$ such that $[Q_{i^*}f](x) <[Qf](x) + \epsilon<[\lrate f](x)$. Since $Q_{i^*}\in\rateset_{\lrate}$, this is a contradiction. Therefore, $Q\in\rateset_{\lrate}$, and because the converging sequence $\{Q_i\}_{i\in\nats}$ was arbitrary, this proves that $\rateset_{\lrate}$ is closed.
 
 Next, we show that $\rateset_{\lrate}$ is convex, or equivalently, that for any two rate matrices $Q_1,Q_2\in\rateset_{\lrate}$, and any $\lambda\in[0,1]$, the matrix $Q_\lambda\coloneqq\lambda Q_1 + (1-\lambda)Q_2$ is again an element of $\rateset_{\lrate}$. It is easily verified from Definition~\ref{def:rate_matrix} that $Q_\lambda$ is a rate matrix. Furthermore, for any $f\in\gamblesX$, we find that
@@ -4250,7 +4325,8 @@ Fix any $x\in\states$. The non-emptiness, boundedness and convexity of $\rateset
 Since $\{Q_i\}_{i\in\nats}$ belongs to the---closed and bounded and therefore---compact set $\rateset$, it has a convergent subsequence $\{Q_{i_k}\}_{k\in\nats}$ whose limit $Q^*$ belongs to $\rateset$. Since $\{Q_i(x,\cdot)\}_{i\in\nats}$ converges to $Q_{\infty}(x,\cdot)$, it follows that $Q^*(x,\cdot)=Q_{\infty}(x,\cdot)$, which, since $Q^*\in\rateset$, implies that $Q_{\infty}(x,\cdot)\in\rateset_x$.
 \end{proof}
 
-\begin{proof}[Proof of Proposition~\ref{prop:dominating_unique_characterization}]
+\propdominatinguniquecharacterization*
+\begin{proof}
 Since $\rateset$ has $\lrate$ as its lower envelope, it follows from Equation~\eqref{eq:dominatingratematrices} that $\rateset\subseteq\rateset_{\lrate}$. Assume \emph{ex absurdo} that $\rateset\subset\rateset_{\lrate}$, or equivalently, that there is some $Q\in\rateset_{\lrate}$ such that $Q\notin\rateset$. Consider now any such $Q$.
 
 Because $\rateset$ has separately specified rows, it follows from $Q\notin\rateset$ that there is some $x\in\states$ such that $Q(x,\cdot)\notin\rateset_x\coloneqq\{Q'(x,\cdot)\,:\,Q'\in\rateset\}$. Furthermore, since $\rateset$ is non-empty, bounded, closed and convex, it follows from Lemma~\ref{lemma:rows_nonempty_bounded_closed_convex} that $\rateset_x$ is a non-empty, bounded, closed and convex subset of $\gamblesX$, and therefore, since $\gamblesX$ is a normed linear space and $Q(x,\cdot)\notin\rateset_x$, it follows from the separating hyperplane theorem~\cite[Chapter 14, Corollary 25]{Royden:2010vn} that there is a linear operator $\psi\colon\gamblesX\to\reals$ such that
@@ -4388,8 +4464,8 @@ Since $u\subseteq u'$, we know that, for all $k\in\{1,\dots,n\}$, there is some 
 Because of Lemma~\ref{lemma:differencebetweennested}, this implies that $\norm{\Phi_{u'}-\Phi_u}\leq\sigma(u)(s-t)\norm{\lrate}^2$. 
 \end{proof}
 
-
-\begin{proof}[Proof of Proposition~\ref{prop:differencebetweenu}]
+\propdifferencebetweenu*
+\begin{proof}
 Consider any $u'\in\mathcal{U}_{[t,s]}$ that is finer than $u$ and $u^*$, meaning that the timepoints it consists of contain the timepoints in $u$ and the timepoints in $u^*$. For example, let $u'$ be the ordered union of the timepoints in $u$ and $u^*$. Corollary~\ref{corol:differencebetweennestedintermsofu} then implies that $\smash{\norm{\Phi_{u}-\Phi_{u'}}\leq\delta C\norm{\lrate}^2}$ and $\smash{\norm{\Phi_{u^*}-\Phi_{u'}}\leq\delta C\norm{\lrate}^2}$, and therefore, it follows that
 \begin{equation*}
 \norm{\Phi_{u}-\Phi_{u^*}}
@@ -4403,8 +4479,8 @@ Consider any $u'\in\mathcal{U}_{[t,s]}$ that is finer than $u$ and $u^*$, meanin
 \end{equation*}
 \end{proof}
 
-
-\begin{proof}[Proof of Corollary~\ref{corol:cauchy}]
+\corolcauchy*
+\begin{proof}
 By definition of a Cauchy sequence, we need to show that
 \begin{equation*}
 (\forall \epsilon>0)(\exists n\in\nats)(\forall i,j\geq n)
@@ -4416,11 +4492,13 @@ Therefore, fix any $\epsilon\in\realspos$, and choose $\delta\in\realspos$ such 
 \end{equation*}
 \end{proof}
 
-\begin{proof}[Proof of Corollary~\ref{corol:limitexistsandiscoherent}]
+\corollimitexistsandiscoherent*
+\begin{proof}
 Since $\lim_{i\to\infty}\sigma(u_i)=0$, and due to Propositions~\ref{lemma:normQsmallenough} and~\ref{lemma:compositioncoherence} and property~\ref{LR:normlratefinite}, there is some index $n$ such that the sequence $\Phi_{u_n},\Phi_{u_{n+1}},\ldots$ consists of lower transition operators. Due to Corollary~\ref{corol:cauchy}, this sequence is Cauchy and therefore, because of Proposition~\ref{lemma:completemetricspace}, this sequence has a limit that is also a lower transition operator. Since the limit starting from $n$ and the limit starting from $1$ are identical (initial elements do not influence the limit), we find that the sequence $\left\{\Phi_{u_i}\right\}_{i\in\nats}$ has a limit, and that this limit is a lower transition operator.
 \end{proof}
 
-\begin{proof}[Proof of Theorem~\ref{theo:convergencelowerbound}]
+\theoconvergencelowerbound*
+\begin{proof}
 Let $\{u_i\}_{i\in\nats}$ be any sequence in $\mathcal{U}_{[t,s]}$ such that $\lim_{i\to\infty}\sigma(u_i)=0$. Because of Corollary~\ref{corol:limitexistsandiscoherent}, the sequence $\{\Phi_{u_i}\}_{i\in\nats}$ then converges to a lower transition operator, which we denote by $\lt$. 
 
 Let $C\coloneqq s-t$, fix any $\epsilon>0$, and choose any $\delta>0$ such that $\smash{4\delta C\norm{\lrate}^2<\epsilon}$ and $\delta\norm{\lrate}\leq1$ [this is clearly always possible].
@@ -4461,7 +4539,8 @@ Fix any $\epsilon>0$. Because of Definition~\ref{def:low_trans}, there is some $
 Since $\epsilon>0$ is arbitrary, the result is now immediate.
 \end{proof}
 
-\begin{proof}[Proof of Proposition~\ref{prop:lower_trans_system_is_system}]
+\proplowertranssystemissystem*
+\begin{proof}
 Consider any $t\in\realsnonneg$. Then $\mathcal{U}_{[t,t]}$ contains only a single degenerate sequence of time points $u$, which consists of the single time point $t$, and for this sequence $u$, we trivially have that $\Phi_u=I$ and $\sigma(u)=0$. Therefore, it follows from Definition~\ref{def:low_trans} that $L_t^t=I$.
 
 
@@ -4498,8 +4577,8 @@ Fix any $\delta>0$ such that $\delta\norm{\lrate}\leq1$. Since $r>t$, there is s
 where the second inequality follows from Lemma~\ref{lemma:recursive_lower_trans} and the third inequality follows from Lemma~\ref{lemma:limitboundonL}. Since $\delta>0$ can be chosen arbitrarily small, this implies that $\norm{L_t^s-L_t^rL_r^s}=0$, or equivalently, that $L_t^s=L_t^rL_r^s$.
 \end{proof}
 
-
-\begin{proof}[Proof of Proposition~\ref{prop:lower_transition_is_homogeneous}]
+\proplowertransitionishomogeneous*
+\begin{proof}
 Consider any $t,s\in\realsnonneg$ such that $t\leq s$, any $\Delta\in\realsnonneg$, and any sequence $\{u_i\}_{i\in\nats}$ in $\mathcal{U}_{[t,s]}$ such that $\lim_{i\to\infty}\sigma(u_i)=0$. For any $i\in\nats$, with $u_i=t_0,\ldots,t_n$, we now define the sequence $u_i^*=(t_0+\Delta),(t_1+\Delta),\ldots,(t_n+\Delta)$. Then clearly, $\lim_{i\to\infty}\sigma(u_i^*)=0$ and, for all $i\in\nats$, $u_i^*\in\mathcal{U}_{[t+\Delta,s+\Delta]}$ and, due to Equation~\eqref{eq:aux_lower_trans}, $\Phi_{u_i}=\Phi_{u_i^*}$.
 We now have that
 \begin{equation*}
@@ -4575,7 +4654,8 @@ n\Delta_n^2\norm{\lrate}^2+n\Delta_n\norm{\lrate}
 Since $n\in\nats$ is arbitrary, the result is now immediate.
 \end{proof}
 
-\begin{proof}[Proof of Proposition~\ref{prop:lower_transition_has_deriv}]
+\proplowertransitionhasderiv*
+\begin{proof}
 We first prove that $\frac{\partial}{\partial t}L_t^s=-\lrate L_t^s$, or equivalently, that
 \begin{equation}\label{eq:lower_deriv_backward}
 (\forall\epsilon>0)\,
@@ -4644,7 +4724,7 @@ Before giving the proof of Proposition~\ref{theorem:nonmarkov_single_var_lower_b
 
 First of all, recall from Proposition~\ref{prop:outerderivativebehaveslikelimit} that, for any $\epsilon\in\realspos$, there is some $\delta>0$ such that, for all $0<\Delta<\delta$, the transition matrix $\smash{T_{t,x_u}^{t+\Delta}}$ of a fixed stochastic process $\smash{P\in\wprocesses_{\rateset,\mathcal{M}}}$ can be approximated by $(I+\Delta Q)$ with an error of at most $\Delta \epsilon$, using a rate matrix $Q\in\overline{\partial}T_{t,x_u}^t\subseteq \mathcal{Q}$. Quite similarly, the following lemma states that, for any given time interval $[t,s]$, there exists a finite partition $u\in\mathcal{U}_{[t,s]}$, $u=t_0,\ldots,t_n$, such that the transition matrices $\smash{T_{t_i,x_u}^{t_{i+1}}}$ can all be approximated by $(I+\Delta_{i+1}Q_{i+1})$, for some $Q_{i+1}\in\rateset$ and with $\Delta_{i+1}=t_{i+1}-t_i$. 
 
-The reason that why this result does not follow trivially from Proposition~\ref{prop:outerderivativebehaveslikelimit} is because the $\delta$---and hence also $\Delta$---in Proposition~\ref{prop:outerderivativebehaveslikelimit} depends on the particular time point that is considered. For this reason, the intuitive idea of using Proposition~\ref{prop:outerderivativebehaveslikelimit} to first find some $\Delta_0$ and $Q_0$ such that $T_{t_0,x_u}^{t_1}=T_{t_0,x_u}^{t_0+\Delta}$ can be approximated by $I+\Delta_1Q_1$, and to then continue in this way find some $\Delta_2$ and $Q_2$, and then some $\Delta_3$ and $Q_3$, and so on, is not feasible, because this proces may continue indefinitely if $\sum_{i=1}^\infty\Delta_i$ is finite. In order to make this work, we need some kind of guarantee that it suffices to consider a finite number of $\Delta_i$, and this is exactly what the following lemma establishes.
+The reason that this result does not follow trivially from Proposition~\ref{prop:outerderivativebehaveslikelimit} is because the $\delta$---and hence also $\Delta$---in Proposition~\ref{prop:outerderivativebehaveslikelimit} depends on the particular time point that is considered. For this reason, the intuitive idea of using Proposition~\ref{prop:outerderivativebehaveslikelimit} to first find some $\Delta_0$ and $Q_0$ such that $T_{t_0,x_u}^{t_1}=T_{t_0,x_u}^{t_0+\Delta}$ can be approximated by $I+\Delta_1Q_1$, and to then continue in this way to find some $\Delta_2$ and $Q_2$, and then some $\Delta_3$ and $Q_3$, and so on, is not feasible, because this process may continue indefinitely if $\sum_{i=1}^\infty\Delta_i$ is finite. In order to make this work, we need some kind of guarantee that it suffices to consider a finite number of $\Delta_i$, and this is exactly what the following lemma establishes.
 
 \begin{lemma}\label{lemma:bound_on_linear_approx_partition}
 Consider any $P\in\wprocesses_{\rateset,\,\mathcal{M}}$, any $0\leq t<s$, any $u\in\mathcal{U}_{<t}$ and any $x_u\in\states_u$. Then for all $\epsilon>0$ and $\delta>0$, there is some $v\in\mathcal{U}_{[t,s]}$ such that $\sigma(v)<\delta$ and, for all $i\in\{0,\dots,n-1\}$:
@@ -4815,7 +4895,8 @@ We provide a proof by induction. For $n=1$, the result follows trivially from Eq
 where the first inequality follows from the induction hypothesis and~\ref{LT:monotonicity}, and the second inequality follows from Equation~\eqref{eq:correspondinglowertrans}.
 \end{proof}
 
-\begin{proof}[Proof of Proposition~\ref{theorem:nonmarkov_single_var_lower_bounded}]
+\theoremnonmarkovsinglevarlowerbounded*
+\begin{proof}
 This result is trivial if $t=s$. Hence, without loss of generality, we may assume that $t<s$. Fix any $\epsilon>0$ and let $C\coloneqq(s-t)$. Choose any $\epsilon_1>0$ such that $\epsilon_1\norm{f}<\nicefrac{\epsilon}{2}$ and any $\epsilon_2>0$ such that $\epsilon_2 C\norm{f}<\nicefrac{\epsilon}{2}$.
 
 Due to Theorem~\ref{theo:convergencelowerbound}, there is some $\delta\in\realspos$ such that $\delta\norm{\lrate}\leq1$ and
@@ -4882,7 +4963,8 @@ Let $\rateset$ be an arbitrary non-empty bounded set of rate matrices that has s
 This is immediate from the definition of the lower envelope of $\rateset$, as given by Equation~\eqref{eq:correspondinglowertrans}, and the fact that $\rateset$ has separately specified rows.
 \end{proof}
 
-\begin{proof}[Proof of Proposition~\ref{theorem:lower_markov_bound_is_tight}]
+\theoremlowermarkovboundistight*
+\begin{proof}
 Fix any $t,s\in\realsnonneg$ such that $t\leq s$, any $f\in\gamblesX$ and any $\epsilon\in\realspos$. If $t=s$, the result is trivial. Hence, without loss of generality, we may assume that $t<s$. Let $C\coloneqq (s-t)$, choose any $\epsilon^*>0$ such that $\epsilon^*C<\epsilon$, choose any $\epsilon_1,\epsilon_2,\epsilon_3>0$ such that $\epsilon_1+\epsilon_2+\epsilon_3<\epsilon^*$, choose any $\delta>0$ such that $\smash{\delta\norm{\rateset}^2\norm{f}<\epsilon_3}$ and $\smash{\delta\norm{\lrate}^2\norm{f}<\epsilon_1}$ (this is always possible because of~\ref{LR:normlratefinite}), and consider any $u\in\mathcal{U}_{[t,s]}$ such that $\sigma(u)<\delta$, with $u=t_0,\ldots,t_n$ and $n\in\nats$. 
 
 Fix any $i\in\{1,\dots,n\}$ and let $g_i\coloneqq L_{t_i}^{t_n}f$. It then follows from Lemma~\ref{lemma:rateset_has_arginf} that there is some $Q_i\in\rateset$ such that $\norm{\lrate g_i-Q_i g_i}<\epsilon_2$ and, due to~\ref{N:normAf} and~\ref{LT:norm_at_most_one}, we also know that $\norm{g_i}=\norm{L_{t_i}^{t_n}f}\leq\norm{L_{t_i}^{t_n}}\norm{f}\leq\norm{f}$.
@@ -4947,7 +5029,8 @@ By continuing in this way---applying induction---we eventually find that
 using Equation~\eqref{eq:theorem:lower_markov_bound_is_tight:localbounds} to establish the second inequality. The result now follows directly from Remark~\ref{remark:expectationT}, which states that $[T_t^sf](x_t)=\mathbb{E}_P[f(X_s)\vert X_t=x_t]$ for all $x_t\in\states$.
 \end{proof}
 
-\begin{proof}[Proof of Corollary~\ref{cor:lower_operator_is_infimum}]
+\corloweroperatorisinfimum*
+\begin{proof}
 Fix any $\epsilon>0$.
 It then follows from Proposition~\ref{theorem:lower_markov_bound_is_tight} that there is some $P\in\wmprocesses_{\rateset,\,\mathcal{M}}$ such that $\mathbb{E}_P[f(X_s)\vert\,X_t=x_t] < [L_t^sf](x_t)+\epsilon$, which implies that
 \begin{align*}
@@ -4969,7 +5052,8 @@ This implies the result because we also have that
 where the first inequality follows from Proposition~\ref{theorem:nonmarkov_single_var_lower_bounded} and the last inequality follows from Proposition~\ref{prop:lower_exp_markov_bounded_by_nonmarkov}.
 \end{proof}
 
-\begin{proof}[Proof of Theorem~\ref{theo:dominating_rate_processes_max_set}]
+\theodominatingrateprocessesmaxset*
+\begin{proof}
 Clearly, it suffices to prove that for any $P\in\processes$ that is not well-behaved or not consistent with $\rateset_{\lrate}$, there are $t,s\in\realsnonneg$ with $t\leq s$, $u\in\mathcal{U}_{<t}$, $x_u\in\states_u$, $x_t\in\states$ and $f\in\gamblesX$ such that
 \begin{equation}\label{eq:theo:dominating_rate_processes_max_set:toprove}
 \mathbb{E}_P[f(X_s)\,\vert\,X_t=x_t,X_u=x_u] < [L_t^sf](x_t).\vspace{5pt}
@@ -4995,7 +5079,8 @@ which, because of Remark~\ref{remark:expectationT}, implies that Equation~\eqref
 Next, we consider the case that $P$ is well behaved, but not consistent with $\rateset_{\lrate}$. In that case, it follows from Definition~\ref{def:consistent_process} that there are $t^*\in\realsnonneg$, $u\in\mathcal{U}_{<t}$ and $x_u\in\states_u$ such that $\smash{\overline{\partial}T_{t^*,\,x_u}^{t^*} \not\subseteq \rateset_{\lrate}}$. Since we know that $\smash{\overline{\partial}T_{t^*,\,x_u}^{t^*}}$ is a non-empty set of rate matrices because of Proposition~\ref{prop:boundednon-emptyandclosed}, this implies the existence of a rate matrix $Q^*\in\smash{\overline{\partial}}T_{t^*,x_u}^{t^*}$ such that $Q^*\notin\rateset_{\lrate}$. Furthermore, since $Q^*\notin\rateset_{\lrate}$, Equation~\eqref{eq:dominatingratematrices} implies that there are $f'\in\gamblesX$ and $x_t\in\states$ such that $[Q^*f'](x_t)<[\lrate f'](x_t)$. Clearly, this implies that $f'\neq0$, and therefore, that $\norm{f'}>0$. If we now let $f\coloneqq\nicefrac{1}{\norm{f'}}f'$, then $\norm{f}=1$, and furthermore, because of the linearity of $Q^*$ and the non-negative homogeneity of $\lrate$, it follows that $[Q^*f](x_t)=\nicefrac{1}{\norm{f'}}[Q^*f'](x_t)<\nicefrac{1}{\norm{f'}}[\lrate f'](x_t)=[\lrate f](x_t)$. Consider now any $\epsilon>0$ such that $\smash{[Q^*f](x_t)\leq[\lrate f](x_t)-2\epsilon}$ (this is now clearly possible). Since $\smash{Q^*\in\smash{\overline{\partial}}T_{t^*,\,x_u}^{t^*}}$, it then follows from Definition~\ref{def:outerpartialderivatives} that there are $t,s\in\realsnonneg$ such that $u<t<s$, $\norm{\nicefrac{1}{\Delta}(T_{t,\,x_u}^s-I)-Q^*}\leq\epsilon$ and $\smash{\Delta\norm{\lrate}^2<\epsilon}$, with $\Delta\coloneqq s-t>0$. Let $Q\coloneqq\nicefrac{1}{\Delta}(T_{t,\,x_u}^s-I)$. Since $\norm{Q-Q^*}\leq\epsilon$ and $\norm{f}=1$, it then follows that $[Qf](x_t)\leq[Q^*f](x_t)+\epsilon\leq[\lrate f](x_t)-\epsilon$. Hence, using the exact same argument as in the first part of this proof, we find that Equation~\eqref{eq:theo:dominating_rate_processes_max_set:toprove} holds.
 \end{proof}
 
-\begin{proof}[Proof of Proposition~\ref{prop:approximation_error_bound}]
+\propapproximationerrorbound*
+\begin{proof}
 Define $h\coloneqq f-\min f-\nicefrac{1}{2}\norm{f}_\mathrm{v}$. Then
 \begin{equation*}
 \max h
@@ -5036,14 +5121,18 @@ because of~\ref{LT:constantadditivity}.
 
 \section{Proofs for the results in Section~\ref{sec:funcs_multi_time_points}}
 
-\begin{proof}[Proof of Corollary~\ref{cor:inf_works_for_single_future_var}]
+\corinfworksforsinglefuturevar*
+\begin{proof}
 Because of Equations~\eqref{eq:fixxu} and~\eqref{eq:applyLtolargerfunctions}, this result is an immediate consequence of Corollary~\ref{cor:lower_operator_is_infimum}. 
 \end{proof}
-\begin{proof}[Proof of Corollary~\ref{cor:composition_lower_trans}]
+
+\corcompositionlowertrans*
+\begin{proof}
 As explained in the main text of Section~\ref{sec:decomposition}, this result is an immediate consequence of Theorem~\ref{theorem:decomposition_multivar} and Corollary~\ref{cor:inf_works_for_single_future_var}.
 \end{proof}
 
-\begin{proof}[Proof of Proposition~\ref{prop:computeinitial}]
+\propcomputeinitial*
+\begin{proof}
 Fix $f\in\gamblesX$ and $\epsilon>0$. It then follows from Equation~\eqref{eq:lowerexp3} that there is a stochastic process $\smash{P\in\wprocesses_{\rateset,\mathcal{M}}}$ such that $\mathbb{E}_P[f(X_0)]\leq\underline{\mathbb{E}}^\mathrm{W}_{\rateset,\mathcal{M}}[f(X_0)]+\epsilon$. Furthermore, since $P\in\wprocesses_{\rateset,\mathcal{M}}$, it follows from Definitions~\ref{def:consistent_process_initialdistribution} and~\ref{def:process_sets} that $P(X_0)\in\mathcal{M}$, and therefore, that
 \begin{equation*}
 \mathbb{E}_P[f(X_0)]=\sum_{x\in\states}P(X_0=x)f(x)\geq\underline{\mathbb{E}}_{\mathcal{M}}[f].
@@ -5071,8 +5160,8 @@ Since $\epsilon>0$ is arbitrary, this implies that $
 HM}}[f(X_0)]$, and therefore, the result follows from Proposition~\ref{prop:lower_exp_markov_bounded_by_nonmarkov}.
 \end{proof}
 
-
-\begin{proof}[Proof of Proposition~\ref{prop:computemarginal}]
+\propcomputemarginal*
+\begin{proof}
 Fix $s\in\realsnonneg$, $f\in\gamblesX$ and $\epsilon>0$. 
 It then follows from Equation~\eqref{eq:lowerexp3} that there is some $\smash{P\in\wprocesses_{\rateset,\mathcal{M}}}$ such that $\mathbb{E}_P[f(X_s)]\leq\underline{\mathbb{E}}^\mathrm{W}_{\rateset,\mathcal{M}}[f(X_s)]+\epsilon$. Since $\smash{P\in\wprocesses_{\rateset,\mathcal{M}}}$, Equation~\eqref{eq:lowerexp3} now implies that, for all $x\in\states$,
 \begin{equation}\label{eq:prop:computemarginal}
@@ -5122,7 +5211,8 @@ Combining all of the above inequalities, we find that
 Since $\epsilon>0$ is arbitrary, this implies that $\underline{\mathbb{E}}^\mathrm{WM}_{\rateset,\mathcal{M}}[f(X_s)]\leq\underline{\mathbb{E}}_{\mathcal{M}}[L_0^sf]\leq\underline{\mathbb{E}}^\mathrm{W}_{\rateset,\mathcal{M}}[f(X_s)]$. The result now follows from Proposition~\ref{prop:lower_exp_markov_bounded_by_nonmarkov}.
 \end{proof}
 
-\begin{proof}[Proof of Proposition~\ref{prop:computeunconditional}]
+\propcomputeunconditional*
+\begin{proof}
 Consider any $u=t_0,\dots,t_n$ in $\mathcal{U}_{\emptyset}$ such that $t_0=0$ and any $f\in\gambles(\states_u)$. Let $\hat{f}\in\gamblesX$ be defined by
 \begin{equation}\label{eq:prop:computeunconditional}
 \hat{f}(x)\coloneqq
