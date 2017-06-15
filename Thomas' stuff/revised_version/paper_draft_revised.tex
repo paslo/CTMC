@@ -727,9 +727,7 @@ Let $P$ be a real-valued map from $\mathcal{C}\subseteq\power\times\nonemptypowe
 with $C_0\coloneqq\cup_{i=1}^nC_i$.
 \end{definition}
 %We refer the interested reader to References~\cite{regazzini1985finitely,williams1975,Williams:2007eu, Vicig:2007gs,berti1991coherent, berti2002coherent} for an extensive discussion on this abstract concept, which may be given an intuitive gambling interpretation.
-The interested reader is invited to take a look at Appendix~\ref{app:coherence}, where we provide this abstract concept with an intuitive gambling interpretation. 
-
-However, for our present purposes, this interpretation is not required. Instead, our motivation for introducing coherence stems from the following two results. First, if $\mathcal{C}=\power\times\nonemptypower$, then coherence is equivalent to the axioms of probability, that is, properties~\ref{def:coh_prob_2}--\ref{def:coh_prob_6}.%conditional probability is the same as a full conditional probability.
+The interested reader is invited to take a look at Appendix~\ref{app:coherence}, where we provide this abstract concept with an intuitive gambling interpretation. However, for our present purposes, this interpretation is not required. Instead, our motivation for introducing coherence stems from the following two results. First, if $\mathcal{C}=\power\times\nonemptypower$, then coherence is equivalent to the axioms of probability, that is, properties~\ref{def:coh_prob_2}--\ref{def:coh_prob_6}.%conditional probability is the same as a full conditional probability.
 \begin{theorem}{\cite[Theorem 3]{regazzini1985finitely}}\label{theo:fullcoherent}
 Let $P$ be a real-valued map from $\power\times\nonemptypower$ to $\reals$. Then $P$ is a coherent conditional probability if and only if it is a full conditional probability.
 \end{theorem}
@@ -1650,7 +1648,9 @@ For the reader that is unfamiliar with this notion of coherent lower previsions,
 \end{equation*}
 We call this map $\underline{\mathbb{E}}$ the \emph{lower envelope} of $\mathcal{M}$, and it should be clear that this map computes a lower expectation with respect to $\mathcal{M}$. Furthermore, note that for any $p\in\mathcal{M}$, the quantity $\sum_{x\in\states}p(x)f(x)$ is bounded from below by $\min\{f(y):y\in\states\}$, and since this is true for any $p\in\mathcal{M}$, it follows that $\underline{\mathbb{E}}f$ is also bounded below by this minimum. Similarly, it is easily verified that $\underline{\mathbb{E}}$ is super-additive and non-negatively homogeneous, due to the properties of the $\inf$ operator. Hence, by the definition cited above, the lower expectation operator $\underline{\mathbb{E}}$ that corresponds to $\mathcal{M}$ is a coherent lower prevision on $\gamblesX$. 
 
-Our consideration of the coherent lower prevision $\lt_x$  above is essentially the same idea, but \emph{without} considering explicitly any link to some set of probability mass functions $\mathcal{M}_x$. Suffice it to say that, for any coherent lower prevision $\lt_x$, such a set $\mathcal{M}_x$ will always exist~\cite[Section 10.2]{Huber:1981ch}. It should furthermore be noted that the qualifier ``coherent'' here has connections to the notion of coherence that appeared in Section~\ref{sec:cond_prob}, and that it can also be given a direct gambling interpretation; we refer to~\cite{troffaes2013:lp,Walley:1991vk} for further discussion on this.
+Our consideration of the coherent lower prevision $\lt_x$  above is essentially the same idea, but \emph{without} considering explicitly any link to some set of probability mass functions $\mathcal{M}_x$. Suffice it to say that, for any coherent lower prevision $\lt_x$, such a set $\mathcal{M}_x$ will always exist~\cite[Section 10.2]{Huber:1981ch}. It should furthermore be noted that the qualifier ``coherent'' here has connections to the notion of coherence that appeared in Section~\ref{sec:cond_prob}, 
+%and that it can also be given a direct gambling interpretation; we refer to~\cite{troffaes2013:lp,Walley:1991vk} for further discussion on this.
+and that it can be given a direct gambling interpretation that resembles the one in Appendix~\ref{app:coherence}; we refer to~\cite{troffaes2013:lp,Walley:1991vk} for further discussion on this.
 
 In any case, for our present purposes, it suffices to realise that, because $\lt_x$ is a coherent lower prevision for any $x\in\states$, the lower transition operator $\lt$ can be seen as a vector of coherent lower previsions. Therefore, and because each of these coherent lower previsions $\lt_x$ has some set $\mathcal{M}_x$ of probability mass functions of which $\lt_x$ computes the lower envelope, we can combine these sets of probability mass functions to form a set of transition matrices
 \begin{equation*}
@@ -2709,29 +2709,6 @@ Jasper De Bock is a Postdoctoral Fellow of the Research Foundation - Flanders (F
 \bibliography{general}
 
 \appendix
-
-
-\section{A gambling interpretation for coherence}\label{app:coherence}
-
-This appendix aims to provide a basic exposition of the gambling interpretation for coherent conditional probabilities. A more extensive discussion, which also provides some historic context, can be found in, among others, References~\cite{regazzini1985finitely,williams1975,Williams:2007eu, Vicig:2007gs,berti1991coherent, berti2002coherent}.
-
-Basically, the idea is to interpret $P$ as a set of gambles on the actual---but unknown---value of $X$ in $\Omega$, which some bettor is willing to either buy or sell, and to impose a rationality criterion on this set of gambles.
-
-Concretely, for every pair $(A,C)\in\mathcal{C}$, $P(A\vert C)$ is interpreted as a bettor's fair price for a ticket that yields a reward of one currency unit to its holder if the event $A$ occurs, conditional on the fact that $C$ happens. In other words, the bettor is willing to either sell or buy such ticket at this price, provided that she will be refunded should event $C$ not happen. Furthermore, it also assumed that the bettor's utility is linear, which implies that she is willing to vary the stakes of her bets arbitrarily.
-
-
-Suppose for example that the actual value of $X$ ends up being $\omega$. For each ticket that the bettor sold, she has then received $P(A\vert C)$ currency units in advance, but after the value of $X$ is revealed, she loses one currency unit if $A$ has happened, that is, she loses $\ind{A}(\omega)$ currency unit. Because all of this is conditional on $C$ happening, her net profit is $\ind{C}(\omega)(P(A\vert C) - \ind{A}(\omega))$, with negative profit being loss. Note that if $C$ does not happen, that is, if $\ind{C}(\omega)=0$, she neither gains nor loses anything. Since we also allow for arbitrary stakes, we conclude that for any $\lambda\in\realsnonneg$, the bettor is willing to accept the uncertain net profit $\lambda \ind{C}(\omega)(P(A\vert C) - \ind{A}(\omega))$.
-
-Similarly, for each ticket that that the bettor buys, she first has to pay $P(A\vert C)$ to buy the ticket, but will then receive one unit of currency if $A$ happens. Her profit is then $\ind{A}(\omega) - P(A\vert C)$ per ticket. However, she only receives this profit if event $C$ also came to pass, and otherwise gets refunded. Hence, if we again take into account that the stake can be chosen arbitrarily, we find that for any $\lambda\in\realsnonneg$ the bettor is willing to accept the uncertain net profit $\lambda\ind{C}(\omega)(\ind{A}(\omega) - P(A\vert C))$. 
-
-By combining the arguments for selling and buying, we conclude from the above that for any $\lambda\in\reals$, the bettor is willing to accept a bet in which she receives the uncertain net profit $\lambda\ind{C}(\omega)(P(A\vert C)-\ind{A}(\omega))$, with negative profit being loss.
-
-
-The final assumption is now that the bettor is willing to combine any finite number of such transactions. That is, if we consider any $n\in\nats$ and, for every $i\in\{1,\ldots,n\}$, some $\lambda_i\in\reals$ and $(A_i,C_i)\in\mathcal{C}$, then the bettor is willing to accept a bet in which her net profit is equal to
-\begin{equation*}
-\sum_{i=1}^n\lambda_i\ind{C_i}(\omega)\left(P(A_i\vert C_i) - \ind{A_i}(\omega)\right)\,.
-\end{equation*}
-The coherence of $P$ is now equivalent to requiring that any such bet \emph{avoids sure loss}, in the sense that there exists at least one ``non-trivial'' outcome $\omega$ for which her total profit is non-negative, the trivial case being when none of the events $C_i$ happen---$\omega\notin\cup_{i=1}^n C_i$---because she then gets refunded completely. 
 
 \section{Proofs and Lemmas for the results in Section~\ref{sec:systems}}\label{app:systems}
 
@@ -4954,6 +4931,29 @@ It then follows from Theorem~\ref{theorem:decomposition_multivar} and Propositio
 \end{equation*}
 Combined with Equation~\eqref{eq:prop:computeunconditional}, this implies the result.
 \end{proof}
+
+
+\section{A gambling interpretation for coherence}\label{app:coherence}
+
+This appendix aims to provide a basic exposition of the gambling interpretation for coherent conditional probabilities. A more extensive discussion, which also provides some historic context, can be found in, among others, References~\cite{regazzini1985finitely,williams1975,Williams:2007eu, Vicig:2007gs,berti1991coherent, berti2002coherent}.
+
+Basically, the idea is to interpret $P$ as a set of gambles on the actual---but unknown---value of $X$ in $\Omega$, which some bettor is willing to either buy or sell, and to impose a rationality criterion on this set of gambles.
+
+Concretely, for every pair $(A,C)\in\mathcal{C}$, $P(A\vert C)$ is interpreted as a bettor's fair price for a ticket that yields a reward of one currency unit to its holder if the event $A$ occurs, conditional on the fact that $C$ happens. In other words, the bettor is willing to either sell or buy such ticket at this price, provided that she will be refunded should event $C$ not happen. Furthermore, it also assumed that the bettor's utility is linear, which implies that she is willing to vary the stakes of her bets arbitrarily.
+
+
+Suppose for example that the actual value of $X$ ends up being $\omega$. For each ticket that the bettor sold, she has then received $P(A\vert C)$ currency units in advance, but after the value of $X$ is revealed, she loses one currency unit if $A$ has happened, that is, she loses $\ind{A}(\omega)$ currency unit. Because all of this is conditional on $C$ happening, her net profit is $\ind{C}(\omega)(P(A\vert C) - \ind{A}(\omega))$, with negative profit being loss. Note that if $C$ does not happen, that is, if $\ind{C}(\omega)=0$, she neither gains nor loses anything. Since we also allow for arbitrary stakes, we conclude that for any $\lambda\in\realsnonneg$, the bettor is willing to accept the uncertain net profit $\lambda \ind{C}(\omega)(P(A\vert C) - \ind{A}(\omega))$.
+
+Similarly, for each ticket that that the bettor buys, she first has to pay $P(A\vert C)$ to buy the ticket, but will then receive one unit of currency if $A$ happens. Her profit is then $\ind{A}(\omega) - P(A\vert C)$ per ticket. However, she only receives this profit if event $C$ also came to pass, and otherwise gets refunded. Hence, if we again take into account that the stake can be chosen arbitrarily, we find that for any $\lambda\in\realsnonneg$ the bettor is willing to accept the uncertain net profit $\lambda\ind{C}(\omega)(\ind{A}(\omega) - P(A\vert C))$. 
+
+By combining the arguments for selling and buying, we conclude from the above that for any $\lambda\in\reals$, the bettor is willing to accept a bet in which she receives the uncertain net profit $\lambda\ind{C}(\omega)(P(A\vert C)-\ind{A}(\omega))$, with negative profit being loss.
+
+
+The final assumption is now that the bettor is willing to combine any finite number of such transactions. That is, if we consider any $n\in\nats$ and, for every $i\in\{1,\ldots,n\}$, some $\lambda_i\in\reals$ and $(A_i,C_i)\in\mathcal{C}$, then the bettor is willing to accept a bet in which her net profit is equal to
+\begin{equation*}
+\sum_{i=1}^n\lambda_i\ind{C_i}(\omega)\left(P(A_i\vert C_i) - \ind{A_i}(\omega)\right)\,.
+\end{equation*}
+The coherence of $P$ is now equivalent to requiring that any such bet \emph{avoids sure loss}, in the sense that there exists at least one ``non-trivial'' outcome $\omega$ for which her total profit is non-negative, the trivial case being when none of the events $C_i$ happen---$\omega\notin\cup_{i=1}^n C_i$---because she then gets refunded completely. 
 
 \section{Proofs of the examples}\label{app:example_proofs}
 
