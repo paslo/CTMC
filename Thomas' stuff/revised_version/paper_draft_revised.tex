@@ -1732,6 +1732,7 @@ For any non-empty bounded set $\rateset\subseteq\mathcal{R}$ of rate matrices, t
 Inspired by this result, we will also refer to the lower envelope of $\rateset$ as the \emph{lower transition rate operator that corresponds to $\rateset$}.  
 However, this correspondence is not one-to-one. As the following example establishes, different non-empty bounded sets of rate matrices may have the same corresponding lower transition rate operator.
 
+
 \begin{exmp}\label{example:different_sets_same_lower_rate}
 For the sake of simplicity, we assume that the state space $\states$ has only two elements, which allows us to work with $2\times 2$ matrices. Consider now two rate matrices
 \begin{equation*}
@@ -1739,10 +1740,7 @@ A\coloneqq\left[\begin{array}{rr}-1 & 1 \\2 & -2\end{array}\right]\quad\text{and
 B\coloneqq\left[\begin{array}{rr}-3 & 3 \\1 & -1\end{array}\right]\,,
 \vspace{7pt}
 \end{equation*}
-let $C\coloneqq \nicefrac{1}{2}(A+B)$ be their convex mixture, which is clearly also a rate matrix, and use these matrices to define the sets $\rateset_1\coloneqq\{A,B\}$ and $\rateset_2\coloneqq\{A,B,C\}$. Then clearly, $\rateset_1$ and $\rateset_2$ are two different, non-empty and bounded sets of rate matrices. Nevertheless, as we are about to show, the corresponding lower transition rate operators are identical.
-
-Let $\lrate_1$ and $\lrate_2$ be the lower transition rate operators that correspond to $\rateset_1$ and $\rateset_2$, respectively, %We will show that $\lrate_1=\lrate_2$.
-and consider any $f\in\gamblesX$. Equation~\eqref{eq:correspondinglowertrans} then implies that $\lrate_1f\leq Af$ and $\lrate_1f\leq Bf$, which in turn implies that $\lrate_1f\leq Cf$. Therefore, by applying Equation~\eqref{eq:correspondinglowertrans} once more, we find that $\lrate_1 f\leq\lrate_2 f$. Hence, since Equation~\eqref{eq:correspondinglowertrans} also trivially implies that $\lrate_2 f\leq\lrate_1 f$, we find that $\lrate_1 f=\lrate_2 f$. Since this is true for any $f\in\gamblesX$, we conclude that $\lrate_1=\lrate_2$.
+let $C\coloneqq \nicefrac{1}{2}(A+B)$ be their convex mixture, which is clearly also a rate matrix, and use these matrices to define the sets $\rateset_1\coloneqq\{A,B\}$ and $\rateset_2\coloneqq\{A,B,C\}$. Then clearly, $\rateset_1$ and $\rateset_2$ are two different, non-empty and bounded sets of rate matrices. Let $\lrate_1$ and $\lrate_2$ be the lower transition rate operators that correspond to $\rateset_1$ and $\rateset_2$, respectively. Then, as is proved in~\exampleproofref, these lower transition rate operators are identical, i.e. $\lrate_1=\lrate_2$.
 \exampleend
 \end{exmp}
 Of course, this should not really be surprising---Example~\ref{example:different_sets_same_lower_rate} essentially establishes that different sets can have the same infimum. However, it does lead to a natural question: what do these different sets have in common?
@@ -1794,6 +1792,7 @@ These additional properties characterise $\rateset_{\lrate}$ completely, in the 
 Consider any non-empty, bounded, closed and convex set of rate matrices $\rateset\subseteq\mathcal{R}$ with separately specified rows that has $\lrate$ as its lower envelope. Then $\rateset=\rateset_{\lrate}$.
 \end{restatable}
 
+
 \begin{exmp}\label{ex:dominatingset}
 Let $\rateset_1$ and $\rateset_2$ be constructed as in Example~\ref{example:different_sets_same_lower_rate}, and let $\lrate\coloneqq\lrate_1=\lrate_2$ be their common lower transition rate operator. As we are about to show, the corresponding set of dominating rate matrices $\rateset_{\lrate}$ is then equal to
 \begin{equation}\label{eq:ex:dominatingset:globaldef}
@@ -1804,21 +1803,8 @@ where, for all $x\in\states$, $\rateset_x$ is given by
 \rateset_x \coloneqq \left\{\lambda A(x,\cdot)+(1-\lambda)B(x,\cdot)\,:\,\lambda\in[0,1]\right\}.
 \end{equation}
 
-First of all, for any $Q\in\rateset^*$, $f\in\gamblesX$ and $x\in\states$, it follows from Equations~\eqref{eq:ex:dominatingset:globaldef} and~\eqref{eq:ex:dominatingset:localdef} that there is some $\lambda\in[0,1]$ such that
-\begin{equation*}
-[Qf](x)=\lambda[Af](x)+(1-\lambda)[Bf](x)
-\geq\lambda[\lrate f](x)+(1-\lambda)[\lrate f](x)
-=[\lrate f](x),
-\end{equation*}
-where the inequality holds because $\lrate$ is the lower envelope of $\rateset_1$. Since this is true for all $x\in\states$, we find that $Qf\geq\lrate f$. Since this is true for all $f\in\gamblesX$ and all $Q\in\rateset^*$, it follows that $\rateset^*\subseteq\rateset_{\lrate}$. 
-
-
-Let now $\lrate^*$ be the lower transition rate operator that corresponds to $\rateset^*$ and consider any $f\in\gamblesX$. Then, because $\rateset^*\subseteq\rateset_{\lrate}$, we find that $\lrate^*f\geq\lrate f$. Similarly, since $\rateset_1$ is clearly a subset of $\rateset^*$, we find that $\lrate^*f\leq\lrate_1f$. Since $\lrate_1=\lrate$, it follows that $\lrate f\leq \lrate^*f\leq \lrate f$, and because this holds for any $f\in\gamblesX$, we conclude that $\lrate^*=\lrate$.
-
-
-
-
-It remains to show that $\smash{\rateset^*=\rateset_{\lrate}}$. One way to verify this is to consider any $Q'\notin\rateset^*$ and to then prove that there is some $f\in\gamblesX$ and some $x\in\states$ such that $[Q'f](x)<[\lrate f](x)$. We leave this method as an exercise for the reader, and note instead the following. $\rateset^*$ is clearly non-empty, bounded, closed, convex, has separately specified rows and, as we have just shown, has $\lrate$ as its lower transition rate operator. Therefore, by Proposition~\ref{prop:dominating_unique_characterization}, it follows that $\rateset^*=\rateset_{\lrate}$.
+First of all, as is shown in~\exampleproofref, $\lrate$ is also the lower transition operator corresponding to $\rateset^*$. Furthermore, $\rateset^*$ is clearly non-empty, bounded, closed, convex, has separately specified rows and, as we have just mentioned, has $\lrate$ as its lower transition rate operator. Therefore, by Proposition~\ref{prop:dominating_unique_characterization}, it follows that $\rateset^*=\rateset_{\lrate}$.
+%We now aim to show that $\smash{\rateset^*=\rateset_{\lrate}}$. One way to verify this is to consider any $Q'\notin\rateset^*$ and to then prove that there is some $f\in\gamblesX$ and some $x\in\states$ such that $[Q'f](x)<[\lrate f](x)$. We leave this method as an exercise for the reader, and note instead the following. $\rateset^*$ is clearly non-empty, bounded, closed, convex, has separately specified rows and, as we have just mentioned, has $\lrate$ as its lower transition rate operator. Therefore, by Proposition~\ref{prop:dominating_unique_characterization}, it follows that $\rateset^*=\rateset_{\lrate}$.
 \exampleend
 \end{exmp}
 
@@ -5266,11 +5252,25 @@ which, since $\epsilon>0$, contradicts the fact that $\smash{\lim_{i\to+\infty}\
 =Q}$. Hence, our assumption must be wrong, and it follows that $\smash{\overline{\partial}}_+T_0^0$ is indeed empty.
 \end{proof}
 
-\begin{proof}[Proof of Example~XXXXX]
+\begin{proof}[Proof of Example~\ref{example:different_sets_same_lower_rate}]
+Let $\lrate_1$ and $\lrate_2$ be the lower transition rate operators that correspond to $\rateset_1$ and $\rateset_2$, respectively, %We will show that $\lrate_1=\lrate_2$.
+and consider any $f\in\gamblesX$. Equation~\eqref{eq:correspondinglowertrans} then implies that $\lrate_1f\leq Af$ and $\lrate_1f\leq Bf$, which in turn implies that $\lrate_1f\leq Cf$. Therefore, by applying Equation~\eqref{eq:correspondinglowertrans} once more, we find that $\lrate_1 f\leq\lrate_2 f$. Hence, since Equation~\eqref{eq:correspondinglowertrans} also trivially implies that $\lrate_2 f\leq\lrate_1 f$, we find that $\lrate_1 f=\lrate_2 f$. Since this is true for any $f\in\gamblesX$, we conclude that $\lrate_1=\lrate_2$.
 \end{proof}
 
-\begin{proof}[Proof of Example~XXXXX]
+\begin{proof}[Proof of Example~\ref{ex:dominatingset}]
+We will prove that $\lrate$ is also the lower transition rate operator corresponding to $\rateset^*$. First of all, for any $Q\in\rateset^*$, $f\in\gamblesX$ and $x\in\states$, it follows from Equations~\eqref{eq:ex:dominatingset:globaldef} and~\eqref{eq:ex:dominatingset:localdef} that there is some $\lambda\in[0,1]$ such that
+\begin{equation*}
+[Qf](x)=\lambda[Af](x)+(1-\lambda)[Bf](x)
+\geq\lambda[\lrate f](x)+(1-\lambda)[\lrate f](x)
+=[\lrate f](x),
+\end{equation*}
+where the inequality holds because $\lrate$ is the lower envelope of $\rateset_1$. Since this is true for all $x\in\states$, we find that $Qf\geq\lrate f$. Since this is true for all $f\in\gamblesX$ and all $Q\in\rateset^*$, it follows that $\rateset^*\subseteq\rateset_{\lrate}$. 
+
+
+Let now $\lrate^*$ be the lower transition rate operator that corresponds to $\rateset^*$ and consider any $f\in\gamblesX$. Then, because $\rateset^*\subseteq\rateset_{\lrate}$, we find that $\lrate^*f\geq\lrate f$. Similarly, since $\rateset_1$ is clearly a subset of $\rateset^*$, we find that $\lrate^*f\leq\lrate_1f$. Since $\lrate_1=\lrate$, it follows that $\lrate f\leq \lrate^*f\leq \lrate f$, and because this holds for any $f\in\gamblesX$, we conclude that $\lrate^*=\lrate$.
 \end{proof}
+
+
 
 
 \end{document}
