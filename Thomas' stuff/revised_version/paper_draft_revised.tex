@@ -1008,7 +1008,7 @@ and, if $t\neq0$, the \emph{left-sided partial derivative} of $T_{t,x_u}^t$ is d
 If these partial derivatives exist, then because of Proposition~\ref{prop:rate_from_stochastic_matrix}, they are guaranteed to belong to the set of rate matrices  $\mathcal{R}$. If they both exist and coincide, we write $\partial{T_{t,\,x_u}^t}$ to denote their common value. If $t=0$, we let $\partial{T_{t,\,x_u}^t}\coloneqq\partial_{+}{T_{t,\,x_u}^t}$.
 \end{definition}
 
-The following example established that these directional partial derivatives need not exist. In particular, they need not exist even for well-behaved processes.
+The following example establishes that these directional partial derivatives need not exist. In particular, they need not exist even for well-behaved processes.
 \begin{exmp}\label{exmp:well-behaved-no-deriv}
 Let $Q_1,Q_2\in\mathcal{R}$ be two commuting rate matrices such that $Q_1\neq Q_2$---for example, let $Q_1\neq0$ be an arbitrary rate matrix and let $Q_2\coloneqq\alpha Q_1$, with $\alpha\in\realsnonneg\setminus\{1\}$---and consider a well-behaved stochastic process $P\in\wprocesses$ of which, for all $t\in(0,1]$, the transition matrix $T_0^t$ is given by Equation~\eqref{eq:ex4:def} in Example~\ref{exmp:limit_trans_mat_system_matrices}. 
 
@@ -1204,7 +1204,7 @@ T_t^s=T_0^{s-t}
 We denote the set of all homogeneous Markov chains by $\hmprocesses$ and use $\whmprocesses$ to refer to the subset that consists of the well-behaved homogeneous Markov chains.
 \end{definition}
 
-Recall now from Section~\ref{sec:systems} the exponential transition matrix system $\mathcal{T}_Q$ corresponding to some $Q\in\mathcal{R}$. As we have seen, the transition matrices of such a system were defined by $T_t^s = e^{Q(s-t)}$. This family $\mathcal{T}_Q$ therefore clearly satisfies Equation~\ref{eq:homogeneousMarkov}. Furthermore, by Proposition~\ref{prop:systemQ}, $\mathcal{T}_Q$ is well-behaved. Hence, we have the following result.
+Recall now from Section~\ref{sec:systems} the exponential transition matrix system $\mathcal{T}_Q$ corresponding to some $Q\in\mathcal{R}$. As we have seen, the transition matrices of such a system were defined by $T_t^s = e^{Q(s-t)}$. This family $\mathcal{T}_Q$ therefore clearly satisfies Equation~\eqref{eq:homogeneousMarkov}. Furthermore, by Proposition~\ref{prop:systemQ}, $\mathcal{T}_Q$ is well-behaved. Hence, we have the following result.
 
 \begin{restatable}{corollary}{corratehasuniquehomogenmarkovprocess}
 \label{cor:rate_has_unique_homogen_markov_process}
@@ -1361,7 +1361,7 @@ Consider any non-empty bounded set of rate matrices $\rateset$ and let $\mathcal
 
 We conclude this section with some notes about closure properties of the different types of \ictmc's that we consider, which are particularly useful for existence proofs. In particular, we focus on closure properties under recombination of known elements---colloquially, the ``piecing together'' of two or more processes to construct a new process that belongs to the same \ictmc.
 
-The example above already suggested how to do this for $\smash{\wmprocesses_{\rateset,\mathcal{M}}}$, by combining two well-behaved homogeneous Markov chains $P_1,P_2\in\whmprocesses$ to form a new process $P\in\wmprocesses$. Similarly, but more generally, for any two processes $P_1,P_2\in\wmprocesses_{\rateset,\mathcal{M}}$, we can combine their transition matrix systems $\mathcal{T}_{P_1}$ and $\mathcal{T}_{P_2}$ to construct a new transition matrix system $\smash{\mathcal{T}\coloneqq \mathcal{T}_{P_1}^{[0,t]}\otimes \mathcal{T}_{P_2}^{[t,+\infty)}}$, with $r>0$ chosen arbitrarily. Theorem~\ref{theo:uniqueMarkovchain} then guarantees that there exists a Markov chain $P$ such that $\mathcal{T}_P=\mathcal{T}$ and $P(X_0)=P_1(X_0)$. It is straightforward to verify that, because $P_1,P_2\in\wmprocesses_{\rateset,\mathcal{M}}$, also $P\in\wmprocesses_{\rateset,\mathcal{M}}$; we leave this as an exercise for the reader.
+The example above already suggested how to do this for $\smash{\wmprocesses_{\rateset,\mathcal{M}}}$, by combining two well-behaved homogeneous Markov chains $P_1,P_2\in\whmprocesses$ to form a new process $P\in\wmprocesses$. Similarly, but more generally, for any two processes $P_1,P_2\in\wmprocesses_{\rateset,\mathcal{M}}$, we can combine their transition matrix systems $\mathcal{T}_{P_1}$ and $\mathcal{T}_{P_2}$ to construct a new transition matrix system $\smash{\mathcal{T}\coloneqq \mathcal{T}_{P_1}^{[0,r]}\otimes \mathcal{T}_{P_2}^{[r,+\infty)}}$, with $r>0$ chosen arbitrarily. Theorem~\ref{theo:uniqueMarkovchain} then guarantees that there exists a Markov chain $P$ such that $\mathcal{T}_P=\mathcal{T}$ and $P(X_0)=P_1(X_0)$. It is straightforward to verify that, because $P_1,P_2\in\wmprocesses_{\rateset,\mathcal{M}}$, also $P\in\wmprocesses_{\rateset,\mathcal{M}}$; we leave this as an exercise for the reader.
 
 
 
@@ -1996,7 +1996,7 @@ and
 \underline{\mathbb{E}}_{\rateset,\mathcal{M}}^\mathrm{W}[f(X_s)\,\vert\,X_t=x_t,X_u=x_u] = \underline{\mathbb{E}}_{\rateset,\mathcal{M}}^\mathrm{W}[f(X_s)\,\vert\,X_t=x_t].
 \vspace{5pt}
 \end{equation}
-In other words, the conditional lower expectations $\underline{\mathbb{E}}_{\rateset,\mathcal{M}}^\mathrm{W}$ and $\underline{\mathbb{E}}_{\rateset,\mathcal{M}}^\mathrm{W}$ satisfy an \emph{imprecise Markov property}: conditional on the state at time $t$, the lower expectation of a function $f(X_s)$ at a future time point $s$ is functionally independent of the states at time points $u$ that precede $t$.
+In other words, the conditional lower expectations $\underline{\mathbb{E}}_{\rateset,\mathcal{M}}^\mathrm{WM}$ and $\underline{\mathbb{E}}_{\rateset,\mathcal{M}}^\mathrm{W}$ satisfy an \emph{imprecise Markov property}: conditional on the state at time $t$, the lower expectation of a function $f(X_s)$ at a future time point $s$ is functionally independent of the states at time points $u$ that precede $t$.
 For the lower expectation $\smash{\underline{\mathbb{E}}_{\rateset,\mathcal{M}}^\mathrm{WM}}$, this is of course to be expected: since $\underline{\mathbb{E}}_{\rateset,\mathcal{M}}^\mathrm{WM}$ is the lower envelope of the set of Markov processes $\smash{\wmprocesses_{\rateset,\mathcal{M}}}$, it is not surprising that this lower envelope itself satisfies a Markov property as well. In fact, for this reason, Equation~\eqref{eq:impreciseMarkov1} is clearly also true if $\rateset$ does not have separately specified rows. The most important message here though is that $\smash{\underline{\mathbb{E}}_{\rateset,\mathcal{M}}^\mathrm{W}}$ also satisfies such an imprecise Markov property. In this case, this result is far from trivial, because the individual processes in $\smash{\wprocesses_{\rateset,\mathcal{M}}}$ are not required to---and usually do not---satisfy a Markov property. It remains an open question at this point whether Equation~\eqref{eq:impreciseMarkov2} also holds if $\rateset$ does not have separately specified rows.
 
 
@@ -2068,7 +2068,7 @@ The parameter $a$ here is the rate at which a healthy person becomes sick.
 Technically, this means that if a person is healthy at time $t$, the probability that he or she will be sick at time $t+\Delta$, for small $\Delta$, is very close to $\Delta a$. More intuitively, if we take the time unit to be one week, it means that he or she will, on average, become sick after $\nicefrac{1}{a}$ weeks. The parameter $b$ is the rate at which a sick person becomes healthy again, and has a similar interpretation. In other words, if we would for example say that $a=\nicefrac{1}{52}$ and $b=1$, then this would mean that---on average---we expect that a healthy person will stay healthy for about one year---52 weeks---and that a sick person will remain sick for one week.
 
 
-In practice, assessing the exact values of $a$ and $b$ may be difficult, especially if want them to be reliable. In those cases, instead of modelling our problem by means of a precise continuous-time Markov chain, we can consider an \ictmc. We then no longer need to assess a single transition rate matrix $Q$, but only need to specify a set of rate matrices $\rateset$ to which we think $Q$ might belong. Suppose for example that we feel confident in saying that the average time for a healthy person to become sick lies somewhere in between four months and a year, and that the average time for a sick person to recover is situated somewhere in between half a week and two weeks. The corresponding set of transition rate matrices is then given by
+In practice, assessing the exact values of $a$ and $b$ may be difficult, especially if we want them to be reliable. In those cases, instead of modelling our problem by means of a precise continuous-time Markov chain, we can consider an \ictmc. We then no longer need to assess a single transition rate matrix $Q$, but only need to specify a set of rate matrices $\rateset$ to which we think $Q$ might belong. Suppose for example that we feel confident in saying that the average time for a healthy person to become sick lies somewhere in between four months and a year, and that the average time for a sick person to recover is situated somewhere in between half a week and two weeks. The corresponding set of transition rate matrices is then given by
 \vspace{3pt}
 \begin{equation}\label{eq:num_example_rateset_params}
 \rateset \coloneqq \left\{\left[\begin{array}{rr}
@@ -2082,7 +2082,7 @@ with the time unit again being one week. Note that $\rateset$ here is clearly no
 \end{exmp}
 
 
-As mentioned above, for a given set $\rateset$, Proposition~\ref{prop:approximation_error_bound} allows us to reduce the problem of computing conditional lower expectations to the problem of evaluating the lower transition operator $\lrate$ of $\rateset$, as defined in Equation~\eqref{eq:correspondinglowertrans}. In theory, the latter could still be a difficult problem, since $\rateset$ can very complicated---we only require that it is non-empty and has separately specified rows. However, in practice, $\rateset$ will typically be described by means of linear constraints, and computing $\lrate g$ is then a standard constrained linear optimisation problem, which is easily solved by means of linear programming techniques. 
+As mentioned above, for a given set $\rateset$, Proposition~\ref{prop:approximation_error_bound} allows us to reduce the problem of computing conditional lower expectations to the problem of evaluating the lower transition operator $\lrate$ of $\rateset$, as defined in Equation~\eqref{eq:correspondinglowertrans}. In theory, the latter could still be a difficult problem, since $\rateset$ can be very complicated---we only require that it is non-empty and has separately specified rows. However, in practice, $\rateset$ will typically be described by means of linear constraints, and computing $\lrate g$ is then a standard constrained linear optimisation problem, which is easily solved by means of linear programming techniques. 
 We will henceforth assume that the optimisation problem in Equation~\eqref{eq:correspondinglowertrans} is solvable. However, as we have just explained, the complexity of this problem will depend on the exact form of $\rateset$.
 
 For the set $\rateset$ of Example~\ref{exmp:example_rateset_simple_model}, as defined by Equation~\eqref{eq:num_example_rateset_params}, the constraints that we are dealing with are simple box-constraints. Furthermore, because the state-space $\states$ contains only two states in this specific example model, computing $\lrate g$ is particularly easy, regardless of the choice of $g\in\gamblesX$. This is made explicit in the following example, where we also compute the quantity $\norm{\lrate}$ that is required for the numerical computations that follow.
@@ -2382,7 +2382,7 @@ f(x_0,x_1,x_2)\coloneqq \ind{X_1=X_2}(x_1,x_2)
 1 & \text{if $x_1 = x_2$} \\
 0 & \text{if $x_1 \neq x_2$}
 \end{cases}
-~~~\text{ for all $x_1,x_2,x_3\in\states$.}
+~~~\text{ for all $x_0,x_1,x_2\in\states$.}
 \end{equation}
 Since $f(X_0,X_1,X_2)$ is clearly identical to $\ind{X_1=X_2}(X_1,X_2)$, our problem now consists of computing $\underline{\mathbb{E}}_{\rateset}^{\mathrm{W}}[f(X_0,X_1,X_2)\,\vert\,X_0]$, which, because of Corollary~\ref{cor:composition_lower_trans}, is given by
 \begin{equation}\label{eq:num_example_composition}
