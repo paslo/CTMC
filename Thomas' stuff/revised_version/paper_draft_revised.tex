@@ -192,7 +192,7 @@ First of all: it is necessary to provide exact values---that is, point-estimates
 Secondly, in order to be able to define the rate parameters, the transition probabilities of the model need to be differentiable.
 Thirdly, the Markov assumption implies that for any time points $r<t<s$,
 \begin{equation*}
-P(X_s={\tt sick}\,\vert\, X_r={\tt healthy}, X_t={\tt sick}) = P(X_s={\tt sick}\,\vert\, X_t={\tt healthy}),
+P(X_s={\tt sick}\,\vert\, X_t={\tt healthy}, X_r={\tt sick}) = P(X_s={\tt sick}\,\vert\, X_t={\tt healthy}),
 \end{equation*}
 that is, once we know the person's health state at time~$t$, his or her probability of being sick at time~$s$ does not depend on whether he or she has ever been sick before time~$t$. If it is possible to develop immunity to the disease in question, then clearly, such an assumption is not realistic. Also, it implies that the rate parameters can only depend on the current state, and not on the previous ones.
 Fourthly, the rate parameters are assumed to remain constant over time, which, for example, excludes the possibility of modelling seasonal variations. This fourth condition can easily be removed by considering a continuous-time Markov chain that is not homogeneous. However, in that case, the rate parameters become time-dependent, which requires us to specify (or learn from data) even more point-estimates. Similarly, although a more complex model would be able to account for history-dependence, for example by adding more states to the model, this would vastly increase the computational complexity of working with the model. 
@@ -469,7 +469,7 @@ In the previous section, we have seen that for any transition matrix $T$ and any
 
 We now consider this property in the context of a transition matrix system $\mathcal{T}$. For all $t\in\realsnonneg$ and all $\Delta\in\realspos$, such a transition matrix system specifies a transition matrix $T_t^{t+\Delta}$ and---if $(t-\Delta)\geq0$---a transition matrix $T_{t-\Delta}^t$. We now consider the behaviour of these matrices for various values of $\Delta$. In particular, we look what happens to these finite differences if we take $\Delta$ to be increasingly smaller. 
 
-For each $\Delta\in\realspos$, due the property that we have just recalled, there will be a rate matrix that corresponds to these finite differences. If the norm of these rate matrices never diverges to $+\infty$ as we take $\Delta$ to zero, we call the family $\mathcal{T}$ \emph{well-behaved}.
+For each $\Delta\in\realspos$, due to the property that we have just recalled, there will be a rate matrix that corresponds to these finite differences. If the norm of these rate matrices never diverges to $+\infty$ as we take $\Delta$ to zero, we call the family $\mathcal{T}$ \emph{well-behaved}.
 
 \begin{definition}[Well-Behaved Transition Matrix System]\label{def:well_behaved_trans_mat_system}
 A transition matrix system $\mathcal{T}$ is called \emph{well-behaved} if 
@@ -726,9 +726,8 @@ Let $P$ be a real-valued map from $\mathcal{C}\subseteq\power\times\nonemptypowe
 \end{equation*}
 with $C_0\coloneqq\cup_{i=1}^nC_i$.
 \end{definition}
-
-We refer the interested reader to References~\cite{regazzini1985finitely,williams1975,Williams:2007eu, Vicig:2007gs,berti1991coherent, berti2002coherent} for an extensive discussion on this abstract concept, which may be given an intuitive gambling interpretation.
-%The interested reader is invited to take a look at Appendix~\ref{app:coherence}, where we provide this abstract concept with an intuitive gambling interpretation. 
+%We refer the interested reader to References~\cite{regazzini1985finitely,williams1975,Williams:2007eu, Vicig:2007gs,berti1991coherent, berti2002coherent} for an extensive discussion on this abstract concept, which may be given an intuitive gambling interpretation.
+The interested reader is invited to take a look at Appendix~\ref{app:coherence}, where we provide this abstract concept with an intuitive gambling interpretation. 
 
 However, for our present purposes, this interpretation is not required. Instead, our motivation for introducing coherence stems from the following two results. First, if $\mathcal{C}=\power\times\nonemptypower$, then coherence is equivalent to the axioms of probability, that is, properties~\ref{def:coh_prob_2}--\ref{def:coh_prob_6}.%conditional probability is the same as a full conditional probability.
 \begin{theorem}{\cite[Theorem 3]{regazzini1985finitely}}\label{theo:fullcoherent}
@@ -1448,7 +1447,7 @@ Let $\rateset$ be an arbitrary non-empty, bounded, and convex set of rate matric
 \underline{\mathbb{E}}^{\mathrm{W}}_{\rateset,\,\mathcal{M}}\left[f(X_u,X_v,X_w)\,\vert\,X_u\right] = \underline{\mathbb{E}}^{\mathrm{W}}_{\rateset,\,\mathcal{M}}\Bigl[\underline{\mathbb{E}}^{\mathrm{W}}_{\rateset,\,\mathcal{M}}\left[f(X_u,X_v,X_w)\,\vert\,X_u,X_v\right] \Big\vert\,X_u\Bigr]\,. 
 \end{equation}
 \end{restatable}
-The reason why this result is useful, is because it essentially allows us to compute lower expectations recursively. In particular, instead of computing a lower expectation for all time points simultaneously, we can focus on each of the time points separately, and eliminate them one by one. We will revisit this idea Section~\ref{sec:funcs_multi_time_points}, where we will use it to develop efficient algorithms.
+The reason why this result is useful, is because it essentially allows us to compute lower expectations recursively. In particular, instead of computing a lower expectation for all time points simultaneously, we can focus on each of the time points separately, and eliminate them one by one. We will revisit this idea in Section~\ref{sec:funcs_multi_time_points}, where we will use it to develop efficient algorithms.
 
 For now, we would like to draw attention to the fact that Theorem~\ref{theorem:decomposition_multivar} relies heavily on the fact that the individual elements of $\smash{\wprocesses_{\rateset,\mathcal{M}}}$ do no need to satisfy the Markov property, in the sense that they can have history-dependent probabilities. Therefore, unfortunately, the result in Theorem~\ref{theorem:decomposition_multivar} does not extend to $\smash{\underline{\mathbb{E}}_{\rateset,\mathcal{M}}^\mathrm{WM}}$ or $\smash{\underline{\mathbb{E}}_{\rateset,\mathcal{M}}^\mathrm{WHM}}$. Since Theorem~\ref{theorem:decomposition_multivar} simplifies considerably the process of computing the lower expectation $\underline{\mathbb{E}}_{\rateset,\mathcal{M}}^\mathrm{W}$, this suggests that the qualitative differences between the three types of \ictmc's that we consider make some of their corresponding lower expectations harder to compute than others. In fact, we will show in Section~\ref{sec:funcs_multi_time_points} that $\wprocesses_{\rateset\,,\mathcal{M}}$ is in some sense the easiest set to do this for, exactly because of Theorem~\ref{theorem:decomposition_multivar}.
 
@@ -1571,7 +1570,7 @@ Every process $P$ in the imprecise Markov chain $\whmprocesses_{\rateset,\,\math
 2-e^{-\nicefrac{t}{100}}-\frac{1}{50}te^{-\nicefrac{t}{100}}&\text{ if $\lambda=0.01$.}
 \end{cases}\\[-10pt]
 \end{align*}
-Obtaining the value of $\underline{\mathbb{E}}_{\rateset,\,\mathcal{M}}^{\mathrm{WHM}}[f(X_t)\,\vert\,X_0=a]$ now corresponds to minimising this expression as $\lambda$ ranges over the interval $[0.01,0.5]$. Figure~\ref{fig:homogeneousCounterExample} illustrates that, even in this simple ternary case, this minimisation problem is already non-trivial, because---depending on the value of $t$---the minimum is not guaranteed to obtained for one of the end points of $[0.01,0.5]$, but may only be achieved by an internal point. Nevertheless, in this simple case, $\underline{\mathbb{E}}_{\rateset,\,\mathcal{M}}^{\mathrm{WHM}}[f(X_t)\,\vert\,X_0=a]$ can of course be computed by brute force, leading to the solution that is depicted in Figure~\ref{fig:homogeneousCounterExample}. 
+Obtaining the value of $\underline{\mathbb{E}}_{\rateset,\,\mathcal{M}}^{\mathrm{WHM}}[f(X_t)\,\vert\,X_0=a]$ now corresponds to minimising this expression as $\lambda$ ranges over the interval $[0.01,0.5]$. Figure~\ref{fig:homogeneousCounterExample} illustrates that, even in this simple ternary case, this minimisation problem is already non-trivial, because---depending on the value of $t$---the minimum is not guaranteed to be obtained for one of the end points of $[0.01,0.5]$, but may only be achieved by an internal point. Nevertheless, in this simple case, $\underline{\mathbb{E}}_{\rateset,\,\mathcal{M}}^{\mathrm{WHM}}[f(X_t)\,\vert\,X_0=a]$ can of course be computed by brute force, leading to the solution that is depicted in Figure~\ref{fig:homogeneousCounterExample}. 
 
 Figure~\ref{fig:homogeneousCounterExample} also depicts $\underline{\mathbb{E}}_{\rateset,\,\mathcal{M}}^{\mathrm{WM}}[f(X_t)\,\vert\,X_0=a]$ and $\underline{\mathbb{E}}_{\rateset,\,\mathcal{M}}^{\mathrm{W}}[f(X_t)\,\vert\,X_0=a]$, which happen to coincide. The reason why they coincide in this case, and the method by which we have computed them, will be explained in Section~\ref{sec:connections}. For now, it suffices to notice that for large enough values of $t$, their common value differs from $\underline{\mathbb{E}}_{\rateset,\,\mathcal{M}}^{\mathrm{WHM}}[f(X_t)\,\vert\,X_0=a]$, thereby illustrating that the first inequality in Proposition~\ref{prop:lower_exp_markov_bounded_by_nonmarkov} can indeed be strict.
 \exampleend
@@ -2712,27 +2711,27 @@ Jasper De Bock is a Postdoctoral Fellow of the Research Foundation - Flanders (F
 \appendix
 
 
-%\section{A gambling interpretation for coherence}\label{app:coherence}
-%
-%This appendix aims to provide a basic exposition of the gambling interpretation for coherent conditional probabilities. A more extensive discussion, which also provides some historic context, can be found in, among others, References~\cite{regazzini1985finitely,williams1975,Williams:2007eu, Vicig:2007gs,berti1991coherent, berti2002coherent}.
-%
-%Basically, the idea is to interpret $P$ as a set of gambles on the actual---but unknown---value of $X$ in $\Omega$, which some bettor is willing to either buy or sell, and to impose a rationality criterion on this set of gambles.
-%
-%Concretely, for every pair $(A,C)\in\mathcal{C}$, $P(A\vert C)$ is interpreted as a bettor's fair price for a ticket that yields a reward of one currency unit to its holder if the event $A$ occurs, conditional on the fact that $C$ happens. In other words, the bettor is willing to either sell or buy such ticket at this price, provided that she will be refunded should event $C$ not happen. Furthermore, it also assumed that the bettor's utility is linear, which implies that she is willing to vary the stakes of her bets arbitrarily.
-%
-%
-%Suppose for example that the actual value of $X$ ends up being $\omega$. For each ticket that the bettor sold, she has then received $P(A\vert C)$ currency units in advance, but after the value of $X$ is revealed, she loses one currency unit if $A$ has happened, that is, she loses $\ind{A}(\omega)$ currency unit. Because all of this is conditional on $C$ happening, her net profit is $\ind{C}(\omega)(P(A\vert C) - \ind{A}(\omega))$, with negative profit being loss. Note that if $C$ does not happen, that is, if $\ind{C}(\omega)=0$, she neither gains nor loses anything. Since we also allow for arbitrary stakes, we conclude that for any $\lambda\in\realsnonneg$, the bettor is willing to accept the uncertain net profit $\lambda \ind{C}(\omega)(P(A\vert C) - \ind{A}(\omega))$.
-%
-%Similarly, for each ticket that that the bettor buys, she first has to pay $P(A\vert C)$ to buy the ticket, but will then receive one unit of currency if $A$ happens. Her profit is then $\ind{A}(\omega) - P(A\vert C)$ per ticket. However, she only receives this profit if event $C$ also came to pass, and otherwise gets refunded. Hence, if we again take into account that the stake can be chosen arbitrarily, we find that for any $\lambda\in\realsnonneg$ the bettor is willing to accept the uncertain net profit $\lambda\ind{C}(\omega)(\ind{A}(\omega) - P(A\vert C))$. 
-%
-%By combining the arguments for selling and buying, we conclude from the above that for any $\lambda\in\reals$, the bettor is willing to accept a bet in which she receives the uncertain net profit $\lambda\ind{C}(\omega)(P(A\vert C)-\ind{A}(\omega))$, with negative profit being loss.
-%
-%
-%The final assumption is now that the bettor is willing to combine any finite number of such transactions. That is, if we consider any $n\in\nats$ and, for every $i\in\{1,\ldots,n\}$, some $\lambda_i\in\reals$ and $(A_i,C_i)\in\mathcal{C}$, then the bettor is willing to accept a bet in which her net profit is equal to
-%\begin{equation*}
-%\sum_{i=1}^n\lambda_i\ind{C_i}(\omega)\left(P(A_i\vert C_i) - \ind{A_i}(\omega)\right)\,.
-%\end{equation*}
-%The coherence of $P$ is now equivalent to requiring that any such bet \emph{avoids sure loss}, in the sense that there exists at least one ``non-trivial'' outcome $\omega$ for which her total profit is non-negative, the trivial case being when none of the events $C_i$ happen---$\omega\notin\cup_{i=1}^n C_i$---because she then gets refunded completely. 
+\section{A gambling interpretation for coherence}\label{app:coherence}
+
+This appendix aims to provide a basic exposition of the gambling interpretation for coherent conditional probabilities. A more extensive discussion, which also provides some historic context, can be found in, among others, References~\cite{regazzini1985finitely,williams1975,Williams:2007eu, Vicig:2007gs,berti1991coherent, berti2002coherent}.
+
+Basically, the idea is to interpret $P$ as a set of gambles on the actual---but unknown---value of $X$ in $\Omega$, which some bettor is willing to either buy or sell, and to impose a rationality criterion on this set of gambles.
+
+Concretely, for every pair $(A,C)\in\mathcal{C}$, $P(A\vert C)$ is interpreted as a bettor's fair price for a ticket that yields a reward of one currency unit to its holder if the event $A$ occurs, conditional on the fact that $C$ happens. In other words, the bettor is willing to either sell or buy such ticket at this price, provided that she will be refunded should event $C$ not happen. Furthermore, it also assumed that the bettor's utility is linear, which implies that she is willing to vary the stakes of her bets arbitrarily.
+
+
+Suppose for example that the actual value of $X$ ends up being $\omega$. For each ticket that the bettor sold, she has then received $P(A\vert C)$ currency units in advance, but after the value of $X$ is revealed, she loses one currency unit if $A$ has happened, that is, she loses $\ind{A}(\omega)$ currency unit. Because all of this is conditional on $C$ happening, her net profit is $\ind{C}(\omega)(P(A\vert C) - \ind{A}(\omega))$, with negative profit being loss. Note that if $C$ does not happen, that is, if $\ind{C}(\omega)=0$, she neither gains nor loses anything. Since we also allow for arbitrary stakes, we conclude that for any $\lambda\in\realsnonneg$, the bettor is willing to accept the uncertain net profit $\lambda \ind{C}(\omega)(P(A\vert C) - \ind{A}(\omega))$.
+
+Similarly, for each ticket that that the bettor buys, she first has to pay $P(A\vert C)$ to buy the ticket, but will then receive one unit of currency if $A$ happens. Her profit is then $\ind{A}(\omega) - P(A\vert C)$ per ticket. However, she only receives this profit if event $C$ also came to pass, and otherwise gets refunded. Hence, if we again take into account that the stake can be chosen arbitrarily, we find that for any $\lambda\in\realsnonneg$ the bettor is willing to accept the uncertain net profit $\lambda\ind{C}(\omega)(\ind{A}(\omega) - P(A\vert C))$. 
+
+By combining the arguments for selling and buying, we conclude from the above that for any $\lambda\in\reals$, the bettor is willing to accept a bet in which she receives the uncertain net profit $\lambda\ind{C}(\omega)(P(A\vert C)-\ind{A}(\omega))$, with negative profit being loss.
+
+
+The final assumption is now that the bettor is willing to combine any finite number of such transactions. That is, if we consider any $n\in\nats$ and, for every $i\in\{1,\ldots,n\}$, some $\lambda_i\in\reals$ and $(A_i,C_i)\in\mathcal{C}$, then the bettor is willing to accept a bet in which her net profit is equal to
+\begin{equation*}
+\sum_{i=1}^n\lambda_i\ind{C_i}(\omega)\left(P(A_i\vert C_i) - \ind{A_i}(\omega)\right)\,.
+\end{equation*}
+The coherence of $P$ is now equivalent to requiring that any such bet \emph{avoids sure loss}, in the sense that there exists at least one ``non-trivial'' outcome $\omega$ for which her total profit is non-negative, the trivial case being when none of the events $C_i$ happen---$\omega\notin\cup_{i=1}^n C_i$---because she then gets refunded completely. 
 
 \section{Proofs and Lemmas for the results in Section~\ref{sec:systems}}\label{app:systems}
 
@@ -5125,7 +5124,7 @@ So fix any $t,s,\Delta\in\reals_{\geq0}$ such that $s=t+\Delta$ and consider any
 \Delta_2\norm{Q_2}
 \leq\Delta M,
 \end{align*}
-where the second and third inequality follows from Lemma~\ref{lemma:recursive} and~\ref{lemma:linearboundonexponential} in Appendix~\ref{app:systems}, respectively.
+where the second and third inequalities follow from Lemma~\ref{lemma:recursive} and~\ref{lemma:linearboundonexponential} in Appendix~\ref{app:systems}, respectively.
 \end{proof}
 
 \begin{proof}[Proof of Example~\ref{exmp:notwellbehavedMarkov}]
