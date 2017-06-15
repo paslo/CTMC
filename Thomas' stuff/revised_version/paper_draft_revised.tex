@@ -1015,36 +1015,13 @@ Let $Q_1,Q_2\in\mathcal{R}$ be two commuting rate matrices such that $Q_1\neq Q_
 
 For now, we simply assume that this is possible. A formal proof for the existence of such a process requires some additional machinery, and we therefore postpone it to Example~\ref{exmp:twoexamplesofMarkovchains}, where we construct a well-behaved continuous-time Markov chain that is compatible with Equation~\eqref{eq:ex4:def}.
 
-The aim of the present example is to show that for any such process, the right-sided partial derivative $\partial_{+}{T_{0}^0}$---which corresponds to choosing $t=0$ and $u=\emptyset$ in Definition~\ref{def:direc_partial_deriv}---does not exist. In order to do this, we will prove that for any $\lambda\in[\nicefrac{1}{3},\nicefrac{2}{3}]$, there is a sequence $\{\Delta_i\}_{i\in\nats_0}\to0^+$ such that
+The aim of the present example is to show that for any such process, the right-sided partial derivative $\partial_{+}{T_{0}^0}$---which corresponds to choosing $t=0$ and $u=\emptyset$ in Definition~\ref{def:direc_partial_deriv}---does not exist. The reason for this is that---as is proved in~\exampleproofref---for any $\lambda\in[\nicefrac{1}{3},\nicefrac{2}{3}]$, there is a sequence $\{\Delta_i\}_{i\in\nats_0}\to0^+$ such that
 \begin{equation}\label{eq:exmp:well-behaved-no-deriv}
 \lim_{i\to+\infty}
 \frac{1}{\Delta_i}
 (T^{\Delta_i}_{0}-I)=Q_\lambda
 \end{equation}
 with $Q_\lambda\coloneqq \lambda Q_1+(1-\lambda)Q_2$. The reason why this indeed implies that $\partial_{+}{T_{0}^0}$ does not exist, is because if it would exist, then Equation~\eqref{eq:exmp:well-behaved-no-deriv} would imply that $\partial_{+}{T_{0}^0}=Q_\lambda$ for all $\lambda\in[\nicefrac{1}{3},\nicefrac{2}{3}]$. The only way for this to be possible would be if $Q_1=Q_2$, but that case was excluded in the beginning of this example.
-
-So fix any $\lambda\in[\nicefrac{1}{3},\nicefrac{2}{3}]$ and consider the sequence $\{\Delta_i\}_{i\in\nats_0}\to0^+$ whose elements are defined by $\Delta_i\coloneqq\nicefrac{(2\delta_{2i+1})}{(3\lambda)}$. For all $i\in\nats_0$, we then find that
-\begin{multline*}
-\varphi_1(\Delta_i)Q_1+\varphi_2(\Delta_i)Q_2
-=\frac{2}{3}\delta_{2i+1}Q_1+(\Delta_i-\frac{2}{3}\delta_{2i+1})Q_2\\
-=\lambda\Delta_i Q_1+(1-\lambda)\Delta_i Q_2
-=Q_\lambda \Delta_i,
-\end{multline*}
-where the first equality follows from Equations~\eqref{eq:ex4:phi1} and~\eqref{eq:ex4:phi2}---because $\nicefrac{1}{3\lambda}\in[\nicefrac{1}{2},1]$ implies that $\delta_{2i+1}\leq\Delta_i\leq\delta_{2i}$.
-Hence, for all $i\in\nats_0$, Equation~\eqref{eq:ex4:def} now tells us that $T_0^{\Delta_i}=e^{Q_\lambda\Delta_i}$.
-Therefore, and because $\{\Delta_{i}\}_{i\in\nats_0}\to0^+$, we find that indeed, as required,
-\begin{equation}\label{eq:exmp:well-behaved-no-deriv2}
-\lim_{i\to+\infty}
-\frac{1}{\Delta_i}
-(T^{\Delta_i}_{0}-I)
-=
-\lim_{i\to+\infty}
-\frac{1}{\Delta_{i}}
-(e^{Q_\lambda\Delta_{i}}-I)
-={\frac{d}{dt}e^{Q_\lambda t}}\big\vert_{t=0}
-=Q_\lambda,
-\end{equation}
-where we use Lemma~\ref{lemma:deriv_exponential_trans} to establish the last equality. 
 \exampleend
 \end{exmp}
 
@@ -1119,49 +1096,11 @@ The following two examples provide this result with some intuition. Example~\ref
 
 \begin{exmp}\label{exmp:outerderivative}
 Consider again the well-behaved stochastic process $P\in\wprocesses$ from Example~\ref{exmp:well-behaved-no-deriv} of which, for all $t\in(0,1]$, the transition matrix $T_0^t$ is given by Equation~\eqref{eq:ex4:def}. 
-The aim of this example is to show that for this particular process,
+As is proved in~\exampleproofref, it then holds for this particular process that
 \begin{equation*}
 \smash{\overline{\partial}}_+T_0^0=\big\{Q_\lambda\colon \lambda\in[\nicefrac{1}{3},\nicefrac{2}{3}]\big\},
 \end{equation*}
 where, for every $\lambda\in[\nicefrac{1}{3},\nicefrac{2}{3}]$, $Q_\lambda\coloneqq\lambda Q_1+(1-\lambda)Q_2$ as in Example~\ref{exmp:well-behaved-no-deriv}.
-
-Showing that $\{Q_\lambda\colon \lambda\in[\nicefrac{1}{3},\nicefrac{2}{3}]\}$ is a subset of $\smash{\overline{\partial}}_+T_0^0$ was, essentially, already done in Example~\ref{exmp:well-behaved-no-deriv}, because for every $\lambda\in[\nicefrac{1}{3},\nicefrac{2}{3}]$, it follows from Equation~\eqref{eq:exmp:well-behaved-no-deriv2} and Definition~\ref{def:direc_partial_deriv} that $Q_\lambda\in\smash{\overline{\partial}}_+T_0^0$. Therefore, we only need to show that $\smash{\overline{\partial}}_+T_0^0$ is a subset of $\{Q_\lambda\colon \lambda\in[\nicefrac{1}{3},\nicefrac{2}{3}]\}$, or equivalently, we need to show that for every $Q\in\smash{\overline{\partial}}_+T_0^0$, there is some $\lambda\in[\nicefrac{1}{3},\nicefrac{2}{3}]$ such that $Q=Q_\lambda$.
-
-So consider any $Q\in\overline{\partial}_+T_0^0$. Definition~\ref{def:outerpartialderivatives} then implies the existence of a sequence $\{\Delta_i\}_{i\in\nats_0}\to 0^+$ such that 
-\begin{equation}\label{eq:exmp:outerderivative}
-\lim_{i\to+\infty}\nicefrac{1}{\Delta_i}(T_0^{\Delta_i}-I)=Q.
-\end{equation}
-
-The first step of the proof is to observe that, for every $t\in(0,1]$, $\varphi_1(t)+\varphi_2(t)=t$ and $\nicefrac{1}{3}t\leq\varphi_1(t)\leq\nicefrac{2}{3}t$; we leave this as an exercise. Given this observation, it follows that for all $t\in(0,1]$, there is some $\lambda_t\in[\nicefrac{1}{3},\nicefrac{2}{3}]$ such that $\varphi_1(t)=\lambda_t t$ and $\varphi_2(t)=(1-\lambda_t)t$. Hence, in particular, for every $i\in\nats$, there is some $\lambda_i\in[\nicefrac{1}{3},\nicefrac{2}{3}]$ such that $\varphi_1(\Delta_i)=\lambda_i \Delta_i$ and $\varphi_2(\Delta_i)=(1-\lambda_i)\Delta_i$ and therefore also, due to Equation~\eqref{eq:ex4:def}, $\smash{T_0^{\Delta_i}=e^{Q_{\lambda_i}\Delta_i}}$.
-Furthermore, because of the Bolzano-Weierstrass theorem, the sequence $\{\lambda_i\}_{i\in\nats_0}$ contains a convergent subsequence $\{\lambda_{i_k}\}_{k\in\nats_0}$ whose limit $\lambda\coloneqq\lim_{k\to+\infty}\lambda_{i_k}$ clearly belongs to $[\nicefrac{1}{3},\nicefrac{2}{3}]$. 
-
-In the remainder of this example, we will prove that $Q=Q_\lambda$. To this end, let us fix any $\epsilon>0$ and prove that $\norm{Q-Q_\lambda}<\epsilon$. First of all, since $\lambda=\lim_{k\to+\infty}\lambda_{i_k}$, there is some $n_1\in\nats_0$ such that, for all $k\geq n_1$, $\abs{\lambda-\lambda_{i_k}}\norm{Q_1-Q_2}<\nicefrac{\epsilon}{3}$ and therefore also
-\begin{equation}\label{eq:exmp:outerderivative1}
-\norm{Q_\lambda-Q_{\lambda_{i_k}}}
-=\norm{(\lambda-\lambda_{i_k})(Q_1-Q_2)}
-=\abs{\lambda-\lambda_{i_k}}\norm{Q_1-Q_2}\leq\frac{\epsilon}{3}.
-\end{equation}
-Secondly, Equation~\eqref{eq:exmp:outerderivative} implies that there is some $n_2\in\nats_0$ such that
-\begin{equation}\label{eq:exmp:outerderivative2}
-\norm{\nicefrac{1}{\Delta_{i_k}}(T_0^{\Delta_{i_k}}-I)-Q}<\frac{\epsilon}{3}
-~\text{ for all $k\geq n_2$}.
-\end{equation}
-Thirdly, Lemma~\ref{lemma:deriv_exponential_trans} implies that there is some $n_3\in\nats_0$ such that
-\begin{equation}\label{eq:exmp:outerderivative3}
-\norm{\nicefrac{1}{\Delta_{i_k}}(e^{Q_{\lambda_{i_k}}\Delta_{i_k}}-I)-Q_{\lambda_{i_k}}} < \frac{\epsilon}{3}
-~\text{ for all $k\geq n_3$.}
-\end{equation}
-Consider now any $k\geq\max\{n_1,n_2,n_3\}$. Then since $T_0^{\Delta_{i_k}}=e^{Q_{\lambda_{i_k}}\Delta_{i_k}}$, it follows from Equations~\eqref{eq:exmp:outerderivative1}--\eqref{eq:exmp:outerderivative3} that
-\begin{align*}
-\norm{Q - Q_{\lambda}} \leq 
-\norm{Q-\nicefrac{1}{\Delta_{i_k}}(T_0^{\Delta_{i_k}}-I)}
-+
-\norm{\nicefrac{1}{\Delta_{i_k}}(e^{Q_{\lambda_{i_k}}\Delta_{i_k}}-I)-Q_{\lambda_{i_k}}}
-+
-\norm{Q_{\lambda_{i_k}}-Q_\lambda}
-\leq\epsilon.
-\end{align*}
-Since this is true for every $\epsilon\in\realspos$, it follows that $\norm{Q-Q_{\lambda}}=0$, and therefore also, that $Q=Q_\lambda$, as desired.
 \exampleend
 \end{exmp}
 
@@ -1170,19 +1109,8 @@ Fix any rate matrix $Q\in\mathcal{R}$ such that $\norm{Q}=1$, let $\mathcal{T}$ 
 
 For now, we simply assume that such a process exists. A formal proof again requires some additional machinery---as in Example~\ref{exmp:well-behaved-no-deriv}---and we therefore postpone it to Example~\ref{exmp:twoexamplesofMarkovchains}, where we construct a continuous-time Markov chain whose family of transition matrices $\mathcal{T}_P$ is equal to the transition matrix system $\mathcal{T}$.
 
-The aim of the present example is to show that for any such process, the right-sided outer partial derivative $\smash{\overline{\partial}}_+T_0^0$ is empty. To this end, assume \emph{ex absurdo} that it is not empty, and consider any $Q\in\smash{\overline{\partial}}_+T_0^0$. It then follows from Equation~\eqref{eq:rightouterderivative} that there is a sequence $\{\Delta_i\}_{i\in\nats}\to0^+$ such that $\smash{\lim_{i\to+\infty}\nicefrac{1}{\Delta_i}
-(T^{\Delta_i}_{0}-I)
-=Q}$. Consider now any $\epsilon>0$, any $n\in\nats_0$ such that $n\geq4+2\norm{Q}+2\epsilon$, let $\delta_n\coloneqq 2^{-n}$ as in Example~\ref{exmp:notwellbehavedMarkov}, and consider any $i^*\in\nats$ such that, for all $i\geq i^*$, $\Delta_i\in(0,\delta_n)$---such an $i^*$ always exists because $\{\Delta_i\}_{i\in\nats}\to0^+$. For all $i\geq i^*$, using Equation~\eqref{eq:exmp:notwellbehavedMarkov} from Example~\ref{exmp:notwellbehavedMarkov}, we then find that
-\begin{equation*}
-\norm{\frac{1}{\Delta_i}(T_0^{\Delta_i}-I)-Q}
-\geq
-\norm{\frac{1}{\Delta_i}(T_0^{\Delta_i}-I)}-\norm{Q}
-\geq
-\frac{n}{2}-2-\norm{Q}\geq\epsilon,
-\end{equation*}
-which, since $\epsilon>0$, contradicts the fact that $\smash{\lim_{i\to+\infty}\nicefrac{1}{\Delta_i}
-(T^{\Delta_i}_{0}-I)
-=Q}$. Hence, our assumption must be wrong, and it follows that $\smash{\overline{\partial}}_+T_0^0$ is indeed empty.
+As is proved in~\exampleproofref, for such a stochastic process $P$, the right-sided outer partial derivative $\smash{\overline{\partial}}_+T_0^0$ is then empty.
+\exampleend
 \end{exmp}
 
 We end this section with two additional properties of the outer partial derivatives of well-behaved stochastic processes. First, as we establish in our next result, they satisfy an $\epsilon-\delta$ expression that is similar to the limit expression of a partial derivative.
@@ -5255,6 +5183,87 @@ Since $\Delta\in(0,\delta_n]$ is arbitrary, this inequality immediately implies 
 \limsup_{\Delta\to 0^{+}}\frac{1}{\Delta}\norm{T_{0}^{\Delta}-I}\geq\frac{n}{2}-2.
 \end{equation*}
 and therefore, since this is true for every $n\in\nats_0$, we infer from Definition~\ref{def:well_behaved_trans_mat_system} that $\mathcal{T}$ is not well-behaved, because the definition clearly fails for $t=0$.
+\end{proof}
+
+\begin{proof}[Proof of Example~\ref{exmp:well-behaved-no-deriv}]
+We will prove that Equation~\eqref{eq:exmp:well-behaved-no-deriv} indeed holds. So fix any $\lambda\in[\nicefrac{1}{3},\nicefrac{2}{3}]$ and consider the sequence $\{\Delta_i\}_{i\in\nats_0}\to0^+$ whose elements are defined by $\Delta_i\coloneqq\nicefrac{(2\delta_{2i+1})}{(3\lambda)}$. For all $i\in\nats_0$, we then find that
+\begin{multline*}
+\varphi_1(\Delta_i)Q_1+\varphi_2(\Delta_i)Q_2
+=\frac{2}{3}\delta_{2i+1}Q_1+(\Delta_i-\frac{2}{3}\delta_{2i+1})Q_2\\
+=\lambda\Delta_i Q_1+(1-\lambda)\Delta_i Q_2
+=Q_\lambda \Delta_i,
+\end{multline*}
+where the first equality follows from Equations~\eqref{eq:ex4:phi1} and~\eqref{eq:ex4:phi2}---because $\nicefrac{1}{3\lambda}\in[\nicefrac{1}{2},1]$ implies that $\delta_{2i+1}\leq\Delta_i\leq\delta_{2i}$.
+Hence, for all $i\in\nats_0$, Equation~\eqref{eq:ex4:def} now tells us that $T_0^{\Delta_i}=e^{Q_\lambda\Delta_i}$.
+Therefore, and because $\{\Delta_{i}\}_{i\in\nats_0}\to0^+$, we find that indeed, as required,
+\begin{equation}\label{eq:exmp:well-behaved-no-deriv2}
+\lim_{i\to+\infty}
+\frac{1}{\Delta_i}
+(T^{\Delta_i}_{0}-I)
+=
+\lim_{i\to+\infty}
+\frac{1}{\Delta_{i}}
+(e^{Q_\lambda\Delta_{i}}-I)
+={\frac{d}{dt}e^{Q_\lambda t}}\big\vert_{t=0}
+=Q_\lambda,
+\end{equation}
+where we use Lemma~\ref{lemma:deriv_exponential_trans} to establish the last equality. 
+\end{proof}
+
+\begin{proof}[Proof of Example~\ref{exmp:outerderivative}]
+Showing that $\{Q_\lambda\colon \lambda\in[\nicefrac{1}{3},\nicefrac{2}{3}]\}$ is a subset of $\smash{\overline{\partial}}_+T_0^0$ was, essentially, already done in Example~\ref{exmp:well-behaved-no-deriv}, because for every $\lambda\in[\nicefrac{1}{3},\nicefrac{2}{3}]$, it follows from Equation~\eqref{eq:exmp:well-behaved-no-deriv2} and Definition~\ref{def:direc_partial_deriv} that $Q_\lambda\in\smash{\overline{\partial}}_+T_0^0$. Therefore, we only need to show that $\smash{\overline{\partial}}_+T_0^0$ is a subset of $\{Q_\lambda\colon \lambda\in[\nicefrac{1}{3},\nicefrac{2}{3}]\}$, or equivalently, we need to show that for every $Q\in\smash{\overline{\partial}}_+T_0^0$, there is some $\lambda\in[\nicefrac{1}{3},\nicefrac{2}{3}]$ such that $Q=Q_\lambda$.
+
+So consider any $Q\in\overline{\partial}_+T_0^0$. Definition~\ref{def:outerpartialderivatives} then implies the existence of a sequence $\{\Delta_i\}_{i\in\nats_0}\to 0^+$ such that 
+\begin{equation}\label{eq:exmp:outerderivative}
+\lim_{i\to+\infty}\nicefrac{1}{\Delta_i}(T_0^{\Delta_i}-I)=Q.
+\end{equation}
+
+The first step of the proof is to observe that, for every $t\in(0,1]$, $\varphi_1(t)+\varphi_2(t)=t$ and $\nicefrac{1}{3}t\leq\varphi_1(t)\leq\nicefrac{2}{3}t$; we leave this as an exercise. Given this observation, it follows that for all $t\in(0,1]$, there is some $\lambda_t\in[\nicefrac{1}{3},\nicefrac{2}{3}]$ such that $\varphi_1(t)=\lambda_t t$ and $\varphi_2(t)=(1-\lambda_t)t$. Hence, in particular, for every $i\in\nats$, there is some $\lambda_i\in[\nicefrac{1}{3},\nicefrac{2}{3}]$ such that $\varphi_1(\Delta_i)=\lambda_i \Delta_i$ and $\varphi_2(\Delta_i)=(1-\lambda_i)\Delta_i$ and therefore also, due to Equation~\eqref{eq:ex4:def}, $\smash{T_0^{\Delta_i}=e^{Q_{\lambda_i}\Delta_i}}$.
+Furthermore, because of the Bolzano-Weierstrass theorem, the sequence $\{\lambda_i\}_{i\in\nats_0}$ contains a convergent subsequence $\{\lambda_{i_k}\}_{k\in\nats_0}$ whose limit $\lambda\coloneqq\lim_{k\to+\infty}\lambda_{i_k}$ clearly belongs to $[\nicefrac{1}{3},\nicefrac{2}{3}]$. 
+
+In the remainder of this proof, we will show that $Q=Q_\lambda$. To this end, let us fix any $\epsilon>0$ and prove that $\norm{Q-Q_\lambda}<\epsilon$. First of all, since $\lambda=\lim_{k\to+\infty}\lambda_{i_k}$, there is some $n_1\in\nats_0$ such that, for all $k\geq n_1$, $\abs{\lambda-\lambda_{i_k}}\norm{Q_1-Q_2}<\nicefrac{\epsilon}{3}$ and therefore also
+\begin{equation}\label{eq:exmp:outerderivative1}
+\norm{Q_\lambda-Q_{\lambda_{i_k}}}
+=\norm{(\lambda-\lambda_{i_k})(Q_1-Q_2)}
+=\abs{\lambda-\lambda_{i_k}}\norm{Q_1-Q_2}\leq\frac{\epsilon}{3}.
+\end{equation}
+Secondly, Equation~\eqref{eq:exmp:outerderivative} implies that there is some $n_2\in\nats_0$ such that
+\begin{equation}\label{eq:exmp:outerderivative2}
+\norm{\nicefrac{1}{\Delta_{i_k}}(T_0^{\Delta_{i_k}}-I)-Q}<\frac{\epsilon}{3}
+~\text{ for all $k\geq n_2$}.
+\end{equation}
+Thirdly, Lemma~\ref{lemma:deriv_exponential_trans} implies that there is some $n_3\in\nats_0$ such that
+\begin{equation}\label{eq:exmp:outerderivative3}
+\norm{\nicefrac{1}{\Delta_{i_k}}(e^{Q_{\lambda_{i_k}}\Delta_{i_k}}-I)-Q_{\lambda_{i_k}}} < \frac{\epsilon}{3}
+~\text{ for all $k\geq n_3$.}
+\end{equation}
+Consider now any $k\geq\max\{n_1,n_2,n_3\}$. Then since $T_0^{\Delta_{i_k}}=e^{Q_{\lambda_{i_k}}\Delta_{i_k}}$, it follows from Equations~\eqref{eq:exmp:outerderivative1}--\eqref{eq:exmp:outerderivative3} that
+\begin{align*}
+\norm{Q - Q_{\lambda}} \leq 
+\norm{Q-\nicefrac{1}{\Delta_{i_k}}(T_0^{\Delta_{i_k}}-I)}
++
+\norm{\nicefrac{1}{\Delta_{i_k}}(e^{Q_{\lambda_{i_k}}\Delta_{i_k}}-I)-Q_{\lambda_{i_k}}}
++
+\norm{Q_{\lambda_{i_k}}-Q_\lambda}
+\leq\epsilon.
+\end{align*}
+Since this is true for every $\epsilon\in\realspos$, it follows that $\norm{Q-Q_{\lambda}}=0$, and therefore also, that $Q=Q_\lambda$, as desired.
+\end{proof}
+
+\begin{proof}[Proof of Example~\ref{exmp:emptyouterderivative}]
+We will prove that the right-sided outer partial derivative $\smash{\overline{\partial}}_+T_0^0$ is empty. To this end, assume \emph{ex absurdo} that it is not empty, and consider any $Q\in\smash{\overline{\partial}}_+T_0^0$. It then follows from Equation~\eqref{eq:rightouterderivative} that there is a sequence $\{\Delta_i\}_{i\in\nats}\to0^+$ such that $\smash{\lim_{i\to+\infty}\nicefrac{1}{\Delta_i}
+(T^{\Delta_i}_{0}-I)
+=Q}$. Consider now any $\epsilon>0$, any $n\in\nats_0$ such that $n\geq4+2\norm{Q}+2\epsilon$, let $\delta_n\coloneqq 2^{-n}$ as in Example~\ref{exmp:notwellbehavedMarkov}, and consider any $i^*\in\nats$ such that, for all $i\geq i^*$, $\Delta_i\in(0,\delta_n)$---such an $i^*$ always exists because $\{\Delta_i\}_{i\in\nats}\to0^+$. For all $i\geq i^*$, using Equation~\eqref{eq:exmp:notwellbehavedMarkov} from the proof of Example~\ref{exmp:notwellbehavedMarkov}, we then find that
+\begin{equation*}
+\norm{\frac{1}{\Delta_i}(T_0^{\Delta_i}-I)-Q}
+\geq
+\norm{\frac{1}{\Delta_i}(T_0^{\Delta_i}-I)}-\norm{Q}
+\geq
+\frac{n}{2}-2-\norm{Q}\geq\epsilon,
+\end{equation*}
+which, since $\epsilon>0$, contradicts the fact that $\smash{\lim_{i\to+\infty}\nicefrac{1}{\Delta_i}
+(T^{\Delta_i}_{0}-I)
+=Q}$. Hence, our assumption must be wrong, and it follows that $\smash{\overline{\partial}}_+T_0^0$ is indeed empty.
 \end{proof}
 
 \begin{proof}[Proof of Example~XXXXX]
