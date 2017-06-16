@@ -20,10 +20,11 @@
 \usepackage{algorithmicx}
 \usepackage{algpseudocode}
 
+
 \usepackage{thm-restate}
 
 \usepackage{graphicx}
-
+\usepackage{tabularx}
 
 \DeclareMathAlphabet\mathbfcal{OMS}{cmsy}{b}{n}
 
@@ -102,6 +103,8 @@
 \newcommand{\exampleend}{\hfill$\Diamond$}
 
 \newcommand{\ictmc}{{ICTMC}}
+
+\newcommand{\placeref}[1]{p\pageref{#1}}
 
 % Change this when compiling ArXiv version
 \newcommand{\exampleproofref}{Appendix~\ref{app:example_proofs}}
@@ -266,9 +269,43 @@ Readers with a more passing interest in the full mathematical formalism, and mor
 
 Finally, readers who are mainly interested in how to compute lower expectations for ICTMC's, might want to focus on Sections~\ref{sec:connections} and~\ref{sec:funcs_multi_time_points}; referring back to Section~\ref{subsec:ictmc_types}---for details about the specific types of ICTMC's that we consider---and Section~\ref{sec:connections_rate}, for the requisite details about lower transition rate operators.
 
-Of course, skipping over parts of the paper will introduce some ambiguity about specific technical concepts that we refer to throughout. In order to alleviate this as much as possible, we end this section with a short list of the most important notation and terminology.
+Of course, skipping over parts of the paper will introduce some ambiguity about specific technical concepts that we refer to throughout. In order to alleviate this as much as possible, we have included Table~\ref{table:glossary} on \placeref{table:glossary} for a short glossary of the most important notation and terminology.
 
-{\bf ****** BIG LIST GOES HERE *******}
+\begin{table}[htb]
+\begin{tabularx}{\textwidth}{l|X|l}
+$\norm{\cdot}$ & the maximum ($L_\infty$) norm of a function or operator & \placeref{notation:norm} \\
+$u$ & a finite, ordered sequence of time points & \placeref{notation:sequenceset} \\
+$\mathcal{U}$ & the set of all finite, ordered sequences of time points & \placeref{notation:sequenceset} \\
+$\mathcal{U}_{<t}$ & the set of all finite, ordered sequences of time points \emph{before} time $t$ & \placeref{notation:sequenceset_ineq} \\
+$\mathcal{U}_{[t,s]}$ & the set of all finite, ordered sequences of time points that partition the time interval $[t,s]$ & \placeref{notation:sequenceset_partition} \\
+$\sigma(u)$ & the maximum sequential difference of $u=t_0,\ldots,t_n$; $\sigma(u)=\max\{t_i-{t_{i-1}}\,:\,i\in\{1,\ldots,n\}\}$ & TODO \\
+$\states$ & the finite state-space of a stochastic process & TODO \\
+$\states_t$, $\states_u$ & the state-space $\states$ at an explicit time $t$, resp. the joint state-space at (multiple) time points $u\in\mathcal{U}$ & TODO \\
+$\gamblesX$ & the set of all functions $f: \states\to\reals$ & TODO \\
+$\gambles(\states_u)$ & the set of all functions $f:\states_u\to\reals$ & TODO \\
+$\mathcal{T}$ & a transition matrix system; a family of transition matrices satisfying certain properties & TODO \\
+$\mathcal{T}_Q$ & the \emph{exponential transition matrix system} for the transition rate matrix $Q$ & TODO \\
+$\mathcal{T}^\mathbf{I}$ & the restriction of the transition matrix system $\mathcal{T}$ to the closed time interval $\mathbf{I}\subseteq\realsnonneg$ & TODO \\
+$\otimes$ & the concatenation operator between two restricted transition matrix systems & TODO \\
+``well-behaved'' & roughly, ``with bounded rate-of-change'' & TODO \\
+$\processes$ & the set of all continuous-time stochastic processes & TODO \\
+$\wprocesses$ & the set of all well-behaved continuous-time stochastic processes & TODO \\
+$\wmprocesses$ & the set of all well-behaved continuous-time Markov chains & TODO \\
+$\whmprocesses$ & the set of all well-behaved, homogeneous continuous-time Markov chains & TODO \\
+$\overline{\partial}_+T_{t,x_u}^t$, $\overline{\partial}_-T_{t,x_u}^t$, $\overline{\partial}T_{t,x_u}^t$ & (resp. right-sided, left-sided) outer partial derivative of the transition matrix $T_{t,x_u}^t$ of a stochastic process, for time $t$ and history $x_u$ & TODO \\
+$\rateset$ & a set of transition rate matrices & TODO \\
+$\mathcal{M}$ & a set of probability mass functions on $\states$ & TODO \\
+$\mathcal{P}$ & a set of stochastic processes, $\mathcal{P}\subseteq\processes$ & TODO \\
+$\mathcal{P}_{\rateset,\mathcal{M}}$ & the subset of $\mathcal{P}$ \emph{consistent} with $\rateset$ and $\mathcal{M}$ & TODO \\
+$\wprocesses_{\rateset,\mathcal{M}}$, $\wmprocesses_{\rateset,\mathcal{M}}$, $\whmprocesses_{\rateset,\mathcal{M}}$ & different types of imprecise continuous-time Markov chains; also see $\mathcal{P}_{\rateset,\mathcal{M}}$ and $\wprocesses$, $\wmprocesses$, and $\whmprocesses$ & TODO \\
+$\underline{\mathbb{E}}$ & lower expectation operator & TODO \\
+$\underline{\mathbb{E}}^\mathrm{W}_{\rateset,\mathcal{M}}$, $\underline{\mathbb{E}}^\mathrm{WM}_{\rateset,\mathcal{M}}$, $\underline{\mathbb{E}}^\mathrm{WHM}_{\rateset,\mathcal{M}}$ & lower expectation operator for the different ICTMC's $\wprocesses_{\rateset,\mathcal{M}}$, $\wmprocesses_{\rateset,\mathcal{M}}$, $\whmprocesses_{\rateset,\mathcal{M}}$ & TODO \\
+$\lrate$ & lower transition rate operator, $\lrate: \gamblesX\to\gamblesX$ & TODO \\
+$L_t^s$ & lower transition operator corresponding to some $\lrate$, for time points $t,s$; $L_t^s:\gambles(\states_s)\to\gambles(\states_t)$ & TODO \\
+$\underline{\mathcal{T}}_{\lrate}$ & family of lower transition operators $L_t^s$ corresponding to $\lrate$ & TODO
+\end{tabularx}
+\caption{Glossary table of important notation and concepts.}\label{table:glossary}
+\end{table}
 
 \section{Preliminaries}\label{sec:prelim}
 
@@ -282,13 +319,13 @@ For any set $A$ and any subset $C$ of $A$, we use $\ind{C}$ to denote the indica
 
 \subsection{Sequences of Time Points}\label{subsec:sequencesoftimepoints}
 
-We will make extensive use of finite sequences of time points. Such a sequence is of the form $u\coloneqq t_0,t_1,\ldots,t_n$, with $n\in\natswith$ and, for all $i\in\{0,\ldots,n\}$, $t_i\in\realsnonneg$. These sequences are taken to be ordered, meaning that for all $i,j\in\{0,\ldots,n\}$ with $i<j$, it holds that $t_i\leq t_j$. Let $\mathcal{U}$ denote the set of all such finite sequences that are \emph{non-degenerate}, meaning that for all $u\in\mathcal{U}$ with $u=t_0,\ldots,t_n$, it holds that $t_i\neq t_j$ for all $i,j\in\{0,\ldots,n\}$ such that $i\neq j$. Note that this does not prohibit \emph{empty} sequences. We therefore also define $\mathcal{U}_\emptyset\coloneqq \mathcal{U}\setminus\{\emptyset\}$.
+We will make extensive use of finite sequences of time points. Such a sequence is of the form $u\coloneqq t_0,t_1,\ldots,t_n$, with $n\in\natswith$ and, for all $i\in\{0,\ldots,n\}$, $t_i\in\realsnonneg$. These sequences are taken to be ordered, meaning that for all $i,j\in\{0,\ldots,n\}$ with $i<j$, it holds that $t_i\leq t_j$. Let $\mathcal{U}$ denote the set of all such finite sequences that are \emph{non-degenerate}, meaning that for all $u\in\mathcal{U}$ with $u=t_0,\ldots,t_n$, it holds that $t_i\neq t_j$ for all $i,j\in\{0,\ldots,n\}$ such that $i\neq j$. Note that this does not prohibit \emph{empty} sequences. We therefore also define $\mathcal{U}_\emptyset\coloneqq \mathcal{U}\setminus\{\emptyset\}$. \label{notation:sequenceset}
 
-For any finite sequence $u$ of time points, let $\max u\coloneqq \max\{t_i:i\in\{0,\ldots,n\}\}$. For any time point $t\in\realsnonneg$, we then write $t>u$ if $t>\max u$, and similarly for other inequalities. If $u=\emptyset$, then $t>u$ is taken to be trivially true, regardless of the value of $t$. We use $\mathcal{U}_{<t}$ to denote the subset of $\mathcal{U}$ that consists of those sequences $u\in\mathcal{U}$ for which $u<t$, and, again, similarly for other inequalities.
+For any finite sequence $u$ of time points, let $\max u\coloneqq \max\{t_i:i\in\{0,\ldots,n\}\}$. For any time point $t\in\realsnonneg$, we then write $t>u$ if $t>\max u$, and similarly for other inequalities. If $u=\emptyset$, then $t>u$ is taken to be trivially true, regardless of the value of $t$. We use $\mathcal{U}_{<t}$ to denote the subset of $\mathcal{U}$ that consists of those sequences $u\in\mathcal{U}$ for which $u<t$, and, again, similarly for other inequalities. \label{notation:sequenceset_ineq}
 
 Since a sequence $u\in\mathcal{U}$ is a subset of $\realsnonneg$, we can use set-theoretic notation to operate on such sequences. The result of such operations is again taken to be ordered. For example, for any $u,v\in\mathcal{U}$, we use $u\cup v$ to denote the ordered union of $u$ and $v$. Similarly, for any $s\in\realsnonneg$ and any $u\in\mathcal{U}_{<s}$ with $u=t_0,\ldots,t_n$, we use $u\cup\{s\}$ to denote the sequence $t_0,\ldots,t_n,s$.
 
-As a special case, we consider finite sequences of time points that partition a given time interval $[t,s]$, with $t,s\in\realsnonneg$ such that $t\leq s$. Such a sequence is taken to include the end-points of this interval.  Thus, the sequence is of the form $t=t_0< t_1<\cdots< t_n=s$. We denote the set of all such sequences by $\mathcal{U}_{[t,s]}$. Since these sequences are non-degenerate, it follows that $\mathcal{U}_{[t,t]}$ consists of a single sequence $u=t$. For any $u\in\mathcal{U}_{[t,s]}$ with $u=t_0,\ldots,t_n$, we also define the sequential differences $\Delta_i\coloneqq t_i-t_{i-1}$, for all $i\in\{1,\ldots,n\}$. We then use $\sigma(u)\coloneqq \max\{\Delta_i:i\in\{1,\ldots,n\}\}$ to denote the maximum such difference.
+As a special case, we consider finite sequences of time points that partition a given time interval $[t,s]$, with $t,s\in\realsnonneg$ such that $t\leq s$. Such a sequence is taken to include the end-points of this interval.  Thus, the sequence is of the form $t=t_0< t_1<\cdots< t_n=s$. We denote the set of all such sequences by $\mathcal{U}_{[t,s]}$. Since these sequences are non-degenerate, it follows that $\mathcal{U}_{[t,t]}$ consists of a single sequence $u=t$. For any $u\in\mathcal{U}_{[t,s]}$ with $u=t_0,\ldots,t_n$, we also define the sequential differences $\Delta_i\coloneqq t_i-t_{i-1}$, for all $i\in\{1,\ldots,n\}$. We then use $\sigma(u)\coloneqq \max\{\Delta_i:i\in\{1,\ldots,n\}\}$ to denote the maximum such difference. \label{notation:sequenceset_partition}
 
 \subsection{States and Functions}\label{sec:multivar_notation}
 
@@ -308,7 +345,7 @@ For any $u\in\mathcal{U}_\emptyset$, we use $\gambles(\states_u)$ to denote the 
 \subsection{Norms and Operators}\label{sec:func_oper_norm}
 
 For any $u\in\mathcal{U}_\emptyset$ and any $f\in\gambles(\states_u)$, let the norm $\norm{f}$ be defined as
-\begin{equation*}
+\begin{equation*}\label{notation:norm}
 \norm{f} \coloneqq \norm{f}_{\infty} \coloneqq \max\{\abs{f(x_u)}\,:\,x_u\in\states_u\}\,.
 \end{equation*}
 As a special case, we then have for any $f\in\gamblesX$ that $\norm{f}=\max\{\abs{f(x)}\,:\,x\in\states\}$.
