@@ -106,21 +106,21 @@ In any case, the induction argument that we give in Lemma G.4 is the simplest th
 This condition is very often applied in the theory of dynamic systems. 
 The authors should check whether any implications of well behavedness coincide with known results based on Lipschitz condition.  }
 
-*** thomas
+We are actually not entirely sure if well-behavedness and Lipschitz-continuity coincide exactly.
 
-We are actually not entirely sure if well-behavedness and Lipschitz-continuity coincide exactly, although it is clear that the latter implies the former.
-
-**** DE ANDERE KANT OP IS NIET HELEMAAL TRIVIAAL. TEN EERSTE, WE EISEN HET ALLEEN OP LOKAAL NIVEAU, TEN TWEEDE EISEN WE NIET DAT DE ``LIPSCHITZ CONSTANTE'' ONAFHANKELIJK IS VAN $t$. 
-
-*** Dat wil zeggen, de well-behavedness-eis kan je herschrijven als dat, voor alle $t$, er een $c_t\in R$ is zodanig dat, voor $\Delta$ klein genoeg,
-\begin{equation}
-\lvert P(X_{t+\Delta}\,\vert\,X_t) - P(X_{t}\,\vert\,X_t) \rvert < \Delta c_t
-\end{equation}
-Het eerste punt is dus dat we niks eisen voor `grote' $\Delta$. Het tweede punt is dat om Lipschitz-continue te zijn, we ook zouden moeten hebben dat
+One reason for this is that the well-behavedness condition is, in a sense, local. This is to say, the well-behavedness requirement can be cast as stating that, for each $t$ and for $\Delta$ small enough, there must be some real-valued $c_t$ such that
 \begin{equation*}
-\sup_{t} c_t < +\infty\,.
+\lVert T_t^{t+\Delta} - T_t^t\rVert < \Delta c_t\,.
 \end{equation*}
-Of dat geimplicteerd is (samen met de definities van stochastische processen).... ik heb echt geen idee.
+Note that this does not imply that also
+\begin{equation*}
+\sup_t c_t < +\infty\,,
+\end{equation*}
+which would be required under the typical notion of Lipschitz-continuity. In this sense, the notion is indeed substantially similar to that of \emph{local} Lipschitz continuity.
+
+However, this connection becomes less obvious for the notion of well-behaved stochastic processes (rather than well-behaved transition matrix systems), because the ``Lipschitz constant'' may there depend not only on $t$, but also on the specific history $x_u$ before time $t$. Due to how Lipschitz continuity is typically defined---on domains that are metric spaces and, for local Lipschitz continuity, on neighbourhoods in those domains---formalising this connection is rather non-trivial. For instance, since stochastic processes are defined on sets of events, even the appropriate metric for this domain seems non-obvious to us.
+
+We have therefore decided to stick to the current terminology. However, we do agree that the---at least intuitive---connection between the two concepts might be helpful for building understanding. We have therefore added some discussion on this to Sections 3.2 and 4.2.
 
 {\bf Why are some environments, e.g. examples definitions, enumerated differently than another? }
 
@@ -290,7 +290,7 @@ Thanks for spotting this typo. It has been fixed.
 {\bf same page, last paragraph: it is not precisely the case that the current approach does not introduce additional parameters; to make this discussion succinct, note that an imprecise probability model of a binary variable requires at least 2 values while the corresponding precise model requires only one. It is better to say that the proposed approach requires only slightly more parameters (that also depends on how models are specified, a topic that is not given much attention: e.g.,  if a convex set is specified by its vertices, the number of required parameters might be huge) }
 
 {\color{green}
-We have implemented this suggestion. Instead of stating that we do not introduce new parameters (which, strictly speaking, is indeed not true), we now state that we do not introduce a large number op new parameters.}
+We have implemented this suggestion. Instead of stating that we do not introduce new parameters (which, strictly speaking, is indeed not true), we now state that we do not introduce a large number of new parameters.}
 
 
 {\bf Page 7, first paragraph of section 2.1: this definition of sequence is rather unusual and in conflict with common use. It is better to define a sequence as a set endowed with the usual total ordering over reals (a sequence usually admits repetitions, which might be created by concatenation, the most common operation on sequences). }
