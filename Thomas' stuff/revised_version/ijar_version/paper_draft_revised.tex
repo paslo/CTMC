@@ -942,14 +942,13 @@ z & \text{if $\lambda_i\geq0$}
 \end{equation*}
 Furthermore, let $N_{<0}\coloneqq\{i\in\{1,\dots,n\}\colon \lambda_i<0\}$ and $N_{\geq0}\coloneqq\{i\in\{1,\dots,n\}\colon \lambda_i\geq0\}$.
 Since $n$ is finite, Equation~\eqref{eq:path_exists_for_finite_points} now guarantees that there is some $\omega\in\Omega$ such that $\omega\vert_{u}=x_u$. Evaluating the sum in Equation~\eqref{exmp:coherence:eq:coherence} using this $\omega$, we find that
-\begin{multline*}
- \sum_{i=1}^n \lambda_{i}\ind{x}(\omega(0))\left(\tilde{P}(X_{t_i}=y\vert X_0=x) - \ind{y}(\omega(t_i))\right)\\[-4pt]
- \begin{aligned}
+\begin{align*}
+ \sum_{i=1}^n \lambda_{i}\ind{x}(\omega(0))\left(\tilde{P}(X_{t_i}=y\vert X_0=x) - \ind{y}(\omega(t_i))\right)
  &= \sum_{i=1}^n \lambda_{i}\left(\tilde{P}(X_{t_i}=y\vert X_0=x) - \ind{y}(\omega(t_i))\right) \\
  &= \sum_{i\in N_{<0}}\lambda_{i}\left(\tilde{P}(X_{t_i}=y\vert X_0=x) - 1\right) + \sum_{i\in N_{\geq0}}\lambda_{i}\tilde{P}(X_{t_i}=y\vert X_0=x) \\
- &\geq \sum_{i\in N_{<0}}\lambda_{i}\left(\tilde{P}(X_{t_i}=y\vert X_0=x) - 1\right) = \sum_{i\in N_{<0}}\abs{\lambda_{i}}\left(1 - \tilde{P}(X_{t_i}=y\vert X_0=x)\right) \geq 0,
- \end{aligned}
-\end{multline*}
+ &\geq \sum_{i\in N_{<0}}\lambda_{i}\left(\tilde{P}(X_{t_i}=y\vert X_0=x) - 1\right) \\ 
+&= \sum_{i\in N_{<0}}\abs{\lambda_{i}}\left(1 - \tilde{P}(X_{t_i}=y\vert X_0=x)\right) \geq 0,
+\end{align*}
 where the two inequalities follow from the fact that $\tilde{P}(X_{t_i}=y\vert X_0=x)=p(t_i)\in [0,1]$\,.
 Furthermore, because $\omega(0)=x$, we also have that $\omega\in (X_0=x)=C_0$. Therefore, we find that Equation~\eqref{exmp:coherence:eq:coherence} indeed holds. Hence, we conclude that $\tilde{P}$ is a coherent conditional probability on $\mathcal{C}$.
 
@@ -1489,16 +1488,16 @@ and similarly for $\smash{\underline{\mathbb{E}}_{\rateset,\mathcal{M}}^{\mathrm
 If $\mathcal{M}$ is the set of \emph{all} probability mass functions on $\states$, then as in Definition~\ref{def:consistent_process_set}, we will write $\underline{\mathbb{E}}_{\rateset}^{\mathrm{W}}$ instead of $\underline{\mathbb{E}}_{\rateset,\mathcal{M}}^{\mathrm{W}}$, and similarly for $\underline{\mathbb{E}}_{\rateset}^{\mathrm{WM}}$ and $\underline{\mathbb{E}}_{\rateset}^{\mathrm{WHM}}$.
 \end{definition}
 
-Upper expectations can be defined analogously, simply by replacing the infimum by a supremum: $\smash{\overline{\mathbb{E}}[\cdot\,\vert\,\cdot]\coloneqq \sup\{\mathbb{E}_P[\cdot\,\vert\,\cdot]\,:\,P\in\mathcal{P}\}}$.
+Upper expectations can be defined analogously, simply by replacing the infimum by a supremum: $\overline{\mathbb{E}}[\cdot\,\vert\,\cdot]\coloneqq \sup\{\mathbb{E}_P[\cdot\,\vert\,\cdot]\,:\,P\in\mathcal{P}\}$.
 However, there is no need to study these upper expectations separately, because they are in one-to-one correspondence to lower expectations through the conjugacy relation $\overline{\mathbb{E}}[\cdot\,\vert\,\cdot]=-\underline{\mathbb{E}}[-\cdot\,\vert\,\cdot]$. 
 Lower and upper probabilities also have analogous definitions. However, these too do not need to be studied separately, because they correspond to special cases of lower and upper expectations. For example, for any $u\in\mathcal{U}$, $x_u\in\states_u$ and $A\in\mathcal{A}_u$, we have that
-\begin{align}
+\begin{equation}
 \underline{P}(A\vert X_u=x_u)
-\coloneqq&\inf\{P(A\vert X_u=x_u)\colon P\in\mathcal{P}\}\notag\\
-=&\inf\{\mathbb{E}_P[\ind{A}\vert X_u=x_u]\colon P\in\mathcal{P}\}
+\coloneqq\inf\{P(A\vert X_u=x_u)\colon P\in\mathcal{P}\}%\notag\\
+=\inf\{\mathbb{E}_P[\ind{A}\vert X_u=x_u]\colon P\in\mathcal{P}\}
 =\underline{\mathbb{E}}[\ind{A}\vert X_u=x_u],
 \label{eq:lowerprobaslowerexp}
-\end{align}
+\end{equation}
 and similarly, we also have that $\overline{P}(A\vert X_u=x_u)=\overline{\mathbb{E}}[\ind{A}\vert X_u=x_u]$, which, due to conjugacy, implies that $\overline{P}(A\vert X_u=x_u)=-\underline{\mathbb{E}}[-\ind{A}\vert X_u=x_u]$. Hence, from a computational point of view, it clearly suffices to focus on lower expectations, which is what we will do in the remainder of this work.
 
 In particular, one of the main aims of this paper is to provide methods to compute lower expectations for the different types of \ictmc's that we have introduced in Section~\ref{subsec:types_ictmc}; however, as we will see at the end of this section, doing this for the set $\whmprocesses_{\rateset,\mathcal{M}}$ is particularly difficult. We will therefore largely focus on performing these computations for the ICTMCs $\wprocesses_{\rateset,\mathcal{M}}$ and $\wmprocesses_{\rateset,\mathcal{M}}$. We start by giving some useful properties of the three types of lower expectations that we are interested in.
@@ -2842,7 +2841,7 @@ We start by proving that Equation~\eqref{eq:alternative_bounded} implies $\norm{
 \begin{align*}
 \norm{\rateset} = \sup_{Q\in\rateset}\sum_{y\in\states}\abs{Q(x',y)}
 &=\sup_{Q\in\rateset}\left(2\abs{Q(x',x')}\right)
- = 2\sup_{Q\in\rateset}\abs{Q(x',x')}\\
+ = 2\sup_{Q\in\rateset}\abs{Q(x',x')} \\
  &= -2\inf_{Q\in\rateset}\left(-\abs{Q(x',x')}\right)
  = -2\inf_{Q\in\rateset}Q(x',x')< +\infty\,,
 \end{align*}
@@ -2954,8 +2953,9 @@ Fix any $t,r,s\in \mathbf{I}$ such that $t\leq r\leq s$. Then for any $i\in\nats
 \begin{align*}
 \norm{T_t^s-T_t^rT_r^s}
 &\leq
-\norm{T_t^s-\presuper{i}T_t^s}+\norm{\presuper{i}T_t^r\presuper{i}T_r^s-T_t^rT_r^s}\\
-&\leq
+\norm{T_t^s-\presuper{i}T_t^s}+\norm{\presuper{i}T_t^r\presuper{i}T_r^s-T_t^rT_r^s} %\\
+%&
+\leq
 \norm{T_t^s-\presuper{i}T_t^s}
 +
 \norm{\presuper{i}T_t^r-T_t^r}
@@ -3201,7 +3201,7 @@ Let
 (X_s=y,X_u=x_u)\in\mathcal{C}^{\mathrm{SP}}
 \colon 
 u\in\mathcal{U}_\emptyset,~s>u,~x_u\in\states_u,~y\in\states
-\}\\
+\}%\\
 \cup
 \{
 (X_0=y,X_\emptyset=x_\emptyset)\in\mathcal{C}^{\mathrm{SP}}\colon y\in\states
@@ -3341,15 +3341,15 @@ T_{\max u}^{w_{j+1}}(x_{\max u},y)
 &\quad\quad\quad\quad\quad\quad
 =T_{\max u}^{w_{j+1}}(x_{\max u},y)
 \sum_{z_{v}\in\states_{v}}
-\tilde{P}_w(X_{v}=z_{v}\vert X_u=x_u)\\[-1mm]
-&\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad~~~
+\tilde{P}_w(X_{v}=z_{v}\vert X_u=x_u)%\\[-1mm]
+%&\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad~~~
 =T_{\max u}^{w_{j+1}}(x_{\max u},y),
 \end{align*}
 where the first equality follows from~\ref{def:coh_prob_3}, the second equality follows from \ref{def:coh_prob_6}, the third equality follows from the assumptions in this lemma and the fact that $\max u=w_j$, and the last equality follows from \ref{def:coh_prob_3} and~\ref{def:coh_prob_5}.
 
 If $\max u<w_j$, then with $v\coloneqq\{w_0,\dots,w_{j-1}\}\setminus u$:
 \begin{align*}
-&\tilde{P}_w(X_{w_{j+1}}=y\vert X_u=x_u)\\[1,5mm]
+\tilde{P}_w(X_{w_{j+1}}=y\vert X_u=x_u)%\\[1,5mm]
 &=\sum_{z_{w_j}\in\states}
 \sum_{z_{v}\in\states_{v}}
 \tilde{P}_w(X_{w_{j+1}}=y, X_{w_j}=z_{w_j}, X_v=z_v\vert X_u=x_u)\\
@@ -3391,8 +3391,8 @@ Let $\mathcal{T}\coloneqq\mathcal{T}_{P_1}=\mathcal{T}_{P_2}$ be the common tran
 \begin{align*}
 P_j(X_s=y)
 =\sum_{x\in\states}P_j(X_s=y, X_0=x)
-&=\sum_{x\in\states}P_j(X_s=y\vert X_0=x)P_j(X_0=x)\\
-&=\sum_{x\in\states}\tilde{P}(X_s=y\vert X_0=x)\tilde{P}(X_0=x).
+&=\sum_{x\in\states}P_j(X_s=y\vert X_0=x)P_j(X_0=x)%\\
+=\sum_{x\in\states}\tilde{P}(X_s=y\vert X_0=x)\tilde{P}(X_0=x).
 \end{align*}
 Hence, the restrictions of $P_1$ and $P_2$ to
 \begin{align*}
@@ -3593,16 +3593,17 @@ The only remaining case is when $t=t_i\neq0$ for some $i\in\{0,\ldots,n\}$. In t
 This proof is rather lengthy, and consists of two parts. First, we will show that there exists a stochastic process $P$ that satisfies Equations~\eqref{eq:theo:aanelkaarplakken:equalsfirst} and~\eqref{eq:theo:aanelkaarplakken:equalssecond}, by constructing it as the extension of a coherent conditional probability on a set of events $\mathcal{C}\subset\mathcal{C}^\mathrm{SP}$. Next, we will finish the proof by showing that $P\in\wprocesses_{\rateset,\,\mathcal{M}}$, as desired.
 
 Let $\mathcal{C}\coloneqq\mathcal{C}_\emptyset\cup(\bigcup_{x_u\in\states_u}\mathcal{C}_{x_u})$, with
-\begin{multline}\label{eq:theo:aanelkaarplakken:firstpartofdomain}
+\begin{equation}\label{eq:theo:aanelkaarplakken:firstpartofdomain}
 \mathcal{C}_\emptyset\coloneqq
-\{(A,X_v=x_v)\in\mathcal{C}^{\mathrm{SP}}\colon v\in\mathcal{U}_{< \max u}\text{~and~}\\A\in\left\langle
+\left\{(A,X_v=x_v)\in\mathcal{C}^{\mathrm{SP}}\colon v\in\mathcal{U}_{< \max u}\text{~and~}
+A\in\left\langle
 \left\{
 (X_t=x)
 \colon
 x\in\states,t\in[0,\max u]
 \right\}
-\right\rangle\}
-\end{multline}
+\right\rangle\right\}
+\end{equation}
 and, for all $x_u\in\states_u$,
 \begin{equation}\label{eq:theo:aanelkaarplakken:secondpartofdomain}
 \mathcal{C}_{x_u}\coloneqq\{
@@ -3764,8 +3765,8 @@ which together with the fact that $P_{\emptyset}\in\wprocesses_{\rateset,\,\math
 In order to do this, we start by establishing an important equality.
 Consider any $w\in\mathcal{U}$ and $s\in\reals_{\geq0}$ such that $w<s$ and $u<s$. Then for all $x_w\in\states_w$ and $y\in\states$, we have that
 \begin{align}\label{eq:theo:aanelkaarplakken:convexcombo}
-P&(X_s=y\vert X_w=x_w)
-=P^*(X_s=y\vert X_w=x_w)\notag\\
+ P(X_s=y\vert X_w=x_w)
+ &=P^*(X_s=y\vert X_w=x_w)\notag\\
 &=
 \sum_{x_{u\setminus w}\in\states_{u\setminus w}}
 P^*(X_s=y,
@@ -3829,13 +3830,13 @@ P(X_{t+\Delta}=y\vert X_t=x, X_v=x_v)
 Hence, if we let $\mathcal{I}\coloneqq\{i\}$, $v^*\coloneqq v$, $\lambda_i\coloneqq 1$, ${}^iP\coloneqq P_\emptyset$ and ${}^ix_{v^*}\coloneqq x_v$, Equation~\eqref{eq:theo:aanelkaarplakken:convexTright} is satisfied by choosing $\delta\coloneqq \max u-\max v$.
 If $t\geq \max u$, then for all $\Delta>0$, it follows from Equation~\eqref{eq:theo:aanelkaarplakken:convexcombo} (with $s\coloneqq t+\Delta$ and $w\coloneqq v\cup t$) that
 \begin{align*}
-&P(X_{t+\Delta}=y\vert X_t=x, X_v=x_v)\\
-&~~~~=
+&\quad P(X_{t+\Delta}=y\vert X_t=x, X_v=x_v)\\
+&=
 \sum_{x_{u\setminus(v\cup t)}\in\states_{u\setminus(v\cup t)}}
 P_{x_u}(X_{t+\Delta}=y\vert X_t=x, 
 X_{(u\setminus t)\cup(v\setminus [0,\max u])}= 
-x_{(u\setminus t)\cup(v\setminus [0,\max u])})\\[-4mm]
-&\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad
+x_{(u\setminus t)\cup(v\setminus [0,\max u])})%\\[-4mm]
+%&\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad
 P^*(X_{u\setminus(v\cup t)}=x_{u\setminus(v\cup t)}
 \vert X_t=x, X_v=x_v).
 \end{align*}
@@ -3858,13 +3859,13 @@ P(X_{t}=y\vert X_{t-\Delta}=x, X_v=x_v)
 Hence, if we let $\mathcal{I}\coloneqq\{i\}$, $v^*\coloneqq v$, $\lambda_i\coloneqq 1$, ${}^iP\coloneqq P_\emptyset$ and ${}^ix_{v^*}\coloneqq x_v$, Equation~\eqref{eq:theo:aanelkaarplakken:convexTleft} is satisfied by choosing $\delta\coloneqq t-\max v$.
 If $t>\max u$, then for all $\Delta\in(0,t-\max(v\cup u))$, it follows from Equation~\eqref{eq:theo:aanelkaarplakken:convexcombo} (with $s\coloneqq t$ and $w\coloneqq v\cup {t-\Delta}$) that
 \begin{align*}
-&P(X_{t}=y\vert X_{t-\Delta}=x, X_v=x_v)\\
-&~~~~=
+&\quad P(X_{t}=y\vert X_{t-\Delta}=x, X_v=x_v)\\
+&=
 \sum_{x_{u\setminus v}\in\states_{u\setminus v}}
 P_{x_u}(X_{t}=y\vert X_{t-\Delta}=x, 
 X_{u\cup(v\setminus [0,\max u])}= 
-x_{u\cup(v\setminus [0,\max u])})\\[-4mm]
-&\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad
+x_{u\cup(v\setminus [0,\max u])})%\\[-4mm]
+%&\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad
 P^*(X_{u\setminus v}=x_{u\setminus v}
 \vert X_{t-\Delta}=x, X_v=x_v).
 \end{align*}
@@ -3960,8 +3961,8 @@ Let $g(X_u,X_v)\coloneqq\underline{\mathbb{E}}^{\mathrm{W}}_{\rateset,\,\mathcal
 For any $P\in\wprocesses_{\rateset,\,\mathcal{M}}$, it then follows from the basic properties of expectations (which follow from~\ref{def:coh_prob_2}--\ref{def:coh_prob_6}) and Definition~\ref{def:lower_exp} that
 \begin{align*}
 \mathbb{E}_P\left[f(X_u,X_v,X_w)\vert\,x_u\right] = \mathbb{E}_P\bigl[\mathbb{E}_P\left[f(X_u,X_v,X_w)\vert\,X_u,X_v\right]\vert\,x_u\bigr] 
- &\geq \mathbb{E}_P\bigl[g(X_u,X_v)\vert\,x_u\bigr] \\
- &\geq \underline{\mathbb{E}}^{\mathrm{W}}_{\rateset,\,\mathcal{M}}\bigl[g(X_u,X_v)\vert\,x_u\bigr].
+ &\geq \mathbb{E}_P\bigl[g(X_u,X_v)\vert\,x_u\bigr] %\\
+ \geq \underline{\mathbb{E}}^{\mathrm{W}}_{\rateset,\,\mathcal{M}}\bigl[g(X_u,X_v)\vert\,x_u\bigr].
 \end{align*}\\[-20pt]
 Since $P\in\wprocesses_{\rateset,\,\mathcal{M}}$ is arbitrary, this implies that
 \begin{equation}\label{eq:theorem:decomposition_multivar:easyinequality}
@@ -4029,8 +4030,8 @@ Consider any $f,g\in\gamblesX$, $\lambda\in\realsnonneg$ and $x\in\states$. Sinc
 \begin{align*}
 [\underline{T}\underline{S}f](x)
 &\geq
-\min\{[\underline{S}f](y)\colon y\in\states\}\\
-&\geq
+\min\{[\underline{S}f](y)\colon y\in\states\}%\\
+\geq
 \min\{\min\{f(z)\colon z\in\states\}\colon y\in\states\}
 =
 \min\{f(z)\colon z\in\states\},
@@ -4187,9 +4188,8 @@ Consider a lower transition rate operator $\lrate$ and, for all $i\in\{1,\ldots,
 We provide a proof by induction. For $n=1$, the result is trivial. So consider the case $n\geq2$ and assume that the result is true for $n-1$. 
 
 For all $i\in\{2,\dots,n\}$, since $\Delta_i\norm{\lrate}\leq1$, it follows from Proposition~\ref{lemma:normQsmallenough} that $I$ and $(I+\Delta_i\lrate)$ are lower transition operators. Therefore,
-\begin{multline*}
-\norm{\prod_{i=1}^n(I+\Delta_i\lrate)-(I+\Delta\lrate)}\\
-\begin{aligned}
+\begin{align*}
+\norm{\prod_{i=1}^n(I+\Delta_i\lrate)-(I+\Delta\lrate)}
 &=\norm{\prod_{i=2}^n(I+\Delta_i\lrate)+\Delta_1\lrate\prod_{i=2}^n(I+\Delta_i\lrate)-(I+\sum_{i=2}^n\Delta_i\lrate)-\Delta_1\lrate}\\
 &\leq\norm{\prod_{i=2}^n(I+\Delta_i\lrate)-(I+\sum_{i=2}^n\Delta_i\lrate)}+\norm{\Delta_1\lrate\prod_{i=2}^n(I+\Delta_i\lrate)-\Delta_1\lrate}\\
 &\leq(\sum_{i=2}^n\Delta_i)^2\norm{\lrate}^2
@@ -4207,8 +4207,7 @@ For all $i\in\{2,\dots,n\}$, since $\Delta_i\norm{\lrate}\leq1$, it follows from
 \Delta_1+\sum_{i=2}^n\Delta_i
 \Big)^2\norm{\lrate}^2
 =\Delta^2\norm{\lrate}^2,
-\end{aligned}
-\end{multline*}\\[3pt]
+\end{align*}%\\[3pt]
 where the second inequality follows from the induction hypothesis and property~\ref{LR:differenceofnorm}, and the third inequality follows from Lemma~\ref{lemma:recursive_lower_trans}.
 \end{proof}
 
@@ -4719,10 +4718,9 @@ Furthermore, since $P\in\wprocesses_\rateset$, and because $\Delta_1<C$ implies 
 \end{equation*}
 Since $\Delta_1<\delta$ and, for all $i\in\{2,\dots,n\}$, $\Delta_i\leq\sigma(v)<\delta$, we know that, for all $i\in\{1,\dots,n\}$, $\Delta_i<\delta$ and therefore also, using Lemma~\ref{lemma:normQboundedbynormLQ}, that $\Delta_i\norm{Q_i}\leq\delta\norm{\lrate}\leq1$.
 Therefore, we find that
-\begin{multline*}
+\begin{align*}
 \abs{[T_{t,\,x_u}^sf](x_t)
--\left[\left(\prod_{i=1}^n(I+\Delta_iQ_i)\right)f\right](x_t)}\\
-\begin{aligned}
+-\left[\left(\prod_{i=1}^n(I+\Delta_iQ_i)\right)f\right](x_t)}
 &=\abs{\Big[T_{t_0,\,x_u}^{t_1}\Bigg(\prod_{i=2}^{n}T_{t_{i-1},\,x_{u\cup\{t\}}}^{t_{i}}\Bigg)f\Big](x_t)
 -\left[\left(\prod_{i=1}^n(I+\Delta_iQ_i)\right)f\right](x_t)}\\
 &\leq\norm{T_{t_0,\,x_u}^{t_1}\Bigg(\prod_{i=2}^{n}T_{t_{i-1},\,x_{u\cup\{t\}}}^{t_{i}}\Bigg)
@@ -4732,8 +4730,7 @@ Therefore, we find that
 +\sum_{i=2}^{n}
 \norm{T_{t_{i-1},\,x_{u\cup\{t\}}}^{t_{i}}-(I+\Delta_iQ_i)}\norm{f}\\
 &<\sum_{i=1}^n\Delta_i\epsilon_2\norm{f}=C\epsilon_2\norm{f}<\frac{\epsilon}{2},
-\end{aligned}
-\end{multline*}
+\end{align*}
 where the equality follows from Lemma~\ref{lemma:weirddecomposition}, the first inequality follows from the properties of $\norm{\cdot}$, and the second inequality follows from Lemma~\ref{lemma:recursive} and Proposition~\ref{prop:stochastic_from_rate_matrix} and, we also find that
 \begin{align*}
 \abs{[L_t^sf](x_t)-\left[\left(\prod_{i=1}^n(I+\Delta_i\lrate)\right)f\right](x_t)}
@@ -4741,13 +4738,13 @@ where the equality follows from Lemma~\ref{lemma:weirddecomposition}, the first 
 \norm{L_t^s-\prod_{i=1}^n(I+\Delta_i\lrate)}\norm{f}\leq\epsilon_1\norm{f}<\frac{\epsilon}{2},
 \end{align*}
 using Equation~\eqref{eq:theorem:nonmarkov_single_var_lower_bounded} to establish the second inequality. Hence, Lemma~\ref{lemma:productofQsdominatesproductoflrates} implies that
-\begin{multline*}
+\begin{align*}
 [L_{t}^s f](x_t)
-<\left[\left(\prod_{i=1}^n(I+\Delta_i\lrate)\right)f\right](x_t)+\frac{\epsilon}{2}\\
+<\left[\left(\prod_{i=1}^n(I+\Delta_i\lrate)\right)f\right](x_t)+\frac{\epsilon}{2}%\\
 \leq
 \left[\left(\prod_{i=1}^n(I+\Delta_i Q_i)\right)f\right](x_t)+\frac{\epsilon}{2}
 <[T_{t,\,x_u}^sf](x_t)+\epsilon.
-\end{multline*}\\[-0pt]
+\end{align*}\\[-0pt]
 Since $\epsilon>0$ was arbitrary, this allows us to infer that $[L_{t}^s f](x_t)\leq [T_{t,\,x_u}^sf](x_t)$. The result now follows because $[T_{t,x_u}^sf](x_t)=\mathbb{E}_P[f(X_s)\vert X_t=x_t,X_u=x_u]$, as noted in Remark~\ref{remark:expectationT}.
 \end{proof}
 
@@ -4771,22 +4768,22 @@ Fix any $t,s\in\realsnonneg$ such that $t\leq s$, any $f\in\gamblesX$ and any $\
 Fix any $i\in\{1,\dots,n\}$ and let $g_i\coloneqq L_{t_i}^{t_n}f$. It then follows from Lemma~\ref{lemma:rateset_has_arginf} that there is some $Q_i\in\rateset$ such that $\norm{\lrate g_i-Q_i g_i}<\epsilon_2$ and, due to~\ref{N:normAf} and~\ref{LT:norm_at_most_one}, we also know that $\norm{g_i}=\norm{L_{t_i}^{t_n}f}\leq\norm{L_{t_i}^{t_n}}\norm{f}\leq\norm{f}$.
 Hence, we find that 
 \begin{align}
-&\norm{L_{t_{i-1}}^{t_i}g_i - e^{Q_i\Delta_i}g_i}\notag\\
-&\quad\quad\quad\leq \norm{L_{t_{i-1}}^{t_i}g_i - \left[I+\Delta_i\lrate\right]g_i} 
+\norm{L_{t_{i-1}}^{t_i}g_i - e^{Q_i\Delta_i}g_i}%\notag\\
+&\leq \norm{L_{t_{i-1}}^{t_i}g_i - \left[I+\Delta_i\lrate\right]g_i} 
 +\norm{\Delta_i\lrate g_i-\Delta_iQ_ig_i}
 + \norm{\left[I+\Delta_iQ_i\right]g_i - e^{Q_i\Delta_i}g_i} \notag\\
-&\quad\quad\quad\leq \norm{L_{t_{i-1}}^{t_i} - \left[I+\Delta_i\lrate\right]}\norm{g_i} 
+&\leq \norm{L_{t_{i-1}}^{t_i} - \left[I+\Delta_i\lrate\right]}\norm{g_i} 
 +\Delta_i\norm{\lrate g_i-Q_ig_i}
 + \norm{I+\Delta_iQ_i - e^{Q_i\Delta_i}}\norm{g_i} \notag\\
-&\quad\quad\quad< \norm{L_{t_{i-1}}^{t_i} - \left[I+\Delta_i\lrate\right]}\norm{f} 
+&< \norm{L_{t_{i-1}}^{t_i} - \left[I+\Delta_i\lrate\right]}\norm{f} 
 +\Delta_i\epsilon_2
 + \norm{I+\Delta_iQ_i - e^{Q_i\Delta_i}}\norm{f} \notag\\
-&\quad\quad\quad\leq
+&\leq
 \Delta_i^2\norm{\lrate}^2\norm{f}
 +\Delta_i\epsilon_2
 +
 \Delta_i^2\norm{Q_i}^2\norm{f}\notag\\
-&\quad\quad\quad\leq
+&\leq
 \Delta_i(
 \delta\norm{\lrate}^2\norm{f}
 +\epsilon_2
@@ -4837,8 +4834,8 @@ It then follows from Proposition~\ref{theorem:lower_markov_bound_is_tight} that 
 \begin{align*}
 \underline{\mathbb{E}}^{\mathrm{WM}}_{\rateset,\,\mathcal{M}}\left[f(X_s)\,\vert\,X_t=x_t,X_u=x_u\right]
 &\leq
-\mathbb{E}_P[f(X_s)\vert\,X_t=x_t,X_u=x_u]\\
-&=\mathbb{E}_P[f(X_s)\vert\,X_t=x_t]
+\mathbb{E}_P[f(X_s)\vert\,X_t=x_t,X_u=x_u]
+=\mathbb{E}_P[f(X_s)\vert\,X_t=x_t]
 < [L_t^sf](x_t)+\epsilon,
 \end{align*}
 using Equation~\eqref{eq:lowerexp3} for the first inequality and the Markov property of $P$ for the equality. Since $\epsilon>0$ is arbitrary, it follows that  $\underline{\mathbb{E}}^{\mathrm{WM}}_{\rateset,\,\mathcal{M}}\left[f(X_s)\,\vert\,X_t=x_t,X_u=x_u\right]\leq[L_t^sf](x_t)$.
@@ -4976,8 +4973,8 @@ where the last equality follows from Corollary~\ref{cor:lower_operator_is_infimu
 \underline{\mathbb{E}}^\mathrm{W}_{\rateset,\mathcal{M}}[f(X_s)]+\epsilon
 \geq
 \mathbb{E}_P[f(X_s)]
-&=\mathbb{E}_P[\mathbb{E}_P[f(X_s)\vert X_0]]\notag\\
-&\geq\mathbb{E}_P[[L_0^sf](X_0)]
+&=\mathbb{E}_P[\mathbb{E}_P[f(X_s)\vert X_0]]%\notag\\
+\geq\mathbb{E}_P[[L_0^sf](X_0)]
 \geq
 \underline{\mathbb{E}}^\mathrm{W}_{\rateset,\mathcal{M}}[[L_0^sf](X_0)]
 =\underline{\mathbb{E}}_{\mathcal{M}}[L_0^sf],%\label{eq:prop:computemarginal:2}
