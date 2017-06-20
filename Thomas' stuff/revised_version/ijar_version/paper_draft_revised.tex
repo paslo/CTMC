@@ -1,14 +1,16 @@
-\documentclass[10pt,a4paper]{paper}
-%\documentclass[3p]{elsarticle}
+%\documentclass[10pt,a4paper]{paper}
+\documentclass[3p]{elsarticle}
 \usepackage[british]{babel}
 
-\usepackage{authblk}
+%\usepackage{authblk}
 
 \usepackage{hyperref,url}
 
 \usepackage{mathptmx}
 \usepackage{amsmath}
-\usepackage{courier}
+
+%\usepackage{courier}
+
 \usepackage{amssymb}
 \usepackage{amsthm}
 \usepackage{enumerate}
@@ -29,15 +31,15 @@
 \DeclareMathAlphabet\mathbfcal{OMS}{cmsy}{b}{n}
 
 \theoremstyle{definition}
-\newtheorem{exmp}{Example}
+\newtheorem{exmp}{Example}[section]
  
 \renewcommand{\ttdefault}{cmtt}
 \newtheorem{theorem}{Theorem}[section]
 \newtheorem{proposition}[theorem]{Proposition}
 \newtheorem{corollary}[theorem]{Corollary}
 \newtheorem{lemma}[theorem]{Lemma}
-\newtheorem{definition}{Definition}
-\newtheorem{remark}{Remark}
+\newtheorem{definition}{Definition}[section]
+\newtheorem{remark}{Remark}[section]
 \newtheorem*{remark*}{Remark}
 
 \newtheorem{claim}{Claim}[theorem]
@@ -112,8 +114,8 @@
 \newcommand{\placeref}[1]{p\pageref{#1}}
 
 % Change this when compiling ArXiv version
-\newcommand{\exampleproofref}{Appendix~\ref{app:example_proofs}}
-%\newcommand{\exampleproofref}{\cite{TODO}[Appendix~\ref{app:example_proofs}]}
+%\newcommand{\exampleproofref}{Appendix~\ref{app:example_proofs}}
+\newcommand{\exampleproofref}{\cite{TODO}[Appendix~I]}
 
 \def\presuper#1#2%
   {\mathop{}%
@@ -121,44 +123,38 @@
    \kern-\scriptspace%
    #2}
 
-\title{Imprecise Continuous-Time Markov Chains\raggedright}
-
-\renewcommand\Affilfont{\normalfont\normalsize}
-\renewcommand{\titlefont}{\LARGE}
-
-\setlength{\affilsep}{3em}
-
-\author[*]{\vspace{0.5cm}
-
-Thomas Krak}
-\author[$\dagger$]{Jasper De Bock}
-\author[$\ddagger$]{Arno Siebes}
-
-
-\affil[ ]{${}^*$\texttt{\large t.e.krak@uu.nl}\\
-${}^\ddagger$\texttt{\large a.p.j.m.siebes@uu.nl}\vspace{2pt}}
-\affil[ ]{Utrecht University\\
-Department of Information and Computing Sciences\\ Princetonplein 5, De Uithof\\
-3584 CC Utrecht\\
-The Netherlands}
-
-\affil[ ]{}
-
-\affil[$\dagger$]{\texttt{\large jasper.debock@ugent.be}\vspace{2pt}}
-\affil[ ]{Ghent University\\
-Department of Electronics and Information Systems\\
-Technologiepark -- Zwijnaarde 914\\
-9052 Zwijnaarde\\ 
-Belgium}
-
-
-
+\bibliographystyle{elsarticle-num}
 
 \begin{document}
 
-\date{}
-\maketitle
 
+\begin{frontmatter}
+
+% title
+\title{Imprecise Continuous-Time Markov Chains}
+
+% author info
+\author[theuuaddress]{Thomas Krak\corref{mycorrespondingauthor}}
+\ead{t.e.krak@uu.nl}
+
+\author[theghentaddress]{Jasper De Bock}
+\ead{jasper.debock@ugent.be}
+
+\author[theuuaddress]{Arno Siebes}
+\ead{a.p.j.m.siebes@uu.nl}
+
+% affiliations
+\address[theuuaddress]{Utrecht University, Department of Information and Computing Sciences, Princetonplein 5, De Uithof, 3584 CC Utrecht, The Netherlands}
+
+\address[theghentaddress]{Ghent University, Department of Electronics and Information Systems,
+Technologiepark -- Zwijnaarde 914,
+9052 Zwijnaarde, Belgium}
+
+% note of corresponding author
+\cortext[mycorrespondingauthor]{Corresponding author}
+
+
+% abstract
 \begin{abstract}
 Continuous-time Markov chains are mathematical models that are used to describe the state-evolution of dynamical systems under stochastic uncertainty, and have found widespread applications in various fields. In order to make these models computationally tractable, they rely on a number of assumptions that---as is well known---may not be realistic for the domain of application; in particular, the ability to provide exact numerical parameter assessments, and the applicability of time-homogeneity and the eponymous Markov property. In this work, we extend these models to \emph{imprecise continuous-time Markov chains} (\ictmc's), which are a robust generalisation that relaxes these assumptions while remaining computationally tractable.
 
@@ -167,10 +163,49 @@ More technically, an \ictmc~is a \emph{set} of ``precise'' continuous-time finit
 The first part of this paper develops a formalism for describing continuous-time finite-state stochastic processes that does not require the aforementioned simplifying assumptions. Next, this formalism is used to characterise \ictmc's and to investigate their properties. The concept of lower expectation is then given an alternative operator-theoretic characterisation, by means of a \emph{lower transition operator}, and the properties of this operator are investigated as well. Finally, we use this lower transition operator to derive tractable algorithms (with polynomial runtime complexity w.r.t. the maximum numerical error) for computing the lower expectation of functions that depend on the state at any finite number of time points.
 \end{abstract}
 
-\noindent\emph{Keywords:} Continuous-Time Markov Chain; Imprecise Probability; Model Uncertainty; Lower and Upper Expectation; Lower Transition Operator
+\begin{keyword} Continuous-Time Markov Chain\sep Imprecise Probability\sep Model Uncertainty\sep Lower and Upper Expectation\sep Lower Transition Operator
+\end{keyword}
 
 
-\newpage
+\end{frontmatter}
+
+
+%
+%\renewcommand\Affilfont{\normalfont\normalsize}
+%\renewcommand{\titlefont}{\LARGE}
+%
+%\setlength{\affilsep}{3em}
+%
+%\author[*]{\vspace{0.5cm}
+%
+%Thomas Krak}
+%\author[$\dagger$]{Jasper De Bock}
+%\author[$\ddagger$]{Arno Siebes}
+%
+%
+%\affil[ ]{${}^*$\texttt{\large t.e.krak@uu.nl}\\
+%${}^\ddagger$\texttt{\large a.p.j.m.siebes@uu.nl}\vspace{2pt}}
+%\affil[ ]{Utrecht University\\
+%Department of Information and Computing Sciences\\ Princetonplein 5, De Uithof\\
+%3584 CC Utrecht\\
+%The Netherlands}
+%
+%\affil[ ]{}
+%
+%\affil[$\dagger$]{\texttt{\large jasper.debock@ugent.be}\vspace{2pt}}
+%\affil[ ]{Ghent University\\
+%Department of Electronics and Information Systems\\
+%Technologiepark -- Zwijnaarde 914\\
+%9052 Zwijnaarde\\ 
+%Belgium}
+
+
+
+%\date{}
+%\maketitle
+
+
+%\newpage
 \section{Introduction}\label{sec:introduction}
 
 Continuous-time Markov chains are mathematical models that can describe the behaviour of dynamical systems under stochastic uncertainty. In particular, they describe the stochastic evolution of such a system through a discrete state space and over a continuous time-dimension. This class of models has found widespread applications in various fields, including queueing theory~\cite{asmussen2008applied,bolch2006queueing}, mathematical finance~\cite{elliott2013default, rolski2009stochastic,sass2004optimizing}, epidemiology~\cite{ duffy1995estimation,jackson2003multistate, lemey2009reconstructing}, system reliability analysis~\cite{besnard2010approach,gokhale2004analysis, wang2007reliability}, and many others~\cite{yin2012continuous}.
@@ -2755,10 +2790,16 @@ In the discrete time case, that is, for imprecise discrete time Markov chains, i
 
 The authors wish to express their sincere gratitude to three anonymous reviewers who, despite the substantial length of this manuscript, provided timely, valuable and detailed feedback. We also thank the area editor, Marco Zaffalon, for finding these reviewers; surely, given the length of the paper, this must not have been easy. Jasper De Bock is a Postdoctoral Fellow of the Research Foundation - Flanders (FWO) and wishes to acknowledge its financial support; he would also like to thank Alexander Erreygers for some stimulating discussions about the computational aspects of imprecise continuous-time Markov chains.
 
-\bibliographystyle{plain} 
 \bibliography{general}
 
 \appendix
+
+% The usual appendix definition of the elsarticle class prefixes ``Appendix'' to the alphanumeric counter. This causes a double statement like ``See Appendix AppendixA'' in the main text. If anybody reads this while typesetting and wants to remove the below redefinition, please make sure that such double statements are fixed throughout the main text :)
+
+\gdef\thesection{\Alph{section}} % corrected redefinition of "\thesection", by user ``Mico'' on tex.stackexchange
+\makeatletter
+\renewcommand\@seccntformat[1]{Appendix \csname the#1\endcsname.\hspace{0.5em}}
+\makeatother
 
 \section{Proofs and Lemmas for the results in Section~\ref{sec:systems}}\label{app:systems}
 
@@ -4981,353 +5022,6 @@ It then follows from Theorem~\ref{theorem:decomposition_multivar} and Propositio
 \end{equation*}
 Combined with Equation~\eqref{eq:prop:computeunconditional}, this implies the result.
 \end{proof}
-
-
-\section{A gambling interpretation for coherence}\label{app:coherence}
-
-This appendix aims to provide a basic exposition of the gambling interpretation for coherent conditional probabilities. A more extensive discussion, which also provides some historic context, can be found in, among others, References~\cite{regazzini1985finitely,williams1975,Williams:2007eu, Vicig:2007gs,berti1991coherent, berti2002coherent}.
-
-Basically, the idea is to interpret $P$ as a set of gambles on the actual---but unknown---value of $X$ in $\Omega$, which some bettor is willing to either buy or sell, and to impose a rationality criterion on this set of gambles.
-
-Concretely, for every pair $(A,C)\in\mathcal{C}$, $P(A\vert C)$ is interpreted as a bettor's fair price for a ticket that yields a reward of one currency unit to its holder if the event $A$ occurs, conditional on the fact that $C$ happens. In other words, the bettor is willing to either sell or buy such ticket at this price, provided that she will be refunded should event $C$ not happen. Furthermore, it also assumed that the bettor's utility is linear, which implies that she is willing to vary the stakes of her bets arbitrarily.
-
-
-Suppose for example that the actual value of $X$ ends up being $\omega$. For each ticket that the bettor sold, she has then received $P(A\vert C)$ currency units in advance, but after the value of $X$ is revealed, she loses one currency unit if $A$ has happened, that is, she loses $\ind{A}(\omega)$ currency unit. Because all of this is conditional on $C$ happening, her net profit is $\ind{C}(\omega)(P(A\vert C) - \ind{A}(\omega))$, with negative profit being loss. Note that if $C$ does not happen, that is, if $\ind{C}(\omega)=0$, she neither gains nor loses anything. Since we also allow for arbitrary stakes, we conclude that for any $\lambda\in\realsnonneg$, the bettor is willing to accept the uncertain net profit $\lambda \ind{C}(\omega)(P(A\vert C) - \ind{A}(\omega))$.
-
-Similarly, for each ticket that that the bettor buys, she first has to pay $P(A\vert C)$ to buy the ticket, but will then receive one unit of currency if $A$ happens. Her profit is then $\ind{A}(\omega) - P(A\vert C)$ per ticket. However, she only receives this profit if event $C$ also came to pass, and otherwise gets refunded. Hence, if we again take into account that the stake can be chosen arbitrarily, we find that for any $\lambda\in\realsnonneg$ the bettor is willing to accept the uncertain net profit $\lambda\ind{C}(\omega)(\ind{A}(\omega) - P(A\vert C))$. 
-
-By combining the arguments for selling and buying, we conclude from the above that for any $\lambda\in\reals$, the bettor is willing to accept a bet in which she receives the uncertain net profit $\lambda\ind{C}(\omega)(P(A\vert C)-\ind{A}(\omega))$, with negative profit being loss.
-
-
-The final assumption is now that the bettor is willing to combine any finite number of such transactions. That is, if we consider any $n\in\nats$ and, for every $i\in\{1,\ldots,n\}$, some $\lambda_i\in\reals$ and $(A_i,C_i)\in\mathcal{C}$, then the bettor is willing to accept a bet in which her net profit is equal to
-\begin{equation*}
-\sum_{i=1}^n\lambda_i\ind{C_i}(\omega)\left(P(A_i\vert C_i) - \ind{A_i}(\omega)\right)\,.
-\end{equation*}
-The coherence of $P$ is now equivalent to requiring that any such bet \emph{avoids sure loss}, in the sense that there exists at least one ``non-trivial'' outcome $\omega$ for which her total profit is non-negative, the trivial case being when none of the events $C_i$ happen---$\omega\notin\cup_{i=1}^n C_i$---because she then gets refunded completely. 
-
-\section{Proofs of the examples}\label{app:example_proofs}
-
-\begin{proof}[Proof of Example~\ref{exmp:limit_trans_mat_system}]
-We will show that the sequence $\{\mathcal{T}_i\}_{i\in\nats_0}$ defined in Equation~\eqref{eq:def:sequenceinexample3} is Cauchy, or in other words, that
-\begin{equation}\label{eq:cauchyexample}
-(\forall\epsilon\in\realspos)\,(\exists n_\epsilon\in\nats)\,(\forall k,\ell > n_\epsilon)~d(\mathcal{T}_{k},\mathcal{T}_\ell)<\epsilon.
-\end{equation}
-In order to prove this, the first step is to notice that for any $i\in\nats$, the difference between $\mathcal{T}_{i}$ and $\mathcal{T}_{i-1}$ is essentially situated on the interval $[0,\delta_i]$. It should therefore be intuitively clear that $d(\mathcal{T}_i,\mathcal{T}_{i-1})$ is proportional to $\delta_i$. 
-
-In fact, it holds that $d(\mathcal{T}_i,\mathcal{T}_{i-1})\leq\delta_i\norm{Q_i-Q_{i-1}}$; we will start by proving this inequality.
-So, fix any $i\in\nats$. %We will prove that $d(\mathcal{T}_i,\mathcal{T}_{i-1})\leq\delta_i\norm{Q_i-Q_{i-1}}$. 
-Fix any $t,s\in\realsnonneg$ such that $t\leq s$, and let $\presuper{i}T_t^s$ and $\presuper{i-1}T_t^s$ be the transition matrices that correspond to $\mathcal{T}_i$ and $\mathcal{T}_{i-1}$, respectively. 
-We now consider three cases. The first case is $t\geq\delta_i$. It then follows from Equation~\eqref{eq:def:sequenceinexample3} that $\norm{\presuper{i}T_t^s-\presuper{i-1}T_t^s}=0$. The second case is $s\leq\delta_i$. It then follows from Equation~\eqref{eq:def:sequenceinexample3} and Lemma~\ref{lemma:differencebetweenexponentials} that
-\begin{equation*}
-\norm{\presuper{i}T_t^s-\presuper{i-1}T_t^s}
-=\norm{e^{Q_i(s-t)}-e^{Q_{i-1}(s-t)}}
-\leq (s-t)\norm{Q_i-Q_{i-1}}\leq\delta_i\norm{Q_i-Q_{i-1}}.
-\end{equation*}
-The third case is $t\leq\delta_i\leq s$. We then find that
-\begin{align*}
-\norm{\presuper{i}T_t^s-\presuper{i-1}T_t^s}
-=\norm{\presuper{i}T_t^{\delta_i}\presuper{i}T_{\delta_i}^s-\presuper{i-1}T_t^{\delta_i}\presuper{i-1}T_{\delta_i}^s}
-&\leq
-\norm{\presuper{i}T_t^{\delta_i}-\presuper{i-1}T_t^{\delta_i}}
-+
-\norm{\presuper{i}T_{\delta_i}^s-\presuper{i-1}T_{\delta_i}^s}\\
-&=\norm{\presuper{i}T_t^{\delta_i}-\presuper{i-1}T_t^{\delta_i}}
-\leq\delta_i\norm{Q_i-Q_{i-1}},
-\end{align*}
-where the first inequality follows from Lemma~\ref{lemma:recursive}, the second equality follows from the first case above, and the last inequality follows from the second case above. Hence, in all three cases, we find that $\norm{\presuper{i}T_t^s-\presuper{i-1}T_t^s}\leq\delta_i\norm{Q_i-Q_{i-1}}$. Since this inequality holds for any $t,s\in\realsnonneg$ such that $s\geq t$, it now follows from Equation~\eqref{eq:trans_mat_system_metric} that $d(\mathcal{T}_i,\mathcal{T}_{i-1})\leq\delta_i\norm{Q_i-Q_{i-1}}$.
-
-
-Using this inequality, and because $d$ is a metric, Equation~\eqref{eq:cauchyexample} can now easily be proven. It suffices to choose $n_\epsilon$ in such a way that $c2^{-n_\epsilon}<\epsilon$. Indeed, in that case, for any $k,\ell>n_\epsilon$, if we assume---without loss of generality---that $k\leq\ell$, it follows that
- \begin{equation*}
-d(\mathcal{T}_{k},\mathcal{T}_\ell)
-\leq\sum_{i=k+1}^{\ell}d(\mathcal{T}_{i-1},\mathcal{T}_i)
-\leq\sum_{i=k+1}^{\ell}\delta_i\norm{Q_i-Q_{i-1}}
-\leq c\sum_{i=k+1}^{\ell}\delta_i
- \end{equation*}
-and therefore, since we also know that
-\begin{equation*}
-\sum_{i=k+1}^{\ell}\delta_i
-\leq
-\sum_{i=k+1}^{+\infty}\delta_i
-=\sum_{i=k+1}^{+\infty}2^{-i}
-=2^{-k},
-\end{equation*}
-it follows that $\smash{d(\mathcal{T}_{k},\mathcal{T}_\ell)\leq c 2^{-k}\leq c 2^{-n_\epsilon}}<\epsilon$, as required.
-
-As a side result, we also obtain a similar bound on the distance between $\mathcal{T}_k$ and $\mathcal{T}$. For any $\ell\geq k$, we know that
-\begin{equation*}
-d(\mathcal{T}_k,\mathcal{T})
-\leq d(\mathcal{T}_k,\mathcal{T}_\ell)+d(\mathcal{T}_\ell,\mathcal{T})\leq c 2^{-k}+d(\mathcal{T}_\ell,\mathcal{T}),
-\end{equation*}
-and therefore, since $\mathcal{T}=\lim_{\ell\to+\infty}\mathcal{T}_\ell$, it follows that $d(\mathcal{T}_k,\mathcal{T})\leq c 2^{-k}$.
-\end{proof}
-
-\begin{proof}[Proof of Example~\ref{exmp:limit_trans_mat_system_matrices}]
-We start by proving that Equation~\eqref{eq:ex4:def} gives us the transition matrix from $0$ to $t$ that corresponds to the transition matrix system $\mathcal{T}$. To this end, we first establish some properties. 
-Consider any $t\in(0,1]$ and let $j$ be the unique element of $\nats_0$ such that $\delta_{j+1}< t\leq\delta_j$. If $j$ is odd, it follows from Equations~\eqref{eq:ex4:phi1} and~\eqref{eq:ex4:phi2} that
-\begin{equation*}
-\varphi_1(t)=t-\nicefrac{2}{3}\delta_{j+1}=(t-\delta_{j+1})+\nicefrac{1}{3}\delta_{j+1}=(t-\delta_{j+1})+\varphi_1(\delta_{j+1})
-\end{equation*}
-and $\varphi_2(t)=\nicefrac{2}{3}\delta_{j+1}=\varphi_2(\delta_{j+1})$. Similarly, if $j$ is even, it follows that $\varphi_1(t)=\varphi_1(\delta_{j+1})$ and $\varphi_2(t)=\varphi_2(\delta_{j+1})+(t-\delta_{j+1})$. Hence, in both cases, we have that
-\begin{equation*}
-Q_1\varphi_1(t)+Q_2\varphi_2(t)=Q_1\varphi_1(\delta_{j+1})+Q_2\varphi_2(\delta_{j+1})+Q_j(t-\delta_{j+1}).
-\end{equation*}
-Therefore, and since $Q_1$ and $Q_2$ commute, it now follows from Equation~\eqref{eq:ex4:def} that
-\vspace{3pt}
-\begin{align}\label{eq:ex4:recursestar}
-T_0^{t}
-=e^{Q_1\varphi_1(t)+Q_2\varphi_2(t)}
-&=e^{Q_1\varphi_1(\delta_{j+1})+Q_2\varphi_2(\delta_{j+1})+Q_j(t-\delta_{j+1})}\notag\\
-&=e^{Q_1\varphi_1(\delta_{j+1})+Q_2\varphi_2(\delta_{j+1})}e^{Q_j(t-\delta_{j+1})}
-=T_0^{\delta_{j+1}}e^{Q_j(t-\delta_{j+1})}.
-\end{align}
-For large enough $k\in\nats$, a similar statement holds for the transition matrix $\presuper{k}T_0^{t}$ that corresponds to $\mathcal{T}_k$. In particular, Equation~\eqref{eq:def:sequenceinexample3} implies that
-\begin{equation}\label{eq:ex4:recursek}
-\presuper{k}T_0^{t}
-=\presuper{k}T_0^{\delta_{j+1}}e^{Q_j(t-\delta_{j+1})}
-~~\text{ for all $k\geq j$}
-\end{equation}
-Hence, for all $j\in\nats_0$, by choosing $t=\delta_j$, and because $\delta_j-\delta_{j+1}=\delta_{j+1}$, it follows that
-\begin{equation}\label{eq:ex4:recursekandstar}
-T_0^{\delta_j}
-=T_0^{\delta_{j+1}}e^{Q_j\delta_{j+1}}
-~\text{ and }~
-\presuper{k}T_0^{\delta_j}
-=\presuper{k}T_0^{\delta_{j+1}}e^{Q_j\delta_{j+1}}
-~\text{ for all $k\geq j$.}
-\vspace{3pt}
-\end{equation}
-Finally, for all $k\in\nats_0$, it follows from Equations~\eqref{eq:ex4:def}--\eqref{eq:ex4:phi2} and~\eqref{eq:def:sequenceinexample3} that
-\begin{equation}\label{eq:ex4:finalstep}
-T_0^{\delta_{k}}
-=e^{Q_k\nicefrac{2}{3}\delta_k+Q_{k+1}\nicefrac{1}{3}\delta_k}
-~\text{ and }~
-\presuper{k}T_0^{\delta_{k}}
-=e^{Q_k\delta_k}
-~\text{ for all $k\in\nats_0$}.
-\end{equation}
-
-
-Using these properties, proving that Equation~\eqref{eq:ex4:def} gives us the transition matrix from $0$ to $t$ that corresponds to the transition matrix system $\mathcal{T}$, is now relatively easy. Consider any $t\in(0,1]$, let $i$ be the unique element of $\nats_0$ such that $\delta_{i+1}< t\leq\delta_i$, and fix any $k\geq i$. Then on the one hand, we find that
-\vspace{5pt}
-\begin{align*}
-\norm{T_0^t-\presuper{k}T_0^t}
-&=
-\norm{T_0^{\delta_{i+1}}e^{Q_i(t-\delta_{i+1})}-\presuper{k}T_0^{\delta_{i+1}}e^{Q_i(t-\delta_{i+1})}}\\
-&\leq
-\norm{T_0^{\delta_{i+1}}-\presuper{k}T_0^{\delta_{i+1}}}
-+
-\norm{e^{Q_i(t-\delta_{i+1})}-e^{Q_i(t-\delta_{i+1})}}\\
-&=
-\norm{T_0^{\delta_{i+1}}-\presuper{k}T_0^{\delta_{i+1}}}
-=
-\norm{T_0^{\delta_{i+2}}e^{Q_{i+1}\delta_{i+2}}-\presuper{k}T_0^{\delta_{i+2}}e^{Q_{i+1}\delta_{i+2}}}\\
-&\quad\quad\quad\quad\quad\quad\quad\quad~\,\,\leq
-\norm{T_0^{\delta_{i+2}}-\presuper{k}T_0^{\delta_{i+2}}}
-+
-\norm{e^{Q_{i+1}\delta_{i+2}}-e^{Q_{i+1}\delta_{i+2}}}\\
-&\quad\quad\quad\quad\quad\quad\quad\quad~\,\,=
-\norm{T_0^{\delta_{i+2}}-\presuper{k}T_0^{\delta_{i+2}}}
-\leq\dots\leq
-\norm{T_0^{\delta_{k}}-\presuper{k}T_0^{\delta_{k}}},\\[-10pt]
-%\vspace{5pt}
-\end{align*}
-where the first equality follows from Equations~\eqref{eq:ex4:recursestar} and~\eqref{eq:ex4:recursek}, the first inequality follows from Lemma~\ref{lemma:recursive} in Appendix~\ref{app:systems}, the third equality follows from Equation~\eqref{eq:ex4:recursekandstar}, the second equality is again due to Lemma~\ref{lemma:recursive}, and the remaining steps consist in repeating the last steps over and over again.
-On the other hand, we also know that
-\vspace{5pt}
-\begin{align*}
-\norm{T_0^{\delta_{k}}-\presuper{k}T_0^{\delta_{k}}}
-&=
-\norm{e^{Q_k\nicefrac{2}{3}\delta_k+Q_{k+1}\nicefrac{1}{3}\delta_k}
--e^{Q_k\delta_k}}\\
-&=
-\norm{e^{Q_k\nicefrac{2}{3}\delta_k}e^{Q_{k+1}\nicefrac{1}{3}\delta_k}
--e^{Q_k\nicefrac{2}{3}\delta_k}e^{Q_k\nicefrac{1}{3}\delta_k}}\\
-&\leq
-\norm{e^{Q_k\nicefrac{2}{3}\delta_k}
--e^{Q_k\nicefrac{2}{3}\delta_k}}
-+
-\norm{e^{Q_{k+1}\nicefrac{1}{3}\delta_k}
--e^{Q_k\nicefrac{1}{3}\delta_k}}\\
-&=\norm{e^{Q_{k+1}\nicefrac{1}{3}\delta_k}
--e^{Q_k\nicefrac{1}{3}\delta_k}}
-\leq\delta_k\norm{Q_k-Q_{k+1}}
-=\delta_k\norm{Q_1-Q_2},\\[-10pt]
-\end{align*}
-where the first equality follows from Equation~\eqref{eq:ex4:recursekandstar}, the second equality holds because $Q_1$ and $Q_2$ commute, and the two inequalities follow from Lemmas~\ref{lemma:recursive} and~\ref{lemma:differencebetweenexponentials} in Appendix~\ref{app:systems}. Hence, we find that $\norm{T_0^t-\presuper{k}T_0^t}\leq\delta_k\norm{Q_1-Q_2}$. Since this is true for any $k\geq i$, it follows that $\lim_{k\to+\infty}\presuper{k}T_0^t=T_0^t$. Therefore, because $\mathcal{T}\coloneqq \lim_{i\to\infty}\mathcal{T}_i$, we can conclude that $T_0^t$ indeed corresponds to $\mathcal{T}$.
-
-We end this proof by showing that the transition matrix system $\mathcal{T}$ is well-behaved. Let $M\coloneqq\max\{\norm{Q_1},\norm{Q_2}\}$. We will prove that
-\begin{equation*}
-\frac{1}{\Delta}\norm{T_t^s-I}\leq M
-~~\text{for all $t,s,\Delta\in\reals_{\geq0}$ such that $s=t+\Delta$.}
-\end{equation*}
-According to Definition~\ref{def:well_behaved_trans_mat_system}, this clearly implies that $\mathcal{T}$ is well-behaved.
-
-So fix any $t,s,\Delta\in\reals_{\geq0}$ such that $s=t+\Delta$ and consider any $\epsilon>0$. Then since $\lim_{i\to+\infty}\presuper{i}T_t^s=T_t^s$, there is some $j\in\nats$ such that $\norm{T_t^s-\presuper{j}T_t^s}\leq\epsilon$. Furthermore, since $Q_1$ and $Q_2$ commute, it follows from Equation~\eqref{eq:def:sequenceinexample3} that there are $\Delta_1,\Delta_2\in\reals_{\geq0}$ such that $\Delta_1+\Delta_2=\Delta$ and $\presuper{j}T_t^s=e^{Q_1\Delta_1}e^{Q_2\Delta_2}$. Therefore, we find that
-\begin{align*}
-\norm{T_t^s-I}
-\leq
-\norm{T_t^s-\presuper{j}T_t^s}
-+
-\norm{e^{Q_1\Delta_1}e^{Q_2\Delta_2}-I}
-&\leq
-\epsilon
-+
-\norm{e^{Q_1\Delta_1}-I}
-+\norm{e^{Q_2\Delta_2}-I}\\
-&\leq
-\epsilon+
-\Delta_1\norm{Q_1}
-+
-\Delta_2\norm{Q_2}
-\leq\Delta M,
-\end{align*}
-where the second and third inequalities follow from Lemma~\ref{lemma:recursive} and~\ref{lemma:linearboundonexponential} in Appendix~\ref{app:systems}, respectively.
-\end{proof}
-
-\begin{proof}[Proof of Example~\ref{exmp:notwellbehavedMarkov}]
-We will prove that the transition matrix system $\mathcal{T}$ from Example~\ref{exmp:notwellbehavedMarkov} is not well-behaved.
-In order to do this, we first fix any $n\in\nats_0$ and any $\Delta\in(0,\delta_n]$, and we let $i\geq n$ be the unique element of $\nats_0$ such that $\delta_{i+1}<\Delta\leq\delta_i$. It then follows from Equation~\eqref{eq:def:sequenceinexample3} that $\presuper{i}T_0^{\Delta}=e^{Q_i\Delta}$, and therefore, we find that
-\begin{equation*}
-%\Delta\norm{Q_i}
-%=
-\norm{\Delta Q_i}
-\leq
-\norm{e^{Q_i\Delta}-(I+\Delta Q_i)}
-+
-\norm{T_0^\Delta-\presuper{i}T_0^\Delta}
-+
-\norm{T_0^\Delta-I}
-\leq\Delta^2\norm{Q_i}^2+2^{-i}+\norm{T_0^\Delta-I},
-\end{equation*}
-where the first inequality holds because $\norm{\cdot}$ is a norm, and where the second inequality holds because of Lemma~\ref{lemma:linearpartofexponential} and because---as proved at the end of the proof of Example~\ref{exmp:limit_trans_mat_system}---$d(\mathcal{T}_i,\mathcal{T})\leq c2^{-i}=2^{-i}$. Hence, since $\norm{Q_i}=\norm{iQ}=i\norm{Q}=i$, we find that
-\begin{equation*}
-\frac{1}{\Delta}\norm{T_0^\Delta-I}
-\geq
-\norm{Q_i}-\Delta\norm{Q_i}^2-\frac{1}{\Delta}2^{-i}
-=
-i-\Delta i^2-\frac{1}{\Delta}2^{-i}
-\geq
-i-\delta_i i^2-\frac{1}{\delta_{i+1}}2^{-i}
-%=i-2^{-i}i^2-2
-\end{equation*}
-and therefore, because $\delta_i=2^{-i}$, $\delta_{i+1}=2^{-i-1}$, $2^i\geq i$ and $i\geq n$, it follows that
-\begin{equation}\label{eq:exmp:notwellbehavedMarkov}
-\frac{1}{\Delta}\norm{T_0^\Delta-I}
-\geq
-i-2^{-i}i^2-2
-\geq
-i-\frac{1}{2}i-2
-=\frac{i}{2}-2
-\geq\frac{n}{2}-2.
-\end{equation}
-Since $\Delta\in(0,\delta_n]$ is arbitrary, this inequality immediately implies that
-\begin{equation*}
-\limsup_{\Delta\to 0^{+}}\frac{1}{\Delta}\norm{T_{0}^{\Delta}-I}\geq\frac{n}{2}-2.
-\end{equation*}
-and therefore, since this is true for every $n\in\nats_0$, we infer from Definition~\ref{def:well_behaved_trans_mat_system} that $\mathcal{T}$ is not well-behaved, because the definition clearly fails for $t=0$.
-\end{proof}
-
-\begin{proof}[Proof of Example~\ref{exmp:well-behaved-no-deriv}]
-We will prove that Equation~\eqref{eq:exmp:well-behaved-no-deriv} indeed holds. So fix any $\lambda\in[\nicefrac{1}{3},\nicefrac{2}{3}]$ and consider the sequence $\{\Delta_i\}_{i\in\nats_0}\to0^+$ whose elements are defined by \mbox{$\Delta_i\coloneqq\nicefrac{(2\delta_{2i+1})}{(3\lambda)}$}. For all $i\in\nats_0$, we then find that
-\begin{multline*}
-\varphi_1(\Delta_i)Q_1+\varphi_2(\Delta_i)Q_2
-=\frac{2}{3}\delta_{2i+1}Q_1+(\Delta_i-\frac{2}{3}\delta_{2i+1})Q_2\\
-=\lambda\Delta_i Q_1+(1-\lambda)\Delta_i Q_2
-=Q_\lambda \Delta_i,
-\end{multline*}
-where the first equality follows from Equations~\eqref{eq:ex4:phi1} and~\eqref{eq:ex4:phi2}---because $\nicefrac{1}{(3\lambda)}\in[\nicefrac{1}{2},1]$ implies that $\delta_{2i+1}\leq\Delta_i\leq\delta_{2i}$.
-Hence, for all $i\in\nats_0$, Equation~\eqref{eq:ex4:def} now tells us that $T_0^{\Delta_i}=e^{Q_\lambda\Delta_i}$.
-Therefore, and because $\{\Delta_{i}\}_{i\in\nats_0}\to0^+$, we find that indeed, as required,
-\begin{equation}\label{eq:exmp:well-behaved-no-deriv2}
-\lim_{i\to+\infty}
-\frac{1}{\Delta_i}
-(T^{\Delta_i}_{0}-I)
-=
-\lim_{i\to+\infty}
-\frac{1}{\Delta_{i}}
-(e^{Q_\lambda\Delta_{i}}-I)
-={\frac{d}{dt}e^{Q_\lambda t}}\big\vert_{t=0}
-=Q_\lambda,
-\end{equation}
-where we use Lemma~\ref{lemma:deriv_exponential_trans} to establish the last equality. 
-\end{proof}
-
-\begin{proof}[Proof of Example~\ref{exmp:outerderivative}]
-Showing that $\{Q_\lambda\colon \lambda\in[\nicefrac{1}{3},\nicefrac{2}{3}]\}$ is a subset of $\smash{\overline{\partial}}_+T_0^0$ was, essentially, already done in Example~\ref{exmp:well-behaved-no-deriv}, because for every $\lambda\in[\nicefrac{1}{3},\nicefrac{2}{3}]$, it follows from Equation~\eqref{eq:exmp:well-behaved-no-deriv2} and Definition~\ref{def:direc_partial_deriv} that $Q_\lambda\in\smash{\overline{\partial}}_+T_0^0$. Therefore, we only need to show that $\smash{\overline{\partial}}_+T_0^0$ is a subset of $\{Q_\lambda\colon \lambda\in[\nicefrac{1}{3},\nicefrac{2}{3}]\}$, or equivalently, we need to show that for every $Q\in\smash{\overline{\partial}}_+T_0^0$, there is some $\lambda\in[\nicefrac{1}{3},\nicefrac{2}{3}]$ such that $Q=Q_\lambda$.
-
-So consider any $Q\in\overline{\partial}_+T_0^0$. Definition~\ref{def:outerpartialderivatives} then implies the existence of a sequence $\{\Delta_i\}_{i\in\nats_0}\to 0^+$ such that 
-\begin{equation}\label{eq:exmp:outerderivative}
-\lim_{i\to+\infty}\nicefrac{1}{\Delta_i}(T_0^{\Delta_i}-I)=Q.
-\end{equation}
-
-The first step of the proof is to observe that, for every $t\in(0,1]$, $\varphi_1(t)+\varphi_2(t)=t$ and $\nicefrac{1}{3}t\leq\varphi_1(t)\leq\nicefrac{2}{3}t$; we leave this as an exercise. Given this observation, it follows that for all $t\in(0,1]$, there is some $\lambda_t\in[\nicefrac{1}{3},\nicefrac{2}{3}]$ such that $\varphi_1(t)=\lambda_t t$ and $\varphi_2(t)=(1-\lambda_t)t$. Hence, in particular, for every $i\in\nats$, there is some $\lambda_i\in[\nicefrac{1}{3},\nicefrac{2}{3}]$ such that $\varphi_1(\Delta_i)=\lambda_i \Delta_i$ and $\varphi_2(\Delta_i)=(1-\lambda_i)\Delta_i$ and therefore also, due to Equation~\eqref{eq:ex4:def}, $\smash{T_0^{\Delta_i}=e^{Q_{\lambda_i}\Delta_i}}$.
-Furthermore, because of the Bolzano-Weierstrass theorem, the sequence $\{\lambda_i\}_{i\in\nats_0}$ contains a convergent subsequence $\{\lambda_{i_k}\}_{k\in\nats_0}$ whose limit $\lambda\coloneqq\lim_{k\to+\infty}\lambda_{i_k}$ clearly belongs to $[\nicefrac{1}{3},\nicefrac{2}{3}]$. 
-
-In the remainder of this proof, we will show that $Q=Q_\lambda$. To this end, let us fix any $\epsilon>0$ and prove that $\norm{Q-Q_\lambda}<\epsilon$. First of all, since $\lambda=\lim_{k\to+\infty}\lambda_{i_k}$, there is some $n_1\in\nats_0$ such that, for all $k\geq n_1$, $\abs{\lambda-\lambda_{i_k}}\norm{Q_1-Q_2}<\nicefrac{\epsilon}{3}$ and therefore also
-\begin{equation}\label{eq:exmp:outerderivative1}
-\norm{Q_\lambda-Q_{\lambda_{i_k}}}
-=\norm{(\lambda-\lambda_{i_k})(Q_1-Q_2)}
-=\abs{\lambda-\lambda_{i_k}}\norm{Q_1-Q_2}\leq\frac{\epsilon}{3}.
-\end{equation}
-Secondly, Equation~\eqref{eq:exmp:outerderivative} implies that there is some $n_2\in\nats_0$ such that
-\begin{equation}\label{eq:exmp:outerderivative2}
-\norm{\nicefrac{1}{\Delta_{i_k}}(T_0^{\Delta_{i_k}}-I)-Q}<\frac{\epsilon}{3}
-~\text{ for all $k\geq n_2$}.
-\end{equation}
-Thirdly, Lemma~\ref{lemma:deriv_exponential_trans} implies that there is some $n_3\in\nats_0$ such that
-\begin{equation}\label{eq:exmp:outerderivative3}
-\norm{\nicefrac{1}{\Delta_{i_k}}(e^{Q_{\lambda_{i_k}}\Delta_{i_k}}-I)-Q_{\lambda_{i_k}}} < \frac{\epsilon}{3}
-~\text{ for all $k\geq n_3$.}
-\end{equation}
-Consider now any $k\geq\max\{n_1,n_2,n_3\}$. Then since $T_0^{\Delta_{i_k}}=e^{Q_{\lambda_{i_k}}\Delta_{i_k}}$, it follows from Equations~\eqref{eq:exmp:outerderivative1}--\eqref{eq:exmp:outerderivative3} that
-\begin{align*}
-\norm{Q - Q_{\lambda}} \leq 
-\norm{Q-\nicefrac{1}{\Delta_{i_k}}(T_0^{\Delta_{i_k}}-I)}
-+
-\norm{\nicefrac{1}{\Delta_{i_k}}(e^{Q_{\lambda_{i_k}}\Delta_{i_k}}-I)-Q_{\lambda_{i_k}}}
-+
-\norm{Q_{\lambda_{i_k}}-Q_\lambda}
-\leq\epsilon.
-\end{align*}
-Since this is true for every $\epsilon\in\realspos$, it follows that $\norm{Q-Q_{\lambda}}=0$, and therefore also, that $Q=Q_\lambda$, as desired.
-\end{proof}
-
-\begin{proof}[Proof of Example~\ref{exmp:emptyouterderivative}]
-We will prove that the right-sided outer partial derivative $\smash{\overline{\partial}}_+T_0^0$ is empty. To this end, assume \emph{ex absurdo} that it is not empty, and consider any $Q\in\smash{\overline{\partial}}_+T_0^0$. It then follows from Equation~\eqref{eq:rightouterderivative} that there is a sequence $\{\Delta_i\}_{i\in\nats}\to0^+$ such that $\smash{\lim_{i\to+\infty}\nicefrac{1}{\Delta_i}
-(T^{\Delta_i}_{0}-I)
-=Q}$. Consider now any $\epsilon>0$, any $n\in\nats_0$ such that $n\geq4+2\norm{Q}+2\epsilon$, let $\delta_n\coloneqq 2^{-n}$ as in Example~\ref{exmp:notwellbehavedMarkov}, and consider any $i^*\in\nats$ such that, for all $i\geq i^*$, $\Delta_i\in(0,\delta_n)$---such an $i^*$ always exists because $\{\Delta_i\}_{i\in\nats}\to0^+$. For all $i\geq i^*$, using Equation~\eqref{eq:exmp:notwellbehavedMarkov} from the proof of Example~\ref{exmp:notwellbehavedMarkov}, we then find that
-\begin{equation*}
-\norm{\frac{1}{\Delta_i}(T_0^{\Delta_i}-I)-Q}
-\geq
-\norm{\frac{1}{\Delta_i}(T_0^{\Delta_i}-I)}-\norm{Q}
-\geq
-\frac{n}{2}-2-\norm{Q}\geq\epsilon,
-\end{equation*}
-which, since $\epsilon>0$, contradicts the fact that $\smash{\lim_{i\to+\infty}\nicefrac{1}{\Delta_i}
-(T^{\Delta_i}_{0}-I)
-=Q}$. Hence, our assumption must be wrong, and it follows that $\smash{\overline{\partial}}_+T_0^0$ is indeed empty.
-\end{proof}
-
-\begin{proof}[Proof of Example~\ref{example:different_sets_same_lower_rate}]
-Let $\lrate_1$ and $\lrate_2$ be the lower transition rate operators that correspond to $\rateset_1$ and $\rateset_2$, respectively, %We will show that $\lrate_1=\lrate_2$.
-and consider any $f\in\gamblesX$. Equation~\eqref{eq:correspondinglowertrans} then implies that $\lrate_1f\leq Af$ and $\lrate_1f\leq Bf$, which in turn implies that $\lrate_1f\leq Cf$. Therefore, by applying Equation~\eqref{eq:correspondinglowertrans} once more, we find that $\lrate_1 f\leq\lrate_2 f$. Hence, since Equation~\eqref{eq:correspondinglowertrans} also trivially implies that $\lrate_2 f\leq\lrate_1 f$, we find that $\lrate_1 f=\lrate_2 f$. Since this is true for any $f\in\gamblesX$, we conclude that $\lrate_1=\lrate_2$.
-\end{proof}
-
-\begin{proof}[Proof of Example~\ref{ex:dominatingset}]
-We will prove that $\lrate$ is also the lower transition rate operator corresponding to $\rateset^*$. First of all, for any $Q\in\rateset^*$, $f\in\gamblesX$ and $x\in\states$, it follows from Equations~\eqref{eq:ex:dominatingset:globaldef} and~\eqref{eq:ex:dominatingset:localdef} that there is some $\lambda\in[0,1]$ such that
-\begin{equation*}
-[Qf](x)=\lambda[Af](x)+(1-\lambda)[Bf](x)
-\geq\lambda[\lrate f](x)+(1-\lambda)[\lrate f](x)
-=[\lrate f](x),
-\end{equation*}
-where the inequality holds because $\lrate$ is the lower envelope of $\rateset_1$. Since this is true for all $x\in\states$, we find that $Qf\geq\lrate f$. Since this is true for all $f\in\gamblesX$ and all $Q\in\rateset^*$, it follows that $\rateset^*\subseteq\rateset_{\lrate}$. 
-
-
-Let now $\lrate^*$ be the lower transition rate operator that corresponds to $\rateset^*$ and consider any $f\in\gamblesX$. Then, because $\rateset^*\subseteq\rateset_{\lrate}$, we find that $\lrate^*f\geq\lrate f$. Similarly, since $\rateset_1$ is clearly a subset of $\rateset^*$, we find that $\lrate^*f\leq\lrate_1f$. Since $\lrate_1=\lrate$, it follows that $\lrate f\leq \lrate^*f\leq \lrate f$, and because this holds for any $f\in\gamblesX$, we conclude that $\lrate^*=\lrate$.
-\end{proof}
-
-
 
 
 \end{document}
