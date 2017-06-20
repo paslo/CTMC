@@ -313,7 +313,7 @@ Of course, skipping parts of the paper may introduce some ambiguity about the me
 
 %\begin{table}[htb]
 %\begin{tabularx}{\textwidth}{lXl}
-\begin{longtable}{ l p{.57\textwidth} l }
+\begin{longtable}{ l p{.68\textwidth} l }
 {\bf Symbol or term} & {\bf Explanation} & {\bf Page} \\[3pt]
 \endhead
 $u$ & \raggedright finite, ordered sequence of time points & \placeref{notation:sequenceset} \\
@@ -346,9 +346,9 @@ $\mathcal{M}$ & \raggedright initial set of probability mass functions & \placer
 % $P\sim\rateset$, $P\sim\mathcal{M}$ & stochastic process $P$ \emph{consistent} with a set $\rateset$ (resp. with $\mathcal{M}$) & \placeref{def:consistent_process}, \placeref{def:consistent_process_initialdistribution} \\
 % $\mathcal{P}$ & a set of stochastic processes, $\mathcal{P}\subseteq\processes$ & --- \\
 % $\mathcal{P}_{\rateset,\mathcal{M}}$ & the subset of $\mathcal{P}$ \emph{consistent} with $\rateset$ and $\mathcal{M}$ & \placeref{def:consistent_process_set} \\
-$\wprocesses_{\rateset,\mathcal{M}}$, $\wmprocesses_{\rateset,\mathcal{M}}$, $\whmprocesses_{\rateset,\mathcal{M}}$ & \raggedright three different types of ICTMC's; also see Definition~\ref{def:consistent_process_set} and $\wprocesses$, $\wmprocesses$ and $\whmprocesses$  & \placeref{def:process_sets} \\
+$\wprocesses_{\rateset,\mathcal{M}}$, $\wmprocesses_{\rateset,\mathcal{M}}$, $\whmprocesses_{\rateset,\mathcal{M}}$ & \raggedright three different types of imprecise continuous-time Markov chains; also see Definition~\ref{def:consistent_process_set} and $\wprocesses$, $\wmprocesses$ and $\whmprocesses$  & \placeref{def:process_sets} \\
 %$\underline{\mathbb{E}}$ & lower expectation operator & \placeref{def:lower_exp} \\
-$\underline{\mathbb{E}}^\mathrm{W}_{\rateset,\mathcal{M}}$, $\underline{\mathbb{E}}^\mathrm{WM}_{\rateset,\mathcal{M}}$, $\underline{\mathbb{E}}^\mathrm{WHM}_{\rateset,\mathcal{M}}$ & \raggedright lower expectation operators of the ICTMC's $\wprocesses_{\rateset,\mathcal{M}}$, $\wmprocesses_{\rateset,\mathcal{M}}$ and $\whmprocesses_{\rateset,\mathcal{M}}$ & \placeref{def:lower_exp} \\
+$\underline{\mathbb{E}}^\mathrm{W}_{\rateset,\mathcal{M}}$, $\underline{\mathbb{E}}^\mathrm{WM}_{\rateset,\mathcal{M}}$, $\underline{\mathbb{E}}^\mathrm{WHM}_{\rateset,\mathcal{M}}$ & \raggedright lower expectation operators of the imprecise continuous-time Markov chains $\wprocesses_{\rateset,\mathcal{M}}$, $\wmprocesses_{\rateset,\mathcal{M}}$ and $\whmprocesses_{\rateset,\mathcal{M}}$ & \placeref{def:lower_exp} \\
 $\lrate$ & \raggedright lower transition rate operator%, $\lrate: \gamblesX\to\gamblesX$ 
 & \placeref{def:coh_low_trans_rate}
 %, \placeref{eq:correspondinglowertrans}
@@ -644,8 +644,10 @@ Consider two closed intervals $\mathbf{I},\mathbf{J}\subseteq\realsnonneg$ such 
 
 \begin{exmp}\label{exmp:combinetwoexponentials}
 Consider any two rate matrices $Q_1,Q_2\in\mathcal{R}$ such that $Q_1\neq Q_2$, and let $\mathcal{T}_{Q_1}$ and $\mathcal{T}_{Q_2}$ be their exponential transition matrix systems, which, as we know from Proposition~\ref{prop:systemQ}, are well-behaved. Now choose any $r\in\realsnonneg$ and define
+\vspace{-3pt}
 \begin{equation*}
 \mathcal{T} \coloneqq \mathcal{T}_{Q_1}^{[0,r]} \otimes \mathcal{T}_{Q_2}^{[r,+\infty)}\,.
+\vspace{6pt}
 \end{equation*}
 It then follows from Proposition~\ref{prop:concat_restr_trans_mat_systems_is_system} that $\mathcal{T}$ is a well-behaved transition matrix system. Furthermore, for any $t,s\in\realsnonneg$ such that $t\leq r\leq s$, the transition matrix $T_t^s$ that corresponds to $\mathcal{T}$ is given by $T_t^s = T_t^rT_r^s = e^{Q_1(r-t)}e^{Q_2(s-r)}$.
 \exampleend
@@ -667,13 +669,15 @@ Note that this result includes as a special case that the set $\mathbfcal{T}$ of
 
 \begin{exmp}\label{exmp:limit_trans_mat_system}
 Consider some positive constant $c\in\realspos$ and let $\{Q_i\}_{i\in\nats_0}$ be a sequence of rate matrices such that, for all $i\in\nats$, $\norm{Q_i-Q_{i-1}}\leq c$.
-We can then construct the following sequence. For $i=0$, we let $\smash{\mathcal{T}_{0}\coloneqq\mathcal{T}_{Q_0}}$, and for all $i\in\nats$, we let%\vspace{-2pt}
+We can then construct the following sequence. For $i=0$, we let $\smash{\mathcal{T}_{0}\coloneqq\mathcal{T}_{Q_0}}$, and for all $i\in\nats$, we let
+\vspace{-2pt}
 \begin{equation}
 \mathcal{T}_i\coloneqq
 \mathcal{T}_{Q_i}^{[0,\delta_i]}\otimes \mathcal{T}_{i-1}^{[\delta_i,+\infty)}
 \label{eq:def:sequenceinexample3}
+\vspace{5pt}
 \end{equation}
-where, for all $i\in\nats_0$, $\delta_i\coloneqq 2^{-i}$. The resulting sequence $\smash{\{\mathcal{T}_i\}_{i\in\nats_0}}$ is then clearly a subset of $\mathbfcal{T}$ and, because of Proposition~\ref{prop:systemQ} and~\ref{prop:concat_restr_trans_mat_systems_is_system}, every transition matrix system in this sequence is well-behaved. Furthermore, as is proved in \exampleproofref, $\{\mathcal{T}_i\}_{i\in\nats_0}$ is a Cauchy sequence, which basically means that its elements become arbitrarily close to each other as the sequence progresses.
+where, for all $i\in\nats_0$, $\delta_i\coloneqq 2^{-i}$. The resulting sequence $\smash{\{\mathcal{T}_i\}_{i\in\nats_0}}$ is then clearly a subset of $\mathbfcal{T}$ and, because of Proposition~\ref{prop:systemQ} and~\ref{prop:concat_restr_trans_mat_systems_is_system}, every transition matrix system in this sequence is well-behaved. Furthermore, as we prove in \exampleproofref, $\{\mathcal{T}_i\}_{i\in\nats_0}$ is a Cauchy sequence, which basically means that its elements become arbitrarily close to each other as the sequence progresses.
 
 The reason why this is of interest to us is because in a complete metric space, every Cauchy sequence converges to a limit that belongs to the same space. Hence, since $\{\mathcal{T}_i\}_{i\in\nats_0}$ is Cauchy, Proposition~\ref{lemma:restricted_trans_mat_system_cauchy_converges} allows us to infer that $\{\mathcal{T}_i\}_{i\in\nats_0}$ converges to a limit $\mathcal{T}\coloneqq \lim_{i\to\infty}\mathcal{T}_i$ in $\mathbfcal{T}$.
 \exampleend
@@ -689,7 +693,7 @@ Let $Q_1,Q_2\in\mathcal{R}$ be two commuting rate matrices. For example, let $Q_
 
 Now let $\{Q_i\}_{i\in\nats_0}$ be defined by $Q_i\coloneqq Q_1$ if $i$ is odd and $Q_i\coloneqq Q_2$ if $i$ is even, define $\delta_i\coloneqq 2^{-i}$ for all $i\in\nats_0$, and consider the corresponding sequence of transition matrix systems $\{\mathcal{T}_i\}_{i\in\nats}$ that was defined in Example~\ref{exmp:limit_trans_mat_system}.  Since $\norm{Q_i-Q_{i-1}}=\norm{Q_1-Q_2}$ for all $i\in\nats$, the sequence $\{Q_i\}_{i\in\nats_0}$ clearly satisfies the conditions in Example~\ref{exmp:limit_trans_mat_system}---just choose $c=\norm{Q_1-Q_2}$---and therefore, as we have seen, $\{\mathcal{T}_i\}_{i\in\nats}$ converges to a limit $\mathcal{T}\coloneqq \lim_{i\to\infty}\mathcal{T}_i$ in $\mathbfcal{T}$. 
 
-As proved in \exampleproofref, it then holds that
+As we prove in \exampleproofref, it then holds that
 %In the first part of this example, we aim to show that 
 for any $t\in(0,1]$, the transition matrix from $0$ to $t$ that corresponds to the transition matrix system $\mathcal{T}$ is equal to
 \vspace{4pt}
@@ -823,7 +827,7 @@ Let $P$ be a real-valued map from $\mathcal{C}\subseteq\power\times\nonemptypowe
 with $C_0\coloneqq\cup_{i=1}^nC_i$.
 \end{definition}
 %We refer the interested reader to References~\cite{regazzini1985finitely,williams1975,Williams:2007eu, Vicig:2007gs,berti1991coherent, berti2002coherent} for an extensive discussion on this abstract concept, which may be given an intuitive gambling interpretation.
-The interested reader is invited to take a look at \cite[Appendix~H]{krak2017ictmcreport}, where we provide this abstract concept with an intuitive gambling interpretation. However, for our present purposes, this interpretation is not required. Instead, our motivation for introducing coherence stems from the following two results. First, if $\mathcal{C}=\power\times\nonemptypower$, then coherence is equivalent to the axioms of probability, that is, properties~\ref{def:coh_prob_2}--\ref{def:coh_prob_6}.%conditional probability is the same as a full conditional probability.
+The interested reader is invited to take a look at \cite[Appendix~H]{krak2017ictmcreport}, where we provide this abstract concept with an brief---and well-known---intuitive gambling interpretation; see References~\cite{regazzini1985finitely,williams1975,Williams:2007eu, Vicig:2007gs,berti1991coherent, berti2002coherent} for an extensive discussion. However, for our present purposes, this interpretation is not required. Instead, our motivation for introducing coherence stems from the following two results. First, if $\mathcal{C}=\power\times\nonemptypower$, then coherence is equivalent to the axioms of probability, that is, properties~\ref{def:coh_prob_2}--\ref{def:coh_prob_6}.%conditional probability is the same as a full conditional probability.
 \begin{theorem}{\cite[Theorem 3]{regazzini1985finitely}}\label{theo:fullcoherent}
 Let $P$ be a real-valued map from $\power\times\nonemptypower$ to $\reals$. Then $P$ is a coherent conditional probability if and only if it is a full conditional probability.
 \end{theorem}
@@ -859,8 +863,10 @@ Basically, a continuous-time stochastic process describes the behaviour of a sys
 A \emph{path} $\omega$ is a function from $\realsnonneg$ to $\states$, and we denote with $\omega(t)$ the value of $\omega$ at time $t$. For any sequence of time points $u\in\mathcal{U}$ and any path $\omega$, we will write $\omega\vert_{u}$ to denote the restriction of $\omega$ to $u\subset\realsnonneg$. Using this notation, we write for any $x_u\in\states_u$ that $\omega\vert_u=x_u$ if, for all $t\in u$, it holds that $\omega(t)=x_{t}$.%, with $x_t\in x_u$.
 
 The outcome space $\Omega$ of a stochastic process is a set of paths. Three commonly considered choices are to let $\Omega$ be the set of all paths, the set of all right-continuous paths~\cite{norris1998markov}, or the set of all cadlag paths (right-continuous paths with left-sided limits)~\cite{williams2000}. However, our results do not require such a specific choice. For the purposes of this paper, all that we require is that
+\vspace{-2pt}
 \begin{equation}\label{eq:path_exists_for_finite_points}
-(\forall u\in\mathcal{U}_\emptyset)(\forall x_u\in\states_u)(\exists \omega\in\Omega)~\omega\vert_u=x_u\,.
+(\forall u\in\mathcal{U}_\emptyset)(\forall x_u\in\states_u)(\exists \omega\in\Omega)~\omega\vert_u=x_u.
+\vspace{5pt}
 \end{equation}
 Thus, $\Omega$ must be chosen in such a way that, for any non-empty finite sequence of time points $u\in\mathcal{U}_\emptyset$ and any state assignment $x_u\in\states_u$ on those time points, there is at least one path $\omega\in\Omega$ that agrees with $x_u$ on $u$. Essentially, 
 %Equation~\eqref{eq:path_exists_for_finite_points} 
@@ -944,6 +950,7 @@ with $C_0\coloneqq \bigcup_{i=1}^n (X_0=x)=(X_0=x)$.
 While doing so, we can assume without loss of generality that $i\neq j$ implies $t_i\neq t_j$, because if $t_i=t_j$ for some $i\neq j$, then we can simply add the corresponding two summands in Equation~\eqref{exmp:coherence:eq:coherence}.
 
 Let $z\in\states$ be any state such that $z\neq y$, let $u\coloneqq(0,t_1,\ldots,t_n)\in\mathcal{U}$, and let $x_u\in\states_u$ be the unique state assignment such that $x_{0}\coloneqq x$ and
+\vspace{-2pt}
 \begin{equation*}
 x_{t_i}\coloneqq
 \begin{cases}
@@ -951,6 +958,7 @@ y & \text{if $\lambda_i<0$} \\
 z & \text{if $\lambda_i\geq0$}
 \end{cases}
 ~~\text{ for all $i\in\{1,\ldots,n\}$.}
+\vspace{5pt}
 \end{equation*}
 Furthermore, let $N_{<0}\coloneqq\{i\in\{1,\dots,n\}\colon \lambda_i<0\}$ and $N_{\geq0}\coloneqq\{i\in\{1,\dots,n\}\colon \lambda_i\geq0\}$.
 Since $n$ is finite, Equation~\eqref{eq:path_exists_for_finite_points} now guarantees that there is some $\omega\in\Omega$ such that $\omega\vert_{u}=x_u$. Evaluating the sum in Equation~\eqref{exmp:coherence:eq:coherence} using this $\omega$, we find that
@@ -1110,7 +1118,7 @@ Let $Q_1,Q_2\in\mathcal{R}$ be two commuting rate matrices such that $Q_1\neq Q_
 
 For now, we simply assume that this is possible. A formal proof for the existence of such a process requires some additional machinery, and we therefore postpone it to Example~\ref{exmp:twoexamplesofMarkovchains}, where we construct a well-behaved continuous-time Markov chain that is compatible with Equation~\eqref{eq:ex4:def}.
 
-The aim of the present example is to show that for any such process, the right-sided partial derivative $\partial_{+}{T_{0}^0}$---which corresponds to choosing $t=0$ and $u=\emptyset$ in Definition~\ref{def:direc_partial_deriv}---does not exist. The reason for this is that---as is proved in~\exampleproofref---for any $\lambda\in[\nicefrac{1}{3},\nicefrac{2}{3}]$, there is a sequence $\{\Delta_i\}_{i\in\nats_0}\to0^+$ such that
+The aim of the present example is to show that for any such process, the right-sided partial derivative $\partial_{+}{T_{0}^0}$---which corresponds to choosing $t=0$ and $u=\emptyset$ in Definition~\ref{def:direc_partial_deriv}---does not exist. The reason for this is that---as we prove in~\exampleproofref---for any $\lambda\in[\nicefrac{1}{3},\nicefrac{2}{3}]$, there is a sequence $\{\Delta_i\}_{i\in\nats_0}\to0^+$ such that
 \begin{equation}\label{eq:exmp:well-behaved-no-deriv}
 \lim_{i\to+\infty}
 \frac{1}{\Delta_i}
@@ -1120,7 +1128,7 @@ with $Q_\lambda\coloneqq \lambda Q_1+(1-\lambda)Q_2$. The reason why this indeed
 \exampleend
 \end{exmp}
 
-Observe, therefore, that the problem is essentially that the finite-difference expressions $\nicefrac{1}{\Delta}(T_{t,x_u}^{t+\Delta} - I)$ and $\nicefrac{1}{\Delta}(T_{t-\Delta,x_u}^{t} - I)$, parameterised in $\Delta$, can have multiple accumulation points as we take $\Delta$ to $0$. Therefore, it will be more convenient to instead work with what we call \emph{outer partial derivatives}. These can be seen as a kind of set-valued derivatives, containing all these accumulation points obtained as $\Delta\to0^+$.
+Observe, therefore, that the problem is essentially that each of the two finite-difference expressions $\nicefrac{1}{\Delta}(T_{t,x_u}^{t+\Delta} - I)$ and $\nicefrac{1}{\Delta}(T_{t-\Delta,x_u}^{t} - I)$, parameterised in $\Delta$, can have multiple accumulation points as we take $\Delta$ to $0$. Therefore, it will be more convenient to instead work with what we call \emph{outer partial derivatives}. These can be seen as a kind of set-valued derivatives, containing all these accumulation points obtained as $\Delta\to0^+$.
 
 \begin{definition}[Outer Partial Derivatives]\label{def:outerpartialderivatives}
 For any stochastic process $P\in\processes$, any $t\in\realsnonneg$, any sequence of time points $u\in\mathcal{U}_{<t}$, and any state assignment $x_u\in\states_u$, the \emph{right-sided outer partial derivative} of $T_{t,x_u}^t$ is defined by
@@ -1191,9 +1199,11 @@ The following two examples provide this result with some intuition. Example~\ref
 
 \begin{exmp}\label{exmp:outerderivative}
 Consider again the well-behaved stochastic process $P\in\wprocesses$ from Example~\ref{exmp:well-behaved-no-deriv} of which, for all $t\in(0,1]$, the transition matrix $T_0^t$ is given by Equation~\eqref{eq:ex4:def}. 
-As proved in~\exampleproofref, it holds for this particular process that
+As we prove in~\exampleproofref, it holds for this particular process that
+\vspace{-2pt}
 \begin{equation*}
 \smash{\overline{\partial}}_+T_0^0=\big\{Q_\lambda\colon \lambda\in[\nicefrac{1}{3},\nicefrac{2}{3}]\big\},
+\vspace{5pt}
 \end{equation*}
 where, for every $\lambda\in[\nicefrac{1}{3},\nicefrac{2}{3}]$, $Q_\lambda\coloneqq\lambda Q_1+(1-\lambda)Q_2$ as in Example~\ref{exmp:well-behaved-no-deriv}.
 \exampleend
@@ -1261,6 +1271,7 @@ A stochastic process that satisfies this property is called a \emph{Markov chain
 We already know from Proposition~\ref{prop:stochasticprocess:simpleproperties} that the transition matrices of a stochastic process---and therefore also, in particular, of a Markov chain---satisfy some simple properties. For the specific case of a Markov chain $P\in\mprocesses$, the family of transition matrices $\mathcal{T}_P$ also satisfies an additional property. In particular, for any $t,r,s\in\realsnonneg$ such that $t\leq r\leq s$, these transition matrices satisfy
 \begin{equation}\label{eq:markovintermsofmatrices}
 T_t^s = T_t^rT_r^s.
+\vspace{3pt}
 \end{equation}
 In this context, this property is known as the \emph{Chapman-Kolmogorov equation} or the semi-group property~\cite{liggett2010continuous}. Indeed, this is the same semi-group property that we defined in Section~\ref{sec:systems} to hold for transition matrix systems $\mathcal{T}$. The following result should therefore not be surprising.
 
@@ -1292,10 +1303,11 @@ As a final note, observe that not only does the Markov property simplify the con
 \subsection{Homogeneous Markov chains}\label{sec:homogen_markov_chain}
 
 \begin{definition}[Homogeneous Markov chain]\label{def:homogeneousMarkov}
-A Markov chain $P\in\mprocesses$ is called \emph{time-homogeneous}, or simply \emph{homogeneous}, if its transition matrices $T_t^s$ do not depend on the absolute value of $t$ and $s$, but only on the time-difference $s-t$:
+A Markov chain $P\in\mprocesses$ is called \emph{time-homogeneous}, or simply \emph{homogeneous}, if its transition matrices $T_t^s$ do not depend on the absolute value of $t$ and $s$, but only on the time-difference $s-t$:\vspace{-2pt}
 \begin{equation}\label{eq:homogeneousMarkov}
 T_t^s=T_0^{s-t}
 \text{~~for all $t,s\in\realsnonneg$ such that $t\leq s$.}
+\vspace{5pt}
 \end{equation}
 We denote the set of all homogeneous Markov chains by $\hmprocesses$ and use $\whmprocesses$ to refer to the subset that consists of the well-behaved homogeneous Markov chains.
 \end{definition}
@@ -1364,7 +1376,7 @@ Recall from Section~\ref{sec:dynamics} that for a given stochastic process $P\in
 Consider a non-empty bounded set of rate matrices $\rateset$ and a stochastic process $P\in\processes$. Then $P$ is said to be \emph{consistent} with $\rateset$ if
 \begin{equation*}
 (\forall t\in\realsnonneg)(\forall u\in\mathcal{U}_{<t})(\forall x_u\in\states_u)\,:\, \smash{\overline{\partial}}T_{t,x_u}^t \subseteq \rateset.
-\vspace{4pt}
+%\vspace{4pt}
 \end{equation*}
 If $P$ is consistent with $\rateset$, we will write $P\sim\rateset$.
 \end{definition}
@@ -1403,7 +1415,7 @@ For any non-empty bounded set of rate matrices $\rateset$, and any non-empty set
 \item $\whmprocesses_{\rateset,\mathcal{M}}$ is the consistent set of all well-behaved homogeneous Markov chains.
 \end{itemize}
 We call each of these three sets 
- an \emph{imprecise continuous-time Markov chain}, and abbreviate this as \ictmc.\footnote{For the set $\wprocesses_{\rateset,\mathcal{M}}$, one might wonder why we choose to call it an imprecise \emph{Markov} chain, since it contains processes that do not satisfy the Markov property. As we will see in Section~\ref{sec:single_var_lower_exp}, this choice of terminology is motivated by that fact that the set $\wprocesses_{\rateset,\mathcal{M}}$ itself---rather than its elements---satisfies a so-called \emph{imprecise Markov property}.} 
+ an \emph{imprecise continuous-time Markov chain}, and abbreviate this as \ictmc.\footnote{For the set $\smash{\wprocesses_{\rateset,\mathcal{M}}}$, one might wonder why we choose to call it an imprecise \emph{Markov} chain, since it contains processes that do not satisfy the Markov property. As we will see in Section~\ref{sec:single_var_lower_exp}, this choice of terminology is motivated by that fact that the set $\wprocesses_{\rateset,\mathcal{M}}$ itself---rather than its elements---satisfies a so-called \emph{imprecise Markov property}.} 
 Following Definition~\ref{def:consistent_process_set}, we will write $\wprocesses_{\rateset}$ when we take $\mathcal{M}$ to be the set of \emph{all} probability mass functions on $\states$, and similarly for $\wmprocesses_{\rateset}$ and $\whmprocesses_{\rateset}$.
 \end{definition}
 
@@ -1438,7 +1450,7 @@ The following example further illustrates the difference between the three types
 \begin{exmp}\label{example:rateset_not_singleton}
 Let $Q_1$ and $Q_2$ be two different transition rate matrices and consider the set $\rateset\coloneqq \{Q_1, Q_2\}$. Let furthermore $\mathcal{M}\coloneqq\{p\}$, with $p$ an arbitrary probability mass function on $\states$.
 
-The set $\whmprocesses_{\rateset,\mathcal{M}}$ then contains exactly two stochastic processes $P_1$ and $P_2$, each of which is a well-behaved homogeneous Markov chain. They both have $p$ as their initial distribution, in the sense that $P_1(X_0)=P_2(X_0)=p$, but their transition rate matrices $Q_{P_i}$, $i\in\{1,2\}$---whose existence is guaranteed by Theorem~\ref{theo:homogeneoushasQ}---are different: $Q_{P_1}=Q_1$, and $Q_{P_2}=Q_2$. 
+The set $\whmprocesses_{\rateset,\mathcal{M}}$ then contains exactly two stochastic processes $P_1$ and $P_2$, each of which is a well-behaved homogeneous Markov chain. They both have $p$ as their initial distribution, in the sense that $P_1(X_0)=P_2(X_0)=p$, but their transition rate matrices $Q_{P_i}$, $i\in\{1,2\}$---whose existence is guaranteed by Theorem~\ref{theo:homogeneoushasQ}---are different: $\smash{Q_{P_1}=Q_1}$, and $\smash{Q_{P_2}=Q_2}$. 
 The transition matrix systems of the Markov chains $P_1$ and $P_2$ are given by the exponential transition matrix systems $\mathcal{T}_{Q_1}$ and $\mathcal{T}_{Q_2}$, in that order, and the transition matrices of $P_1$ and $P_2$ are therefore given by $\presuper{1}T_t^s=e^{Q_1(s-t)}$ and $\presuper{2}T_t^s=e^{Q_2(s-t)}$, respectively. 
 
 Since $\whmprocesses_{\rateset,\mathcal{M}}$ is a subset of $\wmprocesses_{\rateset,\mathcal{M}}$, each of the two homogeneous Markov chains $P_1$ and $P_2$ belongs to $\smash{\wmprocesses_{\rateset,\mathcal{M}}}$ as well. However, $\smash{\wmprocesses_{\rateset,\mathcal{M}}}$ also contains additional processes, which are not homogeneous and therefore do not belong to $\whmprocesses_{\rateset,\mathcal{M}}$. 
@@ -1457,11 +1469,11 @@ Consider any non-empty bounded set of rate matrices $\rateset$ and let $\mathcal
 
 We conclude this section with some notes about closure properties of the different types of \ictmc's that we consider, which are particularly useful for existence proofs. In particular, we focus on closure properties under recombination of known elements---colloquially, the ``piecing together'' of two or more processes to construct a new process that belongs to the same \ictmc.
 
-The example above already suggested how to do this for $\smash{\wmprocesses_{\rateset,\mathcal{M}}}$, by combining two well-behaved homogeneous Markov chains $P_1,P_2\in\whmprocesses$ to form a new process $P\in\wmprocesses$. Similarly, but more generally, for any two processes $P_1,P_2\in\wmprocesses_{\rateset,\mathcal{M}}$, we can combine their transition matrix systems $\mathcal{T}_{P_1}$ and $\mathcal{T}_{P_2}$ to construct a new transition matrix system $\smash{\mathcal{T}\coloneqq \mathcal{T}_{P_1}^{[0,r]}\otimes \mathcal{T}_{P_2}^{[r,+\infty)}}$, with $r>0$ chosen arbitrarily. Theorem~\ref{theo:uniqueMarkovchain} then guarantees that there exists a Markov chain $P$ such that $\mathcal{T}_P=\mathcal{T}$ and $P(X_0)=P_1(X_0)$. It is straightforward to verify that, because $P_1,P_2\in\wmprocesses_{\rateset,\mathcal{M}}$, also $P\in\wmprocesses_{\rateset,\mathcal{M}}$; we leave this as an exercise for the reader.
+The example above already suggested how to do this for $\smash{\wmprocesses_{\rateset,\mathcal{M}}}$, by combining two well-behaved homogeneous Markov chains $P_1,P_2\in\whmprocesses$ to form a new process $P\in\wmprocesses$. Similarly, but more generally, for any two processes $P_1,P_2\in\wmprocesses_{\rateset,\mathcal{M}}$, we can combine their transition matrix systems $\mathcal{T}_{P_1}$ and $\mathcal{T}_{P_2}$ to construct a new transition matrix system $\smash{\mathcal{T}\coloneqq \mathcal{T}_{P_1}^{[0,r]}\otimes \mathcal{T}_{P_2}^{[r,+\infty)}}$, with $r>0$ chosen arbitrarily. Theorem~\ref{theo:uniqueMarkovchain} then guarantees that there exists a Markov chain $P$ such that $\mathcal{T}_P=\mathcal{T}$ and $P(X_0)=P_1(X_0)$. It is straightforward to verify that, because $\smash{P_1,P_2\in\wmprocesses_{\rateset,\mathcal{M}}}$, also $\smash{P\in\wmprocesses_{\rateset,\mathcal{M}}}$; we leave this as an exercise for the reader.
 
 
 
-Clearly, a similar procedure is impossible for $\whmprocesses_{\rateset,\mathcal{M}}$, because the combination of two processes would make the resultant one lose the homogeneity property, which is required to be an element of $\whmprocesses_{\rateset,\mathcal{M}}$.
+Clearly, a similar procedure is impossible for $\smash{\whmprocesses_{\rateset,\mathcal{M}}}$, because the combination of two processes would make the resultant one lose the homogeneity property, which is required to be an element of $\smash{\whmprocesses_{\rateset,\mathcal{M}}}$.
 
 However, for our most general type of \ictmc, which is $\wprocesses_{\rateset,\mathcal{M}}$, it turns out to be possible to recombine elements in an even more general, history-dependent way. That is, if $\rateset$ is convex, then it is possible, for fixed time points $u\in\mathcal{U}$, to choose for every history $x_u\in\states_u$ a different process $P_{x_u}\in\wprocesses_{\rateset,\mathcal{M}}$, and to recombine these into a process $P$ that agrees with these $P_{x_u}$ conditional on the specific history $x_u$. Furthermore, the distribution on the time points $u$ can be chosen to agree with any element $\smash{P_{\emptyset}\in \wprocesses_{\rateset,\mathcal{M}}}$. The following result guarantees that this new process $P$ will again belong to $\wprocesses_{\rateset,\mathcal{M}}$.
 
@@ -1493,8 +1505,10 @@ For any non-empty set of stochastic processes $\mathcal{P}\subseteq\processes$, 
 where $\mathbb{E}_P[\cdot\,\vert\,\cdot]$ denotes the (conditional) expectation taken with respect to $P$.
 
 In particular, for any non-empty bounded set of rate matrices $\rateset$ and any non-empty set $\mathcal{M}$ of probability mass functions on $\states$, we let
+\vspace{-2pt}
 \begin{equation}\label{eq:lowerexp3}
 \underline{\mathbb{E}}_{\rateset,\mathcal{M}}^{\mathrm{W}}[\cdot\,\vert\,\cdot] \coloneqq \inf\left\{\mathbb{E}_P[\cdot\,\vert\,\cdot]\,:\,P\in\mathbb{P}_{\rateset,\mathcal{M}}^{\mathrm{W}}\right\},
+\vspace{5pt}
 \end{equation}
 and similarly for $\smash{\underline{\mathbb{E}}_{\rateset,\mathcal{M}}^{\mathrm{WM}}}$ and $\smash{\underline{\mathbb{E}}_{\rateset,\mathcal{M}}^{\mathrm{WHM}}}$.
 If $\mathcal{M}$ is the set of \emph{all} probability mass functions on $\states$, then as in Definition~\ref{def:consistent_process_set}, we will write $\underline{\mathbb{E}}_{\rateset}^{\mathrm{W}}$ instead of $\underline{\mathbb{E}}_{\rateset,\mathcal{M}}^{\mathrm{W}}$, and similarly for $\underline{\mathbb{E}}_{\rateset}^{\mathrm{WM}}$ and $\underline{\mathbb{E}}_{\rateset}^{\mathrm{WHM}}$.
@@ -1512,7 +1526,7 @@ Lower and upper probabilities also have analogous definitions. However, these to
 \end{equation}
 and similarly, we also have that $\overline{P}(A\vert X_u=x_u)=\overline{\mathbb{E}}[\ind{A}\vert X_u=x_u]$, which, due to conjugacy, implies that $\overline{P}(A\vert X_u=x_u)=-\underline{\mathbb{E}}[-\ind{A}\vert X_u=x_u]$. Hence, from a computational point of view, it clearly suffices to focus on lower expectations, which is what we will do in the remainder of this work.
 
-In particular, one of the main aims of this paper is to provide methods to compute lower expectations for the different types of \ictmc's that we have introduced in Section~\ref{subsec:types_ictmc}; however, as we will see at the end of this section, doing this for the set $\whmprocesses_{\rateset,\mathcal{M}}$ is particularly difficult. We will therefore largely focus on performing these computations for the ICTMCs $\wprocesses_{\rateset,\mathcal{M}}$ and $\wmprocesses_{\rateset,\mathcal{M}}$. We start by giving some useful properties of the three types of lower expectations that we are interested in.
+In particular, one of the main aims of this paper is to provide methods to compute lower expectations for the different types of \ictmc's that we have introduced in Section~\ref{subsec:types_ictmc}; however, as we will see at the end of this section, doing this for the set $\whmprocesses_{\rateset,\mathcal{M}}$ is particularly difficult. We will therefore largely focus on performing these computations for the ICTMCs $\smash{\wprocesses_{\rateset,\mathcal{M}}}$ and $\smash{\wmprocesses_{\rateset,\mathcal{M}}}$. We start by giving some useful properties of the three types of lower expectations that we are interested in.
 
 First of all, it can be shown that if $\rateset$ is a non-empty, bounded, convex and closed set of rate matrices, then the conditional lower expectations $\underline{\mathbb{E}}_{\rateset}^\mathrm{W}$, $\underline{\mathbb{E}}_{\rateset}^\mathrm{WM}$ and $\underline{\mathbb{E}}_{\rateset}^\mathrm{WHM}$ are actually minima---rather than infima---because they are always reached by some element of their corresponding \ictmc. However, the proof of this claim is rather involved and requires some technical machinery that is outside of the scope of this paper; we intend to publish these and related results separately in future work.
 
@@ -1545,10 +1559,10 @@ Let $\rateset$ be an arbitrary non-empty, bounded, and convex set of rate matric
 \end{restatable}
 The reason why this result is useful, is because it essentially allows us to compute lower expectations recursively. In particular, instead of computing a lower expectation for all time points simultaneously, we can focus on each of the time points separately, and eliminate them one by one. We will revisit this idea in Section~\ref{sec:funcs_multi_time_points}, where we will use it to develop efficient algorithms.
 
-For now, we would like to draw attention to the fact that Theorem~\ref{theorem:decomposition_multivar} relies heavily on the fact that the individual elements of $\smash{\wprocesses_{\rateset,\mathcal{M}}}$ do not need to satisfy the Markov property, in the sense that they can have history-dependent probabilities. Therefore, unfortunately, the result in Theorem~\ref{theorem:decomposition_multivar} does not extend to $\smash{\underline{\mathbb{E}}_{\rateset,\mathcal{M}}^\mathrm{WM}}$ or $\smash{\underline{\mathbb{E}}_{\rateset,\mathcal{M}}^\mathrm{WHM}}$. Since Theorem~\ref{theorem:decomposition_multivar} simplifies considerably the process of computing the lower expectation $\underline{\mathbb{E}}_{\rateset,\mathcal{M}}^\mathrm{W}$, this suggests that the qualitative differences between the three types of \ictmc's that we consider make some of their corresponding lower expectations harder to compute than others. In fact, we will show in Section~\ref{sec:funcs_multi_time_points} that $\wprocesses_{\rateset\,,\mathcal{M}}$ is in some sense the easiest set to do this for, exactly because of Theorem~\ref{theorem:decomposition_multivar}.
+For now, we would like to draw attention to the fact that Theorem~\ref{theorem:decomposition_multivar} relies heavily on the fact that the individual elements of $\smash{\wprocesses_{\rateset,\mathcal{M}}}$ do not need to satisfy the Markov property, in the sense that they can have history-dependent probabilities. Therefore, unfortunately, the result in Theorem~\ref{theorem:decomposition_multivar} does not extend to $\smash{\underline{\mathbb{E}}_{\rateset,\mathcal{M}}^\mathrm{WM}}$ or $\smash{\underline{\mathbb{E}}_{\rateset,\mathcal{M}}^\mathrm{WHM}}$. Since Theorem~\ref{theorem:decomposition_multivar} simplifies considerably the process of computing the lower expectation $\smash{\underline{\mathbb{E}}_{\rateset,\mathcal{M}}^\mathrm{W}}$, this suggests that the qualitative differences between the three types of \ictmc's that we consider make some of their corresponding lower expectations harder to compute than others. In fact, we will show in Section~\ref{sec:funcs_multi_time_points} that $\wprocesses_{\rateset\,,\mathcal{M}}$ is in some sense the easiest set to do this for, exactly because of Theorem~\ref{theorem:decomposition_multivar}.
 
 %Furthermore, rather ironically, it turns out that computing lower expectations for the set $\whmprocesses_{\rateset\,,\mathcal{M}}$---which, intuitively, is the simplest of our three types of \ictmc's---is in general much harder than for the sets $\smash{\wmprocesses_{\rateset\,,\mathcal{M}}}$ or $\smash{\wprocesses_{\rateset\,,\mathcal{M}}}$. 
-Furthermore, rather ironically, computing lower expectations for the set $\whmprocesses_{\rateset\,,\mathcal{M}}$---which, intuitively, is the simplest of our three types of \ictmc's---seems to be much harder than for the sets $\smash{\wmprocesses_{\rateset\,,\mathcal{M}}}$ or $\smash{\wprocesses_{\rateset\,,\mathcal{M}}}$.
+Furthermore, rather ironically, computing lower expectations for the set $\whmprocesses_{\rateset\,,\mathcal{M}}$---which, intuitively, is the simplest of our three types of \ictmc's---seems to be much harder than for the sets $\wmprocesses_{\rateset\,,\mathcal{M}}$ or $\wprocesses_{\rateset\,,\mathcal{M}}$.
 The problem is, essentially, that while homogeneous Markov chains are easy to work with numerically, the set $\whmprocesses_{\rateset\,,\mathcal{M}}$ does not provide enough ``degrees of freedom'' to easily solve the optimisation problem that is involved in computing $\underline{\mathbb{E}}^\mathrm{WHM}_{\rateset\,,\mathcal{M}}$.
 The following serves as an illustration. 
 
@@ -1565,6 +1579,7 @@ Suppose that we want to compute the lower expectation $\underline{\mathbb{E}}_{\
 Therefore, computing $\smash{\underline{\mathbb{E}}_{\rateset,\,\mathcal{M}}^{\mathrm{WHM}}[f(X_t)\,\vert\,X_0=x_0]}$ is at its core a non-linear, constrained optimisation problem over the set $\rateset$, where the non-linearity stems from the term $e^{Qt}$, and the specific form of the constraints depends on the choice of $\rateset$.  The following example illustrates the non-linearity of this type of optimisation problem in a simple case.
 
 \begin{figure}[t]
+\begin{center}
 \begin{tikzpicture}
       \node[anchor=south west,inner sep=0] (plot) at (0,0) {\includegraphics[width=106mm]{HomogeneousCounterExamplePicture}};
       \begin{scope}[x={(plot.south east)},y={(plot.north west)}]
@@ -1642,6 +1657,7 @@ Therefore, computing $\smash{\underline{\mathbb{E}}_{\rateset,\,\mathcal{M}}^{\m
         \node at (0.87,0.15) {$~~~~=\underline{\mathbb{E}}_\rateset^\mathrm{W}[f(X_t)\,\vert\,X_0=a]$};
       \end{scope}
     \end{tikzpicture}
+    \end{center}
 % \includegraphics[width=\textwidth]{HomogeneousCounterExamplePicture}
 \caption{Plot of the induced set of expected values $\mathbb{E}_P[f(X_t)\,\vert\,X_0=a]$, for time points $t\in[0,100]$, corresponding to all $P\in\whmprocesses_{\rateset}$ obtained as we vary $\lambda\in[0.01,0.5]$. Observe that the lower expectation with respect to this set is initially reached by choosing $\lambda=0.5$. This changes around the time point $t\approx 6.6$, after which the minimising value of $\lambda$ becomes a (changing) internal point of the interval $[0.01,0.5]$. The dashed line corresponds to the lower expectation with respect to the sets $\wmprocesses_\rateset$ and $\wprocesses_\rateset$, which also include non-homogeneous Markov chains and, for $\wprocesses_\rateset$, even more general processes. Note that the lower expectations with respect to $\whmprocesses_{\rateset}$, $\wmprocesses_{\rateset}$ and $\wprocesses_{\rateset}$ are all equal for $t<6.6$. However, as time evolves further, the lower expectation with respect to $\whmprocesses_{\rateset}$ starts to diverge from the other two.}
 \label{fig:homogeneousCounterExample}
@@ -1731,7 +1747,6 @@ $\lt(f+\mu)=\lt(f)+\mu$;\label{LT:constantadditivity}
 \item
 $\norm{\lt A - \lt B} \leq \norm{A - B}$. \label{LT:differencenorm}
 \end{enumerate}
-\vspace{0pt}
 \end{definition}
 
 \begin{restatable}{proposition}{lemmacompositioncoherence}
@@ -1748,14 +1763,16 @@ A first way to motivate this specific generalisation is to note the following. F
 Due to properties~\ref{LT:bounded_min}-\ref{LT:homo}, it then follows that $\lt_x$ is a map from $\gamblesX$ to $\reals$ that is super-additive, non-negatively homogeneous, and bounded below by the minimum operator. By definition~\cite[Definition~2.3.3]{Walley:1991vk}, that means that $\lt_x$ is a \emph{coherent lower prevision} on $\gamblesX$. Note that the term ``prevision'' here is a synonym for ``expectation''---be it with a different interpretation attached to it---so this essentially states that $\lt_x$ is a ``coherent lower expectation'' on $\gamblesX$.
 
 For the reader that is unfamiliar with this notion of coherent lower previsions, this is perhaps best clarified as follows. Consider some arbitrary set $\mathcal{M}$ of probability mass functions on $\states$, and consider a map $\underline{\mathbb{E}}:\gamblesX\to\reals$, defined for all $f\in\gamblesX$ as
+\vspace{-3pt}
 \begin{equation*}
-\underline{\mathbb{E}}f \coloneqq \inf\left\{\sum_{x\in\states} p(x)f(x)\,:\,p\in\mathcal{M}\right\}\,.
+\underline{\mathbb{E}}f \coloneqq \inf\left\{\sum_{x\in\states} p(x)f(x)\,:\,p\in\mathcal{M}\right\}.
+\vspace{5pt}
 \end{equation*}
 We call this map $\underline{\mathbb{E}}$ the \emph{lower envelope} of $\mathcal{M}$, and it should be clear that this map computes a lower expectation with respect to $\mathcal{M}$. Furthermore, note that for any $p\in\mathcal{M}$, the quantity $\sum_{x\in\states}p(x)f(x)$ is bounded from below by $\min\{f(y):y\in\states\}$, and since this is true for any $p\in\mathcal{M}$, it follows that $\underline{\mathbb{E}}f$ is also bounded below by this minimum. Similarly, it is easily verified that $\underline{\mathbb{E}}$ is super-additive and non-negatively homogeneous, due to the properties of the $\inf$ operator. Hence, by the definition cited above, the lower expectation operator $\underline{\mathbb{E}}$ that corresponds to $\mathcal{M}$ is a coherent lower prevision on $\gamblesX$. 
 
 Our consideration of the coherent lower prevision $\lt_x$  above is essentially the same idea, but \emph{without} considering explicitly any link to some set of probability mass functions $\mathcal{M}_x$. Suffice it to say that, for any coherent lower prevision $\lt_x$, such a set $\mathcal{M}_x$ will always exist~\cite[Section 10.2]{Huber:1981ch}. It should furthermore be noted that the qualifier ``coherent'' here has connections to the notion of coherence that appeared in Section~\ref{sec:cond_prob}, 
 %and that it can also be given a direct gambling interpretation; we refer to~\cite{troffaes2013:lp,Walley:1991vk} for further discussion on this.
-and that it can be given a direct gambling interpretation that resembles the one in \cite[Appendix~H]{krak2017ictmcreport}; we refer to~\cite{troffaes2013:lp,Walley:1991vk} for further discussion on this.
+and that it can also be given a direct gambling interpretation; we refer to~\cite{troffaes2013:lp,Walley:1991vk} for further discussion on this.
 
 In any case, for our present purposes, it suffices to realise that, because $\lt_x$ is a coherent lower prevision for any $x\in\states$, the lower transition operator $\lt$ can be seen as a vector of coherent lower previsions. Therefore, and because each of these coherent lower previsions $\lt_x$ has some set $\mathcal{M}_x$ of probability mass functions of which $\lt_x$ computes the lower envelope, we can combine these sets of probability mass functions to form a set of transition matrices
 \begin{equation*}
@@ -1993,7 +2010,7 @@ Our first result is that this family $\smash{\underline{\mathcal{T}}_{\lrate}}$ 
 Let $\lrate$ be an arbitrary lower transition rate operator, and let $\underline{\mathcal{T}}_{\lrate}$ be the corresponding lower transition operator system. Then, for all $t,r,s\in\realsnonneg$ such that $t\leq r\leq s$, it holds that
 \begin{equation*}
 L_t^s = L_t^rL_r^s.
-\vspace{6pt}
+%\vspace{6pt}
 \end{equation*}
 Furthermore, for all $t\in\realsnonneg$, we have that $L_t^t=I$.
 \end{restatable}
@@ -2281,16 +2298,15 @@ We start by computing the right-most factor on the right-hand side of this equat
 and therefore, it follows that
 \begin{align*}
 g_1(x)\coloneqq[(I + \Delta\lrate)\ind{\text{{\tt s}}}](x)
-&= [\ind{\text{{\tt s}}}](x) + \Delta[\lrate\ind{\text{{\tt s}}}](x)\\
-&=
+&= [\ind{\text{{\tt s}}}](x) + \Delta[\lrate\ind{\text{{\tt s}}}](x)
+=
 \begin{cases}
 2.4038\times 10^{-5}
 &\text{ if $x=\text{\tt h}$}\\
 0.9975
 &\text{ if $x=\text{\tt s}$}
 \end{cases}
-~~~\text{for all $x\in\states$.}\\
-&
+~~~\text{for all $x\in\states$.}
 \end{align*}
 Having completed this first step, we now have that
 \begin{equation*}
@@ -2316,8 +2332,8 @@ from which we conclude that
 \begin{align*}
 \underline{P}_{\rateset}^{\mathrm{W}}(X_1 = \text{{\tt s}}\,\vert\,X_0=\text{{\tt s}}) = \underline{P}_{\rateset}^{\mathrm{WM}}(X_1 = \text{{\tt s}}\,\vert\,X_0=\text{{\tt s}})
 &=
-\left[L_0^1\ind{\text{{\tt s}}}\right](\text{{\tt s}})\\
-&= g_{n}(\text{{\tt s}}) \pm \epsilon = 0.141 \pm 0.001,
+\left[L_0^1\ind{\text{{\tt s}}}\right](\text{{\tt s}})
+= g_{n}(\text{{\tt s}}) \pm \epsilon = 0.141 \pm 0.001,
 \end{align*}
 where the third equality\footnote{Formally, we should write this equality as $[L_0^1\ind{\text{{\tt s}}}](\text{{\tt s}})\in [g_n(\text{{\tt s}})-\epsilon, g_n(\text{{\tt s}})+\epsilon]$ or, completely equivalently, as $g_n(\text{{\tt s}}) \in \bigl[[L_0^1\ind{\text{{\tt s}}}](\text{{\tt s}}) - \epsilon, [L_0^1\ind{\text{{\tt s}}}](\text{{\tt s}}) + \epsilon\bigr]$. However, we find the shorthand $[L_0^1\ind{\text{{\tt s}}}](\text{{\tt s}}) = g_n(\text{{\tt s}})\pm \epsilon$ equally clear. Furthermore, we will later consider similar statements for functions, which we can write much more succinctly with this minor abuse of notation---with the understanding that the above inclusion should then be taken point-wise.} follows from the error bound that is guaranteed by Proposition~\ref{prop:approximation_error_bound}.
 \exampleend
@@ -2357,21 +2373,23 @@ We begin in Section~\ref{sec:function_single_future_multiple_past} by considerin
 \subsection{Multi-Variable Functions on a Single Future Time Point}\label{sec:function_single_future_multiple_past}
 
 Consider a non-empty sequence of time points $u=t_0,\ldots,t_n\in\mathcal{U}_\emptyset$ and a single future time point $s>u$. Let $f\in\gambles(\states_{u\cup s})$ be a function that depends on the states at these time points. Then for any stochastic process $P$ and any history $x_u\in\states_u$, the corresponding conditional expectation of such a function is well known to satisfy the following simple property:
-\vspace{-2pt}
+%\vspace{-2pt}
 \begin{equation*}
 \mathbb{E}_P[f(X_u,X_s)\,\vert\,X_u=x_u] = \mathbb{E}_P[f(x_u,X_s)\,\vert\,X_u=x_u].
 \end{equation*}
 Therefore, and because a lower expectation is an infimum over expectations, we find that also
-\vspace{-2pt}
+%\vspace{-2pt}
 \begin{equation}\label{eq:fixxu}
 \underline{\mathbb{E}}[f(X_u,X_s)\,\vert\,X_u=x_u] = \underline{\mathbb{E}}[f(x_u,X_s)\,\vert\,X_u=x_u].
-\end{equation}\\[-18pt]
+\end{equation}%\\[-18pt]
 
 While writing down these equations, we have implicitly introduced a notational convention that should be intuitively clear: we interpret the function $f(x_u,X_s)$ as the restriction of $f(X_u,X_s)$ to the state $\states_s$, for the fixed state assignment $x_u$. A more formal---but completely equivalent---way of doing this, is to identify $f(x_u,X_s)$ with a function $f_{x_u}\in\gambles(\states_s)=\gamblesX$, defined by $f_{x_u}(x_s)\coloneqq f(x_u,x_s)$ for all $x_s\in\states$.
 With this notation, the equation above then turns into
+\vspace{-2pt}
 \begin{equation*}%\label{eq:fixxuexplicit}
 \underline{\mathbb{E}}[f(X_u,X_s)\,\vert\,X_u=x_u] = \underline{\mathbb{E}}[f_{x_u}(X_s)\,\vert\,X_u=x_u],
-\end{equation*}\\[-14pt]
+\vspace{5pt}
+\end{equation*}%\\[-14pt]
 and in this way, it becomes clear that the problem of computing $\underline{\mathbb{E}}[f(X_u,X_s)\,\vert\,X_u=x_u]$ is completely equivalent to the problem that we have considered in the previous section, which is to compute lower expectations of functions that depend on the state at a single future time point.
 In particular, under the conditions of Corollary~\ref{cor:lower_operator_is_infimum}, we find that
 \begin{equation*}
@@ -2380,9 +2398,11 @@ In particular, under the conditions of Corollary~\ref{cor:lower_operator_is_infi
 However, note that the quantity $[L_{t_n}^sf_{x_u}](x_{t_n})$ still depends on the \emph{entire} state assignment $x_u\in\states_u$, and not just on the state $x_{t_n}$.
 
 In order to unify our notation, we therefore stipulate the following convention. For any $s\in\realspos$ and any $u\in\mathcal{U}_{<s}$ with $u\neq\emptyset$ such that $u=t_0,\ldots,t_n$, we allow $L_{t_n}^s$ to be applied to any $f\in\gambles(\states_{u\cup s})$, by applying it to the restriction of $f$ to the \emph{latest} time point at which it is defined---the time point $s$, in this case. Because this restriction depends on the state assignment $x_u$ at the other time points, the result is a function $[L_{t_n}^sf]\in\gambles(\states_u)$. In short, we stipulate for any $f\in\gambles(\states_{u\cup s})$ that
+\vspace{-2pt}
 \begin{equation}\label{eq:applyLtolargerfunctions}
 [L_{t_n}^sf](x_u) \coloneqq [L_{t_n}^sf_{x_u}](x_{t_n}) \coloneqq [L_{t_n}^sf(x_u,X_s)](x_{t_n})
 ~~\text{for all $x_u\in\states_u$}.
+\vspace{5pt}
 \end{equation}
 
 Using this notational convention, the following corollary formalises the fact that our previous results also apply to functions in $\gambles(\states_{u\cup s})$.
@@ -2499,8 +2519,8 @@ The function $f$ depends on multiple---in this case three---time points, and we 
 \begin{align*}
 g(x_0,x_1)
 &\coloneqq
-[L_1^2f](x_0,x_1)\\[-7pt]
-&\coloneqq
+[L_1^2f](x_0,x_1)
+\coloneqq
 [L_1^2f(x_0,x_1,X_2)](x_1)
 =
 \begin{cases}
@@ -2597,7 +2617,7 @@ All of this changes if we replace $\wmprocesses_{\rateset,\mathcal{M}}$ with $\w
 
 
 
-In the example below, we reconsider the problem of Example~\ref{exmp:num_multivar_func_nonmarkov}, but for a different {\ictmc}: we now use $\wmprocesses_{\rateset,\mathcal{M}}$ instead of $\wprocesses_{\rateset,\mathcal{M}}$. The result ends up being different, and thereby illustrates---by means of a counterexample---that Algorithm~\ref{alg:compute_multivar} is not in general applicable when working with sets of Markov chains such as $\wmprocesses_{\rateset,\mathcal{M}}$.
+In the example below, we reconsider the problem of Example~\ref{exmp:num_multivar_func_nonmarkov}, but for a different {\ictmc}: we now use $\smash{\wmprocesses_{\rateset,\mathcal{M}}}$ instead of $\smash{\wprocesses_{\rateset,\mathcal{M}}}$. The result ends up being different, and thereby illustrates---by means of a counterexample---that Algorithm~\ref{alg:compute_multivar} is not in general applicable when working with sets of Markov chains such as $\wmprocesses_{\rateset,\mathcal{M}}$.
 
 
 
@@ -2630,12 +2650,14 @@ As we will see, the difference between unconditional and conditional lower expec
 In contrast, and rather unsurprisingly, unconditional lower expectations do depend on this choice.
 
 In particular, the choice of $\mathcal{M}$ will influence our computations through the corresponding lower expectation operator $\underline{\mathbb{E}}_{\mathcal{M}}$, defined by
+\vspace{-2pt}
 \begin{equation}\label{eq:initiallowerexp}
 \underline{\mathbb{E}}_{\mathcal{M}}[f]
 \coloneqq
 \inf
 \left\{\sum_{x\in\states}p(x)f(x)\colon p\in\mathcal{M}\right\}
 ~~\text{for all $f\in\gamblesX$.}
+\vspace{5pt}
 \end{equation}
 In principle, evaluating this operator can be difficult, because the only restriction we impose on the set $\mathcal{M}$ is that it should be non-empty. However, in practice, $\mathcal{M}$ will typically have a rather simple  structure, and computing $\underline{\mathbb{E}}_\mathcal{M}[f]$ will then be straightforward. For example, if $\mathcal{M}$ consists of a finite number of probability mass functions---or is equal to their convex hull---then evaluating $\underline{\mathbb{E}}_\mathcal{M}[f]$ is just a matter of minimising over that finite set of probability mass functions.
 Another typical situation is when $\mathcal{M}$ is specified by means of linear constraints. In that case, $\underline{\mathbb{E}}_\mathcal{M}[f]$ can be computed by means of linear programming techniques. We will proceed under the assumption that the optimisation problem in Equation~\eqref{eq:initiallowerexp} is solvable.
@@ -2694,6 +2716,7 @@ To the best of our knowledge, the concept of an imprecise continuous-time Markov
 
 
 In the main body of his paper, {\v{S}kulj} characterises this concept in the following way. For any $f\in\gamblesX$, he considers a time-dependent function $f_s$, which---using our notation---is defined as $f_s\coloneqq T_0^s f$, and then requires that $f_0=f$,
+\vspace{-2pt}
 \begin{equation}\label{eq:constraintsDamjan}
 \lrate f_s
 \leq
@@ -2705,16 +2728,17 @@ D^+f_s\coloneqq
 \frac{f_{s+\Delta}-f_s}{\Delta}
 =\hspace{-1.5pt}\colon D_+f_s
 \leq\overline{Q} f_s,
+\vspace{5pt}
 \end{equation}
 where $\overline{Q}$ is the upper envelope of $\rateset$, or equivalently,  the conjugate upper transition rate operator of $\lrate$, defined by $\overline{Q}g\coloneqq-\lrate(-g)$ for all $g\in\gamblesX$, and where $D^+f_s$ and $D_-f_s$ are called Dini derivatives. In this way, he generalises the usual differential equation characterisation of a precise homogeneous Markov chain, where the Dini derivatives would be replaced by derivatives, where the operator $\lrate$ would be replaced by a transition rate matrix $Q$, and where the inequalities would become equalities. 
 
-Since this generalisation considers inequalities, the solution $f_s$ is not uniquely determined, and the problem is therefore to find lower and upper bounds for $f_s$. {\v{S}kulj} solves this problem, by showing that $\underline{f}_s\leq f_s\leq\overline{f}_s$, where $\underline{f}_s$ and $\overline{f}_s$ are the unique solutions of the differential equations
+Since this generalisation considers inequalities, the solution $f_s$ is not uniquely determined, and the problem is therefore to find lower and upper bounds for $f_s$. {\v{S}kulj} solves this problem, by showing that $\underline{f}_s\leq f_s\leq\overline{f}_s$, where $\underline{f}_s$ and $\smash{\overline{f}_s}$ are the unique solutions of the differential equations
 \begin{equation}\label{eq:boundsdifferentialDamjan}
 \frac{d \underline{f}_{\,s}}{d s}=\lrate\,\underline{f}_{\,s}
 ~~~\text{and}~~~
 \frac{d \overline{f}_{\,s}}{d s}=\overline{Q}\,\overline{f}_{\,s},%\vspace{8pt}
 \end{equation}
-with $\underline{f}_0=\overline{f}_0=f$. In practice, it suffices to restrict attention to either one of these two bounds, because they are related by conjugacy, in the sense that $\smash{\underline{f}_0=-\overline{f}_0}$ implies that $\smash{\underline{f}_s=-\overline{f}_s}$. 
+with $\smash{\underline{f}_0=\overline{f}_0=f}$. In practice, it suffices to restrict attention to either one of these two bounds, because they are related by conjugacy, in the sense that $\underline{f}_0=-\overline{f}_0$ implies that $\smash{\underline{f}_s=-\overline{f}_s}$. 
 
 
 Using this characterisation, {\v{S}kulj} focusses on computing $\overline{f}_s$. Since, for all $x\in\states$, $\overline{f}_s(x)$ is a tight upper bound on $f_s(x)\coloneqq [T_0^sf](x)=\mathbb{E}[f(X_s)\vert X_0=x]$, this can be interpreted as computing a conditional upper expectation. In particular, for all $x\in\states$, we can interpret $\overline{f}_s(x)$ as
@@ -2737,18 +2761,20 @@ On the one hand, this other definition of an imprecise continuous-time Markov ch
 
 Our approach, in contrast, removes this ambiguity, by making it formally explicit which set of stochastic processes $\mathcal{P}$ is being considered. Interestingly, but perhaps unsurprisingly, our results end up being very closely related to the work of {\v{S}kulj}.
 In particular, by comparing Equations~\eqref{eq:pointwisedifferential} and~\eqref{eq:boundsdifferentialDamjan}, we see that $\underline{f}_s=L_0^sf$, and therefore, it follows from Corollary~\ref{cor:lower_operator_is_infimum} that
+\vspace{-2pt}
 \begin{equation*}
 \underline{f}_s(x)
 =
 \underline{\mathbb{E}}_{\rateset,\mathcal{M}}^{\mathrm{W}}[f(X_s)\vert X_0=x]
 =
 \underline{\mathbb{E}}_{\rateset,\mathcal{M}}^{\mathrm{WM}}[f(X_s)\vert X_0=x],
+\vspace{5pt}
 \end{equation*}
 thereby providing the function $\underline{f}_s$ with a clear interpretation in terms of sets of stochastic processes. Due to this connection, many of the results in Section~\ref{sec:lowertrans} can be interpreted as properties of $\underline{f}_s$. For example, Definition~\ref{def:low_trans} provides an alternative characterisation for $\underline{f}_s$, and Proposition~\ref{prop:lower_transition_has_deriv} shows that the defining differential equation for $\underline{f}_s$---Equation~\eqref{eq:boundsdifferentialDamjan}---can be stated uniformly, that is, with respect to the operator norm instead of pointwise.
 
 
 
-Besides the differences that are related to the role of the set of processes $\mathcal{P}$, an other difference between our work and that of {\smash{\v{S}kulj}} is the type of functions that are considered. Due to its focus on $\overline{f}_s$ (and, by conjugacy, $\underline{f}_s$), the work of {\v{S}kulj} applies to functions $f$ that depend on the state $X_s$ at a single time point $s$. In contrast, our work also considers functions that depend on the state at any finite number of time points. In this more general context, as we have seen, it actually becomes crucial to be aware of the exact set of stochastic processes with respect to which the lower expectation is taken, because this choice influences the value of the lower expectation, as well as whether or not it can be computed efficiently.
+Besides the differences that are related to the role of the set of processes $\mathcal{P}$, an other difference between our work and that of {\smash{\v{S}kulj}} is the type of functions that are considered. Due to its focus on $\overline{f}_s$ (and, by conjugacy, $\smash{\underline{f}_s}$), the work of {\v{S}kulj} applies to functions $f$ that depend on the state $X_s$ at a single time point $s$. In contrast, our work also considers functions that depend on the state at any finite number of time points. In this more general context, as we have seen, it actually becomes crucial to be aware of the exact set of stochastic processes with respect to which the lower expectation is taken, because this choice influences the value of the lower expectation, as well as whether or not it can be computed efficiently.
 
 A final difference between our work and that of {\v{S}kulj} are the computational methods that are presented. 
 In both cases, these methods are concerned with approximating $\smash{\underline{f}_s=L_0^sf}$ up to some desired finite precision $\epsilon$. However, the particular approximation methods differ. {\v{S}kulj} considers three distinct methods: a uniform grid discretisation, an adaptive grid discretisation, and a combination of both. We consider only one method, which corresponds to Algorithm~\ref{alg:compute_singlevar}.
@@ -2799,7 +2825,7 @@ Thirdly, still on the technical level, it would be interesting to investigate wh
 
 Yet another interesting line of future research would be to generalise the models that we consider by allowing the set of rate matrices $\rateset$ to be time-dependent, that is, to consider a set-valued function $\rateset_t$. As one anonymous reviewer pointed out, this could be used for example to model the fact that over time, we become less and less certain about what rate matrix to use. The subtlety will then lie in choosing the kind of continuity assumptions that should be imposed on such a function $\rateset_t$. If it is piecewise-constant, then we expect that our methods should translate fairly naturally to such a generalised model. For more complex time-variations, however, technical and computational difficulties may need to be overcome. 
 
-As far as the computational aspects of our work are concerned, there is also still quite a lot of room for future work. In particular, we believe that it should be possible to improve upon the efficiency of our methods for computing $L_t^s$. On the one hand, we did not yet study the effect of allowing for non-uniform discretisations---as \v{S}kulj does in his adaptive discretisation method~\cite{Skulj:2015cq}. On the other hand, our approach---as well as that of \v{S}kulj---does not yet exploit the fact that $L_t^s=L_0^{s-t}$ is guaranteed to converge to a limit as $s-t$ approaches infinity~\cite{DeBock:2016}; for large values of $s-t$, this feature should surely make it easier to compute $L_t^s$, whereas our---and \v{S}kulj's---methods become less efficient as $s-t$ increases. Some initial results in this direction can already be found in Reference~\cite{Krak:2017}.
+As far as the computational aspects of our work are concerned, there is also still quite a lot of room for future work. In particular, we believe that it should be possible to improve upon the efficiency of our methods for computing $L_t^s$. On the one hand, we did not yet study the effect of allowing for non-uniform discretisations---as \v{S}kulj does in his adaptive discretisation method~\cite{Skulj:2015cq}. On the other hand, our approach---as well as that of \v{S}kulj---does not yet exploit the fact that $\smash{L_t^s=L_0^{s-t}}$ is guaranteed to converge to a limit as $s-t$ approaches infinity~\cite{DeBock:2016}; for large values of $s-t$, this feature should surely make it easier to compute $L_t^s$, whereas our---and \v{S}kulj's---methods become less efficient as $s-t$ increases. Some initial results in this direction can already be found in Reference~\cite{Krak:2017}.
 
 
 Finally, on an algorithmic level, a practically important future line of research would be to develop specialized versions of our algorithms, which are tailored to deal with specific functions. The reason why we consider this to be important is because, for functions that depend on the state at a finite number of time points, the runtime-complexity of our algorithms is currently exponential in this number of time points. This is not problematic---and is in fact to be expected---because for general functions, even simply specifying the function has such a complexity. However, in many practical applications, there will typically be some underlying structure of the functions that we are interested in. For instance, for time points $v=s_0,\ldots,s_m$, there may be functions $g_i\in\gambles(\states_{s_i})$, $i\in\{0,\ldots,m\}$, such that $f\in\gambles(\states_v)$ is of the form $f(x_v) = \sum_{i=0}^m g_i(x_{s_i})$ or $f(x_v) = \prod_{i=0}^m g_i(x_{s_i})$.
@@ -3058,7 +3084,7 @@ The result now follows by taking the limit for $n$ going to infinity.
 
 \begin{proof}[Proof of \ref{def:coh_prob_2b}-\ref{def:coh_prob_5}]
 Consider any $A\in\power$ and $C\in\nonemptypower$. It then follows from \ref{def:coh_prob_1} and \ref{def:coh_prob_3} that
-\vspace{-7pt}
+%\vspace{-7pt}
 \begin{equation}\label{eq:extracohprop1}
 P(A\vert C)
 =P(A\cup C\vert C)-P(C\setminus A\vert C)
@@ -3113,10 +3139,12 @@ We start by establishing the boundedness of $\smash{\overline{\partial}_{+}
 \end{equation}
 Consider now any $Q\in\smash{\overline{\partial}_{+}
 {T^t_{t,\,x_u}}}$. Because of Equation~\eqref{eq:rightouterderivative}, $Q$ is the limit of a sequence of matrices $\{Q_k\}_{k\in\nats}$, defined by
+\vspace{-2pt}
 \begin{equation}\label{eq:sequenceofQsinproof}
 Q_k\coloneqq\frac{1}{\Delta_k}
 (T^{t+\Delta_k}_{t,\,x_u}-I)
 \text{~~for all $k\in\nats$}.
+\vspace{5pt}
 \end{equation}
 Because of Equation~\eqref{eq:boundedbyB}, the norms $\norm{Q_k}$ of these matrices are eventually (for large enough $k$) bounded above by $B$. Hence, it follows that $\norm{Q}\leq B$. Since this is true for any $Q\in\smash{\overline{\partial}_{+}
 {T^t_{t,\,x_u}}}$, we find that $\smash{\overline{\partial}_{+}
@@ -3208,7 +3236,7 @@ The fact that $\mathcal{T}_P$ is well-behaved if and only if $P$ is well-behaved
 \theouniqueMarkovchain*
 \begin{proof}
 Let
-\begin{multline*}
+\begin{equation*}
 \mathcal{C}\coloneqq\{
 (X_s=y,X_u=x_u)\in\mathcal{C}^{\mathrm{SP}}
 \colon 
@@ -3218,7 +3246,7 @@ u\in\mathcal{U}_\emptyset,~s>u,~x_u\in\states_u,~y\in\states
 \{
 (X_0=y,X_\emptyset=x_\emptyset)\in\mathcal{C}^{\mathrm{SP}}\colon y\in\states
 \}
-\end{multline*}
+\end{equation*}
 and consider a real-valued function $\tilde{P}$ on $\mathcal{C}$ that is defined by 
 \begin{equation}\label{eq:theo:uniqueMarkovchain:prob_func}
 \tilde{P}(X_s=y\vert X_u=x_u)
@@ -3658,7 +3686,7 @@ If $S^*=\emptyset$, we let $\omega^*$ be any element of $C_0$ (this is always po
 Now let $x_u^*\in\states_u$ be defined by $x_u^*\coloneqq \omega^*\vert_u$.
 Then for all $i\in\{1,\dots,n\}$ such that $(A_i,C_i)\in\mathcal{C}_{x_u^*}$, we know from Equation~\eqref{eq:theo:aanelkaarplakken:secondpartofdomain} that there are $u\subseteq v_i\in\mathcal{U}$ and $x_{v_i\setminus u}\in\states_{v_i\setminus u}$ such that
 \begin{equation}\label{eq:theo:aanelkaarplakken:Cisplit}
-C_i=(X_u=x_u^*)\cap(X_{v_i\setminus u}=x_{v_i\setminus u})=C_i^*\cap C_i^{**},\vspace{2mm}
+C_i=(X_u=x_u^*)\cap(X_{v_i\setminus u}=x_{v_i\setminus u})=C_i^*\cap C_i^{**},%\vspace{2mm}
 \end{equation}
 with $C_i^{*}\coloneqq
 %(X_u=x_u^*)\cap
@@ -3841,9 +3869,9 @@ P(X_{t+\Delta}=y\vert X_t=x, X_v=x_v)
 \end{equation*}
 Hence, if we let $\mathcal{I}\coloneqq\{i\}$, $v^*\coloneqq v$, $\lambda_i\coloneqq 1$, ${}^iP\coloneqq P_\emptyset$ and ${}^ix_{v^*}\coloneqq x_v$, Equation~\eqref{eq:theo:aanelkaarplakken:convexTright} is satisfied by choosing $\delta\coloneqq \max u-\max v$.
 If $t\geq \max u$, then for all $\Delta>0$, it follows from Equation~\eqref{eq:theo:aanelkaarplakken:convexcombo} (with $s\coloneqq t+\Delta$ and $w\coloneqq v\cup t$) that
-\begin{align*}
-&\quad P(X_{t+\Delta}=y\vert X_t=x, X_v=x_v)\\
-&=
+\begin{multline*}
+P(X_{t+\Delta}=y\vert X_t=x, X_v=x_v)\\
+~~~=
 \sum_{x_{u\setminus(v\cup t)}\in\states_{u\setminus(v\cup t)}}
 P_{x_u}(X_{t+\Delta}=y\vert X_t=x, 
 X_{(u\setminus t)\cup(v\setminus [0,\max u])}= 
@@ -3851,7 +3879,7 @@ x_{(u\setminus t)\cup(v\setminus [0,\max u])})%\\[-4mm]
 %&\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad
 P^*(X_{u\setminus(v\cup t)}=x_{u\setminus(v\cup t)}
 \vert X_t=x, X_v=x_v).
-\end{align*}
+\end{multline*}
 Therefore, if we let $\mathcal{I}\coloneqq\states_{u\setminus(v\cup t)}$, $v^*\coloneqq (u\setminus t)\cup(v\setminus [0,\max u])$ and, for all $x_{u\setminus(v\cup t)}\in \mathcal{I}$,
 \begin{equation*}
 \lambda_{x_{u\setminus(v\cup t)}}
@@ -3870,9 +3898,9 @@ P(X_{t}=y\vert X_{t-\Delta}=x, X_v=x_v)
 \end{equation*}
 Hence, if we let $\mathcal{I}\coloneqq\{i\}$, $v^*\coloneqq v$, $\lambda_i\coloneqq 1$, ${}^iP\coloneqq P_\emptyset$ and ${}^ix_{v^*}\coloneqq x_v$, Equation~\eqref{eq:theo:aanelkaarplakken:convexTleft} is satisfied by choosing $\delta\coloneqq t-\max v$.
 If $t>\max u$, then for all $\Delta\in(0,t-\max(v\cup u))$, it follows from Equation~\eqref{eq:theo:aanelkaarplakken:convexcombo} (with $s\coloneqq t$ and $w\coloneqq v\cup {t-\Delta}$) that
-\begin{align*}
-&\quad P(X_{t}=y\vert X_{t-\Delta}=x, X_v=x_v)\\
-&=
+\begin{multline*}
+P(X_{t}=y\vert X_{t-\Delta}=x, X_v=x_v)\\
+=
 \sum_{x_{u\setminus v}\in\states_{u\setminus v}}
 P_{x_u}(X_{t}=y\vert X_{t-\Delta}=x, 
 X_{u\cup(v\setminus [0,\max u])}= 
@@ -3880,7 +3908,7 @@ x_{u\cup(v\setminus [0,\max u])})%\\[-4mm]
 %&\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad\quad
 P^*(X_{u\setminus v}=x_{u\setminus v}
 \vert X_{t-\Delta}=x, X_v=x_v).
-\end{align*}
+\end{multline*}
 Therefore, if we let $\mathcal{I}\coloneqq\states_{u\setminus v}$, $v^*\coloneqq u\cup(v\setminus [0,\max u])$ and, for all $x_{u\setminus v}\in \mathcal{I}$,
 \begin{equation*}
 \lambda_{x_{u\setminus v}}
@@ -3933,11 +3961,13 @@ Consider the $\mathcal{I}$, $v^*\in\mathcal{U}_{<t}$, $\{\lambda_i\}_{i\in \math
 \begin{equation*}%\label{eq:theo:aanelkaarplakken:fixingsubsequence}
 \left\{\frac{1}{\Delta_j}
 ({}^iT^{t+\Delta_j}_{t,\,{}^ix_{v^*}}-I)\right\}_{j\in\nats}
+\vspace{5pt}
 \end{equation*}
 is bounded, and therefore, the Bolzano-Weierstra{\ss} theorem implies that it has a convergent subsequence, of which we denote the limit by $Q_i$. Hence, without loss of generality---simply remove the indexes $j$ that do not correspond to the subsequence---we may assume that
 \begin{equation}\label{eq:theo:aanelkaarplakken:fixingsubsequence}
 \lim_{j\to+\infty}\frac{1}{\Delta_j}
 ({}^iT^{t+\Delta_j}_{t,\,{}^ix_{v^*}}-I)=Q_i.
+\vspace{4pt}
 \end{equation}
 Since we know from Proposition~\ref{prop:rate_from_stochastic_matrix} that $Q_i$ is a limit of rate matrices, $Q_i$ is also a rate matrix, and therefore, it follows from Equation~\eqref{eq:rightouterderivative} that $Q_i\in\smash{\overline{\partial}_{+}
 {{}^iT^t_{t,\,{}^ix_{v^*}}}}$, which, since ${}^iP$ is consistent with $\rateset$, implies that $Q_i\in\rateset$. By repeating this argument for every other $i\in \mathcal{I}$, we obtain a set of rate matrices $\{Q_i\in\rateset\}_{i\in \mathcal{I}}$ such that, without loss of generality, Equation~\eqref{eq:theo:aanelkaarplakken:fixingsubsequence} holds for every $i\in \mathcal{I}$. Additionally, since $\lim_{j\to\infty}\Delta_j=0$, we may assume without loss of generality that $0<\Delta_j<\delta$ for all $j\in\nats$. Equations~\eqref{eq:theo:aanelkaarplakken:convexTright} and~\eqref{eq:theo:aanelkaarplakken:fixingsubsequence} now imply that
@@ -4012,7 +4042,7 @@ and
 \begin{equation*}%\label{theorem:decomposition_multivar:secondhalfexp}
 \mathbb{E}_P[f(X_u,X_v,X_w)\vert\,x_u,x_v]
 =\mathbb{E}_{P_{x_v}}[f(X_u,X_v,X_w)\vert\, x_u,x_v]
-<g(x_u,x_v)+\nicefrac{\epsilon}{2}.\vspace{6pt}
+<g(x_u,x_v)+\nicefrac{\epsilon}{2}.%\vspace{6pt}
 \end{equation*}
 Hence, we find that
 \begin{align*}
@@ -4809,7 +4839,8 @@ where the second inequality holds because of~\ref{N:normAf}, the third inequalit
 
 Let $Q_0$ and $Q_{n+1}$ be two arbitrary elements of $\rateset$ and, for all $i\in\{0,\ldots,n+1\}$, let $\mathcal{T}_{Q_i}$ denote the transition matrix system corresponding to $Q_i$, as in Definition~\ref{def:systemfromQ}. Then, by Proposition~\ref{prop:nonhomogeneous_in_process_set}, there is some $P\in\wmprocesses_{\rateset,\,\mathcal{M}}$ with transition matrix system $\mathcal{T}_P$, such that
 \begin{equation*}
-\mathcal{T}_P = \mathcal{T}_{Q_0}^{[0,t_0]}\otimes \mathcal{T}_{Q_1}^{[t_0,t_1]}\otimes \cdots \otimes \mathcal{T}_{Q_n}^{[t_{n-1},t_n]} \otimes \mathcal{T}_{Q_n}^{[t_{n},\infty)}\,.
+\mathcal{T}_P = \mathcal{T}_{Q_0}^{[0,t_0]}\otimes \mathcal{T}_{Q_1}^{[t_0,t_1]}\otimes \cdots \otimes \mathcal{T}_{Q_n}^{[t_{n-1},t_n]} \otimes \mathcal{T}_{Q_n}^{[t_{n},\infty)}.
+\vspace{3pt}
 \end{equation*}
 
 Due to Equation~\eqref{eq:theorem:lower_markov_bound_is_tight:localbound}, we know that the transition matrices of this process $P$ satisfy
@@ -4993,8 +5024,10 @@ where the last equality follows from Corollary~\ref{cor:lower_operator_is_infimu
 \end{align*}
 where the first equality follows from Equation~\eqref{eq:lawofiteratedexpectation}, the second inequality follows from Equation~\eqref{eq:prop:computemarginal}, the third inequality follows from $P\in\wprocesses_{\rateset,\mathcal{M}}$ and Equation~\eqref{eq:lowerexp3}, and the last equality follows from Proposition~\ref{prop:computeinitial}.
 Next, because of Equation~\eqref{eq:initiallowerexp}, we know that there is a probability mass function $p\in\mathcal{M}$ such that $\sum_{x\in\states}p(x)[L_0^sf](x)\leq\underline{\mathbb{E}}_{\mathcal{M}}[L_0^sf]+\epsilon$. Let $\mathcal{M}^*\coloneqq\{p\}$. Proposition~\ref{theorem:lower_markov_bound_is_tight} then implies that there is a well-behaved Markov chain $P^*\in\wmprocesses_{\rateset,\mathcal{M}^*}\subseteq\wmprocesses_{\rateset,\mathcal{M}}$ such that
+\vspace{-2pt}
 \begin{equation*}
 \mathbb{E}_{P^*}[f(X_s)\,\vert\,X_0]\leq[\lbound_0^sf](X_0)+\epsilon.
+\vspace{5pt}
 \end{equation*}
 It now follows from the definition of $\underline{\mathbb{E}}^\mathrm{WM}_{\rateset,\mathcal{M}}$ that
 \begin{equation*}
