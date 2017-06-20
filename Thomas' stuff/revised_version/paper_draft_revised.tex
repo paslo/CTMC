@@ -173,7 +173,7 @@ The first part of this paper develops a formalism for describing continuous-time
 \newpage
 \section{Introduction}\label{sec:introduction}
 
-Continuous-time Markov chains are mathematical models that can describe the behaviour of dynamical systems under stochastic uncertainty. In particular, they describe the stochastic evolution of such a system through a discrete state-space and over a continuous time-dimension. This class of models has found widespread applications in various fields, including queueing theory~\cite{asmussen2008applied,bolch2006queueing}, mathematical finance~\cite{elliott2013default, rolski2009stochastic,sass2004optimizing}, epidemiology~\cite{ duffy1995estimation,jackson2003multistate, lemey2009reconstructing}, system reliability analysis~\cite{besnard2010approach,gokhale2004analysis, wang2007reliability}, and many others~\cite{yin2012continuous}.
+Continuous-time Markov chains are mathematical models that can describe the behaviour of dynamical systems under stochastic uncertainty. In particular, they describe the stochastic evolution of such a system through a discrete state space and over a continuous time-dimension. This class of models has found widespread applications in various fields, including queueing theory~\cite{asmussen2008applied,bolch2006queueing}, mathematical finance~\cite{elliott2013default, rolski2009stochastic,sass2004optimizing}, epidemiology~\cite{ duffy1995estimation,jackson2003multistate, lemey2009reconstructing}, system reliability analysis~\cite{besnard2010approach,gokhale2004analysis, wang2007reliability}, and many others~\cite{yin2012continuous}.
 
 In order to model a problem by means of such a continuous-time Markov chain, quite a lot of assumptions need to be satisfied.
 For example, it is common practice to assume that the user is able to specify an exact value for all the parameters of the model.
@@ -281,8 +281,8 @@ $\mathcal{U}$ & the set of all finite, ordered sequences of time points & \place
 $\mathcal{U}_{<t}$ & the set of all finite, ordered sequences of time points \emph{before} time $t$ & \placeref{notation:sequenceset_ineq} \\
 $\mathcal{U}_{[t,s]}$ & the set of all finite, ordered sequences of time points that partition the time interval $[t,s]$ & \placeref{notation:sequenceset_partition} \\
 $\sigma(u)$ & the maximum sequential difference of $u=t_0,\ldots,t_n$; $\sigma(u)=\max\{t_i-{t_{i-1}}\,:\,i\in\{1,\ldots,n\}\}$ & \placeref{notation:sequenceset_partition} \\
-$\states$ & the finite state-space of a stochastic process & \placeref{notation:statespace} \\
-$\states_t$, $\states_u$ & the state-space $\states$ at an explicit time $t$, resp. the joint state-space at (multiple) time points $u\in\mathcal{U}$ & \placeref{notation:statespace} \\
+$\states$ & the finite state space of a stochastic process & \placeref{notation:statespace} \\
+$\states_t$, $\states_u$ & the state space $\states$ at an explicit time $t$, resp. the joint state space at (multiple) time points $u\in\mathcal{U}$ & \placeref{notation:statespace} \\
 $\gamblesX$ & the set of all functions $f: \states\to\reals$ & \placeref{notation:functionspace} \\
 $\gambles(\states_u)$ & the set of all functions $f:\states_u\to\reals$ & \placeref{notation:functionspacemulti} \\
 $\norm{\cdot}$ & the maximum ($L_\infty$) norm of a function, operator, or set of matrices & \placeref{notation:norm} \\
@@ -2106,7 +2106,7 @@ In the remainder of this section, we will numerically illustrate this method of 
 
 
 \begin{exmp}\label{exmp:example_rateset_simple_model}
-Consider again the binary-state disease model from Example~\ref{ex:health_sick_exmp}, modeling a person periodically becoming sick and recovering after some time. The state-space here is of the form $\states=\{\text{{\tt healthy}},\text{{\tt sick}}\}$, and we wish to specify numerical values for the rate at which the two possible transitions occur; that is, the transitions from {\tt healthy} to {\tt sick}, and from {\tt sick} to {\tt healthy}.
+Consider again the binary-state disease model from Example~\ref{ex:health_sick_exmp}, modelling a person periodically becoming sick and recovering after some time. The state space here is of the form $\states=\{\text{{\tt healthy}},\text{{\tt sick}}\}$, and we wish to specify numerical values for the rate at which the two possible transitions occur; that is, the transitions from {\tt healthy} to {\tt sick}, and from {\tt sick} to {\tt healthy}.
 
 If we were using a precise homogeneous Markov chain $P\in\whmprocesses$, it would suffice to select a single rate matrix $Q\in\mathcal{R}$, which, in this binary case, would be of the form
 \begin{equation*}
@@ -2136,7 +2136,7 @@ with the time unit again being one week. Note that $\rateset$ here is clearly no
 As mentioned above, for a given set $\rateset$, Proposition~\ref{prop:approximation_error_bound} allows us to reduce the problem of computing conditional lower expectations to the problem of evaluating the lower transition operator $\lrate$ of $\rateset$, as defined in Equation~\eqref{eq:correspondinglowertrans}. In theory, the latter could still be a difficult problem, since $\rateset$ can be very complicated---we only require that it is non-empty and has separately specified rows. However, in practice, $\rateset$ will typically be described by means of linear constraints, and computing $\lrate g$ is then a standard constrained linear optimisation problem, which is easily solved by means of linear programming techniques. 
 We will henceforth assume that the optimisation problem in Equation~\eqref{eq:correspondinglowertrans} is solvable. However, as we have just explained, the complexity of this problem will depend on the exact form of $\rateset$.
 
-For the set $\rateset$ of Example~\ref{exmp:example_rateset_simple_model}, as defined by Equation~\eqref{eq:num_example_rateset_params}, the constraints that we are dealing with are simple box-constraints. Furthermore, because the state-space $\states$ contains only two states in this specific example model, computing $\lrate g$ is particularly easy, regardless of the choice of $g\in\gamblesX$. This is made explicit in the following example, where we also compute the quantity $\norm{\lrate}$ that is required for the numerical computations that follow.
+For the set $\rateset$ of Example~\ref{exmp:example_rateset_simple_model}, as defined by Equation~\eqref{eq:num_example_rateset_params}, the constraints that we are dealing with are simple box-constraints. Furthermore, because the state space $\states$ contains only two states in this specific example model, computing $\lrate g$ is particularly easy, regardless of the choice of $g\in\gamblesX$. This is made explicit in the following example, where we also compute the quantity $\norm{\lrate}$ that is required for the numerical computations that follow.
 
 \begin{exmp}\label{exmp:numerical_lrate}
 Consider the set $\rateset$ of Example~\ref{exmp:example_rateset_simple_model}, as defined by Equation~\eqref{eq:num_example_rateset_params}, let $\lrate$ be the corresponding lower transition rate operator, and consider any $g\in\gamblesX$. Furthermore, for the sake of notational convenience, let us abbreviate {\tt healthy} as {\tt h} and {\tt sick} as {\tt s}. It then follows from Equation~\eqref{eq:correspondinglowertrans} that
