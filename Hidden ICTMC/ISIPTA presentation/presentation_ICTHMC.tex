@@ -1,0 +1,400 @@
+\documentclass{beamer}
+\usepackage[english]{babel}
+\usetheme{Warsaw}
+
+\useoutertheme{infolines}
+\beamertemplatenavigationsymbolsempty
+
+\defbeamertemplate*{footline}{infolines}
+{
+  \leavevmode%
+  \hbox{%
+  \begin{beamercolorbox}[wd=.333333\paperwidth,ht=2.25ex,dp=1ex,center]{author in head/foot}%
+    \usebeamerfont{author in head/foot}Thomas Krak, Jasper De Bock, Arno Siebes
+  \end{beamercolorbox}%
+  \begin{beamercolorbox}[wd=.333333\paperwidth,ht=2.25ex,dp=1ex,center]{title in head/foot}%
+    \usebeamerfont{title in head/foot}Updated Lower Expectations for ICTHMCs
+  \end{beamercolorbox}%
+  \begin{beamercolorbox}[wd=.333333\paperwidth,ht=2.25ex,dp=1ex,right]{date in head/foot}%
+    \usebeamerfont{date in head/foot}\insertshortdate{}\hspace*{2em}
+    \insertframenumber{} / \inserttotalframenumber\hspace*{2ex}
+  \end{beamercolorbox}}%
+  \vskip0pt%
+}
+
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{bbm}
+\usepackage{graphicx}
+\usepackage{beamerouterthemesplit}
+\usepackage{tikz}
+\usepackage{soul}
+%\setbeamertemplate{footline}{Krak \& van der Gaag \\ Knowledge-based Bias Correction \\ Utrecht University}
+
+\title{Efficient Computation of Updated Lower Expectations for Imprecise Continuous-Time Hidden Markov Chains}
+\author{Thomas Krak$^*$ \and Jasper De Bock$^\dagger$ \and Arno Siebes$^*$}
+\institute{$^*$Department of Information and Computing Sciences\\Utrecht University\\ \quad \\$^\dagger$Department of Electronics and Information Systems\\Ghent University}
+\date{}
+
+\begin{document}
+
+\begin{frame}
+\maketitle
+\end{frame}
+
+\title{{\color{gray}\st{Efficient Computation of}} Updated Lower Expectations for Imprecise Continuous-Time Hidden Markov Chains}
+
+\begin{frame}
+\maketitle
+\end{frame}
+
+\begin{frame}
+Modelling problem: Dynamical system under uncertainty
+\begin{itemize}
+\item System that changes over time
+\item We don't know exactly how
+\end{itemize}
+For example, disease development over time.
+\newline\newline
+System might not be observable directly, only indirectly.
+\newline\newline
+We model this with a (hidden) Markov chain.
+\begin{itemize}
+\item Specifically, an \emph{imprecise continuous-time hidden Markov chain}
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Overview}
+\begin{itemize}
+\item (Im)precise Markov Chains
+\item (Im)precise Continuous-Time Markov Chains
+\item Hidden Markov Chains
+\item Updating the Model
+\item Summary and Conclusions
+\end{itemize}
+\end{frame}
+
+\section{(Imprecise) Continuous-Time Markov Chains}
+
+\begin{frame}{(Discrete-Time) Markov Chains}
+State-space $\mathcal{X}$
+\begin{itemize}
+\item E.g., $\mathcal{X}=\{$healthy, sick$\}$
+\end{itemize}
+Time-dimension $\mathbb{N}$
+\newline\newline
+Markov chain $P$ specifies random variable $X_t$ at each time $t\in\mathbb{N}$.\\
+Each $X_t$ takes values in $\mathcal{X}$.
+\newline\newline
+Graphically as a Bayesian Network:
+\newline\newline
+\begin{tikzpicture}
+\draw[black] (0,0) circle (0.5) node[anchor=center] {$X_0$};
+\draw[->,thick] (0.5,0) -- +(0.8,0);
+\draw[black] (1.8,0) circle (0.5) node[anchor=center] {$X_1$};
+\draw[->,thick] (2.3,0) -- +(0.8,0);
+\draw[white] (3.6,0) circle (0.5) node[anchor=center,black] {$\cdots$};
+\draw[->,thick] (4.1,0) -- +(0.8,0);
+\draw[black] (5.4,0) circle (0.5) node[anchor=center] {$X_{t-1}$};
+\draw[->,thick] (5.9,0) -- +(0.8,0);
+\draw[black] (7.2,0) circle (0.5) node[anchor=center] {$X_{t}$};
+\draw[->,thick] (7.7,0) -- +(0.8,0);
+\draw[black] (9,0) circle (0.5) node[anchor=center] {$X_{t+1}$};
+\draw[->,thick] (9.5,0) -- +(0.8,0);
+\draw[white] (10.8,0) circle (0.5) node[anchor=center,black] {$\cdots$};
+\end{tikzpicture}
+\newline\newline
+Satisfies \emph{Markov property}:
+\begin{equation*}
+P(X_{t+1}\,\vert\, X_1,\ldots,X_{t}) = P(X_{t+1}\,\vert\,X_t)
+\end{equation*}
+\end{frame}
+
+
+\begin{frame}{Imprecise (Discrete-Time) Markov Chains}
+Set $\mathcal{P}$ of probability distributions.
+\newline\newline
+Each $P\in\mathcal{P}$ specifies random variable $X_t$ at each time $t\in\mathbb{N}$.
+\newline\newline
+Graphically as a Credal Network:
+\newline\newline
+\begin{tikzpicture}
+\draw[black] (0,0) circle (0.5) node[anchor=center] {$X_0$};
+\draw[->,thick] (0.5,0) -- +(0.8,0);
+\draw[black] (1.8,0) circle (0.5) node[anchor=center] {$X_1$};
+\draw[->,thick] (2.3,0) -- +(0.8,0);
+\draw[white] (3.6,0) circle (0.5) node[anchor=center,black] {$\cdots$};
+\draw[->,thick] (4.1,0) -- +(0.8,0);
+\draw[black] (5.4,0) circle (0.5) node[anchor=center] {$X_{t-1}$};
+\draw[->,thick] (5.9,0) -- +(0.8,0);
+\draw[black] (7.2,0) circle (0.5) node[anchor=center] {$X_{t}$};
+\draw[->,thick] (7.7,0) -- +(0.8,0);
+\draw[black] (9,0) circle (0.5) node[anchor=center] {$X_{t+1}$};
+\draw[->,thick] (9.5,0) -- +(0.8,0);
+\draw[white] (10.8,0) circle (0.5) node[anchor=center,black] {$\cdots$};
+\end{tikzpicture}
+Either:
+\begin{itemize}
+\item Strong independence: Every $P\in\mathcal{P}$ is a Markov chain;
+\item Epistemic Irrelevance: $P\in\mathcal{P}$ need not be Markov, but $\mathcal{P}$ must satisfy \emph{Imprecise Markov property}:
+\end{itemize}
+\begin{equation*}
+\underline{P}(X_{t+1}\,\vert\, X_1,\ldots,X_{t}) = \underline{P}(X_{t+1}\,\vert\,X_t)
+\end{equation*}
+\end{frame}
+
+%\begin{frame}{Continuous-Time Markov Chains}
+%Continuous-time Markov chain: Time dimension $\mathbb{R}_{\geq 0}$.
+%\newline\newline
+%$\Rightarrow$ Specifies random variable $X_t$ at each time $t\in\mathbb{R}_{\geq 0}$.
+%\newline\newline
+%Somewhat difficult to draw completely.\newline\newline
+%\begin{tikzpicture}
+%\draw[black] (0,0) circle (0.5) node[anchor=center] {$X_0$};
+%\draw[->,thick] (0.5,0) -- +(0.8,0);
+%\draw[black] (1.8,0) circle (0.5) node[anchor=center] {$X_1$};
+%\draw[->,thick] (2.3,0) -- +(0.8,0);
+%\draw[white] (3.6,0) circle (0.5) node[anchor=center,black] {$\cdots$};
+%\draw[->,thick] (4.1,0) -- +(0.8,0);
+%\draw[black] (5.4,0) circle (0.5) node[anchor=center] {$X_{t-1}$};
+%\draw[->,thick] (5.9,0) -- +(0.8,0);
+%\draw[black] (7.2,0) circle (0.5) node[anchor=center] {$X_{t}$};
+%\draw[->,thick] (7.7,0) -- +(0.8,0);
+%\draw[black] (9,0) circle (0.5) node[anchor=center] {$X_{t+1}$};
+%\draw[->,thick] (9.5,0) -- +(0.8,0);
+%\draw[white] (10.8,0) circle (0.5) node[anchor=center,black] {$\cdots$};
+%\draw[white] (0.5,-2.2) circle (0.5) node[anchor=west,black] {Need infinitely many nodes in between};
+%\draw[->,thick] (3.6,-2) -- (0.9,-0.1);
+%\draw[->,thick] (3.6,-2) -- (2.7,-0.1);
+%\draw[->,thick] (3.6,-2) -- (4.4,-0.1);
+%\draw[->,thick] (3.6,-2) -- (6.3,-0.1);
+%\draw[->,thick] (3.6,-2) -- (8.1,-0.1);
+%\draw[->,thick] (3.6,-2) -- (9.9,-0.1);
+%\end{tikzpicture}
+%\end{frame}
+%
+%\begin{frame}{Continuous-Time Markov Chains}
+%Continuous-time Markov chain: Time dimension $\mathbb{R}_{\geq 0}$.
+%\newline\newline
+%$\Rightarrow$ Specifies random variable $X_t$ at each time $t\in\mathbb{R}_{\geq 0}$.
+%\newline\newline
+%Start with initial distribution at time 0.\newline\newline\newline\newline
+%\begin{tikzpicture}
+%\draw[black] (0,0) circle (0.5) node[anchor=center] {$X_0$};
+%\end{tikzpicture}
+%\quad\newline\newline
+%\end{frame}
+
+\begin{frame}{Continuous-Time Markov Chains}
+Continuous-time Markov chain: Time dimension $\mathbb{R}_{\geq 0}$.
+\newline\newline
+$\Rightarrow$ Specifies random variable $X_t$ at each time $t\in\mathbb{R}_{\geq 0}$.
+\newline\newline
+Start with initial distribution at time 0. \\
+Add complete time line.\newline\newline\newline
+\begin{tikzpicture}
+\draw[black] (0,0) circle (0.5) node[anchor=center] {$X_0$};
+\draw[->,thick] (0.5,0) -- (11.3,0);
+\end{tikzpicture}
+\quad\newline\newline
+\end{frame}
+
+\begin{frame}{Continuous-Time Markov Chains}
+Continuous-time Markov chain: Time dimension $\mathbb{R}_{\geq 0}$.
+\newline\newline
+$\Rightarrow$ Specifies random variable $X_t$ at each time $t\in\mathbb{R}_{\geq 0}$.
+\newline\newline
+Start with initial distribution at time 0. \\
+Add complete time line. \\
+Fix any time points $0< t < r < s$. \newline\newline
+\begin{tikzpicture}
+\draw[black] (0,0) circle (0.5) node[anchor=center] {$X_0$};
+\draw[->,thick] (0.5,0) -- (2.5,0);
+\draw[black] (3,0) circle (0.5) node[anchor=center] {$X_t$};
+\draw[->,thick] (3.5,0) -- (4.5,0);
+\draw[black] (5,0) circle (0.5) node[anchor=center] {$X_r$};
+\draw[->,thick] (5.5,0) -- (8.5,0);
+\draw[black] (9,0) circle (0.5) node[anchor=center] {$X_s$};
+\draw[->,thick] (9.5,0) -- (11.3,0);
+\end{tikzpicture}
+\quad\newline\newline\pause
+Satisfies Markov property: $P(X_s\,\vert\,X_0,X_t,X_r)=P(X_s\,\vert\,X_r)$.
+\end{frame}
+
+\begin{frame}{Imprecise Continuous-Time Markov Chains (ICTMC)}
+Set of distributions $\mathcal{P}$.
+\newline\newline
+Each $P\in\mathcal{P}$ specifies r.v. $X_t$ for all $t\in\mathbb{R}_{\geq 0}$.
+\newline\newline
+For any $0<t<r<s$, now induces a Credal Network:
+\newline\newline
+\begin{tikzpicture}
+\draw[black] (0,0) circle (0.5) node[anchor=center] {$X_0$};
+\draw[->,thick] (0.5,0) -- (2.5,0);
+\draw[black] (3,0) circle (0.5) node[anchor=center] {$X_t$};
+\draw[->,thick] (3.5,0) -- (4.5,0);
+\draw[black] (5,0) circle (0.5) node[anchor=center] {$X_r$};
+\draw[->,thick] (5.5,0) -- (8.5,0);
+\draw[black] (9,0) circle (0.5) node[anchor=center] {$X_s$};
+\draw[->,thick] (9.5,0) -- (11.3,0);
+\end{tikzpicture}
+\newline\newline
+Imprecise Markov property: $\underline{P}(X_s\,\vert\,X_0,X_t,X_r)=\underline{P}(X_s\,\vert\,X_r)$
+\end{frame}
+
+\section{Imprecise Continuous-Time Hidden Markov Chains}
+
+\begin{frame}{Hidden ICTMCs: Adding Observables}
+``Hidden'' ICTMC:
+\begin{itemize}
+\item States $X_t$ cannot be directly observed
+\item Instead we observe $Y_t$, which ``correlate'' with $X_t$
+\begin{itemize}
+\item E.g., symptoms of a disease.
+\end{itemize}
+\end{itemize}
+\quad\newline
+Graphically:\newline\newline
+\begin{tikzpicture}
+\draw[black] (0,0) circle (0.5) node[anchor=center] {$X_0$};
+\draw[->,thick] (0,-0.5) -- (0,-1);
+\draw[black] (0,-1.5) circle (0.5) node[anchor=center] {$Y_0$};
+\draw[->,thick] (0.5,0) -- (2.5,0);
+\draw[black] (3,0) circle (0.5) node[anchor=center] {$X_t$};
+\draw[->,thick] (3,-0.5) -- (3,-1);
+\draw[black] (3,-1.5) circle (0.5) node[anchor=center] {$Y_t$};
+\draw[->,thick] (3.5,0) -- (4.5,0);
+\draw[black] (5,0) circle (0.5) node[anchor=center] {$X_r$};
+\draw[->,thick] (5,-0.5) -- (5,-1);
+\draw[black] (5,-1.5) circle (0.5) node[anchor=center] {$Y_r$};
+\draw[->,thick] (5.5,0) -- (8.5,0);
+\draw[black] (9,0) circle (0.5) node[anchor=center] {$X_s$};
+\draw[->,thick] (9,-0.5) -- (9,-1);
+\draw[black] (9,-1.5) circle (0.5) node[anchor=center] {$Y_s$};
+\draw[->,thick] (9.5,0) -- (11.3,0);
+\end{tikzpicture}
+\quad\newline\newline
+For simplicity, we use \emph{precise}, homogeneous output models: 
+\begin{equation*}
+\underline{P}(Y_t\,\vert\,X_t)=P(Y_t\,\vert\,X_t)=P(Y\,\vert\,X),\quad t\in\mathbb{R}_{\geq 0}\,.
+\end{equation*}
+\end{frame}
+
+\begin{frame}{The Inference Problem}
+Now interested in inference on the state-space, given observations:
+\begin{equation*}
+\underline{\mathbb{E}}[f(X_s)\,\vert\,Y_t=y_t]
+\end{equation*}
+We will call this the \emph{updated} lower expectation.
+\newline\newline
+More generally, for any \emph{event} $O\subseteq \mathcal{Y}$, what is $\underline{\mathbb{E}}[f(X_s)\,\vert\,Y_t\in O]$?
+\newline\newline
+First, how should we define it?
+\newline
+$\Rightarrow$ Depends on properties of $Y_t$
+\end{frame}
+
+\begin{frame}{Positive (Upper) Probability}
+If the observation $(Y_t\in O)$ has positive probability, we use Bayes' rule in the precise case:
+\begin{align*}
+\mathbb{E}_P[f(X_s)\,\vert\, Y_t\in O] &:= \sum_{x_s} f(x_s)\frac{P(X_s=x_s,Y_t\in O)}{P(Y_t\in O)} %\\
+% &\,= \frac{\mathbb{E}_P\bigl[f(X_s)P(Y_t\in O\,\vert\,X_t)\bigr]}{\mathbb{E}_P\bigl[P(Y_t\in O\,\vert\,X_t)\bigr]}\,,
+\end{align*}
+whenever $P(Y_t\in O)>0$.%=\mathbb{E}_P\bigl[P(Y_t\in O\,\vert\,X_t)\bigr] > 0$.
+\end{frame}
+
+\begin{frame}{Positive (Upper) Probability, cont.}
+For imprecise case, we use \emph{regular extension}:
+\begin{equation*}
+\underline{\mathbb{E}}[f(X_s)\,\vert\, Y_t\in O] := \inf\Bigl\{ \mathbb{E}_P[f(X_s)\,\vert\, Y_t\in O]\,:\, P\in\mathcal{P},\,P(Y_t\in O)>0 \Bigr\}\,,
+\end{equation*}
+whenever $\overline{P}(Y_t\in O)>0$.%= \overline{\mathbb{E}}\bigl[P(Y_t\in O\,\vert\,X_t)\bigr]>0$.
+\newline\newline\newline
+Satisfies a \emph{generalised Bayes' rule}:
+\begin{equation*}
+\underline{\mathbb{E}}[f(X_s)\,\vert\, Y_t\in O] = \max\Bigl\{ \mu\in\mathbb{R}\,:\, \underline{\mathbb{E}}\bigl[P(Y_t\in O\,\vert\,X_t)(f(X_s) - \mu)\bigr] \geq 0 \Bigr\}
+\end{equation*}
+(whenever $\overline{P}(Y_t\in O)>0$).
+\end{frame}
+
+\begin{frame}{Continuous Outputs}
+If $Y_t$ is continuous, e.g. $\mathcal{Y}=\mathbb{R}$, then $P(Y_t=y_t)=0$ for all $P\in\mathcal{P}$.
+\newline
+$\Rightarrow$ We cannot simply use Bayes' rule and/or regular extension.
+\newline\newline
+How do we define $\mathbb{E}_P[f(X_s)\,\vert\,Y_t=y_t]$?
+\newline\newline
+Consider (conditional) \emph{probability density function} $\phi:\mathcal{Y}\times \mathcal{X}\to\mathbb{R}$:
+\begin{equation*}
+P(Y_t\in O\,\vert\,X_t=x_t) = \int_{O}\phi(y\,\vert\,x_t)\,\mathrm{d}y
+\end{equation*}
+\newline\newline
+Take a sequence $\{O_i\}_{i\in\mathbb{N}}$ such that $\lim_{i\to+\infty}O_i=\{y_t\}$. Then
+\begin{equation*}
+\mathbb{E}_P[f(X_s)\,\vert\,Y_t=y_t] := \lim_{i\to+\infty} \mathbb{E}_P[f(X_s)\,\vert\,Y_t\in O_i]
+\end{equation*}
+\end{frame}
+
+\begin{frame}{Continuous Outputs, cont.}
+We have
+\begin{equation*}
+\mathbb{E}_P[f(X_s)\,\vert\,Y_t=y_t] := \lim_{i\to+\infty} \mathbb{E}_P[f(X_s)\,\vert\,Y_t\in O_i]
+\end{equation*}
+This limit exists under suitable assumptions, e.g. $P(Y_t\in O_i)>0$, $i\in\mathbb{N}$.
+\newline\newline
+In particular,
+\begin{equation*}
+\mathbb{E}_P[f(X_s)\,\vert\,Y_t=y_t] = \frac{\mathbb{E}_P[f(X_s)\phi(y_t\,\vert\,X_t)]}{\mathbb{E}_P[\phi(y_t\,\vert\,X_t)]}
+\end{equation*}
+whenever $\mathbb{E}_P[\phi(y_t\,\vert\,X_t)]>0$.
+\newline\newline
+This is \emph{Bayes' rule for (finite) mixtures of densities}.
+\end{frame}
+
+\begin{frame}{Continuous Outputs, cont.}
+For the imprecise case, we define
+\begin{equation*}
+\underline{\mathbb{E}}[f(X_s)\,\vert\,Y_t=y_t] := \inf\Bigl\{ \mathbb{E}_P[f(X_s)\,\vert\,Y_t=y_t]\,:\, P\in\mathcal{P} \Bigr\}\,,
+\end{equation*}
+whenever $\underline{\mathbb{E}}[\phi(y_t\,\vert\,X_t)]>0$.
+\newline\newline
+Satisfies limit interpretation,
+\begin{equation*}
+\underline{\mathbb{E}}[f(X_s)\,\vert\,Y_t=y_t] = \lim_{i\to+\infty} \underline{\mathbb{E}}[f(X_s)\,\vert\,Y_t\in O_i]\,,
+\end{equation*}
+and \emph{generalised Bayes' rule for (finite) mixtures of densities}:
+\begin{equation*}
+\underline{\mathbb{E}}[f(X_s)\,\vert\,Y_t=y_t] = \max\Bigl\{ \mu\in\mathbb{R}\,:\, \underline{\mathbb{E}}\bigl[\phi(y_t\,\vert\,X_t)(f(X_s) - \mu)\bigr] \geq 0 \Bigr\}\,,
+\end{equation*}
+(whenever $\underline{\mathbb{E}}[\phi(y_t\,\vert\,X_t)]>0$).
+\end{frame}
+
+\begin{frame}{Generalised Bayes' Rule(s)}
+In both cases, we have a GBR:
+\begin{align*}
+\underline{\mathbb{E}}[f(X_s)\,\vert\, Y_t\in O] &= \max\Bigl\{ \mu\in\mathbb{R}\,:\, \underline{\mathbb{E}}\bigl[P(Y_t\in O\,\vert\,X_t)(f(X_s) - \mu)\bigr] \geq 0 \Bigr\} \\
+\underline{\mathbb{E}}[f(X_s)\,\vert\,Y_t=y_t] &= \max\Bigl\{ \mu\in\mathbb{R}\,:\, \underline{\mathbb{E}}\bigl[\phi(y_t\,\vert\,X_t)(f(X_s) - \mu)\bigr] \geq 0 \Bigr\}
+\end{align*}
+\newline\newline
+Computational problem reduces to solving these maximisation problems.
+\newline\newline
+See the paper for a polynomial runtime algorithm to do this.
+\end{frame}
+
+\section{Summary and Questions}
+
+\begin{frame}{Summary}
+Main take-away points:
+\begin{itemize}
+\item Modelling dynamical system under uncertainty
+\item If system cannot be directly observed, we use a hidden model \\ \quad
+\item We define \emph{updated lower expectations} for the imprecise model
+\begin{itemize}
+\item Outputs either discrete or continuous
+\end{itemize}
+\item Paper describes a polynomial runtime algorithm to compute these quantities.
+\end{itemize}
+\end{frame}
+
+
+\end{document}
