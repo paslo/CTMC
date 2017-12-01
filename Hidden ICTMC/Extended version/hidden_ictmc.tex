@@ -1,6 +1,6 @@
-\documentclass[twoside,11pt]{article}
-\usepackage{isipta}
-
+%\documentclass[twoside,11pt]{article}
+\documentclass[3p]{elsarticle}
+%\usepackage{isipta}
 
 \usepackage[british]{babel}
 %\usepackage[garamond]{mathdesign}
@@ -9,16 +9,21 @@
 
 \usepackage{hyperref,url}
 
-\usepackage{mathptmx}
+%\usepackage{mathptmx}
 \usepackage{amsmath}
 \usepackage{courier}
 \usepackage{amssymb}
 %\usepackage{mathtools}
-%\usepackage{amsthm}
+
+\usepackage{amsthm}
 
 \usepackage{enumerate}
 \usepackage{enumitem,multicol}
 \usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{pgfplotstable}
+
+\usepackage{filecontents}
 \usepackage{nicefrac}
 \usepackage{bm}
 \usepackage{algorithm}
@@ -26,6 +31,10 @@
 \usepackage{algpseudocode}
 
 \usepackage{graphicx}
+\usepackage{caption}
+
+\pgfplotsset{compat=1.15}
+
 
 %\usepackage{eufrak}
 
@@ -39,12 +48,14 @@
 %\newtheorem{exmp}{Example}%[section]
  
 \renewcommand{\ttdefault}{cmtt}
-%\newtheorem{theorem}{Theorem}[section]
-%\newtheorem{proposition}[theorem]{Proposition}
-%\newtheorem{corollary}[theorem]{Corollary}
-%\newtheorem{lemma}[theorem]{Lemma}
-%\newtheorem{definition}{Definition}
-%\newtheorem{remark}{Remark}
+
+\newtheorem{example}{Example}[section]
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{definition}{Definition}
+\newtheorem{remark}{Remark}
 %\newtheorem*{remark*}{Remark}
 
 %\newtheorem{claim}{Claim}[theorem]
@@ -115,6 +126,10 @@
 
 \newcommand{\ictmc}{{ICTMC}}
 
+%\newcommand{\citep}[1]{\cite{#1}}
+%\newcommand{\citet}[1]{\cite{#1}}
+
+
 \def\presuper#1#2%
   {\mathop{}%
    \mathopen{\vphantom{#2}}^{#1}%
@@ -134,34 +149,57 @@
 \newcommand{\BibTeX}{\textsc{B\kern-0.1emi\kern-0.017emb}\kern-0.15em\TeX}
 
 % Running title and authors 
-\ShortHeadings{Imprecise Continuous-Time Hidden Markov Chains}{Krak et al.} 
+%\ShortHeadings{Imprecise Continuous-Time Hidden Markov Chains}{Krak et al.} 
 
 
 \begin{document}
 
+\begin{frontmatter}
 
 \title{Imprecise Continuous-Time Hidden Markov Chains and \\Efficiently Computing their Lower Expectations}
-\author{\name Thomas Krak \email thomas.krak@ugent.be\\
-\addr $^\dagger$Department of Electronics and Information Systems, imec, IDLab\\
-Ghent University (Belgium)
-\AND
-\name Jasper De Bock$^\dagger$ \email jasper.debock@ugent.be\\
-\AND
-\name Arno Siebes \email a.p.j.m.siebes@uu.nl\\
-\addr Department of Information and Computing Sciences\\
-Utrecht University (The Netherlands)
-}
-\maketitle
-\vspace{-7pt}
+%\author{\name Thomas Krak \email thomas.krak@ugent.be\\
+%\addr $^\dagger$Department of Electronics and Information Systems, imec, IDLab\\
+%Ghent University (Belgium)
+%\AND
+%\name Jasper De Bock$^\dagger$ \email jasper.debock@ugent.be\\
+%\AND
+%\name Arno Siebes \email a.p.j.m.siebes@uu.nl\\
+%\addr Department of Information and Computing Sciences\\
+%Utrecht University (The Netherlands)
+%}
+\author[theghentaddress]{Thomas Krak\corref{mycorrespondingauthor}}
+\ead{thomas.krak@ugent.be}
+
+\author[theghentaddress]{Jasper De Bock}
+\ead{jasper.debock@ugent.be}
+
+\author[theuuaddress]{Arno Siebes}
+\ead{a.p.j.m.siebes@uu.nl}
+
+% affiliations
+\address[theghentaddress]{Ghent University, Department of Electronics and Information Systems,
+Technologiepark -- Zwijnaarde 914,
+9052 Zwijnaarde, Belgium}
+
+\address[theuuaddress]{Utrecht University, Department of Information and Computing Sciences, Princetonplein 5, De Uithof, 3584 CC Utrecht, The Netherlands}
+
+% note of corresponding author
+\cortext[mycorrespondingauthor]{Corresponding author}
+
+
+%\maketitle
+%\vspace{-7pt}
 
 
 \begin{abstract}We consider the problem of performing inference with \emph{imprecise continuous-time hidden Markov chains}, that is, \emph{imprecise continuous-time Markov chains} that are augmented with random \emph{output} variables whose distribution depends on the hidden state of the chain. The prefix `imprecise' refers to the fact that we do not consider a classical continuous-time Markov chain, but replace it with a robust extension that allows us to represent various types of model uncertainty, using the theory of \emph{imprecise probabilities}. The inference problem amounts to computing lower expectations of functions on the state-space of the chain and/or on these output variables.
 We develop and investigate this problem with very few assumptions on the output variables; in particular, they can be chosen to be either discrete or continuous random variables. Our main result is a polynomial runtime algorithm to compute the lower expectation of various such inference problems. In particular, we cover the computation of unconditional probabilities and density values of the output variables, as well as functions on the state-space given observations of the outputs.\vspace{-3pt}
 \end{abstract}
 
-\section{Introduction}\label{sec:introduction}%\vspace{-5pt}
+\end{frontmatter}
 
+\section{Introduction}\label{sec:introduction}%\vspace{-5pt}
 A continuous-time Markov chain (CTMC) is a stochastic model that describes the evolution of a dynamical system under uncertainty. Specifically, it provides a probabilistic description of how such a system might move through a finite state-space, as time elapses in a continuous fashion. There are various ways in which this model class can be extended.
+
 
 One such extension are continuous-time \emph{hidden} Markov chains (CTHMC's)~\citep{wei2002continuous}. Such a CTHMC is a stochastic model that contains a continuous-time Markov chain as a latent variable---that is, the actual realised behaviour of the system cannot be directly observed. This model furthermore incorporates random \emph{output} variables, which depend probabilistically on the current state of the system, and it is rather realisations of these variables that one observes. Through this stochastic dependency between the output variables and the states in which the system might be, one can perform inferences about quantities of interest that depend on these states---even though they have not been, or cannot be, observed directly.
 
@@ -332,7 +370,122 @@ The lower expectation with respect to $\mathcal{Z}$ will be denoted by $\underli
 Note that we leave the parameters $\mathcal{M}$, $\rateset$ and $P_{\observs\vert\states}$ implicit in the notation of the ICTHMC $\mathcal{Z}$---we will henceforth take these parameters to be fixed.
 
 Also, the output model is taken to be precise, and shared by all processes in the set. One further generalisation that we aim to make in the future is to allow for an imprecise specification of this output model. However, this would force us into choosing an appropriate notion of independence; e.g., whether to enforce the independence assumptions made in Section~\ref{sec:aug_stochastic_processes}, leading to strong or complete independence, or to only enforce the lower envelopes to have these independence properties, leading to epistemic irrelevance. It is currently unclear which choice should be preferred, e.g. with regard to computability, so at present we prefer to focus on this simpler model.
-\vspace{-8pt}
+%\vspace{-8pt}
+
+We conclude this section by introducing a simple example model, which we will also use in the sequel to illustrate some of our results.
+\begin{example}
+blabla as illustrated by Figure~\ref{fig:example_queue_sketch}.
+
+%This can be represented by a CTMC with transition rate matrix $Q$ given by
+%\begin{equation*}
+%Q = \left[\begin{array}{rrrrrr}
+%-a & a & 0 & 0 & \cdots & 0\\
+%d & -q & a & 0 & \cdots & 0 \\
+%0 & d & -q & a & \cdots & 0 \\
+%\vdots &  & \ddots & \ddots & \ddots &\vdots\\
+%0 & \cdots & 0 & d & -q & a \\
+%0 & \cdots & 0 & 0 & d & -d
+%\end{array}\right]\,, \text{with $q\coloneqq a+d$.}
+%\end{equation*}
+
+This can be represented by a CTMC with $(k+1)\times (k+1)$ transition rate matrix $Q$ whose elements are defined, for all $i,j\in\{0,\ldots,k\}$ such that $i\neq j$, by
+\begin{equation*}
+Q(i,j) \coloneqq \left\{\begin{array}{rl}
+a & \text{if $i<k$ and $j=i+1$,} \\
+d & \text{if $i>0$ and $j=i-1$,} \\
+0 & \text{otherwise,}
+\end{array}\right.
+\end{equation*} 
+and the diagonal elements follow from the zero-row sum constraint, i.e., for all $i\in\{0,\ldots,k\}$:
+\begin{equation*}
+Q(i,i) = \left\{\begin{array}{cl}
+-a & \text{if $i=0$,} \\
+-d & \text{if $i=k$,} \\
+-(a+d) & \text{otherwise.}
+\end{array}\right.
+\end{equation*}
+
+We can now make this system imprecise by specifying that the arrival rates $a$ and departure rates $d$ are not known precisely, but that we only know that they belong to the intervals $[\underline{a},\overline{a}]$ and $[\underline{d},\overline{d}]$ respectively. Next, we can relax the assumption that these rates are independent of the length of the queue; for instance, a longer queue might deter new arrivals due to higher expected waiting times. Hence, we then consider the set $\rateset$ as the set of rate matrices $Q\in\rateset$ for which, for all $i,j\in\{0,\ldots,k\}$ with $i\neq j$,
+\begin{equation*}
+Q(i,j) \in \left\{\begin{array}{cl}
+[\,\underline{a},\overline{a}\,] & \text{if $i<k$ and $j=i+1$,} \\
+ \text{$[\,\underline{d},\overline{d}\,]$} & \text{if $i>0$ and $j=i-1$,} \\
+\{0\} & \text{otherwise,}
+\end{array}\right.
+\end{equation*}
+and for which $\sum_{j\in\{0,\ldots,k\}}Q(i,j)=0$. Using this set $\rateset$, we can now specify the corresponding ICTMC $\mathbb{P}_{\rateset,\mathcal{M}}$. For simplicity, we assume that the queue always starts out empty, i.e., that $\mathcal{M}=\{p_0\}$, where $p_0$ is a probability mass function on $\{0,\ldots,k\}$ that satisfies $p_0(0)=1$ (and hence $p_0(i)=0$ for all $i\in\{1,\ldots,k\}$).
+
+{\bf **** nog wat over de onafhankelijkheidsaannamen en de vergelijking met Stavros' werk}
+
+*** hidden system van maken door sensor te plaatsen
+
+\begin{figure}
+\centering
+\begin{tabular}{lr}
+\begin{tikzpicture}[xscale=0.8,yscale=0.8]
+%\draw[help lines] (0,0) grid (10,3);
+\draw (-0.5,-0.5) rectangle (7.5,3);
+\draw[->] (0,1.5) -- (1,1.5);
+\node [above] at (0.5,1.5) {$a$};
+\draw (1.15,0) rectangle (1.35,0.75);
+\draw[dashed] (1.25,0.75) -- (1.25,2.5);
+\node [right] at (1.5,0.375) {sensor};
+%\draw [dotted] (1,1) rectangle (1.5,2);
+%\draw [dotted] (1.5,1) rectangle (2,2);
+%\draw [dotted] (2,1) rectangle (2.5,2);
+%\draw [dotted] (2.5,1) rectangle (3,2);
+\draw [dotted] (1,1) -- (3,1);
+\draw [dotted] (1,2) -- (3,2);
+\draw [dotted] (1,1) -- (1,2);
+\draw [dotted] (1.5,1) -- (1.5,2);
+\draw [dotted] (2,1) -- (2,2);
+\draw [dotted] (2.5,1) -- (2.5,2);
+\draw (3,1) rectangle (3.5,2);
+\draw (3.5,1) rectangle (4,2);
+\draw (4,1) rectangle (4.5,2);
+\draw (4.5,1) rectangle (5,2);
+\draw (5.5,1.5) circle (0.5);
+\draw[->] (6,1.5) -- (7,1.5);
+\node [above] at (6.5, 1.5) {$d$};
+\draw [white,fill=white] (3.75,1.75) rectangle (4.25,1.25);
+\node at (4,1.5) {$X_t$};
+\end{tikzpicture}
+&
+\begin{tikzpicture}[xscale=0.8,yscale=0.8]
+%\draw[help lines] (0,0) grid (10,3);
+\draw (-0.5,-0.5) rectangle (7.5,3);
+\draw[->] (0,1.5) -- (1,1.5);
+\node [above] at (0.5,1.5) {$a$};
+\draw (1.15,0) rectangle (1.35,0.75);
+\draw[dashed] (1.25,0.75) -- (1.25,1);
+\node [right] at (1.5,0.375) {sensor};
+%\draw [dotted] (1,1) rectangle (1.5,2);
+%\draw [dotted] (1.5,1) rectangle (2,2);
+%\draw [dotted] (2,1) rectangle (2.5,2);
+\draw [dotted] (1,1) -- (3,1);
+\draw [dotted] (1,2) -- (3,2);
+\draw [dotted] (1,1) -- (1,2);
+\draw [dotted] (1.5,1) -- (1.5,2);
+\draw [dotted] (2,1) -- (2,2);
+\draw (2.5,1) rectangle (3,2);
+\draw (3,1) rectangle (3.5,2);
+\draw (3.5,1) rectangle (4,2);
+\draw (4,1) rectangle (4.5,2);
+\draw (4.5,1) rectangle (5,2);
+\draw [fill=white] (1.15,1) rectangle (1.65,2);
+\draw [fill=white] (1.85,1) rectangle (2.35,2);
+\draw (5.5,1.5) circle (0.5);
+\draw[->] (6,1.5) -- (7,1.5);
+\node [above] at (6.5, 1.5) {$d$};
+\draw [white,fill=white] (3.75,1.75) rectangle (4.25,1.25);
+\node at (4,1.5) {$X_t$};
+\end{tikzpicture}
+\end{tabular}
+\caption{Left: Sketch of a finite-length, single server queue $X_t$ with arrival rate $a$ and departure rate $d$. A sensor is in place to measure whether the queue is full. Right: The same system as on the left, here with non-ideal filling of the queue. The sensor registers the queue as being full despite not all slots being filled.}
+\label{fig:example_queue_sketch}
+\end{figure}
+\exampleend
+\end{example}
 
 \section{Computing Lower Expectations for ICTHMC's}\label{sec:computing_icthmc}
 
@@ -799,6 +952,38 @@ The algorithm %now
 starts by setting $\mu_-\coloneqq \min f$, and $\mu_+\coloneqq \max f$; if $G(\mu_+)=0$, we know that $\mu_+$ is the quantity of interest. Otherwise, proceed iteratively in the following way. Compute the half-way point $\mu\coloneqq \nicefrac{1}{2}(\mu_+-\mu_-)$; then, if $G(\mu)\geq 0$ set $\mu_-\coloneqq \mu$, otherwise set $\mu_+\coloneqq\mu$; then repeat. Clearly, the interval $[\mu_-,\mu_+]$ still contains the maximum root after each step. The procedure can be terminated whenever $(\mu_+-\mu_-)<\epsilon$, for some desired numerical precision $\epsilon>0$. Since the width of the interval is halved at each iteration, the runtime of this procedure is $O\bigl(\log\{(\max f - \min f)\epsilon^{-1}\}\bigr)$.
 Methods for improving the numerical stability of this procedure can be found in \cite[Section 2.7.3]{de2015credal}. 
 
+\begin{figure}
+\begin{center}
+\begin{tikzpicture}
+\begin{axis}[
+    xlabel=$\mu$,ylabel=$G(\mu)$
+]
+\pgfplotstableread{gbrPlotData.txt}\mydata;
+\addplot [ 
+           color=red, 
+           %only marks, 
+           %mark=*, 
+           %mark size=0.5pt, 
+         ]
+         table {\mydata};
+\addplot [color=black,] table {
+x y
+0 0
+8 0
+};
+\addplot [color=black,dashed] table {
+x y
+1.82 0.2
+1.82 -1.4
+};
+\end{axis}
+\node [above] at (2.07, 0.75) {$\underline{\mathbb{E}}_\mathcal{Z}[f(X_s)\,\vert\,Y_u=y_u]$};
+\end{tikzpicture}
+\end{center}
+\caption{Plot of the function $G(\mu)$ used in the Generalised Bayes Rule. The dashed line marks the (in this case unique) root of $G(\mu)$, that is, the value of $\mu$ corresponding to the updated lower expectation of interest.
+The model considered here corresponds to the unobserved single-server queue of length $X$ at most $k=7$, with arrival rates $a\in[1,2]$ and departure rates $d\in[1,2]$, ``full queue''-sensor output probabilities $P_{\observs\vert\states}($IsFull=T$\,\vert\,X=n)=\nicefrac{n}{k+1}$ for all $n\in\{0,\ldots,k\}$, and an empty initial queue $P(X_0=0)=1$. The quantity of interest is the expected queue length, obtained by setting $f(x)\coloneqq x$, at time $s=21$, given an observed positive sensor output at time $t=20$. Then $\underline{\mathbb{E}}_\mathcal{Z}[f(X_{21})\,\vert\,$IsFull${}_{20}$=T$]\approx 1.82$. }
+\end{figure}\label{fig:gbr_example}
+
 %\subsection{Functions on a Single Time Point}\label{sec:funcs_single_time}
 %
 %Having discussed an efficient method to find the maximum root of the function $G(\mu)$ in Section~\ref{sec:gbr}, it now remains to provide an efficient method to numerically \emph{evaluate} this function for a given value of $\mu$. Clearly, any such method will depend on the choice of $f$.
@@ -843,11 +1028,23 @@ In future work, we intend to further generalise this model, by also allowing for
 such as the problem of computing updated lower expectations of functions $f\in\gambles(\states_v)$ that depend on more than one time-point. Another such problem is that of estimating state-sequences given observed output-sequences---as was previously done for (discrete-time) iHMM's~\citep{DeBock:2014ts}. %We believe that these previous results should translate fairly naturally to the current setting.
 \vspace{-9pt}
 
+
 \appendix
 
-\acks{The work in this paper was partially supported by the Research Foundation - Flanders (FWO) and the H2020-MSCA-ITN-2016 UTOPIAE, grant agreement 722734. %The authors would also like to thank three anonymous referees for their helpful comments and suggestions.
-}
-\vspace{-4pt}
+% The usual appendix definition of the elsarticle class prefixes ``Appendix'' to the alphanumeric counter. This causes a double statement like ``See Appendix AppendixA'' in the main text. If anybody reads this while typesetting and wants to remove the below redefinition, please make sure that such double statements are fixed throughout the main text :)
+
+\gdef\thesection{\Alph{section}} % corrected redefinition of "\thesection", by user ``Mico'' on tex.stackexchange
+\makeatletter
+\renewcommand\@seccntformat[1]{Appendix \csname the#1\endcsname.\hspace{0.5em}}
+\makeatother
+
+\section*{Acknowledgements}
+%\acks{
+The work in this paper was partially supported by the Research Foundation - Flanders (FWO) and the H2020-MSCA-ITN-2016 UTOPIAE, grant agreement 722734. %The authors would also like to thank three anonymous referees for their helpful comments and suggestions.
+%}
+%\vspace{-4pt}
+\quad\newline\newline
+
 %\bibliography{general}
 \begin{thebibliography}{8}
 \providecommand{\natexlab}[1]{#1}
