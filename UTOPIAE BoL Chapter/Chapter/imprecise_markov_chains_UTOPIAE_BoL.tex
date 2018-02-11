@@ -1,0 +1,320 @@
+\documentclass[11pt]{book}
+
+
+\usepackage[british]{babel}
+%\usepackage[garamond]{mathdesign}
+
+%\usepackage{authblk}
+
+\usepackage{hyperref,url}
+
+\usepackage{mathptmx}
+\usepackage{amsmath}
+\usepackage{courier}
+\usepackage{amssymb}
+\usepackage{mathtools}
+\usepackage{amsthm}
+
+\usepackage{enumerate}
+\usepackage{enumitem,multicol}
+\usepackage{tikz}
+\usepackage{nicefrac}
+\usepackage{bm}
+\usepackage{algorithm}
+\usepackage{algorithmicx}
+\usepackage{algpseudocode}
+
+\usepackage{graphicx}
+\usepackage{caption}
+
+%\usepackage{eufrak}
+
+%\usepackage{hyperref}
+%\usepackage{pdfsync}
+%\usepackage{authblk}
+
+\DeclareMathAlphabet\mathbfcal{OMS}{cmsy}{b}{n}
+
+%\theoremstyle{definition}
+%\newtheorem{exmp}{Example}%[section]
+ 
+\renewcommand{\ttdefault}{cmtt}
+\newtheorem{theorem}{Theorem}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{definition}{Definition}
+%\newtheorem{remark}{Remark}
+%\newtheorem*{remark*}{Remark}
+
+%\newtheorem{claim}{Claim}[theorem]
+%\newtheorem*{claim*}{Claim}
+
+\algrenewcommand\algorithmicrequire{\textbf{Input:}}
+\algrenewcommand\algorithmicensure{\textbf{Output:}}
+
+% - macros
+
+\newcommand{\nats}{\mathbb{N}}
+\newcommand{\natswith}{\nats_{0}}
+\newcommand{\reals}{\mathbb{R}}
+
+\newcommand{\realspos}{\reals_{>0}}
+\newcommand{\realsnonneg}{\reals_{\geq 0}}
+
+\newcommand{\states}{\mathcal{X}}
+\newcommand{\observs}{\mathcal{Y}}
+
+\newcommand{\paths}{\Omega}
+%\newcommand{\path}{\omega}
+
+\newcommand{\power}{\mathcal{P}(\paths)}
+\newcommand{\nonemptypower}{\power_{\emptyset}}
+\newcommand{\events}{\mathcal{E}}
+%\newcommand{\nonemptyevents}{\events^{\emptyset}}
+\newcommand{\filter}[1][t]{\mathcal{F}_{#1}}
+\newcommand{\eventst}[1][t]{\events_{#1}}
+
+\newcommand{\processes}{\mathbb{P}}
+\newcommand{\mprocesses}{\processes^{\mathrm{M}}}
+
+\newcommand{\hmprocesses}{\processes^{\mathrm{HM}}}
+
+\newcommand{\wprocesses}{\processes^{\mathrm{W}}}
+\newcommand{\wmprocesses}{\processes^{\mathrm{WM}}}
+
+\newcommand{\whmprocesses}{\processes^{\mathrm{WHM}}}
+
+\newcommand{\lexp}{\underline{\mathbb{E}}_{\rateset,\mathcal{M}}}
+\newcommand{\uexp}{\overline{\mathbb{E}}_{\rateset,\mathcal{M}}}
+
+\newcommand{\lt}{\underline{T}}
+\newcommand{\lbound}{L}
+
+\newcommand{\gambles}{\mathcal{L}}
+\newcommand{\gamblesX}{\gambles(\states)} 
+
+\newcommand{\ind}[1]{\mathbb{I}_{#1}}
+
+\newcommand{\rateset}{\mathcal{Q}}
+\newcommand{\lrate}{\underline{Q}}
+
+\newcommand{\asa}{\Leftrightarrow}
+\newcommand{\then}{\Rightarrow}
+
+\newcommand{\norm}[1]{\left\lVert #1 \right\rVert}
+\newcommand{\abs}[1]{\left\vert #1 \right\vert}
+
+\newcommand{\coloneqq}{:\!=}
+
+\newcommand{\opinset}{\,\,\widetilde{\in}\,\,}
+
+\newcommand{\argmin}{\arg\min}
+
+\newcommand{\exampleend}{\hfill$\Diamond$}
+
+\newcommand{\ictmc}{{ICTMC}}
+
+\newcommand{\prev}{\bbbe}
+
+\newcommand{\timedim}{\mathbb{T}}
+
+\def\presuper#1#2%
+  {\mathop{}%
+   \mathopen{\vphantom{#2}}^{#1}%
+   \kern-\scriptspace%
+   #2}
+
+\makeatletter
+\newcommand{\customlabel}[2]{%
+   \protected@write \@auxout {}{\string \newlabel {#1}{{#2}{\thepage}{#2}{#1}{}} }%
+   \hypertarget{#1}{\emph{#2}\!}
+}
+\makeatother
+
+
+\usepackage{color,soul,booktabs}
+\setulcolor{blue}
+\newcommand{\BibTeX}{\textsc{B\kern-0.1emi\kern-0.017emb}\kern-0.15em\TeX}
+
+% Running title and authors 
+%\ShortHeadings{Efficient Computation of Updated Lower Expectations for ICTHMC's}{Krak et al.} 
+
+\title{UTOPIAE Book of Lectures}
+\author{}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\chapter{Imprecise Markov Chains}
+
+\section{Introduction}
+
+\emph{In this section: Both discrete- and continuous-time stochastic processes, some intuition, areas of application, toward the imprecise case, motivation etc.}
+\quad\newline\newline
+
+In many areas of science and engineering, we are interesting in modelling uncertainty about (the behaviour of) dynamical systems, that is, systems whose state changes as time elapses.
+
+{\bf TODO: some examples relevant to UTOPIAE. Trajectory tracking, reliability/failure analysis etc. Some other examples with broader scope.}
+
+Our uncertainty about the behaviour of such a system can be due to various factors. For example, there may be an intrinsically stochastic component to the system under study. {\bf TODO: or ``direct'' uncertainty might be due to model fidelity or whatever. go read something about interpretations of randomness. In any case, this is when we use stochastic processes. }
+
+
+On the other hand, we might also be uncertain about whether our model is correct. For instance, we might not know exactly the numerical values that the parameters of our model should take. Similarly, we might be aware that our modelling assumptions lead to simplifications that are not necessarily warranted, which introduces uncertainty about the accuracy or applicability of any assessments made on the basis of these models. {\bf TODO: so it is of interest then, to robustify our models about these kinds of ``meta'' uncertainties.}
+
+{\bf TODO: The remainder of this chapter is structured as follows...}
+
+\section{(Precise) Stochastic Processes}
+
+\emph{In this section: Some notation and formalisation. Different representations; probability measures (intuitively, not going to do the full measure theoretic treatment), event trees, graphical models (again: short, not the full general theory). Various independence concepts, and Markov chains as a special case. Computations using law of iterated expectation. Focus largely on discrete-time, with some first concepts about continuous-time. A brief discussion about limit behaviour.}
+
+We will start the exposition around stochastic processes in a relatively general and abstract sense, but will quickly make things more specific. Throughout the remainder of this chapter, we will consider some fixed abstract \emph{state-space} $\states$. A \emph{state} is an element $x\in\states$ and represents uniquely the relevant information about the underlying system that we are interested in modelling. So as not to complicate matters, we will assume throughout that $\states$ is finite, so that we can identify it without loss of generality as the set $\states=\{1,\ldots,k\}\subset\nats$. Note that here and in what follows, we denote with $\nats$ the natural numbers, and will write $\natswith\coloneqq\nats\cup\{0\}$ when we include zero. Furthermore, the real numbers are written $\reals$, the non-negative reals are $\realsnonneg$, and the positive reals are $\realspos$.
+
+Because we are interested in modelling a system whose state $x\in\states$ changes over time, we next identify some \emph{time-dimension} $\timedim$. A crucial choice to be made later on is whether we are considering processes in discrete-time, in which case we identify $\timedim=\natswith$, or processes in continuous-time, in which case $\timedim=\realsnonneg$. For now we simply keep the discussion general without making this identification.
+
+With the state-space and time-dimension in place, it now makes sense to talk about the \emph{realisation} of some (yet to be identified) stochastic process. Such a realisation is also called a \emph{sample path}, and it is a function $\omega:\timedim\to\states$. So, this $\omega$ describes for each point in time $t\in\timedim$ the state $\omega(t)\in\states$ that the system was in at that time. We collect in the set $\Omega$ all these sample paths. For technical reasons, it is sometimes required to restrict attention to paths that satisfy sufficient smoothness conditions; for instance, when $\timedim=\realsnonneg$ it is common practice to let $\Omega$ only contain c\`adl\`ag functions, that is, paths $\omega(t)$ that are right-continuous and whose left-sided limits exists everywhere.
+
+This set $\Omega$ thus contains all possible ways in which the system might behave over time; it can therefore be considered an \emph{outcome space} of a stochastic model. Formally, we will consider some abstract underlying probability space $(\Omega,\mathcal{F},P)$, where $\mathcal{F}$ is some appropriate $\sigma$-algebra on $\Omega$ and where $P$ is a probability measure on $(\Omega,\mathcal{F})$. Given this probability space, we can finally formalise the notion of a \emph{stochastic process} as a collection $\{X_t\}_{t\in\timedim}$ of random variables associated to this probability space. We will here slightly restrict our definition to the following specific stochastic process:
+\begin{definition}[Stochastic Process]\label{def:stochastic_process}
+Fix a time-dimension $\timedim$ and consider a probability space $(\Omega,\mathcal{F},P)$. Then (the corresponding) stochastic process is the collection $\{X_t\}_{t\in\timedim}$ of random variables $X_t:\Omega\to\states:\omega\mapsto\omega(t)$, $t\in\timedim$, on this space.
+\end{definition}
+\begin{corollary}\label{cor:process_prob_is_measure}
+Fix a time-dimension $\timedim$, consider a probability space $(\Omega,\mathcal{F},P)$, and let $\{X_t\}_{t\in\nats}$ be the corresponding stochastic process. Then for all $t\in\timedim$ and all $x\in\states$, it holds that $\Pr(X_t=x) = P\bigl( \{\omega\in\Omega\,:\,\omega(t)=x\} \bigr)$.
+\end{corollary}
+\begin{proof}
+Fix $t\in\timedim$, and recall the definition of a random variable: for all $x\in\states$, the probability $\Pr(X_t=x)$ of $X_t$ taking the value $x$ is equal to $P\bigl(X_t^{-1}(x)\bigr)$, the measure of its preimage in $\Omega$. Since $X_t(\omega)=\omega(t)$, we have $X_t^{-1}(x)=\{\omega\in\Omega\,:\,\omega(t)=x\}$.
+\end{proof}
+The above is a formal way of saying that, and how, these random variables $\{X_t\}_{t\in\timedim}$ are associated to the given probability space. In words, for some fixed time $t\in\timedim$, $X_t$ is a random variable that takes on a value $x\in\states$ with probability equal to the measure $P(\cdot)$ of the set of paths along which the state at time $t$ is $x$. Conversely, if we would fix the outcome $\omega\in\Omega$, then the collection $\{X_t\}_{t\in\timedim}$ can be considered a deterministic process, and $X_t(\omega)=\omega(t)$ for all $t\in\states$.
+
+Note, therefore, that all the quantitative information about the probability of the process taking on certain values at given points in time, is completely determined by the measure $P$. It is therefore also intuitive to instead consider this measure $P$ to be ``the stochastic process'', although this is technically an abuse of terminology. This is because, for a given probability space $(\Omega,\mathcal{F},P)$, it is possible to define many different stochastic processes; \emph{any} $\timedim$-indexed collection of random variables on this space satisfies the general definition. However, in a sense, the stochastic process in Definition~\ref{def:stochastic_process} can be viewed as the ``canonical'' stochastic process corresponding to the given probability space, since it specifically and exactly represents the uncertainty about which states might be obtained at different points in time. We will therefore, and for notational convenience, often refer to the measure $P$ and its corresponding stochastic process $\{X_t\}_{t\in\timedim}$ interchangeably and without confusion.
+
+\subsection{Probability Trees}
+
+The preceding discussion introduced stochastic processes in a very general, but rather abstract sense. We will build further intuition by next offering a different view and representation, by means of \emph{probability trees}. In the remainder of this section, unless otherwise specified, we will focus on discrete-time stochastic processes, whence we identify $\timedim=\natswith$.
+
+We next need some notation and definitions for ``partial paths'', which in this setting are also called \emph{situations}. As before, a (full) path is a map $\omega:\natswith\to\states$. In contrast, a \emph{situation} is defined as a (finite length) \emph{prefix} of such a path. In other words, a situation is an element of a set $\states^{n}$, for some $n\in\nats$. If $w\in\states^n$, $n\in\nats$, is a situation, we write $w(i)$ for its $i$-th coordinate, $i\in\{1,\ldots,n\}$, and we say that its \emph{length} is $\lvert w\rvert=n$. The set of all situations is $\states^*\coloneqq \{\Box\}\bigcup \cup_{n\in\nats}\states^n$, where we explicitly add the \emph{empty situation}, denoted by $\Box$.
+
+We endow this set $\states^*$ with the \emph{prefix order}, denoted $\prec$, which is a partial order such that $\Box\prec v$ for all $v\in\states^*\setminus\{\Box\}$, and, for all $v,w\in\states^*\setminus\{\Box\}$ with lengths $n=\lvert v\rvert$ and $m=\lvert w\rvert$, it holds that $v\prec w$ if and only if $n<m$ and $v(i)=w(i)$ for all $i\in\{1,\ldots,n\}$. This is just a rigorous but somewhat obfuscated way of saying that $v\prec w$ if ``$v$ is the beginning of $w$'', or ``$w$ is what you can get if $v$ happens first, and then some other things happen'', or, indeed, ``$v$ is a prefix of $w$''.
+
+The important thing to notice is that the ordered set $(\states^*,\prec)$ induces a graphical tree structure, with all the situations as its vertices. This tree is what is known as the \emph{event tree}. It has $\Box$ as its root and, for all $v,w\in\states^*$, $w$ is a descendant of $v$ exactly if $v\prec w$. An example of such a tree is shown in Figure~\ref{fig:example_event_tree}, which (partially) shows the event tree corresponding to a binary state-space $\states=\{a,b\}$.
+
+\begin{figure}
+\centering
+\begin{tikzpicture}[xscale=0.9,yscale=0.9]
+%\draw[help lines] (-1,-0.5) grid (11,7.5);
+\draw (-1,-1) rectangle (11,7.5);
+\draw (0,3.5) circle(0.5) node[align=center] {$\Box$};
+\draw (3,5.5) circle(0.5) node[align=center] {$a$};
+\draw (3,1.5) circle(0.5) node[align=center] {$b$};
+\draw (6,6.5) circle(0.5) node[align=center] {$aa$};
+\draw (6,4.5) circle(0.5) node[align=center] {$ab$};
+\draw (6,2.5) circle(0.5) node[align=center] {$ba$};
+\draw (6,0.5) circle(0.5) node[align=center] {$bb$};
+\draw (9,5.25) circle(0.5) node[align=center] {$aba$};
+\draw (9,3.75) circle(0.5) node[align=center] {$abb$};
+\draw (0.5,3.5) -- (2.5,5.5);
+\draw (0.5,3.5) -- (2.5,1.5);
+\draw (3.5,5.5) -- (5.5,6.5);
+\draw (3.5,5.5) -- (5.5,4.5);
+\draw (3.5,1.5) -- (5.5,2.5);
+\draw (3.5,1.5) -- (5.5,0.5);
+\draw (6.5,4.5) -- (8.5,5.25);
+\draw (6.5,4.5) -- (8.5,3.75);
+\draw [dashed] (6.5,6.5) -- (7.5,7);
+\draw [dashed] (6.5,6.5) -- (7.5,6);
+\draw [dashed] (6.5,2.5) -- (7.5,3);
+\draw [dashed] (6.5,2.5) -- (7.5,2);
+\draw [dashed] (6.5,0.5) -- (7.5,1);
+\draw [dashed] (6.5,0.5) -- (7.5,0);
+\draw [dashed] (9.5,5.25) -- (10.5,5.75);
+\draw [dashed] (9.5,5.25) -- (10.5,4.75);
+\draw [dashed] (9.5,3.75) -- (10.5,4.25);
+\draw [dashed] (9.5,3.75) -- (10.5,3.25);
+\draw (1.5,3.5) node[align=right] {$p_{\Box}$};
+%\draw (1,3.8) .. controls (1.25,3.5) .. (1,3.2);
+\draw (1,3.8) to[bend left] (1,3.2);
+\draw (4.5,5.5) node[align=right] {$p_{a}$};
+\draw (4,5.8) to[bend left] (4,5.2);
+\draw (4.5,1.5) node[align=right] {$p_{b}$};
+\draw (4,1.8) to[bend left] (4,1.2);
+\draw (7.5,6.5) node[align=right] {$p_{aa}$};
+\draw (7,6.8) to[bend left] (7,6.2);
+\draw (7.5,4.5) node[align=right] {$p_{ab}$};
+\draw (7,4.8) to[bend left] (7,4.2);
+\draw (7.5,2.5) node[align=right] {$p_{ba}$};
+\draw (7,2.8) to[bend left] (7,2.2);
+\draw (7.5,0.5) node[align=right] {$p_{bb}$};
+\draw (7,0.8) to[bend left] (7,0.2);
+\draw (10.6,5.25) node[align=right] {$p_{aba}$};
+\draw (10,5.55) to[bend left] (10,4.95);
+\draw (10.6,3.75) node[align=right] {$p_{abb}$};
+\draw (10,4.05) to[bend left] (10,3.45);
+\draw (0,-0.5) node[align=center] {time};
+\draw [->] (1,-0.5) -- (10.5,-0.5);
+\draw (3,-0.5) -- (3,-0.25);
+\draw (3, -0.5) node[align=center,below] {0};
+\draw (6,-0.5) -- (6,-0.25);
+\draw (6, -0.5) node[align=center,below] {1};
+\draw (9,-0.5) -- (9,-0.25);
+\draw (9, -0.5) node[align=center,below] {2};
+\end{tikzpicture}
+\caption{A (partial) event tree for a binary state-space $\states=\{a,b\}$. The vertices are situations, i.e. elements of $\states^*$, and edges are induced by the prefix order $\prec$. Dashed lines represent branches that are not shown in the figure. The tree has been augmented to a probability tree, by assigning to each $w\in\states^*$ a local model $p_w$. A time axis represents at which point in time the situations can occur.}
+\label{fig:example_event_tree}
+\end{figure}
+
+Such an event tree can be turned into an intuitive representation of a stochastic process by augmenting it into a \emph{probability tree}. This is done by assigning to each situation $w\in\states^*$ in the tree a \emph{local model} $p_{w}$, which is a probability mass function on $\states$; that is, it is a map $p_w:\states\to\realsnonneg$ such that $\sum_{x\in\states}p_w(x)=1$. An example of this is again illustrated in Figure~\ref{fig:example_event_tree}.
+\begin{definition}[Probability Tree]\label{def:prob_tree}
+A probability tree is a tuple $(\states^*,\prec,p_{(\cdot)})$, where $\states^*$ is the set of all situations, $\prec$ is the prefix order on $\states^*$, and $p_{(\cdot)}:\states^*\times\states\to\realsnonneg$ represents all local models, so that $\sum_{x\in\states}p_w(x)=1$ for all $w\in\states^*$.
+\end{definition}
+
+The mechanism by which a stochastic process obtains a certain realisation $\omega\in\Omega$ can now be interpreted as performing a weighted, random walk along this probability tree, starting from $\Box$. Following the tree in Figure~\ref{fig:example_event_tree}, this is done as follows: from $\Box$, we transition either to $a$, with probability $p_\Box(a)$, or to $b$, with probability $p_\Box(b)$. Suppose we transition to $a$. From this new situation, the next step will take us either to $aa$, with probability $p_a(a)$, or to $ab$, with probability $p_a(b)$. Proceeding in this fashion, an infinite random walk along this tree generates a full path $\omega:\natswith\to\states$, where, for all $t\in\natswith$, the state $\omega(t)$ represents the (randomly chosen) branch that we took along the tree at the $(t+1)$-th step.
+
+This ``path construction'' view allows us also to connect back to the measure-theoretic definition that we encountered earlier. This can intuitively be done as follows: fix an event tree $(\states^*,\prec)$ and let $(\Omega,\mathcal{F},P)$ be a (discrete-time) probability space with corresponding stochastic process $\{X_t\}_{t\in\natswith}$. We will aim to choose the local models $p_{(\cdot)}$ needed to construct a probability tree, using the measure $P$. 
+
+By Corollary~\ref{cor:process_prob_is_measure}, for the initial state $X_0$ and for any $x\in\states$, the probability that $X_0$ obtains the value $x$, is equal to the measure of the set of paths for which $\omega(0)=x$. In the event tree terminology, this is the set of all infinite paths (along the tree) that have $x$ as a prefix, or in other words, which pass through the situation $x$. It therefore makes sense to set $p_\Box(x)=\Pr(X_0=x)$ for all $x\in\states$.
+
+{\bf TODO: proper introduction of conditional probability and derivation from Bayes' Rule.} Fix any situation $w\in\states^*\setminus\{\Box\}$ with length $\lvert w\rvert$ and let $n\coloneqq \lvert w\rvert-1$. Then we set for all $x\in\states$,
+\begin{equation*}
+p_w(x) \coloneqq \frac{P\bigl(X_{n+1}=x\cap X_{0:n}=w\bigr)}{P\bigl(X_{0:n}=w)}\,,
+\end{equation*} 
+where $(X_{n+1}=x)\coloneqq \{\omega\in\Omega:\omega(n+1)=x\}$, and
+\begin{equation*}
+\bigl(X_{0:n}=w\bigr) \coloneqq \Bigl\{ \omega\in\Omega\,:\,\bigl( \forall t\in\{0,\ldots,n\}:\omega(t)=w(t+1) \bigr) \Bigr\}\,.
+\end{equation*}
+Do note that this is sometimes undefined; in particular, when $P(X_{0:n}=w)=0$ we cannot use this connection. {\bf TODO: explain why it intuitively makes sense though.}
+
+So, we can conclude that there is indeed a correspondence between the two representations that we have seen so far (up to some technical difficulties surrounding probabilities that are zero). We have seen that the graphical tree structure allows us to reason intuitively about how a stochastic process generates a sample path, by ``walking'' from the root of the tree down its branches. However, in a very real sense, we can also use this structure to ``reason backwards'': from vertices deep down in the tree back to the root. As we will see, this allows one to intuitively derive efficient \emph{computational methods} for working with stochastic processes. 
+
+Before we can discuss this method, we first need a short notational digression. In what follows, we will be interested in computing the expectation of some real-valued function $f$, whose value depends on the specific realisation of the stochastic process. However, to prevent technical difficulties, we will assume that this function $f$ only depends on a finite number of steps; without loss of generality we can then assume that it is a map $f:\states^n\to\reals$, with $n\in\nats$, whose value depends on the \emph{first} $n$ random variables $X_0,\ldots,X_{n-1}$. Note that if we are interested in a function whose value only depends on a subset of the first $n$ steps, we can always trivially extend it to a function on all $n$ initial steps. For any $n\in\nats$, we collect in the set $\gambles(\states^n)$ all real-valued functions on $\states^n$.
+
+{\bf TODO: Maybe move the preceding discussion and introduction to the measure-theoretic part?}
+
+ {\bf TODO: Computations using law of iterated expectation; intuition follows from the graphical structure. Simplifying assumptions: Markov chains follow intuitively, as does homogeneity.}
+
+\subsection{Probabilistic Graphical Models}
+
+{\bf TODO: Next representation under the Markov assumption: Bayesian networks. Interpretation of the independence structure. Conditional Probability Tables and transition matrices. Connect back to measure-representation and probability tree. Simplified version of law of iterated expectation under Markov assumption. }
+
+\subsection{Transition Graphs}
+
+{\bf TODO: Next representation under both Markov and homogeneity assumption: transition graph. Interpretation of the structure and connect back to measure-representation, probability tree, and PGM. Some intuition about communicating states and irreducibility etc. }
+
+\subsection{Limit Behaviour}
+
+{\bf TODO: Some intuition about limit behaviour. Results for irreducible chains. }
+
+\section{Imprecise Discrete-Time Markov Chains}
+
+\emph{In this section: Parameterisation and imprecise local models. Different independence concepts. Different representations; sets of precise processes, (imprecise) event trees, imprecise graphical models. Computation using law of iterated lower expectation. Results on limit behaviour.}
+
+\section{Imprecise Continuous-Time Markov Chains}
+
+\emph{In this section: Intuition as limit of discrete-time (imprecise) Markov chains. Paramerisation using local models and the (imprecise) matrix exponential. Recollection and translation of the different independence concepts. Different representations; sets of precise processes and imprecise graphical models. Reduction of computations to discrete-time case, and law of iterated lower expectation. Results on limit behaviour.}
+
+\section{Further Reading}
+
+\emph{In this section: Brief summary of main points including pointers to further reading. Also references to related work that we did not cover, e.g. the martingale-theoretic approach.}
+
+\end{document}
