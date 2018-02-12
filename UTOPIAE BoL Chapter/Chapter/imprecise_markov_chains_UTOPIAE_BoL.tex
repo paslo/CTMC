@@ -159,7 +159,7 @@ In many areas of science and engineering, we are interesting in modelling uncert
 
 {\bf TODO: some examples relevant to UTOPIAE. Trajectory tracking, reliability/failure analysis etc. Some other examples with broader scope.}
 
-Our uncertainty about the behaviour of such a system can be due to various factors. For example, there may be an intrinsically stochastic component to the system under study. {\bf TODO: or ``direct'' uncertainty might be due to model fidelity or whatever. go read something about interpretations of randomness. In any case, this is when we use stochastic processes. }
+Our uncertainty about the behaviour of such a system can be due to various factors. For example, there may be an intrinsically stochastic component to the system under study. {\bf TODO: regardless of interpretation; inherent randomness or model fidelity or whatever. In any case, this is when we use stochastic processes. }
 
 
 On the other hand, we might also be uncertain about whether our model is correct. For instance, we might not know exactly the numerical values that the parameters of our model should take. Similarly, we might be aware that our modelling assumptions lead to simplifications that are not necessarily warranted, which introduces uncertainty about the accuracy or applicability of any assessments made on the basis of these models. {\bf TODO: so it is of interest then, to robustify our models about these kinds of ``meta'' uncertainties.}
@@ -181,7 +181,7 @@ This set $\Omega$ thus contains all possible ways in which the system might beha
 Fix a time-dimension $\timedim$ and consider a probability space $(\Omega,\mathcal{F},P)$. Then (the corresponding) stochastic process is the collection $\{X_t\}_{t\in\timedim}$ of random variables $X_t:\Omega\to\states:\omega\mapsto\omega(t)$, $t\in\timedim$, on this space.
 \end{definition}
 \begin{corollary}\label{cor:process_prob_is_measure}
-Fix a time-dimension $\timedim$, consider a probability space $(\Omega,\mathcal{F},P)$, and let $\{X_t\}_{t\in\nats}$ be the corresponding stochastic process. Then for all $t\in\timedim$ and all $x\in\states$, it holds that $\Pr(X_t=x) = P\bigl( \{\omega\in\Omega\,:\,\omega(t)=x\} \bigr)$.
+Fix a time-dimension $\timedim$, consider a probability space $(\Omega,\mathcal{F},P)$, and let $\{X_t\}_{t\in\timedim}$ be the corresponding stochastic process. Then for all $t\in\timedim$ and all $x\in\states$, it holds that $\Pr(X_t=x) = P\bigl( \{\omega\in\Omega\,:\,\omega(t)=x\} \bigr)$.
 \end{corollary}
 \begin{proof}
 Fix $t\in\timedim$, and recall the definition of a random variable: for all $x\in\states$, the probability $\Pr(X_t=x)$ of $X_t$ taking the value $x$ is equal to $P\bigl(X_t^{-1}(x)\bigr)$, the measure of its preimage in $\Omega$. Since $X_t(\omega)=\omega(t)$, we have $X_t^{-1}(x)=\{\omega\in\Omega\,:\,\omega(t)=x\}$.
@@ -189,6 +189,19 @@ Fix $t\in\timedim$, and recall the definition of a random variable: for all $x\i
 The above is a formal way of saying that, and how, these random variables $\{X_t\}_{t\in\timedim}$ are associated to the given probability space. In words, for some fixed time $t\in\timedim$, $X_t$ is a random variable that takes on a value $x\in\states$ with probability equal to the measure $P(\cdot)$ of the set of paths along which the state at time $t$ is $x$. Conversely, if we would fix the outcome $\omega\in\Omega$, then the collection $\{X_t\}_{t\in\timedim}$ can be considered a deterministic process, and $X_t(\omega)=\omega(t)$ for all $t\in\states$.
 
 Note, therefore, that all the quantitative information about the probability of the process taking on certain values at given points in time, is completely determined by the measure $P$. It is therefore also intuitive to instead consider this measure $P$ to be ``the stochastic process'', although this is technically an abuse of terminology. This is because, for a given probability space $(\Omega,\mathcal{F},P)$, it is possible to define many different stochastic processes; \emph{any} $\timedim$-indexed collection of random variables on this space satisfies the general definition. However, in a sense, the stochastic process in Definition~\ref{def:stochastic_process} can be viewed as the ``canonical'' stochastic process corresponding to the given probability space, since it specifically and exactly represents the uncertainty about which states might be obtained at different points in time. We will therefore, and for notational convenience, often refer to the measure $P$ and its corresponding stochastic process $\{X_t\}_{t\in\timedim}$ interchangeably and without confusion.
+
+{\bf TODO: slightly better way to transition in to the following}
+
+In what follows, we will be interested in computing the expectation of some real-valued function $f$, whose value depends on the specific realisation of the stochastic process. However, to prevent technical difficulties, we will assume that this function $f$ only depends on a finite number time points; without loss of generality we can then assume that it is a map $f:\states^n\to\reals$, with $n\in\nats$, whose value depends on the $n$ random variables $X_{t_1},\ldots,X_{t_{n}}$, with $t_1,\ldots,t_{n}\in\timedim$. For any $n\in\nats$, we collect in the set $\gambles(\states^n)$ all such real-valued functions on $\states^n$. If we choose time points $t_1,\ldots,t_{n}\in\timedim$, the expected value of such a $f\in\gambles(\states^n)$ is defined as
+\begin{equation}\label{eq:def_expectation}
+\mathbb{E}_P\bigr[f(X_{t_1},\ldots,X_{t_n})\bigr] \coloneqq \sum_{x_{t_1}\in\states}\cdots\sum_{x_{t_n}\in\states} f(x_{t_1},\ldots,x_{t_n}) P(X_{t_1}=x_{t_1},\ldots,X_{t_n}=x_{t_n})\,,
+\end{equation}
+where we have implicitly introduced the intuitive notation for the set
+\begin{equation*}
+(X_{t_1}=x_{t_1},\ldots,X_{t_n}=x_{t_n}) \coloneqq \Bigl\{\omega\in\Omega\,:\,\bigl(\forall i\in\{1,\ldots,n\}:\omega(t_i)=x_{t_i}\bigr)\Bigr\}\,.
+\end{equation*}
+In Equation~\eqref{eq:def_expectation}, we use the subscript $P$ for the expectation operator $\mathbb{E}_P$ to make explicit that it is taken with respect to the measure $P$; this will be notationally convenient further on.
+
 
 \subsection{Probability Trees}
 
@@ -287,11 +300,167 @@ Do note that this is sometimes undefined; in particular, when $P(X_{0:n}=w)=0$ w
 
 So, we can conclude that there is indeed a correspondence between the two representations that we have seen so far (up to some technical difficulties surrounding probabilities that are zero). We have seen that the graphical tree structure allows us to reason intuitively about how a stochastic process generates a sample path, by ``walking'' from the root of the tree down its branches. However, in a very real sense, we can also use this structure to ``reason backwards'': from vertices deep down in the tree back to the root. As we will see, this allows one to intuitively derive efficient \emph{computational methods} for working with stochastic processes. 
 
-Before we can discuss this method, we first need a short notational digression. In what follows, we will be interested in computing the expectation of some real-valued function $f$, whose value depends on the specific realisation of the stochastic process. However, to prevent technical difficulties, we will assume that this function $f$ only depends on a finite number of steps; without loss of generality we can then assume that it is a map $f:\states^n\to\reals$, with $n\in\nats$, whose value depends on the \emph{first} $n$ random variables $X_0,\ldots,X_{n-1}$. Note that if we are interested in a function whose value only depends on a subset of the first $n$ steps, we can always trivially extend it to a function on all $n$ initial steps. For any $n\in\nats$, we collect in the set $\gambles(\states^n)$ all real-valued functions on $\states^n$.
 
-{\bf TODO: Maybe move the preceding discussion and introduction to the measure-theoretic part?}
+ {\bf TODO: Computations using law of iterated expectation; intuition follows from the graphical structure.}
 
- {\bf TODO: Computations using law of iterated expectation; intuition follows from the graphical structure. Simplifying assumptions: Markov chains follow intuitively, as does homogeneity.}
+{\bf TODO: Better way to transition in to the following.}
+
+Note that the specification of a probability tree is still relatively complicated. This is not really due to the structure of the tree; the situations $\states^*$ and prefix order $\prec$ carry enough information to construct the tree up to any desired level, and their mathematical specification is straightforward. However, in order to specify all the local models $p_{(\cdot)}$, we need to provide an infinite number of probability mass functions on $\states$; one for each situation $w\in\states^*$. This is why one often restricts attention to simpler models, where one needs less, and often only finitely many, local models.
+
+These simplifications can be seen as a matter of degree. At the one extreme, we have the general definition that we used above, where each situation $w\in\states^*$ has a local model $p_w$. This leads to a lot of possible structure, but is hard to specify. At the other extreme is the \emph{independent and identically distributed} (i.i.d.) process; this is when we only have a single probability mass function $p$, and we set $p_w\coloneqq p$ for all $w\in\states^*$. For such a process, no matter what situation we are in, the next branch will always be chosen according to $p$. This process is easy to specify, but it does not yield a lot of structure that can capture the dynamics of the underlying system that we are trying to model.
+
+A useful step up from the i.i.d. process is reached by the popular class of models known as \emph{homogeneous Markov chains}. For a homogeneous Markov chain, the local model \emph{only} depends on the last step of the corresponding situation, and not on what happened before that:
+\begin{definition}[Homogeneous Markov Chain as Probability Tree]\label{def:prob_tree_homogen_markov}
+A probability tree $(\states^*,\prec,p_{(\cdot)})$ is called a homogeneous Markov chain if, for all situations $v,w\in\states^*\setminus\{\Box\}$ such that $v\bigl(\lvert v\rvert\bigr)=w\bigl(\lvert w\rvert\bigr)$, it holds that $p_v=p_w$.
+\end{definition} 
+\begin{corollary}
+Let $(\states^*,\prec,p_{(\cdot)})$ be a homogeneous Markov chain. Then for all $x\in\states$ and all $w\in\states^*\setminus\{\Box\}$ such that $w\bigl(\lvert w\rvert\bigr)=x$, it holds that $p_w=p_x$.
+\end{corollary}
+\begin{proof}
+Trivial from Definition~\ref{def:prob_tree_homogen_markov} and the fact that all $x\in\states$ are also situations. 
+\end{proof}
+\begin{figure}
+\centering
+\begin{tikzpicture}[xscale=0.9,yscale=0.9]
+%\draw[help lines] (-1,-0.5) grid (11,7.5);
+\draw (-1,-1) rectangle (11,7.5);
+\draw (0,3.5) circle(0.5) node[align=center] {$\Box$};
+\draw (3,5.5) circle(0.5) node[align=center] {$a$};
+\draw (3,1.5) circle(0.5) node[align=center] {$b$};
+\draw (6,6.5) circle(0.5) node[align=center] {$aa$};
+\draw (6,4.5) circle(0.5) node[align=center] {$ab$};
+\draw (6,2.5) circle(0.5) node[align=center] {$ba$};
+\draw (6,0.5) circle(0.5) node[align=center] {$bb$};
+\draw (9,5.25) circle(0.5) node[align=center] {$aba$};
+\draw (9,3.75) circle(0.5) node[align=center] {$abb$};
+\draw (0.5,3.5) -- (2.5,5.5);
+\draw (0.5,3.5) -- (2.5,1.5);
+\draw (3.5,5.5) -- (5.5,6.5);
+\draw (3.5,5.5) -- (5.5,4.5);
+\draw (3.5,1.5) -- (5.5,2.5);
+\draw (3.5,1.5) -- (5.5,0.5);
+\draw (6.5,4.5) -- (8.5,5.25);
+\draw (6.5,4.5) -- (8.5,3.75);
+\draw [dashed] (6.5,6.5) -- (7.5,7);
+\draw [dashed] (6.5,6.5) -- (7.5,6);
+\draw [dashed] (6.5,2.5) -- (7.5,3);
+\draw [dashed] (6.5,2.5) -- (7.5,2);
+\draw [dashed] (6.5,0.5) -- (7.5,1);
+\draw [dashed] (6.5,0.5) -- (7.5,0);
+\draw [dashed] (9.5,5.25) -- (10.5,5.75);
+\draw [dashed] (9.5,5.25) -- (10.5,4.75);
+\draw [dashed] (9.5,3.75) -- (10.5,4.25);
+\draw [dashed] (9.5,3.75) -- (10.5,3.25);
+\draw (1.5,3.5) node[align=right] {$p_{\Box}$};
+%\draw (1,3.8) .. controls (1.25,3.5) .. (1,3.2);
+\draw (1,3.8) to[bend left] (1,3.2);
+\draw (4.5,5.5) node[align=right] {$p_{a}$};
+\draw (4,5.8) to[bend left] (4,5.2);
+\draw (4.5,1.5) node[align=right] {$p_{b}$};
+\draw (4,1.8) to[bend left] (4,1.2);
+\draw (7.5,6.5) node[align=right] {$p_{a}$};
+\draw (7,6.8) to[bend left] (7,6.2);
+\draw (7.5,4.5) node[align=right] {$p_{b}$};
+\draw (7,4.8) to[bend left] (7,4.2);
+\draw (7.5,2.5) node[align=right] {$p_{a}$};
+\draw (7,2.8) to[bend left] (7,2.2);
+\draw (7.5,0.5) node[align=right] {$p_{b}$};
+\draw (7,0.8) to[bend left] (7,0.2);
+\draw (10.6,5.25) node[align=right] {$p_{a}$};
+\draw (10,5.55) to[bend left] (10,4.95);
+\draw (10.6,3.75) node[align=right] {$p_{b}$};
+\draw (10,4.05) to[bend left] (10,3.45);
+\draw (0,-0.5) node[align=center] {time};
+\draw [->] (1,-0.5) -- (10.5,-0.5);
+\draw (3,-0.5) -- (3,-0.25);
+\draw (3, -0.5) node[align=center,below] {0};
+\draw (6,-0.5) -- (6,-0.25);
+\draw (6, -0.5) node[align=center,below] {1};
+\draw (9,-0.5) -- (9,-0.25);
+\draw (9, -0.5) node[align=center,below] {2};
+\end{tikzpicture}
+\caption{A homogeneous Markov chain, represented as a probability tree.}
+\label{fig:example_homogen_markov_tree}
+\end{figure}
+An example for the binary state space $\states=\{a,b\}$ is shown in Figure~\ref{fig:example_homogen_markov_tree}. Additional degrees of freedom can be introduced back into this model by also letting the local models depend on the corresponding depth of the tree. The dynamics can then depend on the point in time, but not on the \emph{specific} history up to that time. This yields the more general definition of a (non-homogeneous) \emph{Markov chain}:
+\begin{definition}[Markov Chain as Probability Tree]\label{def:prob_tree_markov}
+A probability tree $(\states^*,\prec,p_{(\cdot)})$ is called a Markov chain if, for all situations $v,w\in\states^*\setminus\{\Box\}$ for which $\lvert v\rvert=\lvert w\rvert$ and $v\bigl(\lvert v\rvert\bigr)=w\bigl(\lvert w\rvert\bigr)$, it holds that $p_v=p_w$.
+\end{definition}
+\begin{figure}
+\centering
+\begin{tikzpicture}[xscale=0.9,yscale=0.9]
+%\draw[help lines] (-1,-0.5) grid (11,7.5);
+\draw (-1,-1) rectangle (11,7.5);
+\draw (0,3.5) circle(0.5) node[align=center] {$\Box$};
+\draw (3,5.5) circle(0.5) node[align=center] {$a$};
+\draw (3,1.5) circle(0.5) node[align=center] {$b$};
+\draw (6,6.5) circle(0.5) node[align=center] {$aa$};
+\draw (6,4.5) circle(0.5) node[align=center] {$ab$};
+\draw (6,2.5) circle(0.5) node[align=center] {$ba$};
+\draw (6,0.5) circle(0.5) node[align=center] {$bb$};
+\draw (9,5.25) circle(0.5) node[align=center] {$aba$};
+\draw (9,3.75) circle(0.5) node[align=center] {$abb$};
+\draw (0.5,3.5) -- (2.5,5.5);
+\draw (0.5,3.5) -- (2.5,1.5);
+\draw (3.5,5.5) -- (5.5,6.5);
+\draw (3.5,5.5) -- (5.5,4.5);
+\draw (3.5,1.5) -- (5.5,2.5);
+\draw (3.5,1.5) -- (5.5,0.5);
+\draw (6.5,4.5) -- (8.5,5.25);
+\draw (6.5,4.5) -- (8.5,3.75);
+\draw [dashed] (6.5,6.5) -- (7.5,7);
+\draw [dashed] (6.5,6.5) -- (7.5,6);
+\draw [dashed] (6.5,2.5) -- (7.5,3);
+\draw [dashed] (6.5,2.5) -- (7.5,2);
+\draw [dashed] (6.5,0.5) -- (7.5,1);
+\draw [dashed] (6.5,0.5) -- (7.5,0);
+\draw [dashed] (9.5,5.25) -- (10.5,5.75);
+\draw [dashed] (9.5,5.25) -- (10.5,4.75);
+\draw [dashed] (9.5,3.75) -- (10.5,4.25);
+\draw [dashed] (9.5,3.75) -- (10.5,3.25);
+\draw (1.5,3.5) node[align=right] {$p_{\Box}$};
+%\draw (1,3.8) .. controls (1.25,3.5) .. (1,3.2);
+\draw (1,3.8) to[bend left] (1,3.2);
+\draw (4.5,5.5) node[align=right] {$p_{a}$};
+\draw (4,5.8) to[bend left] (4,5.2);
+\draw (4.5,1.5) node[align=right] {$p_{b}$};
+\draw (4,1.8) to[bend left] (4,1.2);
+\draw (7.5,6.5) node[align=right] {$p_{\cdot a}$};
+\draw (7,6.8) to[bend left] (7,6.2);
+\draw (7.5,4.5) node[align=right] {$p_{\cdot b}$};
+\draw (7,4.8) to[bend left] (7,4.2);
+\draw (7.5,2.5) node[align=right] {$p_{\cdot a}$};
+\draw (7,2.8) to[bend left] (7,2.2);
+\draw (7.5,0.5) node[align=right] {$p_{\cdot b}$};
+\draw (7,0.8) to[bend left] (7,0.2);
+\draw (10.6,5.25) node[align=right] {$p_{\cdot\cdot a}$};
+\draw (10,5.55) to[bend left] (10,4.95);
+\draw (10.6,3.75) node[align=right] {$p_{\cdot\cdot b}$};
+\draw (10,4.05) to[bend left] (10,3.45);
+\draw (0,-0.5) node[align=center] {time};
+\draw [->] (1,-0.5) -- (10.5,-0.5);
+\draw (3,-0.5) -- (3,-0.25);
+\draw (3, -0.5) node[align=center,below] {0};
+\draw (6,-0.5) -- (6,-0.25);
+\draw (6, -0.5) node[align=center,below] {1};
+\draw (9,-0.5) -- (9,-0.25);
+\draw (9, -0.5) node[align=center,below] {2};
+\end{tikzpicture}
+\caption{A (non-homogeneous) Markov chain, represented as a probability tree.}
+\label{fig:example_markov_tree}
+\end{figure}
+An example for the binary state space $\states=\{a,b\}$ is shown in Figure~\ref{fig:example_markov_tree}. It can be verified that a homogeneous Markov chain is a Markov chain, but not---in general---the other way around. 
+Note that, in contrast to homogeneous Markov chains where we only needed to specify local models $p_x$ for all $x\in\states$, we now need different local models for each level of the tree. So, we are now back to needing an infinite number of local models in order to fully describe such a model.
+
+These definitions of (homogeneous) Markov chains can also be conveniently translated back to the measure-theoretic context. {\bf TODO: this can be done for general time dimension and arbitrary number of steps to the future:}
+\begin{definition}[Markov Chain as Probability Measure]\label{def:measure_markov}
+A stochastic process $\{X_t\}_{t\in\timedim}$ on $(\Omega,\mathcal{F},P)$ is called a Markov chain if for all $s_1,\ldots,s_n,t\in\timedim$, $n\in\nats$, such that $s_1<\cdots<s_n<t$, it holds that $P(X_t\,\vert\,X_{s_1},\ldots,X_{s_n}) = P(X_t\,\vert\,X_{s_n})$.
+\end{definition}
+{\bf TODO: similarly, homogeneous:}
+\begin{definition}[Homogeneous Markov Chain as Probability Measure]\label{def:measure_homogen_markov}
+A stochastic process $\{X_t\}_{t\in\timedim}$ on $(\Omega,\mathcal{F},P)$ is called a homogeneous Markov chain if it is a Markov chain, and if additionally, for all $s,t\in\timedim$ such that $s<t$, it holds that $P(X_t\,\vert\,X_s)=P(X_{t-s}\,\vert\,X_0)$.
+\end{definition}
+We leave it as an exercise to verify that, when $\timedim=\natswith$, Definitions~\ref{def:measure_markov} and~\ref{def:measure_homogen_markov} correspond to what we would expect from Definitions~\ref{def:prob_tree_markov} and~\ref{def:prob_tree_homogen_markov}, respectively.
 
 \subsection{Probabilistic Graphical Models}
 
