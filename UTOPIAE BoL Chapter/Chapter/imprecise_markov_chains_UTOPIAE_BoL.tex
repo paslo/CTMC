@@ -284,21 +284,32 @@ A probability tree is a tuple $(\states^*,\prec,p_{(\cdot)})$, where $\states^*$
 
 The mechanism by which a stochastic process obtains a certain realisation $\omega\in\Omega$ can now be interpreted as performing a weighted, random walk along this probability tree, starting from $\Box$. Following the tree in Figure~\ref{fig:example_event_tree}, this is done as follows: from $\Box$, we transition either to $a$, with probability $p_\Box(a)$, or to $b$, with probability $p_\Box(b)$. Suppose we transition to $a$. From this new situation, the next step will take us either to $aa$, with probability $p_a(a)$, or to $ab$, with probability $p_a(b)$. Proceeding in this fashion, an infinite random walk along this tree generates a full path $\omega:\natswith\to\states$, where, for all $t\in\natswith$, the state $\omega(t)$ represents the (randomly chosen) branch that we took along the tree at the $(t+1)$-th step.
 
-This ``path construction'' view allows us also to connect back to the measure-theoretic definition that we encountered earlier. This can intuitively be done as follows: fix an event tree $(\states^*,\prec)$ and let $(\Omega,\mathcal{F},P)$ be a (discrete-time) probability space with corresponding stochastic process $\{X_t\}_{t\in\natswith}$. We will aim to choose the local models $p_{(\cdot)}$ needed to construct a probability tree, using the measure $P$. 
+This ``path construction'' view allows us also to connect back to the measure-theoretic definition that we encountered earlier. To obtain this correspondence in one direction, fix a probability tree $(\states^*,\prec, p_{(\cdot)})$ and let $(\Omega,\mathcal{F})$ be an appropriate measurable space of discrete-time sample paths, on which we will aim to construct the measure $P$ quantifying in the measure-theoretic sense the uncertainty of the corresponding stochastic process $\{X_t\}_{t\in\natswith}$ on the resulting probability space.
 
-By Corollary~\ref{cor:process_prob_is_measure}, for the initial state $X_0$ and for any $x\in\states$, the probability that $X_0$ obtains the value $x$, is equal to the measure of the set of paths for which $\omega(0)=x$. In the event tree terminology, this is the set of all infinite paths (along the tree) that have $x$ as a prefix, or in other words, which pass through the situation $x$. It therefore makes sense to set $p_\Box(x)=\Pr(X_0=x)$ for all $x\in\states$.
+We now reason intuitively by using the ``random walk'' along the probability tree. Starting from $\Box$, we transition to a first situation $x\in\states$ with probability $p_\Box(x)$. From there, we could then perform the entire infinite random walk to generate the remainder of the path. So, a different way of saying this is that, of all the random paths $\omega\in\Omega$ that could be generated, a fraction of $p_\Box(x)$ of them will start with $\omega(0)=x$. Using also the interpretation given by Corollary~\ref{cor:process_prob_is_measure}, it therefore makes sense to define the \emph{first-step marginal measure} $P^*(X_0=x) \coloneqq p_\Box(x)$ for all $x\in\states$.
 
-{\bf TODO: proper introduction of conditional probability and derivation from Bayes' Rule.} Fix any situation $w\in\states^*\setminus\{\Box\}$ with length $\lvert w\rvert$ and let $n\coloneqq \lvert w\rvert-1$. Then we set for all $x\in\states$,
+Let us now consider the next step, and assume the first step down the tree resulted in a situation $x\in\states$. Then, with probability $p_x(y)$, $y\in\states$, the next situation will be $xy$. In terms of paths that could be generated, a fraction of $p_x(y)$ of the paths that satisfy $\omega(0)=x$, will furthermore satisfy $\omega(1)=y$. Therefore, we define for the \emph{second}-step marginal measure $P^*(X_0=x,X_1=y)\coloneqq p_\Box(x)p_x(y)$.
+
+Proceeding in this manner, for every situation $w\in\states^*\setminus\{\Box\}$ whose length is written $n$, we can compute the $n$-th step marginal measure as
 \begin{equation*}
-p_w(x) \coloneqq \frac{P\bigl(X_{n+1}=x\cap X_{0:n}=w\bigr)}{P\bigl(X_{0:n}=w)}\,,
-\end{equation*} 
-where $(X_{n+1}=x)\coloneqq \{\omega\in\Omega:\omega(n+1)=x\}$, and
-\begin{equation*}
-\bigl(X_{0:n}=w\bigr) \coloneqq \Bigl\{ \omega\in\Omega\,:\,\bigl( \forall t\in\{0,\ldots,n\}:\omega(t)=w(t+1) \bigr) \Bigr\}\,.
+P^*\bigl(X_0=w(1),\ldots,X_{n-1}=w(n)\bigr) \coloneqq p_\Box\bigl(w(1)\bigr)\prod_{i=1}^{n-1} p_{w(1)\cdots w(i)}\bigl(w(i+1)\bigr)\,,
 \end{equation*}
-Do note that this is sometimes undefined; in particular, when $P(X_{0:n}=w)=0$ we cannot use this connection. {\bf TODO: explain why it intuitively makes sense though.}
+or in words, by multiplying all probabilities given by the local models of the situations encountered on the path from the root of the tree, down to the situation $w$.
 
-So, we can conclude that there is indeed a correspondence between the two representations that we have seen so far (up to some technical difficulties surrounding probabilities that are zero). We have seen that the graphical tree structure allows us to reason intuitively about how a stochastic process generates a sample path, by ``walking'' from the root of the tree down its branches. However, in a very real sense, we can also use this structure to ``reason backwards'': from vertices deep down in the tree back to the root. As we will see, this allows one to intuitively derive efficient \emph{computational methods} for working with stochastic processes. 
+A fundamental result in the measure-theoretic treatment of stochastic processes (known as the \emph{Kolmogorov extension theorem}) states that the collection of all these $n$-th step marginal measures $P^*$ induces (``coherently'') a probability measure $P$ on $(\Omega,\mathcal{F})$. Specifically, the finite $n$-th step marginals of $P$ will correspond exactly to these $n$-th step marginal measures that we constructed from the probability tree. This establishes the connection between probability trees and discrete-time measure-theoretic stochastic processes, in that the latter can be constructed from the former.
+
+For the other direction, so, to construct a probability tree from a given probability space $(\Omega,\mathcal{F},P)$, we start with an event tree $(\states^*,\prec)$ and aim to construct the local models $p_{(\cdot)}$. Using the intuitive interpretation offered by Corollary~\ref{cor:process_prob_is_measure}, we start by setting $p_\Box(x)=P(X_0=x)$ for all $x\in\states$.
+
+Then, for all other situations $w\in\states^*\setminus\{\Box\}$ whose length is written $n$, the local model $p_w$ is defined as the \emph{conditional} measure constructed from \emph{Bayes' rule}, i.e., for all $x\in\states$,
+\begin{align*}
+p_w(x) &= P\bigl( X_n=x\,\big\vert\, X_0=w(1),\ldots,X_{n-1}=w(n) \bigr) \\
+ &= \frac{P\bigl(X_0=w(1),\ldots,X_{n-1}=w(n), X_n=x\bigr)}{P\bigl( X_0=w(1),\ldots,X_{n-1}=w(n) \bigr)}\,.
+\end{align*}
+This also establishes the connection in the other direction. It can be verified that, by now constructing from this probability tree a measure $P^*$, say, in the manner described above, we obtain again $P^*=P$; so, we conclude that this yields a one-to-one correspondence between probability trees and measure-theoretic stochastic processes.
+
+It should be noted that the second direction in the preceding discussion has one (rather large) caveat: it does not work when there are partial paths that have zero probability to occur. This is because then Bayes' rule cannot define the conditional measure required to construct the local model for the situation corresponding to that partial path, since it would result in a division by zero.
+
+To recap, we can conclude that there is indeed a correspondence between the two representations that we have seen so far (up to some technical difficulties surrounding probabilities that are zero). We have seen that the graphical tree structure allows us to reason intuitively about how a stochastic process generates a sample path, by ``walking'' from the root of the tree down its branches. As we will discuss next, we can also use this structure to ``reason backwards'': from vertices deep down in the tree back to the root. We will see that this allows one to intuitively derive efficient \emph{computational methods} for working with stochastic processes. 
 
 
  {\bf TODO: Computations using law of iterated expectation; intuition follows from the graphical structure.}
@@ -452,11 +463,11 @@ A probability tree $(\states^*,\prec,p_{(\cdot)})$ is called a Markov chain if, 
 An example for the binary state space $\states=\{a,b\}$ is shown in Figure~\ref{fig:example_markov_tree}. It can be verified that a homogeneous Markov chain is a Markov chain, but not---in general---the other way around. 
 Note that, in contrast to homogeneous Markov chains where we only needed to specify local models $p_x$ for all $x\in\states$, we now need different local models for each level of the tree. So, we are now back to needing an infinite number of local models in order to fully describe such a model.
 
-These definitions of (homogeneous) Markov chains can also be conveniently translated back to the measure-theoretic context. {\bf TODO: this can be done for general time dimension and arbitrary number of steps to the future:}
+These definitions of (homogeneous) Markov chains can also be conveniently translated back to the measure-theoretic context. We here give the general definition, for an arbitrary time-dimension (we assume that at least some order $<$ is defined on $\timedim$, which obviously holds in both discrete-time and continuous-time) and multiple steps into the future:
 \begin{definition}[Markov Chain as Probability Measure]\label{def:measure_markov}
 A stochastic process $\{X_t\}_{t\in\timedim}$ on $(\Omega,\mathcal{F},P)$ is called a Markov chain if for all $s_1,\ldots,s_n,t\in\timedim$, $n\in\nats$, such that $s_1<\cdots<s_n<t$, it holds that $P(X_t\,\vert\,X_{s_1},\ldots,X_{s_n}) = P(X_t\,\vert\,X_{s_n})$.
 \end{definition}
-{\bf TODO: similarly, homogeneous:}
+Similarly, the notion of homogeneity can be defined for an arbitrary time-dimension, assuming that in addition to an order, a difference operation is defined on $\timedim$ (again, this holds trivially both when $\timedim=\natswith$ and when $\timedim=\realsnonneg$):  
 \begin{definition}[Homogeneous Markov Chain as Probability Measure]\label{def:measure_homogen_markov}
 A stochastic process $\{X_t\}_{t\in\timedim}$ on $(\Omega,\mathcal{F},P)$ is called a homogeneous Markov chain if it is a Markov chain, and if additionally, for all $s,t\in\timedim$ such that $s<t$, it holds that $P(X_t\,\vert\,X_s)=P(X_{t-s}\,\vert\,X_0)$.
 \end{definition}
@@ -477,6 +488,25 @@ We leave it as an exercise to verify that, when $\timedim=\natswith$, Definition
 \section{Imprecise Discrete-Time Markov Chains}
 
 \emph{In this section: Parameterisation and imprecise local models. Different independence concepts. Different representations; sets of precise processes, (imprecise) event trees, imprecise graphical models. Computation using law of iterated lower expectation. Results on limit behaviour.}
+
+{\bf TODO: transition better into this section. }
+
+We will now move on to the discussion surrounding \emph{Imprecise (Discrete-Time) Markov Chains} (IDTMC). So, we still consider the time-dimension $\timedim=\natswith$. 
+
+{\bf TODO: Sets of precise processes. Lower expectation definition. Imprecise Markov condition.}
+
+
+Recall that for precise probability trees, we associate with each situation $w\in\states^*$ a local model $p_w$, which is a probability mass function on $\states$. In contrast, in order to define \emph{imprecise} probability trees, we will consider \emph{imprecise local models}. Such an imprecise local model $\mathcal{P}_w$ is simply a \emph{set} of probability mass functions on $\states$. This leads to the following definition:
+\begin{definition}[Imprecise Probability Tree]
+An imprecise probability tree is a tuple $(\states^*,\prec,\mathcal{P}_{(\cdot)})$, where $(\states^*,\prec)$ is an event tree, and $\mathcal{P}_{(\cdot)}$ is a set-valued function such that, for all $w\in\states^*$, $\mathcal{P}_w$ is a set of probability mass functions on $\states$.
+\end{definition}
+As before, the need to specify these (imprecise) local models $\mathcal{P}_w$ for all situations $w\in\states^*$ makes such a model difficult to work with. Attention is therefore restricted to \emph{imprecise Markov chains}; note that here and in what follows, we will assume the analogue of homogeneity to hold implicitly:
+\begin{definition}[IDTMC as Imprecise Probability Tree]An imprecise probability tree $(\states^*,\prec,\mathcal{P}_w)$ is called an imprecise discrete-time Markov chain if, for all $v,w\in\states^*\setminus\{\Box\}$ for which $v\bigl(\lvert v\rvert\bigr)=w\bigl(\lvert w\rvert\bigr)$, it holds that $\mathcal{P}_v=\mathcal{P}_w$.
+\end{definition}
+
+{\bf TODO: LoILE for imprecise prob trees}
+
+{\bf TODO: Imprecise graphical models. Lower transition operators. LoILE in operator concatenation form. }
 
 \section{Imprecise Continuous-Time Markov Chains}
 
