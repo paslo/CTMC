@@ -26,7 +26,10 @@
 \usepackage{courier}
 \usepackage{amssymb}
 \usepackage{mathtools}
-%\usepackage{amsthm}
+
+\let\proof\relax\let\endproof\relax
+
+\usepackage{amsthm}
 
 \usepackage{enumerate}
 \usepackage{enumitem,multicol}
@@ -63,6 +66,7 @@
 
 %\newtheorem{claim}{Claim}[theorem]
 %\newtheorem*{claim*}{Claim}
+
 
 \algrenewcommand\algorithmicrequire{\textbf{Input:}}
 \algrenewcommand\algorithmicensure{\textbf{Output:}}
@@ -231,8 +235,18 @@ where we have implicitly introduced the intuitive notation for the set
 \end{equation*}
 In Equation~\eqref{eq:def_expectation}, we use the subscript $P$ for the expectation operator $\mathbb{E}_P$ to make explicit that it is taken with respect to the measure $P$; this will be notationally convenient further on.
 
+We finish this first introduction by recalling the notion of conditional probabilities and conditional expectations. For any two finite sequences of time-points $\mathbf{t}$ and $\mathbf{s}$ in $\timedim$, the \emph{conditional probability} of $X_\mathbf{s}$, given $X_\mathbf{t}$, is derived using \emph{Bayes' rule}:
+\begin{equation*}
+P(X_\mathbf{t}\,\vert\,X_\mathbf{s}) \coloneqq \frac{P(X_\mathbf{s},X_\mathbf{t})}{P(X_\mathbf{s})}\,,
+\end{equation*}
+whenever $P(X_\mathbf{s})$ is everywhere strictly positive. The necessity of the final condition is obvious; it leads to a division by zero whenever it does not hold.
 
-\subsection{Probability Trees}
+Using this notion of conditional probability, we can define conditional expectations analogously. Suppose the sequences $\mathbf{s}$ and $\mathbf{t}$ are of length $n,m\in\nats$, respectively. Then for any $f\in\gambles(\states^{n+m})$ on $X_\mathbf{s},X_\mathbf{t}$ we define, for all $x_\mathbf{s}\in\states^n$,
+\begin{equation*}
+\mathbb{E}_P\bigl[f(X_\mathbf{s},X_\mathbf{t})\,\big\vert\,X_\mathbf{s}=x_\mathbf{s}\bigr] \coloneqq \sum_{x_\mathbf{t}\in\states^m} f(x_\mathbf{s},x_\mathbf{t})P(X_\mathbf{t}=x_\mathbf{t}\,\vert\,X_\mathbf{s}=x_\mathbf{s})\,.
+\end{equation*}
+
+\subsection{Probability Trees}\label{sec:prob_trees}
 
 The preceding discussion introduced stochastic processes in a very general, but rather abstract sense. We will build further intuition by next offering a different view and representation, by means of \emph{probability trees}. In the remainder of this section, unless otherwise specified, we will focus on discrete-time stochastic processes, whence we identify $\timedim=\natswith$.
 
@@ -329,7 +343,7 @@ or in words, by multiplying all probabilities given by the local models of the s
 
 A fundamental result in the measure-theoretic treatment of stochastic processes (known as the \emph{Kolmogorov extension theorem}) states that the collection of all these $n$-th step marginal measures $P^*$ induces (``coherently'') a probability measure $P$ on $(\Omega,\mathcal{F})$. Specifically, the finite $n$-th step marginals of $P$ will correspond exactly to these $n$-th step marginal measures that we constructed from the probability tree. This establishes the connection between probability trees and discrete-time measure-theoretic stochastic processes, in that the latter can be constructed from the former.
 
-For the other direction, so, to construct a probability tree from a given probability space $(\Omega,\mathcal{F},P)$, we start with an event tree $(\states^*_\Box,\prec)$ and aim to construct the local models $p_{(\cdot)}$. Using the intuitive interpretation offered by Corollary~\ref{cor:process_prob_is_measure}, we start by setting $p_\Box(x)=P(X_0=x)$ for all $x\in\states$. For all other situations $w\in\states^*$ with length $n+1$, $n\in\natswith$, the local model $p_w$ is defined as the \emph{conditional} measure constructed from \emph{Bayes' rule}, i.e., for all $x\in\states$,
+For the other direction, so, to construct a probability tree from a given probability space $(\Omega,\mathcal{F},P)$, we start with an event tree $(\states^*_\Box,\prec)$ and aim to construct the local models $p_{(\cdot)}$. Using the intuitive interpretation offered by Corollary~\ref{cor:process_prob_is_measure}, we start by setting $p_\Box(x)=P(X_0=x)$ for all $x\in\states$. For all other situations $w\in\states^*$ with length $n+1$, $n\in\natswith$, the local model $p_w$ is defined as the conditional measure constructed from Bayes' rule, i.e., for all $x\in\states$,
 \begin{align*}
 p_w(x) &= P\bigl( X_{n+1}=x\,\big\vert\, X_{0:n}=w \bigr) = \frac{P\bigl(X_{0:n}=w, X_{n+1}=x\bigr)}{P\bigl( X_{0:n}=w \bigr)}\,.
 \end{align*}
@@ -337,7 +351,7 @@ This also establishes the connection in the other direction. It can be verified 
 
 It should be noted that the second direction in the preceding discussion has one (rather large) caveat: it does not work when there are partial paths that have zero probability to occur. This is because then Bayes' rule cannot define the conditional measure required to construct the local model for the situation corresponding to that partial path, since it would result in a division by zero.
 
-To summarise, we can conclude that there is indeed a correspondence between the two representations that we have seen so far (up to some technical difficulties surrounding probabilities that are zero). We have seen that the graphical tree structure allows us to reason intuitively about how a stochastic process generates a sample path, by ``walking'' from the root of the tree down its branches. As we will discuss next, we can also use this structure to ``reason backwards'': from vertices deep down in the tree back to the root. We will see that this allows one to intuitively derive efficient \emph{computational methods} for working with stochastic processes. 
+To summarise, we can conclude that there is indeed a correspondence between the two representations that we have seen so far (up to some technical difficulties surrounding probabilities that are zero). We have seen that the graphical tree structure allows us to reason intuitively about how a stochastic process generates a sample path, by ``walking'' from the root of the tree down its branches. As we will discuss next, we can also use this structure to ``reason backwards'': from vertices deep down in the tree back to the root. We will see that this allows one to intuitively derive \emph{computational methods} for working with stochastic processes. 
 
 So, fix $n\in\natswith$ and let $f\in\gambles(\states^{n+1})$ be a real-valued function of which we aim to compute the expected value with respect to the random variables $X_{0:n}$ at the time points $0,\ldots,n\in\natswith$. Note that it suffices to consider this case, in the sense that any function defined on a subset of the variables $X_{0:n}$, can always be trivially extended to a function on all of them. Now first notice the following. For any situation $w\in\states^*$ with length $\lvert w\rvert = n+1$, the value of $f$ in $w$ is easy to compute; it is simply $f(w)$. Hence in particular, the \emph{expected value} of $f$, in $w$, is simply
 \begin{equation*}
@@ -413,8 +427,8 @@ Now, observe that the above conditional expectation of $f$ in $v$, is itself a r
 which is exactly the expected value of $f$ that we started out wanting to compute.
 
 This method to compute the expected value of a function by ``pulling back'' the ``local'', or conditional, expected values, uses the interpretation of a stochastic process as a probability tree. The method relies on a property that is called the \emph{law of iterated expectation}, or alternatively the \emph{law of total probability}. It can be stated formally in the measure-theoretic context, where it is also easily stated for \emph{continuous}-time stochastic processes.
-\begin{theorem}
-Fix a time-dimension $\timedim\in\{\natswith,\realsnonneg\}$, and let $\{X_t\}_{t\in\timedim}$ be a stochastic process on $(\Omega,\mathcal{F},P)$. Choose any three ordered sequences $\mathbf{s}=s_1,\ldots,s_n$, $\mathbf{t}=t_1,\ldots,t_m$, and $\mathbf{u}=u_1,\ldots,u_\ell$ in $\timedim$, with $n,m,\ell\in\nats$ such that $s_n<t_1$ and $t_m<u_1$. Then for any real-valued function $f$ on $X_\mathbf{s},X_\mathbf{t},X_\mathbf{u}$, it holds that
+\begin{theorem}\label{thm:loie}
+Fix a time-dimension $\timedim\in\{\natswith,\realsnonneg\}$, and let $\{X_t\}_{t\in\timedim}$ be a stochastic process on $(\Omega,\mathcal{F},P)$. Choose any three ordered sequences $\mathbf{s}=s_1,\ldots,s_n$, $\mathbf{t}=t_1,\ldots,t_m$, and $\mathbf{u}=u_1,\ldots,u_\ell$ in $\timedim$, with $n,m,\ell\in\nats$ such that $s_n<t_1$ and $t_m<u_1$. Then for any real-valued function $f\in\gambles(\states^{n+m+\ell})$ on $X_\mathbf{s},X_\mathbf{t},X_\mathbf{u}$, it holds that
 \begin{equation*}
 \mathbb{E}\bigl[f(X_\mathbf{s},X_\mathbf{t},X_\mathbf{u})\,\big\vert\,X_\mathbf{s}\bigr] = \mathbb{E}\Bigl[\mathbb{E}\bigl[f(X_\mathbf{s},X_\mathbf{t},X_\mathbf{u})\,\big\vert\,X_\mathbf{s},X_\mathbf{t}\bigr]\,\Big\vert\,X_\mathbf{s}\Bigr]\,,
 \end{equation*} 
@@ -580,7 +594,107 @@ We leave it as an exercise to verify that, when $\timedim=\natswith$, Definition
 
 \subsection{Probabilistic Graphical Models}
 
-{\bf TODO: Next representation under the Markov assumption: Bayesian networks. Interpretation of the independence structure. Conditional Probability Tables and transition matrices. Connect back to measure-representation and probability tree. Simplified version of law of iterated expectation under Markov assumption. }
+We now move on to a different graphical representation of stochastic processes, that is useful for discrete-time Markov chains in particular: \emph{probabilistic graphical models} (PGMs), which are also known as \emph{Bayesian networks}. While the graphical structure of probability trees in Section~\ref{sec:prob_trees} emphasised the partial paths in the realisation of a stochastic process, the PGM representation emphasises the individual random variables $X_t$. 
+
+The PGM representation of a discrete-time Markov chain $\{X_t\}_{t\in\natswith}$ is given in Figure~\ref{fig:example_markov_pgm}. The structure is a directed acyclic graph, with one node associated to each random variable $X_t$, and arcs representing the dependence of the receiving node's random variable's distribution, on the originating node's random variable's value. Due to the Markov property (c.f. Definition~\ref{def:measure_markov}), each random variable $X_n$, $n\in\nats$, is only influenced by $X_{n-1}$, the value of the random variable immediately before it. The initial variable $X_0$ is somewhat of a special case, since it does not depend on any other variables; there are no time-points preceding it. Due to these properties, the graphical structure is that of a chain; this may go some way in explaining the name ``Markov chain''. In the remainder of this section, we will refer to both a node in the PGM and to its random variable, using the same notation $X_t$.
+\begin{figure}
+\centering
+\begin{tikzpicture}[xscale=0.9,yscale=0.9]
+%\draw[help lines] (-1,-0.5) grid (11,7.5);
+\draw (-1,-1) rectangle (10.5,1.5);
+\draw (0,0) circle(0.5) node[align=center] {$X_0$};
+\draw (0,1) node[align=right] {$P(X_0)$};
+\draw [->] (0.5,0) -- (1.5,0);
+\draw (2,0) circle(0.5) node[align=center] {$X_1$};
+\draw (2,1) node[align=right] {$P(X_1\,\vert\,X_0)$};
+\draw [->] (2.5,0) -- (3.5,0);
+\draw (4,0) circle(0.5) node[align=center] {$X_2$};
+\draw (4,1) node[align=right] {$P(X_2\,\vert\,X_1)$};
+\draw [->] (4.5,0) -- (5.5,0);
+\draw (6,0) node[align=right] {$\cdots$};
+\draw [->] (6.5,0) -- (7.5,0);
+\draw (8,0) circle(0.5) node[align=center] {$X_n$};
+\draw (8,1) node[align=right] {$P(X_n\,\vert\,X_{n-1})$};
+\draw [->] (8.5,0) -- (9.5,0);
+\draw (10,0) node[align=right] {$\cdots$};
+\end{tikzpicture}
+\caption{Probabilistic graphical model representation of a discrete-time Markov chain $\{X_t\}_{t\in\natswith}$. Nodes represent random variables. An incoming arc on a node represents that the distribution of the corresponding random variable is influenced by the originating node of that arc. Correspondingly, each node associates a probability distribution to its random variable, conditional on the values of the random variables of the nodes by which it is influenced.}
+\label{fig:example_markov_pgm}
+\end{figure}
+
+It should be emphasised that the graphical structure is not saying that only nodes which are adjacent in the PGM can influence each other. The formal interpretation is as follows: for any node $X_n$, $n\in\nats$, \emph{conditional on the value of the parent(s) of $X_n$}, the distribution of $X_n$ is probabilistically independent of the non-parents, non-descendants of $X_n$. This is the general interpretation of the independence properties of the arcs in a PGM. In the special case of Markov chains that we are considering here, the interpretation vastly simplifies. Notably, the ``non-parents, non-descendants'' of any node $X_n$ are exactly its ``grand-parents'', ``great-grand-parents'', and so on; it is the set of nodes $\{X_{m}\,:\,m\in\natswith,\, m<n-1\}$.
+
+Put differently, the value of $X_n$ influences the distribution of \emph{all} of its descendants (i.e. the nodes $X_m$, $m>n$), so long as we do not know the value of any of those descendants themselves. We will next consider how to can quantify this.
+
+We start by observing that for each node $X_n$, $n\in\nats$, we have the associated conditional probability $P(X_n\,\vert\,X_{n-1})$. Since the state-space $\states$ is taken to be finite, we can conveniently represent these conditional probabilities in a $\lvert\states\rvert\times\lvert\states\rvert$ matrix. For any $t\in\natswith$, this matrix $T_t$ is defined, for all $x,y\in\states$, as
+\begin{equation*}
+T_t(x,y) \coloneqq P(X_{t+1}=y\,\vert\,X_t=x)\,,
+\end{equation*}
+where the indexing is taken to be row-first. This matrix $T_t$ is called the \emph{transition matrix} of the Markov chain at time $t$. Its elements $T_t(x,y)$ are called the \emph{transition probabilities from $x$ to $y$}, and they are the probabilities that a system that is in state $x$ at time $t$, will be in state $y$ at time $t+1$. This explains the subscript-indexing, whereby the matrix $T_t$ contains the conditional probabilities associated to node $X_{t+1}$.
+
+The reason that we represent these probabilities using matrices is that this opens up the entire toolbox of linear algebra. We will see that this allows us to very succinctly write down certain relations and properties. For instance, we can now write the influence of a node on its descendants, using a simple matrix product:
+\begin{proposition}\label{prop:markov_factor_transmat}
+Let $\{X_t\}_{t\in\natswith}$ be a discrete-time Markov chain, and let $T_t$ be the associated family of transition matrices, as defined above. Then for all $s,t\in\natswith$ such that $s\leq t$, and all $x,y\in\states$, it holds that $P(X_{t+1}=y\,\vert\,X_s=x) = \left[T_s\cdots T_{t}\right](x,y)$.
+\end{proposition}
+\begin{proof}
+We give a proof by induction. For $t=s$ the result is immediate from the definition of the transition matrix $T_s$. Now suppose the result is true for $t-1$; we show that it is also true for $t$:
+\begin{align*}
+P(X_{t+1}=y\,\vert\,X_s=x) &= \sum_{z\in\states} P(X_{t+1}=y,X_{t}=z\,\vert\,X_s=x) \\
+ &= \sum_{z\in\states} P(X_{t}=z\,\vert\,X_s=x) P(X_{t+1}=y\,\vert\,X_{t}=z,\,X_s=x) \\
+ &= \sum_{z\in\states} \left[T_s\cdots T_{t-1}\right](x,z) P(X_{t+1}=y\,\vert\,X_{t}=z) \\
+ &= \sum_{z\in\states} \left[T_s\cdots T_{t-1}\right](x,z) T_{t}(z,y) = \bigl[T_s\cdots T_{t-1}T_{t}\bigr](x,y)\,,
+\end{align*}
+where the first and second equalities are basic properties of probabilities, the third equality is due to the induction hypothesis and the Markov property (c.f. Definition~\ref{def:measure_markov}), the fourth equality uses the definition of the transition matrix $T_{t}$, and the final equality uses the definition of a matrix product. 
+\end{proof}
+
+Another useful property of this representation, is that it allows us to write conditional expectations of functions $f\in\gamblesX$ using matrix-vector products. In particular, again because $\states$ is finite, any $f\in\gamblesX$ can be interpreted as a vector in $\reals^{\lvert\states\rvert}$; the coordinates are simply the values $f(x)$, $x\in\states$. Hence:
+\begin{proposition}\label{prop:expectation_using_transmat}
+Let $\{X_t\}_{t\in\natswith}$ be a discrete-time Markov chain, and let $T_t$ be the associated family of transition matrices. Then, for all $f\in\gamblesX$, all $t\in\natswith$, and all $x\in\states$, it holds that $\mathbb{E}\bigl[f(X_{t+1})\,\vert\,X_t=x\bigr] = \left[T_tf\right](x)$.
+\end{proposition}
+\begin{proof}
+Simply use the definition of the matrix-vector product: 
+\begin{equation*}
+\left[T_tf\right](x)=\sum_{y\in\states}T_t(x,y)f(y)=\sum_{y\in\states}P(X_{t+1}=y\,\vert\,X_t=x)f(y) = \mathbb{E}\bigl[f(X_{t+1})\,\vert\,X_t=x\bigr].
+\vspace{-16pt}
+\end{equation*}
+\end{proof}
+
+The above properties can be combined to give a simplified version of the law of iterated expectation (Theorem~\ref{thm:loie}) that we encountered in Section~\ref{sec:prob_trees}:
+\begin{corollary}\label{cor:trans_mat_loie}
+Let $\{X_t\}_{t\in\natswith}$ be a discrete-time Markov chain, and let $T_t$ be the associated family of transition matrices. Then, for all $f\in\gamblesX$, all $s,t\in\natswith$ such that $s\leq t$, and all $x\in\states$, it holds that $\mathbb{E}\bigl[f(X_{t+1})\,\vert\,X_s=x\bigr] = \left[T_s\cdots T_tf\right](x)$.
+\end{corollary}
+\begin{proof}
+Immediate from Propositions~\ref{prop:markov_factor_transmat} and~\ref{prop:expectation_using_transmat}.
+\end{proof}
+Note that, where the law of iterated expectation in Theorem~\ref{thm:loie} could be interpreted as ``pulling back'' in the associated probability tree, the above simplified version can be interpreted as ``pulling back'' the conditional expectations in the associated PGM, through the product of the transition matrices. This is graphically represented in Figure~\ref{fig:example_loie_pgm}.
+\begin{figure}
+\centering
+\begin{tikzpicture}[xscale=0.9,yscale=0.9]
+%\draw[help lines] (-1,-0.5) grid (11,7.5);
+\draw (-1,-1) rectangle (10.5,2.5);
+\draw (0,0) node[align=center] {$\cdots$};
+\draw [->] (0.5,0) -- (1.5,0);
+\draw (2,0) circle(0.5) node[align=center] {$X_s$};
+\draw (2,1) node[align=right] {$\bigl[T_s\cdots T_{t}f\bigr](X_s)$};
+\draw [->] (2.5,0) -- (3.5,0);
+\draw (4,0) node[align=right] {$\cdots$};
+\draw [->] (4.5,0) -- (5.5,0);
+\draw (6,0) circle(0.5) node[align=center] {$X_{t}$};
+\draw (6,1) node[align=right] {$\bigl[T_{t}f\bigr](X_{t})$};
+\draw [->] (6.5,0) -- (7.5,0);
+\draw (8,0) circle(0.5) node[align=center] {$X_{t+1}$};
+\draw (8,1) node[align=right] {$f(X_{t+1})$};
+\draw (7,2) node[align=right] {$T_t$};
+\draw (7.75,1.5) edge[->,double,bend right] (6.25,1.5);
+\draw (5.25,2) node[align=right] {$T_{t-1}$};
+\draw (5.75,1.5) edge[->,double,bend right] (4.5,1.75);
+\draw (2.75,2) node[align=right] {$T_s$};
+\draw (3.5,1.75) edge[->,double,bend right] (2.25,1.5);
+\draw (4,1.75) node[align=right] {$\cdots$};
+\end{tikzpicture}
+\caption{Graphical representation of the ``pulling back'' interpretation of the simplified version of the law of iterated expectation in Corollary~\ref{cor:trans_mat_loie}. The function $f$, of which we want to compute the expectation on $X_{t+1}$, given $X_s$, starts at node $X_{t+1}$, where its value is trivial. The function is then ``pulled back'' to the parent $X_t$ of $X_{t+1}$, by taking the local expectation;  by left-multiplying with $T_t$. This new function $T_tf$ on $X_t$, is then ``pulled'' back by multiplying with $T_{t-1}$, and so forth. Eventually, the function $T_{s+1}\cdots T_tf$ is pulled into $X_s$, by left-multiplying with $T_s$. The resulting function on $X_s$ is the conditional expectation of interest.}
+\label{fig:example_loie_pgm}
+\end{figure}
 
 \subsection{Transition Graphs}
 
