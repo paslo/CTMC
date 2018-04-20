@@ -584,7 +584,7 @@ Note that, in contrast to homogeneous Markov chains where we only needed to spec
 
 These definitions of (homogeneous) Markov chains can also be conveniently translated back to the measure-theoretic context. We here give the general definition, for an arbitrary time-dimension (so, either $\timedim=\natswith$ or $\timedim=\realsnonneg$) and multiple steps into the future:
 \begin{definition}[Markov Chain as Probability Measure]\label{def:measure_markov}
-A stochastic process $\{X_t\}_{t\in\timedim}$ on $(\Omega,\mathcal{F},P)$ is called a Markov chain if for all $s_1,\ldots,s_n,t\in\timedim$, $n\in\nats$, such that $s_1<\cdots<s_n<t$, it holds that $P(X_t\,\vert\,X_{s_1},\ldots,X_{s_n}) = P(X_t\,\vert\,X_{s_n})$.
+A stochastic process $\{X_t\}_{t\in\timedim}$ on $(\Omega,\mathcal{F},P)$ is called a Markov chain if for all $s_1,\ldots,s_n,t\in\timedim$, $n\in\nats$, such that $s_1<\cdots<s_n<t$, it holds that $P(X_t\,\vert\,X_{s_1},\ldots,X_{s_n}) = P(X_t\,\vert\,X_{s_n})$. A stochastic process that is a Markov chain, is said to have the Markov property.
 \end{definition}
 Similarly, the notion of homogeneity can be defined measure-theoretically and for an arbitrary time-dimension:  
 \begin{definition}[Homogeneous Markov Chain as Probability Measure]\label{def:measure_homogen_markov}
@@ -666,7 +666,7 @@ Let $\{X_t\}_{t\in\natswith}$ be a discrete-time Markov chain, and let $T_t$ be 
 \begin{proof}
 Immediate from Propositions~\ref{prop:markov_factor_transmat} and~\ref{prop:expectation_using_transmat}.
 \end{proof}
-Note that, where the law of iterated expectation in Theorem~\ref{thm:loie} could be interpreted as ``pulling back'' in the associated probability tree, the above simplified version can be interpreted as ``pulling back'' the conditional expectations in the associated PGM, through the product of the transition matrices. This is graphically represented in Figure~\ref{fig:example_loie_pgm}.
+Note that, where the law of iterated expectation in Theorem~\ref{thm:loie} could be interpreted as ``pulling back'' in the associated probability tree, the above simplified version can additionally be interpreted as ``pulling back'' the conditional expectations in the associated PGM, through the product of the transition matrices. This is graphically represented in Figure~\ref{fig:example_loie_pgm}.
 \begin{figure}
 \centering
 \begin{tikzpicture}[xscale=0.9,yscale=0.9]
@@ -698,7 +698,49 @@ Note that, where the law of iterated expectation in Theorem~\ref{thm:loie} could
 
 \subsection{Transition Graphs}
 
-{\bf TODO: Next representation under both Markov and homogeneity assumption: transition graph. Interpretation of the structure and connect back to measure-representation, probability tree, and PGM. Some intuition about communicating states and irreducibility etc. }
+We now move on to yet another graphical representation: the \emph{transition graph} of a homogeneous (discrete-time) Markov chain. We start by noticing the following:
+\begin{proposition}
+Let $\{X_t\}_{t\in\natswith}$ be a discrete-time homogeneous Markov chain, and let $T_t$ be the associated family of transition matrices. Then there is a unique matrix $T$ such that $T_t=T$ for all $t\in\natswith$. Furthermore, this matrix $T$ is row-stochastic, i.e., $T(x,y)\geq 0$ for all $x,y\in\states$, and $\sum_{y\in\states}T(x,y)=1$ for all $x\in\states$.
+\end{proposition}
+\begin{proof}
+The matrix of interest can be identified as $T\coloneqq T_0$. Now, using the definition of a homogeneous Markov chain (Definition~\ref{def:measure_homogen_markov}) and the transition matrix $T_t$ for any $t\in\natswith$, it holds for all $x,y\in\states$ that
+\begin{align*}
+T(x,y) = T_0(x,y) &= P(X_1=y\,\vert\,X_0=x) \\
+ &= P(X_{(t+1)-t}=y\,\vert\,X_0=x)=P(X_{t+1}=y\,\vert\,X_t=x)=T_t(x,y)\,,
+\end{align*}
+which concludes the proof of the first statement. The claim that $T$ is row-stochastic follows immediately from the fact that $T_0$ is.
+\end{proof}
+
+The transition graph of a discrete-time homogeneous Markov chain is a graphical representation of its associated transition matrix $T$. In this way, this representation emphasises the interactions between the \emph{states}, rather than the random variables. An example transition graph is shown in Figure~\ref{fig:example_trans_graph}.
+\begin{figure}
+\centering
+\begin{tikzpicture}[xscale=0.9,yscale=0.9]
+%\draw[help lines] (-1,-0.5) grid (11,7.5);
+%\draw (0,0) rectangle (10,8);
+\draw (2,2) rectangle (2.8,2.8);
+\draw (2.4,2.4) node[anchor=center] {$b$};
+\draw (2,5) rectangle (2.8,5.8);
+\draw (2.4,5.4) node[anchor=center] {$a$};
+\draw (5,3.5) rectangle (5.8,4.3);
+\draw (5.4,3.9) node[anchor=center] {$c$};
+\draw [->] (2.8,2.4) to [out=0,in=-90] (5.4,3.5);
+\draw [->] (5,3.8) to [out=180,in=90] (2.4,2.8);
+\draw [->] (5,4) to [out=180,in=-90] (2.4,5);
+\draw [->] (2,5.4) to [out=180,in=180] (2,2.4);
+\draw (2.8,5.4) to [out=0,in=-90] (3.2,5.8);
+\draw (3.2,5.8) to [out=90,in=0] (2.8,6.2);
+\draw [->] (2.8,6.2) to [out=180,in=90] (2.4,5.8);
+\draw (3.2,6.2) node[anchor=west] {$P(a\,\vert\,a)$};
+\draw (1.1,3.9) node[anchor=east] {$P(b\,\vert\,a)$};
+\draw (5.4,2.4) node {$P(c\,\vert\,b)$};
+\draw (3.2,4.3) node[anchor=west] {$P(a\,\vert\,c)$};
+\draw (3.2,3.5) node[anchor=west] {$P(b\,\vert\,c)$};
+\end{tikzpicture}
+\caption{Example transition graph for a discrete-time homogeneous Markov chain with a ternary state-space $\states=\{a,b,c\}$. The transition graph is a directed graph, with a vertex for each state, and an arc from the vertex of $x$ to that of $y$, with $x,y\in\states$, whenever $T(x,y)=P(X_1=y\,\vert\,X_0=x)>0$. The arcs are labelled with the corresponding transition probabilities. The figure uses the shorthand notation $P(y\vert x)$ for the elements $T(x,y)$ of $T$.}
+\label{fig:example_trans_graph}
+\end{figure}
+
+{\bf TODO: Some intuition about communicating states and irreducibility etc. }
 
 \subsection{Limit Behaviour}
 
