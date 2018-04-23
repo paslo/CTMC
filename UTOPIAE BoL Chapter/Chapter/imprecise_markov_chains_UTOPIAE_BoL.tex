@@ -200,7 +200,7 @@ Our aim with the present chapter is to provide an extensive but intuitive overvi
 
 \section{(Precise) Stochastic Processes}
 
-\emph{In this section: Some notation and formalisation. Different representations; probability measures (intuitively, not going to do the full measure theoretic treatment), event trees, graphical models (again: short, not the full general theory). Various independence concepts, and Markov chains as a special case. Computations using law of iterated expectation. Focus largely on discrete-time, with some first concepts about continuous-time. A brief discussion about limit behaviour.}
+%\emph{In this section: Some notation and formalisation. Different representations; probability measures (intuitively, not going to do the full measure theoretic treatment), event trees, graphical models (again: short, not the full general theory). Various independence concepts, and Markov chains as a special case. Computations using law of iterated expectation. Focus largely on discrete-time, with some first concepts about continuous-time. A brief discussion about limit behaviour.}
 
 We will start the exposition around stochastic processes in a relatively general and abstract sense, but will quickly make things more specific. Throughout the remainder of this chapter, we will consider some fixed abstract \emph{state-space} $\states$. A \emph{state} is an element $x\in\states$ and represents uniquely the relevant information about the underlying system that we are interested in modelling. So as not to complicate matters, we will assume throughout that $\states$ is finite, so that we can identify it without loss of generality as the set $\states=\{1,\ldots,k\}\subset\nats$. Note that here and in what follows, we denote with $\nats$ the natural numbers, and will write $\natswith\coloneqq\nats\cup\{0\}$ when we include zero. Furthermore, the real numbers are written $\reals$, the non-negative reals are $\realsnonneg$, and the positive reals are $\realspos$.
 
@@ -711,7 +711,10 @@ T(x,y) = T_0(x,y) &= P(X_1=y\,\vert\,X_0=x) \\
 which concludes the proof of the first statement. The claim that $T$ is row-stochastic follows immediately from the fact that $T_0$ is.
 \end{proof}
 
-The transition graph of a discrete-time homogeneous Markov chain is a graphical representation of its associated transition matrix $T$. In this way, this representation emphasises the interactions between the \emph{states}, rather than the random variables. An example transition graph is shown in Figure~\ref{fig:example_trans_graph}.
+The transition graph of a discrete-time homogeneous Markov chain is a graphical representation of its associated transition matrix $T$. In this way, this representation emphasises the interactions between the \emph{states}, rather than the random variables. An example transition graph is shown in Figure~\ref{fig:example_trans_graph}. The formal definition is as follows:
+\begin{definition}[Transition Graph]\label{def:trans_graph}
+Let $\{X_t\}_{t\in\natswith}$ be a discrete-time homogeneous Markov chain, and let $T$ be its associated transition matrix. Then its associated \emph{transition graph} is a directed graph $(V,E)$ with one vertex for each state, $V=\states$, and, for all $x,y\in\states$, an arc $(x,y)\in E$ whenever $T(x,y)>0$.
+\end{definition}
 \begin{figure}
 \centering
 \begin{tikzpicture}[xscale=0.9,yscale=0.9]
@@ -740,11 +743,38 @@ The transition graph of a discrete-time homogeneous Markov chain is a graphical 
 \label{fig:example_trans_graph}
 \end{figure}
 
-{\bf TODO: Some intuition about communicating states and irreducibility etc. }
+One of the reasons transition graphs are sometimes useful, is that they allow one to study which parts of a system can be reached from other parts of the system. The simplest application is that of \emph{communicating states}:
+\begin{definition}[Communicating States]\label{def:communicating_states}
+Let $\{X_t\}_{t\in\natswith}$ be a discrete-time homogeneous Markov chain, and let $T$ be its associated transition matrix. For any two states $x,y\in\states$, $y$ is said to be \emph{accessible} from $x$ if there is some $n\in\nats$ such that $T^n(x,y)>0$. Furthermore, $x$ and $y$ are said to \emph{communicate} it $y$ is accessible from $x$, and $x$ is accessible from $y$. 
+\end{definition}
+Note that in the above, the term $T^n$ denotes the $n$-th matrix power of $T$ (c.f. Proposition~\ref{prop:markov_factor_transmat}). This has an intuitive graphical interpretation:
+\begin{corollary}
+Let $\{X_t\}_{t\in\natswith}$ be a discrete-time homogeneous Markov chain. Then for any $x,y\in\states$, $y$ is accessible from $x$ if and only if there is a path from $x$ to $y$ in the associated transition graph. Furthermore, $x$ and $y$ communicate if and only if there is a cycle in the associated transition graph that contains both $x$ and $y$.
+\end{corollary}
+\begin{proof}
+Trivial from Definitions~\ref{def:trans_graph} and~\ref{def:communicating_states}.
+\end{proof}
+Inspection of the transition graph in Figure~\ref{fig:example_trans_graph} shows that, in that example, all states communicate with each other. A maximal set of states that all communicate with each other is called a \emph{communication class}. When a Markov chain has only a single communication class, this is called the \emph{top (communication) class}. When the top class contains all states, the Markov chain is said to be \emph{irreducible}.
 
-\subsection{Limit Behaviour}
+Investigation of the communicating states in a Markov chain is often useful when one is interested in the long-term behaviour of the system. After all, while a system might begin in one state (or communication class), it need not necessarily always eventually return to that state (or communication class).
 
-{\bf TODO: Some intuition about limit behaviour. Results for irreducible chains. }
+{\bf ** example and better introduction to the following}
+
+An important concept is that of the \emph{regularity} of the communication classes of a Markov chain. A communication class is regular if there is a number $n\in\nats$ such that it is possible to go from any state in the class, to any other state in the class, in exactly $n$ steps. Of particular importance is the notion of \emph{top class regularity}:
+\begin{definition}[Top Class Regularity]
+Let $\{X_t\}_{t\in\natswith}$ be a discrete-time homogeneous Markov chain, and let $T$ be its associated transition matrix. Then the Markov chain is said to be \emph{top class regular} if
+\begin{equation*}
+\bigl\{ y\in\states\,:\,(\exists n\in\nats)(\forall x\in\states)\, T^n(x,y)>0 \bigr\} \neq \emptyset\,,
+\end{equation*}
+and in that case the top class $\states_\mathrm{top}$ of the Markov chain is equal to this set. When furthermore $\states_\mathrm{top}=\states$, the Markov chain itself is said to be \emph{regular}.
+\end{definition}
+The reason that this property is so important, is that it provides a sufficient condition for the long-term behaviour of a Markov chain to converge to a stationary distribution, regardless of the state in which it started:
+\begin{theorem}
+Let $\{X_t\}_{t\in\natswith}$ be a discrete-time homogeneous Markov chain, and let $T$ be its associated transition matrix. Let this Markov chain be regular. Then there exists a probability mass function $P_\infty:\states\to\realsnonneg$ such that, for all $x,y\in\states$, 
+\begin{equation*}
+P_\infty(y) = \lim_{n\to+\infty}T^n(x,y)\,.
+\end{equation*}
+\end{theorem}
 
 \section{Imprecise Discrete-Time Markov Chains}
 
