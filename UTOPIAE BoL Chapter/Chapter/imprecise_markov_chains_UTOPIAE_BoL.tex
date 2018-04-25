@@ -198,7 +198,7 @@ Our aim with the present chapter is to provide an extensive but intuitive overvi
 
 {\bf TODO: The remainder of this chapter is structured as follows...}
 
-\section{(Precise) Stochastic Processes}
+\section{(Precise) Stochastic Processes}\label{sec:prec_stoch_proc}
 
 %\emph{In this section: Some notation and formalisation. Different representations; probability measures (intuitively, not going to do the full measure theoretic treatment), event trees, graphical models (again: short, not the full general theory). Various independence concepts, and Markov chains as a special case. Computations using law of iterated expectation. Focus largely on discrete-time, with some first concepts about continuous-time. A brief discussion about limit behaviour.}
 
@@ -754,11 +754,57 @@ Let $\{X_t\}_{t\in\natswith}$ be a discrete-time homogeneous Markov chain. Then 
 \begin{proof}
 Trivial from Definitions~\ref{def:trans_graph} and~\ref{def:communicating_states}.
 \end{proof}
-Inspection of the transition graph in Figure~\ref{fig:example_trans_graph} shows that, in that example, all states communicate with each other. A maximal set of states that all communicate with each other is called a \emph{communication class}. When a Markov chain has only a single communication class, this is called the \emph{top (communication) class}. When the top class contains all states, the Markov chain is said to be \emph{irreducible}.
+Inspection of the transition graph in Figure~\ref{fig:example_trans_graph} shows that, in that example, all states communicate with each other. When this is the case, i.e. when all states communicate, the Markov chain is said to be \emph{irreducible}. A maximal set of states that all communicate with each other is called a \emph{communication class}. Hence, an irreducible Markov chain has only a single communication class, which is equal to $\states$.
 
-Investigation of the communicating states in a Markov chain is often useful when one is interested in the long-term behaviour of the system. After all, while a system might begin in one state (or communication class), it need not necessarily always eventually return to that state (or communication class).
+Note that not every Markov chain is irreducible; in general there may be more than one communication class. An example is given in Figure~\ref{fig:example_trans_graph_reducible}. When a communication class $\mathcal{A}\subset\states$ is accessible from a different communication class $\mathcal{B}\subset\states$, then $\mathcal{A}$ is said to dominate $\mathcal{B}$. A communication class which is not dominated is called \emph{maximal}. When a Markov chain has only a single maximal communication class, this is called the \emph{top (communication) class}. 
+\begin{figure}
+\centering
+\begin{tikzpicture}[xscale=0.9,yscale=0.9]
+%\draw[help lines] (-1,-0.5) grid (11,7.5);
+%\draw (0,0) rectangle (10,8);
+\draw (2,2) rectangle (2.8,2.8);
+\draw (2.4,2.4) node[anchor=center] {$b$};
+\draw (2,5) rectangle (2.8,5.8);
+\draw (2.4,5.4) node[anchor=center] {$a$};
+\draw (5,5) rectangle (5.8,5.8);
+\draw (5.4,5.4) node[anchor=center] {$d$};
+\draw (5,2) rectangle (5.8,2.8);
+\draw (5.4,2.4) node[anchor=center] {$c$};
+\draw [->] (2.8,2.4) to [out=0,in=180] (5,2.4);
+\draw [->] (2.4,2.8) to [out=90,in=-90] (2.4,5);
+\draw [->] (5.4,2.8) to [out=90,in=-90] (5.4,5);
+%\draw [->] (5,3.8) to [out=180,in=90] (2.4,2.8);
+%\draw [->] (5,4) to [out=180,in=-90] (2.4,5);
+\draw [->] (2,5.4) to [out=180,in=180] (2,2.4);
+\draw [->] (5.8,5.4) to [out=0,in=0] (5.8,2.4);
+\draw (2.8,5.4) to [out=0,in=-90] (3.2,5.8);
+\draw (3.2,5.8) to [out=90,in=0] (2.8,6.2);
+\draw [->] (2.8,6.2) to [out=180,in=90] (2.4,5.8);
+%
+\draw (5,5.4) to [out=180,in=-90] (4.6,5.8);
+\draw (4.6,5.8) to [out=90,in=180] (5,6.2);
+\draw [->] (5,6.2) to [out=0,in=90] (5.4,5.8);
+%
+%\draw (5.4,2) to [out=-90,in=180] (5.8,1.6);
+%\draw (5.8,1.6) to [out=0,in=-90] (6.2,2);
+%\draw [->] (6.2,2) to [out=90,in=0] (5.8,2.4);
+%
+\draw (2.5,6.5) node[anchor=west] {$P(a\,\vert\,a)$};
+\draw (1.1,3.9) node[anchor=east] {$P(b\,\vert\,a)$};
+\draw (2.5,3.9) node[anchor=west] {$P(a\,\vert\,b)$};
+\draw (5.3,6.5) node[anchor=east] {$P(d\,\vert\,d)$};
+\draw (6.7,3.9) node[anchor=west] {$P(c\,\vert\,d)$};
+\draw (5.3,3.9) node[anchor=east] {$P(d\,\vert\,c)$};
+\draw (3.9,2.6) node[ ] {$P(c\,\vert\,b)$};
+%\draw (5.4,2.4) node {$P(c\,\vert\,b)$};
+%\draw (3.2,4.3) node[anchor=west] {$P(a\,\vert\,c)$};
+%\draw (3.2,3.5) node[anchor=west] {$P(b\,\vert\,c)$};
+\end{tikzpicture}
+\caption{Transition graph of a Markov chain that is \emph{not} irreducible. It has two communication classes, $\{a,b\}$ and $\{c,d\}$. The set $\{c,d\}$ dominates $\{a,b\}$, and is the top (communication) class of the Markov chain. This Markov chain is top class regular.}
+\label{fig:example_trans_graph_reducible}
+\end{figure}
 
-{\bf ** example and better introduction to the following}
+Investigation of the communicating states in a Markov chain is often useful when one is interested in the long-term behaviour of the system. After all, while a system might begin in one state, it need not necessarily always eventually return to that state; this is the property that is illustrated in Figure~\ref{fig:example_trans_graph_reducible}.
 
 An important concept is that of the \emph{regularity} of the communication classes of a Markov chain. A communication class is regular if there is a number $n\in\nats$ such that it is possible to go from any state in the class, to any other state in the class, in exactly $n$ steps. Of particular importance is the notion of \emph{top class regularity}:
 \begin{definition}[Top Class Regularity]
@@ -766,7 +812,7 @@ Let $\{X_t\}_{t\in\natswith}$ be a discrete-time homogeneous Markov chain, and l
 \begin{equation*}
 \bigl\{ y\in\states\,:\,(\exists n\in\nats)(\forall x\in\states)\, T^n(x,y)>0 \bigr\} \neq \emptyset\,,
 \end{equation*}
-and in that case the top class $\states_\mathrm{top}$ of the Markov chain is equal to this set. When furthermore $\states_\mathrm{top}=\states$, the Markov chain itself is said to be \emph{regular}.
+and in that case the top class $\states_\mathrm{top}$ of the Markov chain exists and is equal to this set. When furthermore $\states_\mathrm{top}=\states$, the Markov chain itself is said to be \emph{regular}.
 \end{definition}
 The reason that this property is so important, is that it provides a sufficient condition for the long-term behaviour of a Markov chain to converge to a stationary distribution, regardless of the state in which it started:
 \begin{theorem}
@@ -782,10 +828,44 @@ P_\infty(y) = \lim_{n\to+\infty}T^n(x,y)\,.
 
 {\bf TODO: transition better into this section. }
 
-We will now move on to the discussion surrounding \emph{Imprecise (Discrete-Time) Markov Chains} (IDTMC). So, we still consider the time-dimension $\timedim=\natswith$. 
+We will now move on to the discussion surrounding \emph{Imprecise (Discrete-Time) Markov Chains} (IDTMCs). So, we still consider the time-dimension $\timedim=\natswith$. {\bf blabla} We will follow the same order as in Section~\ref{sec:prec_stoch_proc}. 
 
-{\bf TODO: Sets of precise processes. Lower expectation definition. Imprecise Markov condition.}
+So, let us start with the ``measure-theoretic'' representation of imprecise stochastic processes. In this setting, we consider a \emph{set} $\mathbb{P}$ of probability measures on the measurable space of paths $(\Omega,\mathcal{F})$. Then for each $P\in\mathbb{P}$ we have a probability space $(\Omega,\mathcal{F},P)$, to which we can associate the precise stochastic process $\{X_t\}_{t\in\natswith}$ as in Definition~\ref{def:stochastic_process}. For any function $f\in\gambles(\states^n)$, $n\in\nats$, we can express the expected value on the $n$ time points $\mathbf{t}\subset\natswith$ as $\mathbb{E}_P[f(X_\mathbf{t})]$ as in Section~\ref{sec:prec_stoch_proc}. Recall from Chapter {\bf TODO: chapter ref} that in this imprecise probabilistic context, we are more generally interested in the \emph{lower-} and \emph{upper expectation} of $f$, which are defined respectively as
+\begin{equation*}
+\underline{\mathbb{E}}_\mathbb{P}\bigl[f(X_\mathbf{t})\bigr] \coloneqq \inf_{P\in\mathbb{P}} \mathbb{E}_P\bigl[f(X_\mathbf{t})\bigr],\quad\text{and,}\quad \overline{\mathbb{E}}_\mathbb{P}\bigl[f(X_\mathbf{t})\bigr] \coloneqq \sup_{P\in\mathbb{P}} \mathbb{E}_P\bigl[f(X_\mathbf{t})\bigr]\,.
+\end{equation*}
+We briefly recall the well-known conjugacy relation $\overline{\mathbb{E}}_\mathbb{P}\bigl[f(X_\mathbf{t})\bigr]=-\underline{\mathbb{E}}_\mathbb{P}\bigl[-f(X_\mathbf{t})\bigr]$, from which it follows that we can present the remainder of this discussion entirely in terms of lower expectations; any results on upper expectations follow analogously through this relation.
 
+Slightly more generally than the above, we will focus on \emph{conditional} lower expectations. Similar to the precise case that we discussed before, this is defined for any $f\in\gambles(\states^{n+m})$, $n,m\in\nats$, any $\mathbf{s},\mathbf{t}\subset\natswith$ such that $\mathbf{s}$ and $\mathbf{t}$ are of length $n$ and $m$ respectively, and any $x_\mathbf{s}\in\states^n$, as
+\begin{equation*}
+\underline{\mathbb{E}}_\mathbb{P}\bigl[f(X_\mathbf{s},X_\mathbf{t})\,\big\vert\,X_\mathbf{s}=x_\mathbf{s}\bigr] \coloneqq \inf_{P\in\mathbb{P}} \mathbb{E}_P \bigl[f(X_\mathbf{s},X_\mathbf{t})\,\big\vert\,X_\mathbf{s}=x_\mathbf{s}\bigr]\,,
+\end{equation*}
+whenever $\underline{\mathbb{E}}_\mathbb{P}[\mathbb{I}_{x_\mathbf{s}}(X_\mathbf{s})]>0$. In this last condition, $\mathbb{I}_{x_\mathbf{s}}$ is the indicator of $x_\mathbf{s}$; for all $y_\mathbf{s}\in\states^n$, $\mathbb{I}_{x_\mathbf{s}}(y_\mathbf{s})\coloneqq 1$ if $x_\mathbf{s}=y_\mathbf{s}$, and $\mathbb{I}_{x_\mathbf{s}}(y_\mathbf{s})\coloneqq 0$, otherwise. Note that
+\begin{equation*}
+0 < \underline{\mathbb{E}}_\mathbb{P}[\mathbb{I}_{x_\mathbf{s}}(X_\mathbf{s})] = \inf_{P\in\mathbb{P}} \mathbb{E}_P[\mathbb{I}_{x_\mathbf{s}}(X_\mathbf{s})] = \inf_{P\in\mathbb{P}} P(X_\mathbf{s}=x_\mathbf{s})\,,
+\end{equation*}
+so this condition guarantees that the conditional expectations are well-defined for all the precise measures $P\in\mathbb{P}$.
+
+We are now ready to introduce the notion of an imprecise Markov chain:
+\begin{definition}[Imprecise Discrete-Time Markov Chain as Set of Processes]
+An \emph{imprecise discrete-time Markov chain} is a set $\mathbb{P}$ of probability measures on the measurable space $(\Omega,\mathcal{F})$, with associated lower expectation operator $\underline{\mathbb{E}}_\mathbb{P}$ as defined above, such that, for all $f\in\gambles(\states)$ and all $s_1,\ldots,s_n,t\in\natswith$ such that $s_1<\cdots s_n<t$,
+\begin{equation*}
+\underline{\mathbb{E}}_\mathbb{P}\bigl[f(X_t)\,\big\vert\, X_{s_1},\ldots,X_{s_n}\bigr] = \underline{\mathbb{E}}_\mathbb{P}\bigl[f(X_t)\,\big\vert\, X_{s_n}\bigr]\,.
+\end{equation*}
+Furthermore, an imprecise discrete-time Markov chain is called \emph{homogeneous} if, for all $s,t\in\natswith$, $s<t$, and all $f\in\gamblesX$, it holds that $\underline{\mathbb{E}}_\mathbb{P}[f(X_t)\,\vert\,X_s]= \underline{\mathbb{E}}_\mathbb{P}[f(X_{t-s}),\vert\,X_0]$.
+\end{definition}
+Let us compare this with Definition~\ref{def:measure_markov}, the measure-theoretic definition of a precise Markov chain. The first difference is that the imprecise definition above is phrased in terms of (lower) expectations, whereas the precise definition used probabilities. We recall that this is because, in the framework of imprecise probability, it does not suffice to state results in terms of (lower) probabilities; instead the more general language of (lower) expectation operators is required. {\bf *** TODO: this needs some polish depending on how Chapter 2 discussed this}
+
+Nevertheless, this definition implies that, in terms of lower probabilities,
+\begin{align*}
+\inf_{P\in\mathbb{P}} P(X_t=x\,\vert\,X_{s_1},\ldots,X_{s_n}) &= 
+\underline{\mathbb{E}}_\mathbb{P}\bigl[\mathbb{I}_{x}(X_t)\,\big\vert\, X_{s_1},\ldots,X_{s_n}\bigr] \\
+ &= \underline{\mathbb{E}}_\mathbb{P}\bigl[\mathbb{I}_{x}(X_t)\,\big\vert\, X_{s_n}\bigr]
+= \inf_{P\in\mathbb{P}} P(X_t=x\,\vert\,X_{s_n})\,,
+\end{align*}
+which displays this imprecise Markov condition in more familiar terms.
+
+{\bf *** blabla, imprecise probability trees}
 
 Recall that for precise probability trees, we associate with each situation $w\in\states^*_\Box$ a local model $p_w$, which is a probability mass function on $\states$. In contrast, in order to define \emph{imprecise} probability trees, we will consider \emph{imprecise local models}. Such an imprecise local model $\mathcal{P}_w$ is simply a \emph{set} of probability mass functions on $\states$. This leads to the following definition:
 \begin{definition}[Imprecise Probability Tree]
