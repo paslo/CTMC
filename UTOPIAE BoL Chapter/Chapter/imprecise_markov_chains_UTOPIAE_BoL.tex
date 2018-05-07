@@ -710,7 +710,7 @@ Note that, where the law of iterated expectation in Theorem~\ref{thm:loie} could
 \subsection{Transition Graphs}\label{sec:trans_graph}
 
 We now move on to yet another graphical representation: the \emph{transition graph} of a homogeneous (discrete-time) Markov chain. We start by noticing the following:
-\begin{proposition}
+\begin{proposition}\label{prop:homogen_dtmc_has_single_transmat}
 Let $\{X_t\}_{t\in\natswith}$ be a discrete-time homogeneous Markov chain, and let $T_t$ be the associated family of transition matrices. Then there is a unique matrix $T$ such that $T_t=T$ for all $t\in\natswith$.
 \end{proposition}
 \begin{proof}
@@ -721,8 +721,9 @@ T(x,y) = T_0(x,y) &= P(X_1=y\,\vert\,X_0=x) \\
 \end{align*}
 which concludes the proof; uniqueness is trivial.
 \end{proof}
+As an aside, note therefore that a discrete-time homogeneous Markov chain can be characterised (up to the initial distribution $P(X_0)$) by a single transition matrix $T$. In particular, this $T$ can be seen as the canonical parameter of the Markov chain. This relative ease of parameterisation---compared to say an arbitrary stochastic process, which needs separate parameters for every possible history---is arguably one of the reasons that make homogeneous Markov chains such convenient and widely used models.
 
-The transition graph of a discrete-time homogeneous Markov chain is a graphical representation of its associated transition matrix $T$. In this way, this representation emphasises the interactions between the \emph{states}, rather than the random variables. An example transition graph is shown in Figure~\ref{fig:example_trans_graph}. The formal definition is as follows:
+Moving on, the transition graph of a discrete-time homogeneous Markov chain is a graphical representation of its associated transition matrix $T$. In this way, this representation emphasises the interactions between the \emph{states}, rather than the random variables. An example transition graph is shown in Figure~\ref{fig:example_trans_graph}. The formal definition is as follows:
 \begin{definition}[Transition Graph]\label{def:trans_graph}
 Let $\{X_t\}_{t\in\natswith}$ be a discrete-time homogeneous Markov chain, and let $T$ be its associated transition matrix. Then its associated \emph{transition graph} is a directed graph $(V,E)$ with one vertex for each state, $V=\states$, and, for all $x,y\in\states$, an arc $(x,y)\in E$ whenever $T(x,y)>0$.
 \end{definition}
@@ -835,9 +836,9 @@ P_\infty(y) = \lim_{n\to+\infty}T^n(x,y)\,.
 
 \section{Imprecise Discrete-Time Markov Chains}\label{sec:idtmc}
 
-\emph{In this section: Parameterisation and imprecise local models. Different independence concepts. Different representations; sets of precise processes, (imprecise) event trees, imprecise graphical models. Computation using law of iterated lower expectation. Results on limit behaviour.}
+%\emph{In this section: Parameterisation and imprecise local models. Different independence concepts. Different representations; sets of precise processes, (imprecise) event trees, imprecise graphical models. Computation using law of iterated lower expectation. Results on limit behaviour.}
 
-{\bf TODO: transition better into this section. }
+%{\bf TODO: transition better into this section. }
 
 We will now move on to the discussion surrounding \emph{Imprecise (Discrete-Time) Markov Chains} (IDTMCs). So, we still consider the time-dimension $\timedim=\natswith$. We will generalise each of the representations that we previously encountered to this new setting, where we roughly follow the same order as in Section~\ref{sec:prec_stoch_proc}. 
 
@@ -876,7 +877,7 @@ Nevertheless, this definition implies that, in terms of lower probabilities,
 \end{align*}
 which displays this imprecise Markov condition in more familiar terms.
 
-One may wonder at this point whether an imprecise Markov chain $\mathbb{P}$ is itself a set of Markov chains; the answer to this question is a resounding \emph{no} (or at least, not necessarily). This point deserves the strongest possible emphasis and, if the reader remembers just one thing from this chapter, let it be this:
+One may wonder at this point whether an imprecise Markov chain $\mathbb{P}$ is itself a set of Markov chains; the answer to this question is a resounding \emph{no} (or at least, not necessarily). This point deserves the strongest possible emphasis:
 \quad\newline\newline
 \noindent \emph{An element of an imprecise Markov chain $\mathbb{P}$ does {\bf not} need to be a Markov chain! So, in general $P(X_t\,\vert\,X_{s_1},\ldots,X_{s_n})\neq P(X_t\,\vert\,X_{s_n})$ for $P\in\mathbb{P}$, with $s_1<\cdots s_n<t$ in $\natswith$.}
 \quad\newline\newline
@@ -959,7 +960,7 @@ We here consider the graphical representation of imprecise Markov chains as \emp
 \caption{Credal network representation of an imprecise discrete-time Markov chain. An incoming arc on a node represents that the local uncertainty model of the corresponding variable is influenced by the originating node of that arc. Correspondingly, each node associates an imprecise probability model to its variable, conditional on the values of the random variables of the nodes on which it is dependent.}
 \label{fig:example_markov_credal}
 \end{figure}
-The interpretation in terms of sets of distributions is as would be expected; the model induces a set $\mathbb{P}$, each $P\in\mathbb{P}$ of which satisfies $P(X_n\,\vert\,X_{n-1})\in\mathcal{P}(X_n\,\vert\,X_{n-1})$ for all $n\in\nats$, and $P(X_0)\in\mathcal{P}(X_0)$. As before, the independence assumptions are not necessarily required to hold for these compatible precise models.
+The interpretation in terms of sets of distributions is as would be expected; the model induces a set $\mathbb{P}$, each $P\in\mathbb{P}$ of which satisfies $P(X_n\,\vert\,X_{n-1})\in\mathcal{P}(X_n\,\vert\,X_{n-1})$ for all $n\in\nats$, and $P(X_0)\in\mathcal{P}(X_0)$. As before, the independence assumptions are not necessarily required to hold for these compatible precise models. Conversely, if we are given an IDTMC $\mathbb{P}$, then the local models $\mathcal{P}(X_n\vert X_{n-1})$ of the credal network are constructed by restricting attention to the conditional events $P(X_{n}\,\vert\,X_{n-1})$, and varying $P$ over $\mathbb{P}$. So, we can straightforwardly switch between representations.
 
 We next generalise the exposition in Section~\ref{sec:pgm} regarding the associated transition matrices. To this end, fix any $t\in\natswith$. Then, as in the precise case, each element $P(X_{t+1}\,\vert\,X_t)\in\mathcal{P}(X_{t+1}\,\vert\,X_t)$ induces a transition matrix $T_t$. So, let us now consider the \emph{set} $\mathcal{T}_t$ of transition matrices that is induced by the imprecise local models:
 \begin{align*}
@@ -967,14 +968,14 @@ We next generalise the exposition in Section~\ref{sec:pgm} regarding the associa
  &\quad P(X_{t+1}\,\vert\,X_t)\in\mathcal{P}(X_{t+1}\,\vert\,X_t) \Bigr\}\,.
 \end{align*} 
 A key insight is that we can use this set of transition matrices to define a convenient computational tool for lower expectations:
-\begin{definition}
+\begin{definition}\label{def:lower_discrete_trans}
 Let $\mathbb{P}$ be an IDTMC, and let $\mathcal{T}_t$ be the associated family of sets of transition matrices, as defined above. Then, for each $t\in\natswith$, the associated \emph{lower transition operator} $\underline{T}_t:\gamblesX\to\gamblesX$ is defined, for all $f\in\gamblesX$ and all $x\in\states$, as
 \begin{equation*}
 \bigl[\underline{T}_tf\bigr](x) \coloneqq \inf_{T_t\in\mathcal{T}_t}\bigl[T_tf\bigr](x)\,.
 \end{equation*}
 \end{definition}
-We immediately obtain the following:
-\begin{proposition}
+This lower transition operator essentially fulfils the same role as the transition matrices from which it is derived. In particular, we have the following:
+\begin{proposition}\label{prop:lower_trans_is_lower_exp}
 Let $\mathbb{P}$ be an IDTMC, and let $\underline{T}_t$ be the associated family of lower transition operators. Then, for all $t\in\natswith$ and all $f\in\gamblesX$, it holds that
 \begin{equation*}
 \underline{T}_tf = \underline{\mathbb{E}}_\mathbb{P}\bigl[f(X_{t+1})\,\vert\,X_t\bigr]\,.
@@ -991,34 +992,180 @@ Simply use the definitions together with Proposition~\ref{prop:expectation_using
 where in the fourth equality we used the definition of the compatible measures.
 \end{proof}
 As in Corollary~\ref{cor:trans_mat_loie}, we can now state the simplified law of iterated lower expectation for imprecise Markov chains, using these lower transition operators:
-\begin{theorem}
+\begin{theorem}\label{thm:loile_dt}
 Let $\mathbb{P}$ be an IDTMC, and let $\underline{T}_t$ be the associated family of lower transition operators. Then, for all $f\in\gamblesX$, all $s,t\in\natswith$ such that $s\leq t$, and all $x\in\states$, it holds that
 \begin{equation*}
 \underline{\mathbb{E}}_\mathbb{P}\bigl[f(X_t)\,\big\vert\,X_s=x\bigr] = \bigl[\underline{T}_s\cdots \underline{T}_tf\bigr](x)\,,
 \end{equation*}
 where the right-hand side represents an iterated operator product (composition). 
 \end{theorem}
-We omit the full proof, but the interested reader can reconstruct the argument by using the general computational process of iterated lower expectation as explained in Section~\ref{sec:imprecise_prob_tree}, the imprecise Markov property from Definition~\ref{def:idtmc_set_measures}, and the definition of the lower transition operator.
+We omit the full proof, but the interested reader can reconstruct the argument by using the general computational process of iterated lower expectation as explained in Section~\ref{sec:imprecise_prob_tree}, the imprecise Markov property from Definition~\ref{def:idtmc_set_measures}, and the interpretation of the lower transition operator from Proposition~\ref{prop:lower_trans_is_lower_exp}.
 
 \subsection{Limits of Homogeneous IDTMCs}
 
-We conclude the discussion of imprecise discrete-time Markov chains with some results about their limit behaviour, in analogy to the results in Section~\ref{sec:trans_graph}. We start again by restricting attention to homogeneous IDTMCs, and notice the following:
+We conclude the discussion of imprecise discrete-time Markov chains with some results about their limit behaviour, in analogy to the results in Section~\ref{sec:trans_graph}. We start again by restricting attention to homogeneous IDTMCs, and notice the following (we omit the proof, which is straightforward):
 \begin{proposition}
 Let $\mathbb{P}$ be a homogeneous IDTMC, and let $\underline{T}_t$ be the associated family of lower transition operators. Then there is a unique lower transition operator $\underline{T}:\gamblesX\to\gamblesX$, such that, for all $f\in\gamblesX$, $\underline{T}_tf=\underline{T}f$ for all $t\in\natswith$.
 \end{proposition}
-\begin{proof}
-{\bf TODO, but fairly trivial}.
-\end{proof}
 
-{\bf TODO: Remark on parameterisation by means of set of transition matrices. Also add this in precise section. }
+We take a moment here to remark on a property that was already encountered in~\refIPChapter: the duality between lower expectation operators and closed and convex sets of probability measures. Indeed, this correspondence was also used in Definition~\ref{def:lower_discrete_trans} above, where we used the sets $\mathcal{T}_t$ of transition matrices, to construct the lower transition operator $\underline{T}_t$. Since, as we have just seen, the dynamics of a \emph{homogeneous} IDTMC can be completely described by a single $\underline{T}$, it now makes sense to think about the other direction. 
 
-{\bf TODO: Remark on communicating states and conjugate upper transition operator. Generalisation of regularity. }
+Specifically, corresponding to $\underline{T}$ there exists a closed and convex set $\mathcal{T}$ of transition matrices, such that $\underline{T}f=\inf_{T\in\mathcal{T}}Tf$ for all $f\in\gamblesX$. This implies that (up to the initial distribution at time zero) an IDTMC can also be characterised by such a set $\mathcal{T}$. So, whereas we noted in Section~\ref{sec:pgm} that a (precise) discrete-time Markov chain's canonical parameter is a single transition matrix $T$, for a homogeneous IDTMC the parameter can be understood as a single closed and convex set $\mathcal{T}$ of transition matrices.
 
-{\bf TODO: Limit result for regular imprecise Markov chains. }
+Furthermore, in Section~\ref{sec:pgm} we used a property of the associated transition matrix $T$, to state a sufficient condition for the long-term behaviour of the Markov chain to converge to a distribution over the states, independently of the state in which it started. We here have a similar result, which starts by introducing the conjugate \emph{upper} transition operator $\overline{T}:\gamblesX\to\gamblesX:f\mapsto -\underline{T}(-f)$.
+
+Now, recall that in the precise case, a homogeneous discrete-time Markov chain with transition matrix $T$ was said to be \emph{regular}, if there was some $n\in\nats$ such that $T^n(x,y)>0$ for all $x,y\in\states$. The interpretation is clear: the Markov chain is regular if and only if there is some finite number of steps $n$ in which every state $x$ can reach every state $y$. This is now generalised to the imprecise case:
+\begin{definition}[Regularity for Homogeneous IDTMC]
+Let $\mathbb{P}$ be a homogeneous IDTMC with associated lower (and upper) transition operator $\underline{T}$ (and $\overline{T}$). Then the IDTMC is \emph{regular} if there is some $n\in\nats$ such that $\bigl[\overline{T}^n\mathbb{I}_y\bigr](x)>0$ for all $x,y\in\states$.
+\end{definition}
+Let us consider this definition. One difference with the precise case, is the introduction of the indicator function $\mathbb{I}_y$ on the state $y\in\states$; this was introduced because, in contrast to matrices, we cannot index the ``elements'' of the transition operator. Specifically, using Theorem~\ref{thm:loile_dt}, we can interpret the condition as
+\begin{equation*}
+0 < \Bigl[\overline{T}^n\mathbb{I}_y\Bigr](x) = \overline{\mathbb{E}}_\mathbb{P}\bigl[\mathbb{I}_y(X_n)\,\big\vert\,X_0=x\bigr] = \sup_{P\in\mathbb{P}} P(X_n=y\,\vert\,X_0=x)\,,
+\end{equation*}
+for all $x,y\in\states$ and some $n\in\nats$. What regularity asks for, then, is for there to be some $n\in\nats$ such that is possible for all $x,y\in\states$ to move from $x$ to $y$ in exactly $n$ steps, \emph{according to some} $P\in\mathbb{P}$. In particular, the (precise) measure $P$ for which this needs to be possible, can be different for every pair $x,y\in\states$. Regularity for IDTMCs then, is a much weaker---easier to satisfy---condition than that for precise Markov chains. Nevertheless, the condition is sufficient for the following:
+
+\begin{theorem}
+Let $\mathbb{P}$ be a homogeneous IDTMC with associated lower transition operator $\underline{T}$, and suppose that $\mathbb{P}$ is regular. Then, there exists a unique lower expectation operator $\underline{\mathbb{E}}_\mathbb{P}[\cdot(X_{+\infty})]:\gamblesX\to\reals$ such that, for all $f\in\gamblesX$ and all $x\in\states$,
+\begin{equation*}
+\underline{\mathbb{E}}_\mathbb{P}\bigl[f(X_{+\infty})\bigr] = \lim_{n\to+\infty} \underline{\mathbb{E}}_\mathbb{P}\bigl[f(X_n)\,\vert\,X_0=x\bigr] = \lim_{n\to+\infty} \bigl[\underline{T}^nf\bigr](x)\,.
+\end{equation*}
+Furthermore, this is the unique $\underline{T}$-invariant lower expectation on $\gamblesX$, meaning that $\underline{\mathbb{E}}_\mathbb{P}[f(X_{+\infty})]= \underline{\mathbb{E}}_\mathbb{P}\bigl[[\underline{T}\,f](X_{+\infty})\bigr]$ for all $f\in\gamblesX$.
+\end{theorem}
 
 \section{Imprecise Continuous-Time Markov Chains}
 
-\emph{In this section: Intuition as limit of discrete-time (imprecise) Markov chains. Paramerisation using local models and the (imprecise) matrix exponential. Recollection and translation of the different independence concepts. Different representations; sets of precise processes and imprecise graphical models. Reduction of computations to discrete-time case, and law of iterated lower expectation. Results on limit behaviour.}
+\emph{In this section: Intuition as limit of discrete-time (imprecise) Markov chains. Parametrisation using local models and the (imprecise) matrix exponential. Recollection and translation of the different independence concepts. Different representations; sets of precise processes and imprecise graphical models. Reduction of computations to discrete-time case, and law of iterated lower expectation. Results on limit behaviour.}
+
+We now move on to the discussion about (imprecise) \emph{continuous}-time Markov chains. We have already encountered this setting several times in the preceding discussions, but have generally skipped over any details. Let us recall from Section~\ref{sec:prec_stoch_proc} that continuous-time stochastic processes are identified with a time-dimension $\timedim=\realsnonneg$, and that the elements $\omega$ of the outcome space of paths $\Omega$ are maps $\omega:
+\realsnonneg\to\states$. The measure-theoretic definition is then as before, where we consider the abstract probability space $(\Omega,\mathcal{F},P)$, and the stochastic process $\{X_t\}_{t\in\realsnonneg}$ is a family of random variables on this space. Furthermore, measure-theoretic definitions of (homogeneous) continuous-time Markov chains (CTMCs) were already encountered in Definitions~\ref{def:measure_markov} and~\ref{def:measure_homogen_markov}.
+
+How, then, can these models be interpreted? Let us start by considering the simplest case, \emph{viz.}, a precise and homogeneous Markov chain in continuous-time. According to the previous definitions, this is a stochastic process such that
+\begin{enumerate}
+\item $P(X_t\,\vert\, X_{s_1},\ldots,X_{s_n}) = P(X_t\,\vert\,X_{s_n})$ for all $s_1<\cdots<s_n<t$ in $\realsnonneg$, and 
+\item $P(X_t\,\vert\,X_s) = P(X_{t-s}\,\vert\,X_0)$ for all $ t<s$ in $\realsnonneg$.
+\end{enumerate}
+The immediate difficulty of moving on from this abstract representation is that the time-dimension is now, in a sense, too big to use any of the previous representations. For instance, we could try to draw a ``continuous-time'' probability tree, where the local model of a node with terminal situation $w_\top$ is given by a probability mass function $P(X_{t}\,\vert\,X_0=w_\top)$. But what is the time $t$ that we should use? When we were working in discrete-time, the approach was to use the \emph{next} time point, as viewed from the current situation. But of course, there is no ``next'' time $t$ when working in continuous-time! This difficulty of using graphical representations is the main reason that we have postponed the treatment of continuous-time processes until now, thereby hopefully allowing the reader to first develop some graphical intuition for the discrete-time case.
+
+Nevertheless, all is not lost; the first interpretation that we will consider is to view continuous-time processes as limits of discrete-time ones. To this end, it will be convenient to consider the transition-matrix $T$ associated with a homogeneous DTMC. Let us recall from Sections~\ref{sec:pgm} and~\ref{sec:trans_graph}, that the elements of such a matrix represent the ``transition probabilities'' of the system, that is, the probability of moving from a state $x$ to a state $y$, in one time step:
+\begin{equation*}
+T(x,y) = P(X_1=y\,\vert\,X_0=x)\,.
+\end{equation*}
+We can use this formalism to interpret the continuous-time case, by simply ``fixing the length of the step''. That is, consider some ``step size'' $\Delta>0$. Then, for a homogeneous CTMC, we known that
+\begin{equation*}
+P(X_{t+\Delta}\,\vert\,X_t) = P(X_\Delta\,\vert\,X_0)\,,
+\end{equation*}
+for all $t\in\realsnonneg$, so we can collect these ``transition probabilities'' in a matrix $T_\Delta$:
+\begin{equation*}
+T_\Delta(x,y) \coloneqq P(X_\Delta=y\,\vert\,X_0=x)\quad\quad\text{for all }x,y\in\states\,.
+\end{equation*}
+Clearly, the elements of $T_\Delta$ are the probabilities for the system to end up in a state $y$, if it is currently in a state $x$, after a time duration of $\Delta$ has elapsed. Provided, then, that we are not interested in a granularity of the time dimension that is finer than $\Delta$, this representation suffices. The matrix $T_\Delta$ can be associated with a DTMC, and all the previous results can be used. For instance, for any multiple $n\in\nats$ of $\Delta$, we use Proposition~\ref{prop:markov_factor_transmat} to find that
+\begin{equation*}
+P(X_{n\Delta}=y\,\vert\,X_0=x) = T_\Delta^n(x,y)\,.
+\end{equation*}
+
+But, of course, the point of using the continuous-time representation is that we \emph{are} interested in an arbitrarily fine granularity of the time-dimension. In particular, the measure-theoretic definition encodes this arbitrary granularity, and it seems a waste to only focus on the restriction to a single step size $\Delta$. The ``trick'', then, is to take the limit as $\Delta$ goes to zero, and somehow usefully represent this limit. It is hopefully clear from the above discussion that, as we decrease $\Delta$ further and further, the associated transition matrix $T_\Delta$ covers increasingly smaller steps along the time-dimension. And, for each such positive $\Delta$, we can associate a discrete-time Markov chain, and use all the previous interpretations that we developed.
+
+We first remark that the naive limit does not encode a lot of information; it trivially holds that
+\begin{equation}\label{eq:time_zero_is_id}
+\lim_{\Delta\to 0^+} P(X_{\Delta}=y\,\vert\,X_0=x) = P(X_0=y\,\vert\,X_0=x) = \begin{cases}
+1 & \text{if $y=x$, and} \\
+0 & \text{otherwise.}
+\end{cases}
+\end{equation}
+In matrix notation this reads as $\lim_{\Delta\to0^+}T_\Delta = I$, where $I$ denotes the $\lvert\states\rvert\times \lvert\states\rvert$ identity matrix. Colloquially, we might understand this as saying that ``if time does not evolve, the system does not change''. This is clearly an almost tautological statement to make of what should be interpreted as a dynamical system. So let us consider how the system \emph{does} change as time evolves. The natural representation for this is obviously the \emph{derivative} of the transition matrix $T_\Delta$; this is the limit interpretation that we shall use. Ignoring technical issues of differentiability, we have
+\begin{equation}\label{eq:rate_mat_is_deriv}
+\frac{\mathrm{d}\,T_\Delta}{\mathrm{d}\,\Delta}\bigg\vert_{\Delta=0} = \lim_{\Delta\to0^+}\frac{T_\Delta - I}{\Delta} =: Q\,,
+\end{equation}
+where we have used the previous observation that $T_0=I$. On the right-hand side, the term $Q$ is called the \emph{transition rate matrix} of the homogeneous CTMC (or sometimes simply the \emph{rate matrix}). It is clear from the above definition that it encodes the \emph{rate of change} of the transition probabilities around time zero. It satisfies the following properties:
+\begin{definition}[Transition Rate Matrix]\label{def:trans_rate_matrix}
+A real-valued $\lvert\states\rvert\times\lvert\states\rvert$ matrix $Q$ is called a \emph{transition rate matrix} if, for all $x\in\states$, it holds that
+\begin{enumerate}
+\item $Q(x,y)\geq 0$ for all $y\in\states$ such that $x\neq y$, and
+\item $\sum_{y\in\states}Q(x,y)=0$.
+\end{enumerate}
+\end{definition}
+The elements $Q(x,y)$ of a rate matrix can be interpreted as the ``speed'' with which the process moves from the state $x$ to the state $y$. In the above definition, the two conditions imply that the diagonal elements $Q(x,x)$ are always non-positive. On the other hand, the first condition states that the off-diagonal elements are non-negative. Combined this can be understood as saying that the system will move ``out'' of the current state (the non-positivity of the diagonal elements) and ``into'' some other states (the non-negativity of the off-diagonals).
+
+A more concrete way to interpret the rate-matrix, is through a linearised approximation of the transition probabilities over a small enough time-step. That is, it follows from Equation~\eqref{eq:rate_mat_is_deriv} that, for ``small enough'' $\Delta>0$, it holds that $Q\approx (T_\Delta-I)\nicefrac{1}{\Delta}$; hence also
+\begin{equation}\label{eq:cont_trans_small_delta}
+T_\Delta \approx I + \Delta Q\,.
+\end{equation}
+We therefore see that the matrix $Q$ can be used to approximately compute the transition probabilities over a small enough time step.
+
+An obvious next question is if we can extrapolate this to compute the matrix $T_t$ that contains the transition probabilities over an arbitrary duration $t$. Indeed we can, although it requires a bit of setup. For any $t\in\realsnonneg$, first define the transition matrix of the CTMC after time $t$:
+\begin{equation*}
+T_t(x,y) \coloneqq P(X_{t}=y\,\vert\,X_0=x)\quad\quad\text{for all }x,y\in\states\,.
+\end{equation*}
+Then we differentiate in $t$; to this end, first fix $\Delta>0$, and use the Markov property and homogeneity to derive that $T_{t+\Delta} = T_tT_\Delta$ (c.f. Proposition~\ref{prop:markov_factor_transmat}). Then we proceed by using Equation~\eqref{eq:rate_mat_is_deriv}:
+\begin{equation*}
+\frac{\mathrm{d}\,T_t}{\mathrm{d}\,t} = \lim_{\Delta\to0^+} \frac{T_{t+\Delta} - T_t}{\Delta} = \lim_{\Delta\to0^+} \frac{T_tT_\Delta - T_t}{\Delta} = T_t\left(\lim_{\Delta\to0^+} \frac{T_\Delta - I}{\Delta}\right) = T_tQ\,.
+\end{equation*}
+Using also Equation~\eqref{eq:time_zero_is_id}, we can now write the matrix differential equation
+\begin{equation*}
+\frac{\mathrm{d}\,T_t}{\mathrm{d}\,t} = T_tQ\,,\quad\quad T_0 = I\,,
+\end{equation*}
+whose solution is the \emph{matrix exponential} of $Qt$:
+\begin{equation*}
+T_t = e^{Qt}\,.
+\end{equation*}
+
+We recall from Proposition~\ref{prop:homogen_dtmc_has_single_transmat} that the dynamic behaviour of a homogeneous discrete-time Markov chain can be characterised by a single transition matrix $T$, and that therefore this matrix constitutes the canonical parameter of the process. Because the matrix $Q$ can be used to (re-)construct the transition matrices of a homogeneous CTMC over any time duration, it here plays the same role.
+\begin{proposition}
+Let $\{X_t\}_{t\in\realsnonneg}$ be a continuous-time homogeneous Markov chain, with transition rate matrix $Q$ as defined above. Then for all $t\in\realsnonneg$, the transition probabilities after time $t$ are the elements of the transition matrix $T_t=e^{Qt}$.
+\end{proposition}
+
+While we do not aim to give a complete treatment on the interpretation of the matrix exponential, some properties are worth pointing out. First of all, it can be defined analogously to the exponential function of real-numbers; that is, through a Taylor expansion around zero. Specifically, it holds that
+\begin{equation*}
+T_t = e^{Qt} \coloneqq \sum_{k=0}^{+\infty} \frac{t^kQ^k}{k!}\,.
+\end{equation*}
+Thus, the approximation in Equation~\eqref{eq:cont_trans_small_delta} can be seen as a first-order truncation of the above series.
+
+As a second important point, we can consider the entire family of transition matrices $T_t$ for all $t\in\realsnonneg$. Then this family constitutes a \emph{semi-group} of transition matrices, and $Q$ is the \emph{generator} of this semi-group. Specifically, it holds that $T_{t+s}=T_tT_s$ for all $t,s\in\realsnonneg$---this is called the \emph{semi-group} property. Observe that it is analogous to the result in Proposition~\ref{prop:markov_factor_transmat}, and that we already used this property for the matrix $T_{t+\Delta}$ when constructing the derivative.
+
+These properties immediately yield a different representation for the matrix exponential, which will be convenient further on. We omit the proof.
+\begin{proposition}
+Let $\{X_t\}_{t\in\realsnonneg}$ be a continuous-time homogeneous Markov chain, with transition rate matrix $Q$, and let $T_t$ be the associated family of transition matrices. Then, for all $t\in\realsnonneg$, it holds that
+\begin{equation*}
+T_t = \lim_{n\to+\infty} \left(I+\frac{t}{n}Q\right)^n\,.
+\end{equation*}
+\end{proposition}
+
+Let us consider the importance of the homogeneity assumption in the preceding exposition. Indeed, it is this property that crucially allows the parametrisation to only require a single rate matrix $Q$. More generally, we may consider a non-homogeneous CTMC, and consider the derivatives at each time point; first write the transition matrix for the interval $[s,t]$ as
+\begin{equation*}
+T_s^t(x,y) \coloneqq P(X_t=y\,\vert\,X_s=x)\,,
+\end{equation*}
+and differentiate to obtain
+\begin{equation*}
+\frac{\mathrm{d}\,T_s^t}{\mathrm{d}\,t}\bigg\vert_{t=s} = \lim_{t\to s^+}\frac{T_s^t-I}{t-s} =: Q_s\,,
+\end{equation*}
+whence the parametrisation now requires an entire family $Q_s$ of rate matrices---one for each point in time. Note, though, that these matrices are still transition rate matrices, in that they satisfy the properties in Definition~\ref{def:trans_rate_matrix}. However, the corresponding matrix differential equation is no longer solved by a simple matrix exponential. 
+
+More generally still, for arbitrary continuous-time stochastic processes (that are neither homogeneous nor Markov) we may consider the transition rates (derivatives) not only for specific points in time, but also for specific histories leading up to that time. For instance, with $\mathbf{s}=s_1,\ldots,s_n$ and $t$ in $\realsnonneg$ and $x_\mathbf{s}\in\states^n$, we may write
+\begin{equation*}
+Q_{x_\mathbf{s},t}(x,y) \coloneqq \frac{\mathrm{d}}{\mathrm{d}\,u}P\bigl(X_u=y\,\vert\,X_\mathbf{s}=x_\mathbf{s},X_t=x\bigr)\bigg\vert_{u=t}\,.
+\end{equation*}
+Thus, the parametrisation requires the specification of a transition rate matrix for each point in time and for each possible history before that time. It should be clear that this leads to a rather unwieldy process specification.
+
+Before moving on to the imprecise generalisation of this model class, let us briefly return to the homogeneous and Markov setting, where the entire system is determined using a single matrix $Q$. As we have discussed, we can associate to such a homogeneous CTMC a family $T_t$ of transition matrices. We can now use the formalism of probabilistic graphical models that we have seen in Section~\ref{sec:pgm}, to graphically reason about these models. Specifically, while the time dimension $\realsnonneg$ is itself ``too big'' to graphically represent, we may consider some (finite) set of time points $0<t_1<\cdots <t_n$ in $\realsnonneg$, and consider the restriction of the process to only these time-points. By augmenting the graphical representation by letting the graphical length of the arcs represent the corresponding time duration, we can draw a PGM as in Figure~\ref{fig:example_ctmc_pgm}.
+\begin{figure}
+\centering
+\begin{tikzpicture}[xscale=0.9,yscale=0.9]
+%\draw[help lines] (-1,-0.5) grid (11,7.5);
+\draw (-1,-1) rectangle (10.5,1.5);
+\draw (0,0) circle(0.5) node[align=center] {$X_0$};
+\draw (0,1) node[align=right] {$P(X_0)$};
+\draw [->] (0.5,0) -- (3.5,0);
+\draw (4,0) circle(0.5) node[align=center] {$X_{t_1}$};
+\draw (4,1) node[align=right] {$P(X_{t_1}\,\vert\,X_0)=e^{Qt_1}$};
+\draw [->] (4.5,0) -- (6.5,0);
+\draw (7,0) circle(0.5) node[align=center] {$X_{t_2}$};
+\draw (7,1) node[align=right] {$P(X_{t_2}\,\vert\,X_{t_1})=e^{Q(t_2-t_1)}$};
+\draw [->] (7.5,0) -- (10,0);
+\draw (10,-0.25) node[align=right] {$\realsnonneg$};
+\end{tikzpicture}
+\caption{Caption goes here.}
+\label{fig:example_ctmc_pgm}
+\end{figure}
 
 \section{Further Reading}
 
