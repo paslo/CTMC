@@ -165,7 +165,7 @@
 % Running title and authors 
 %\ShortHeadings{Efficient Computation of Updated Lower Expectations for ICTHMC's}{Krak et al.} 
 
-\title{Imprecise Markov Chains}
+\title{An Introduction to Imprecise Markov Chains}
 % Use \titlerunning{Short Title} for an abbreviated version of
 % your contribution title if the original one is too long
 \author{Thomas Krak}
@@ -187,19 +187,21 @@
 
 \section{Introduction}
 
-In many areas of science and engineering, we are interested in modelling uncertainty about (the behaviour of) dynamical systems, that is, systems whose state changes as time elapses.
+In many areas of science and engineering, we are interested in modelling uncertainty about the behaviour of dynamical systems, that is, systems whose state changes as time elapses. For instance, we may want to model the evolution of the spatial trajectories of a system in motion; or the performance and reliability of a complex composite system as its components wear out, break down, and get replaced; or the spread of pathogens through a population; or the evolution of stock prices---and so on and so forth. 
 
-{\bf TODO: some examples relevant to UTOPIAE. Trajectory tracking, reliability/failure analysis etc. Some other examples with broader scope.}
+What all these systems have in common is that there is a \emph{dynamic} component to their description---they change \emph{over time}---and they are, in a sense, hard to describe \emph{exactly}. For instance, this difficulty may arise because their behaviour depends on unknown external influences, or because the system cannot reasonably be described at a sufficiently detailed level. Thus, there arises an uncertainty about how exactly the system will evolve over time, even if one can model how it will ``roughly'' behave.
+%On the other hand, there may be an intrinsically stochastic component to the system under study.
+Regardless of the interpretation that we want to assign to this uncertainty, such systems are modelled using \emph{stochastic processes}. A stochastic process, then, is a probabilistic description of the system under study. In this sense, it provides a formal and integrated description of the system dynamics and the probabilistic uncertainty of its evolution.
 
-Our uncertainty about the behaviour of such a system can be due to various reasons. For example, there may be an intrinsically stochastic component to the system under study. Regardless of the interpretation that we want to assign to this kind of uncertainty, systems of this kind are modelled using \emph{stochastic processes}. {\bf TODO: bit more explanation and intuition.}
-
-On the other hand, we might also be uncertain about whether our model is correct. For instance, we might not know exactly the numerical values that the parameters of our model should take. Similarly, we might be aware that our modelling assumptions lead to simplifications that are not necessarily warranted, which introduces uncertainty about the accuracy or applicability of any assessments made on the basis of these models. It is therefore of interest to robustify our models also against these kinds of ``meta'', or ``higher-order'', uncertainties.
+On the other hand, we might also be uncertain about whether such a model is ``correct''. For instance, we might not know exactly the numerical values that the parameters of our model should take. Similarly, we might be aware that our modelling assumptions lead to simplifications that are not necessarily warranted, which introduces uncertainty about the accuracy or applicability of any assessments made on the basis of these models. It is therefore of interest to robustify our models also against these kinds of ``meta'', or ``higher-order'', uncertainties.
 
 In this chapter, we consider stochastic processes for which this higher-order uncertainty is modelled using the theory of Imprecise Probabilities (IP). For an extended introduction to IP, we refer the reader back to~\refIPChapter. We here constrain ourselves to briefly recall that such Imprecise Probabilistic models can be interpreted as representing a \emph{set} of traditional probabilistic models. So, in our current setting, we will be considering \emph{sets} of stochastic processes. From an inference point of view, the aim is then to compute inferences which are robust with respect to variations within such a set. We recall from~\refIPChapter~that these robust inferences are captured in general by the \emph{lower} and \emph{upper} expectations with respect to the elements of the set that we are considering.
 
-Our aim with the present chapter is to provide an extensive but intuitive overview of the theory of Imprecise Stochastic Processes, and of Imprecise Markov Chains in particular. To this end, we will intentionally focus on different representations of these processes. We will show how each of these different ways of looking at these models provides its own way of deriving useful properties and highlights different intuitive ways of reasoning about them. Important results and properties are stated, but we have made an effort to keep the discussion intuitive. We try to prevent technicalities and do not provide extended proofs; instead, we provide pointers to the literature that the interested reader might pursue herself.
+Our aim with the present chapter is to provide an extensive but intuitive introduction to the theory of Imprecise Stochastic Processes, and of Imprecise Markov Chains in particular. To this end, we will intentionally focus on different representations of these processes. We will show how each of these different ways of looking at these models provides its own way of deriving useful properties and highlights different intuitive ways of reasoning about them. Important results and properties are stated, but we have made an effort to keep the discussion intuitive. We try to prevent technicalities and do not provide extended proofs; instead, we provide pointers to the literature that the interested reader might pursue herself.
 
-{\bf TODO: The remainder of this chapter is structured as follows...}
+The remainder of this chapter is organised as follows. We start the discussion by giving a quick introduction to stochastic processes in Section~\ref{sec:prec_stoch_proc}. The first part basically uses the measure-theoretic approach (albeit in a rather simplified sense) to pin down some first concepts and notation. We then go on to present three different and graphical representations of stochastic processes, which can be used when the time-dimension is discrete. Specifically, we cover the representation using probability trees, in Section~\ref{sec:prob_trees}, using probabilistic graphical models, in Section~\ref{sec:pgm}, and using transition graphs, in Section~\ref{sec:trans_graph}.
+
+Once we have developed these different ways of reasoning about discrete-time processes, we generalise the discussion to \emph{imprecise} discrete-time processes in Section~\ref{sec:idtmc}. We use the previously developed graphical notions to provide intuition about how to reason and compute inferences using these models. The treatment of (imprecise) continuous-time processes is largely postponed until Section~\ref{sec:ictmc}. Here the graphical and intuitive representations largely break down, but we can then use the previously developed understanding of the discrete-time case to reason about these models. Finally, some summarising remarks and pointers to the literature are provided in Section~\ref{sec:further_reading}.
 
 \section{(Precise) Stochastic Processes}\label{sec:prec_stoch_proc}
 
@@ -1032,7 +1034,7 @@ Let $\mathbb{P}$ be a homogeneous IDTMC with associated lower transition operato
 Furthermore, this is the unique $\underline{T}$-invariant lower expectation on $\gamblesX$, meaning that $\underline{\mathbb{E}}_\mathbb{P}[f(X_{+\infty})]= \underline{\mathbb{E}}_\mathbb{P}\bigl[[\underline{T}\,f](X_{+\infty})\bigr]$ for all $f\in\gamblesX$.
 \end{theorem}
 
-\section{Imprecise Continuous-Time Markov Chains}
+\section{Imprecise Continuous-Time Markov Chains}\label{sec:ictmc}
 
 %\emph{In this section: Intuition as limit of discrete-time (imprecise) Markov chains. Parametrisation using local models and the (imprecise) matrix exponential. Recollection and translation of the different independence concepts. Different representations; sets of precise processes and imprecise graphical models. Reduction of computations to discrete-time case, and law of iterated lower expectation. Results on limit behaviour.}
 
@@ -1251,7 +1253,7 @@ Let $\mathbb{P}$ be an ICTMC and suppose that, for all $x,y\in\states$, $y$ is u
 %\label{fig:example_ctmc_pgm}
 %\end{figure}
 
-\section{Further Reading}
+\section{Further Reading}\label{sec:further_reading}
 
 \emph{In this section: Brief summary of main points including pointers to further reading. Also references to related work that we did not cover, e.g. the martingale-theoretic approach.}
 
