@@ -43,30 +43,7 @@
 \usepackage{graphicx}
 \usepackage{caption}
 
-%\usepackage{eufrak}
-
-%\usepackage{hyperref}
-%\usepackage{pdfsync}
-%\usepackage{authblk}
-
 \DeclareMathAlphabet\mathbfcal{OMS}{cmsy}{b}{n}
-
-%\theoremstyle{definition}
-%\newtheorem{exmp}{Example}%[section]
- 
-%\renewcommand{\ttdefault}{cmtt}
-%\newtheorem{theorem}{Theorem}
-%\newtheorem{proposition}[theorem]{Proposition}
-%\newtheorem{corollary}[theorem]{Corollary}
-%\newtheorem{lemma}[theorem]{Lemma}
-%\newtheorem{definition}{Definition}
-
-%\newtheorem{remark}{Remark}
-%\newtheorem*{remark*}{Remark}
-
-%\newtheorem{claim}{Claim}[theorem]
-%\newtheorem*{claim*}{Claim}
-
 
 \algrenewcommand\algorithmicrequire{\textbf{Input:}}
 \algrenewcommand\algorithmicensure{\textbf{Output:}}
@@ -180,17 +157,16 @@
 %
 \maketitle
 
-\abstract{Stochastic processes in general provide a popular framework for modelling uncertainty about the evolution of dynamical systems. The theory of Markov chains uses a number of crucial assumptions, e.g., about the (in)dependence of such a process on its history, that make their analysis tractable. In practice however, the parameters of a Markov chain may not be known exactly, or there may exist doubt as to the applicability of these assumptions to the system under study. This chapter presents an introduction to imprecise Markov chains, which are a robust generalisation of these models that may be used when parameters are not known exactly or when such assumptions could be violated. Their treatment is grounded in the theory of imprecise probabilities. This generalised model can be interpreted as a set of (traditional) stochastic processes, which may or may not be Markovian and which may have different and varying parameter values. Inferences are then performed to ensure robustness with respect to variations within this set. This chapter assumes no advanced familiarity with Markov chains or imprecise probability theory. It aims to develop an intuitive and graphical understanding of (imprecise) Markov chains in discrete- and in continuous time. %The first part develops the theory of stochastic processes and Markov chains by means of different intuitive, graphical representations. These notions are then generalised to imprecise Markov chains in discrete-time. Finally, an introduction to the theory of precise and imprecise Markov chains in continuous-time is presented.
+\abstract{Stochastic processes in general provide a popular framework for modelling uncertainty about the evolution of dynamical systems. The theory of Markov chains uses a number of crucial assumptions, e.g., about the (in)dependence of such a process on its history, that make their analysis tractable. In practice however, the parameters of a Markov chain may not be known exactly, or there may exist doubt as to the applicability of these assumptions to the system under study. This chapter presents an introduction to imprecise Markov chains, which are a robust generalisation of these models that may be used when parameters are not known exactly or when such assumptions could be violated. Their treatment is grounded in the theory of imprecise probabilities. This generalised model can be interpreted as a set of (traditional) stochastic processes, which may or may not be Markovian and which may have different and varying parameter values. Inferences are then performed to ensure robustness with respect to variations within this set. This chapter assumes no advanced familiarity with Markov chains or imprecise probability theory. It aims to develop an intuitive and graphical understanding of (imprecise) Markov chains in discrete- and in continuous time.
 }
 
-%\chapter{Imprecise Markov Chains}
+%\chapter{An Introduction to Imprecise Markov Chains}
 
 \section{Introduction}
 
 In many areas of science and engineering, we are interested in modelling uncertainty about the behaviour of dynamical systems, that is, systems whose state changes as time elapses. For instance, we may want to model the evolution of the spatial trajectories of a system in motion; or the performance and reliability of a complex composite system as its components wear out, break down, and get replaced; or the spread of pathogens through a population; or the evolution of stock prices---and so on and so forth. 
 
 What all these systems have in common is that there is a \emph{dynamic} component to their description---they change \emph{over time}---and they are, in a sense, hard to describe \emph{exactly}. For instance, this difficulty may arise because their behaviour depends on unknown external influences, or because the system cannot reasonably be described at a sufficiently detailed level. Thus, there arises an uncertainty about how exactly the system will evolve over time, even if one can model how it will ``roughly'' behave.
-%On the other hand, there may be an intrinsically stochastic component to the system under study.
 Regardless of the interpretation that we want to assign to this uncertainty, such systems are modelled using \emph{stochastic processes}. A stochastic process, then, is a probabilistic description of the system under study. In this sense, it provides a formal and integrated description of the system dynamics and the probabilistic uncertainty of its evolution.
 
 On the other hand, we might also be uncertain about whether such a model is ``correct''. For instance, we might not know exactly the numerical values that the parameters of our model should take. Similarly, we might be aware that our modelling assumptions lead to simplifications that are not necessarily warranted, which introduces uncertainty about the accuracy or applicability of any assessments made on the basis of these models. It is therefore of interest to robustify our models also against these kinds of ``meta'', or ``higher-order'', uncertainties.
@@ -205,7 +181,6 @@ Once we have developed these different ways of reasoning about discrete-time pro
 
 \section{(Precise) Stochastic Processes}\label{sec:prec_stoch_proc}
 
-%\emph{In this section: Some notation and formalisation. Different representations; probability measures (intuitively, not going to do the full measure theoretic treatment), event trees, graphical models (again: short, not the full general theory). Various independence concepts, and Markov chains as a special case. Computations using law of iterated expectation. Focus largely on discrete-time, with some first concepts about continuous-time. A brief discussion about limit behaviour.}
 
 We will start the exposition around stochastic processes in a relatively general and abstract sense, but will quickly make things more specific. Throughout the remainder of this chapter, we will consider some fixed abstract \emph{state-space} $\states$. A \emph{state} is an element $x\in\states$ and represents uniquely the relevant information about the underlying system that we are interested in modelling. So as not to complicate matters, we will assume throughout that $\states$ is finite, so that we can identify it without loss of generality as the set $\states=\{1,\ldots,k\}\subset\nats$. Note that here and in what follows, we denote with $\nats$ the natural numbers, and will write $\natswith\coloneqq\nats\cup\{0\}$ when we include zero. Furthermore, the real numbers are written $\reals$, the non-negative reals are $\realsnonneg$, and the positive reals are $\realspos$.
 
@@ -838,10 +813,6 @@ P_\infty(y) = \lim_{n\to+\infty}T^n(x,y)\,.
 
 \section{Imprecise Discrete-Time Markov Chains}\label{sec:idtmc}
 
-%\emph{In this section: Parameterisation and imprecise local models. Different independence concepts. Different representations; sets of precise processes, (imprecise) event trees, imprecise graphical models. Computation using law of iterated lower expectation. Results on limit behaviour.}
-
-%{\bf TODO: transition better into this section. }
-
 We will now move on to the discussion surrounding \emph{Imprecise (Discrete-Time) Markov Chains} (IDTMCs). So, we still consider the time-dimension $\timedim=\natswith$. We will generalise each of the representations that we previously encountered to this new setting, where we roughly follow the same order as in Section~\ref{sec:prec_stoch_proc}. 
 
 So, let us start with the ``measure-theoretic'' representation of imprecise stochastic processes. In this setting, we consider a \emph{set} $\mathbb{P}$ of probability measures on the measurable space of paths $(\Omega,\mathcal{F})$. Then for each $P\in\mathbb{P}$ we have a probability space $(\Omega,\mathcal{F},P)$, to which we can associate the precise stochastic process $\{X_t\}_{t\in\natswith}$ as in Definition~\ref{def:stochastic_process}. For any function $f\in\gambles(\states^n)$, $n\in\nats$, we can express the expected value on the $n$ time points $\mathbf{t}\subset\natswith$ as $\mathbb{E}_P[f(X_\mathbf{t})]$ as in Section~\ref{sec:prec_stoch_proc}. Recall from~\refIPChapter~that in this imprecise probabilistic context, we are more generally interested in the \emph{lower-} and \emph{upper expectation} of $f$, which are defined respectively as
@@ -1036,8 +1007,6 @@ Furthermore, this is the unique $\underline{T}$-invariant lower expectation on $
 
 \section{Imprecise Continuous-Time Markov Chains}\label{sec:ictmc}
 
-%\emph{In this section: Intuition as limit of discrete-time (imprecise) Markov chains. Parametrisation using local models and the (imprecise) matrix exponential. Recollection and translation of the different independence concepts. Different representations; sets of precise processes and imprecise graphical models. Reduction of computations to discrete-time case, and law of iterated lower expectation. Results on limit behaviour.}
-
 We now move on to the discussion about (imprecise) \emph{continuous}-time Markov chains. We have already encountered this setting several times in the preceding discussions, but have generally skipped over any details. Let us recall from Section~\ref{sec:prec_stoch_proc} that continuous-time stochastic processes are identified with a time-dimension $\timedim=\realsnonneg$, and that the elements $\omega$ of the outcome space of paths $\Omega$ are maps $\omega:
 \realsnonneg\to\states$. The measure-theoretic definition is then as before, where we consider the abstract probability space $(\Omega,\mathcal{F},P)$, and the stochastic process $\{X_t\}_{t\in\realsnonneg}$ is a family of random variables on this space. Furthermore, measure-theoretic definitions of (homogeneous) continuous-time Markov chains (CTMCs) were already encountered in Definitions~\ref{def:measure_markov} and~\ref{def:measure_homogen_markov}.
 
@@ -1198,7 +1167,7 @@ Let $\mathcal{Q}$ be a non-empty set of transition rate matrices, and let $\unde
 \end{equation*}
 These operators satisfy $\underline{T}_0=I$, $\underline{T}_{t+s}=\underline{T}_t\underline{T}_s$ for all $t,s\in\realsnonneg$, and $\nicefrac{\mathrm{d}}{\mathrm{d}t}\underline{T}_t=\underline{Q}\underline{T}_t$. 
 \end{theorem}
-Observe that this family of operators $\underline{T}_t$ satisfy in large part the same properties as the matrix exponential of $Qt$---c.f. the discussion after Proposition~\ref{prop:ctmc_homogen_transmat_is_exponential}---with the main difference being that they are \emph{non-linear} operators. We can now finally present the result that allows the computation of lower expectations for ICTMCs.
+Observe that this family of operators $\underline{T}_t$ satisfy in large part the same properties as the matrix exponentials of $Qt$---c.f. the discussion after Proposition~\ref{prop:ctmc_homogen_transmat_is_exponential}---with the main difference being that they are \emph{non-linear} operators. We can now finally present the result that allows the computation of lower expectations for ICTMCs.
 \begin{theorem}\label{theo:lower_exp_is_lower_trans_ctmc}
 Let $\mathcal{Q}$ be a non-empty set of transition rate matrices, with corresponding lower transition rate operator $\underline{Q}$, and let $\mathbb{P}$ be the corresponding ICTMC. Suppose that $\mathcal{Q}$ is closed, convex, and has separately specified rows (i.e. is closed under recombination of the rows of its elements). Then, for all $f\in\gamblesX$, all $t\in\realsnonneg$, and all $x\in\states$, it holds that
 \begin{equation}\label{eq:lower_exp_is_lower_trans_ctmc}
@@ -1229,29 +1198,6 @@ Let $\mathbb{P}$ be an ICTMC and suppose that, for all $x,y\in\states$, $y$ is u
 \underline{\mathbb{E}}_\mathbb{P}\bigl[f(X_{+\infty})\bigr] = \lim_{t\to+\infty} \underline{\mathbb{E}}_\mathbb{P}\bigl[f(X_{t})\,\big\vert\,X_0=x\bigr] = \lim_{t\to+\infty}\bigl[\underline{T}_tf\bigr](x)\,.
 \end{equation*}
 \end{theorem}
-%Now, a sufficient condition for the lower expectation to converge, is that for all $x,y\in\states$, $y$ is upper reachable from $x$. However, we can do better; there is a much stronger result that is easy to give at this point
-
-%\subsection{Continuous-Time PGM Representation}
-%Before moving on to the imprecise generalisation of this model class, let us briefly return to the homogeneous and Markov setting, where the entire system is determined using a single matrix $Q$. As we have discussed, we can associate to such a homogeneous CTMC a family $T_t$ of transition matrices. We can now use the formalism of probabilistic graphical models that we have seen in Section~\ref{sec:pgm}, to graphically reason about these models. Specifically, while the time dimension $\realsnonneg$ is itself ``too big'' to graphically represent, we may consider some (finite) set of time points $0<t_1<\cdots <t_n$ in $\realsnonneg$, and consider the restriction of the process to only these time-points. By augmenting the graphical representation by letting the graphical length of the arcs represent the corresponding time duration, we can draw a PGM as in Figure~\ref{fig:example_ctmc_pgm}.
-%\begin{figure}
-%\centering
-%\begin{tikzpicture}[xscale=0.9,yscale=0.9]
-%\draw[help lines] (-1,-0.5) grid (11,7.5);
-%\draw (-1,-1) rectangle (10.5,1.5);
-%\draw (0,0) circle(0.5) node[align=center] {$X_0$};
-%\draw (0,1) node[align=right] {$P(X_0)$};
-%\draw [->] (0.5,0) -- (3.5,0);
-%\draw (4,0) circle(0.5) node[align=center] {$X_{t_1}$};
-%\draw (4,1) node[align=right] {$P(X_{t_1}\,\vert\,X_0)=e^{Qt_1}$};
-%\draw [->] (4.5,0) -- (6.5,0);
-%\draw (7,0) circle(0.5) node[align=center] {$X_{t_2}$};
-%\draw (7,1) node[align=right] {$P(X_{t_2}\,\vert\,X_{t_1})=e^{Q(t_2-t_1)}$};
-%\draw [->] (7.5,0) -- (10,0);
-%\draw (10,-0.25) node[align=right] {$\realsnonneg$};
-%\end{tikzpicture}
-%\caption{Caption goes here.}
-%\label{fig:example_ctmc_pgm}
-%\end{figure}
 
 \section{Further Reading}\label{sec:further_reading}
 
@@ -1263,15 +1209,15 @@ For the interpretation of Markov chains using probability trees, see for example
 
 For an account of the general theory of precise probabilistic graphical models, see~\cite{pearl:1988}. For their imprecise generalisation---credal networks---references~\cite{cozman:2000, cozman:2005, chap_pgm:itip, de2015credal, debock:2017} discuss a lot of the general theory.
 
-For a discussion around imprecise \emph{discrete}-time Markov chains, we refer to~\cite{deCooman:2010gd, augustin2013:itip, decooman:2016}. For imprecise \emph{continuous}-time Markov chains, see~\cite{Skulj:2015cq, krak2016ictmc}. A treatment of the matrix exponential, which is crucial to computational methods for CTMCs, is given in~\cite{vanloan:1975}. Reference~\cite{erreygers2017imprecise} discusses the current state-of-the-art to efficiently compute the imprecise generalisation of the matrix exponential, which we have seen is crucial for computing inferences in ICTMCs.
+Imprecise \emph{discrete}-time Markov chains are discussed, e.g., in~\cite{deCooman:2010gd, augustin2013:itip, decooman:2016}. For imprecise \emph{continuous}-time Markov chains, see~\cite{Skulj:2015cq, krak2016ictmc}. A treatment of the matrix exponential, which is crucial to computational methods for CTMCs, is given in~\cite{vanloan:1975}. Reference~\cite{erreygers2017imprecise} discusses the current state-of-the-art to efficiently compute the imprecise generalisation of the matrix exponential, which we have seen is crucial for computing inferences in ICTMCs.
 
-For a detailed treatment of the long-term (limit) behaviour in IDTMCs, see~\cite{decooman:2009, hermans:2012, skulv:2013, decooman:2015}. Reference~\cite{DeBock:2016} provides the necessary and sufficient conditions for the limit behaviour of ICTMCs, and~\cite{erreygers2017imprecise} also discusses computational methods to numerically approximate this limit. We remark that Theorems~\ref{theo:idtmc_ergodic_simple} and~\ref{theo:ictmc_ergodic_simple} in this chapter are stated in a simplified form compared to their statement in the literature. In particular, the results in~\cite{decooman:2009,DeBock:2016} are stronger; for instance,~\cite{DeBock:2016} in fact provides \emph{necessary} and sufficient conditions for the convergence of an ICTMC, whereas Theorem~\ref{theo:ictmc_ergodic_simple} only states a sufficient condition.
+Detailed treatments on the long-term (limit) behaviour in IDTMCs can be found in~\cite{decooman:2009, hermans:2012, skulv:2013, decooman:2015}. Reference~\cite{DeBock:2016} provides the necessary and sufficient conditions for the limit behaviour of ICTMCs, and~\cite{erreygers2017imprecise} also discusses computational methods to numerically approximate this limit. We remark that Theorems~\ref{theo:idtmc_ergodic_simple} and~\ref{theo:ictmc_ergodic_simple} in this chapter are stated in a simplified form compared to their statement in the literature. In particular, the results in~\cite{decooman:2009,DeBock:2016} are stronger; for instance,~\cite{DeBock:2016} in fact provides \emph{necessary} and sufficient conditions for the convergence of an ICTMC, whereas Theorem~\ref{theo:ictmc_ergodic_simple} only states a sufficient condition.
 
-For some examples of the merits of imprecise Markov chains in actual applications, see~\cite{soullard2017, troffaes2015using, rottondi:2017}. One particular domain for which the applicability of (imprecise) Markov chains has been extensively studied, is queueing theory~\cite{crossman:2009, lopatatzidis:2015b:isipta, lopatatzidis:2015:isipta, lopatatzidis2016queue, lopatatzidis:2017:journal}.
+Some examples of the merits of imprecise Markov chains in applications are provided by~\cite{soullard2017, troffaes2015using, rottondi:2017}. One particular domain for which the applicability of (imprecise) Markov chains has been extensively studied, is queueing theory~\cite{crossman:2009, lopatatzidis:2015b:isipta, lopatatzidis:2015:isipta, lopatatzidis2016queue, lopatatzidis:2017:journal}.
 
 A generalisation of Markov chains that we have not discussed, but which is nevertheless important in many practical applications, are \emph{hidden} Markov chains. There, the stochastic process cannot be observed directly, but only through a noisy measurement model. Their imprecise treatment is discussed, e.g., in~\cite{benavoli2011,DeBock:2014ts,krak2017icthmc}.
 
-Fields that are closely related to the theory of imprecise Markov chains are controlled Markov processes~\cite{guo:2003} and Markov decision processes~\cite{satia:1973, white:1994, itoh:2007, guo:2009}. Here also, the process under study has its parameters changed over time. However, the goal there is not to represent uncertainty and change these parameters to compute robust bounds on quantities of interest. Rather, their aim is to optimise the process evolution towards some operational target.
+Fields that are closely related to the theory of imprecise Markov chains are controlled Markov processes~\cite{guo:2003} and Markov decision processes~\cite{satia:1973, white:1994, itoh:2007, guo:2009}. There also, the process under study has its parameters changed over time. However, the goal there is not to represent uncertainty and change these parameters to compute robust bounds on quantities of interest. Rather, their aim is to optimise the process evolution towards some operational target.
 
 Finally, we again emphasise that our treatment uses epistemic irrelevance, which we distinguish from using strong independence. There is, however, an extended body of literature also on the latter. These alternative models are known as Markov chains under strong independence, e.g. in~\cite{augustin2013:itip}, as interval Markov chains~\cite{kozine:2002, skulj:2006, skulj:2007, galdino:2013}, or as Markov set chains~\cite{hartfiel:1991, hartfiel:1994, hartfiel:1998}.
 
