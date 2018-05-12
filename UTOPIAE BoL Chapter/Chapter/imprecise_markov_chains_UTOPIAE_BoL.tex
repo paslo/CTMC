@@ -1223,7 +1223,7 @@ Let us in particular consider the final condition in this definition. From the c
 \end{equation*}
 Thus, upper reachability of $y$, from $x$, requires that there exists a sequence of states from $x$ to $y$ such that, at each step in this sequence, there is \emph{some} transition rate matrix $Q\in\mathcal{Q}$ which assigns strictly positive ``speed'' of moving from the current state in this sequence, to the next one. In other words, it should be possible for these transitions to happen according to some of the models in our set $\mathbb{P}$, but not necessarily all, and there can be a different model allowing for this possibility at each step. This can now be used to state the following result:
 
-\begin{theorem}
+\begin{theorem}\label{theo:ictmc_ergodic_simple}
 Let $\mathbb{P}$ be an ICTMC and suppose that, for all $x,y\in\states$, $y$ is upper reachable from $x$. Then, there exists a unique lower expectation operator $\underline{\mathbb{E}}_\mathbb{P}\bigl[\cdot(X_{+\infty})\bigr]:\gamblesX\to\reals$ such that, for all $f\in\gamblesX$ and all $x\in\states$,
 \begin{equation*}
 \underline{\mathbb{E}}_\mathbb{P}\bigl[f(X_{+\infty})\bigr] = \lim_{t\to+\infty} \underline{\mathbb{E}}_\mathbb{P}\bigl[f(X_{t})\,\big\vert\,X_0=x\bigr] = \lim_{t\to+\infty}\bigl[\underline{T}_tf\bigr](x)\,.
@@ -1255,7 +1255,23 @@ Let $\mathbb{P}$ be an ICTMC and suppose that, for all $x,y\in\states$, $y$ is u
 
 \section{Further Reading}\label{sec:further_reading}
 
-\emph{In this section: Brief summary of main points including pointers to further reading. Also references to related work that we did not cover, e.g. the martingale-theoretic approach.}
+Let us conclude this chapter by providing pointers to the literature on which the material in this chapter is based. We will also briefly discuss some parts of the literature that are related but not quite the same as what we covered here.
+
+First of all, there exists an extensive body of literature on (precise) Markov chains, both in discrete- and in continuous time. It would be nigh impossible to give a complete overview here, but we think that \cite{norris1998markov, anderson1991} make excellent introductory reads. For a broad and general introduction to the theory of imprecise probability, that lies at the heart of the models that we discussed here, we refer the reader to~\cite{Walley:1991vk,augustin:2014}. The difference between the notions of strong independence and epistemic irrelevance---which we have stressed repeatedly and which is a crucial property of imprecise Markov chains as we treated them here---is discussed, e.g., in \cite{couso:2000, chap_irr_ind:itip:2014}.
+
+For the interpretation of Markov chains using probability trees, see for example~\cite{decooman:2008, destercke:2008, stavros:phd:2017}. This interpretation is also closely related to the \emph{game-theoretic} formalisation of probabilities using the theory of martingales (which we did not cover here). The interested reader may want to pursue~\cite{decooman:2008, chap:game_theo:itip, stavros:phd:2017}.
+
+For an account of the general theory of precise probabilistic graphical models, see~\cite{pearl:1988}. For their imprecise generalisation---credal networks---references~\cite{cozman:2000, cozman:2005, chap_pgm:itip, de2015credal, debock:2017} discuss a lot of the general theory.
+
+For a discussion around imprecise \emph{discrete}-time Markov chains, we refer to~\cite{deCooman:2010gd, augustin2013:itip, decooman:2016}. For imprecise \emph{continuous}-time Markov chains, see~\cite{Skulj:2015cq, krak2016ictmc}. A treatment of the matrix exponential, which is crucial to computational methods for CTMCs, is given in~\cite{vanloan:1975}. Reference~\cite{erreygers2017imprecise} discusses the current state-of-the-art to efficiently compute the imprecise generalisation of the matrix exponential, which we have seen is crucial for computing inferences in ICTMCs.
+
+For a detailed treatment of the long-term (limit) behaviour in IDTMCs, see~\cite{decooman:2009, hermans:2012, skulv:2013, decooman:2015}. Reference~\cite{DeBock:2016} provides the necessary and sufficient conditions for the limit behaviour of ICTMCs, and~\cite{erreygers2017imprecise} also discusses computational methods to numerically approximate this limit. We remark that Theorems~\ref{theo:idtmc_ergodic_simple} and~\ref{theo:ictmc_ergodic_simple} in this chapter are stated in a simplified form compared to their statement in the literature. In particular, the results in~\cite{decooman:2009,DeBock:2016} are stronger; for instance,~\cite{DeBock:2016} in fact provides \emph{necessary} and sufficient conditions for the convergence of an ICTMC, whereas Theorem~\ref{theo:ictmc_ergodic_simple} only states a sufficient condition.
+
+For some examples of the merits of imprecise Markov chains in actual applications, see~\cite{soullard2017, troffaes2015using, rottondi:2017}. One particular domain for which the applicability of (imprecise) Markov chains has been extensively studied, is queueing theory~\cite{crossman:2009, lopatatzidis:2015b:isipta, lopatatzidis:2015:isipta, lopatatzidis2016queue, lopatatzidis:2017:journal}.
+
+Fields that are closely related to the theory of imprecise Markov chains are controlled Markov processes~\cite{guo:2003} and Markov decision processes~\cite{satia:1973, white:1994, itoh:2007, guo:2009}. Here also, the process under study has its parameters changed over time. However, the goal there is not to represent uncertainty and change these parameters to compute robust bounds on quantities of interest. Rather, their aim is to optimise the process evolution towards some operational target.
+
+Finally, we again emphasise that our treatment uses epistemic irrelevance, which we distinguish from using strong independence. There is, however, an extended body of literature also on the latter. These alternative models are known as Markov chains under strong independence, e.g. in~\cite{augustin2013:itip}, as interval Markov chains~\cite{kozine:2002, skulj:2006, skulj:2007, galdino:2013}, or as Markov set chains~\cite{hartfiel:1991, hartfiel:1994, hartfiel:1998}.
 
 \input{reference_ch}
 
