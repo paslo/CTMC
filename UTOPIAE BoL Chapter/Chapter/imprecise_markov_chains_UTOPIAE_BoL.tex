@@ -115,7 +115,7 @@
 \newcommand{\timedim}{\mathbb{T}}
 
 % ATTN: replace this with a proper cross-reference to that chapter
-\def\refIPChapter{Chapter 2}
+\def\refIPChapter{Chapter~2}
 
 \def\presuper#1#2%
   {\mathop{}%
@@ -157,23 +157,23 @@
 %
 \maketitle
 
-\abstract{Stochastic processes in general provide a popular framework for modelling uncertainty about the evolution of dynamical systems. The theory of Markov chains uses a number of crucial assumptions, e.g., about the (in)dependence of such a process on its history, that make their analysis tractable. In practice however, the parameters of a Markov chain may not be known exactly, or there may exist doubt as to the applicability of these assumptions to the system under study. This chapter presents an introduction to imprecise Markov chains, which are a robust generalisation of these models that may be used when parameters are not known exactly or when such assumptions could be violated. Their treatment is grounded in the theory of imprecise probabilities. This generalised model can be interpreted as a set of (traditional) stochastic processes, which may or may not be Markovian and which may have different and varying parameter values. Inferences are then performed to ensure robustness with respect to variations within this set. This chapter assumes no advanced familiarity with Markov chains or imprecise probability theory. It aims to develop an intuitive and graphical understanding of (imprecise) Markov chains in discrete- and in continuous time.
+\abstract*{Stochastic processes in general provide a popular framework for modelling uncertainty about the evolution of dynamical systems. The theory of Markov chains uses a number of crucial assumptions about the (in)dependence of such a process on its history, that make their analysis tractable. In practice however, the parameters of a Markov chain may not be known exactly, or there may exist doubt as to the applicability of these assumptions to the system under study. This chapter presents an introduction to imprecise Markov chains, which are a robust generalisation of these models that may be used when parameters are not known exactly or when such assumptions could be violated. Their treatment is grounded in the theory of imprecise probabilities. The generalised model can be interpreted as a set of (traditional) stochastic processes, which may or may not be Markovian and which may have different and varying parameter values. Inferences are then performed to ensure robustness with respect to variations within this set. This chapter assumes no advanced familiarity with Markov chains or imprecise probability theory. It aims to develop an intuitive and graphical understanding of (imprecise) Markov chains in discrete- and in continuous time.
 }
 
 %\chapter{An Introduction to Imprecise Markov Chains}
 
 \section{Introduction}
 
-In many areas of science and engineering, we are interested in modelling uncertainty about the behaviour of dynamical systems, that is, systems whose state changes as time elapses. For instance, we may want to model the evolution of the spatial trajectories of a system in motion; or the performance and reliability of a complex composite system as its components wear out, break down, and get replaced; or the spread of pathogens through a population; or the evolution of stock prices---and so on and so forth. 
+In many areas of science and engineering, we are interested in modelling uncertainty about the behaviour of dynamical systems, that is, systems whose state changes as time passes. For instance, we may want to model the evolution of the spatial trajectories of a system in motion; or the performance and reliability of a complex composite system as its components wear out, break down, and get replaced; or the spread of pathogens through a population; or the evolution of stock prices---and so on and so forth. 
 
 What all these systems have in common is that there is a \emph{dynamic} component to their description---they change \emph{over time}---and they are, in a sense, hard to describe \emph{exactly}. For instance, this difficulty may arise because their behaviour depends on unknown external influences, or because the system cannot reasonably be described at a sufficiently detailed level. Thus, there arises an uncertainty about how exactly the system will evolve over time, even if one can model how it will ``roughly'' behave.
 Regardless of the interpretation that we want to assign to this uncertainty, such systems are modelled using \emph{stochastic processes}. A stochastic process, then, is a probabilistic description of the system under study. In this sense, it provides a formal and integrated description of the system dynamics and the probabilistic uncertainty of its evolution.
 
 On the other hand, we might also be uncertain about whether such a model is ``correct''. For instance, we might not know exactly the numerical values that the parameters of our model should take. Similarly, we might be aware that our modelling assumptions lead to simplifications that are not necessarily warranted, which introduces uncertainty about the accuracy or applicability of any assessments made on the basis of these models. It is therefore of interest to robustify our models also against these kinds of ``meta'', or ``higher-order'', uncertainties.
 
-In this chapter, we consider stochastic processes for which this higher-order uncertainty is modelled using the theory of Imprecise Probabilities (IP). For an extended introduction to IP, we refer the reader back to~\refIPChapter. We here constrain ourselves to briefly recall that such Imprecise Probabilistic models can be interpreted as representing a \emph{set} of traditional probabilistic models. So, in our current setting, we will be considering \emph{sets} of stochastic processes. From an inference point of view, the aim is then to compute inferences which are robust with respect to variations within such a set. We recall from~\refIPChapter~that these robust inferences are captured in general by the \emph{lower} and \emph{upper} expectations with respect to the elements of the set that we are considering.
+In this chapter, we consider stochastic processes for which this higher-order uncertainty is modelled using the theory of Imprecise Probabilities (IP). For an extended introduction to IP, we refer the reader back to~\refIPChapter. We constrain ourselves to briefly recalling that such Imprecise Probabilistic models can be interpreted as representing a \emph{set} of traditional probabilistic models. So, in our current setting, we will be considering \emph{sets} of stochastic processes. From an inference point of view, the aim is then to compute inferences which are robust with respect to variations within such a set. We recall from~\refIPChapter~that these robust inferences are captured in general by the \emph{lower} and \emph{upper} expectations with respect to the elements of the set that we are considering.
 
-Our aim with the present chapter is to provide an extensive but intuitive introduction to the theory of Imprecise Stochastic Processes, and of Imprecise Markov Chains in particular. To this end, we will intentionally focus on different representations of these processes. We will show how each of these different ways of looking at these models provides its own way of deriving useful properties and highlights different intuitive ways of reasoning about them. Important results and properties are stated, but we have made an effort to keep the discussion intuitive. We try to prevent technicalities and do not provide extended proofs; instead, we will provide pointers to the literature that the interested reader might pursue herself.
+Our aim with the present chapter is to provide an extensive but intuitive introduction to the theory of Imprecise Stochastic Processes, and of Imprecise Markov Chains in particular. To this end, we will intentionally focus on different representations of these processes. We will show how each of the different ways of looking at these models provides its own way of deriving useful properties and highlights different intuitive ways of reasoning about them. Important results and properties are stated, but we have made an effort to keep the discussion intuitive. We try to prevent technicalities and do not provide extended proofs; instead, we will provide pointers to the literature that the interested reader might pursue herself.
 
 The remainder of this chapter is organised as follows. We start the discussion by giving a quick introduction to stochastic processes in Section~\ref{sec:prec_stoch_proc}. The first part basically uses the measure-theoretic approach (albeit in a rather simplified sense) to pin down some first concepts and notation. We then go on to present three different and graphical representations of stochastic processes, which can be used when the time-dimension is discrete. Specifically, we cover the representation using probability trees, in Section~\ref{sec:prob_trees}, using Bayesian networks, in Section~\ref{sec:pgm}, and using transition graphs, in Section~\ref{sec:trans_graph}.
 
@@ -193,12 +193,12 @@ This set $\Omega$ thus contains all possible ways in which the system might beha
 Fix a time-dimension $\timedim$ and consider a probability space $(\Omega,\mathcal{F},P)$. Then (the corresponding) stochastic process is the collection $\{X_t\}_{t\in\timedim}$ of random variables $X_t:\Omega\to\states:\omega\mapsto\omega(t)$, $t\in\timedim$, on this space.
 \end{definition}
 \begin{corollary}\label{cor:process_prob_is_measure}
-Fix a time-dimension $\timedim$, consider a probability space $(\Omega,\mathcal{F},P)$, and let $\{X_t\}_{t\in\timedim}$ be the corresponding stochastic process. Then for all $t\in\timedim$ and all $x\in\states$, it holds that $\Pr(X_t=x) = P\bigl( \{\omega\in\Omega\,:\,\omega(t)=x\} \bigr)$.
+Fix a time-dimension $\timedim$, consider a probability space $(\Omega,\mathcal{F},P)$, and let $\{X_t\}_{t\in\timedim}$ be the corresponding stochastic process. Then for all $t\in\timedim$ and $x\in\states$, it holds that $\Pr(X_t=x) = P\bigl( \{\omega\in\Omega\,:\,\omega(t)=x\} \bigr)$.
 \end{corollary}
 \begin{proof}
 Fix $t\in\timedim$, and recall the definition of a random variable: for all $x\in\states$, the probability $\Pr(X_t=x)$ of $X_t$ taking the value $x$ is equal to $P\bigl(X_t^{-1}(x)\bigr)$, the measure of its preimage in $\Omega$. Since $X_t(\omega)=\omega(t)$, we have $X_t^{-1}(x)=\{\omega\in\Omega\,:\,\omega(t)=x\}$.
 \end{proof}
-The above is a formal way of saying that, and how, these random variables $\{X_t\}_{t\in\timedim}$ are associated to the given probability space. In words, for some fixed time $t\in\timedim$, $X_t$ is a random variable that takes on a value $x\in\states$ with probability equal to the measure $P(\cdot)$ of the set of paths along which the state at time $t$ is $x$. Conversely, if we would fix the outcome $\omega\in\Omega$, then the collection $\{X_t\}_{t\in\timedim}$ can be considered a deterministic process, and $X_t(\omega)=\omega(t)$ for all $t\in\states$.
+The above is a formal way of saying that, and how, these random variables $\{X_t\}_{t\in\timedim}$ are associated to the given probability space. In words, for some fixed time $t\in\timedim$, $X_t$ is a random variable that takes on a value $x\in\states$ with probability equal to the measure of the set of paths along which the state at time $t$ is $x$. Conversely, if we fix the outcome $\omega\in\Omega$, then the collection $\{X_t\}_{t\in\timedim}$ can be considered a deterministic process, and $X_t(\omega)=\omega(t)$ for all $t\in\states$.
 
 Note, therefore, that all the quantitative information about the probability of the process taking on certain values at given points in time, is completely determined by the measure $P$. It is therefore also intuitive to instead consider this measure $P$ to be ``the stochastic process'', although this is technically an abuse of terminology. This is because, for a given probability space $(\Omega,\mathcal{F},P)$, it is possible to define many different stochastic processes; \emph{any} $\timedim$-indexed collection of random variables on this space satisfies the general definition. However, in a sense, the stochastic process in Definition~\ref{def:stochastic_process} can be viewed as the ``canonical'' stochastic process corresponding to the given probability space, since it specifically and exactly represents the uncertainty about which states might be obtained at different points in time. We will therefore, and for notational convenience, often refer to the measure $P$ and its corresponding stochastic process $\{X_t\}_{t\in\timedim}$ interchangeably and without confusion.
 
@@ -333,7 +333,7 @@ It should be noted that the second direction in the preceding discussion has one
 
 To summarise, we can conclude that there is indeed a correspondence between the two representations that we have seen so far (up to some technical difficulties surrounding probabilities that are zero). We have seen that the graphical tree structure allows us to reason intuitively about how a stochastic process generates a sample path, by ``walking'' from the root of the tree down its branches. As we will discuss next, we can also use this structure to ``reason backwards'': from vertices deep down in the tree back to the root. We will see that this allows one to intuitively derive \emph{computational methods} for working with stochastic processes. 
 
-So, fix $n\in\natswith$ and let $f\in\gambles(\states^{n+1})$ be a real-valued function of which we aim to compute the expected value with respect to the random variables $X_{0:n}$ at the time points $0,\ldots,n\in\natswith$. Note that it suffices to consider this case, in the sense that any function defined on a subset of the variables $X_{0:n}$, can always be trivially extended to a function on all of them. Now first notice the following. For any situation $w\in\states^*$ with length $\lvert w\rvert = n+1$, the value of $f$ in $w$ is easy to compute; it is simply $f(w)$. Hence in particular, the \emph{expected value} of $f$, in $w$, is simply
+So, fix $n\in\natswith$ and let $f\in\gambles(\states^{n+1})$ be a real-valued function for which we aim to compute the expected value with respect to the random variables $X_{0:n}$ at the time points $0,\ldots,n\in\natswith$. Note that it suffices to consider this case, in the sense that any function defined on a subset of the variables $X_{0:n}$, can always be trivially extended to a function on all of them. Now first notice the following. For any situation $w\in\states^*$ with length $\lvert w\rvert = n+1$, the value of $f$ in $w$ is easy to compute; it is simply $f(w)$. Hence in particular, the \emph{expected value} of $f$, in $w$, is simply
 \begin{equation*}
 \mathbb{E}\bigl[f(X_{0:n})\,\big\vert\,X_{0:n}=w\bigr] = f(w)\,.
 \end{equation*}
@@ -414,17 +414,18 @@ Fix a time-dimension $\timedim\in\{\natswith,\realsnonneg\}$, and let $\{X_t\}_{
 \end{equation*} 
 whenever $P(X_\mathbf{s})$ and $P(X_\mathbf{s},X_\mathbf{t})$ are everywhere strictly positive.
 \end{theorem}
+In this result, the final constraint is required to ensure that the conditional expectations are all well-defined in the measure-theoretic sense. This point did not arise in the discussion using probability trees, because there the local (conditional) models are always properly defined by the model specification.
 
-Having discussed how to interpret probability trees, and how to use them to reason about the computation of expected values, we now move on to a discussion of their structural properties. Note that the specification of a probability tree is still relatively complicated. This is not really due to the structure of the tree; the situations $\states^*_\Box$ and prefix order $\prec$ carry enough information to construct the tree up to any desired level, and their mathematical specification is straightforward. However, in order to specify all the local models $p_{(\cdot)}$, we need to provide an infinite number of probability mass functions on $\states$; one for each situation $w\in\states^*_\Box$. This is why one often restricts attention to simpler models, where one needs less, and often only finitely many, local models.
+Having discussed how to interpret probability trees, and how to use them to reason about the computation of expected values, we now move on to a discussion of their structural properties. Note that the specification of a probability tree is still relatively complicated. This is not really due to the structure of the tree; the situations $\states^*_\Box$ and prefix order $\prec$ carry enough information to construct the tree up to any desired level, and their mathematical specification is straightforward. However, in order to specify all the local models $p_{(\cdot)}$, we need to provide an infinite number of probability mass functions on $\states$; one for each situation $w\in\states^*_\Box$. This is why one often restricts attention to simpler models, where one needs fewer, and often only finitely many, local models.
 
 These simplifications can be seen as a matter of degree. At the one extreme, we have the general definition that we used above, where each situation $w\in\states^*_\Box$ has a local model $p_w$. This leads to a lot of possible structure, but is hard to specify. At the other extreme is the \emph{independent and identically distributed} (i.i.d.) process; this is when we only have a single probability mass function $p$, and we set $p_w\coloneqq p$ for all $w\in\states^*_\Box$. For such a process, no matter what situation we are in, the next branch will always be chosen according to $p$. This process is easy to specify, but it does not yield a lot of structure that can capture the dynamics of the underlying system that we are trying to model.
 
 A useful step up from the i.i.d. process is reached by the popular class of models known as \emph{homogeneous Markov chains}. For a homogeneous Markov chain, the local model \emph{only} depends on the last step of the corresponding situation, and not on what happened before that:
 \begin{definition}[Homogeneous Markov Chain as Probability Tree]\label{def:prob_tree_homogen_markov}
-A probability tree $(\states^*_\Box,\prec,p_{(\cdot)})$ is called a homogeneous Markov chain if, for all situations $v,w\in\states^*$ such that $v_\top=w_\top$, it holds that $p_v=p_w$.
+A probability tree $(\states^*_\Box,\prec,p_{(\cdot)})$ is called a homogeneous Markov chain if $p_v=p_w$ for all situations $v,w\in\states^*$ such that $v_\top=w_\top$.
 \end{definition} 
 \begin{corollary}
-Let $(\states^*_\Box,\prec,p_{(\cdot)})$ be a homogeneous Markov chain. Then for all $x\in\states$ and all $w\in\states^*$ such that $w_\top=x$, it holds that $p_w=p_x$.
+Let $(\states^*_\Box,\prec,p_{(\cdot)})$ be a homogeneous Markov chain. Then $p_w=p_x$ for all $x\in\states$ and all $w\in\states^*$ such that $w_\top=x$.
 \end{corollary}
 \begin{proof}
 Trivial from Definition~\ref{def:prob_tree_homogen_markov} and the fact that all $x\in\states$ are also situations. 
@@ -494,7 +495,7 @@ Trivial from Definition~\ref{def:prob_tree_homogen_markov} and the fact that all
 \end{figure}
 An example for the binary state space $\states=\{a,b\}$ is shown in Figure~\ref{fig:example_homogen_markov_tree}. Additional degrees of freedom can be introduced back into this model by also letting the local models depend on the corresponding depth of the tree. The dynamics can then depend on the point in time, but not on the \emph{specific} history up to that time. This yields the more general definition of a (non-homogeneous) \emph{Markov chain}:
 \begin{definition}[Markov Chain as Probability Tree]\label{def:prob_tree_markov}
-A probability tree $(\states^*_\Box,\prec,p_{(\cdot)})$ is called a Markov chain if, for all situations $v,w\in\states^*$ for which $\lvert v\rvert=\lvert w\rvert$ and $v_\top=w_\top$, it holds that $p_v=p_w$.
+A probability tree $(\states^*_\Box,\prec,p_{(\cdot)})$ is called a Markov chain if $p_v=p_w$ for all situations $v,w\in\states^*$ for which $\lvert v\rvert=\lvert w\rvert$ and $v_\top=w_\top$.
 \end{definition}
 \begin{figure}
 \centering
@@ -805,7 +806,7 @@ and in that case the top class $\states_\mathrm{top}$ of the Markov chain exists
 \end{definition}
 The reason that this property is so important, is that it provides a sufficient condition for the long-term behaviour of a Markov chain to converge to a stationary distribution, regardless of the state in which it started:
 \begin{theorem}
-Let $\{X_t\}_{t\in\natswith}$ be a discrete-time homogeneous Markov chain, and let $T$ be its associated transition matrix. Let this Markov chain be regular. Then there exists a probability mass function $P_\infty:\states\to\realsnonneg$ such that, for all $x,y\in\states$, 
+Let $\{X_t\}_{t\in\natswith}$ be a discrete-time homogeneous Markov chain, and let $T$ be its associated transition matrix. Let this Markov chain be regular. Then there is a probability mass function $P_\infty:\states\to\realsnonneg$ such that, for all $x,y\in\states$, 
 \begin{equation*}
 P_\infty(y) = \lim_{n\to+\infty}T^n(x,y)\,.
 \end{equation*}
@@ -815,21 +816,21 @@ P_\infty(y) = \lim_{n\to+\infty}T^n(x,y)\,.
 
 We will now move on to the discussion surrounding \emph{Imprecise (Discrete-Time) Markov Chains} (IDTMCs). So, we still consider the time-dimension $\timedim=\natswith$. We will generalise each of the representations that we previously encountered to this new setting, where we roughly follow the same order as in Section~\ref{sec:prec_stoch_proc}. 
 
-So, let us start with the ``measure-theoretic'' representation of imprecise stochastic processes. In this setting, we consider a \emph{set} $\mathbb{P}$ of probability measures on the measurable space of paths $(\Omega,\mathcal{F})$. Then for each $P\in\mathbb{P}$ we have a probability space $(\Omega,\mathcal{F},P)$, to which we can associate the precise stochastic process $\{X_t\}_{t\in\natswith}$ as in Definition~\ref{def:stochastic_process}. For any function $f\in\gambles(\states^n)$, $n\in\nats$, we can express the expected value on the $n$ time points $\mathbf{t}\subset\natswith$ as $\mathbb{E}_P[f(X_\mathbf{t})]$ as in Section~\ref{sec:prec_stoch_proc}. Recall from~\refIPChapter~that in this imprecise probabilistic context, we are more generally interested in the \emph{lower-} and \emph{upper expectation} of $f$, which are defined respectively as
+So, let us start with the ``measure-theoretic'' representation of imprecise stochastic processes. In this setting, we consider a set $\mathbb{P}$ of probability measures on the measurable space of paths $(\Omega,\mathcal{F})$. Then for each $P\in\mathbb{P}$ we have a probability space $(\Omega,\mathcal{F},P)$, to which we can associate the precise stochastic process $\{X_t\}_{t\in\natswith}$ as in Definition~\ref{def:stochastic_process}. For any function $f\in\gambles(\states^n)$, $n\in\nats$, we can express the expected value on the $n$ time points $\mathbf{t}\subset\natswith$ as $\mathbb{E}_P[f(X_\mathbf{t})]$ as in Section~\ref{sec:prec_stoch_proc}. Recall from~\refIPChapter~that in this imprecise probabilistic context, we are more generally interested in the \emph{lower-} and \emph{upper expectation} of $f$, which are defined respectively as
 \begin{equation*}
-\underline{\mathbb{E}}_\mathbb{P}\bigl[f(X_\mathbf{t})\bigr] \coloneqq \inf_{P\in\mathbb{P}} \mathbb{E}_P\bigl[f(X_\mathbf{t})\bigr],\quad\text{and,}\quad \overline{\mathbb{E}}_\mathbb{P}\bigl[f(X_\mathbf{t})\bigr] \coloneqq \sup_{P\in\mathbb{P}} \mathbb{E}_P\bigl[f(X_\mathbf{t})\bigr]\,.
+\underline{\mathbb{E}}_\mathbb{P}\bigl[f(X_\mathbf{t})\bigr] \coloneqq \inf_{P\in\mathbb{P}} \mathbb{E}_P\bigl[f(X_\mathbf{t})\bigr]\quad\text{and}\quad \overline{\mathbb{E}}_\mathbb{P}\bigl[f(X_\mathbf{t})\bigr] \coloneqq \sup_{P\in\mathbb{P}} \mathbb{E}_P\bigl[f(X_\mathbf{t})\bigr]\,.
 \end{equation*}
-We briefly recall the well-known conjugacy relation $\overline{\mathbb{E}}_\mathbb{P}\bigl[f(X_\mathbf{t})\bigr]=-\underline{\mathbb{E}}_\mathbb{P}\bigl[-f(X_\mathbf{t})\bigr]$, from which it follows that we can present the remainder of this discussion entirely in terms of lower expectations; any results on upper expectations follow analogously through this relation.
+We briefly recall the well-known conjugacy relation $\overline{\mathbb{E}}_\mathbb{P}\bigl[f(X_\mathbf{t})\bigr]=-\underline{\mathbb{E}}_\mathbb{P}\bigl[-f(X_\mathbf{t})\bigr]$, from which it follows that we can present the remainder of this discussion entirely in terms of lower expectations; any corresponding results on upper expectations follow directly through this relation.
 
 Slightly more generally than the above, we will focus on \emph{conditional} lower expectations. Similar to the precise case that we discussed before, these are defined for any $f\in\gambles(\states^{n+m})$, $n,m\in\nats$, any $\mathbf{s},\mathbf{t}\subset\natswith$ such that $\mathbf{s}$ and $\mathbf{t}$ are of length $n$ and $m$ respectively, and any $x_\mathbf{s}\in\states^n$, as
 \begin{equation*}
 \underline{\mathbb{E}}_\mathbb{P}\bigl[f(X_\mathbf{s},X_\mathbf{t})\,\big\vert\,X_\mathbf{s}=x_\mathbf{s}\bigr] \coloneqq \inf_{P\in\mathbb{P}} \mathbb{E}_P \bigl[f(X_\mathbf{s},X_\mathbf{t})\,\big\vert\,X_\mathbf{s}=x_\mathbf{s}\bigr]\,,
 \end{equation*}
-whenever $\underline{\mathbb{E}}_\mathbb{P}[\mathbb{I}_{x_\mathbf{s}}(X_\mathbf{s})]>0$. In this last condition, $\mathbb{I}_{x_\mathbf{s}}(\cdot)$ is the indicator of $x_\mathbf{s}$; for all $y_\mathbf{s}\in\states^n$, $\mathbb{I}_{x_\mathbf{s}}(y_\mathbf{s})\coloneqq 1$ if $x_\mathbf{s}=y_\mathbf{s}$, and $\mathbb{I}_{x_\mathbf{s}}(y_\mathbf{s})\coloneqq 0$, otherwise. Note that then
+whenever $\underline{\mathbb{E}}_\mathbb{P}[\mathbb{I}_{x_\mathbf{s}}(X_\mathbf{s})]>0$. In this last condition, $\mathbb{I}_{x_\mathbf{s}}$ is the indicator of $x_\mathbf{s}$; for all $y_\mathbf{s}\in\states^n$, $\mathbb{I}_{x_\mathbf{s}}(y_\mathbf{s})\coloneqq 1$ if $x_\mathbf{s}=y_\mathbf{s}$, and $\mathbb{I}_{x_\mathbf{s}}(y_\mathbf{s})\coloneqq 0$, otherwise. Note that then
 \begin{equation*}
 0 < \underline{\mathbb{E}}_\mathbb{P}[\mathbb{I}_{x_\mathbf{s}}(X_\mathbf{s})] = \inf_{P\in\mathbb{P}} \mathbb{E}_P[\mathbb{I}_{x_\mathbf{s}}(X_\mathbf{s})] = \inf_{P\in\mathbb{P}} P(X_\mathbf{s}=x_\mathbf{s})\,,
 \end{equation*}
-so this condition guarantees that the conditional expectations are well-defined for all the precise measures $P\in\mathbb{P}$.
+so this condition guarantees that the conditional expectations are well-defined for all the precise measures $P\in\mathbb{P}$. As before, there are formalisms where this condition is not strictly required---see for example the discussion around the local models of probability trees---or where it can be weakened. For simplicity, we keep the condition here to ensure that everything remains well-defined also under the measure-theoretic interpretation.
 
 We are now ready to give the formal definition of an imprecise discrete-time Markov chain (IDTMC):
 \begin{definition}[IDTMC as Set of Processes]\label{def:idtmc_set_measures}
@@ -852,13 +853,13 @@ which displays this imprecise Markov condition in more familiar terms.
 
 One may wonder at this point whether an imprecise Markov chain $\mathbb{P}$ is itself a set of Markov chains; the answer to this question is a resounding \emph{no} (or at least, not necessarily). This point deserves the strongest possible emphasis:
 \quad\newline\newline
-\noindent \emph{An element of an imprecise Markov chain $\mathbb{P}$ does {\bf not} need to be a Markov chain! So, in general $P(X_t\,\vert\,X_{s_1},\ldots,X_{s_n})\neq P(X_t\,\vert\,X_{s_n})$ for $P\in\mathbb{P}$, with $s_1<\cdots s_n<t$ in $\natswith$.}
+\noindent \emph{An element of an imprecise Markov chain $\mathbb{P}$ need {\bf not} be a Markov chain! So, in general $P(X_t\,\vert\,X_{s_1},\ldots,X_{s_n})\neq P(X_t\,\vert\,X_{s_n})$ for $P\in\mathbb{P}$, with $s_1<\cdots s_n<t$ in $\natswith$.}
 \quad\newline\newline
 To clarify, the ``imprecise Markov condition'' of an imprecise Markov chain is an ``independence'' assessment about the \emph{lower envelope} only. Formally, it is an assessment of \emph{epistemic irrelevance}---a specific type of independence that arises in imprecise probability theory---which is weaker than \emph{strong independence}---a different type of independence, and what would hold of all $P\in\mathbb{P}$ were Markov chains.
 
 In a similar vein, the notion of homogeneity is here only enforced on the lower envelope. So, for an IDTMC $\mathbb{P}$ that is homogeneous, there may be processes $P\in\mathbb{P}$ that are neither Markov, nor homogeneous.
 
-The reason that we stress this so much is twofold. First of all, it implies that the structural assumptions of an imprecise Markov chain are in fact much weaker than those of a precise Markov chain---we no longer assume that future events are fully independent of the history, given the current state, or that their distribution is independent of the point in time. They might be, of course---there \emph{are} elements $P\in\mathbb{P}$ that satisfy those properties---but it's not enforced as strictly. In other words, this model also represents ``higher-order'' uncertainty about the \emph{structural properties} of the system that we are trying to model.
+The reason why we stress this so strongly is twofold. First of all, it implies that the structural assumptions of an imprecise Markov chain are in fact much weaker than those of a precise Markov chain---we no longer assume that future events are fully independent of the history, given the current state, or that their distribution is independent of the point in time. They might be, of course---there \emph{are} elements $P\in\mathbb{P}$ that satisfy those properties---but it's not enforced as strictly. In other words, this model also represents ``higher-order'' uncertainty about the \emph{structural properties} of the system that we are trying to model.
 
 The second reason is that this property is central to all the efficient computational methods that have been developed for working with imprecise Markov chains. We will next illustrate this point by moving the discussion to the representation of IDTMCs as \emph{imprecise probability trees}.
 
@@ -879,7 +880,7 @@ The connection in the other direction is analogous, but a bit more subtle. In pa
 
 As a simple example, suppose that $\states=\{a,b\}$ and we start with a set $\mathbb{P}$ containing only two i.i.d. processes, whose local models are given by $p,h$ respectively. Then, the induced imprecise probability tree has local models $\mathcal{P}_w=\{p,h\}$ for all $w\in\states_\Box^*$. On the other hand, we can easily construct a non-i.i.d. process such that, for all $w\in\states_\Box^*$, its local model is $p_w=p$ if $w_\top=a$, and $p_w=h$, otherwise. Then clearly this process was not in the original set $\mathbb{P}$, but it is compatible with the imprecise probability tree. 
 
-To prevent this from happening, we will require that the set-representation $\mathbb{P}$ of the IDTMC is ``large enough''. Specifically, what we need is that it is already closed under such ``recombination'' of local models at different points in time. Whenever this property holds, we will say that the IDTMC is \emph{separately specified}. Clearly, when we start from an imprecise probability tree and construct its set of compatible processes, this IDTMC will then satisfy this property. In the remainder of this section, we will assume that a given set $\mathbb{P}$ is indeed separately specified. Further on, when we consider the parametrisation of an IDTMC, we will consider an easy condition that ensures this will hold.
+To prevent this from happening, we will require that the set representation $\mathbb{P}$ of the IDTMC is ``large enough''. Specifically, what we need is that it is already closed under such ``recombination'' of local models at different points in time. Whenever this property holds, we will say that the IDTMC is \emph{separately specified}. Clearly, when we start from an imprecise probability tree and construct its set of compatible processes, this IDTMC will then satisfy this property. In the remainder of this section, we will assume that a given set $\mathbb{P}$ is indeed separately specified. Further on, when we consider the parametrisation of an IDTMC, we will consider an easy condition that ensures this will hold.
 
 With this connection between the two representations in place, we can again start to consider computational methods for lower expectations. Analogous to what we have seen before, in this context we have a \emph{law of iterated lower expectation} that we can use as a computational tool. The imprecise probability tree representation again provides graphical intuition.
 
@@ -899,17 +900,17 @@ which is the lower expectation of interest.
 
 As before, the need to specify these (imprecise) local models $\mathcal{P}_w$ for all situations $w\in\states^*_\Box$ makes such a model difficult to work with. This is simplified for imprecise Markov chains; note that we here assume the analogue of homogeneity to hold implicitly:
 \begin{definition}[Homogeneous IDTMC as Imprecise Probability Tree]\label{def:idtmc_prob_tree}
-An imprecise probability tree $(\states^*_\Box,\prec,\mathcal{P}_{(\cdot)})$ is called an imprecise homogeneous discrete-time Markov chain if, for all $v,w\in\states^*$ for which $v_\top=w_\top$, it holds that $\mathcal{P}_v=\mathcal{P}_w$.
+An imprecise probability tree $(\states^*_\Box,\prec,\mathcal{P}_{(\cdot)})$ is called an imprecise homogeneous discrete-time Markov chain if $\mathcal{P}_v=\mathcal{P}_w$ for all $v,w\in\states^*$ for which $v_\top=w_\top$.
 \end{definition}
 \begin{corollary}
-Let $(\states^*_\Box,\prec,\mathcal{P}_{(\cdot)})$ be a homogeneous IDTMC. Then for all $x\in\states$ and all $w\in\states^*$ such that $w_\top=x$, it holds that $\mathcal{P}_w=\mathcal{P}_x$.
+Let $(\states^*_\Box,\prec,\mathcal{P}_{(\cdot)})$ be a homogeneous IDTMC. Then $\mathcal{P}_w=\mathcal{P}_x$ for all $x\in\states$ and all $w\in\states^*$ such that $w_\top=x$.
 \end{corollary}
 \begin{proof}
 Trivial from Definition~\ref{def:idtmc_prob_tree} and the fact that all $x\in\states$ are also situations.
 \end{proof}
-As above, an IDTMC $(\states^*_\Box,\prec,\mathcal{P}_{(\cdot)})$ has a set of compatible precise probability trees, each of which induces a measure $P$, and these are collected in the set $\mathbb{P}$, which is the measure-theoretic IDTMC representation from Definition~\ref{def:idtmc_set_measures}. Observe that a precise probability tree does \emph{not} have to be a (homogeneous) Markov chain, for it to be compatible with a given IDTMC! That is, to be compatible each local model $p_w$, $w\in\states^*_\Box$, should be in the set $\mathcal{P}_{w_\top}$, and this set only depends on the most recent state $w_\top$ of the situation $w$. But, while in a different situation $v$ such that $v_\top=w_\top$, we do require that $p_v\in\mathcal{P}_{v_\top}=\mathcal{P}_{w_\top}$, we do \emph{not} require that $p_v=p_w$!
+As above, an IDTMC $(\states^*_\Box,\prec,\mathcal{P}_{(\cdot)})$ has a set of compatible precise probability trees, each of which induces a measure $P$, and these are collected in the set $\mathbb{P}$, which is the measure-theoretic IDTMC representation from Definition~\ref{def:idtmc_set_measures}. Observe that a precise probability tree does \emph{not} have to be a (homogeneous) Markov chain, for it to be compatible with a given IDTMC! That is, to be compatible each local model $p_w$, $w\in\states^*_\Box$, should be in the set $\mathcal{P}_{w_\top}$, and this set depends only on the most recent state $w_\top$ of the situation $w$. But, while in a different situation $v$ such that $v_\top=w_\top$, we do require that $p_v\in\mathcal{P}_{v_\top}=\mathcal{P}_{w_\top}$, we do \emph{not} require that $p_v=p_w$!
 
-We will next illustrate that the law of iterated lower expectation simplifies further for imprecise Markov chains. We do this again by considering the imprecise analogue of Bayesian networks.
+We will next illustrate that the law of iterated lower expectation simplifies further for imprecise Markov chains. We do this again by considering the imprecise counterpart of Bayesian networks.
 
 \subsection{Credal Networks}\label{sec:credal_net}
 
@@ -961,13 +962,13 @@ Let $\mathbb{P}$ be an IDTMC, and let $\mathcal{T}_t$ be the associated family o
 \end{definition}
 This lower transition operator essentially fulfils the same role as the transition matrices from which it is derived. In particular, we have the following:
 \begin{proposition}\label{prop:lower_trans_is_lower_exp}
-Let $\mathbb{P}$ be an IDTMC, and let $\underline{T}_t$ be the associated family of lower transition operators. Then, for all $t\in\natswith$ and all $f\in\gamblesX$, it holds that
+Let $\mathbb{P}$ be an IDTMC, and let $\underline{T}_t$ be the associated family of lower transition operators. Then, for all $f\in\gamblesX$, all $t\in\natswith$, and all $x\in\states$, it holds that
 \begin{equation*}
-\underline{T}_tf = \underline{\mathbb{E}}_\mathbb{P}\bigl[f(X_{t+1})\,\vert\,X_t\bigr]\,.
+\bigl[\underline{T}_tf\bigr](x) = \underline{\mathbb{E}}_\mathbb{P}\bigl[f(X_{t+1})\,\vert\,X_t=x\bigr]\,.
 \end{equation*}
 \end{proposition}
 \begin{proof}
-Simply use the definitions together with Proposition~\ref{prop:expectation_using_transmat}. For any $x\in\states$,
+Simply use the definitions together with Proposition~\ref{prop:expectation_using_transmat}:
 \begin{align*}
 \bigl[\underline{T}_tf\bigr](x) = \inf_{T_t\in\mathcal{T}_t} \bigl[T_tf\bigr](x) &= \inf_{T_t\in\mathcal{T}_t} \sum_{y\in\states} f(y) T_t(x,y) \\
  &= \inf_{P(X_{t+1}\vert X_t)\in\mathcal{P}(X_{t+1}\vert X_t)} \sum_{y\in\states} f(y) P(X_{t+1}=y\vert X_t=x) \\
@@ -1007,10 +1008,10 @@ Let us consider this definition. One difference with the precise case, is the in
 \begin{equation*}
 0 < \Bigl[\overline{T}^n\mathbb{I}_y\Bigr](x) = \overline{\mathbb{E}}_\mathbb{P}\bigl[\mathbb{I}_y(X_n)\,\big\vert\,X_0=x\bigr] = \sup_{P\in\mathbb{P}} P(X_n=y\,\vert\,X_0=x)\,,
 \end{equation*}
-for all $x,y\in\states$ and some $n\in\nats$. What regularity asks for, then, is for there to be some $n\in\nats$ such that is possible for all $x,y\in\states$ to move from $x$ to $y$ in exactly $n$ steps, \emph{according to some} $P\in\mathbb{P}$. In particular, the (precise) measure $P$ for which this needs to be possible, can be different for every pair $x,y\in\states$. Regularity for IDTMCs then, is a much weaker---easier to satisfy---condition than that for precise Markov chains. Nevertheless, the condition is sufficient for the following:
+for all $x,y\in\states$ and some $n\in\nats$. What regularity asks for, then, is for there to be some $n\in\nats$ such that is possible for all $x,y\in\states$ to move from $x$ to $y$ in exactly $n$ steps, \emph{according to some} $P\in\mathbb{P}$. In particular, the (precise) measure $P$ for which this needs to be possible, can be different for every pair $x,y\in\states$. Regularity for IDTMCs then, is in a sense a much weaker---easier to satisfy---condition than that for precise Markov chains. Nevertheless, the condition is sufficient for the following:
 
 \begin{theorem}\label{theo:idtmc_ergodic_simple}
-Let $\mathbb{P}$ be a homogeneous IDTMC with associated lower transition operator $\underline{T}$, and suppose that $\mathbb{P}$ is separately specified and regular. Then, there exists a unique lower expectation operator $\underline{\mathbb{E}}_\mathbb{P}[\cdot(X_{+\infty})]:\gamblesX\to\reals$ such that, for all $f\in\gamblesX$ and all $x\in\states$,
+Let $\mathbb{P}$ be a homogeneous IDTMC is separately specified and regular, with associated lower transition operator $\underline{T}$. Then, there is a unique lower expectation operator $\underline{\mathbb{E}}_\mathbb{P}[\cdot(X_{+\infty})]:\gamblesX\to\reals$ such that, for all $f\in\gamblesX$ and all $x\in\states$,
 \begin{equation*}
 \underline{\mathbb{E}}_\mathbb{P}\bigl[f(X_{+\infty})\bigr] = \lim_{n\to+\infty} \underline{\mathbb{E}}_\mathbb{P}\bigl[f(X_n)\,\vert\,X_0=x\bigr] = \lim_{n\to+\infty} \bigl[\underline{T}^nf\bigr](x)\,.
 \end{equation*}
@@ -1020,7 +1021,7 @@ Furthermore, this is the unique $\underline{T}$-invariant lower expectation on $
 \section{Imprecise Continuous-Time Markov Chains}\label{sec:ictmc}
 
 We now move on to the discussion about (imprecise) \emph{continuous}-time Markov chains. We have already encountered this setting several times in the preceding discussions, but have generally skipped over any details. Let us recall from Section~\ref{sec:prec_stoch_proc} that continuous-time stochastic processes are identified with a time-dimension $\timedim=\realsnonneg$, and that the elements $\omega$ of the outcome space of paths $\Omega$ are maps $\omega:
-\realsnonneg\to\states$. The measure-theoretic definition is then as before, where we consider the abstract probability space $(\Omega,\mathcal{F},P)$, and the stochastic process $\{X_t\}_{t\in\realsnonneg}$ is a family of random variables on this space. Furthermore, measure-theoretic definitions of (homogeneous) continuous-time Markov chains (CTMCs) were already encountered in Definitions~\ref{def:measure_markov} and~\ref{def:measure_homogen_markov}.
+\realsnonneg\to\states$. The measure-theoretic definition is then as before, where we consider the abstract probability space $(\Omega,\mathcal{F},P)$, and the stochastic process $\{X_t\}_{t\in\realsnonneg}$ is a family of random variables on this space. Furthermore, measure-theoretic definitions of (homogeneous) continuous-time Markov chains (CTMCs) have already been encountered in Definitions~\ref{def:measure_markov} and~\ref{def:measure_homogen_markov}.
 
 How, then, can these models be interpreted? Let us start by considering the simplest case, \emph{viz.}, a precise and homogeneous Markov chain in continuous-time. According to the previous definitions, this is a stochastic process such that
 \begin{enumerate}
@@ -1055,7 +1056,7 @@ We first remark that the naive limit does not encode a lot of information; ignor
 0 & \text{otherwise.}
 \end{cases}
 \end{equation}
-In matrix notation this reads as $\lim_{\Delta\to0^+}T_\Delta = I$, where $I$ denotes the $\lvert\states\rvert\times \lvert\states\rvert$ identity matrix. Colloquially, we might understand this as saying that ``if time does not evolve, the system does not change''. This is clearly an almost tautological statement to make of what should be interpreted as a dynamical system. So let us consider how the system \emph{does} change as time evolves. The natural representation for this is obviously the \emph{derivative} of the transition matrix $T_\Delta$; this is the limit interpretation that we shall use. Ignoring technical issues of differentiability, we have
+In matrix notation this reads as $\lim_{\Delta\to0^+}T_\Delta = I$, where $I$ denotes the $\lvert\states\rvert\times \lvert\states\rvert$ identity matrix. Colloquially, we might understand this as saying that ``if time does not evolve, the system does not change''. This is clearly an almost tautological statement to make of what may be interpreted as a dynamical system. So let us consider how the system \emph{does} change as time evolves. The natural representation for this is obviously the \emph{derivative} of the transition matrix $T_\Delta$; this is the limit interpretation that we shall use. Ignoring technical issues of differentiability, we have
 \begin{equation}\label{eq:rate_mat_is_deriv}
 \frac{\mathrm{d}\,T_\Delta}{\mathrm{d}\,\Delta}\bigg\vert_{\Delta=0} = \lim_{\Delta\to0^+}\frac{T_\Delta - I}{\Delta} =: Q\,,
 \end{equation}
@@ -1092,7 +1093,7 @@ whose solution is the \emph{matrix exponential} of $Qt$:
 T_t = e^{Qt}\,.
 \end{equation*}
 
-We recall from Proposition~\ref{prop:homogen_dtmc_has_single_transmat} that the dynamic behaviour of a homogeneous discrete-time Markov chain can be characterised by a single transition matrix $T$, and that therefore this matrix constitutes the canonical parameter of the process. Because the matrix $Q$ can be used to (re-)construct the transition matrices of a homogeneous CTMC over any time duration, it here plays the same role.
+We recall from Proposition~\ref{prop:homogen_dtmc_has_single_transmat} that the dynamic behaviour of a homogeneous discrete-time Markov chain can be characterised by a single transition matrix $T$, and that therefore this matrix constitutes the canonical parameter of the process. Because the matrix $Q$ can be used to (re-)construct the transition matrices of a homogeneous CTMC over any time duration, it plays the same role here.
 \begin{proposition}\label{prop:ctmc_homogen_transmat_is_exponential}
 Let $\{X_t\}_{t\in\realsnonneg}$ be a continuous-time homogeneous Markov chain, with transition rate matrix $Q$ as defined above. Then for all $t\in\realsnonneg$, the transition probabilities after time $t$ are the elements of the transition matrix $T_t=e^{Qt}$.
 \end{proposition}
@@ -1101,7 +1102,7 @@ While we do not aim to give a complete treatment on the interpretation of the ma
 \begin{equation*}
 T_t = e^{Qt} \coloneqq \sum_{k=0}^{+\infty} \frac{t^kQ^k}{k!}\,.
 \end{equation*}
-Thus, the approximation in Equation~\eqref{eq:cont_trans_small_delta} can be seen as a first-order truncation of the above series.
+Thus, the approximation in Equation~\eqref{eq:cont_trans_small_delta} can be seen as a first-order truncation of the series above.
 
 As a second important point, we can consider the entire family of transition matrices $T_t$ for all $t\in\realsnonneg$. Then this family constitutes a \emph{semi-group} of transition matrices, and $Q$ is the \emph{generator} of this semi-group. Specifically, it holds that $T_{t+s}=T_tT_s$ for all $t,s\in\realsnonneg$---this is called the \emph{semi-group} property. Observe that it is analogous to the result in Proposition~\ref{prop:markov_factor_transmat}, and that we already used this property for the matrix $T_{t+\Delta}$ when constructing the derivative.
 
@@ -1119,7 +1120,7 @@ Furthermore, let us again remark that the transition-matrix representation is al
 Let $\{X_t\}_{t\in\realsnonneg}$ be a continuous-time homogeneous Markov chain, with transition rate matrix $Q$, and let $T_t$ be the associated family of transition matrices. Then, for all $f\in\gamblesX$, all $t\in\realsnonneg$, and all $x\in\states$, it holds that $\mathbb{E}[f(X_t)\,\vert\,X_0=x]=\bigl[T_tf\bigr](x)$\,.
 \end{proposition}
 \begin{proof}
-Exactly analogous to the proof of Proposition~\ref{prop:expectation_using_transmat}.
+Analogous to the proof of Proposition~\ref{prop:expectation_using_transmat}.
 \end{proof}
 
 Let us consider the importance of the homogeneity assumption in the preceding exposition. Indeed, it is this property that crucially allows the parametrisation to only require a single rate matrix $Q$. More generally, we may consider a non-homogeneous CTMC, and consider the derivatives at each time point; first write the transition matrix for the interval $[s,t]$ as
@@ -1139,7 +1140,7 @@ Thus, the parametrisation requires the specification of a transition rate matrix
 
 \subsection{Imprecise Continuous-Time Markov Chains}
 
-With the above notation and concepts for precise continuous-time stochastic processes in place, let us now turn to the imprecise generalisation. In what follows, we will consider imprecise, homogeneous continuous-time Markov chains (ICTMC). As before, we start by considering the abstract sets-of-measures definition:
+With the notation and concepts for precise continuous-time stochastic processes in place, let us now turn to the imprecise generalisation. In what follows, we will consider imprecise, homogeneous continuous-time Markov chains (ICTMC). As before, we start by considering the abstract sets-of-measures definition:
 \begin{definition}[ICTMC as Set of Processes]\label{def:ictmc_set_measures}
 An \emph{imprecise continuous-time Markov chain} is a set $\mathbb{P}$ of probability measures on the measurable space $(\Omega,\mathcal{F})$ of (continuous-time) paths, with associated lower expectation operator $\underline{\mathbb{E}}_\mathbb{P}$ such that, for all $f\in\gamblesX$ and all $s_1,\ldots,s_n,t\in\realsnonneg$ such that $s_1<\cdots<s_n<t$, it holds that
 \begin{equation*}
@@ -1147,7 +1148,7 @@ An \emph{imprecise continuous-time Markov chain} is a set $\mathbb{P}$ of probab
 \end{equation*}
 Furthermore, an imprecise continuous-time Markov chain is called \emph{homogeneous} if, for all $s,t\in\realsnonneg$, $s<t$, and all $f\in\gamblesX$, it holds that $\underline{\mathbb{E}}_\mathbb{P}\bigl[f(X_t)\,\big\vert\,X_s\bigr]=\underline{\mathbb{E}}_\mathbb{P}\bigl[f(X_{t-s})\,\big\vert\,X_0\bigr]$.
 \end{definition}
-As in the discussion about imprecise discrete-time Markov chains, we distinguish between the definition by epistemic irrelevance---which is what is used above---and the definition by strong independence, which would imply that all $P\in\mathbb{P}$ are precise (homogeneous) Markov chains, and what we are explicitly not using.
+As in the discussion about imprecise discrete-time Markov chains, we distinguish between the definition by epistemic irrelevance---which is what is used above---and the definition by strong independence, which would imply that all $P\in\mathbb{P}$ are precise (homogeneous) Markov chains, and which we are explicitly not using.
 
 Let us now consider the parametrisation of such an ICTMC. We recall that in the precise case, the canonical parameter is a single transition rate matrix $Q$. In contrast, for the imprecise case, the ``parameter'' of interest is a \emph{set} $\mathcal{Q}$ of transition rate matrices.
 Because a precise homogeneous CTMC is identified with a a rate matrix $Q$, it is clear that such a set $\mathcal{Q}$ induces a set of precise processes: simply consider all processes for which the associated rate matrix is included in $\mathcal{Q}$. However, this induced set then only includes homogeneous Markov processes and, as remarked above, we aim to relax these independence assumptions. Using the parametrisation of more general precise processes, we introduce the notion of compatibility with a given set of rate matrices:
@@ -1171,9 +1172,9 @@ Intuitively, for small $\Delta>0$, we can then approximate the lower expectation
 \begin{equation*}
 \underline{\mathbb{E}}_\mathbb{P}\bigl[f(X_\Delta)\,\vert\,X_0\bigr] \approx \inf_{Q\in\mathcal{Q}} (I+\Delta Q)f = (I+\Delta\underline{Q})f\,,
 \end{equation*}
-where the approximation is again due to Equation~\eqref{eq:cont_trans_small_delta}. It turns out that we can make this exact and extend the result to any time $t$, analogous to Proposition~\ref{prop:matrix_exp_convenient_steps}:
+where the approximation is again due to Equation~\eqref{eq:cont_trans_small_delta}. It turns out that we can make this exact and extend the result to any time $t$, analogously to Proposition~\ref{prop:matrix_exp_convenient_steps}:
 \begin{theorem}\label{theo:continuous_trans_is_imprecise_exponential}
-Let $\mathcal{Q}$ be a non-empty set of transition rate matrices, and let $\underline{Q}$ be the corresponding lower transition rate operator, as in Equation~\eqref{eq:lrate_def}. Then, for all $t\in\realsnonneg$, there exists an operator $\underline{T}_t:\gamblesX\to\gamblesX$, such that
+Let $\mathcal{Q}$ be a non-empty set of transition rate matrices, and let $\underline{Q}$ be the corresponding lower transition rate operator, as in Equation~\eqref{eq:lrate_def}. Then, for all $t\in\realsnonneg$, there is an operator $\underline{T}_t:\gamblesX\to\gamblesX$, such that
 \begin{equation*}
 \underline{T}_t = \lim_{n\to+\infty}\left(I+\frac{t}{n}\underline{Q}\right)^n\,.
 \end{equation*}
@@ -1186,7 +1187,7 @@ Let $\mathcal{Q}$ be a non-empty set of transition rate matrices, with correspon
 \underline{\mathbb{E}}_\mathbb{P}\bigl[f(X_t)\,\vert\,X_0=x\bigr] = \bigl[\underline{T}_tf\bigr](x)\,.
 \end{equation}
 \end{theorem}
-Observe that this result needs some constraints on the rate matrix set $\mathcal{Q}$. This can be explained in the sense that the right-hand side of Equation~\eqref{eq:lower_exp_is_lower_trans_ctmc} depends, through Theorem~\ref{theo:continuous_trans_is_imprecise_exponential}, on the lower transition rate operator $\underline{Q}$. In turn, $\underline{Q}$ depends on $\mathcal{Q}$ through Equation~\eqref{eq:lrate_def}. Conversely, the left-hand side (the lower expectation) depends on the set $\mathbb{P}$, which in turn depends on $\mathcal{Q}$ through the compatibility as in Definition~\ref{def:compatible_process}. It turns out that for these different dependencies on $\mathcal{Q}$ to be equivalent, we need some regularity conditions on this latter set---these are the constraints mentioned in the above theorem. 
+Observe that this result needs some constraints on the rate matrix set $\mathcal{Q}$. This can be explained in the sense that the right-hand side of Equation~\eqref{eq:lower_exp_is_lower_trans_ctmc} depends, through Theorem~\ref{theo:continuous_trans_is_imprecise_exponential}, on the lower transition rate operator $\underline{Q}$. In turn, $\underline{Q}$ depends on $\mathcal{Q}$ through Equation~\eqref{eq:lrate_def}. Conversely, the left-hand side (the lower expectation) depends on the set $\mathbb{P}$, which in turn depends on $\mathcal{Q}$ through the compatibility as in Definition~\ref{def:compatible_process}. It turns out that for these different dependencies on $\mathcal{Q}$ to be equivalent, we need some regularity conditions on this latter set---these are the constraints mentioned in the theorem above. 
 
 \subsection{Limits of ICTMCs}
 
@@ -1205,7 +1206,7 @@ Let us in particular consider the final condition in this definition. From the c
 Thus, upper reachability of $y$, from $x$, requires that there exists a sequence of states from $x$ to $y$ such that, at each step in this sequence, there is \emph{some} transition rate matrix $Q\in\mathcal{Q}$ which assigns strictly positive ``speed'' of moving from the current state in this sequence, to the next one. In other words, it should be possible for these transitions to happen according to some of the models in our set $\mathbb{P}$, but not necessarily all, and there can be a different model allowing for this possibility at each step. This can now be used to state the following result:
 
 \begin{theorem}\label{theo:ictmc_ergodic_simple}
-Let $\mathbb{P}$ be an ICTMC and suppose that, for all $x,y\in\states$, $y$ is upper reachable from $x$. Then, there exists a unique lower expectation operator $\underline{\mathbb{E}}_\mathbb{P}\bigl[\cdot(X_{+\infty})\bigr]:\gamblesX\to\reals$ such that, for all $f\in\gamblesX$ and all $x\in\states$,
+Let $\mathbb{P}$ be an ICTMC and suppose that, for all $x,y\in\states$, $y$ is upper reachable from $x$. Then, there is a unique lower expectation operator $\underline{\mathbb{E}}_\mathbb{P}\bigl[\cdot(X_{+\infty})\bigr]:\gamblesX\to\reals$ such that, for all $f\in\gamblesX$ and all $x\in\states$,
 \begin{equation*}
 \underline{\mathbb{E}}_\mathbb{P}\bigl[f(X_{+\infty})\bigr] = \lim_{t\to+\infty} \underline{\mathbb{E}}_\mathbb{P}\bigl[f(X_{t})\,\big\vert\,X_0=x\bigr] = \lim_{t\to+\infty}\bigl[\underline{T}_tf\bigr](x)\,.
 \end{equation*}
@@ -1215,23 +1216,26 @@ Let $\mathbb{P}$ be an ICTMC and suppose that, for all $x,y\in\states$, $y$ is u
 
 Let us conclude this chapter by providing pointers to the literature on which the material in this chapter is based. We will also briefly discuss some parts of the literature that are related but not quite the same as what we covered here.
 
-First of all, there exists an extensive body of literature on (precise) Markov chains, both in discrete- and in continuous time. It would be nigh impossible to give a complete overview here, but we think that \cite{norris1998markov, anderson1991} make excellent introductory reads. For a broad and general introduction to the theory of imprecise probability, that lies at the heart of the models that we discussed here, we refer the reader to~\cite{Walley:1991vk,augustin:2014}. The difference between the notions of strong independence and epistemic irrelevance---which we have stressed repeatedly and which is a crucial property of imprecise Markov chains as we treated them here---is discussed, e.g., in \cite{couso:2000, chap_irr_ind:itip:2014}.
+First of all, there exists an extensive body of literature on (precise) Markov chains, both in discrete- and in continuous time. It would be nigh impossible to give a complete overview here, but we think that \cite{anderson1991, norris1998markov} make excellent introductory reads. For a broad and general introduction to the theory for imprecise probability, which lies at the heart of the models that we discussed here, we refer the reader to~\cite{augustin:2014, Walley:1991vk}. The difference between the notions of strong independence and epistemic irrelevance---which we have stressed repeatedly and which is a crucial property of imprecise Markov chains as we treated them here---is discussed, e.g., in \cite{couso:2000, chap_irr_ind:itip:2014}.
 
-For the interpretation of Markov chains using probability trees, see for example~\cite{decooman:2008, destercke:2008, stavros:phd:2017}. This interpretation is also closely related to the \emph{game-theoretic} formalisation of probabilities using the theory of martingales (which we did not cover here). The interested reader may want to pursue~\cite{decooman:2008, chap:game_theo:itip, stavros:phd:2017}.
+For the interpretation of Markov chains using probability trees, see for example~\cite{decooman:2008, destercke:2008, stavros:phd:2017}. This interpretation is also closely related to the \emph{game-theoretic} formalisation of probabilities using the theory of martingales (which we did not cover here). The interested reader may want to pursue~\cite{decooman:2008, stavros:phd:2017, chap:game_theo:itip}.
 
-For an account of the general theory of Bayesian networks, see~\cite{pearl:1988}. For their imprecise generalisation---credal networks---references~\cite{cozman:2000, cozman:2005, chap_pgm:itip, de2015credal, debock:2017} discuss a lot of the general theory.
+For an account of the general theory of Bayesian networks, see~\cite{pearl:1988}. For their imprecise generalisation---credal networks---references~\cite{chap_pgm:itip, cozman:2000, cozman:2005, de2015credal, debock:2017} discuss a lot of the general theory.
 
-Imprecise \emph{discrete}-time Markov chains are discussed, e.g., in~\cite{deCooman:2010gd, augustin2013:itip, decooman:2016}. For imprecise \emph{continuous}-time Markov chains, see~\cite{Skulj:2015cq, krak2016ictmc}. A treatment of the matrix exponential, which is crucial to computational methods for CTMCs, is given in~\cite{vanloan:1975}. Reference~\cite{erreygers2017imprecise} discusses the current state-of-the-art to efficiently compute the imprecise generalisation of the matrix exponential, which we have seen is crucial for computing inferences in ICTMCs.
+Imprecise \emph{discrete}-time Markov chains are discussed, e.g., in~\cite{deCooman:2010gd, decooman:2016, augustin2013:itip}. For imprecise \emph{continuous}-time Markov chains, see~\cite{krak2016ictmc, Skulj:2015cq}. A treatment of the matrix exponential, which is crucial to computational methods for CTMCs, is given in~\cite{vanloan:1975}. Reference~\cite{erreygers2017imprecise} discusses the current state-of-the-art to efficiently compute the imprecise generalisation of the matrix exponential, which we have seen is crucial for computing inferences in ICTMCs.
 
-Detailed treatments on the long-term (limit) behaviour in IDTMCs can be found in~\cite{decooman:2009, hermans:2012, skulv:2013, decooman:2015}. Reference~\cite{DeBock:2016} provides the necessary and sufficient conditions for the limit behaviour of ICTMCs, and~\cite{erreygers2017imprecise} also discusses computational methods to numerically approximate this limit. We remark that Theorems~\ref{theo:idtmc_ergodic_simple} and~\ref{theo:ictmc_ergodic_simple} in this chapter are stated in a simplified form compared to their statement in the literature. In particular, the results in~\cite{decooman:2009,DeBock:2016} are stronger; for instance,~\cite{DeBock:2016} in fact provides \emph{necessary} and sufficient conditions for the convergence of an ICTMC, whereas Theorem~\ref{theo:ictmc_ergodic_simple} only states a sufficient condition.
+Detailed treatments on the long-term (limit) behaviour in IDTMCs can be found in~\cite{decooman:2009, decooman:2015, hermans:2012, skulv:2013}. Reference~\cite{DeBock:2016} provides the necessary and sufficient conditions for the limit behaviour of ICTMCs, and~\cite{erreygers2017imprecise} also discusses computational methods to numerically approximate this limit. We remark that Theorems~\ref{theo:idtmc_ergodic_simple} and~\ref{theo:ictmc_ergodic_simple} in this chapter are stated in a simplified form compared to their statement in the literature. In particular, the results in~\cite{DeBock:2016, decooman:2009} are stronger; for instance,~\cite{DeBock:2016} in fact provides \emph{necessary} and sufficient conditions for the convergence of an ICTMC, whereas Theorem~\ref{theo:ictmc_ergodic_simple} only states a sufficient condition.
 
-Some examples of the merits of imprecise Markov chains in applications are provided by~\cite{soullard2017, troffaes2015using, rottondi:2017}. A domain for which the applicability of (imprecise) Markov chains has been extensively studied, is queueing theory~\cite{crossman:2009, lopatatzidis:2015b:isipta, lopatatzidis:2015:isipta, lopatatzidis2016queue, lopatatzidis:2017:journal}.
+Some examples of the merits of imprecise Markov chains in applications are provided by~\cite{rottondi:2017, soullard2017, troffaes2015using}. A domain for which the applicability of (imprecise) Markov chains has been extensively studied, is queueing theory~\cite{crossman:2009, lopatatzidis:2015:isipta, lopatatzidis:2015b:isipta, lopatatzidis2016queue, lopatatzidis:2017:journal}.
 
 A generalisation of Markov chains that we have not discussed, but which is nevertheless important in many practical applications, are \emph{hidden} Markov chains. There, the stochastic process cannot be observed directly, but only through a noisy measurement model. Their imprecise treatment is discussed, e.g., in~\cite{benavoli2011,DeBock:2014ts,krak2017icthmc}.
 
-Fields that are closely related to the theory of imprecise Markov chains are controlled Markov processes~\cite{guo:2003} and Markov decision processes~\cite{satia:1973, white:1994, itoh:2007, guo:2009}. There also, the process under study has its parameters changed over time. However, the goal there is not to represent uncertainty and change these parameters to compute robust bounds on quantities of interest. Rather, their aim is to optimise the process evolution towards some operational target.
+Fields that are closely related to the theory of imprecise Markov chains are controlled Markov processes~\cite{guo:2003} and Markov decision processes~\cite{guo:2009, itoh:2007, satia:1973, white:1994}. There also, the process under study has its parameters changed over time. However, the goal there is not to represent uncertainty and change these parameters to compute robust bounds on quantities of interest. Rather, their aim is to optimise the process evolution towards some operational target.
 
-Finally, we again emphasise that our treatment uses epistemic irrelevance, which we distinguish from using strong independence. There is, however, an extended body of literature also on the latter. These alternative models are known as Markov chains under strong independence, e.g. in~\cite{augustin2013:itip}, as interval Markov chains~\cite{kozine:2002, skulj:2006, skulj:2007, galdino:2013}, or as Markov set chains~\cite{hartfiel:1991, hartfiel:1994, hartfiel:1998}.
+Finally, we again emphasise that our treatment uses epistemic irrelevance, which we distinguish from using strong independence. There is, however, an extended body of literature also on the latter. These alternative models are known as Markov chains under strong independence, e.g. in~\cite{augustin2013:itip}, as interval Markov chains~\cite{galdino:2013, kozine:2002, skulj:2006, skulj:2007}, or as Markov set chains~\cite{hartfiel:1991, hartfiel:1998, hartfiel:1994}.
+
+\section*{Acknowledgements}
+The author wishes to express his sincere gratitude to Gert de Cooman and Jasper De Bock, for their helpful comments and suggestions during the writing of this chapter.
 
 \input{reference_ch}
 
